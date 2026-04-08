@@ -1,0 +1,609 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\nInterest on :Dnode wNum, determined properties.  The worksheet is interested in Train/Test determined\u003d1 undetermined\u003d0 property (See relevant paragraph for scores).\nIt does perform a link prediction (it predicts wNum\u003d0 nodes shoud be linked to wNum\u003d5 nodes).  ",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-19 12:07:46.926",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": true,
+          "language": "markdown",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eInterest on :Dnode wNum, determined properties. The worksheet is interested in Train/Test determined\u003d1 undetermined\u003d0 property (See relevant paragraph for scores).\u003cbr/\u003eIt does perform a link prediction (it predicts wNum\u003d0 nodes shoud be linked to wNum\u003d5 nodes).\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620909581151_-1885712338",
+      "id": "20210513-083941_2077688273",
+      "dateCreated": "2021-05-13 08:39:41.151",
+      "dateStarted": "2021-05-19 12:07:46.927",
+      "dateFinished": "2021-05-19 12:07:48.230",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "In memory graph created with :Dnode { wNum, determined} properties.  zMap relation connects nodes.",
+      "text": "call gds.graph.create(\n    \u0027myGraph\u0027,\n    {\n        DNode: {\n        label: \u0027Dnode\u0027,\n        properties: [\u0027wNum\u0027,\u0027determined\u0027]\n    }\n    },{\n        zMap: {\n        type: \u0027zMap\u0027,\n        orientation: \u0027UNDIRECTED\u0027    \n        }\n    }\n    )",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:48:27.374",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "nodeProjection.DNode.properties.wNum.property": "string",
+                      "nodeProjection.DNode.properties.wNum.defaultValue": "string",
+                      "nodeProjection.DNode.properties.determined.property": "string",
+                      "nodeProjection.DNode.properties.determined.defaultValue": "string",
+                      "nodeProjection.DNode.label": "string",
+                      "relationshipProjection.zMap.orientation": "string",
+                      "relationshipProjection.zMap.aggregation": "string",
+                      "relationshipProjection.zMap.type": "string",
+                      "graphName": "string",
+                      "nodeCount": "string",
+                      "relationshipCount": "string",
+                      "createMillis": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nodeProjection.DNode.properties.wNum.property\tnodeProjection.DNode.properties.wNum.defaultValue\tnodeProjection.DNode.properties.determined.property\tnodeProjection.DNode.properties.determined.defaultValue\tnodeProjection.DNode.label\trelationshipProjection.zMap.orientation\trelationshipProjection.zMap.aggregation\trelationshipProjection.zMap.type\tgraphName\tnodeCount\trelationshipCount\tcreateMillis\nwNum\t\tdetermined\t\tDnode\tUNDIRECTED\tDEFAULT\tzMap\t\"myGraph\"\t7458\t14914\t142\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620829242547_-1668865318",
+      "id": "20210512-102042_356280540",
+      "dateCreated": "2021-05-12 10:20:42.547",
+      "dateStarted": "2021-05-13 08:13:30.537",
+      "dateFinished": "2021-05-13 08:13:35.759",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "",
+      "text": "CALL gds.alpha.ml.nodeClassification.train(\u0027myGraph\u0027, {\n  nodeLabels: [\u0027DNode\u0027],\n  modelName: \u0027nc-model\u0027,\n  featureProperties: [\u0027wNum\u0027],\n  targetProperty: \u0027determined\u0027,\n  randomSeed: 2,\n  holdoutFraction: 0.2,\n  validationFolds: 5,\n  metrics: [ \u0027F1_WEIGHTED\u0027 ],\n  params: [\n    {penalty: 0.0625},\n    {penalty: 0.5},\n    {penalty: 1.0},\n    {penalty: 4.0}\n  ]\n}) YIELD modelInfo\nRETURN\n  modelInfo.bestParameters AS winningModel,\n  modelInfo.metrics.F1_WEIGHTED.outerTrain AS trainGraphScore,\n  modelInfo.metrics.F1_WEIGHTED.test AS testGraphScore",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:48:23.232",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "winningModel.penalty": "string",
+                      "trainGraphScore": "string",
+                      "testGraphScore": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "winningModel.penalty\ttrainGraphScore\ttestGraphScore\n0.0625\t0.9583373205059682\t0.961058632115385\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620829247594_1910222181",
+      "id": "20210512-102047_1863449944",
+      "dateCreated": "2021-05-12 10:20:47.594",
+      "dateStarted": "2021-05-13 08:14:05.934",
+      "dateFinished": "2021-05-13 08:14:11.715",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.alpha.ml.splitRelationships.mutate(\u0027myGraph\u0027, {\n  relationshipTypes: [\u0027zMap\u0027],\n  remainingRelationshipType: \u0027zMap_REMAINING\u0027,\n  holdoutRelationshipType: \u0027zMap_TESTGRAPH\u0027,\n  holdoutFraction: 0.2\n}) YIELD relationshipsWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:48:34.350",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "relationshipsWritten": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "relationshipsWritten\n14914\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620829247357_1697942656",
+      "id": "20210512-102047_56173428",
+      "dateCreated": "2021-05-12 10:20:47.358",
+      "dateStarted": "2021-05-13 08:14:45.507",
+      "dateFinished": "2021-05-13 08:14:45.587",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.alpha.ml.splitRelationships.mutate(\u0027myGraph\u0027, {\n  relationshipTypes: [\u0027zMap_REMAINING\u0027],\n  remainingRelationshipType: \u0027zMap_IGNORED_FOR_TRAINING\u0027,\n  holdoutRelationshipType: \u0027zMap_TRAINGRAPH\u0027,\n  holdoutFraction: 0.2\n}) YIELD relationshipsWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:48:39.704",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "relationshipsWritten": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "relationshipsWritten\n11932\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620829247169_344150889",
+      "id": "20210512-102047_1669003221",
+      "dateCreated": "2021-05-12 10:20:47.169",
+      "dateStarted": "2021-05-13 08:14:53.999",
+      "dateFinished": "2021-05-13 08:14:54.040",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.alpha.ml.linkPrediction.train(\u0027myGraph\u0027, {\n  trainRelationshipType: \u0027zMap_TRAINGRAPH\u0027,\n  testRelationshipType: \u0027zMap_TESTGRAPH\u0027,\n  modelName: \u0027lp-determined-model\u0027,\n  featureProperties: [\u0027determined\u0027,\u0027wNum\u0027],\n  validationFolds: 5,\n  classRatio: 1.33,\n  randomSeed: 2,\n  params: [\n    {penalty: 0.5, maxIterations: 1000},\n    {penalty: 1.0, maxIterations: 1000},\n    {penalty: 0.0, maxIterations: 1000}\n  ]\n}) YIELD modelInfo\nRETURN\n  modelInfo.bestParameters AS winningModel,\n  modelInfo.metrics.AUCPR.outerTrain AS trainGraphScore,\n  modelInfo.metrics.AUCPR.test AS testGraphScore",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:48:43.976",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "winningModel.maxIterations": "string",
+                      "winningModel.penalty": "string",
+                      "trainGraphScore": "string",
+                      "testGraphScore": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "winningModel.maxIterations\twinningModel.penalty\ttrainGraphScore\ttestGraphScore\n1000\t0.5\t0.6135459387885058\t0.6333081571533413\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620829246855_-1512522187",
+      "id": "20210512-102046_290170899",
+      "dateCreated": "2021-05-12 10:20:46.855",
+      "dateStarted": "2021-05-13 08:15:11.403",
+      "dateFinished": "2021-05-13 08:15:12.955",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.alpha.ml.linkPrediction.predict.mutate(\u0027myGraph\u0027, {\n  relationshipTypes: [\u0027zMap\u0027],\n  modelName: \u0027lp-determined-model\u0027,\n  mutateRelationshipType: \u0027zMap_PREDICTED\u0027,\n  topN: 50,\n  threshold: 0.45\n}) YIELD relationshipsWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:48:48.550",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "relationshipsWritten": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "relationshipsWritten\n100\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620829246615_790732869",
+      "id": "20210512-102046_393240055",
+      "dateCreated": "2021-05-12 10:20:46.615",
+      "dateStarted": "2021-05-13 08:15:37.713",
+      "dateFinished": "2021-05-13 08:15:46.007",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.graph.writeRelationship(\u0027myGraph\u0027, \u0027zMap_PREDICTED\u0027, \u0027probability\u0027)\nYIELD relationshipsWritten, propertiesWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:48:54.797",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1620829246355_-2026949332",
+      "id": "20210512-102046_1867627009",
+      "dateCreated": "2021-05-12 10:20:46.355",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH p\u003d()-[r:zMap_PREDICTED]-\u003e() RETURN p ",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-02 08:49:03.549",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "network",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id": "string",
+                      "label": "string",
+                      "vmResult": "string",
+                      "d": "string",
+                      "determined": "string",
+                      "totalZero": "string",
+                      "wNum": "string",
+                      "n": "string",
+                      "probability": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "NETWORK",
+            "data": "{\"nodes\":[{\"id\":134275,\"data\":{\"vmResult\":\"[0.0, 1.0000000000119371, -10.000000000173486, 35.00000000095315, -50.000000002437446, -1775.9999999971078, 8879.99999999876]\",\"d\":5,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":134912,\"data\":{\"vmResult\":\"[0.0, 1.0000000000005507, -10.000000000014978, 35.000000000108685, -110.00000000033901, 84.00000000046293, 1079.9999999997822]\",\"d\":10,\"determined\":0,\"totalZero\":3,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":135041,\"data\":{\"vmResult\":\"[0.0, 1.0000000000025189, -10.000000000039549, 35.00000000023272, -110.00000000063324, 444.0000000007842, -720.0000000003472]\",\"d\":9,\"determined\":0,\"totalZero\":3,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":134150,\"data\":{\"vmResult\":\"[0.0, 0.9999999999994915, -9.999999999991893, 34.99999999995133, -49.99999999986562, -96.00000000016846, 120.00000000007515]\",\"d\":1,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":134919,\"data\":{\"vmResult\":\"[0.0, 1.0000000000011882, -10.000000000019782, 35.00000000012201, -110.00000000034396, 204.00000000043786, -1.9736035028513773E-10]\",\"d\":3,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":135172,\"data\":{\"vmResult\":\"[0.0, 0.9999999999944968, -9.999999999922863, 34.999999999578904, -109.99999999892862, -996.0000000012578, 3600.0000000005357]\",\"d\":3,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":135179,\"data\":{\"vmResult\":\"[0.0, 0.9999999999949267, -9.999999999926331, 34.9999999996262, -109.99999999910688, -996.0000000009859, 5040.0000000004]\",\"d\":4,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":134157,\"data\":{\"vmResult\":\"[0.0, 1.0000000000009452, -10.000000000016698, 35.00000000010701, -50.00000000030883, -95.99999999959954, 239.99999999981742]\",\"d\":2,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":2},\"label\":\"Dnode\"},{\"id\":135186,\"data\":{\"vmResult\":\"[0.0, 0.9999999999946922, -9.999999999936563, 34.9999999997126, -109.99999999938882, -996.0000000005839, 6480.000000000207]\",\"d\":5,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":134164,\"data\":{\"vmResult\":\"[0.0, 0.99999999999948, -9.999999999992674, 34.99999999996021, -49.99999999989939, -96.00000000011755, 360.0000000000499]\",\"d\":3,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":134933,\"data\":{\"vmResult\":\"[0.0, 1.0000000000011708, -10.00000000001911, 35.00000000011607, -110.00000000032335, 204.00000000040814, -120.00000000018292]\",\"d\":2,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":134171,\"data\":{\"vmResult\":\"[0.0, 1.000000000000135, -10.00000000000253, 35.000000000015234, -50.00000000004127, -95.99999999994805, 479.9999999999768]\",\"d\":8,\"determined\":0,\"totalZero\":3,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":135199,\"data\":{\"vmResult\":\"[0.0, 1.000000000001527, -10.000000000025508, 35.00000000015748, -290.0000000004437, 264.00000000056497, -2.546585164969519E-10]\",\"d\":1,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":134952,\"data\":{\"vmResult\":\"[0.0, 0.9999999999982379, -9.999999999971564, 34.99999999982805, -109.99999999952297, 203.99999999939973, 240.00000000026853]\",\"d\":4,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":134184,\"data\":{\"vmResult\":\"[0.0, 0.9999999999966086, -9.999999999944237, 34.99999999965564, -49.999999999030024, -576.0000000012349, 5.566107574861949E-10]\",\"d\":0,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":0},\"label\":\"Dnode\"},{\"id\":135214,\"data\":{\"vmResult\":\"[0.0, 1.0000000000002292, -10.00000000000918, 35.00000000008009, -290.00000000027455, 264.00000000039404, 479.99999999980946]\",\"d\":2,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":2},\"label\":\"Dnode\"},{\"id\":134959,\"data\":{\"vmResult\":\"[0.0, 0.9999999999953069, -9.99999999992346, 34.99999999953468, -109.99999999870352, 203.9999999983636, 480.0000000007335]\",\"d\":5,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":134198,\"data\":{\"vmResult\":\"[0.0, 0.999999999996513, -9.999999999944691, 34.99999999967014, -49.99999999909346, -576.0000000011322, 600.000000000504]\",\"d\":1,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":134966,\"data\":{\"vmResult\":\"[0.0, 1.000000000001902, -10.00000000003135, 35.00000000019353, -110.00000000054524, 324.0000000006941, -3.128661774105409E-10]\",\"d\":0,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":0},\"label\":\"Dnode\"},{\"id\":135221,\"data\":{\"vmResult\":\"[0.0, 1.0000000000016573, -10.000000000033452, 35.000000000227715, -290.00000000068803, 264.00000000091813, 1439.999999999574]\",\"d\":3,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":135228,\"data\":{\"vmResult\":\"[0.0, 1.0000000000016982, -10.00000000004053, 35.00000000029445, -290.0000000009177, 264.0000000012542, 2879.9999999994097]\",\"d\":4,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":134205,\"data\":{\"vmResult\":\"[0.0, 0.9999999999908304, -9.999999999851866, 34.999999999104034, -49.99999999751253, -576.0000000031309, 1200.0000000014008]\",\"d\":2,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":2},\"label\":\"Dnode\"},{\"id\":135235,\"data\":{\"vmResult\":\"[0.0, 1.00000000000162, -10.00000000004502, 35.00000000035061, -290.00000000113687, 264.00000000159343, 4679.999999999241]\",\"d\":5,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":133956,\"data\":{\"vmResult\":\"[0.0, 14.999999999999893, -84.99999999999883, 224.9999999999955, -273.9999999999932, 119.99999999999659]\",\"d\":0,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":0},\"label\":\"Dnode\"},{\"id\":134980,\"data\":{\"vmResult\":\"[0.0, 1.0000000000018008, -10.000000000029218, 35.000000000176954, -110.0000000004921, 324.00000000062005, -240.00000000027762]\",\"d\":4,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":134212,\"data\":{\"vmResult\":\"[0.0, 0.9999999999968399, -9.999999999954156, 34.999999999745114, -49.99999999933789, -576.0000000007894, 1800.0000000003406]\",\"d\":3,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":135242,\"data\":{\"vmResult\":\"[0.0, 1.0000000000043132, -10.000000000071736, 35.000000000442846, -290.00000000124874, 744.0000000015899, -7.166818249985646E-10]\",\"d\":3,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":134219,\"data\":{\"vmResult\":\"[0.0, 1.000000000002153, -10.000000000030639, 35.000000000163254, -50.000000000403816, -575.9999999995343, 2399.999999999804]\",\"d\":4,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":134987,\"data\":{\"vmResult\":\"[0.0, 1.0000000000018425, -10.000000000029381, 35.00000000017579, -110.00000000048419, 324.00000000060595, -360.00000000027]\",\"d\":8,\"determined\":0,\"totalZero\":3,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":133966,\"data\":{\"vmResult\":\"[0.0, 120.0]\",\"d\":0,\"totalZero\":0,\"determined\":1,\"wNum\":5,\"n\":0},\"label\":\"Dnode\"},{\"id\":134226,\"data\":{\"vmResult\":\"[0.0, 0.9999999999968701, -9.999999999958675, 34.999999999789, -49.99999999949887, -576.0000000005539, 2880.0000000002246]\",\"d\":10,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":135256,\"data\":{\"vmResult\":\"[0.0, 1.0000000000042721, -10.000000000069534, 35.000000000421664, -290.000000001173, 744.0000000014793, -480.00000000066257]\",\"d\":2,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":134233,\"data\":{\"vmResult\":\"[0.0, 0.9999999999896697, -9.999999999827878, 34.999999998938314, -49.99999999700731, -1776.0000000038099, 1.7171259969508756E-9]\",\"d\":0,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":0},\"label\":\"Dnode\"},{\"id\":135006,\"data\":{\"vmResult\":\"[0.0, 1.0000000000023468, -10.000000000037765, 35.00000000022665, -110.00000000062559, 324.0000000007844, -120.00000000035004]\",\"d\":5,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":134876,\"data\":{\"vmResult\":\"[0.0, 1.0000000000004878, -10.000000000008157, 35.000000000050356, -110.00000000014188, 84.0000000001806, -8.139977580884713E-11]\",\"d\":7,\"determined\":0,\"totalZero\":3,\"wNum\":0,\"n\":6},\"label\":\"Dnode\"},{\"id\":134247,\"data\":{\"vmResult\":\"[0.0, 0.999999999989825, -9.999999999837513, 34.999999999024794, -49.999999997308805, -1776.0000000033729, 1800.0000000015048]\",\"d\":1,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":135013,\"data\":{\"vmResult\":\"[0.0, 1.0000000000025542, -10.00000000004303, 35.00000000026554, -110.00000000074817, 444.00000000095247, -4.292814992377189E-10]\",\"d\":0,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":0},\"label\":\"Dnode\"},{\"id\":134891,\"data\":{\"vmResult\":\"[0.0, 1.000000000000168, -10.000000000004142, 35.00000000003132, -110.00000000010047, 84.00000000013893, 119.99999999993418]\",\"d\":2,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":2},\"label\":\"Dnode\"},{\"id\":135275,\"data\":{\"vmResult\":\"[0.0, 0.9999999999925144, -9.999999999878753, 34.99999999926706, -289.99999999796455, 743.999999997437, 960.0000000011469]\",\"d\":4,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":135144,\"data\":{\"vmResult\":\"[0.0, 0.9999999999940977, -9.999999999903366, 34.99999999940329, -109.99999999831971, -996.000000002139, 9.64064383881318E-10]\",\"d\":0,\"determined\":0,\"totalZero\":2,\"wNum\":0,\"n\":0},\"label\":\"Dnode\"},{\"id\":134254,\"data\":{\"vmResult\":\"[0.0, 0.9999999999897824, -9.99999999984692, 34.99999999911279, -49.99999999760985, -1776.0000000029368, 3600.0000000012924]\",\"d\":2,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":2},\"label\":\"Dnode\"},{\"id\":134898,\"data\":{\"vmResult\":\"[0.0, 1.000000000000493, -10.000000000009727, 35.000000000065654, -110.00000000019702, 84.0000000002616, 359.9999999998789]\",\"d\":3,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":135027,\"data\":{\"vmResult\":\"[0.0, 1.0000000000025424, -10.000000000041062, 35.00000000024784, -110.00000000068712, 444.00000000086425, -360.0000000003864]\",\"d\":1,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":134003,\"data\":{\"vmResult\":\"[0.0, 0.9999999999999591, -9.999999999999368, 34.99999999999619, -49.99999999998968, 23.99999999998701, -119.9999999999942]\",\"d\":5,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":5},\"label\":\"Dnode\"},{\"id\":135158,\"data\":{\"vmResult\":\"[0.0, 0.9999999999943228, -9.999999999908994, 34.99999999945567, -109.9999999984991, -996.0000000018786, 1080.0000000008374]\",\"d\":1,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":1},\"label\":\"Dnode\"},{\"id\":134261,\"data\":{\"vmResult\":\"[0.0, 0.9999999999901164, -9.99999999985505, 34.999999999188276, -49.999999997884515, -1776.000000002532, 5400.000000001094]\",\"d\":3,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":3},\"label\":\"Dnode\"},{\"id\":135034,\"data\":{\"vmResult\":\"[0.0, 1.0000000000031433, -10.000000000048999, 35.00000000028507, -110.0000000007683, 444.0000000009454, -600.0000000004167]\",\"d\":2,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":2},\"label\":\"Dnode\"},{\"id\":134136,\"data\":{\"vmResult\":\"[0.0, 0.9999999999994486, -9.999999999990706, 34.999999999942645, -49.99999999983834, -96.00000000020583, 9.276845958103247E-11]\",\"d\":6,\"determined\":0,\"totalZero\":3,\"wNum\":0,\"n\":6},\"label\":\"Dnode\"},{\"id\":134905,\"data\":{\"vmResult\":\"[0.0, 1.0000000000005036, -10.000000000011497, 35.00000000008208, -110.00000000025443, 84.00000000034561, 719.9999999998379]\",\"d\":4,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":134268,\"data\":{\"vmResult\":\"[0.0, 0.9999999999899885, -9.999999999862098, 34.99999999926513, -49.99999999815918, -1776.0000000021282, 7200.000000000897]\",\"d\":4,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":4},\"label\":\"Dnode\"},{\"id\":135165,\"data\":{\"vmResult\":\"[0.0, 0.9999999999970299, -9.999999999952877, 34.999999999713054, -109.9999999991951, -996.0000000010159, 2280.0000000004557]\",\"d\":2,\"determined\":0,\"totalZero\":1,\"wNum\":0,\"n\":2},\"label\":\"Dnode\"}],\"edges\":[{\"source\":133966,\"target\":133956,\"id\":179586,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134003,\"id\":179587,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133956,\"target\":133966,\"id\":179585,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134157,\"id\":179590,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134164,\"id\":179591,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134136,\"id\":179588,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134150,\"id\":179589,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134198,\"id\":179594,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134205,\"id\":179595,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134171,\"id\":179592,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134184,\"id\":179593,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134226,\"id\":179598,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134233,\"id\":179599,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134212,\"id\":179596,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134219,\"id\":179597,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134261,\"id\":179602,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134268,\"id\":179603,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134247,\"id\":179600,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134254,\"id\":179601,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134891,\"id\":179606,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134898,\"id\":179607,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134275,\"id\":179604,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134876,\"id\":179605,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134919,\"id\":179610,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134933,\"id\":179611,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134905,\"id\":179608,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134912,\"id\":179609,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134966,\"id\":179614,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134980,\"id\":179615,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134952,\"id\":179612,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134959,\"id\":179613,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135013,\"id\":179618,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135027,\"id\":179619,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":134987,\"id\":179616,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135006,\"id\":179617,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135144,\"id\":179622,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135158,\"id\":179623,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135034,\"id\":179620,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135041,\"id\":179621,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135179,\"id\":179626,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135186,\"id\":179627,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135165,\"id\":179624,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135172,\"id\":179625,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135221,\"id\":179630,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135228,\"id\":179631,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135199,\"id\":179628,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135214,\"id\":179629,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135256,\"id\":179634,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135275,\"id\":179635,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135235,\"id\":179632,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":133966,\"target\":135242,\"id\":179633,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134150,\"target\":133966,\"id\":179638,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134157,\"target\":133966,\"id\":179639,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134003,\"target\":133966,\"id\":179636,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134136,\"target\":133966,\"id\":179637,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134184,\"target\":133966,\"id\":179642,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134198,\"target\":133966,\"id\":179643,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134164,\"target\":133966,\"id\":179640,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134171,\"target\":133966,\"id\":179641,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134219,\"target\":133966,\"id\":179646,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134226,\"target\":133966,\"id\":179647,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134205,\"target\":133966,\"id\":179644,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134212,\"target\":133966,\"id\":179645,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134254,\"target\":133966,\"id\":179650,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134261,\"target\":133966,\"id\":179651,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134233,\"target\":133966,\"id\":179648,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134247,\"target\":133966,\"id\":179649,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134876,\"target\":133966,\"id\":179654,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134891,\"target\":133966,\"id\":179655,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134268,\"target\":133966,\"id\":179652,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134275,\"target\":133966,\"id\":179653,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134912,\"target\":133966,\"id\":179658,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134919,\"target\":133966,\"id\":179659,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134898,\"target\":133966,\"id\":179656,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134905,\"target\":133966,\"id\":179657,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134959,\"target\":133966,\"id\":179662,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134966,\"target\":133966,\"id\":179663,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134933,\"target\":133966,\"id\":179660,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134952,\"target\":133966,\"id\":179661,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135006,\"target\":133966,\"id\":179666,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135013,\"target\":133966,\"id\":179667,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134980,\"target\":133966,\"id\":179664,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":134987,\"target\":133966,\"id\":179665,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135041,\"target\":133966,\"id\":179670,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135144,\"target\":133966,\"id\":179671,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135027,\"target\":133966,\"id\":179668,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135034,\"target\":133966,\"id\":179669,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135172,\"target\":133966,\"id\":179674,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135179,\"target\":133966,\"id\":179675,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135158,\"target\":133966,\"id\":179672,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135165,\"target\":133966,\"id\":179673,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135214,\"target\":133966,\"id\":179678,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135221,\"target\":133966,\"id\":179679,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135186,\"target\":133966,\"id\":179676,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135199,\"target\":133966,\"id\":179677,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135242,\"target\":133966,\"id\":179682,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135256,\"target\":133966,\"id\":179683,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135228,\"target\":133966,\"id\":179680,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135235,\"target\":133966,\"id\":179681,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"},{\"source\":135275,\"target\":133966,\"id\":179684,\"data\":{\"probability\":0.9979421429395282},\"label\":\"zMap_PREDICTED\"}],\"labels\":{\"Dnode\":\"#629105\",\"CreatedBy\":\"#EB5FFB\",\"MuNumber\":\"#3E3CBE\"},\"types\":[\"CreatedBye\",\"zMap_PREDICTED\",\"zMap\"],\"directed\":true}"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1620835937754_-1371035286",
+      "id": "20210512-121217_141841115",
+      "dateCreated": "2021-05-12 12:12:17.754",
+      "dateStarted": "2021-06-01 12:29:15.078",
+      "dateFinished": "2021-06-01 12:29:18.452",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1620835938110_-1014594712",
+      "id": "20210512-121218_644392377",
+      "dateCreated": "2021-05-12 12:12:18.110",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1620835938503_1583686615",
+      "id": "20210512-121218_1820359612",
+      "dateCreated": "2021-05-12 12:12:18.503",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1620835938984_1064496247",
+      "id": "20210512-121218_576638590",
+      "dateCreated": "2021-05-12 12:12:18.986",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphicFirstML",
+  "id": "2G6Q2K1PG",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

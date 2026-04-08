@@ -1,0 +1,18 @@
+Have the git-hub.
+
+have the polynomials section,
+
+     the newton's graph section.
+
+ML does apply to newtons graph at this time.  
+
+Needs a review to present of
+
+generator
+graph
+determined pipeline
+linked pipeline
+
+explanation of what is "determined"
+               why link the fields..
+

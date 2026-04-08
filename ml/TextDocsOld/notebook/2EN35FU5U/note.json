@@ -1,0 +1,69 @@
+{
+  "paragraphs": [
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),\n      (i:IndexedBy)-[:VertexIndexedBy]-\u003e(pp:ProductArgsNode)-[pR1:ProductRelationA]-\u003e(p:ProductArgsNode),\n      (ii:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode)\nWHERE i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"8\" AND i.RowCounter\u003d4\nReturn i,count(pp)",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-27 12:43:40.806",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.neo4j.driver.v1.exceptions.AuthenticationException: The client is unauthorized due to authentication failure.\r\n\tat org.neo4j.driver.internal.net.SocketResponseHandler.handleFailureMessage(SocketResponseHandler.java:72)\r\n\tat org.neo4j.driver.internal.messaging.PackStreamMessageFormatV1$Reader.unpackFailureMessage(PackStreamMessageFormatV1.java:470)\r\n\tat org.neo4j.driver.internal.messaging.PackStreamMessageFormatV1$Reader.read(PackStreamMessageFormatV1.java:431)\r\n\tat org.neo4j.driver.internal.net.SocketClient.receiveOne(SocketClient.java:191)\r\n\tat org.neo4j.driver.internal.net.SocketClient.receiveAll(SocketClient.java:185)\r\n\tat org.neo4j.driver.internal.net.SocketConnection.receiveAll(SocketConnection.java:203)\r\n\tat org.neo4j.driver.internal.net.SocketConnection.sync(SocketConnection.java:157)\r\n\tat org.neo4j.driver.internal.net.SocketConnection.init(SocketConnection.java:118)\r\n\tat org.neo4j.driver.internal.net.ConcurrencyGuardingConnection.init(ConcurrencyGuardingConnection.java:52)\r\n\tat org.neo4j.driver.internal.net.SocketConnector.connect(SocketConnector.java:58)\r\n\tat org.neo4j.driver.internal.net.pooling.SocketConnectionPool$ConnectionSupplier.get(SocketConnectionPool.java:204)\r\n\tat org.neo4j.driver.internal.net.pooling.SocketConnectionPool$ConnectionSupplier.get(SocketConnectionPool.java:186)\r\n\tat org.neo4j.driver.internal.net.pooling.BlockingPooledConnectionQueue.acquire(BlockingPooledConnectionQueue.java:96)\r\n\tat org.neo4j.driver.internal.net.pooling.SocketConnectionPool.acquireConnection(SocketConnectionPool.java:137)\r\n\tat org.neo4j.driver.internal.net.pooling.SocketConnectionPool.acquire(SocketConnectionPool.java:76)\r\n\tat org.neo4j.driver.internal.DirectConnectionProvider.acquireConnection(DirectConnectionProvider.java:47)\r\n\tat org.neo4j.driver.internal.DirectConnectionProvider.verifyConnectivity(DirectConnectionProvider.java:67)\r\n\tat org.neo4j.driver.internal.DirectConnectionProvider.\u003cinit\u003e(DirectConnectionProvider.java:41)\r\n\tat org.neo4j.driver.internal.DriverFactory.createDirectDriver(DriverFactory.java:109)\r\n\tat org.neo4j.driver.internal.DriverFactory.createDriver(DriverFactory.java:93)\r\n\tat org.neo4j.driver.internal.DriverFactory.newInstance(DriverFactory.java:67)\r\n\tat org.neo4j.driver.v1.GraphDatabase.driver(GraphDatabase.java:135)\r\n\tat org.neo4j.driver.v1.GraphDatabase.driver(GraphDatabase.java:117)\r\n\tat org.apache.zeppelin.graph.neo4j.Neo4jConnectionManager.getDriver(Neo4jConnectionManager.java:98)\r\n\tat org.apache.zeppelin.graph.neo4j.Neo4jConnectionManager.open(Neo4jConnectionManager.java:104)\r\n\tat org.apache.zeppelin.graph.neo4j.Neo4jCypherInterpreter.open(Neo4jCypherInterpreter.java:76)\r\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:69)\r\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:616)\r\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:188)\r\n\tat org.apache.zeppelin.scheduler.ParallelScheduler$JobRunner.run(ParallelScheduler.java:162)\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\r\n\tat java.lang.Thread.run(Thread.java:748)\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1566924205894_-1174483217",
+      "id": "20190827-124325_932600325",
+      "dateCreated": "2019-08-27 12:43:25.894",
+      "dateStarted": "2019-08-27 12:43:40.858",
+      "dateFinished": "2019-08-27 12:43:50.435",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1566924220806_1826047177",
+      "id": "20190827-124340_1564984047",
+      "dateCreated": "2019-08-27 12:43:40.806",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/TestNote2",
+  "id": "2EN35FU5U",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "sh:shared_process": [],
+    "jdbc:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

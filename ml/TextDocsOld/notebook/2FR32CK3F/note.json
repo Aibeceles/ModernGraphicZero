@@ -1,0 +1,799 @@
+{
+  "paragraphs": [
+    {
+      "text": "Match (n)\nReturn count(n)\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-05 11:43:07.134",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "count(n)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "tableHide": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "count(n)\n301452\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1606929026840_-1023252012",
+      "id": "20201202-121026_647586781",
+      "dateCreated": "2020-12-02 12:10:26.840",
+      "dateStarted": "2020-12-09 10:55:25.476",
+      "dateFinished": "2020-12-09 10:55:28.013",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3T",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(2,10) AS n\nWITH toString(n) AS iN, \"10000\" as iM\nMATCH (cl:CollectedProductArgNode {Dimension:\u00278\u0027,MaxN:iM,N:iN})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH max(aN.ResultDivisor) AS maxDivisor,iN,iM\nMATCH (cl:CollectedProductArgNode {Dimension:\u00278\u0027,MaxN:iM,N:iN})-[:Arguments]-\u003e(aN:ArgumentsNode)\n//RETURN aN.ScalarProduct,aN.DegreeSum,aN.ResultDivisor,cl.tft,cl.Divisor,iN,iM\nWITH {DS:COLLECT({ResultScalar:aN.ScalarProduct, ResultDegree:aN.DegreeSum, ResultDivisor:aN.ResultDivisor}), ET:cl.tft, Divisor:cl.Divisor} AS resultProduct,iN,iM,maxDivisor\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor,eTrm \nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm \nWITH COLLECT(pTerms) as pTermss,iM,iN,eTrm\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,eTrm\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,eTrm\nRETURN tDegree,tScalar,iN,iM,pTD,eTrm",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-09 11:50:00.861",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "tDegree": "string",
+                      "tScalar": "string",
+                      "iN": "string",
+                      "iM": "string",
+                      "pTD": "string",
+                      "eTrm": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "tDegree\ttScalar\tiN\tiM\tpTD\teTrm\n\"2\"\t\"2\"\t\"2\"\t\"10000\"\t\"2\"\t1\n\"1\"\t\"-39996\"\t\"2\"\t\"10000\"\t\"2\"\t1\n\"0\"\t\"199960008\"\t\"2\"\t\"10000\"\t\"2\"\t1\n\"2\"\t\"2\"\t\"3\"\t\"10000\"\t\"2\"\t2\n\"1\"\t\"-39998\"\t\"3\"\t\"10000\"\t\"2\"\t2\n\"0\"\t\"199980000\"\t\"3\"\t\"10000\"\t\"2\"\t2\n\"2\"\t\"2\"\t\"3\"\t\"10000\"\t\"2\"\t1\n\"1\"\t\"-39992\"\t\"3\"\t\"10000\"\t\"2\"\t1\n\"0\"\t\"199920016\"\t\"3\"\t\"10000\"\t\"2\"\t1\n\"5\"\t\"-239980\"\t\"4\"\t\"10000\"\t\"32\"\t4\n\"4\"\t\"5999000064\"\t\"4\"\t\"10000\"\t\"32\"\t4\n\"6\"\t\"4\"\t\"4\"\t\"10000\"\t\"32\"\t4\n\"3\"\t\"-79980002559888\"\t\"4\"\t\"10000\"\t\"32\"\t4\n\"2\"\t\"599800038396640128\"\t\"4\"\t\"10000\"\t\"32\"\t4\n\"1\"\t\"-2399000255966402559936\"\t\"4\"\t\"10000\"\t\"32\"\t4\n\"0\"\t\"3998000639888012799360000\"\t\"4\"\t\"10000\"\t\"32\"\t4\n\"2\"\t\"32\"\t\"4\"\t\"10000\"\t\"32\"\t2\n\"1\"\t\"-639904\"\t\"4\"\t\"10000\"\t\"32\"\t2\n\"0\"\t\"3199040064\"\t\"4\"\t\"10000\"\t\"32\"\t2\n\"2\"\t\"32\"\t\"4\"\t\"10000\"\t\"32\"\t1\n\"1\"\t\"-639808\"\t\"4\"\t\"10000\"\t\"32\"\t1\n\"0\"\t\"3198080448\"\t\"4\"\t\"10000\"\t\"32\"\t1\n\"4\"\t\"23995200308\"\t\"5\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-959904\"\t\"5\"\t\"10000\"\t\"64\"\t8\n\"6\"\t\"16\"\t\"5\"\t\"10000\"\t\"64\"\t8\n\"3\"\t\"-319904012319452\"\t\"5\"\t\"10000\"\t\"64\"\t8\n\"2\"\t\"2399040184783560576\"\t\"5\"\t\"10000\"\t\"64\"\t8\n\"1\"\t\"-9595201231835611519744\"\t\"5\"\t\"10000\"\t\"64\"\t8\n\"0\"\t\"15990403079452057597440000\"\t\"5\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-479944\"\t\"5\"\t\"10000\"\t\"64\"\t4\n\"4\"\t\"11997200208\"\t\"5\"\t\"10000\"\t\"64\"\t4\n\"6\"\t\"8\"\t\"5\"\t\"10000\"\t\"64\"\t4\n\"3\"\t\"-159944008319520\"\t\"5\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"1199440124785600704\"\t\"5\"\t\"10000\"\t\"64\"\t4\n\"1\"\t\"-4797200831856014079360\"\t\"5\"\t\"10000\"\t\"64\"\t4\n\"0\"\t\"7994402079520070393600256\"\t\"5\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"64\"\t\"5\"\t\"10000\"\t\"64\"\t2\n\"1\"\t\"-1279680\"\t\"5\"\t\"10000\"\t\"64\"\t2\n\"0\"\t\"6396800384\"\t\"5\"\t\"10000\"\t\"64\"\t2\n\"2\"\t\"64\"\t\"5\"\t\"10000\"\t\"64\"\t1\n\"1\"\t\"-1279488\"\t\"5\"\t\"10000\"\t\"64\"\t1\n\"0\"\t\"6394881408\"\t\"5\"\t\"10000\"\t\"64\"\t1\n\"5\"\t\"-223943306719665.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"7\"\t\"-319973.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"6\"\t\"11198110112.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"4\"\t\"2799055167983250776.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"8\"\t\"4.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"3\"\t\"-22390552239665031038766.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"2\"\t\"111943316796650465562981216.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"1\"\t\"-319811067183253103629824319488.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"0\"\t\"399730111966507758766121594880000.00\"\t\"6\"\t\"10000\"\t\"64\"\t16\n\"4\"\t\"23993600500\"\t\"6\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-959872\"\t\"6\"\t\"10000\"\t\"64\"\t8\n\"6\"\t\"16\"\t\"6\"\t\"10000\"\t\"64\"\t8\n\"3\"\t\"-319872019998836\"\t\"6\"\t\"10000\"\t\"64\"\t8\n\"2\"\t\"2398720299965081672\"\t\"6\"\t\"10000\"\t\"64\"\t8\n\"1\"\t\"-9593601999650833438592\"\t\"6\"\t\"10000\"\t\"64\"\t8\n\"0\"\t\"15987204998836167185920512\"\t\"6\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-479928\"\t\"6\"\t\"10000\"\t\"64\"\t4\n\"4\"\t\"11996400304\"\t\"6\"\t\"10000\"\t\"64\"\t4\n\"6\"\t\"8\"\t\"6\"\t\"10000\"\t\"64\"\t4\n\"3\"\t\"-159928012159200\"\t\"6\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"1199280182376001344\"\t\"6\"\t\"10000\"\t\"64\"\t4\n\"1\"\t\"-4796401215760026878592\"\t\"6\"\t\"10000\"\t\"64\"\t4\n\"0\"\t\"7992803039200134385920768\"\t\"6\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"64\"\t\"6\"\t\"10000\"\t\"64\"\t2\n\"1\"\t\"-1279552\"\t\"6\"\t\"10000\"\t\"64\"\t2\n\"0\"\t\"6395520768\"\t\"6\"\t\"10000\"\t\"64\"\t2\n\"2\"\t\"64\"\t\"6\"\t\"10000\"\t\"64\"\t1\n\"1\"\t\"-1279360\"\t\"6\"\t\"10000\"\t\"64\"\t1\n\"0\"\t\"6393602048\"\t\"6\"\t\"10000\"\t\"64\"\t1\n\"6\"\t\"33593385384.500\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"4\"\t\"8396693076698627020.500\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"5\"\t\"-671801573068972.500\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"7\"\t\"-959905.500\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"8\"\t\"12.000\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"3\"\t\"-67166932688972580817169.000\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"2\"\t\"335801607664726212215072560.000\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"1\"\t\"-959338730648633081150751198976.000\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"0\"\t\"1199055384397270202169255989760000.000\"\t\"7\"\t\"10000\"\t\"64\"\t32\n\"4\"\t\"2798775248972051446.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"5\"\t\"-223926509959441.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"6\"\t\"11197550166.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"7\"\t\"-319965.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"8\"\t\"4.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"3\"\t\"-22387753319441057837214.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"2\"\t\"111926524894410867516423684.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"1\"\t\"-319755099572055783164273677056.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"0\"\t\"399650165944114457214368370561024.00\"\t\"7\"\t\"10000\"\t\"64\"\t16\n\"4\"\t\"23992000724\"\t\"7\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-959840\"\t\"7\"\t\"10000\"\t\"64\"\t8\n\"6\"\t\"16\"\t\"7\"\t\"10000\"\t\"64\"\t8\n\"3\"\t\"-319840028958060\"\t\"7\"\t\"10000\"\t\"64\"\t8\n\"2\"\t\"2398400434341803224\"\t\"7\"\t\"10000\"\t\"64\"\t8\n\"1\"\t\"-9592002895418064476800\"\t\"7\"\t\"10000\"\t\"64\"\t8\n\"0\"\t\"15984007238060322368001536\"\t\"7\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-479912\"\t\"7\"\t\"10000\"\t\"64\"\t4\n\"4\"\t\"11995600416\"\t\"7\"\t\"10000\"\t\"64\"\t4\n\"6\"\t\"8\"\t\"7\"\t\"10000\"\t\"64\"\t4\n\"3\"\t\"-159912016638816\"\t\"7\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"1199120249564482176\"\t\"7\"\t\"10000\"\t\"64\"\t4\n\"1\"\t\"-4795601663644843517568\"\t\"7\"\t\"10000\"\t\"64\"\t4\n\"0\"\t\"7991204158816217575681536\"\t\"7\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"64\"\t\"7\"\t\"10000\"\t\"64\"\t2\n\"1\"\t\"-1279424\"\t\"7\"\t\"10000\"\t\"64\"\t2\n\"0\"\t\"6394241280\"\t\"7\"\t\"10000\"\t\"64\"\t2\n\"2\"\t\"64\"\t\"7\"\t\"10000\"\t\"64\"\t1\n\"1\"\t\"-1279232\"\t\"7\"\t\"10000\"\t\"64\"\t1\n\"0\"\t\"6392322816\"\t\"7\"\t\"10000\"\t\"64\"\t1\n\"7\"\t\"-2239757.7500\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"4\"\t\"19591522788863992531.5000\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"5\"\t\"-1567491336557279.7500\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"6\"\t\"78383043526.0000\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"8\"\t\"28.0000\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"3\"\t\"-156715233017279951253517.0000\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"2\"\t\"783491428872800518705515408.0000\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"1\"\t\"-2238304865464007624055208157952.0000\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"0\"\t\"2797578525728025308517540779520000.0000\"\t\"8\"\t\"10000\"\t\"64\"\t64\n\"7\"\t\"-959881.500\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"6\"\t\"33591705573.500\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"5\"\t\"-671751184408203.500\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"4\"\t\"8395853360160179075.500\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"8\"\t\"12.000\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"3\"\t\"-67158536468203663013128.000\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"2\"\t\"335751236007037445093848222.000\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"1\"\t\"-959170844010191299938564433856.000\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"0\"\t\"1198815573320390748128822138562048.000\"\t\"8\"\t\"10000\"\t\"64\"\t32\n\"7\"\t\"-319957.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"5\"\t\"-223909713679171.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"4\"\t\"2798495341958552294.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"6\"\t\"11196990228.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"8\"\t\"4.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"3\"\t\"-22384954559171091755170.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"2\"\t\"111909734191711376255107212.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"1\"\t\"-319699136758559174551144233216.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"0\"\t\"399570227917122935170721132163072.00\"\t\"8\"\t\"10000\"\t\"64\"\t16\n\"5\"\t\"-959808\"\t\"8\"\t\"10000\"\t\"64\"\t8\n\"4\"\t\"23990400980\"\t\"8\"\t\"10000\"\t\"64\"\t8\n\"6\"\t\"16\"\t\"8\"\t\"10000\"\t\"64\"\t8\n\"3\"\t\"-319808039197124\"\t\"8\"\t\"10000\"\t\"64\"\t8\n\"2\"\t\"2398080587913725232\"\t\"8\"\t\"10000\"\t\"64\"\t8\n\"1\"\t\"-9590403919137304634368\"\t\"8\"\t\"10000\"\t\"64\"\t8\n\"0\"\t\"15980809797124523143683072\"\t\"8\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-479896\"\t\"8\"\t\"10000\"\t\"64\"\t4\n\"4\"\t\"11994800544\"\t\"8\"\t\"10000\"\t\"64\"\t4\n\"6\"\t\"8\"\t\"8\"\t\"10000\"\t\"64\"\t4\n\"3\"\t\"-159896021758368\"\t\"8\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"1198960326351043200\"\t\"8\"\t\"10000\"\t\"64\"\t4\n\"1\"\t\"-4794802175510463996288\"\t\"8\"\t\"10000\"\t\"64\"\t4\n\"0\"\t\"7989605438368319962882560\"\t\"8\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"64\"\t\"8\"\t\"10000\"\t\"64\"\t2\n\"1\"\t\"-1279296\"\t\"8\"\t\"10000\"\t\"64\"\t2\n\"0\"\t\"6392961920\"\t\"8\"\t\"10000\"\t\"64\"\t2\n\"2\"\t\"64\"\t\"8\"\t\"10000\"\t\"64\"\t1\n\"1\"\t\"-1279104\"\t\"8\"\t\"10000\"\t\"64\"\t1\n\"0\"\t\"6391043712\"\t\"8\"\t\"10000\"\t\"64\"\t1\n\"4\"\t\"41980749255236993068.87500\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"6\"\t\"167961493670.37500\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"5\"\t\"-3358844882715989.62500\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"7\"\t\"-4799449.87500\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"8\"\t\"60.00000\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"3\"\t\"-335807504650990097740465.25000\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"2\"\t\"1678845100491153340888968892.00000\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"1\"\t\"-4796150576899528521139802835904.00000\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"0\"\t\"5994501169724080674216389159040000.00000\"\t\"9\"\t\"10000\"\t\"64\"\t128\n\"5\"\t\"-1567373765625227.7500\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"4\"\t\"19589563515511397972.0000\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"6\"\t\"78379124010.5000\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"7\"\t\"-2239701.7500\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"8\"\t\"28.0000\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"3\"\t\"-156695642705228168863454.0000\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"2\"\t\"783373901527283782703638374.0000\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"1\"\t\"-2237913156061429383036567467136.0000\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"0\"\t\"2797019010022879703455837271364096.0000\"\t\"9\"\t\"10000\"\t\"64\"\t64\n\"4\"\t\"8395013679613481734.500\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"5\"\t\"-671700797187269.500\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"6\"\t\"33590025786.500\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"7\"\t\"-959857.500\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"8\"\t\"12.000\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"3\"\t\"-67150140727269769367636.000\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"2\"\t\"335700867947699040329096474.000\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"1\"\t\"-959002971763501934291129465664.000\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"0\"\t\"1198575786227017332637647256646144.000\"\t\"9\"\t\"10000\"\t\"64\"\t32\n\"5\"\t\"-223892917878855.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"7\"\t\"-319949.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"6\"\t\"11196430298.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"4\"\t\"2798215446942753320.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"8\"\t\"4.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"3\"\t\"-22382155958855132792634.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"2\"\t\"111892944688551991779031800.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"1\"\t\"-319643178742763277790435987968.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"0\"\t\"399490297885533192635179879686144.00\"\t\"9\"\t\"10000\"\t\"64\"\t16\n\"4\"\t\"23988801268\"\t\"9\"\t\"10000\"\t\"64\"\t8\n\"5\"\t\"-959776\"\t\"9\"\t\"10000\"\t\"64\"\t8\n\"6\"\t\"16\"\t\"9\"\t\"10000\"\t\"64\"\t8\n\"3\"\t\"-319776050716028\"\t\"9\"\t\"10000\"\t\"64\"\t8\n\"2\"\t\"2397760760680847696\"\t\"9\"\t\"10000\"\t\"64\"\t8\n\"1\"\t\"-9588805070808553911296\"\t\"9\"\t\"10000\"\t\"64\"\t8\n\"0\"\t\"15977612676028769512965120\"\t\"9\"\t\"10000\"\t\"64\"\t8\n\"4\"\t\"11994000688\"\t\"9\"\t\"10000\"\t\"64\"\t4\n\"5\"\t\"-479880\"\t\"9\"\t\"10000\"\t\"64\"\t4\n\"6\"\t\"8\"\t\"9\"\t\"10000\"\t\"64\"\t4\n\"3\"\t\"-159880027517856\"\t\"9\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"1198800412735684416\"\t\"9\"\t\"10000\"\t\"64\"\t4\n\"1\"\t\"-4794002751356888314752\"\t\"9\"\t\"10000\"\t\"64\"\t4\n\"0\"\t\"7988006877856441547523840\"\t\"9\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"64\"\t\"9\"\t\"10000\"\t\"64\"\t2\n\"1\"\t\"-1279168\"\t\"9\"\t\"10000\"\t\"64\"\t2\n\"0\"\t\"6391682688\"\t\"9\"\t\"10000\"\t\"64\"\t2\n\"2\"\t\"64\"\t\"9\"\t\"10000\"\t\"64\"\t1\n\"1\"\t\"-1278976\"\t\"9\"\t\"10000\"\t\"64\"\t1\n\"0\"\t\"6389764736\"\t\"9\"\t\"10000\"\t\"64\"\t1\n\"4\"\t\"86758775814832623306.625000\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"6\"\t\"347117540960.375000\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"5\"\t\"-6941526388857901.937500\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"7\"\t\"-9918821.937500\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"8\"\t\"124.000000\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"3\"\t\"-693987784817902994733269.125000\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"2\"\t\"3469526868910285233023097558.000000\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"1\"\t\"-9911756762995202591981213651808.000000\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"0\"\t\"12388224708915458034521505718080000.000000\"\t\"10\"\t\"10000\"\t\"64\"\t256\n\"5\"\t\"-3358592948726148.87500\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"6\"\t\"167953094770.62500\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"4\"\t\"41976550905369968589.62500\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"7\"\t\"-4799329.87500\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"8\"\t\"60.00000\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"3\"\t\"-335765526651149868546827.50000\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"2\"\t\"1678593265480253652629865461.50000\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"1\"\t\"-4795311236807543097049059203120.00000\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"0\"\t\"5993302269490135858081545881208192.00000\"\t\"10\"\t\"10000\"\t\"64\"\t128\n\"6\"\t\"78375204551.0000\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"5\"\t\"-1567256198052747.2500\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"4\"\t\"19587604326137380036.0000\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"7\"\t\"-2239645.7500\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"8\"\t\"28.0000\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"3\"\t\"-156676053512747951409574.0000\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"2\"\t\"783256382577483020687257586.0000\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"1\"\t\"-2237521480237432634872951689600.0000\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"0\"\t\"2796459550274900329577758296012288.0000\"\t\"10\"\t\"10000\"\t\"64\"\t64\n\"4\"\t\"8394174035058534997.500\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"5\"\t\"-671650411406170.500\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"6\"\t\"33588346023.500\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"7\"\t\"-959833.500\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"8\"\t\"12.000\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"3\"\t\"-67141745466170899880693.000\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"2\"\t\"335650503486710997920817316.000\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"1\"\t\"-958835113908564984208446294400.000\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"0\"\t\"1198336023117149955695731344012288.000\"\t\"10\"\t\"10000\"\t\"64\"\t32\n\"4\"\t\"2797935563924654524.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"6\"\t\"11195870376.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"5\"\t\"-223876122558493.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"7\"\t\"-319941.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"8\"\t\"4.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"3\"\t\"-22379357518493180949606.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"2\"\t\"111876156384932714088197448.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"1\"\t\"-319587225524668092882148941312.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"0\"\t\"399410375849345229607744613130240.00\"\t\"10\"\t\"10000\"\t\"64\"\t16\n\"5\"\t\"-959744\"\t\"10\"\t\"10000\"\t\"64\"\t8\n\"4\"\t\"23987201588\"\t\"10\"\t\"10000\"\t\"64\"\t8\n\"6\"\t\"16\"\t\"10\"\t\"10000\"\t\"64\"\t8\n\"3\"\t\"-319744063514772\"\t\"10\"\t\"10000\"\t\"64\"\t8\n\"2\"\t\"2397440952643170616\"\t\"10\"\t\"10000\"\t\"64\"\t8\n\"1\"\t\"-9587206350431812307584\"\t\"10\"\t\"10000\"\t\"64\"\t8\n\"0\"\t\"15974415874773061475847680\"\t\"10\"\t\"10000\"\t\"64\"\t8\n\"4\"\t\"11993200848\"\t\"10\"\t\"10000\"\t\"64\"\t4\n\"5\"\t\"-479864\"\t\"10\"\t\"10000\"\t\"64\"\t4\n\"6\"\t\"8\"\t\"10\"\t\"10000\"\t\"64\"\t4\n\"3\"\t\"-159864033917280\"\t\"10\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"1198640508718405824\"\t\"10\"\t\"10000\"\t\"64\"\t4\n\"1\"\t\"-4793203391184116472960\"\t\"10\"\t\"10000\"\t\"64\"\t4\n\"0\"\t\"7986408477280582329605376\"\t\"10\"\t\"10000\"\t\"64\"\t4\n\"2\"\t\"64\"\t\"10\"\t\"10000\"\t\"64\"\t2\n\"1\"\t\"-1279040\"\t\"10\"\t\"10000\"\t\"64\"\t2\n\"0\"\t\"6390403584\"\t\"10\"\t\"10000\"\t\"64\"\t2\n\"2\"\t\"64\"\t\"10\"\t\"10000\"\t\"64\"\t1\n\"1\"\t\"-1278848\"\t\"10\"\t\"10000\"\t\"64\"\t1\n\"0\"\t\"6388485888\"\t\"10\"\t\"10000\"\t\"64\"\t1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1606929115022_975369091",
+      "id": "20201202-121155_597100995",
+      "dateCreated": "2020-12-02 12:11:55.022",
+      "dateStarted": "2021-06-09 11:50:00.920",
+      "dateFinished": "2021-06-09 11:50:01.855",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3A",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(2,2) AS n\nWITH toString(n) AS iN, \"8\" as iM\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\nWITH iN, iM, max(vI.divisor) as maxDivisor\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\n// return v.Scalar,v.Degree,vI.divisor,vI.twoSeq\nWITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n\nWITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS aDegree,dSListU.Scalar AS aScalar,iN,iM,pTD\nRETURN aDegree,aScalar,pTD,iM,iN",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-07 09:05:21.223",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "aDegree": "string",
+                      "aScalar": "string",
+                      "pTD": "string",
+                      "iM": "string",
+                      "iN": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "aDegree\taScalar\tpTD\tiM\tiN\n\"2\"\t\"2\"\t\"2\"\t\"8\"\t\"2\"\n\"1\"\t\"-28\"\t\"2\"\t\"8\"\t\"2\"\n\"0\"\t\"104\"\t\"2\"\t\"8\"\t\"2\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607529682218_2041144209",
+      "id": "20201209-110122_666822635",
+      "dateCreated": "2020-12-09 11:01:22.218",
+      "dateStarted": "2021-05-07 09:05:21.243",
+      "dateFinished": "2021-05-07 09:05:21.480",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3E",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(2,12) AS n\nWITH toString(n) AS iN, \"10000\" as iM\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\nWITH iN, iM, max(vI.divisor) as maxDivisor\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\nWITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n\nWITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\n\nWITH REDUCE(sum\u003d\u00271\u0027, x in RANGE(1,toInteger(dSListU.Degree)) | apoc.number.exact.mul(sum,toString(iM))) as acc,iN,iM,dSListU,pTD\nWith apoc.number.exact.mul(dSListU.Scalar,acc) as scalarDegreeProduct,iN,iM,pTD\nWITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap,iN,iM\nWITH COLLECT(termsMap) AS termsMapC,iN,iM\nUNWIND RANGE(0,SIZE(termsMapC)-1) AS pTT\nWITH REDUCE(sum\u003d\u00270\u0027, x IN termsMapC[pTT].SDP | apoc.number.exact.add(sum,toString(x))) AS acc,toString(termsMapC[pTT].DivideBy) AS dB,iM,iN\nWITH apoc.number.exact.div(acc,dB) AS pResult,acc,dB,iM,iN\nWITH COLLECT(pResult) AS evaluates,iN,iM\nWITH REDUCE (sum\u003d\u00270\u0027, n IN evaluates| apoc.number.exact.add(sum,n)) AS acc \nRETURN acc as Value",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-09 11:50:41.453",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "Value",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {
+                          "priority": 0.0,
+                          "direction": "asc"
+                        },
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1.0,
+                      "paginationPageSize": 250.0
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Value": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Value\n\"4\"\n\"8\"\n\"16\"\n\"32\"\n\"64\"\n\"128\"\n\"256\"\n\"512\"\n\"1024\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607529680530_1723761205",
+      "id": "20201209-110120_1086011639",
+      "dateCreated": "2020-12-09 11:01:20.530",
+      "dateStarted": "2021-06-09 11:50:41.484",
+      "dateFinished": "2021-06-09 11:50:41.909",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S12Initial (json)",
+      "text": "CYPHER runtime\u003dinterpreted \n        UNWIND range(toInteger(?),toInteger(?)) AS n\n        WITH toString(n) AS N, ? as nMax\n        MATCH (v:VertexNode)\u003c-[]-(i:IndexedBy)-[]-\u003e(e:Evaluate),(t:TwoSeqFactor)\u003c-[]-(i) where i.N\u003dN AND i.MaxN\u003dnMax AND i.Dimension\u003d? AND t.twoSeq\u003d? \n        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       \n        OPTIONAL MATCH (vv:VertexNode)\u003c-[]-(ii:IndexedBy)-[]-\u003e(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)\u003c-[]-(ii) where ii.MaxN\u003diM  AND ii.Dimension\u003d?\n        WITH\n        \u00271\u0027  AS pDivisor, \n        \u00272\u0027 AS pDimension,\n        \u00272\u0027 AS vDivisor,\n        tt.twoSeq AS vvTwoSeq,\n        ee.Value AS eeValue,\n        \u00272\u0027  AS vvDivisor,\n         i,      //iN,\n        \u00274\u0027 AS iDimension,\n               // iM,\n        t.twoSeq AS vTwoSeq,\n        v.Degree AS vDegree,\n        vv.Degree AS vvDegree,\n        v.Scalar AS vScalar,\n        vv.Scalar AS vvScalar,  \n        toString( CASE WHEN toString(i.RowCounter)\u003d\u00272\u0027 THEN apoc.number.exact.mul(toString(v.Scalar),\u00272\u0027) ELSE toString(v.Scalar) END ) AS q\n        WITH\n        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD\n        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n             toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vScalar),\u00272\u0027) ELSE toString(TTScalarRowCounter) END ) AS TTScalar,\n             toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vvScalar),\u00272\u0027) ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     \n             toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vDegree,\u00271\u0027) ELSE apoc.number.exact.add(vDegree,\u00270\u0027) END ) AS TTDegree,\n             toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vvDegree,\u00271\u0027) ELSE apoc.number.exact.add(vvDegree,\u00270\u0027)  END) AS AADegree\n        \n        WITH {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN \\\"0\\\" ELSE vvTwoSeq END,p2Eval:p2Eval,\n               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN \\\"0\\\" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN \\\"0\\\" ELSE AADegree END,\n               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,\n               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,\n               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,\n               writeDimension:?} as lines\n        RETURN lines",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-07 08:44:18.606",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1607529519470_1205090221",
+      "id": "20201209-105839_1666542036",
+      "dateCreated": "2020-12-09 10:58:39.470",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S12Recurring",
+      "text": "CYPHER runtime\u003dinterpreted \n        UNWIND range(toInteger(?),toInteger(?)) AS n\n        WITH toString(n) AS N, ? as nMax\n        MATCH (v:VertexNode {Degree:?})\u003c-[vI:VertexIndexedBy {twoSeq:?}]-(i:IndexedBy {N:N,MaxN:nMax,Dimension:?})-[]-\u003e(e:Evaluate)\n        WITH i.N as iN, i.MaxN as iM,e,v,vI,i                        \n        OPTIONAL MATCH (vv:VertexNode)\u003c-[vII:VertexIndexedBy]-(ii:IndexedByArgument)-[]-\u003e(ee:Evaluate {Value:toString(vI.twoSeq)})      \n                            where ii.MaxN\u003diM  AND ii.Dimension\u003d?\n        \n        WITH\n        vI.twoSeq AS vTwoSeq,\n        vI.divisor AS vDivisor,\n        vII.twoSeq AS vvTwoSeq,\n        ee.Value AS eeValue,\n        vII.divisor AS vvDivisor,\n        iN,\n        iM,\n        i.Dimension AS iDimension,\n        v.Scalar AS vScalar,\n        v.Degree AS vDegree,\n        vv.Scalar AS vvScalar,\n        vv.Degree AS vvDegree,i\n                                            \n        WITH\n        \n        iN,iM,vTwoSeq as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,  \n        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n             toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vScalar),\u00272\u0027) ELSE toString(vScalar) END ) AS TTScalar,\n        toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vvScalar),\u00272\u0027) ELSE toString(vvScalar) END) AS AAScalar,\n        toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vDegree,\u00271\u0027) ELSE apoc.number.exact.add(vDegree,\u00270\u0027) END ) AS TTDegree,\n        toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vvDegree,\u00271\u0027) ELSE apoc.number.exact.add(vvDegree,\u00270\u0027)  END) AS AADegree\n        \n        WITH\n        {iM:iM,iN:iN,pD:pD,p2Eval:p2Eval,vTwoSeq:vTwoSeq,TTDegree:TTDegree,TTScalar:TTScalar,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:vvTwoSeq,AADegree:AADegree,AAScalar:AAScalar,\n        degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,\n        scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,\n        resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,\n        writeDimension:?} AS line\n        RETURN line ",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-20 12:11:13.551",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610462841973_-195050598",
+      "id": "20210112-094721_1871356562",
+      "dateCreated": "2021-01-12 09:47:21.973",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(2,7) AS n\nWITH toString(n) AS N, \u00278\u0027 as nMax\nMATCH (v:VertexNode)\u003c-[]-(i:IndexedBy)-[]-\u003e(e:Evaluate),(t:TwoSeqFactor)\u003c-[]-(i) where i.N\u003dN AND i.MaxN\u003dnMax AND i.Dimension\u003d\u00272\u0027 //  AND t.twoSeq\u003d\u002732\u0027\nWITH i.N as iN, i.MaxN as iM,e,v,t,i                       \nOPTIONAL MATCH (vv:VertexNode)\u003c-[]-(ii:IndexedBy)-[]-\u003e(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)\u003c-[]-(ii) where ii.MaxN\u003diM  AND ii.Dimension\u003d\u00272\u0027\nWITH\n\u00271\u0027  AS pDivisor, \n\u00272\u0027 AS pDimension,\n\u00272\u0027 AS vDivisor,\ntt.twoSeq AS vvTwoSeq,\nee.Value AS eeValue,\n\u00272\u0027  AS vvDivisor,\niN,\n\u00274\u0027 AS iDimension,\niM,\nt.twoSeq AS vTwoSeq,\nv.Degree AS vDegree,\nvv.Degree AS vvDegree,\nv.Scalar AS vScalar,\nvv.Scalar AS vvScalar,  \ntoString( CASE WHEN toString(i.RowCounter)\u003d\u00272\u0027 THEN apoc.number.exact.mul(toString(v.Scalar),\u00272\u0027) ELSE toString(v.Scalar) END ) AS TTScalarRowCounter\nWITH\niN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD\nCASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n     toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vScalar),\u00272\u0027) ELSE toString(TTScalarRowCounter) END ) AS TTScalar,\n     toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vvScalar),\u00272\u0027) ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     \n     toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vDegree,\u00271\u0027) ELSE apoc.number.exact.add(vDegree,\u00270\u0027) END ) AS TTDegree,\n     toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vvDegree,\u00271\u0027) ELSE apoc.number.exact.add(vvDegree,\u00270\u0027)  END) AS AADegree\nRETURN\niM,iN,pD,p2Eval,vTwoSeq,TTDegree,TTScalar,vDivisor,vvDivisor,vvTwoSeq,AADegree,AAScalar,\nCASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END AS degreeSum,\nCASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END as scalarProduct,\nCASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END as resultDivisor,\nrand() as rKeyU",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-20 12:13:54.299",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "iM": "string",
+                      "iN": "string",
+                      "pD": "string",
+                      "p2Eval": "string",
+                      "vTwoSeq": "string",
+                      "TTDegree": "string",
+                      "TTScalar": "string",
+                      "vDivisor": "string",
+                      "vvDivisor": "string",
+                      "vvTwoSeq": "string",
+                      "AADegree": "string",
+                      "AAScalar": "string",
+                      "degreeSum": "string",
+                      "scalarProduct": "string",
+                      "resultDivisor": "string",
+                      "rKeyU": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "iM\tiN\tpD\tp2Eval\tvTwoSeq\tTTDegree\tTTScalar\tvDivisor\tvvDivisor\tvvTwoSeq\tAADegree\tAAScalar\tdegreeSum\tscalarProduct\tresultDivisor\trKeyU\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"6\"\t\"2\"\t0.5751171687669403\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"42\"\t\"2\"\t0.007716830514573059\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-7\"\t\"2\"\t0.6606526544420547\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.15287674801970252\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-6\"\t\"2\"\t0.391083331281611\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"56\"\t\"2\"\t0.7554934666714214\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.9818141569558338\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-8\"\t\"2\"\t0.48036201151500824\n\"8\"\t\"2\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-7\"\t\"2\"\t0.24032914062579191\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"8\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"8\"\t\"2\"\t0.6744312621604\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-5\"\t\"2\"\t0.8172200168585316\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.9914653583275707\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"30\"\t\"2\"\t0.26193449894275855\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-6\"\t\"2\"\t0.9944317576963828\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-7\"\t\"2\"\t0.17809339443084915\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.774148330166507\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"42\"\t\"2\"\t0.8346632505605392\n\"8\"\t\"3\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-6\"\t\"2\"\t0.34270774189829745\n\"8\"\t\"3\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-14\"\t\"2\"\t0.22807555689428116\n\"8\"\t\"3\"\t\"1\"\t99\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"2\"\t\"2\"\t0.8338472742446903\n\"8\"\t\"3\"\t\"1\"\t99\t\"2\"\t\"0\"\t\"112\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"112\"\t\"2\"\t0.0020812801937566405\n\"8\"\t\"3\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-16\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-16\"\t\"2\"\t0.9616245437501569\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"10\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"10\"\t\"2\"\t0.9854321875165389\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-5\"\t\"2\"\t0.7886548214806084\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"20\"\t\"2\"\t0.26244698621919615\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.18699969370488312\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-4\"\t\"2\"\t0.2263313933585116\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"30\"\t\"2\"\t0.2607017430744272\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.07715509915940821\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-6\"\t\"2\"\t0.05172682626224878\n\"8\"\t\"4\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-5\"\t\"2\"\t0.7788179359303214\n\"8\"\t\"4\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-12\"\t\"2\"\t0.9479959118143937\n\"8\"\t\"4\"\t\"1\"\t99\t\"2\"\t\"0\"\t\"84\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"84\"\t\"2\"\t0.5288198113811967\n\"8\"\t\"4\"\t\"1\"\t99\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"2\"\t\"2\"\t0.6127180791403147\n\"8\"\t\"4\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-14\"\t\"2\"\t0.5817006405434269\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-336\"\t\"4\"\t0.8222939409138732\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"56\"\t\"4\"\t0.6586922612487547\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.2837196592348852\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"48\"\t\"4\"\t0.2743190623363857\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-448\"\t\"4\"\t0.8039304594123431\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.39004671572877914\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"64\"\t\"4\"\t0.20828333784475528\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"56\"\t\"4\"\t0.885324527002985\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-48\"\t\"4\"\t0.6712501994688329\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"0\"\t\"2352\"\t\"4\"\t0.538455766108277\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-392\"\t\"4\"\t0.9093058558661153\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.10848708293669951\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-336\"\t\"4\"\t0.7782400144706145\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"0\"\t\"3136\"\t\"4\"\t0.44018382246210097\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.037488118607813425\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"1\"\t\"-448\"\t\"4\"\t0.4565867977507724\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-392\"\t\"4\"\t0.445633854299162\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"0\"\t\"336\"\t\"4\"\t0.5772162052644169\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-294\"\t\"4\"\t0.08085163009710206\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"49\"\t\"4\"\t0.07170983238219486\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.3207923249158563\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.45978872235155765\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-392\"\t\"4\"\t0.33100457927143556\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.4355675879617652\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"56\"\t\"4\"\t0.8267708331725314\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"49\"\t\"4\"\t0.6782768679484277\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-42\"\t\"4\"\t0.19209240163935226\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"42\"\t\"4\"\t0.5484817043140197\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.39552961953794585\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.29572710274444036\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.140525399049246\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"2\"\t\"56\"\t\"4\"\t0.17862933607312403\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.2904201109040442\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"3\"\t\"-8\"\t\"4\"\t0.9564383385892156\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.28347260763519155\n\"8\"\t\"4\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"2\"\t\"6\"\t\"4\"\t0.018913841089371886\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"12\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"12\"\t\"2\"\t0.38521078614882887\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"12\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"12\"\t\"2\"\t0.35082397183924696\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-4\"\t\"2\"\t0.6263734108309374\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.8154484197951911\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-3\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-3\"\t\"2\"\t0.06511149470638478\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.7669285085773083\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-5\"\t\"2\"\t0.08490254043155376\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"20\"\t\"2\"\t0.048604100030053665\n\"8\"\t\"5\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-4\"\t\"2\"\t0.5814281247271283\n\"8\"\t\"5\"\t\"1\"\t99\t\"2\"\t\"0\"\t\"60\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"60\"\t\"2\"\t0.34652635186142\n\"8\"\t\"5\"\t\"1\"\t99\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"2\"\t\"2\"\t0.6509130423116978\n\"8\"\t\"5\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-12\"\t\"2\"\t0.9693291144445012\n\"8\"\t\"5\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-10\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-10\"\t\"2\"\t0.07460014971709905\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"0\"\t\"1764\"\t\"4\"\t0.752515161145466\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-294\"\t\"4\"\t0.863090663320782\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"42\"\t\"4\"\t0.7157049137484133\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-252\"\t\"4\"\t0.5954114936861277\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"0\"\t\"2352\"\t\"4\"\t0.9495772823929315\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"42\"\t\"4\"\t0.8231278036556909\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"1\"\t\"-336\"\t\"4\"\t0.9862434685942598\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-294\"\t\"4\"\t0.6220048911855663\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"0\"\t\"252\"\t\"4\"\t0.38735879502634896\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-252\"\t\"4\"\t0.16511599421953727\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"42\"\t\"4\"\t0.7090457329584549\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.5318917565393498\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"36\"\t\"4\"\t0.3327088177902975\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-336\"\t\"4\"\t0.5475589078325881\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.8193924458838986\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"48\"\t\"4\"\t0.8751918289821844\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"42\"\t\"4\"\t0.13846528319700424\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-36\"\t\"4\"\t0.748473624120724\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-294\"\t\"4\"\t0.5749444958602137\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"49\"\t\"4\"\t0.41243472980345763\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.41918217133049707\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.6060608451123741\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-392\"\t\"4\"\t0.1740194089397501\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.20763963111105288\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"56\"\t\"4\"\t0.08036102318797267\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"49\"\t\"4\"\t0.3511286545349219\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-42\"\t\"4\"\t0.07490898430073945\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"42\"\t\"4\"\t0.5497564197522368\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.5358094426433365\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.6060758093356688\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.3479641138170493\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"2\"\t\"56\"\t\"4\"\t0.6480920465710064\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.9390336725617439\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"3\"\t\"-8\"\t\"4\"\t0.7059156059828052\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.2354069417277037\n\"8\"\t\"5\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"2\"\t\"6\"\t\"4\"\t0.9053830051181866\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"3\"\t\"-14\"\t\"4\"\t0.5648776700084729\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t0.5647586241059525\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"2\"\t\"112\"\t\"4\"\t0.48990229926555684\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"3\"\t\"-16\"\t\"4\"\t0.14913134022024654\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.9236321142960423\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.869071062257664\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"2\"\t\"30\"\t\"4\"\t0.5442923617006463\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.03819041774548981\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.16627439985958226\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.7324137607399028\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"42\"\t\"4\"\t0.3552473314917971\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.8193488284114651\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"2\"\t\"8\"\t\"4\"\t0.39995258974996617\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"98\"\t\"4\"\t0.6154889154803319\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-14\"\t\"4\"\t0.6852226804660786\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"1\"\t\"-784\"\t\"4\"\t0.5409746301091182\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"2\"\t\"112\"\t\"4\"\t0.051848863017930014\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"35\"\t\"4\"\t0.5618761659543788\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.497991008190944\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-210\"\t\"4\"\t0.7301935266221807\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.9145816317010126\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"49\"\t\"4\"\t0.7063792677877271\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.2514708164884376\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-294\"\t\"4\"\t0.09722089612077822\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.9483515892365464\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"1\"\t\"-56\"\t\"4\"\t0.15557848488737291\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"1\"\t\"-784\"\t\"4\"\t0.6217860607338969\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"112\"\t\"4\"\t0.7668765971303217\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"0\"\t\"6272\"\t\"4\"\t0.09300384273984641\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"1\"\t\"-896\"\t\"4\"\t0.7385317058716896\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-280\"\t\"4\"\t0.4454797198773357\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.1379904392017537\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"0\"\t\"1680\"\t\"4\"\t0.008083446677235706\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-336\"\t\"4\"\t0.47062706132523213\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-392\"\t\"4\"\t0.0510303020513756\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.3577479435617009\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"0\"\t\"2352\"\t\"4\"\t0.973687766894008\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-336\"\t\"4\"\t0.18583268373099793\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"0\"\t\"448\"\t\"4\"\t0.6897728346296549\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"112\"\t\"4\"\t0.7875376773827897\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-16\"\t\"4\"\t0.33650793535119905\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"1\"\t\"-896\"\t\"4\"\t0.8453093620534798\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"2\"\t\"128\"\t\"4\"\t0.5696061788504087\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"40\"\t\"4\"\t0.6542538471169436\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.19602750214686393\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-240\"\t\"4\"\t0.3242938117164115\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"48\"\t\"4\"\t0.09058690724759166\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"56\"\t\"4\"\t0.8659110550355044\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.07435917378983259\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-336\"\t\"4\"\t0.16251688648678186\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"48\"\t\"4\"\t0.9288638203068671\n\"8\"\t\"5\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"1\"\t\"-64\"\t\"4\"\t0.3781492040676696\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"14\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"14\"\t\"2\"\t0.08578637742050976\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-3\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-3\"\t\"2\"\t0.4957883135671609\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.13648525508505427\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"6\"\t\"2\"\t0.7946272840160887\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-2\"\t\"2\"\t0.026648596520236767\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-3\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-3\"\t\"2\"\t0.9592254108246018\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"12\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"12\"\t\"2\"\t0.6622375383649463\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-4\"\t\"2\"\t0.1655710280720999\n\"8\"\t\"6\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.5863539577104042\n\"8\"\t\"6\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-8\"\t\"2\"\t0.6172228210626526\n\"8\"\t\"6\"\t\"1\"\t99\t\"2\"\t\"0\"\t\"40\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"40\"\t\"2\"\t0.9790057387479998\n\"8\"\t\"6\"\t\"1\"\t99\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"2\"\t\"2\"\t0.4335259128231831\n\"8\"\t\"6\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-10\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-10\"\t\"2\"\t0.8573140348239242\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-210\"\t\"4\"\t0.649608976626726\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"35\"\t\"4\"\t0.8985122192782747\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-5\"\t\"4\"\t0.7484046104095348\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"30\"\t\"4\"\t0.017902553968491164\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-280\"\t\"4\"\t0.8205889420444187\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-5\"\t\"4\"\t0.37723567554055215\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"40\"\t\"4\"\t0.08785217981042037\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"35\"\t\"4\"\t0.6923093763244862\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-30\"\t\"4\"\t0.07881169523169806\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"0\"\t\"1260\"\t\"4\"\t0.9709830785875896\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-210\"\t\"4\"\t0.6484648120818615\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"30\"\t\"4\"\t0.2829913947380934\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-180\"\t\"4\"\t0.7997542091860933\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"0\"\t\"1680\"\t\"4\"\t0.6108685872451767\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"30\"\t\"4\"\t0.18017762040028706\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"1\"\t\"-240\"\t\"4\"\t0.020538289038374624\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-210\"\t\"4\"\t0.8338537537845359\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"0\"\t\"180\"\t\"4\"\t0.16365105504379684\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-252\"\t\"4\"\t0.9040940626123851\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"42\"\t\"4\"\t0.22800162851243566\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.32163561561945864\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"36\"\t\"4\"\t0.25204001887236216\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-336\"\t\"4\"\t0.8057040599074553\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.3797932137660246\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"48\"\t\"4\"\t0.2438141491362108\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"42\"\t\"4\"\t0.7769302025428163\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-36\"\t\"4\"\t0.3037097008099333\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"42\"\t\"4\"\t0.6621868391782181\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.6879476276981185\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.790176644215037\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.7427790123294927\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"2\"\t\"56\"\t\"4\"\t0.5607360088782657\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.739189522194559\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"3\"\t\"-8\"\t\"4\"\t0.5069918703335743\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.2229579379121881\n\"8\"\t\"6\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"2\"\t\"6\"\t\"4\"\t0.5665466672902307\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"3\"\t\"-14\"\t\"4\"\t0.6004158704441943\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t0.7396594310440706\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"2\"\t\"112\"\t\"4\"\t0.22000490044099463\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"3\"\t\"-16\"\t\"4\"\t0.2836094032848533\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.6459800726863114\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.9658016001141959\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"2\"\t\"30\"\t\"4\"\t0.673958765719877\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.3528686482127579\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.1849502822097906\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.6282556408136405\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"42\"\t\"4\"\t0.6419073416861197\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.28874235484576016\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"2\"\t\"8\"\t\"4\"\t0.6710851383287983\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"98\"\t\"4\"\t0.4547192914164099\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-14\"\t\"4\"\t0.90566645417434\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"1\"\t\"-784\"\t\"4\"\t0.30261317540959176\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"2\"\t\"112\"\t\"4\"\t0.9261406568570401\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"35\"\t\"4\"\t0.12804290403744678\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.27330828665509144\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-210\"\t\"4\"\t0.49332875333484105\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.6070300270955827\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"49\"\t\"4\"\t0.039473249297571567\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.6521405670043925\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-294\"\t\"4\"\t0.2645115349067604\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.5360982235932269\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"1\"\t\"-56\"\t\"4\"\t0.10179022557962936\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"84\"\t\"4\"\t0.7392863195309967\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-12\"\t\"4\"\t0.4455205229843814\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"1\"\t\"-672\"\t\"4\"\t0.2888589333976286\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"2\"\t\"96\"\t\"4\"\t0.5719258919535641\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"30\"\t\"4\"\t0.3417258373321923\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.019047089670105377\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-180\"\t\"4\"\t0.6988093196228056\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"36\"\t\"4\"\t0.947809518914509\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"42\"\t\"4\"\t0.3977413491414006\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.2416568631320517\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-252\"\t\"4\"\t0.4709343294098127\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"36\"\t\"4\"\t0.8972501030225567\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"1\"\t\"-48\"\t\"4\"\t0.9331555929926039\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"1\"\t\"-588\"\t\"4\"\t0.706445451414787\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"84\"\t\"4\"\t0.42946887057968564\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"0\"\t\"4704\"\t\"4\"\t0.9291318212370347\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"1\"\t\"-672\"\t\"4\"\t0.8987176871032676\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-210\"\t\"4\"\t0.269295493346543\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"42\"\t\"4\"\t0.9064652795409185\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"0\"\t\"1260\"\t\"4\"\t0.3673826991502437\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-252\"\t\"4\"\t0.4596612108201713\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-294\"\t\"4\"\t0.1758355796605917\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"42\"\t\"4\"\t0.05481350502129401\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"0\"\t\"1764\"\t\"4\"\t0.8279621860546638\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-252\"\t\"4\"\t0.8970217020369887\n\"8\"\t\"6\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"0\"\t\"336\"\t\"4\"\t0.2629230047498736\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"3\"\t\"-32\"\t\"4\"\t0.3031742400911239\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"2\"\t\"224\"\t\"4\"\t0.10197876983544407\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"3\"\t\"-28\"\t\"4\"\t0.29822947551266155\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"4\"\t\"4\"\t\"4\"\t0.2973821868208456\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"2\"\t\"10\"\t\"4\"\t0.3409917351604733\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"3\"\t\"-12\"\t\"4\"\t0.5477849613422263\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"2\"\t\"84\"\t\"4\"\t0.5415127944823721\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t0.7537615971670808\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"3\"\t\"-14\"\t\"4\"\t0.9645135591571241\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.07516729967318325\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"2\"\t\"20\"\t\"4\"\t0.03783316610694065\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.6357869395737678\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"3\"\t\"-4\"\t\"4\"\t0.2670585604539507\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"2\"\t\"30\"\t\"4\"\t0.6867090410886547\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.2321570125487914\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.6540223897513653\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.10872873481898071\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"2\"\t\"256\"\t\"4\"\t0.8302780640403775\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"1\"\t\"-1792\"\t\"4\"\t0.369400620034964\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"2\"\t\"224\"\t\"4\"\t0.935897845445145\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"3\"\t\"-32\"\t\"4\"\t0.4197405348719758\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"1\"\t\"-80\"\t\"4\"\t0.882319982646316\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"96\"\t\"4\"\t0.30073566147609787\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"1\"\t\"-672\"\t\"4\"\t0.41465024222619706\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-16\"\t\"4\"\t0.41124718205682753\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"112\"\t\"4\"\t0.41410513244814284\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"40\"\t\"4\"\t0.5255013489161515\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"1\"\t\"-160\"\t\"4\"\t0.02070287243524982\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.7914909560396889\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"32\"\t\"4\"\t0.49611082921176297\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-240\"\t\"4\"\t0.5217311264136465\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.1762384725735633\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"48\"\t\"4\"\t0.6856257307383749\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"40\"\t\"4\"\t0.4231455012987506\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"1\"\t\"-1792\"\t\"4\"\t0.15818189676342653\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"0\"\t\"12544\"\t\"4\"\t0.4743600680163925\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"1\"\t\"-1568\"\t\"4\"\t0.7880159172170733\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"2\"\t\"224\"\t\"4\"\t0.8823487247084685\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"0\"\t\"560\"\t\"4\"\t0.17421409079869266\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"1\"\t\"-672\"\t\"4\"\t0.4532440482407253\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"0\"\t\"4704\"\t\"4\"\t0.9693730820503728\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"112\"\t\"4\"\t0.6833439371578359\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"1\"\t\"-784\"\t\"4\"\t0.08992887264891891\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-280\"\t\"4\"\t0.34433388890110794\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"0\"\t\"1120\"\t\"4\"\t0.15958564790385588\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.8979725548886988\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"1\"\t\"-224\"\t\"4\"\t0.3437078701846349\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"0\"\t\"1680\"\t\"4\"\t0.871987462455974\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.46041268299856186\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-336\"\t\"4\"\t0.7047675076455544\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-280\"\t\"4\"\t0.1621036649969072\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"2\"\t\"224\"\t\"4\"\t0.36934440068527363\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"1\"\t\"-1568\"\t\"4\"\t0.8811497820119385\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"2\"\t\"196\"\t\"4\"\t0.95917639138841\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"3\"\t\"-28\"\t\"4\"\t0.998059717424863\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"1\"\t\"-70\"\t\"4\"\t0.7950881188300082\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"84\"\t\"4\"\t0.24235990583768674\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"1\"\t\"-588\"\t\"4\"\t0.9826396333784576\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-14\"\t\"4\"\t0.17973918611024942\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"98\"\t\"4\"\t0.8905685583315099\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"35\"\t\"4\"\t0.5419972357999385\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"1\"\t\"-140\"\t\"4\"\t0.6835470017767443\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.5706564848005369\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"28\"\t\"4\"\t0.7902643865241552\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-210\"\t\"4\"\t0.8361390179900716\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.6050994957069125\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.4916136867403752\n\"8\"\t\"6\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"35\"\t\"4\"\t0.28628822249149055\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"16\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"16\"\t\"2\"\t0.08768330951983283\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-2\"\t\"2\"\t0.11235971868011696\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-1\"\t\"2\"\t0.44892975633316534\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.4734252182961707\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"2\"\t\"2\"\t0.09093538825321701\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"0\"\t\"6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"6\"\t\"2\"\t0.2942053691300578\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"1\"\t\"2\"\t0.003419966836135102\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-2\"\t\"2\"\t0.9772090404303575\n\"8\"\t\"7\"\t\"1\"\t99\t\"1\"\t\"1\"\t\"-3\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-3\"\t\"2\"\t0.36219885068327173\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-6\"\t\"2\"\t0.6836671998646418\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-8\"\t\"2\"\t0.22950604958149845\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"0\"\t\"24\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"24\"\t\"2\"\t0.43043664289102235\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"2\"\t\"2\"\t0.2405964191639276\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"0\"\t\"840\"\t\"4\"\t0.5494723949301737\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-140\"\t\"4\"\t0.9899811138477072\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"20\"\t\"4\"\t0.6818096848700099\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-120\"\t\"4\"\t0.8765601280957471\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"0\"\t\"1120\"\t\"4\"\t0.9333889630031028\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"20\"\t\"4\"\t0.4680122464442332\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"1\"\t\"-160\"\t\"4\"\t0.48949001567814754\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-140\"\t\"4\"\t0.5529608541976615\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"0\"\t\"20\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"0\"\t\"120\"\t\"4\"\t0.5520858600349959\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-168\"\t\"4\"\t0.18609485800345604\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"28\"\t\"4\"\t0.5383828464960664\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-4\"\t\"4\"\t0.10599780066713804\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"24\"\t\"4\"\t0.9492681684474014\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-224\"\t\"4\"\t0.13495223481425722\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-4\"\t\"4\"\t0.12534861988255785\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"32\"\t\"4\"\t0.792463889108722\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"28\"\t\"4\"\t0.7254451068219707\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-4\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-24\"\t\"4\"\t0.8981295580010983\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"42\"\t\"4\"\t0.16237090958413125\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.5626325712087696\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.22802582197682786\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.914248547431459\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"2\"\t\"56\"\t\"4\"\t0.5731277054481668\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.6144036210991608\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"3\"\t\"-8\"\t\"4\"\t0.9570962439707406\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.561891392343872\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"2\"\t\"6\"\t\"4\"\t0.592887971660491\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-210\"\t\"4\"\t0.6673038222596603\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"35\"\t\"4\"\t0.9540338731819206\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-5\"\t\"4\"\t0.3526483788827559\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"30\"\t\"4\"\t0.4993123096158967\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"56\"\t\"1\"\t\"-280\"\t\"4\"\t0.8285727968714008\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-5\"\t\"4\"\t0.4439374768842551\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-8\"\t\"2\"\t\"40\"\t\"4\"\t0.05864149876451086\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"35\"\t\"4\"\t0.7435368719419447\n\"8\"\t\"7\"\t\"1\"\t4\t\"4\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"6\"\t\"1\"\t\"-30\"\t\"4\"\t0.5589629039624536\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"3\"\t\"-14\"\t\"4\"\t0.675117951374668\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t0.7387232458044574\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"2\"\t\"112\"\t\"4\"\t0.9498742126328563\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"3\"\t\"-16\"\t\"4\"\t0.19691881719970195\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.26544774920528025\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.5249648830462189\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"2\"\t\"30\"\t\"4\"\t0.27362928315205015\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.4456434716466964\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"3\"\t\"-7\"\t\"4\"\t0.6177523547585637\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.8205663377836815\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"2\"\t\"42\"\t\"4\"\t0.2267845420887321\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.8127355613908306\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"2\"\t\"8\"\t\"4\"\t0.011595599250273647\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"70\"\t\"4\"\t0.4221405492920235\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-10\"\t\"4\"\t0.2710358132079561\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"1\"\t\"-560\"\t\"4\"\t0.9869699228766903\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"2\"\t\"80\"\t\"4\"\t0.8031151646901161\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"25\"\t\"4\"\t0.13953352757066628\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-5\"\t\"4\"\t0.650748278992639\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-150\"\t\"4\"\t0.5777905436086659\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"30\"\t\"4\"\t0.6632003212792908\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"35\"\t\"4\"\t0.4230129376393683\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-5\"\t\"4\"\t0.950399547089014\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-210\"\t\"4\"\t0.5026951028552589\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"30\"\t\"4\"\t0.6192975194215873\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-5\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"1\"\t\"-40\"\t\"4\"\t0.09545512102135367\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"1\"\t\"-420\"\t\"4\"\t0.8532177963857183\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"60\"\t\"4\"\t0.45351534359284384\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"0\"\t\"3360\"\t\"4\"\t0.3909046110295832\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"1\"\t\"-480\"\t\"4\"\t0.8590184214832579\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-150\"\t\"4\"\t0.929932134912193\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"30\"\t\"4\"\t0.18226393046360545\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"0\"\t\"900\"\t\"4\"\t0.2447175916960711\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-180\"\t\"4\"\t0.8755704623532283\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"1\"\t\"-210\"\t\"4\"\t0.5712754453123936\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"30\"\t\"4\"\t0.6707327587031705\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"0\"\t\"1260\"\t\"4\"\t0.53088294425516\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-180\"\t\"4\"\t0.6498088319320554\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"0\"\t\"30\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"0\"\t\"240\"\t\"4\"\t0.8540749610861437\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"84\"\t\"4\"\t0.5234780863411611\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-12\"\t\"4\"\t0.41468671853395456\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"112\"\t\"1\"\t\"-672\"\t\"4\"\t0.44632804551443883\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-16\"\t\"2\"\t\"96\"\t\"4\"\t0.5658445648475684\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"30\"\t\"4\"\t0.5767952751948734\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.4158249706191677\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-180\"\t\"4\"\t0.01981030859261068\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"36\"\t\"4\"\t0.28476392769199965\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-7\"\t\"2\"\t\"42\"\t\"4\"\t0.15582511010463873\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.2969100096263093\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"42\"\t\"1\"\t\"-252\"\t\"4\"\t0.2728129734421889\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"36\"\t\"4\"\t0.24947002225497183\n\"8\"\t\"7\"\t\"1\"\t8\t\"8\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"8\"\t\"1\"\t\"-48\"\t\"4\"\t0.8909526694895809\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"3\"\t\"-32\"\t\"4\"\t0.5214496724972975\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"2\"\t\"224\"\t\"4\"\t0.12874030117496782\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"3\"\t\"-28\"\t\"4\"\t0.8744129811421487\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"4\"\t\"4\"\t\"4\"\t0.22517144590913463\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"2\"\t\"10\"\t\"4\"\t0.5083116790086951\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"3\"\t\"-12\"\t\"4\"\t0.6967365468709135\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"2\"\t\"84\"\t\"4\"\t0.31605213065915205\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t0.29853738897653836\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"3\"\t\"-14\"\t\"4\"\t0.8134868057405508\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.5401549291067647\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"2\"\t\"20\"\t\"4\"\t0.5672718485042558\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.16079128306767398\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"3\"\t\"-4\"\t\"4\"\t0.11368939620689988\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"2\"\t\"30\"\t\"4\"\t0.23720475320942636\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.36128952184284335\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"3\"\t\"-6\"\t\"4\"\t0.24001402735993715\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.6538994906531898\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"2\"\t\"224\"\t\"4\"\t0.7116357660520639\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"1\"\t\"-1568\"\t\"4\"\t0.537735670304898\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"2\"\t\"196\"\t\"4\"\t0.43058501801235594\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"3\"\t\"-28\"\t\"4\"\t0.28902079597208863\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"1\"\t\"-70\"\t\"4\"\t0.5406489149791602\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"84\"\t\"4\"\t0.33851663037873214\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"1\"\t\"-588\"\t\"4\"\t0.07037917307452812\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-14\"\t\"4\"\t0.5254974489351757\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"98\"\t\"4\"\t0.24054980566183093\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"35\"\t\"4\"\t0.6062366879044125\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"1\"\t\"-140\"\t\"4\"\t0.9177813517876121\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.006237741018906284\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"28\"\t\"4\"\t0.3043173430198651\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-210\"\t\"4\"\t0.6288664244772773\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.7463668885255353\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"42\"\t\"4\"\t0.5656889309444488\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"35\"\t\"4\"\t0.9442131703443372\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"2\"\t\"192\"\t\"4\"\t0.04986325127986024\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"1\"\t\"-1344\"\t\"4\"\t0.05414260827449202\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"2\"\t\"168\"\t\"4\"\t0.8185127271168695\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"3\"\t\"-24\"\t\"4\"\t0.0515754392725527\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"1\"\t\"-60\"\t\"4\"\t0.45750715089112903\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"72\"\t\"4\"\t0.2772711492060499\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"1\"\t\"-504\"\t\"4\"\t0.5582757466378906\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-12\"\t\"4\"\t0.04386205682752442\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"2\"\t\"84\"\t\"4\"\t0.09219515225004693\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"30\"\t\"4\"\t0.45185557867309434\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"1\"\t\"-120\"\t\"4\"\t0.07751581859989509\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.9436758933045067\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"24\"\t\"4\"\t0.8488117481002461\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"1\"\t\"-180\"\t\"4\"\t0.9287263261768507\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-6\"\t\"4\"\t0.30247227757418416\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"2\"\t\"36\"\t\"4\"\t0.988265970798532\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"30\"\t\"4\"\t0.2772614351333358\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-32\"\t\"1\"\t\"-1344\"\t\"4\"\t0.9900740338557367\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"224\"\t\"0\"\t\"9408\"\t\"4\"\t0.605777415107913\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"1\"\t\"-1176\"\t\"4\"\t0.7130262054082293\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"2\"\t\"168\"\t\"4\"\t0.39555034253241694\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"10\"\t\"0\"\t\"420\"\t\"4\"\t0.30023141752814864\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"1\"\t\"-504\"\t\"4\"\t0.2780937672098841\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"84\"\t\"0\"\t\"3528\"\t\"4\"\t0.743650234096898\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"84\"\t\"4\"\t0.48426520380345917\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-14\"\t\"1\"\t\"-588\"\t\"4\"\t0.2700435678313652\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-210\"\t\"4\"\t0.6265522848706165\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"0\"\t\"840\"\t\"4\"\t0.007344494198116891\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"42\"\t\"4\"\t0.9533261935850275\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"1\"\t\"-168\"\t\"4\"\t0.6270895362601865\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"30\"\t\"0\"\t\"1260\"\t\"4\"\t0.2826909875826551\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"42\"\t\"4\"\t0.9105140378654519\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-6\"\t\"1\"\t\"-252\"\t\"4\"\t0.534016614577619\n\"8\"\t\"7\"\t\"1\"\t16\t\"16\"\t\"0\"\t\"42\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-210\"\t\"4\"\t0.11370974040817783\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"168\"\t\"1\"\t\"-1176\"\t\"4\"\t0.8702387983285172\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-24\"\t\"2\"\t\"168\"\t\"4\"\t0.12260043030062462\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"2\"\t\"196\"\t\"4\"\t0.43131593289083336\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"3\"\t\"-28\"\t\"4\"\t0.30866583208094844\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"8\"\t\"2\"\t\"8\"\t\"3\"\t\"-56\"\t\"4\"\t0.29487989441917384\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-56\"\t\"2\"\t\"392\"\t\"4\"\t0.5308765471158854\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"8\"\t\"0\"\t\"448\"\t\"1\"\t\"-3136\"\t\"4\"\t0.4278192509002898\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-64\"\t\"2\"\t\"448\"\t\"4\"\t0.9888739133499149\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"60\"\t\"1\"\t\"-420\"\t\"4\"\t0.2932098459264071\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-14\"\t\"4\"\t0.21417173883652696\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"84\"\t\"4\"\t0.42986849528588866\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-10\"\t\"2\"\t\"70\"\t\"4\"\t0.9174829532343441\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"1\"\t\"-84\"\t\"4\"\t0.36475129399381234\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"28\"\t\"4\"\t0.2919478379751752\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.36561570783314734\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-3\"\t\"2\"\t\"21\"\t\"4\"\t0.6506017453434927\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-7\"\t\"4\"\t0.7007269604899776\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"35\"\t\"4\"\t0.36578718963386414\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"1\"\t\"-140\"\t\"4\"\t0.27021153970506095\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"28\"\t\"4\"\t0.718296144893797\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-7\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"1\"\t\"-84\"\t\"4\"\t0.18730600434483025\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"168\"\t\"1\"\t\"-1344\"\t\"4\"\t0.3230485952165002\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-24\"\t\"2\"\t\"192\"\t\"4\"\t0.27576317904929915\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"2\"\t\"224\"\t\"4\"\t0.6545038212386491\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"3\"\t\"-32\"\t\"4\"\t0.6377232678978477\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"8\"\t\"2\"\t\"8\"\t\"3\"\t\"-64\"\t\"4\"\t0.7229687107926348\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-56\"\t\"2\"\t\"448\"\t\"4\"\t0.7948346123755445\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"8\"\t\"0\"\t\"448\"\t\"1\"\t\"-3584\"\t\"4\"\t0.7916280272376787\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-64\"\t\"2\"\t\"512\"\t\"4\"\t0.45430042154571404\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"60\"\t\"1\"\t\"-480\"\t\"4\"\t0.7118726509281157\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"3\"\t\"-16\"\t\"4\"\t0.14336418590364497\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"2\"\t\"96\"\t\"4\"\t0.15721022419678532\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-10\"\t\"2\"\t\"80\"\t\"4\"\t0.4447377454347786\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"1\"\t\"-96\"\t\"4\"\t0.09519320447013391\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"32\"\t\"4\"\t0.6569896746466866\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.7834645865629971\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-3\"\t\"2\"\t\"24\"\t\"4\"\t0.6312381407556785\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"3\"\t\"-8\"\t\"4\"\t0.3524673329849086\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"2\"\t\"40\"\t\"4\"\t0.6323692520077017\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"1\"\t\"-160\"\t\"4\"\t0.5906727369100098\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"2\"\t\"32\"\t\"4\"\t0.4454309626466968\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"1\"\t\"-96\"\t\"4\"\t0.5394946831116918\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"168\"\t\"2\"\t\"168\"\t\"4\"\t0.43951422762115133\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-24\"\t\"3\"\t\"-24\"\t\"4\"\t0.44589040506876376\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"3\"\t\"-28\"\t\"4\"\t0.18727186783502703\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"4\"\t\"4\"\t\"4\"\t0.44569644532579356\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"8\"\t\"2\"\t\"8\"\t\"4\"\t\"8\"\t\"4\"\t0.5251075514108535\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-56\"\t\"3\"\t\"-56\"\t\"4\"\t0.6663480912464432\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"8\"\t\"0\"\t\"448\"\t\"2\"\t\"448\"\t\"4\"\t0.7200554895923718\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-64\"\t\"3\"\t\"-64\"\t\"4\"\t0.7172955536719685\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"60\"\t\"2\"\t\"60\"\t\"4\"\t0.1967910154513658\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t0.009422104574550616\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"3\"\t\"-12\"\t\"4\"\t0.7761135727286188\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-10\"\t\"3\"\t\"-10\"\t\"4\"\t0.4485705421467594\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"2\"\t\"12\"\t\"4\"\t0.06380919470007496\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"3\"\t\"-4\"\t\"4\"\t0.5514817967086065\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.8518050282834336\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-3\"\t\"3\"\t\"-3\"\t\"4\"\t0.9886787083923675\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"4\"\t\"1\"\t\"4\"\t0.631122832551046\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"3\"\t\"-5\"\t\"4\"\t0.41957681562801774\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"2\"\t\"20\"\t\"4\"\t0.8198963061917559\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"3\"\t\"-4\"\t\"4\"\t0.17155223932126662\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"2\"\t\"1\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"2\"\t\"12\"\t\"4\"\t0.8360896218101351\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"0\"\t\"168\"\t\"0\"\t\"9408\"\t\"4\"\t0.5447809242558369\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-24\"\t\"1\"\t\"-1344\"\t\"4\"\t0.7867730275810948\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"1\"\t\"-28\"\t\"1\"\t\"-1568\"\t\"4\"\t0.9422385339919832\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"4\"\t\"2\"\t\"4\"\t\"2\"\t\"224\"\t\"4\"\t0.511204263278272\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"8\"\t\"2\"\t\"8\"\t\"2\"\t\"448\"\t\"4\"\t0.7208244460208663\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-56\"\t\"1\"\t\"-3136\"\t\"4\"\t0.6950999981836636\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"8\"\t\"0\"\t\"448\"\t\"0\"\t\"25088\"\t\"4\"\t0.40790261569832975\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"8\"\t\"1\"\t\"-64\"\t\"1\"\t\"-3584\"\t\"4\"\t0.5086009550186174\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"0\"\t\"60\"\t\"0\"\t\"3360\"\t\"4\"\t0.13064460486215457\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"112\"\t\"4\"\t0.8082263903303197\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-12\"\t\"1\"\t\"-672\"\t\"4\"\t0.5382053159251152\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"2\"\t\"1\"\t\"-10\"\t\"1\"\t\"-560\"\t\"4\"\t0.31101410339502866\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"0\"\t\"672\"\t\"4\"\t0.10150218191390592\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"1\"\t\"-224\"\t\"4\"\t0.12060079215025898\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.15658714105996951\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-3\"\t\"1\"\t\"-168\"\t\"4\"\t0.7987876264947397\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"2\"\t\"1\"\t\"2\"\t\"56\"\t\"4\"\t0.23072394274313712\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-5\"\t\"1\"\t\"-280\"\t\"4\"\t0.7667417400750904\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"20\"\t\"0\"\t\"1120\"\t\"4\"\t0.49550916443639403\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"1\"\t\"-4\"\t\"1\"\t\"-224\"\t\"4\"\t0.4343929207955053\n\"8\"\t\"7\"\t\"1\"\t32\t\"32\"\t\"0\"\t\"56\"\t\"2\"\t\"2\"\t\"1\"\t\"0\"\t\"12\"\t\"0\"\t\"672\"\t\"4\"\t0.028576437400660626\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613841073633_855558140",
+      "id": "20210220-121113_1546915512",
+      "dateCreated": "2021-02-20 12:11:13.633",
+      "dateStarted": "2021-02-20 12:13:52.815",
+      "dateFinished": "2021-02-20 12:13:53.608",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S12Zero  -  wants target node\u0027s P at (MaxN,N,RowCounter\u003dN-2) and   \"argument\" node\u0027s P at (MaxN,N+1,RowCounter\u003d(N+1)-2.",
+      "text": "CYPHER runtime\u003dinterpreted \n        UNWIND range(toInteger(?),toInteger(?)) AS n\n        WITH toString(n) AS N, ? as nMax\n        MATCH (v:VertexNode {Degree:?})\u003c-[vI:VertexIndexedBy {twoSeq:?}]-(i:IndexedBy {N:N,MaxN:nMax,Dimension:?})-[]-\u003e(e:Evaluate)\n        WITH i.N as iN, i.MaxN as iM,e,v,vI,i                        \n        OPTIONAL MATCH (vv:VertexNode)\u003c-[vII:VertexIndexedBy]-(ii:IndexedByArgument)-[]-\u003e(ee:Evaluate {Value:toString(vI.twoSeq)})      \n                            where ii.MaxN\u003diM  AND ii.Dimension\u003d?\n        \n        WITH\n        vI.twoSeq AS vTwoSeq,\n        vI.divisor AS vDivisor,\n        vII.twoSeq AS vvTwoSeq,\n        ee.Value AS eeValue,\n        vII.divisor AS vvDivisor,\n        iN,\n        iM,\n        i.Dimension AS iDimension,\n        v.Scalar AS vScalar,\n        v.Degree AS vDegree,\n        vv.Scalar AS vvScalar,\n        vv.Degree AS vvDegree,i\n                                            \n        WITH\n        \n        iN,iM,vTwoSeq as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,  \n        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n             toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vScalar),\u00272\u0027) ELSE toString(vScalar) END ) AS TTScalar,\n        toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vvScalar),\u00272\u0027) ELSE toString(vvScalar) END) AS AAScalar,\n        toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vDegree,\u00271\u0027) ELSE apoc.number.exact.add(vDegree,\u00270\u0027) END ) AS TTDegree,\n        toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vvDegree,\u00271\u0027) ELSE apoc.number.exact.add(vvDegree,\u00270\u0027)  END) AS AADegree\n        \n        WITH\n        {iM:iM,iN:iN,pD:pD,p2Eval:p2Eval,vTwoSeq:vTwoSeq,TTDegree:TTDegree,TTScalar:TTScalar,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:vvTwoSeq,AADegree:AADegree,AAScalar:AAScalar,\n        degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,\n        scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,\n        resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,\n        writeDimension:?} AS line\n        RETURN line ",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-07 08:55:52.796",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610651741673_706476411",
+      "id": "20210114-141541_1586283586",
+      "dateCreated": "2021-01-14 14:15:41.674",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3ARC  -   P(MaxN,N,D,RowCounter) from IndexedBy pattern. ",
+      "text": "CYPHER runtime\u003dinterpreted\n        UNWIND range(toInteger(\u00275\u0027),toInteger(\u00275\u0027)) AS n\n        WITH toString(n) AS iN, \u00278\u0027 as iM\n        MATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027,RowCounter:8})-[]-\u003e(e:Evaluate)\n        WITH iN, iM, max(vI.divisor) as maxDivisor\n        MATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027,RowCounter:8})-[]-\u003e(e:Evaluate)\n        // return v.Scalar,v.Degree,vI.divisor,vI.twoSeq\n        WITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n        \n        WITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\n        UNWIND RANGE(0,SIZE(rPC)-1) as iI\n        WITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\n        UNWIND rPCDS as rPCDSU\n        WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\n        WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\n        UNWIND RANGE(0,SIZE(resultMapC)-1) as iII\n        WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\n        UNWIND RANGE(0,SIZE(rSL)-1) as iIII\n        UNWIND rSL[iIII] as rSLI\n        \n        //RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\n        WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\n        WITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\n        WITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\n        WITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\n        WITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \n        WITH COLLECT(pTerms) as pTermss,iM,iN\n        UNWIND RANGE(0,SIZE(pTermss)-1) as pT\n        WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\n        UNWIND dSList as dSListU\n        WITH dSListU.Degree AS aDegree,dSListU.Scalar AS aScalar,iN,iM,pTD\n        RETURN aDegree,aScalar,pTD,iM,iN ",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-07 08:46:32.160",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "aDegree": "string",
+                      "aScalar": "string",
+                      "pTD": "string",
+                      "iM": "string",
+                      "iN": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "aDegree\taScalar\tpTD\tiM\tiN\n\"0\"\t\"10752\"\t\"4\"\t\"8\"\t\"5\"\n\"2\"\t\"1226\"\t\"4\"\t\"8\"\t\"5\"\n\"3\"\t\"-114\"\t\"4\"\t\"8\"\t\"5\"\n\"4\"\t\"4\"\t\"4\"\t\"8\"\t\"5\"\n\"1\"\t\"-5904\"\t\"4\"\t\"8\"\t\"5\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610462844396_733963987",
+      "id": "20210112-094724_920083116",
+      "dateCreated": "2021-01-12 09:47:24.396",
+      "dateStarted": "2021-01-12 15:28:34.443",
+      "dateFinished": "2021-01-12 15:28:34.680",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Script added for \"The Quadratics\" note; deleatable.",
+      "text": "%neo4j\nCYPHER runtime\u003dinterpreted\nUNWIND range(7,7) AS n\nWITH toString(n) AS N, \"8\" as nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u00274\u0027,MaxN:nMax,N:N,tft:2})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWith max(aN.ResultDivisor) as maxDivisor,N,nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u00274\u0027,MaxN:nMax,N:N,tft:2})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,\n      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,\n      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,\n      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,  N as iN, nMax as iM,maxDivisor  // cl.N as iN,cl.MaxN as iM,\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor\nUNWIND aPTds as aPTdsU\n//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor\nWITH CASE WHEN aPclafe \u003d 99 THEN                                                                                 \n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               \n      ResultDegree:aPTdsU.DegreeSum,\n      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               \nELSE\n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       \n    ResultDegree:aPTdsU.DegreeSum,                              //CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,        \n    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM,maxDivisor\n//RETURN resultProduct\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm\nWITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,\"0\" as accumulator,maxDivisor\nCREATE (a:Accumulator { acc:\"0\"})\nFOREACH (n IN cts| SET a.acc \u003d apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter)\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN \n//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN\n//RETURN pTerms\nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\n//RETURN dSListU.Degree,dSListU.Scalar,pTD\nCREATE (c:Accumulator {acc:\"1\"})   \nFOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc \u003d apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer\nWith apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD,iN,iM\nWITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap,iN,iM\n//Return termsMap\nWITH COLLECT(termsMap) AS termsMapC,iN,iM\nUNWIND RANGE(0,SIZE(termsMapC)-1) as pTT\nCREATE (b:Accumulator { acc:\"0\" ,db:toString(termsMapC[pTT].DivideBy) })\nFOREACH (n IN termsMapC[pTT].SDP| SET b.acc \u003d apoc.number.exact.add(b.acc,n))\nWITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b,iM,iN\n\nWITH COLLECT(pResult) as evaluates,iN,iM\n//return evaluates,iN,iM\nCREATE (d:Accumulator { acc:\"0\"})\nFOREACH (n IN evaluates| SET d.acc \u003d apoc.number.exact.add(d.acc,n)) \nRETURN d.acc as Value",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-05 11:43:54.060",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Value": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Value\n\"20\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610474586887_930084512",
+      "id": "20210112-130306_600417423",
+      "dateCreated": "2021-01-12 13:03:06.887",
+      "dateStarted": "2021-02-05 11:16:38.593",
+      "dateFinished": "2021-02-05 11:16:38.889",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Script added for \"The Quadratics\", deletable",
+      "text": "%neo4j\nCYPHER runtime\u003dinterpreted\nUNWIND range(7,7) AS n\nWITH toString(n) AS N, \u00278\u0027 as nMax\nMATCH (v:VertexNode)\u003c-[]-(i:IndexedBy)-[]-\u003e(e:Evaluate),(t:TwoSeqFactor)\u003c-[]-(i) where i.N\u003dN AND i.MaxN\u003dnMax AND i.Dimension\u003d\u00272\u0027  AND t.twoSeq\u003d\u00272\u0027\nWITH i.N as iN, i.MaxN as iM,e,v,t,i                       \nOPTIONAL MATCH (vv:VertexNode)\u003c-[]-(ii:IndexedBy)-[]-\u003e(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)\u003c-[]-(ii) where ii.MaxN\u003diM  AND ii.Dimension\u003d\u00272\u0027\nWITH\n\u00271\u0027  AS pDivisor, \n\u00272\u0027 AS pDimension,\n\u00272\u0027 AS vDivisor,\ntt.twoSeq AS vvTwoSeq,\nee.Value AS eeValue,\n\u00272\u0027  AS vvDivisor,\niN,\n\u00274\u0027 AS iDimension,\niM,\nt.twoSeq AS vTwoSeq,\nv.Degree AS vDegree,\nvv.Degree AS vvDegree,\nv.Scalar AS vScalar,\nvv.Scalar AS vvScalar,  \ntoString( CASE WHEN toString(i.RowCounter)\u003d\u00272\u0027 THEN apoc.number.exact.mul(toString(v.Scalar),\u00272\u0027) ELSE toString(v.Scalar) END ) AS TTScalarRowCounter\nWITH\niN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD\nCASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n     toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vScalar),\u00272\u0027) ELSE toString(TTScalarRowCounter) END ) AS TTScalar,\n     toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vvScalar),\u00272\u0027) ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     \n     toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vDegree,\u00271\u0027) ELSE apoc.number.exact.add(vDegree,\u00270\u0027) END ) AS TTDegree,\n     toString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vvDegree,\u00271\u0027) ELSE apoc.number.exact.add(vvDegree,\u00270\u0027)  END) AS AADegree\nRETURN\niM,iN,pD,p2Eval,vTwoSeq,TTDegree,TTScalar,vDivisor,vvDivisor,vvTwoSeq,AADegree,AAScalar,\nCASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END AS degreeSum,\nCASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END as scalarProduct,\nCASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END as resultDivisor,\nrand() as rKeyU",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-05 12:12:04.907",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "iM": "string",
+                      "iN": "string",
+                      "pD": "string",
+                      "p2Eval": "string",
+                      "vTwoSeq": "string",
+                      "TTDegree": "string",
+                      "TTScalar": "string",
+                      "vDivisor": "string",
+                      "vvDivisor": "string",
+                      "vvTwoSeq": "string",
+                      "AADegree": "string",
+                      "AAScalar": "string",
+                      "degreeSum": "string",
+                      "scalarProduct": "string",
+                      "resultDivisor": "string",
+                      "rKeyU": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "iM\tiN\tpD\tp2Eval\tvTwoSeq\tTTDegree\tTTScalar\tvDivisor\tvvDivisor\tvvTwoSeq\tAADegree\tAAScalar\tdegreeSum\tscalarProduct\tresultDivisor\trKeyU\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-6\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-6\"\t\"2\"\t0.745075928181108\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"1\"\t\"-8\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"1\"\t\"-8\"\t\"2\"\t0.4432953886419676\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"0\"\t\"24\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"0\"\t\"24\"\t\"2\"\t0.9369418211014227\n\"8\"\t\"7\"\t\"1\"\t99\t\"2\"\t\"2\"\t\"2\"\t\"2\"\t\"2\"\tNULL\tNULL\tNULL\t\"2\"\t\"2\"\t\"2\"\t0.8803394191064231\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610474589472_326697007",
+      "id": "20210112-130309_1952442213",
+      "dateCreated": "2021-01-12 13:03:09.472",
+      "dateStarted": "2021-02-05 11:20:15.040",
+      "dateFinished": "2021-02-05 11:20:15.217",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Script added for \"The Quadratics\" note, deletable",
+      "text": "%neo4j\n\n// Arithmetic Script\n// Select x of the quadratic as i.MaxN from available list of nodes:  4,5,6,7,8,9,10,15,20,30,40,50,100,200,300,400,500\n// Select two values to be added as string i.N with value \u003d 2^(i.N-2) N\u003e1 and N less then MaxN\n// eg. i.N\u003d\"4\" or i.N\u003d\"5\" adds  2^2 + 2^3 as a graph representing quadratics evaluated at x\u003d100 of value\u003d 4 and 8\n// Select a single i.N value for quadratic expression\n\nCYPHER runtime\u003dinterpreted\nMATCH (v:VertexNode)\u003c-[]-(i:IndexedBy)-[]-\u003e(e:Evaluate),(t:TwoSeqFactor)\u003c-[]-(i) WHERE (i.N\u003d\"7\" OR i.N\u003d\"7\") AND (i.MaxN\u003d\"8\") AND (i.Dimension\u003d\"2\")\nWITH {TwoSeq:COLLECT({TwoSeq:toInteger(t.twoSeq)}),Vertex:v.Vertex} as factors,v,i,i.MaxN as iMax\nWITH COLLECT(v.Vertex) as vV,factors,v,i,iMax\nWITH COLLECT(factors.TwoSeq) as fact,v,i.N as N,vV,iMax\nUNWIND RANGE(0,SIZE(fact)-1) as ii\nUNWIND fact[ii] as ts\nWITH collect(ts.TwoSeq) as cts,v,N,vV,iMax\nWITH REDUCE(tSum\u003d0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,iMax\nWITH [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV,iMax\nWITH {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV,iMax\nWITH collect(output) as outputlist,outputMap,output,vV,iMax\nWITH DISTINCT vV as vVV, outputlist,outputMap,output,iMax\nWITH collect(outputMap.TotalT) as opMTT,vVV,iMax\nWITH REDUCE(tSum\u003d0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV,iMax\nWITH Collect(TotalTseqq) as result,vVV,iMax\n\n//Return {Multiple:result,Vertex:vVV} //  Uncomment and for instance: {\"Vertex\":\"1 1 2 0 0\",\"Degree\":\"2\",\"Scalar\":\"1\"}  are the Polynomial terms processed below \n\nUNWIND vVV as vVVV\nWITH vVVV as lL,result as d,iMax\nWITH lL,Size(lL) AS lLS,d,iMax                    \nWITH lL,lLS-2 AS lLss,d,iMax                     \nWITH SUBSTRING(lL,1,lLss) AS lLs,d,iMax          \nWITH COLLECT(split(lLs,\u0027 \u0027)) AS lList,d,iMax              \n\nUNWIND RANGE(0,size(lList)-1) AS rC \nWITH  lList[rC] as vtx,d,iMax\nWITH collect( toInteger((d[0]*(CASE WHEN toInteger(vtx[2])\u003d-1 THEN toInteger(vtx[1])*2 ELSE toInteger(vtx[1]) END*(toInteger(iMax) ^ CASE WHEN toInteger(vtx[2])\u003d-1 THEN toInteger(vtx[2])+1 ELSE toInteger(vtx[2]) END )))/2))  as rSlt\nWITH REDUCE(tSum\u003d0,ff IN rSlt  | tSum +ff) As TotalrSlt\nRETURN TotalrSlt",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-05 12:25:50.676",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "TotalrSlt": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TotalrSlt\n128\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612545125014_677936687",
+      "id": "20210205-121205_648575131",
+      "dateCreated": "2021-02-05 12:12:05.015",
+      "dateStarted": "2021-02-05 12:25:50.375",
+      "dateFinished": "2021-02-05 12:25:50.545",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\nCYPHER runtime\u003dinterpreted\nUNWIND range(7,7) AS n\nWITH toString(n) AS N, \"8\" as nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u00274\u0027,MaxN:nMax,N:N,tft:2})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWith max(aN.ResultDivisor) as maxDivisor,N,nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u00274\u0027,MaxN:nMax,N:N,tft:2})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,\n      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,\n      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,\n      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,  N as iN, nMax as iM,maxDivisor  // cl.N as iN,cl.MaxN as iM,\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor\nUNWIND aPTds as aPTdsU\nRETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-05 11:42:27.753",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1612541934878_1100439650",
+      "id": "20210205-111854_21791535",
+      "dateCreated": "2021-02-05 11:18:54.878",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphicScripts",
+  "id": "2FR32CK3F",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

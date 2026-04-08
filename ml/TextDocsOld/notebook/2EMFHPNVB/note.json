@@ -1,0 +1,66 @@
+{
+  "paragraphs": [
+    {
+      "text": "%Beam\n// most used imports\nimport org.apache.beam.sdk.coders.StringUtf8Coder;\nimport org.apache.beam.sdk.transforms.Create;\nimport java.io.Serializable;\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.ArrayList;\nimport org.apache.spark.api.java.*;\nimport org.apache.spark.api.java.function.Function;\nimport org.apache.spark.SparkConf;\nimport org.apache.spark.streaming.*;\nimport org.apache.spark.SparkContext;\nimport org.apache.beam.runners.direct.*;\nimport org.apache.beam.sdk.runners.*;\nimport org.apache.beam.sdk.options.*;\nimport org.apache.beam.runners.spark.*;\nimport org.apache.beam.runners.spark.io.ConsoleIO;\nimport org.apache.beam.runners.flink.*;\nimport org.apache.beam.runners.flink.examples.WordCount.Options;\nimport org.apache.beam.sdk.Pipeline;\nimport org.apache.beam.sdk.io.TextIO;\nimport org.apache.beam.sdk.options.PipelineOptionsFactory;\nimport org.apache.beam.sdk.transforms.Count;\nimport org.apache.beam.sdk.transforms.DoFn;\nimport org.apache.beam.sdk.transforms.MapElements;\nimport org.apache.beam.sdk.transforms.ParDo;\nimport org.apache.beam.sdk.transforms.SimpleFunction;\nimport org.apache.beam.sdk.values.KV;\nimport org.apache.beam.sdk.options.PipelineOptions;\n\npublic class MinimalWordCount {\n  static List\u003cString\u003e s \u003d new ArrayList\u003c\u003e();\n\n  static final String[] SENTENCES_ARRAY \u003d new String[] {\n    \"Hadoop is the Elephant King!\",\n    \"A yellow and elegant thing.\",\n    \"He never forgets\",\n    \"Useful data, or lets\",\n    \"An extraneous element cling!\",\n    \"A wonderful king is Hadoop.\",\n    \"The elephant plays well with Sqoop.\",\n    \"But what helps him to thrive\",\n    \"Are Impala, and Hive,\",\n    \"And HDFS in the group.\",\n    \"Hadoop is an elegant fellow.\",\n    \"An elephant gentle and mellow.\",\n    \"He never gets mad,\",\n    \"Or does anything bad,\",\n    \"Because, at his core, he is yellow\",\n    };  \n  static final List\u003cString\u003e SENTENCES \u003d Arrays.asList(SENTENCES_ARRAY);\n  public static void main(String[] args) {\n    Options options \u003d PipelineOptionsFactory.create().as(Options.class);\n    options.setRunner(FlinkRunner.class);\n    Pipeline p \u003d Pipeline.create(options);\n    p.apply(Create.of(SENTENCES).withCoder(StringUtf8Coder.of()))\n         .apply(\"ExtractWords\", ParDo.of(new DoFn\u003cString, String\u003e() {\n           @Override\n           public void processElement(ProcessContext c) {\n             for (String word : c.element().split(\"[^a-zA-Z\u0027]+\")) {\n               if (!word.isEmpty()) {\n                 c.output(word);\n               }\n             }\n           }\n         }))\n        .apply(Count.\u003cString\u003e perElement())\n        .apply(\"FormatResults\", ParDo.of(new DoFn\u003cKV\u003cString, Long\u003e, String\u003e() {\n          @Override\n          public void processElement(DoFn\u003cKV\u003cString, Long\u003e, String\u003e.ProcessContext arg0)\n            throws Exception {\n            s.add(\"\\n\" + arg0.element().getKey() + \"\\t\" + arg0.element().getValue());\n            }\n        }));\n    p.run();\n    System.out.println(\"%table word\\tcount\");\n    for (int i \u003d 0; i \u003c s.size(); i++) {\n      System.out.print(s.get(i));\n    }\n\n  }\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-01 14:57:02.458",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1567364094547_242056010",
+      "id": "20190901-145454_2121736591",
+      "dateCreated": "2019-09-01 14:54:54.548",
+      "status": "ERROR",
+      "errorMessage": "org.apache.zeppelin.interpreter.InterpreterNotFoundException: Either no interpreter named Beam or it is not binded to this note\r\n\tat org.apache.zeppelin.interpreter.InterpreterFactory.getInterpreter(InterpreterFactory.java:101)\r\n\tat org.apache.zeppelin.notebook.Paragraph.getBindedInterpreter(Paragraph.java:242)\r\n\tat org.apache.zeppelin.notebook.Paragraph.execute(Paragraph.java:350)\r\n\tat org.apache.zeppelin.notebook.Note.run(Note.java:683)\r\n\tat org.apache.zeppelin.socket.NotebookServer.persistAndExecuteSingleParagraph(NotebookServer.java:1881)\r\n\tat org.apache.zeppelin.socket.NotebookServer.runParagraph(NotebookServer.java:1840)\r\n\tat org.apache.zeppelin.socket.NotebookServer.onMessage(NotebookServer.java:262)\r\n\tat org.apache.zeppelin.socket.NotebookSocket.onWebSocketText(NotebookSocket.java:59)\r\n\tat org.eclipse.jetty.websocket.common.events.JettyListenerEventDriver.onTextMessage(JettyListenerEventDriver.java:189)\r\n\tat org.eclipse.jetty.websocket.common.message.SimpleTextMessage.messageComplete(SimpleTextMessage.java:69)\r\n\tat org.eclipse.jetty.websocket.common.events.AbstractEventDriver.appendMessage(AbstractEventDriver.java:66)\r\n\tat org.eclipse.jetty.websocket.common.events.JettyListenerEventDriver.onTextFrame(JettyListenerEventDriver.java:158)\r\n\tat org.eclipse.jetty.websocket.common.events.AbstractEventDriver.incomingFrame(AbstractEventDriver.java:162)\r\n\tat org.eclipse.jetty.websocket.common.WebSocketSession.incomingFrame(WebSocketSession.java:459)\r\n\tat org.eclipse.jetty.websocket.common.extensions.AbstractExtension.nextIncomingFrame(AbstractExtension.java:182)\r\n\tat org.eclipse.jetty.websocket.common.extensions.compress.PerMessageDeflateExtension.nextIncomingFrame(PerMessageDeflateExtension.java:105)\r\n\tat org.eclipse.jetty.websocket.common.extensions.compress.CompressExtension.forwardIncoming(CompressExtension.java:142)\r\n\tat org.eclipse.jetty.websocket.common.extensions.compress.PerMessageDeflateExtension.incomingFrame(PerMessageDeflateExtension.java:85)\r\n\tat org.eclipse.jetty.websocket.common.extensions.ExtensionStack.incomingFrame(ExtensionStack.java:220)\r\n\tat org.eclipse.jetty.websocket.common.Parser.notifyFrame(Parser.java:219)\r\n\tat org.eclipse.jetty.websocket.common.Parser.parse(Parser.java:244)\r\n\tat org.eclipse.jetty.websocket.common.io.AbstractWebSocketConnection.readParse(AbstractWebSocketConnection.java:559)\r\n\tat org.eclipse.jetty.websocket.common.io.AbstractWebSocketConnection.onFillable(AbstractWebSocketConnection.java:390)\r\n\tat org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)\r\n\tat org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)\r\n\tat org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)\r\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)\r\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)\r\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)\r\n\tat org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)\r\n\tat org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)\r\n\tat org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)\r\n\tat org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)\r\n\tat java.lang.Thread.run(Thread.java:748)\r\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1567364222458_-2024809102",
+      "id": "20190901-145702_1024425448",
+      "dateCreated": "2019-09-01 14:57:02.458",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/test8",
+  "id": "2EMFHPNVB",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "sh:shared_process": [],
+    "jdbc:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

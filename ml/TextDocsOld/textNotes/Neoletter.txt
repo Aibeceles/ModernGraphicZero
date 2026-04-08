@@ -1,0 +1,71 @@
+
+
+Thank you. 
+
+  I do have some questions concerning the ML library outlined below.  The project I am working on is as follows:
+
+   The origonal effort was writing quadratics and quartets evaluating expectedly to integers.
+Addition of these polynomials then argumented with appropriate free variable did prove
+arithmetic.   https://globalgraphhack.devpost.com/project-gallery
+
+  The effort did evolve into defining higher degree polynomial analogues with arithmetic
+considered soley with respect to the constant term and radix (Zeppelin notebook).  In this regard Ne4j is a
+repository of the bits necessary for defining p's.  Cypher scripts and java jars are tasked with generating data for the
+graph. Scala Spark Zeppelin notebook analysis proves these p's have one critical point, no roots and various convergence.   
+
+   Multiplication of these p's in terms of two free variables introduces various surfaces.  As the two variable
+polynomial is composed of p's each with one critical point.  A single two dimensional point locates the surface
+minimum.  Here, Spark Scala notebook matches p's from graph into Dataframes for multiplication and subsequent applications
+of Gradient Descent, Newton's Method, and Curve Length integrals.  The goal is to define a surface with a minimum at any
+arbitrary rational 2 dimensional point.     
+
+   In the above, Neo4j is something of a traditional database albeit leveraging Cypher.  However generalizing to surfaces
+with different numbers and locations of arbitrary minimums requires different sets of polynomials.
+https://www.youtube.com/watch?v=H4dBkofVA4A is my description of an algorithm capable of generating graphed sets of polynomials
+with arbitrary numbers of roots and critical points.   These graphed sets, aside from above mentioned analysis,  are the
+subject of both correlation with prior mentioned p's and Neo4j Ml algorithms.  
+
+   Before using the graphed polynomial sets to further multivariable analysis, and to familiarize with Neo4j ML library, The graphed p's
+are subject to both label prediction and link prediction on properties of the polynomials represented as node fields.  The label
+prediction activity questions which nodes (polynomials) are determined (have the same number of roots as the degree of the polynomial).
+The link prediction activity interprets the root set as an arbitrary number encoding a rational (link to quora) and attempts to provide
+links connecting nodes with the same denominator.
+
+  GraphicLablePredicion and GraphicLinkPredicition are Zeppelin notebooks defining these ML pipelines.  Somewhat mysteriously both applications provide
+accurate preditions.  The label (determeind) prediction uses node propertes (level on graph, number of roots) as featureProperties and not a
+fastRP/GraphSage embedding in gds.alpha.ml.NodeClassification.train. On a smallish graph (Biggest graph is 18 million node) the predictions are
+well promising.  However the link prediciton (common denominator) is brittle.  GraphSage embeddings are experimented with and good predictions
+occur only at certain test/train thresholds.  As both these activities are somewhat toyish, and not the reason the polynomial graph was generated,
+am concerned first with competency and best practices with the library.  
+
+Questions:
+  Assessing hyperparameter/embeddings efficies require iterations of the pipeline.  How are results quantified compared ?   
+  The link prediction returns accurate predictions and the links are updated into the graph.
+  How does the GraphSage embedding get updated?  Is the whole pipeline rerun?
+  The latter graph is unbounded.  How are local embeddings defined and appended to the whole graph embedding as needed (literature or otherwise)?
+
+Links:
+
+Neo4j Auora Database with small Difference Graph:
+ 
+URI:  neo4j+s://062f8726.databases.neo4j.io
+Name: neo4j
+Password: DSxvueIHvtSBuxd7LHhguLWeAlYCORjnX7sPz6UbUjg
+       
+Video of Differences Algorithm
+
+https://www.youtube.com/watch?v=H4dBkofVA4A
+
+Encoding integers as rational numbers:
+
+https://www.quora.com/How-are-rational-numbers-constructed-from-the-axioms-of-set-theory?q=how%20are%20the%20rationals%20constructed%20from%20the%20axioms%20of%20set
+
+Github of two Zeppelin ML Notbooks and Differences neo4j.dump
+
+https://github.com/Aibeceles/GraphMLDifferences
+
+Main project Github:
+
+https://github.com/Aibeceles/GraphicZero
+
+

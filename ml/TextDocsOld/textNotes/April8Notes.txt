@@ -1,0 +1,12 @@
+
+4/8
+
+A recap of last weeks cypher:
+
+  .Determine the twoSequence value and project the targeted verticies for
+   a multiplicative substitution.
+  .Project the vertices defining the twoSequence value 
+  .Unwind both projections, then reassemble a projection representing the cartesian
+   product of the two origonal vertex lists (The result is a pairwise list of arguments
+   for operation to performed upon).
+  .

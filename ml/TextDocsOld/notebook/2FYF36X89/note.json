@@ -1,0 +1,667 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\nThe TwoPolynomialGenerator.jar output exibited in detail.\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-05 09:58:28.077",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eThe TwoPolynomialGenerator.jar output exibited in detail.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612537005911_-102817571",
+      "id": "20210205-095645_230161375",
+      "dateCreated": "2021-02-05 09:56:45.911",
+      "dateStarted": "2021-02-05 09:58:28.078",
+      "dateFinished": "2021-02-05 09:58:28.085",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "DataFrame/Dataset case class definitions.",
+      "text": "import org.apache.spark.sql.types.DecimalType\nimport java.math.BigDecimal\ncase class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\ncase class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\ncase class indexSum(iSum:String,finalISum:String)\n\ncase class kvCaseC(rowScalar:String,degree:String,scalar:String)\ncase class pivotE(rowScalar:String,zero:String,one:String,two:String)\ncase class roots(root1:String,root2:String)\n//case class s3ARe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String)",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:36:08.972",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.types.DecimalType\r\nimport java.math.BigDecimal\r\ndefined class s12QQu\r\ndefined class s12Re\r\ndefined class indexSum\r\ndefined class kvCaseC\r\ndefined class pivotE\r\ndefined class roots\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612537111417_-1906716947",
+      "id": "20210205-095831_599296418",
+      "dateCreated": "2021-02-05 09:58:31.417",
+      "dateStarted": "2021-02-10 14:01:18.595",
+      "dateFinished": "2021-02-10 14:01:28.331",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "QuerryS12QuadQuerry object.",
+      "text": "\nobject QuerryS12QuadQuerry {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nval s3 \u003d new DFScripts \n\ndef s12QuadQuerry(rLow:String,rHigh:String,nMax:String): ArrayBuffer[s12QQu] \u003d {\n\nval terms \u003d new ArrayBuffer[s12QQu]()\n//val s3 \u003d new DFScripts  \nval s12QQRS \u003d s3.s12QuadQ(rLow,rHigh,nMax)\n\nwhile (s12QQRS.next()) {\nterms +\u003d s12QQu(s12QQRS.getString(1),s12QQRS.getString(2),s12QQRS.getString(3),s12QQRS.getString(4),s12QQRS.getString(5),s12QQRS.getString(6))\n}\nterms\n}\n\ndef main(args:Array[String]) {\n\nval terms \u003d new ArrayBuffer[ArrayBuffer[s12QQu]]()\nval nMax \u003d args(0)                                 \n//for(a \u003c- 1 to 1; n \u003c- 7 to 7;b \u003c- 0 to (n-2)) {\nfor(a \u003c- 1 to 1; n \u003c- BigInt(args(1)).intValue() to BigInt(args(1)).intValue();b \u003c- 0 to 0) {\n     terms +\u003d s12QuadQuerry(n.toString,n.toString,nMax)\n}\n\nval mainTermss\u003dterms.flatMap(_.toList)\n\nval df \u003d spark.createDataFrame(mainTermss)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(args(2),df)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:36:30.201",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\nwarning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\ndefined object QuerryS12QuadQuerry\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612537113639_-2117810594",
+      "id": "20210205-095833_718253940",
+      "dateCreated": "2021-02-05 09:58:33.639",
+      "dateStarted": "2021-02-10 14:01:32.995",
+      "dateFinished": "2021-02-10 14:01:33.995",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "QuerryS12QuadQuerry calls.",
+      "text": "QuerryS12QuadQuerry.main(Array(\"10000\",\"5\",\"s120710000\"))      //MaxN,N,zString,\"s12QuadDF\"   looks like does not loop through tSeq, that is, the whole set is returnd.  possibly a large one.\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:36:51.026",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n+-----+-----+---------+-------+--------+------+\n|index|MaxN |rowScalar|divisor|scalar  |degree|\n+-----+-----+---------+-------+--------+------+\n|5    |10000|1        |2      |12      |0     |\n|5    |10000|1        |2      |99910020|0     |\n|5    |10000|1        |2      |1       |2     |\n|5    |10000|1        |2      |-9996   |1     |\n|5    |10000|1        |2      |-9995   |1     |\n|5    |10000|1        |2      |1       |2     |\n|5    |10000|1        |2      |-9997   |1     |\n|5    |10000|1        |2      |-9996   |1     |\n|5    |10000|1        |2      |99930012|0     |\n|5    |10000|2        |2      |-9998   |1     |\n|5    |10000|2        |2      |99950006|0     |\n|5    |10000|2        |2      |-9997   |1     |\n|5    |10000|2        |2      |1       |2     |\n|5    |10000|4        |2      |99970002|0     |\n|5    |10000|4        |2      |-9998   |1     |\n|5    |10000|4        |2      |-9999   |1     |\n|5    |10000|4        |2      |1       |2     |\n|5    |10000|8        |2      |1       |2     |\n|5    |10000|8        |2      |-9999   |1     |\n|5    |10000|8        |2      |-10000  |1     |\n|5    |10000|8        |2      |99990000|0     |\n+-----+-----+---------+-------+--------+------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612537115387_-534679684",
+      "id": "20210205-095835_1356583003",
+      "dateCreated": "2021-02-05 09:58:35.387",
+      "dateStarted": "2021-02-10 14:01:38.417",
+      "dateFinished": "2021-02-10 14:01:41.764",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "ResultUDF Object",
+      "text": "object ResultUDF extends Serializable {\n\n//case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\n//case class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\n//case class indexSum(iSum:String,finalISum:String)\n\n\n//case class s3ARe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String)\n\n\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\ndef extendResult(qQuerry:s12QQu): s12Re \u003d {      // need to include the rowCounter multiplication\n  val scalar \u003d new BigDecimal(qQuerry.scalar)\n  val rowScalar \u003d new BigDecimal(qQuerry.rowScalar)\n  val degree \u003d qQuerry.degree.toInt\n  val divisor \u003d new BigDecimal(qQuerry.divisor)\n  val index \u003d new BigDecimal(qQuerry.MaxN)\n  val indexPower \u003d index.pow(degree)\n  val scalarDiv \u003d scalar.divide(divisor)\n  val result \u003d indexPower.multiply(scalarDiv)\n  val result1 \u003d result.multiply(new BigDecimal(qQuerry.rowScalar))\n  val s\u003d  s12Re(\"2\",qQuerry.degree,qQuerry.scalar,qQuerry.index,qQuerry.MaxN,qQuerry.divisor,result1.toPlainString,qQuerry.rowScalar)\n  s\n}\n\ndef main(args:Array[String]) {\n    \nimport org.apache.spark.sql.DataFrame\nval df\u003d z.get(args(0)).asInstanceOf[DataFrame]\nspark.udf.register(\"eResult\", extendResult _)\n\nval ds: Dataset[s12QQu] \u003d df.as[s12QQu]\n//val dss\u003dds.map{f \u003d\u003e extendResult(s3AQu(f.dimension,f.Degree,f.scalar,f.index,f.maxIndex,f.divisor)) }\n\nval dss\u003dds.map{f \u003d\u003e extendResult(s12QQu(f.index,f.MaxN,f.rowScalar,f.divisor,f.scalar,f.degree)) }\nval dssCount\u003ddss.count()\ndss.show(dssCount.toInt,false)\nz.put(args(1),dss)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:37:18.124",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ResultUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612555893176_293804150",
+      "id": "20210205-151133_1314831867",
+      "dateCreated": "2021-02-05 15:11:33.176",
+      "dateStarted": "2021-02-10 14:01:45.671",
+      "dateFinished": "2021-02-10 14:01:46.477",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "ResultUDF object Calls.",
+      "text": "ResultUDF.main(Array(\"s120710000\",\"rUdf0710000\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:37:36.882",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+--------+-----+--------+-------+------------+---------+\n|dimension|degree|scalar  |index|maxIndex|divisor|result      |rowScalar|\n+---------+------+--------+-----+--------+-------+------------+---------+\n|2        |0     |12      |5    |10000   |2      |6           |1        |\n|2        |0     |99910020|5    |10000   |2      |49955010    |1        |\n|2        |2     |1       |5    |10000   |2      |50000000.0  |1        |\n|2        |1     |-9996   |5    |10000   |2      |-49980000   |1        |\n|2        |1     |-9995   |5    |10000   |2      |-49975000.0 |1        |\n|2        |2     |1       |5    |10000   |2      |50000000.0  |1        |\n|2        |1     |-9997   |5    |10000   |2      |-49985000.0 |1        |\n|2        |1     |-9996   |5    |10000   |2      |-49980000   |1        |\n|2        |0     |99930012|5    |10000   |2      |49965006    |1        |\n|2        |1     |-9998   |5    |10000   |2      |-99980000   |2        |\n|2        |0     |99950006|5    |10000   |2      |99950006    |2        |\n|2        |1     |-9997   |5    |10000   |2      |-99970000.0 |2        |\n|2        |2     |1       |5    |10000   |2      |100000000.0 |2        |\n|2        |0     |99970002|5    |10000   |2      |199940004   |4        |\n|2        |1     |-9998   |5    |10000   |2      |-199960000  |4        |\n|2        |1     |-9999   |5    |10000   |2      |-199980000.0|4        |\n|2        |2     |1       |5    |10000   |2      |200000000.0 |4        |\n|2        |2     |1       |5    |10000   |2      |400000000.0 |8        |\n|2        |1     |-9999   |5    |10000   |2      |-399960000.0|8        |\n|2        |1     |-10000  |5    |10000   |2      |-400000000  |8        |\n|2        |0     |99990000|5    |10000   |2      |399960000   |8        |\n+---------+------+--------+-----+--------+-------+------------+---------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612793253754_-1355459603",
+      "id": "20210208-090733_2060077126",
+      "dateCreated": "2021-02-08 09:07:33.754",
+      "dateStarted": "2021-02-10 14:02:23.901",
+      "dateFinished": "2021-02-10 14:02:24.690",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Aggregator (ungrouped)",
+      "text": "import org.apache.spark.sql.{Encoder, Encoders, SparkSession}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\n\nobject IndexRowsSum extends Aggregator[s12Re, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  \n  def reduce(buffer: indexSum, s3TR: s12Re): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.result)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  \n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n \n  def finish(reduction: indexSum): String \u003d reduction.iSum\n\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n}\n\nval ds\u003d z.get(\"rUdf0710000\").asInstanceOf[Dataset[s12Re]]\nds.schema\nds.show(false) \n\nval indexResult \u003d IndexRowsSum.toColumn.name(\"index_Result\")\nval iResult \u003d ds.select(indexResult)\niResult.show(false)",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-12 13:39:39.435",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+--------+-----+--------+-------+------------+---------+\n|dimension|degree|scalar  |index|maxIndex|divisor|result      |rowScalar|\n+---------+------+--------+-----+--------+-------+------------+---------+\n|2        |0     |12      |5    |10000   |2      |6           |1        |\n|2        |0     |99910020|5    |10000   |2      |49955010    |1        |\n|2        |2     |1       |5    |10000   |2      |50000000.0  |1        |\n|2        |1     |-9996   |5    |10000   |2      |-49980000   |1        |\n|2        |1     |-9995   |5    |10000   |2      |-49975000.0 |1        |\n|2        |2     |1       |5    |10000   |2      |50000000.0  |1        |\n|2        |1     |-9997   |5    |10000   |2      |-49985000.0 |1        |\n|2        |1     |-9996   |5    |10000   |2      |-49980000   |1        |\n|2        |0     |99930012|5    |10000   |2      |49965006    |1        |\n|2        |1     |-9998   |5    |10000   |2      |-99980000   |2        |\n|2        |0     |99950006|5    |10000   |2      |99950006    |2        |\n|2        |1     |-9997   |5    |10000   |2      |-99970000.0 |2        |\n|2        |2     |1       |5    |10000   |2      |100000000.0 |2        |\n|2        |0     |99970002|5    |10000   |2      |199940004   |4        |\n|2        |1     |-9998   |5    |10000   |2      |-199960000  |4        |\n|2        |1     |-9999   |5    |10000   |2      |-199980000.0|4        |\n|2        |2     |1       |5    |10000   |2      |200000000.0 |4        |\n|2        |2     |1       |5    |10000   |2      |400000000.0 |8        |\n|2        |1     |-9999   |5    |10000   |2      |-399960000.0|8        |\n|2        |1     |-10000  |5    |10000   |2      |-400000000  |8        |\n+---------+------+--------+-----+--------+-------+------------+---------+\nonly showing top 20 rows\n\r\n+------------+\n|index_Result|\n+------------+\n|32.0        |\n+------------+\n\r\nimport org.apache.spark.sql.{Encoder, Encoders, SparkSession}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\ndefined object IndexRowsSum\r\nds: org.apache.spark.sql.Dataset[s12Re] \u003d [dimension: string, degree: string ... 6 more fields]\r\nindexResult: org.apache.spark.sql.TypedColumn[s12Re,String] \u003d indexrowssum() AS `index_Result`\r\niResult: org.apache.spark.sql.Dataset[String] \u003d [index_Result: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612793251663_-1043508603",
+      "id": "20210208-090731_1364284245",
+      "dateCreated": "2021-02-08 09:07:31.663",
+      "dateStarted": "2021-02-10 14:02:29.952",
+      "dateFinished": "2021-02-10 14:02:31.320",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-08 14:04:58.857",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1612811046054_-1707490638",
+      "id": "20210208-140406_1019696814",
+      "dateCreated": "2021-02-08 14:04:06.054",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Grouped Aggrigator",
+      "text": "//case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\n//case class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\n//case class indexSum(iSum:String,finalISum:String)\n\n\nimport org.apache.spark.sql.{Encoder, Encoders}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nobject GroupedScalarRowsSum extends Aggregator[s12Re, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  def reduce(buffer: indexSum, s3TR: s12Re): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.scalar)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n  def finish(reduction: indexSum): String \u003d reduction.iSum\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n}\nval ds\u003d z.get(\"rUdf0710000\").asInstanceOf[Dataset[s12Re]]\n                                                                                                 // val extendResultDSCoun\u003dds.count()\nval scalarResult \u003d GroupedScalarRowsSum.toColumn.name(\"scalar_Result\")\nval kDS\u003d ds.groupByKey(x\u003d\u003e(x.rowScalar.toInt,x.degree.toInt))\n   .agg(scalarResult)\n//   .orderBy(asc(\"key\"))\nval kdsCount\u003dkDS.count()\nkDS.show(kdsCount.toInt,false)\nkDS.schema                                                                                      //  val iResult \u003d ds.select(indexResult)\nz.put(\"KvDS\",kDS)\n\n\n\n                                                                                                //  iResult.show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:38:08.483",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+-------------+\n|key  |scalar_Result|\n+-----+-------------+\n|[1,0]|199840044    |\n|[2,2]|1            |\n|[1,2]|2            |\n|[4,0]|99970002     |\n|[1,1]|-39984       |\n|[8,1]|-19999       |\n|[2,1]|-19995       |\n|[8,2]|1            |\n|[2,0]|99950006     |\n|[8,0]|99990000     |\n|[4,2]|1            |\n|[4,1]|-19997       |\n+-----+-------------+\n\r\nimport org.apache.spark.sql.{Encoder, Encoders}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\nimport org.apache.spark.sql.types.DecimalType\r\ndefined object GroupedScalarRowsSum\r\nds: org.apache.spark.sql.Dataset[s12Re] \u003d [dimension: string, degree: string ... 6 more fields]\r\nscalarResult: org.apache.spark.sql.TypedColumn[s12Re,String] \u003d groupedscalarrowssum() AS `scalar_Result`\r\nkDS: org.apache.spark.sql.Dataset[((Int, Int), String)] \u003d [key: struct\u003c_1: int, _2: int\u003e, scalar_Result: string]\r\nkdsCount: Long \u003d 12\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612797177820_-466098442",
+      "id": "20210208-101257_987068514",
+      "dateCreated": "2021-02-08 10:12:57.820",
+      "dateStarted": "2021-02-10 14:02:35.938",
+      "dateFinished": "2021-02-10 14:02:40.056",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Unpack Grouped DataFrame",
+      "text": "object MapKVUDF extends Serializable {\n\n//case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\n//case class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\n//case class indexSum(iSum:String,finalISum:String)\n//case class kvCaseC(rowScalar:String,degree:String,scalar:String)\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset,Row}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\n//def extractKeyValue(inMap:Map[Row,String]): kvCaseC \u003d {      // need to include the rowCounter multiplication\n\n// inMap.map{ case (Row(rS: Int, deg: Int), value) \u003d\u003e kvCaseC(rS.toString,deg.toString,value) }\n// //inMap.map{ case ((i:Int,j:Int), value:String) \u003d\u003e kvCaseC(key.getInt(0).toString,key.getInt(1).toString,value) }\n\n//}\n\ndef main(args:Array[String]) {\n    \n\nval df\u003d z.get(\"KvDS\").asInstanceOf[DataFrame]\n//val df\u003d z.get(\"KvDS\").asInstanceOf[Dataset[((Int, Int), String)]]\ndf.schema                                                           // will not print schema\ndf.show()\n\nval kDS \u003d df.select($\"*\", $\"key.*\")\nkDS.show\nz.put(\"KvDSUnpavked\",kDS)\n\n\n//spark.udf.register(\"extractKey\", extractKeyValue _)\n//val dss\u003dds.map{f \u003d\u003e extractKeyValue(f.key,f.scalar_Result) }\n\n\n//spark.udf.register(\"eResult\", extendResult _)\n\n//val ds: Dataset[s12QQu] \u003d df.as[s12QQu]\n////val dss\u003dds.map{f \u003d\u003e extendResult(s3AQu(f.dimension,f.Degree,f.scalar,f.index,f.maxIndex,f.divisor)) }\n\n//val dss\u003dds.map{f \u003d\u003e extendResult(s12QQu(f.index,f.MaxN,f.rowScalar,f.divisor,f.scalar,f.degree)) }\n//val dssCount\u003ddss.count()\n//dss.show(dssCount.toInt,false)\n//z.put(args(1),dss)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:38:27.311",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object MapKVUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612797177401_-2216144",
+      "id": "20210208-101257_847792707",
+      "dateCreated": "2021-02-08 10:12:57.401",
+      "dateStarted": "2021-02-10 14:02:44.658",
+      "dateFinished": "2021-02-10 14:02:44.938",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "MapKVDF object call.",
+      "text": "MapKVUDF.main(Array(null))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-11 09:38:46.242",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+-------------+\n|  key|scalar_Result|\n+-----+-------------+\n|[1,0]|    199840044|\n|[2,2]|            1|\n|[1,2]|            2|\n|[4,0]|     99970002|\n|[1,1]|       -39984|\n|[8,1]|       -19999|\n|[2,1]|       -19995|\n|[8,2]|            1|\n|[2,0]|     99950006|\n|[8,0]|     99990000|\n|[4,2]|            1|\n|[4,1]|       -19997|\n+-----+-------------+\n\r\n+-----+-------------+---+---+\n|  key|scalar_Result| _1| _2|\n+-----+-------------+---+---+\n|[1,0]|    199840044|  1|  0|\n|[2,2]|            1|  2|  2|\n|[1,2]|            2|  1|  2|\n|[4,0]|     99970002|  4|  0|\n|[1,1]|       -39984|  1|  1|\n|[8,1]|       -19999|  8|  1|\n|[2,1]|       -19995|  2|  1|\n|[8,2]|            1|  8|  2|\n|[2,0]|     99950006|  2|  0|\n|[8,0]|     99990000|  8|  0|\n|[4,2]|            1|  4|  2|\n|[4,1]|       -19997|  4|  1|\n+-----+-------------+---+---+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612797177018_-1542751648",
+      "id": "20210208-101257_2013165688",
+      "dateCreated": "2021-02-08 10:12:57.018",
+      "dateStarted": "2021-02-10 14:02:48.752",
+      "dateFinished": "2021-02-10 14:02:50.001",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "RowScalar,Degree pivot.",
+      "text": "import org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.types.DecimalType\nval df\u003d z.get(\"KvDSUnpavked\").asInstanceOf[DataFrame]\ndf.show\nval groupDf \u003d df.withColumn(\"rowScalar\",col(\"_1\").cast(DecimalType(25,10)))\n                .withColumn(\"degree\",col(\"_2\").cast(DecimalType(25,10)))\n                .withColumn(\"scalar\",col(\"scalar_Result\").cast(DecimalType(25,10)))\n//                .orderBy(asc(\"nBD\"),asc(\"rowCounterBD\"))\n                .groupBy(\"rowScalar\")\n                .pivot(\"degree\")\n                .agg(sum(\"scalar\"))\nval groupDfCount \u003d groupDf.count()\ngroupDf.show(groupDfCount.toInt,false)\ngroupDf.schema\nz.put(\"pivotDF\",groupDf)",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-10 14:03:00.072",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+-------------+---+---+\n|  key|scalar_Result| _1| _2|\n+-----+-------------+---+---+\n|[1,0]|    199840044|  1|  0|\n|[2,2]|            1|  2|  2|\n|[1,2]|            2|  1|  2|\n|[4,0]|     99970002|  4|  0|\n|[1,1]|       -39984|  1|  1|\n|[8,1]|       -19999|  8|  1|\n|[2,1]|       -19995|  2|  1|\n|[8,2]|            1|  8|  2|\n|[2,0]|     99950006|  2|  0|\n|[8,0]|     99990000|  8|  0|\n|[4,2]|            1|  4|  2|\n|[4,1]|       -19997|  4|  1|\n+-----+-------------+---+---+\n\r\n+------------+--------------------+-----------------+------------+\n|rowScalar   |0E-10               |1.0000000000     |2.0000000000|\n+------------+--------------------+-----------------+------------+\n|1.0000000000|199840044.0000000000|-39984.0000000000|2.0000000000|\n|8.0000000000|99990000.0000000000 |-19999.0000000000|1.0000000000|\n|2.0000000000|99950006.0000000000 |-19995.0000000000|1.0000000000|\n|4.0000000000|99970002.0000000000 |-19997.0000000000|1.0000000000|\n+------------+--------------------+-----------------+------------+\n\r\nimport org.apache.spark.sql.DataFrame\r\nimport org.apache.spark.sql.types.DecimalType\r\ndf: org.apache.spark.sql.DataFrame \u003d [key: struct\u003c_1: int, _2: int\u003e, scalar_Result: string ... 2 more fields]\r\ngroupDf: org.apache.spark.sql.DataFrame \u003d [rowScalar: decimal(25,10), 0E-10: decimal(35,10) ... 2 more fields]\r\ngroupDfCount: Long \u003d 4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612555894594_1310396104",
+      "id": "20210205-151134_1378140479",
+      "dateCreated": "2021-02-05 15:11:34.594",
+      "dateStarted": "2021-02-10 14:03:00.094",
+      "dateFinished": "2021-02-10 14:03:10.709",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "PivotrEvaluateUDF implements Quadratic Equation.",
+      "text": "object PivotEvaluateUDF extends Serializable {\n\n//case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\n//case class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\n//case class indexSum(iSum:String,finalISum:String)\n//case class s3ARe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String)\n//case class pivotE(rowScalar:DecimalType,zero:DecimalType,one:DecimalType,two:DecimalType)\n//case class roots(root1:BigDecimal,root2:BigDecimal)\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\nimport org.apache.spark.sql.{Encoder, Encoders}\n\ndef quadEqu(rowP:pivotE): roots \u003d {      //           need to include the rowCounter multiplication  and remember all are BigDecimal.\n\n  val four \u003d new BigDecimal(4)\n  val zero \u003d new BigDecimal(0)\n  val two \u003d new BigDecimal(2)\n  val rowScalar \u003d new BigDecimal(rowP.rowScalar)\n  val a \u003d new BigDecimal(rowP.two)\n  val aMM \u003d rowScalar.multiply(a)\n  val aM \u003d aMM.divide(two)\n  \n  val twoA \u003d aM.multiply(two)\n  val b \u003d new BigDecimal(rowP.one)\n  val bMM \u003d rowScalar.multiply(b)\n  val bM \u003d bMM.divide(two)\n  \n  val negB \u003d zero.subtract(bM)\n  val negBdTwoA \u003d negB.divide(twoA)\n  val bSqr \u003d bM.pow(2)\n  val c \u003d new BigDecimal(rowP.zero)\n  val cMM \u003d rowScalar.multiply(c)\n  val cM \u003d cMM.divide(two)\n  \n  val ac\u003d aM.multiply(cM)\n  val fac \u003d ac.multiply(four)\n  val disc \u003d bSqr.subtract(fac)\n  val discD \u003d disc.doubleValue()    \n  if (discD\u003e0) {\n    val discSqr \u003d Math.sqrt(discD)\n    val discSqrBD \u003d new BigDecimal(discSqr)\n    val discSqrdTwoA \u003d discSqrBD.divide(twoA)\n    val rootOne \u003d negBdTwoA.add(discSqrdTwoA)\n    val rootTwo \u003d negBdTwoA.subtract(discSqrdTwoA)\n    val s \u003d roots(rootOne.toPlainString(),rootTwo.toPlainString())\n    //    val s \u003d roots(rootOne.toPlainString(),rootTwo.toPlainString())\n    s\n    } else \n    {\n    val s \u003d roots(\"no\",\"real roots\")\n    s\n    }\n }\n\ndef main(args:Array[String]) {\n//val df\u003d z.get(args(0)).asInstanceOf[DataFrame]\nspark.udf.register(\"qEque\", quadEqu _)\nval dfff\u003d z.get(\"pivotDF\").asInstanceOf[DataFrame]\ndfff.show(false)\n//val ds: Dataset[pivotE] \u003d df.as[pivotE]\nval dss \u003ddfff.map(row \u003d\u003e pivotE(row.getDecimal(0).toPlainString(), row.getDecimal(1).toPlainString(), row.getDecimal(2).toPlainString(), row.getDecimal(3).toPlainString()))\ndss.show(false)\nval dsss\u003ddss.map{f \u003d\u003e quadEqu(pivotE(f.rowScalar,f.zero,f.one,f.two)) }\n//dss.show(false)\n//val dss\u003dds.map{f \u003d\u003e extendResult(s12QQu(f.index,f.MaxN,f.rowScalar,f.divisor,f.scalar,f.degree)) }\nval dsssCount\u003ddsss.count()\ndsss.show(dsssCount.toInt,false)\n//z.put(args(1),dss)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-12 09:46:32.632",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object PivotEvaluateUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612555897195_2039037764",
+      "id": "20210205-151137_1233487395",
+      "dateCreated": "2021-02-05 15:11:37.195",
+      "dateStarted": "2021-02-10 14:28:19.123",
+      "dateFinished": "2021-02-10 14:28:19.447",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "PivotEvaluateUDF object call.",
+      "text": "PivotEvaluateUDF.main(null)",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-12 10:04:59.662",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+--------------------+-----------------+------------+\n|rowScalar   |0E-10               |1.0000000000     |2.0000000000|\n+------------+--------------------+-----------------+------------+\n|1.0000000000|199840044.0000000000|-39984.0000000000|2.0000000000|\n|8.0000000000|99990000.0000000000 |-19999.0000000000|1.0000000000|\n|2.0000000000|99950006.0000000000 |-19995.0000000000|1.0000000000|\n|4.0000000000|99970002.0000000000 |-19997.0000000000|1.0000000000|\n+------------+--------------------+-----------------+------------+\n\r\n+------------+--------------------+-----------------+------------+\n|rowScalar   |zero                |one              |two         |\n+------------+--------------------+-----------------+------------+\n|1.0000000000|199840044.0000000000|-39984.0000000000|2.0000000000|\n|8.0000000000|99990000.0000000000 |-19999.0000000000|1.0000000000|\n|2.0000000000|99950006.0000000000 |-19995.0000000000|1.0000000000|\n|4.0000000000|99970002.0000000000 |-19997.0000000000|1.0000000000|\n+------------+--------------------+-----------------+------------+\n\r\n+-------+----------+\n|root1  |root2     |\n+-------+----------+\n|no     |real roots|\n|10000.0|9999.0    |\n|9998.0 |9997.0    |\n|9999.0 |9998.0    |\n+-------+----------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612969328084_-1619798130",
+      "id": "20210210-100208_1152583877",
+      "dateCreated": "2021-02-10 10:02:08.084",
+      "dateStarted": "2021-02-10 14:28:25.240",
+      "dateFinished": "2021-02-10 14:28:35.045",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2021-02-12 09:05:56.748",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1612969327655_2017957053",
+      "id": "20210210-100207_1984510727",
+      "dateCreated": "2021-02-10 10:02:07.655",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2021-02-12 09:06:00.699",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1612969327076_1459771073",
+      "id": "20210210-100207_2100624723",
+      "dateCreated": "2021-02-10 10:02:07.076",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1612969325601_741932889",
+      "id": "20210210-100205_452575257",
+      "dateCreated": "2021-02-10 10:02:05.601",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1612969323427_-2075197801",
+      "id": "20210210-100203_762656065",
+      "dateCreated": "2021-02-10 10:02:03.428",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GQuadratics",
+  "id": "2FYF36X89",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

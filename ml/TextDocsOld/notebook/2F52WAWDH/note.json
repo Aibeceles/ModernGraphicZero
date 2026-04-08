@@ -1,0 +1,480 @@
+{
+  "paragraphs": [
+    {
+      "title": "S1 CSV EXPORT",
+      "text": "%neo4j\nCall apoc.export.csv.query(\"\nUNWIND range(2,19) AS n\nWITH toString(n) AS N, \u002720\u0027 as nMax\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:N,MaxN:nMax,Dimension:\u0027256\u0027})-[]-\u003e(e:Evaluate)\nWITH i.N as iN, i.MaxN as iM,e,v,vI,i                        \nOPTIONAL MATCH (vv:VertexNode)\u003c-[vII:VertexIndexedBy]-(ii:IndexedByArgument)-[]-\u003e(ee:Evaluate {Value:toString(vI.twoSeq)})      \n                    where ii.MaxN\u003diM  AND ii.Dimension\u003d\u002716\u0027\n\nWITH\nvI.twoSeq AS vTwoSeq,\nvI.divisor AS vDivisor,\nvII.twoSeq AS vvTwoSeq,\nee.Value AS eeValue,\nvII.divisor AS vvDivisor,\niN,\niM,\ni.Dimension AS iDimension,\nv.Scalar AS vScalar,\nv.Degree AS vDegree,\nvv.Scalar AS vvScalar,\nvv.Degree AS vvDegree,i\n                                      //toString( CASE WHEN toString(i.RowCounter)\u003d\u00272\u0027 THEN apoc.number.exact.mul(toString(v.Scalar),\u00272\u0027) ELSE toString(v.Scalar) END ) AS TTScalarRowCounter\nWITH\n\niN,iM,vTwoSeq as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,   //,toString( CASE WHEN toString(i.RowCounter)\u003d\u00272\u0027 THEN toString(vScalar) ELSE toString(vScalar) END ) AS TTScalarRowCounter, \nCASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n     toString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vScalar),\u00272\u0027) ELSE toString(vScalar) END ) AS TTScalar,\ntoString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.mul(toString(vvScalar),\u00272\u0027) ELSE toString(vvScalar) END) AS AAScalar,\ntoString( CASE WHEN toString(vDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vDegree,\u00271\u0027) ELSE apoc.number.exact.add(vDegree,\u00270\u0027) END ) AS TTDegree,\ntoString( CASE WHEN toString(vvDegree)\u003d\u0027-1\u0027 THEN apoc.number.exact.add(vvDegree,\u00271\u0027) ELSE apoc.number.exact.add(vvDegree,\u00270\u0027)  END) AS AADegree\n\nRETURN\niM,iN,pD,p2Eval,vTwoSeq,TTDegree,TTScalar,vDivisor,vvDivisor,vvTwoSeq,AADegree,AAScalar,\nCASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END AS degreeSum,\nCASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END as scalarProduct,\nCASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END as resultDivisor\n\"\n,\n\"C:/Users/ChiefQuippy/.Neo4jDesktop/neo4jDatabases/database-c41a3534-7e82-4421-819a-dd170f561899/installation-3.4.1/import/D256N20S1.csv\",{d:\";\"})",
+      "user": "anonymous",
+      "dateUpdated": "2020-05-06 13:31:26.464",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "file",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "source",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "format",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "nodes",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "relationships",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "rows",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "properties",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "time",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "batchSize",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "batches",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "done",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1.0,
+                      "paginationPageSize": 250.0
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "file": "string",
+                      "source": "string",
+                      "format": "string",
+                      "nodes": "string",
+                      "relationships": "string",
+                      "properties": "string",
+                      "time": "string",
+                      "rows": "string",
+                      "batchSize": "string",
+                      "batches": "string",
+                      "done": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "tableHide": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "file\tsource\tformat\tnodes\trelationships\tproperties\ttime\trows\tbatchSize\tbatches\tdone\n\"C:/Users/ChiefQuippy/.Neo4jDesktop/neo4jDatabases/database-c41a3534-7e82-4421-819a-dd170f561899/installation-3.4.1/import/D256N20S1.csv\"\t\"kernelTransaction: cols(15)\"\t\"csv\"\t0\t0\t3225555\t52505\t215037\t-1\t0\tTRUE\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1585429108660_1521236298",
+      "id": "20200328-165828_38405299",
+      "dateCreated": "2020-03-28 16:58:28.660",
+      "dateStarted": "2020-03-28 18:17:29.686",
+      "dateFinished": "2020-03-28 18:18:22.372",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S2 IMPORT CSV",
+      "text": "%neo4j\nUSING PERIODIC COMMIT 2000\nLOAD CSV WITH HEADERS FROM \"file:/\" + \"D256N20S1.csv\" AS line FIELDTERMINATOR \";\"\nWITH line\nMerge (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:line.iM,N:line.iN,Divisor:line.pD,afe:line.p2Eval,tft:toInteger(line.vTwoSeq)})                                       \nCREATE (cl)-[:Arguments]-\u003e(aN:ArgumentsNode { TDegree:line.TTDegree,\n                                              TScalar:line.TTScalar,                    \n                                              TDivisor:line.vDivisor,\n                                              ADivisor:line.vvDivisor,\n                                              ATwoSeq:line.vvTwoSeq,                          \n                                              ADegree:line.AADegree,   \n                                              AScalar:line.AAScalar,                  \n                                              DegreeSum:line.degreeSum,\n                                              ScalarProduct:line.scalarProduct,\n                                              ResultDivisor:line.resultDivisor })\n\nRETURN COUNT(cl)",
+      "user": "anonymous",
+      "dateUpdated": "2020-04-02 14:11:43.588",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "COUNT(cl)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "COUNT(cl)\n215037\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1585429105730_-2089927087",
+      "id": "20200328-165825_427744471",
+      "dateCreated": "2020-03-28 16:58:25.730",
+      "dateStarted": "2020-03-28 18:18:36.015",
+      "dateFinished": "2020-03-28 18:19:48.633",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "D256S3E",
+      "text": "%neo4j\nUNWIND range(7,7) AS n\nWITH toString(n) AS N, \"20\" as nMax\n\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWith max(aN.ResultDivisor) as maxDivisor,N,nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,\n      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,\n      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,\n      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,  N as iN, nMax as iM,maxDivisor  // cl.N as iN,cl.MaxN as iM,\n// Collect the products in context of tft (twoSequence), divisors\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor\nUNWIND aPTds as aPTdsU\n//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor\n\n                                                                           //  ResultDivisor (defined in S1) is not the same as maxDivisor and both are differnent from argumentProduct Divisor (apD) \nWITH CASE WHEN aPclafe \u003d 99 THEN                                           //  Looks like depricated condition.  A simple map definition is probably sufficient.                                \n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                            //  Otherwise, have maps of scalars,degrees,divisors in terms of RowCounter and apD.                                             ResultDegree:aPTdsU.DegreeSum,\n      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               \nELSE\n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       \n    ResultDegree:aPTdsU.DegreeSum,                                    \n    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM,maxDivisor\n//RETURN resultProduct\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\n\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU                                                                         //  Have maps of lists of scalars in context of Degree, ResultDivisor, Divisor (apD), RowCounter. \nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm\n\n                                                                                               //  Drop RowCounter (eTrm) context. Collect scalars in terms of ResultDivisor, Divisor, Degree.\nWITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,\"0\" as accumulator,maxDivisor\nCREATE (a:Accumulator { acc:\"0\"})\nFOREACH (n IN cts| SET a.acc \u003d apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter)    // Sum scalar list.\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN            // Map degree,scalar by ResultDivisor.\n//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN\n//RETURN pTerms\nWITH COLLECT(pTerms) as pTermss,iM,iN\n\n\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\n//RETURN dSListU.Degree,dSListU.Scalar,pTD\nCREATE (c:Accumulator {acc:\"1\"})   \nFOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc \u003d apoc.number.exact.mul(c.acc,toString(iM)))   //  Calculate N^Degree.\nWith apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD,iN,iM                          //  Multiply result by Scalar.\nWITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap,iN,iM                           //  Collect maps of results in terms of Divisors.\n//Return termsMap\nWITH COLLECT(termsMap) AS termsMapC,iN,iM\nUNWIND RANGE(0,SIZE(termsMapC)-1) as pTT\nCREATE (b:Accumulator { acc:\"0\" ,db:toString(termsMapC[pTT].DivideBy) })\nFOREACH (n IN termsMapC[pTT].SDP| SET b.acc \u003d apoc.number.exact.add(b.acc,n))\nWITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b,iM,iN                                     //  Divide each result by Divisor.\n\nWITH COLLECT(pResult) as evaluates,iN,iM                                                                // Collect list of results and add.\n//return evaluates,iN,iM\nCREATE (d:Accumulator { acc:\"0\"})\nFOREACH (n IN evaluates| SET d.acc \u003d apoc.number.exact.add(d.acc,n)) \n\nRETURN d.acc as Value",
+      "user": "anonymous",
+      "dateUpdated": "2020-05-05 13:47:05.540",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Value": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Expected a numeric value for RangeFunction(Literal(1),ToIntegerFunction(ReferenceFromSlot(6).Degree),Literal(1)), but got null"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1583862651047_-471313863",
+      "id": "20200310-135051_1308166022",
+      "dateCreated": "2020-03-10 13:50:51.049",
+      "dateStarted": "2020-05-05 13:47:05.818",
+      "dateFinished": "2020-05-05 13:47:07.666",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3T ALL N EXPORT",
+      "text": "%neo4j\nCall apoc.export.csv.query(\"\nUNWIND range(2,19) AS n\nWITH toString(n) AS N, \u002720\u0027 as nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N,tft:2^(toInteger(N)-2)})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH DISTINCT aN.ResultDivisor AS maxDivisor,N,nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,\n      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,\n      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,\n      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,N as iN,nMax as iM,maxDivisor   //  ,cl.N as iN,cl.MaxN as iM\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor\nUNWIND aPTds as aPTdsU\n//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor\nWITH CASE WHEN aPclafe \u003d 99 THEN                                                                                 \n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,ResultDegree:aPTdsU.DegreeSum,ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                 \nELSE\n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,ResultDegree:aPTdsU.DegreeSum,ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM,maxDivisor\n//RETURN resultProduct\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm\n//WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,\u00270\u0027 as accumulator,maxDivisor,eTrm\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor,eTrm \nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm \n//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm\n//RETURN pTerms\nWITH COLLECT(pTerms) as pTermss,iM,iN,eTrm\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,eTrm\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,eTrm\nRETURN tDegree,tScalar,iN,iM,pTD,eTrm\n\"\n,\n\"C:/Users/ChiefQuippy/.Neo4jDesktop/neo4jDatabases/database-c41a3534-7e82-4421-819a-dd170f561899/installation-3.4.1/import/D256N20S3T.csv\",{d:\";\"})",
+      "user": "anonymous",
+      "dateUpdated": "2020-05-06 10:59:48.925",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1585428803010_1601458761",
+      "id": "20200328-165323_62642713",
+      "dateCreated": "2020-03-28 16:53:23.011",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-04-27 08:00:39.767",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1587988839613_-1712084670",
+      "id": "20200427-080039_1460340763",
+      "dateCreated": "2020-04-27 08:00:39.680",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3T ALL N IMPORT",
+      "text": "%neo4j\nUSING PERIODIC COMMIT 2000\nLOAD CSV WITH HEADERS FROM \"file:/\" + \"D256N20S3T.csv\" AS line FIELDTERMINATOR \";\"\nWITH line\nMERGE (i:IndexedBy {N:line.iN,RowCounter:line.eTrm,MaxN:line.iM,Dimension:\"512\"} )  \nCREATE (v:VertexNode {Scalar:line.tScalar,Degree:toString(line.tDegree)} )\nMERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(line.iN)))}) \nMERGE (i) -[:IndexedByEvaluate]-\u003e(e)\nMERGE  (i)-[eee:VertexIndexedBy {twoSeq:line.eTrm, divisor:line.pTD}]-\u003e(v)\n\nRETURN COUNT(i)",
+      "user": "anonymous",
+      "dateUpdated": "2020-05-05 10:59:05.062",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1585668120793_1948569463",
+      "id": "20200331-112200_490054514",
+      "dateCreated": "2020-03-31 11:22:00.793",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3A ALL N EXPORT",
+      "text": "%neo4j\nCall apoc.export.csv.query(\"\nUNWIND range(2,19) AS n\nWITH toString(n) AS N, \u002720\u0027 as nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N,tft:2^(toInteger(N)-2)})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH DISTINCT aN.ResultDivisor AS maxDivisor,N,nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,\n      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,\n      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,\n      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,N as iN,nMax as iM,maxDivisor\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor\nUNWIND aPTds as aPTdsU\n//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor\nWITH CASE WHEN aPclafe \u003d 99 THEN                                                                                 \n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               \n      ResultDegree:aPTdsU.DegreeSum,\n      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               \nELSE\n{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       \n    ResultDegree:aPTdsU.DegreeSum,                                      \n    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM,maxDivisor\n//RETURN resultProduct\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor    //,eTrm\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor //  rDivisor,\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \n//  Below need a refactor - the degree should not be in the collected maps  -  the number.exact.mul should occure earlier in the script.\n//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN\nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD\nRETURN tDegree,tScalar,pTD,iM,iN\n\"\n,\n\"C:/Users/ChiefQuippy/.Neo4jDesktop/neo4jDatabases/database-c41a3534-7e82-4421-819a-dd170f561899/installation-3.4.1/import/D256N20S3A.csv\",{d:\";\"})\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-05-06 08:49:52.360",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1585666416954_-1955721002",
+      "id": "20200331-105336_542321510",
+      "dateCreated": "2020-03-31 10:53:36.954",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3A ALL N IMPORT",
+      "text": "%neo4j\nUSING PERIODIC COMMIT 2000\nLOAD CSV WITH HEADERS FROM \"file:/\" + \"D256N20S3A.csv\" AS line FIELDTERMINATOR \";\"\nWITH line\nMERGE (i:IndexedByArgument {N:line.iN,MaxN:line.iM,Dimension:\"512\"} )  \nCREATE (v:VertexNode {Scalar:line.tScalar,Degree:toString(line.tDegree)} )\nMERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(line.iN)))}) \nMERGE (i) -[:IndexedByEvaluate]-\u003e(e)\nMERGE  (i)-[eee:VertexIndexedBy {twoSeq:\"99\", divisor:line.pTD}]-\u003e(v)    \nRETURN COUNT(i)",
+      "user": "anonymous",
+      "dateUpdated": "2020-03-31 11:29:47.045",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1585668341454_-1483187825",
+      "id": "20200331-112541_1743103788",
+      "dateCreated": "2020-03-31 11:25:41.454",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "D256",
+  "id": "2F52WAWDH",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "neo4j:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

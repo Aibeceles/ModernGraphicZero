@@ -1,0 +1,271 @@
+{
+  "paragraphs": [
+    {
+      "text": "kafka.zookeeper.connect\u003dlocalhost:2181\nkafka.bootstrap.servers\u003dlocalhost:9092\nstreams.procedures.enabled\u003d\u003ctrue/false, default\u003dtrue\u003e\nstreams.sink.enabled\u003dtrue",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-24 08:55:50.559",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003ekafka.zookeeper.connect\u003dlocalhost:2181\u003cbr/\u003ekafka.bootstrap.servers\u003dlocalhost:9092\u003cbr/\u003estreams.procedures.enabled\u003d\u0026lt;true/false, default\u003dtrue\u0026gt;\u003cbr/\u003estreams.sink.enabled\u003dtrue\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608818093849_1335911988",
+      "id": "20201224-085453_1273197774",
+      "dateCreated": "2020-12-24 08:54:53.849",
+      "dateStarted": "2020-12-24 08:55:50.559",
+      "dateFinished": "2020-12-24 08:55:52.107",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "streams.sink.topic.cypher.twoPoly\u003dMERGE (i:IndexedBy {N:event.NN,RowCounter:event.flatFileRowCounterr,MaxN:event.nMaxx,Dimension:\"2\"} ) \\\nMERGE (t:TwoSeqFactor {twoSeq:event.tSeqDB} ) \\\nMERGE (v:VertexNode {Vertex:event.vertexDBVertex,Scalar:event.vertexScalarDB,Degree:event.vertexDegreeDB} ) \\\nMERGE (e:Evaluate {Value:event.targetEvaluate}) \\\nMERGE  (i)-[ee:TwoFactor]-\u003e(t) \\\nMERGE (i) -[:IndexedByEvaluate]-\u003e(e) \\\nMERGE  (i)-[:VertexIndexedBy]-\u003e(v)",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-24 08:56:30.482",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003estreams.sink.topic.cypher.twoPoly\u003dMERGE (i:IndexedBy {N:event.NN,RowCounter:event.flatFileRowCounterr,MaxN:event.nMaxx,Dimension:\u0026ldquo;2\u0026rdquo;} ) \\\u003cbr/\u003eMERGE (t:TwoSeqFactor {twoSeq:event.tSeqDB} ) \\\u003cbr/\u003eMERGE (v:VertexNode {Vertex:event.vertexDBVertex,Scalar:event.vertexScalarDB,Degree:event.vertexDegreeDB} ) \\\u003cbr/\u003eMERGE (e:Evaluate {Value:event.targetEvaluate}) \\\u003cbr/\u003eMERGE (i)-[ee:TwoFactor]-\u0026gt;(t) \\\u003cbr/\u003eMERGE (i) -[:IndexedByEvaluate]-\u0026gt;(e) \\\u003cbr/\u003eMERGE (i)-[:VertexIndexedBy]-\u0026gt;(v)\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608818124491_1340814292",
+      "id": "20201224-085524_449945065",
+      "dateCreated": "2020-12-24 08:55:24.491",
+      "dateStarted": "2020-12-24 08:56:30.483",
+      "dateFinished": "2020-12-24 08:56:30.497",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "streams.sink.topic.cypher.s12\u003dCreate (aN:ArgumentsNode { TDegree:event.TTDegree, TScalar:event.TTScalar, TDivisor:event.vDivisor, ADivisor:event.vvDivisor,ATwoSeq:event.vvTwoSeq,ADegree:event.AADegree,AScalar:event.AAScalar,DegreeSum:event.degreeSum,ScalarProduct:event.scalarProduct,ResultDivisor:event.resultDivisor }) \\\nMerge (cl:CollectedProductArgNode {Dimension:event.writeDimension,MaxN:event.iM,N:event.iN,Divisor:event.pD,afe:event.p2Eval,tft:toInteger(event.vTwoSeq)}) \\\nMerge (cl) - [:Arguments] -\u003e (aN)",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-24 08:57:15.416",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003estreams.sink.topic.cypher.s12\u003dCreate (aN:ArgumentsNode { TDegree:event.TTDegree, TScalar:event.TTScalar, TDivisor:event.vDivisor, ADivisor:event.vvDivisor,ATwoSeq:event.vvTwoSeq,ADegree:event.AADegree,AScalar:event.AAScalar,DegreeSum:event.degreeSum,ScalarProduct:event.scalarProduct,ResultDivisor:event.resultDivisor }) \\\u003cbr/\u003eMerge (cl:CollectedProductArgNode {Dimension:event.writeDimension,MaxN:event.iM,N:event.iN,Divisor:event.pD,afe:event.p2Eval,tft:toInteger(event.vTwoSeq)}) \\\u003cbr/\u003eMerge (cl) - [:Arguments] -\u0026gt; (aN)\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608818117128_-1032475093",
+      "id": "20201224-085517_964968030",
+      "dateCreated": "2020-12-24 08:55:17.128",
+      "dateStarted": "2020-12-24 08:57:15.416",
+      "dateFinished": "2020-12-24 08:57:15.426",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "streams.sink.topic.cypher.s3t\u003dCREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)} ) \\\nMERGE (i:IndexedBy {N:event.iN,RowCounter:event.eTrm,MaxN:event.iM,Dimension:event.dimension} ) \\\nMERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) \\\nMERGE (i) -[:IndexedByEvaluate]-\u003e(e) \\\nMERGE  (i)-[eee:VertexIndexedBy {twoSeq:event.eTrm, divisor:event.pTD}]-\u003e(v)",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-24 08:57:57.943",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003estreams.sink.topic.cypher.s3t\u003dCREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)} ) \\\u003cbr/\u003eMERGE (i:IndexedBy {N:event.iN,RowCounter:event.eTrm,MaxN:event.iM,Dimension:event.dimension} ) \\\u003cbr/\u003eMERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) \\\u003cbr/\u003eMERGE (i) -[:IndexedByEvaluate]-\u0026gt;(e) \\\u003cbr/\u003eMERGE (i)-[eee:VertexIndexedBy {twoSeq:event.eTrm, divisor:event.pTD}]-\u0026gt;(v)\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608818116641_1113956067",
+      "id": "20201224-085516_988465676",
+      "dateCreated": "2020-12-24 08:55:16.641",
+      "dateStarted": "2020-12-24 08:57:57.943",
+      "dateFinished": "2020-12-24 08:57:57.952",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "streams.sink.topic.cypher.s3a\u003dCREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)}) \\\nMERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) \\\nMERGE (i:IndexedByArgument {N:event.iN,MaxN:event.iM,Dimension:event.dimension} ) \\\nMERGE (i) -[:IndexedByEvaluate]-\u003e(e) \\\nMERGE  (i)-[eee:VertexIndexedBy {twoSeq:\"99\", divisor:event.pTD}]-\u003e(v)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-24 08:58:34.911",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003estreams.sink.topic.cypher.s3a\u003dCREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)}) \\\u003cbr/\u003eMERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) \\\u003cbr/\u003eMERGE (i:IndexedByArgument {N:event.iN,MaxN:event.iM,Dimension:event.dimension} ) \\\u003cbr/\u003eMERGE (i) -[:IndexedByEvaluate]-\u0026gt;(e) \\\u003cbr/\u003eMERGE (i)-[eee:VertexIndexedBy {twoSeq:\u0026ldquo;99\u0026rdquo;, divisor:event.pTD}]-\u0026gt;(v)\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608818116154_-1373136166",
+      "id": "20201224-085516_1828132452",
+      "dateCreated": "2020-12-24 08:55:16.154",
+      "dateStarted": "2020-12-24 08:58:34.911",
+      "dateFinished": "2020-12-24 08:58:34.920",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Tenant graphs: \n.differenceGraph\n.integerpolys\n.skipmu\n.createbymu",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-19 13:34:58.246",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1608818115376_1847016252",
+      "id": "20201224-085515_679327110",
+      "dateCreated": "2020-12-24 08:55:15.376",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CREATE INDEX ON :IndexedBy(N,MaxN)\nCREATE INDEX ON :Evaluate(Value)\nCREATE INDEX ON :TwoSeqFactor(twoSeq)\nCREATE INDEX ON :CollectedProductArgNode(MaxN,N)\nCREATE INDEX ON :IndexedByArgument(N,MaxN)\n\nCREATE INDEX ON :CreatedBy(resultId)\nCREATE INDEX ON :Dnode(vmResult)",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-19 13:35:21.226",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1621445698343_1551945243",
+      "id": "20210519-133458_1747089219",
+      "dateCreated": "2021-05-19 13:34:58.343",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Streams.Sink.Topic.Cypher",
+  "id": "2FT43SUAG",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

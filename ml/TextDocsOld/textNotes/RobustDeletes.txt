@@ -1,0 +1,165 @@
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='5' AND i.MaxN='6' AND i.Dimension="4"                                      //  Must aggree with Merge clause.
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval     
+
+
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4'}) - [:Arguments] -> (aN:ArgumentsNode)
+DETACH DELETE cl,aN
+         
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                                TScalar:CASE WHEN toInteger(v.Degree)=-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,
+                                                ATwoSeq:toInteger(p2.T),
+                                                ADegree:toInteger(vv.Degree),   
+                                                AScalar:CASE WHEN toInteger(vv.Degree)=-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })
+RETURN cl,aN
+
+
+
+
+Nodes created in D4 second script:
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4'}) - [:Arguments] -> (aN:ArgumentsNode)
+DETACH DELETE cl,aN
+
+
+Nodes created in D4 third script:                                           //  [eee:TargetRelation]   there is no context in nextD first script for this lable.
+
+MATCH (i:IndexedByArgument {Dimension:"8"})-[eee:TargetRelation]->(v)
+DETACH DELETE i,v
+
+
+MERGE (i:IndexedBy {N:iN,RowCounter:eTrm,MaxN:iM,Dimension:"8"} )
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+
+
+
+MATCH  (i:IndexedBy {Dimension:"8"})-[eee:TargetRelation]->(v)
+
+
+
+MERGE  (i)-[eee:VertexIndexedBy {twoSeq:"99", divisor:pTD}]->(v)
+
+
+
+
+MERGE (i:IndexedBy {N:iN,RowCounter:eTrm,MaxN:iM,Dimension:"16"} )  
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MATCH  (i:IndexedBy {Dimension:"16"} ) -[eee:VertexIndexedBy]->(v)
+
+
+MATCH  (i:IndexedBy {Dimension:"16"} ) -[eee:VertexIndexedBy]->(v)
+DETACH DELETE i,eee
+
+
+MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:"16"} )  
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:VertexIndexedBy]->(v)
+
+
+MATCH  (i:IndexedByArgument {Dimension:"16"} )-[eee:VertexIndexedBy]->(v)
+DETACH DELETE i,eee
+
+
+
+DELETE QuartetsRefactord script 2 created nodes.
+MATCH (cl:CollectedProductArgNode {Dimension:'4'}) - [:Arguments] -> (aN:ArgumentsNode)
+DETACH DELETE cl,aN
+
+DELETE QuartetsRefactored script 3 Target created nodes.
+MATCH  (i:IndexedBy {Dimension:"8"} ) -[eee:VertexIndexedBy]->(v)
+DETACH DELETE i,v
+
+DELETE QuartetsRefactored script 3 Argument created nodes.
+MATCH  (ii:IndexedByArgument {Dimension:"8"} )-[eee:VertexIndexedBy]->(vv)
+DETACH DELETE ii,vv
+
+
+
+
+
+DELETE D8 script 2 created nodes.
+MATCH (cl:CollectedProductArgNode {Dimension:'8'}) - [:Arguments] -> (aN:ArgumentsNode)
+DETACH DELETE cl,aN
+
+DELETE D8 script 3 Target created nodes.
+MATCH  (i:IndexedBy {Dimension:"16"} ) -[eee:VertexIndexedBy]->(v)
+DETACH DELETE i,v
+
+DELETE D8 script 3 Argument created nodes.
+MATCH  (ii:IndexedByArgument {Dimension:"16"} )-[eee:VertexIndexedBy]->(vv)
+DETACH DELETE ii,vv
+
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) 
+                     where i.N="5" AND i.MaxN="6" AND i.Dimension="8" //AND t.twoSeq=1
+WITH i.N as iN, i.MaxN as iM,e,v,t,i                        
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedByArgument)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii)
+                    where ii.MaxN="6"  AND ii.Dimension="8"
+WITH iN,iM,e,v,vv,t,tt,ee
+CREATE (p:ProductArgsNode {Divisor:t.twoSeq,Dimension:"8"})  
+FOREACH(snoreMe IN CASE  WHEN vv.Degree IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq,Divisor:t.divisor}] - (p) )                                                      
+FOREACH(snoreMe IN CASE  WHEN vv.Degree IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq,Divisor:t.divisor}] - (p)    
+CREATE (p) - [:ProductRelationA {T:tt.twoSeq, Eval:ee.Value,Divisor:tt.divisor}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"8",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+RETURN i,p,v,vv
+
+
+CREATE (p:ProductArgsNode {Divisor:t.twoSeq,Dimension:"8"}) 
+MERGE  (i:IndexedBy {N:iN, Dimension:"8",MaxN:iM,RowCounter:t.twoSeq})
+
+
+
+MERGE  (i:IndexedBy {Dimension:"8"})-[:VertexIndexedBy]->(p:ProductArgsNode {Dimension:"8"})
+DETACH DELETE i,p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

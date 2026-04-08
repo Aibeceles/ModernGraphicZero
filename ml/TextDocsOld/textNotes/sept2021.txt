@@ -1,0 +1,1623 @@
+
+
+9/1
+
+The graph utility is: with an arbitrary node x define a sequence 
+of transoforms on x.polynomial resulting in the node y.polynomial.  Important to
+this set of transforms is the pArray information on each node'c CreatedBy analog
+node. First off, pArray is a graph coordinate.  Each integer in pArray from the graph
+root defines which branch to take at each graph depth
+
+The goal is take ZAD graph and link nodes with common denominator.
+
+so for d, another d 1 hop
+                    2 hop
+                    ...
+                    n hops
+
+a histogram...
+take averages of all d's one hop, two hop...
+
+How far apart are the d's? Relates to GS hyperparameters?   --  Suppose important question.
+How algabraicly near ard the d's for the nodes connected to a particular node's d?
+
+ZAD writes G irrespective of determined/undetermined properties.
+Does detach delete undetermined disjoin determined nodes? 
+Not just detach delete re-link as zMap into undetermined inherites undetermined zMap.
+
+
+
+MATCH (n:Dnode) 
+WITH n.muList as nB, size(n.muList) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+SET n.muListSize=size(listNB)
+RETURN COUNT(n) as NodesUpdated
+
+
+MATCH (m:MuNumber) 
+WITH m                                               
+OPTIONAL MATCH (d:Dnode {muList:m.nBinary})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+DELETE m)
+
+
+MATCH (d:Dnode)
+WITH d
+SET d.allZerosMu=0
+FOREACH(x IN (CASE WHEN d.muListSize=d.totalZero THEN [1] else [0] END) |
+SET d.allZerosMu=1)
+
+
+
+MATCH (d:Dnode)-[p:predictedLink]->(dd:Dnode) WHERE d.dd=dd.dd
+DELETE p
+MERGE (d)-[:zMap]->(dd)
+RETURN COUNT(p)
+
+MATCH (:Dnode)-[r:predictedLink]->(:Dnode)
+DELETE r
+
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy)   
+Set n.wNum=c.wNum
+return count(n)
+
+
+CALL gds.beta.graphSage.train(
+  'myGraph',
+  {
+     modelName: 'myGraphh',
+     epochs:75
+    , aggregator: 'pool'
+//    , aggregator: 'mean'
+    , activationFunction: 'relu'
+    , featureProperties: ['dd']
+    , projectedFeatureDimension: 1
+    , sampleSizes: [25, 10]
+    , searchDepth: 25
+  }
+)
+
+
+ Therefore, increasing the walk length can introduce undesired information sharing between nodes
+having a too large K can even cause having the same embedding for all nodes.
+
+
+Current Node Lable predictions always write the greater distribution as predicted.
+if more undetermined then all predicted are undetermined.
+if more determined then all predicted are determined
+
+maybe wNum, num zeros predict determined
+
+maybe have to rewrite wNum to indicate expected number of zeros....
+
+
+
+
+MATCH (d:Dnode) 
+WITH d 
+FOREACH(x IN (CASE WHEN d.totalZero=0 THEN [1] else [0] END) | SET d.zero=1)      totalZero
+FOREACH(x IN (CASE WHEN d.totalZero=1 THEN [1] else [0] END) | SET d.one=1)
+FOREACH(x IN (CASE WHEN d.totalZero=2 THEN [1] else [0] END) | SET d.two=1)
+FOREACH(x IN (CASE WHEN d.totalZero=3 THEN [1] else [0] END) | SET d.three=1)
+RETURN COUNT(d)
+
+
+MATCH (d:Dnode) 
+set d.zero=0
+case when d.totalZero=0 then [1] else [] as update
+foreach (x in update | set d.zero=1)
+return count(d)
+
+
+MATCH (d:Dnode) 
+set d.zero=0
+WITH d, CASE WHEN d.totalZero=0 then [1] else [] end as update
+foreach (x in update | set d.zero=1)
+return count(d)
+
+
+MATCH (d:Dnode) 
+set d.three=0
+WITH d, CASE WHEN d.totalZero=3 then [1] else [] end as update
+foreach (x in update | set d.three=1)
+return count(d)
+
+
+MATCH (n:Dnode {determined:1}  ) RETURN count(n)
+
+MATCH (n:Dnode {predictedDetermined:1, determined:0}  ) RETURN n
+
+MATCH (n:Dnode) 
+set n.predictedDetermined=-1
+set n.predictedProbabilities=-1
+return count(n)
+
+MATCH (n:Dnode) where n.wNum is NULL return n
+
+
+
+
+
+
+
+
+
+
+Appended features are returning same train test probability 
+but predictions are performant....   --- not with embedding though....
+
+probably instead of wNum,  a vector wNum0 is 0,1
+                                    wNum1 is 0,1...
+
+
+
+Have the link prediction      using embedding. 
+     the label prediction not using embedding...
+
+
+Graph* has single node label.  maybe want to label determined and undetermined and drop dNode for browser view.
+
+And ZAD:
+
+pArray defines zeros at an index of triag_i.
+can  implement the skip pattern.
+
+can put in a multiple of triag_1's factorial   eg: triag_4 are multiples of 6.
+
+The revisit of DifferencesPolynomials.ods.  
+
+Have Three components of worksheet:
+
+1.Cells for the definition of P.
+2.Cells denoting evaluates for a range of imputs acroos the triag_i's.
+3.Cells advising the appropriate scalar adjustment at a particular triag_i's index.
+
+In regard to the third component, a value at traig_i's index cell is a "most" to add or subtract.
+ZAD resolves only the zero.  Want ZAD to write the range up to the term for expecting a zero.
+
+easy on a small graph.  Very problomatic on larger graph.
+
+
+
+9/2
+
+MATCH (n {name: 'Stefan'})
+SET n:German
+RETURN n.name, labels(n) AS labels
+
+
+MATCH (n {name: 'Peter'})
+REMOVE n:German
+RETURN n.name, labels(n)
+
+MATCH (d:Dnode {determined:1})
+SET d:DDetermined
+RETURN COUNT(d)
+
+MATCH (d:Dnode {determined:0})
+SET d:DUndetermined
+RETURN COUNT(d)
+
+MATCH (d:DDetermined),(dd:DUndetermined)
+REMOVE d:Dnode
+REMOVE dd:Dnode
+RETURN d,dd
+
+MATCH (d:DDetermined),(dd:DUndetermined)
+SET d:Dnode
+SET dd:Dnode
+RETURN COUNT(d),COUNT(dd)
+
+
+
+MATCH (d:DUndetermined {predictedDetermined:1}) RETURN COUNT(n)
+SET d:BadPrediction
+RETURN COUNT(d)
+
+
+MATCH (d:DDetermined),(dd:DUndetermined),(ddd:BadPrediction)
+RETURN d,dd,ddd
+
+DiffDFScripts will not work with DNodes renamed...
+
+
+Directory for note paragraph images:
+ 
+C:\Users\Aibes\zeppelin-0.8.2-bin-all\zeppelin-web-0.8.2
+
+<IMG SRC="graph.jpg">
+
+
+MATCH (n:Dnode) 
+WITH n.muList as nB, size(n.muList) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+SET n.muListSize=size(listNB)
+RETURN COUNT(n) as NodesUpdated
+
+MATCH (d:Dnode)
+SET d.wNum=toFloat(d.wNum)
+RETURN count(d)
+
+
+MATCH (d:Dnode)
+WITH d
+SET d.allZerosMu=0
+FOREACH(x IN (CASE WHEN d.muListSize=d.totalZero THEN [1] else [0] END) |
+SET d.allZerosMu=1)
+
+MATCH (d:Dnode)
+SET d.determined=toInteger(d.determined)
+RETURN count(d)
+
+
+9/3
+
+Export files are written to the import directory, which is defined by the dbms.directories.import
+
+apoc.export.file.enabled=true
+
+CALL apoc.export.csv.all("CubicNewtonDifferences.csv", {})
+
+
+CALL gds.alpha.ml.nodeClassification.predict.write('myGraph', {
+  nodeLabels: ['Dnode'],
+  modelName: 'determined-model',
+  writeProperty: 'predictedDetermined',
+  predictedProbabilityProperty: 'predictedProbabilities'
+}) YIELD nodePropertiesWritten
+
+
+9/5
+
+
+fxrenderer
+
+9/6
+
+https://stats.stackexchange.com/questions/61328/libsvm-data-format
+
+https://spark.apache.org/docs/latest/ml-classification-regression.html#one-vs-rest-classifier-aka-one-vs-all
+
+https://en.wikipedia.org/wiki/Singular_value_decomposition
+
+https://web.stanford.edu/class/cs520/2020/notes/What_Are_Some_Inference_Algorithms.html
+
+http://zyxue.github.io/2018/09/12/visualize-various-gradient-descent-algorithms.html
+//  "pretty" useless.
+
+
+https://towardsdatascience.com/why-visualize-gradient-descent-optimization-algorithms-a393806eee2
+
+https://towardsdatascience.com/an-intuitive-explanation-of-graphsage-6df9437ee64f
+
+We can divide GraphSAGE into three main parts as context construction, information aggregation, and loss function
+
+https://dsgiitr.com/blogs/graphsage/
+
+https://sefiks.com/2021/06/06/graph-embeddings-in-neo4j-with-graphsage/
+//  Neo4j graphsage walk through.  uses eucliddeanDistance of embedding for similarity.
+
+https://www.quantamagazine.org/how-big-data-carried-graph-theory-into-new-dimensions-20210819/
+// wax -  The higher-order analogue of a graph, for example, is called a hypergraph, and instead of edges, it has “hyperedges.
+//        https://www.quantamagazine.org/new-math-proof-raises-lower-bounds-of-graph-randomness-20201104/
+
+https://medium.com/analytics-vidhya/ohmygraphs-graphsage-and-inductive-representation-learning-ea26d2835331
+//  Algorithm explained.
+
+
+https://antonsruberts.github.io/graph/graphsage/
+// GS deep dive.  does incpomprehsable scatter plot. 
+
+
+is :Dnode {d} property near another d?
+
+so for d, another d 1 hop
+                    2 hop
+                    ...
+                    n hops
+
+a histogram...
+
+
+6 days ago graphsage3.note
+
+. DiffDataExploeD6C1,2 
+. DiffDnodeMuD
+
+
+CALL db.schema.visualization()
+
+
+sklearn.manifold.TSNE — scikit-learn 0.24.2 documentation
+X_embedded = TSNE(n_components=2, random_state=6).fit_transform(list(X.embedding))
+
+places = list(X.place)
+df = pd.DataFrame(data = {
+    "place": places,
+    "country": X.country,
+    "x": [value[0] for value in list(X_embedded)],
+    "y": [value[1] for value in list(X_embedded)]
+})
+
+
+We can then use the Altair visualization library to create a scatterplot of these coordinates:
+
+chart = alt.Chart(df).mark_circle(size=60).encode(
+    x='x',
+    y='y',
+    tooltip=['place', 'country']
+).properties(width=700, height=400)
+chart.save('node2vec.json')
+chart
+
+
+If the input dataset has a dimension greater than 50, it is advisable to project the data set down to 50 dimensions using PCA or some similar technique.
+https://towardsdatascience.com/t-distributed-stochastic-neighbor-embedding-t-sne-bb60ff109561
+
+http://www.edwardraff.com/jsat_docs/JSAT-0.0.8-javadoc/jsat/datatransform/visualization/TSNE.html
+
+https://www.tabnine.com/code/java/classes/org.deeplearning4j.plot.Tsne
+
+https://alvinalexander.com/java/jwarehouse/deeplearning4j/deeplearning4j-core/src/main/java/org/deeplearning4j/plot/Tsne.java.shtml
+
+https://onix-systems.com/blog/top-10-java-machine-learning-tools-and-libraries
+
+https://github.com/rahul-raj/Java-Deep-Learning-Cookbook/blob/master/05_Implementing_NLP/sourceCode/cookbookapp/words.txt
+
+Here is an image of the tsne-standard-coords.csv file plotted using gnuplot.
+
+Have to write the embedding into Dnode.
+Have to ZADScripts read the embedding into dataframe.
+
+So, tSNE has implementation curve.
+Neo4j GraphSage will write a 2 dimensional/3 dimensional embedding  ---  can k-Means ---  Have the plot variables.
+
+https://www.geeksforgeeks.org/difference-between-pca-vs-t-sne/
+
+https://medium.com/analytics-vidhya/pca-vs-t-sne-17bcd882bf3d
+
+Can scatter plot with centers.
+
+6 lines (6 sloc) 120 Bytes
+
+0 1:0.0 2:0.0 3:0.0
+1 1:0.1 2:0.1 3:0.1
+2 1:0.2 2:0.2 3:0.2
+3 1:9.0 2:9.0 3:9.0
+4 1:9.1 2:9.1 3:9.1
+5 1:9.2 2:9.2 3:9.2
+
+
+Will have to unpack the 2,3 d array as each in the array a property.
+Is running GS 2,3 d similar to GS64 and then tSNE???? Favorable/UnFavorable???
+
+match,return and plot.
+
+
+Spark has principal component analysis...
+
+
+
+Have ZAD writing zeros..
+Write the modulo...   
+
+The object of interest is 1x^3 differenced.
+
+triag_1's factorial is 1
+triag_2's factorial is 2
+
+Transform triag_2 into p with root at index=1 is accomplished
+by subtracting 6 from square term (currently 0). 
+
+What happens when subtract value less than 6 (Range 1..5)?
+Suppose subtract 1.
+Define zero at index=0, 
+then the linear term is also a subtract (the strict zero only
+algorithm alternates addition and subtraction).
+A unique qubic is defined with 4 defined in the constant term of P.
+ 
+							
+Ax^7	Bx^6	Cx^5	Dx^4	Ex^3	Fx^2	Gx	H
+0	0	0	0	1	-7	14	-8
+
+usefull qubic not in graph.
+
+ZAD notes
+
+computeIndexZero:
+currentCoefficient=A[k+1][j];    // note Math.rint very dicy because of gauss reduction.
+result=result+evalCoeff(pArray.getpValue(n),(int)Math.rint(currentCoefficient),denumerator);
+result=result/intModulo;
+
+The iteration control is pArray.
+Each worker in the semaphore pattern needs a function to determine stopSize.
+
+From LoopsDriverTwoP:
+gbList1:LoopList has added propertyChangeListener:LoopListener.
+pArray:PolynomialArray has added propertyChangeListener:ParrayResetlistener.
+
+Have:
+parray
+"[0, 0, 0, 0]"
+"[0, 2, 0, 0]"
+"[1, 2, 0, 0]"
+"[2, 2, 0, 0]"
+"[3, 2, 0, 0]"
+"[0, 3, 0, 0]"
+
+with meaning:"put a zero at each index in pArray".
+pArray needs a tupple at each array index....
+
+increment to the factorial of zero.....
+
+pArray is argumented with numWorkers, set product range.
+
+ZAD uses this.maxSetProductRange=rs.getInt(3); for bounding pArray's index increment.
+It means iterate until the index at maxSetProductRange is zero.
+
+it is an argument computIndexZero method uses.  
+
+Need the semantic changed...  It would entail a ZAD fork.
+
+The new fork  will have PArrayIterationConstants. 
+It is an array of maximum number of iterations each LoopSemaphore compleates before reset.
+
+computeIndexZero computes result with updated function.
+
+
+within LoopListener.propertyChange:
+
+     for (int wCount=(dimension-1); wCount>-1; wCount--) {
+//     System.out.println(".propertyChange first for loop.wCount: "+wCount+" ");
+//     rModulo=(BigDecimal)moduloList.get(wCount-1);         // origonal, before refactor 2/26/2021
+     rModulo=(BigDecimal)moduloList.get(wCount);
+     computeIndexZero(wCount,rModulo);
+      updateRlistB();                                                 //  it does clear rListB
+     } 
+
+aparently the loop is for each pArray index.
+
+
+computeIndexZero gets triag_i's gMatrix (gauss matrix)
+
+and with each coefficient...
+
+
+Maybe LoopListener.propertyChange does increment pArray.
+computeIndexZero need the new pArray value.
+It will not evaluate pArray,  for result to update figPArray with.
+Instead it will update figPArray with new PArray value...
+
+
+On the pArray side of things, The reset parameter is a refactored component, see above...
+
+
+9/7
+
+LoopSemaphore initial "has put a zero at index" instead of the new "decrement figParray".
+
+LoopSemaphore is constructed as:
+this.setSize=setSize;
+
+LoopsDriverTwoP passes to LoopSemaphore setProductRange
+
+LoopsDriverTwoPManager reads setProductRange from graph config node.
+
+LoopsDriverTwoP gets a function method multiplying out respective wNum factorials for individual constants.
+
+
+ParrayResetListener used much???
+
+loopsLogic.rentrentReset();
+
+public void rentrentReset() {
+    System.out.println("rentrentReset                                                           rentrentReset");
+    pArray.setpArray(new muNumDen(modulo,workerNum,gbList.getancestorlist()));
+}
+
+
+public synchronized void setpArray(muNumDen value){
+//    System.out.println("PolynomialArray.setpArray                                PolynomialArray.setpArray");
+    propertySupport.firePropertyChange("abc", "abc", value) ;    
+}
+
+
+Thus parrayResetListener:
+
+     public void propertyChange(PropertyChangeEvent evt)
+     ....
+Conclusion:
+
+pArray knows not when it will be reset.....
+It is purly an event predicated on LoopSemaphore setSize..
+
+And how does it iterate through a negative range??? (The June July jira).
+Constructed with this.lbSetSize=lbSetSize;
+
+So:
+
+Proceed with parameterizing each SemaphorePattern 
+
+
+From config node:
+│"n"                                                                                                                                               │
+╞══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"pArray":"[0, 0, 0, 0]","setProductRange":3,"setProductRAngeIncrement":3,"dimension":3,"maxSetProductRange":3,"maxFigPScalar":1,"integerRange":20│
+│0}                                                                                                                                                │
+
+
+
+Ax^7	Bx^6	Cx^5	Dx^4	Ex^3	Fx^2	Gx	H
+0	0	0	0	1	-7	14	-8
+
+							
+Ax^7	Bx^6	Cx^5	Dx^4	Ex^3	Fx^2	Gx	H
+0	0	0	0	1	-7	10	0
+0	0	0	0	1	-31	314	-1040
+
+
+
+							
+Ax^7	Bx^6	Cx^5	Dx^4	Ex^3	Fx^2	Gx	H
+0	0	0	0	1	-6	8	
+
+
+
+
+
+is interesting.. it is resulting from wNum=1 being incremented by iterating through +1.
+
+
+Maybe....
+
+A high wNum increment is a propeertyChange event advising "compute new semaphore setSize for lower wNum's.
+
+for example:  a zero at wnum=2, index 10 event should write lower bound 270 upperbound -60 for iteration
+of wNum=1 (the two values at wNum=1 index 0 and index 10).
+
+  
+Which means LoopSemaphores and loopListeners share a common bean with update lb,setSize and read
+lb,setSize.
+
+the modulo rule only works on the linear; for a quartet triag_3 can 
+meaning,  every parray increment event will trigger a recompute lb,setSize for the next lower worker.
+
+A wNum iterates untill a zero at config.setSize index. 
+The semaphere iterates the range utill index 0 has 0 then index 1 has 0 then index 2 has zero...
+after each index_i has zero reentrant reset computes next lower bound without releasing semaphore 
+until cofig.sestsize index has zero.  
+
+
+A wNum cannot sf1.release();  until expanded iteration is complete.
+
+the expanded iteration is a setproduct range number of loops each with their owne lowerbound, setsze arguments.
+
+the setSize parameter is repurposed to stop creating subloop parameters.
+It is to no longer control the semaphore while loop.  
+
+A
+Loopsemaphore   
+sb1.acquire();  triggers lowerBound, setSize while loop parameter calculation.   
+
+and What of CreatedBy.pArray????   The sub loop...  does/doesn't  pArray increment increment....
+
+
+Maybe pArray takes on a different meaning.....  
+Instead the integer at wNum_i on pArray:  "A zero at index j."
+have    the integer at wNum_i on pArray:  "This value at figPArry."
+
+Though still interpreting pArray goes from high to low...
+
+So,  what is the first worker's lb,setproductrange....
+
+Every loopsLogic.sf2Aquire()
+
+computeIndexZero updates figParray.
+updateRlistB rewrites the looplists.
+
+meaning proceed with 
+Querrying and writing new loop boundaries.
+
+
+9/8
+
+A LoopSemaphore narraton:
+
+LoopSemaphore is constructed.
+Within the constructor,
+this.setSize=setSize;
+this.lbSetSize=lbSetSize;
+The parameters are read from config node.
+
+These parameters must be 
+computed within loopsLogic.setLBSetSize(); - LoopsLogicLoopSemaphore.
+
+index 100 is x=0.
+
+It is started and blocks until sf2.acquire();
+
+gaustable1 is commented out.
+
+private void runLoopsDriver() 
+// goCCypher(((GaussBean1)dbbVector.get(0)).getfigPArray(),((GaussBean1)dbbVector.get(0)).getpArray(),((GaussBean1)dbbVector.get(0)).getLoopList(),((GaussBean1)dbbVector.get(0)).getLoopList().getworkNum(),((GaussBean1)dbbVector.get(0)).getLoopList().getVmResult(),((GaussBean1)dbbVector.get(0)).getresultlistid(),((GaussBean1)dbbVector.get(0)).getfPArray(),((GaussBean1)dbbVector.get(0)).getMuMaskList()); 
+
+
+public LoopsLogicLoopSemaphore(LoopList gbList,int workerNum,int integerRange, PolynomialArray pArray ) {
+this.workerNum=workerNum;
+this.integerRange=integerRange;
+this.gbList=gbList;
+this.pArray=pArray;
+setModulo();
+// setMaxIncrement();   funcion implementd in runnable
+}  
+
+
+    loopsLogic.setLBSetSize();   ---   needs to be a function.  Needs to return   lbSetSize,setSize.
+
+
+   so it will return an array with two elements....
+
+
+just sleuthed setLowerBoundSetSize is not monotone, 
+
+maybe just iterate from min to max....
+
+so...  read the setproduct range of values on gbList.
+       record min and max value..
+       return wNum modulo min, wNum modulo max.
+
+
+so,  before first aquire   loopsLogic.setLBSetSize(); should suffice.
+    
+
+and now, loopsLogic.setLBSetSize() needs to read from appropraite place in list, up to setproduct range
+
+the zero index is at 100 on gbList.
+      
+
+public LoopList...
+
+this.integerRange=integerRange;
+
+Looks like 
+
+LoopListener.updateRlistB should be writing to a bean 
+the ArrayList setLBSetSize(int setSize) output.
+
+So, 
+LoopListener,LoopsLogicLoopSemaphore 
+
+need a common object to share lowerbound,setsize.
+LoopListener will pass this object into LoopList for each initialization.  
+
+
+List lbSetSize =new ArrayList();
+
+
+
+   gbList.addPropertyChangeListener(new LoopListener(allrListB,dimension,rListB,gbList,muList,muSem,Executors.newFixedThreadPool(rListB.size()),rListB.size(),pArray,moduloList,deltaList,ancestorlist,figPArray,pArrayResetFlag,cashedrListB,cashedPArray,cashedFigPArray,resultListId,noBufferRun,integerRange,muMaskList.toString(),lbSetSize)); 
+
+
+      rListB.add(new LoopList(dimension-(numerator-1),rListB,dimension,integerRange,numerator,xPowers,figPArray,moduloList,lbSetSize,lbSetProductRange)); 
+
+
+
+   private void subsequentWorkerListInit() {
+        
+    //iterate over integer range
+    // for each integer in range
+    // subtract entries at integer of prior looplist
+    BigDecimal arg1=new BigDecimal(1); 
+    BigDecimal arg2=new BigDecimal(1);
+    BigDecimal arg11=new BigDecimal(1); 
+    BigDecimal arg22=new BigDecimal(1);
+    BigDecimal difference=new BigDecimal(1);
+    BigDecimal listResult=new BigDecimal(1);      //result
+    BigDecimal listResult1=new BigDecimal(1);
+    BigDecimal zero=new BigDecimal(0);
+    BigDecimal bigDecimalRange=new BigDecimal(1); // synchronized with x
+    BigDecimal bigDecimalDimension=new BigDecimal(dimension);
+    BigDecimal one=new BigDecimal(1);
+    BigDecimal factordResult=new BigDecimal(1);
+    int moduloIndex;
+    int caiIndex=0;
+//System.out.println("LoopList.subsequentWorkerListInitWorkNum : ");
+//System.out.println("subsequent deltalist: "+deltaList.toString());
+//System.out.println("LoopList.subsequentWorkerListInit.worknum,integerRange: "+workNum+ "  " + integerRange);
+//System.out.println("LoopList.subsequentWorkerListInit.rListB1: "+rListB.toString());
+ int halfIntegerRange=integerRange/2;
+for (int x=workNum-1;  x<workNum; x++){    
+//  System.out.println("workNum: "+workNum);
+//  System.out.println("x: "+x);
+ // System.out.println("((LoopList)rListB.get(x)).toString():"+((LoopList)rListB.get(x)).toString());
+ for (int y=0;  y<integerRange; y++){
+// for(int y=-halfIntegerRange;  y<(halfIntegerRange); y++){    
+ //for(int y=-halfIntegerRange;  y<(halfIntegerRange); y++){
+ //    System.out.println("((LoopList)rListB.get(x)).get(y)).toString():"+(((LoopList)rListB.get(x)).get(y)).toString());  
+ //    System.out.println("x: "+x+" y: "+y);
+     arg1=(BigDecimal)((LoopList)rListB.get(x)).get(y);
+ //    arg11=(BigDecimal)((List)ancestorlist.get(x)).get(y);
+    // System.out.println("arg1, arg11: "+arg1.toString()+"   "+arg11.toString());
+     
+     if (y+1<integerRange)
+     { 
+         arg2=(BigDecimal)((LoopList)rListB.get(x)).get(y+1);
+ //        arg22=(BigDecimal)((List)ancestorlist.get(x)).get(y+1);
+     }
+     else
+     {arg2=zero;arg22=zero; }  
+     listResult=arg2.subtract(arg1);
+//     System.out.println("arg2,arg1: "+arg2.toString()+"  "+arg1);
+     //  listResult1=arg22.subtract(arg11);
+   //  difference=listResult.subtract(listResult1);
+    moduloIndex=workNum-1;
+//     System.out.println("listResult, moduloIndex: "+listResult.toString()+"  "+moduloIndex);
+//     System.out.println("moduloList: "+moduloList.toString()); 
+//  try {  //System.out.println("modulo value: "+(BigDecimal)moduloList.get(moduloIndex)); 
+//   try {
+//     factordResult=listResult.divide((BigDecimal)moduloList.get(moduloIndex));
+//   } catch (ArithmeticException exx) {factordResult=listResult; }
+//   }
+//  catch (NullPointerException ex) {
+//     System.out.println(ex); 
+//  }
+//    this.
+ 
+ //    ((List)deltaList.get(workNum)).add(difference);
+     this.add(listResult);thisList.add(listResult);
+//     if (listResult.compareTo(zero)==0) {muList.add(y+1-caiIndex); caiIndex++;}
+//        if (listResult.compareTo(zero)==0 && x>(halfIntegerRange-1)) {muList.add(x+1-caiIndex-halfIntegerRange-1); caiIndex++;}   
+//      if (listResult.compareTo(zero)==0 && (y>halfIntegerRange) ) {muList.add(y+1-caiIndex-halfIntegerRange); caiIndex++;}
+if (listResult.compareTo(zero)==0 && (y>halfIntegerRange) ) {
+//    System.out.println("SWLI y,cai: "+y+" "+caiIndex);
+    muList.add(y-caiIndex-halfIntegerRange); caiIndex++;    
+}
+        if (listResult.compareTo(zero)==0) {totalZero++;} 
+//    ((List)ancestorlist.get(workNum)).add(listResult1);
+ //    this.ancestorTerm.add(listResult1);
+    }   
+    }
+//    System.out.println("subsequentWorkerListInit.this: "+this.toString());
+//    System.out.println("subsequent this: "+this.toString());
+//    rListB.add(this);
+//     cashedrListB.add(this);
+ //    ((List)ancestorlist.get(workNum)).add(listPower1);
+ //    this.ancestorlist.add(ancestorTerm);
+ //    System.out.println("subsequent rListB: "+rListB.toString()); 
+ //    System.out.println("subsequentWorkerListInit()");
+     setNumDen();
+    }
+  
+    
+    private void setNumDen()  {
+        
+     int num=0;
+     int den=0;
+     int totalZero=0;
+     int y;     
+     int halfIntegerRange=integerRange/2;
+//
+
+
+//System.out.println("LOOPLIST: ");
+//for (int xx=0; xx<100; xx++) {
+//   System.out.print(this.get(xx)+" ");
+//}
+//System.out.println("");
+//for (int xx=100; xx<199; xx++) {
+//   System.out.print(this.get(xx)+" ");
+//}
+//System.out.println("MuList:   "+ muList.toString());
+
+for (int x=0;  x<muList.size(); x++){
+        y=(int)muList.get(x);
+        if (y>num) {num=y;}
+        den=den+y;
+    }
+    this.numerator=num;
+    this.denominator=den;
+//      System.out.println("SETNUMDEN: "+muList.toString()+" "+num+" "+den);
+    }
+
+
+
+
+TechnoColor Podcast 192 | Ixbalanke
+
+9/10
+
+Any time the semaphore iterated, call lowerBoundSetSizeArray=loopsLogic.setLBSetSize(setSize); 
+
+it is now time for 
+loopsLogic.sf2Aquire
+to no longer zero at index.
+from the first loopsLogic.sf2Aquire,  
+
+
+9/13
+
+last weeks work:
+
+Attempt began with setLBSetSize function in LoopsLogicLoopsSemaphore. It was intended
+to read the looplist and envalue range of semaphore iteration.
+Aparently that job is part of the LoopList constructor.
+subsequentWorkerListInit refactor does envalue listMax,listMin.
+These two represent the range a scalar takes on during semaphore
+pattern iteration.  They both exist on LoopList as a two member
+arraylist "lbSetSize".  The formentioned setLBSetSize now retrieves 
+the range values when appropriate.
+
+wNum=0 does not use lbSetSize.  The increments are the values themselves as 
+there is no purpose in rangeing from a low to high.
+
+Note a null pointer exception is thrown during pArray resets.  The exact 
+cirmstance is unknown at present time.  
+
+And an execution narration of ZAD is:
+
+The looplists are initialized.
+
+The first LoopSemaphore sf2.Aquire is called.  - meaning pArray is incremented (old style, figparray is updated
+to represent p such that the updated pArray index is a zero).  
+
+The sb2.reslease() is fired.
+
+The maxMinRange is reported 
+before while loop is entered.  
+
+The above narration is not quite desired.
+
+Want to see the iteration range before first sf2.acquire.
+...
+And it is correct.  
+
+And so now implement the range....
+
+the low/high does not concider the semaphore modulo.
+
++++++++LoopSemaphore lowerBoundSetSizeArray max min 37 1 1
++++++++LoopSemaphore lowerBoundSetSizeArray max min 24 6 2
+
+remember:
+. the sign change from the zero rule.  minus the value computed...
+. Looplist values are BigDecimals,  down cast to Ints....
+
+
+LoopSemaphore has these two definitions from constructor:
+
+this.setSize=setSize;      maximum iteration value. Loosly as number of elements in powerset.
+this.lbSetSize=lbSetSize;  is the initialize value after each !endproduct loop.
+                           usually zero, can be negative.
+
+so... always increment figParray.
+and the     while (setSizee<setSize)   loop condition.
+
+how about the difference in the range modulo wNum is number of loopIterations.
+
+
+lbSetSize gets a third element:  the difference of high,low modulo modulolist(wNum).
+
+
+System.out.println("LoopSemaphore lowerBoundSetSizeArray "+"max min "+lowerBoundSetSizeArray.get(0)+" "+lowerBoundSetSizeArray.get(1)+" "+lowerBoundSetSizeArray.get(2)+" "+lowerBoundSetSizeArray.get(3));
+
+setSizee=lbSetSize;    -  lbSetSize is passed in from LoopsDriverTwoP.  All good as it is zero.
+
+lowerBoundSetSizeArray.get(2)
+
+Next up computeIndexZero refactor....
+
+currentFigPArrayIndexValue=figPArray.getpValue(n);
+result=result/intModulo;
+newFigPArrayIndexValue=currentFigPArrayIndexValue-result;
+
+setSizee is 0 and iterating to lowerBoundSetSizeArray.get(2);
+
+result is being redefined as 1 or -1 depending on where iterator is in range.
+loopListener does not have this information. 
+
+PropertyChangeEvent evt needs "this" information in payload.
+
+or rather,,,  .computIndexZero fetching the gauss matrix A on relevant looplist
+and  
+
+
+
+
+hey im going for my walk at 4.  if you didn't all ready go into town (wink),
+maybe that promised steak is available?
+
+
+run:
+Connected to  database twotabledb1thread 
+SimpleApp starting in embedded mode
+Loaded the appropriate driver
+Sep 13, 2021 2:00:26 PM org.neo4j.driver.internal.logging.JULogger info
+INFO: Direct driver instance 1091749617 created for server address localhost:7687
+jdbc:neo4j:bolt://localhost
+Connected to  database twotabledb1thread 
+Sep 13, 2021 2:00:27 PM org.neo4j.driver.internal.logging.JULogger info
+INFO: Closing driver instance 1091749617
+Sep 13, 2021 2:00:27 PM org.neo4j.driver.internal.logging.JULogger info
+INFO: Closing connection pool towards localhost:7687
+configureQuery1 dimension:3
+.setDimension dimension: 3 3
+.setDimension dimension: 3 3
+SetProductRange: 3maxSetProductRange: 3
+LoopsDriverTwoPManager.noBufferRun
+                                                                          GaussTable1threadId: 42
+Connected to  database twotabledb1thread 
+SimpleApp starting in embedded mode
+Loaded the appropriate driver
+LoopsDriverTwoPManager.run.figPArray: [0, 0, 0, 1]
+LoopsDriverTwoPManager.run.cashedFigPArray: [0, 0, 0, 1]
+LoopsDriverTwoPManager.run.pArray: [0, 0, 0, 0]
+Dimension 3
+resultListID 600000
+ModuloList:[1, 1, 2, 6, 24]
+LoopDriverTwoP.zadTwoP , Threadid43
+LoopDriverTwoP , pre gList00
+LoopDriverTwoP , pre gList
+LoopDriverTwoP , 6/27/2021 first figParray[0, 0, 0, 1]
+
+1.0  1.0  1.0  1.0  1.0  
+8.0  4.0  2.0  1.0  8.0  
+27.0  9.0  3.0  1.0  27.0  
+64.0  16.0  4.0  1.0  64.0  
+
+
+
+1.0  0.0  0.0  0.16666666666666663  1.0  
+0.0  1.0  0.0  -1.0  -0.0  
+0.0  0.0  1.0  1.8333333333333333  0.0  
+0.0  0.0  0.0  -1.0  0.0  
+
+
+resultListID 600001
+constructor a muMaskList [false, false, false]
+LoopDriverTwoP , pre gList1
+LoopsDriverTwoP inside for loop                                               rListB.size()+1 11
+LoopDriverTwoP , 6/27/20211 figParray[0, 0, 0, 1]
+LoopSemaphore initial !endProduct threadId: 44
+
+1.0  1.0  1.0  7.0  
+4.0  2.0  1.0  19.0  
+9.0  3.0  1.0  37.0  
+
+
+
+1.0  0.0  0.0  3.0  
+0.0  1.0  0.0  3.0  
+0.0  0.0  1.0  1.0  
+
+
+resultListID 600002
+constructor a muMaskList [false, false, false]
+LoopsDriverTwoP inside for loop                                               rListB.size()+1 21
+LoopDriverTwoP , 6/27/20212 figParray[0, 0, 0, 1]
+
+1.0  1.0  LoopSemaphore sf2.acquire()0threadId: 45
+12.0  
+++++++++++++++++++++++++++++++++++++++++++LoopSemaphore lowerBoundSetSizeArray max min 37 1 36 1
+2.0  1.0  18.0  
+
+
+
+1.0  0.0  6.0  
+Sep 13, 2021 2:00:27 PM org.neo4j.driver.internal.logging.JULogger info
+0.0  1.0  6.0  
+
+
+resultListID 600003
+constructor a muMaskList [false, false, false]
+LoopDriverTwoP , pre gList2
+INFO: Direct driver instance 197801833 created for server address localhost:7687
+LoopSemaphore sf2.acquire()0threadId: 46
+++++++++++++++++++++++++++++++++++++++++++LoopSemaphore lowerBoundSetSizeArray max min 24 6 9 2
+listResult: -970299
+listResult: -970299
+++++++++++++++++++++++++++++++++integerRangeCounter listMax, listMin, workNum: 6  6 3
+1.0  
+1.0  6.0  
+
+
+
+9/14
+
+     ((ArrayList)lbSetSize.get(workNum)).set(0, listMax);
+     ((ArrayList)lbSetSize.get(workNum)).set(1, listMin);
+     ((ArrayList)lbSetSize.get(workNum)).set(2, (listMax-listMin)/((BigDecimal)moduloList.get(workNum)).intValue());
+
+
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++LoopSemaphore lowerBoundSetSizeArray max min 37 1 36 1
+
+resultListID 600003
+constructor a muMaskList [false, false, false]
+LoopDriverTwoP , pre gList2
+LoopSemaphore sf2.acquire()0threadId: 46
+++++++++++++++++++++++++++++++++++++++++++LoopSemaphore lowerBoundSetSizeArray max min 24 6 9 2
+listResult: -970299
+listResult: -970299
+Sep 14, 2021 7:24:42 AM org.neo4j.driver.internal.logging.JULogger info
+++++++++++++++++++++++++++++++++integerRangeCounter listMax, listMin, workNum: 6  6 3
+
+
+
+
+So,    The initial rlistB is composed of the differenced p's defined in LoopsDriverTwoP.
+This set does not corrolate with pArray[] intital.  
+
+Though it seems the first incriment, a worker 0 increment, writes rlistb with respect to
+pArray.
+
+
+looks like the big experiment is moving lowerBoundSetSizeArray to after first sf2.acquire...
+It used to be before the .aquire.
+
+
+for instance:
+
+pArrayResetListener                       updated pArray: [0, 0, 2, 0]
+pArrayResetListener                      new figPArray: [0, 0, 0, 1]
+
+++++++++++++++++++++++++++++++++++++++++++LoopSemaphore lowerBoundSetSizeArray max min 0 -18 18 1
+                                                              PolynomialArray.incrementP   pArray:   [0, 0, 2, 0]
+                                                              PolynomiaArray.increment index:   1
+
+this pArray reset
+
+write out the whole pArray..
+Suppose though, as the reset was upto wNum=2 do not want wNum 1, wNum 0 reset...
+want the "native" range for wnum 1,2 semaphore pattern...
+
+must have "native" range do not reset entire pArray.
+
+LoopListener propertyChange does itrate ovver range of workers, from high to low, 
+resetting them all to current pArray.
+
+only wnat reset up to evt.getNewValue.getWorkNum.
+
+seems like both computeIndexZero 
+           and  updateRlistB        up to evt.getNewValue.getWorkNum. 
+
+but only updateRlistB  for workers lower than   evt.getNewValue.getWorkNum. 
+
+
+
+9/15
+
+LoopListener
+
+.propertyChange
+
+     for (int wCount=(dimension-1); wCount>-1; wCount--) {
+     System.out.println(".propertyChange first for loop.wCount: "+wCount+" ");
+//     rModulo=(BigDecimal)moduloList.get(wCount-1);         // origonal, before refactor 2/26/2021
+     rModulo=(BigDecimal)moduloList.get(wCount);
+     computeIndexZero(wCount,rModulo);
+      updateRlistB();                                                 //  it does clear rListB
+     }
+
+.propertyChange first for loop.wCount: 2 
+Subsequent worker list init: listMax, listMin: 16 -2 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 1 
+Subsequent worker list init: listMax, listMin: 18 0 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 0 
+Subsequent worker list init: listMax, listMin: 18 0 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+resultListID 600005
+
+
+.updateRlistB()
+
+     for (int numerator=1; numerator<=(dimension) ; numerator++) {
+
+          rListB.add(new LoopList(dimension-(numerator-1),rListB,dimension,integerRange,numerator,xPowers,figPArray,moduloList,lbSetSize,lbSetProductRange)); 
+          gMain.gauss(muList,muSem,dimension-(numerator-1),dimension-(numerator-1)+1,(double[][])((LoopList)rListB.get(numerator)).getgMatrix(),new GaussBean1(figPArray,pArray.toString(),(LoopList)rListB.get(numerator),resultListCounter));
+     }
+
+.propertyChange first for loop.wCount: 2 
+LoopListener.computIndexZero.figPArray (before): [0, 0, 0, 1] pArray: [0, 0, 0, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 0, -3, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 16 -2 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 1 
+LoopListener.computIndexZero.figPArray (before): [0, 0, -3, 1] pArray: [0, 0, 0, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 2, -3, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 18 0 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 0 
+LoopListener.computIndexZero.figPArray (before): [0, 2, -3, 1] pArray: [0, 0, 0, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 2, -3, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 18 0 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+
+suspect some unnecessary computation, though maybe no need to remediate.
+
+Back to the big worry:
+
+Have the LoopsDriverTwoP initialized set of LoopSemaphore.  
+Each LoopSemaphore is associated with a LoopList.          -  The initial LoopList at each LoopSemaphore is the differenced
+                                                              p of the prior LoopSemaphore.
+Each LoopList is a representation of pArray at it's semaphore's index.
+
+Each LoopSemaphore performs a sf2.acquire()
+before a while loop controled sf2.acquire().
+
+LoopListener.propertyChange.wNum, moduloList 0   [1, 1, 2, 6, 24]
+
+and then unwanted redundancy:
+
+LoopListener.propertyChange.wNum, moduloList 0   [1, 1, 2, 6, 24]
+.propertyChange first for loop.wCount: 2 
+LoopListener.computIndexZero.figPArray (before): [0, 0, 0, 1] pArray: [0, 0, 0, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 0, -3, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 16 -2 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 1 
+LoopListener.computIndexZero.figPArray (before): [0, 0, -3, 1] pArray: [0, 0, 0, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 2, -3, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 18 0 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 0 
+LoopListener.computIndexZero.figPArray (before): [0, 2, -3, 1] pArray: [0, 0, 0, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 2, -3, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 18 0 1
+Subsequent worker list init: listMax, listMin: 18 0 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+resultListID 600005
+
+first reason why behavior exists:
+updateRlistB clears all LoopLists.  
+rewrites all loopLists from wNum=0 to dimension.
+
+the propertyChange.computeIndexZero call happens in a loop because it computes the zero one worker at a time. 
+for each computeIndexZero all loopLists are re-written in updateRlstB loop.
+
+Maybe:
+Do not need to re-read entire pArray during .propertyChange event. 
+As in the first propertyChange event is fired by wNum=0
+
+LoopListener proceeds to reconstruct rListB from highFigParry index to low by reading each pArray index from high to low. 
+Note the pArray increment event only increments one index. 
+
+Believe it needs to only rewrite figpArray from propertyChage.wNum down to wNum=0.  
+Imperativly speaking:
+Only rewrite figParray indices from wNum down to Zero.
+And don't zero out the ones not rewritten.
+
+The listener alway seem to rewrite entire figPArray.  
+it is constructed with LoopDriverTwoP's version.
+
+......
+......
+......
+
+So, maybe semaphore initialization should set lowerBound, number of iterations...pArray needs new initialization scheme.
+                                                                                 currently a zero list or formally a list of
+                                                                                 lowerBoundSet size.....
+And the nature of pArray is....
+
+LoopsDriverTwoP:
+pArray gets initialized index by index as LoopSemaphores are instanciated by wNum.   --  the LoopList  public List lbSetSize is used
+more particular:  The LoopListener constructor is responsible for reading LoopList and setting appropriate pArray index.
+
+The  wNum=i LoopSemaphore gets intitialized with same setZizee=0 and same  while (setSizee<lowerBoundSetSizeArray.get(2)+1) 
+These values are updated after loop exit, before rentrant reset loop.
+
+-it is iterating a number modulo the range of vales.
+
+Importantly computeIndexZero needs to simply read pArray index for figPArray value.  
+
+      currentFigPArrayIndexValue=figPArray.getpValue(n);         // currentFigPArrayIndexValue=figPArray.getpValue(n-1);   //  suspect pArrayIndexValue if w=1 it indexes zero  is wrong change index to n
+      result=result/intModulo;
+      newFigPArrayIndexValue=currentFigPArrayIndexValue-result;
+      figPArray.set(n,newFigPArrayIndexValue);
+
+Are the new only four lines of code     private void computeIndexZero (int n,BigDecimal rModulo) needs.
+the second is not needed 
+
+so, cannot computeindexZero untill pArray refactored.
+so the order of the refactor is 
+
+pArray
+computIndexZero
+LoopSemaphore rentrant eratta.
+
+
+
+
+
+Below speaks of each wNum range being correctly defined at first initialization.
+
+resultListID 600001
+constructor a muMaskList [false, false, false]
+LoopDriverTwoP , pre gList1
+LoopsDriverTwoP inside for loop                                               rListB.size()+1 11
+LoopDriverTwoP , 6/27/20211 figParray[0, 0, 0, 1]
+LoopSemaphore initial !endProduct threadId: 44
+Subsequent worker list init: listMax, listMin: 37 1 1
+
+1.0  1.0  1.0  7.0  
+4.0  2.0  1.0  19.0  
+9.0  3.0  1.0  37.0  
+
+
+
+1.0  0.0  0.0  3.0  
+0.0  1.0  0.0  3.0  
+0.0  0.0  1.0  1.0  
+
+
+resultListID 600002
+constructor a muMaskList [false, false, false]
+LoopsDriverTwoP inside for loop                                               rListB.size()+1 21
+LoopDriverTwoP , 6/27/20212 figParray[0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 24 6 2
+
+
+9/16
+
+Looplist.lbSetSize[[0, 0, 0], [37, 1, 36], [24, 6, 9]]
+Is all good.  
+
+Second element is corrosponding pArray value. 
+
+pArray is updated with lbSetSize low values.
+
+The semaphores need 
+
+
+LoopList has
+    public List lbSetSize;
+
+LoopSemaphore has 
+
+   ArrayList<Integer> lowerBoundSetSizeArray;
+   this.lbSetSize=lbSetSize;  from LoopsDriverTwoP as int lbSetProductRange=0; 
+
+
+LoopListener.propertyChange figPArray,cashedFigPArray: [0, 0, 0, 1] [0, 0, 0, 1]
+LoopListener.propertyChange.wNum, moduloList 0   [1, 1, 2, 6, 24]
+.propertyChange first for loop.wCount: 2 
+LoopListener.computIndexZero.figPArray (before): [0, 0, 0, 1] pArray: [2, 29, 8, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 0, -27, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: -26 -152 1
+Subsequent worker list init: listMax, listMin: -30 -48 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 1 
+LoopListener.computIndexZero.figPArray (before): [0, 0, -27, 1] pArray: [2, 29, 8, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, -1018, -27, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: -1044 -1170 1
+Subsequent worker list init: listMax, listMin: -30 -48 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 0 
+LoopListener.computIndexZero.figPArray (before): [0, -1018, -27, 1] pArray: [2, 29, 8, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [2136, -1018, -27, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: -1044 -1170 1
+Subsequent worker list init: listMax, listMin: -30 -48 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+resultListID 600522
+LoopListener.pArrayIncrement pre pArray .to string [2, 29, 8, 0] wNum: 0  rListIndex: 1
+
+
+Looplist.lbSetSize[[0, 0, 0], [37, 1, 36], [24, 6, 9]]
+
+
+So, The inital refactored LoopSemaphore pattern is performant.  
+
+So goes the narative:
+
+wNum=1 LoopsSemaphore finished while loop,  
+it's sb1.acquire() was succesful.          -  wNum=2 LoopSemaphore pattern incremented
+It is now again starting while(!endProduct.getEndCproduct()) loop.
+setSizee is again initialized to zero.  
+setSize needs a fresh value. 
+
+
+resultListID 600190
+LoopListener.pArrayIncrement pre pArray .to string [0, 0, 7, 0] wNum: 0  rListIndex: 1
+                                                              PolynomialArray.incrementP   pArray:   [0, 0, 7, 0]
+                                                              PolynomiaArray.increment index:   0
+LoopListener.propertyChange figPArray,cashedFigPArray: [0, 0, 0, 1] [0, 0, 0, 1]
+LoopListener.propertyChange.wNum, moduloList 0   [1, 1, 2, 6, 24]
+.propertyChange first for loop.wCount: 2 
+Subsequent worker list init: listMax, listMin: -23 -131 1
+Subsequent worker list init this: [34477, 33835, 33199, 32569, 31945, 31327, 30715, 30109, 29509, 28915, 28327, 27745, 27169, 26599, 26035, 25477, 24925, 24379, 23839, 23305, 22777, 22255, 21739, 21229, 20725, 20227, 19735, 19249, 18769, 18295, 17827, 17365, 16909, 16459, 16015, 15577, 15145, 14719, 14299, 13885, 13477, 13075, 12679, 12289, 11905, 11527, 11155, 10789, 10429, 10075, 9727, 9385, 9049, 8719, 8395, 8077, 7765, 7459, 7159, 6865, 6577, 6295, 6019, 5749, 5485, 5227, 4975, 4729, 4489, 4255, 4027, 3805, 3589, 3379, 3175, 2977, 2785, 2599, 2419, 2245, 2077, 1915, 1759, 1609, 1465, 1327, 1195, 1069, 949, 835, 727, 625, 529, 439, 355, 277, 205, 139, 79, 25, -23, -65, -101, -131, -155, -173, -185, -191, -191, -185, -173, -155, -131, -101, -65, -23, 25, 79, 139, 205, 277, 355, 439, 529, 625, 727, 835, 949, 1069, 1195, 1327, 1465, 1609, 1759, 1915, 2077, 2245, 2419, 2599, 2785, 2977, 3175, 3379, 3589, 3805, 4027, 4255, 4489, 4729, 4975, 5227, 5485, 5749, 6019, 6295, 6577, 6865, 7159, 7459, 7765, 8077, 8395, 8719, 9049, 9385, 9727, 10075, 10429, 10789, 11155, 11527, 11905, 12289, 12679, 13075, 13477, 13885, 14299, 14719, 15145, 15577, 16015, 16459, 16909, 17365, 17827, 18295, 18769, 19249, 19735, 20227, 20725, 21229, 21739, 22255, 22777, 23305, 23839, 24379, -735075]
+Subsequent worker list init: listMax, listMin: -24 -42 2
+Subsequent worker list init this: [-642, -636, -630, -624, -618, -612, -606, -600, -594, -588, -582, -576, -570, -564, -558, -552, -546, -540, -534, -528, -522, -516, -510, -504, -498, -492, -486, -480, -474, -468, -462, -456, -450, -444, -438, -432, -426, -420, -414, -408, -402, -396, -390, -384, -378, -372, -366, -360, -354, -348, -342, -336, -330, -324, -318, -312, -306, -300, -294, -288, -282, -276, -270, -264, -258, -252, -246, -240, -234, -228, -222, -216, -210, -204, -198, -192, -186, -180, -174, -168, -162, -156, -150, -144, -138, -132, -126, -120, -114, -108, -102, -96, -90, -84, -78, -72, -66, -60, -54, -48, -42, -36, -30, -24, -18, -12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144, 150, 156, 162, 168, 174, 180, 186, 192, 198, 204, 210, 216, 222, 228, 234, 240, 246, 252, 258, 264, 270, 276, 282, 288, 294, 300, 306, 312, 318, 324, 330, 336, 342, 348, 354, 360, 366, 372, 378, 384, 390, 396, 402, 408, 414, 420, 426, 432, 438, 444, 450, 456, 462, 468, 474, 480, 486, 492, 498, 504, 510, 516, 522, 528, 534, 540, -759454, 735075]
+Subsequent worker list init: listMax, listMin: 6 6 3
+Subsequent worker list init this: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -759994, 1494529, -735075]
+.propertyChange first for loop.wCount: 1 
+Subsequent worker list init: listMax, listMin: 0 -108 1
+Subsequent worker list init this: [34500, 33858, 33222, 32592, 31968, 31350, 30738, 30132, 29532, 28938, 28350, 27768, 27192, 26622, 26058, 25500, 24948, 24402, 23862, 23328, 22800, 22278, 21762, 21252, 20748, 20250, 19758, 19272, 18792, 18318, 17850, 17388, 16932, 16482, 16038, 15600, 15168, 14742, 14322, 13908, 13500, 13098, 12702, 12312, 11928, 11550, 11178, 10812, 10452, 10098, 9750, 9408, 9072, 8742, 8418, 8100, 7788, 7482, 7182, 6888, 6600, 6318, 6042, 5772, 5508, 5250, 4998, 4752, 4512, 4278, 4050, 3828, 3612, 3402, 3198, 3000, 2808, 2622, 2442, 2268, 2100, 1938, 1782, 1632, 1488, 1350, 1218, 1092, 972, 858, 750, 648, 552, 462, 378, 300, 228, 162, 102, 48, 0, -42, -78, -108, -132, -150, -162, -168, -168, -162, -150, -132, -108, -78, -42, 0, 48, 102, 162, 228, 300, 378, 462, 552, 648, 750, 858, 972, 1092, 1218, 1350, 1488, 1632, 1782, 1938, 2100, 2268, 2442, 2622, 2808, 3000, 3198, 3402, 3612, 3828, 4050, 4278, 4512, 4752, 4998, 5250, 5508, 5772, 6042, 6318, 6600, 6888, 7182, 7482, 7788, 8100, 8418, 8742, 9072, 9408, 9750, 10098, 10452, 10812, 11178, 11550, 11928, 12312, 12702, 13098, 13500, 13908, 14322, 14742, 15168, 15600, 16038, 16482, 16932, 17388, 17850, 18318, 18792, 19272, 19758, 20250, 20748, 21252, 21762, 22278, 22800, 23328, 23862, 24402, -737352]
+Subsequent worker list init: listMax, listMin: -24 -42 2
+Subsequent worker list init this: [-642, -636, -630, -624, -618, -612, -606, -600, -594, -588, -582, -576, -570, -564, -558, -552, -546, -540, -534, -528, -522, -516, -510, -504, -498, -492, -486, -480, -474, -468, -462, -456, -450, -444, -438, -432, -426, -420, -414, -408, -402, -396, -390, -384, -378, -372, -366, -360, -354, -348, -342, -336, -330, -324, -318, -312, -306, -300, -294, -288, -282, -276, -270, -264, -258, -252, -246, -240, -234, -228, -222, -216, -210, -204, -198, -192, -186, -180, -174, -168, -162, -156, -150, -144, -138, -132, -126, -120, -114, -108, -102, -96, -90, -84, -78, -72, -66, -60, -54, -48, -42, -36, -30, -24, -18, -12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144, 150, 156, 162, 168, 174, 180, 186, 192, 198, 204, 210, 216, 222, 228, 234, 240, 246, 252, 258, 264, 270, 276, 282, 288, 294, 300, 306, 312, 318, 324, 330, 336, 342, 348, 354, 360, 366, 372, 378, 384, 390, 396, 402, 408, 414, 420, 426, 432, 438, 444, 450, 456, 462, 468, 474, 480, 486, 492, 498, 504, 510, 516, 522, 528, 534, 540, -761754, 737352]
+Subsequent worker list init: listMax, listMin: 6 6 3
+Subsequent worker list init this: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -762294, 1499106, -737352]
+.propertyChange first for loop.wCount: 0 
+Subsequent worker list init: listMax, listMin: 0 -108 1
+Subsequent worker list init this: [34500, 33858, 33222, 32592, 31968, 31350, 30738, 30132, 29532, 28938, 28350, 27768, 27192, 26622, 26058, 25500, 24948, 24402, 23862, 23328, 22800, 22278, 21762, 21252, 20748, 20250, 19758, 19272, 18792, 18318, 17850, 17388, 16932, 16482, 16038, 15600, 15168, 14742, 14322, 13908, 13500, 13098, 12702, 12312, 11928, 11550, 11178, 10812, 10452, 10098, 9750, 9408, 9072, 8742, 8418, 8100, 7788, 7482, 7182, 6888, 6600, 6318, 6042, 5772, 5508, 5250, 4998, 4752, 4512, 4278, 4050, 3828, 3612, 3402, 3198, 3000, 2808, 2622, 2442, 2268, 2100, 1938, 1782, 1632, 1488, 1350, 1218, 1092, 972, 858, 750, 648, 552, 462, 378, 300, 228, 162, 102, 48, 0, -42, -78, -108, -132, -150, -162, -168, -168, -162, -150, -132, -108, -78, -42, 0, 48, 102, 162, 228, 300, 378, 462, 552, 648, 750, 858, 972, 1092, 1218, 1350, 1488, 1632, 1782, 1938, 2100, 2268, 2442, 2622, 2808, 3000, 3198, 3402, 3612, 3828, 4050, 4278, 4512, 4752, 4998, 5250, 5508, 5772, 6042, 6318, 6600, 6888, 7182, 7482, 7788, 8100, 8418, 8742, 9072, 9408, 9750, 10098, 10452, 10812, 11178, 11550, 11928, 12312, 12702, 13098, 13500, 13908, 14322, 14742, 15168, 15600, 16038, 16482, 16932, 17388, 17850, 18318, 18792, 19272, 19758, 20250, 20748, 21252, 21762, 22278, 22800, 23328, 23862, 24402, -737352]
+Subsequent worker list init: listMax, listMin: -24 -42 2
+Subsequent worker list init this: [-642, -636, -630, -624, -618, -612, -606, -600, -594, -588, -582, -576, -570, -564, -558, -552, -546, -540, -534, -528, -522, -516, -510, -504, -498, -492, -486, -480, -474, -468, -462, -456, -450, -444, -438, -432, -426, -420, -414, -408, -402, -396, -390, -384, -378, -372, -366, -360, -354, -348, -342, -336, -330, -324, -318, -312, -306, -300, -294, -288, -282, -276, -270, -264, -258, -252, -246, -240, -234, -228, -222, -216, -210, -204, -198, -192, -186, -180, -174, -168, -162, -156, -150, -144, -138, -132, -126, -120, -114, -108, -102, -96, -90, -84, -78, -72, -66, -60, -54, -48, -42, -36, -30, -24, -18, -12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144, 150, 156, 162, 168, 174, 180, 186, 192, 198, 204, 210, 216, 222, 228, 234, 240, 246, 252, 258, 264, 270, 276, 282, 288, 294, 300, 306, 312, 318, 324, 330, 336, 342, 348, 354, 360, 366, 372, 378, 384, 390, 396, 402, 408, 414, 420, 426, 432, 438, 444, 450, 456, 462, 468, 474, 480, 486, 492, 498, 504, 510, 516, 522, 528, 534, 540, -761754, 737352]
+Subsequent worker list init: listMax, listMin: 6 6 3
+Subsequent worker list init this: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -762294, 1499106, -737352]
+resultListID 600191
+LoopListener.pArrayIncrement pre pArray .to string [1, 0, 7, 0] wNum: 0  rListIndex: 1
+                                                              PolynomialArray.incrementP   pArray:   [1, 0, 7, 0]
+
+9/17
+
+The LoopListener.propertyChange method returns after the last instruction, pArrayIncrement(evt).
+
+This leaves rListB not consistant with latest pArray.
+
+LoopSemaphore needs an accurate lowerBoundSetSizeArray by the time it enters the while (setSizee<setSize) loop.
+
+
+
+
+System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++LoopSemaphore !endProduct "+"threadId: "+threadId+" "+setSize);
+    while (setSizee<setSize)
+    {   
+ //      System.out.println("LoopSemaphore setSizee<setSize"+" threadId: "+threadId+" "+setSizee+" "+setSize);
+       sf2.acquire(); 
+ //      System.out.println("LoopSemaphore sf2.acquire()2 "+threadId);
+       loopsLogic.sf2Aquire();setSizee++;
+  //     if (setSizee<setSize){ sb2.release(); }
+       sb2.release();
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++LoopSemaphore setSizee<setSize"+" threadId: "+threadId+" "+setSizee+" "+setSize);
+    }  // end of while loop 
+ //   loopsLogic.rentrentReset();
+ //   System.out.println("loopsemaphore pre sf1.release (it iterated) " + threadId);
+     sf2.acquire(); 
+     loopsLogic.rentrentReset();
+ }  // close skip block 
+
+
+
+The first time while loop calls loopsLogic.sf2Aquire() is where update to setSize can be found.  
+can guard setSize update with if setSize=initial value.
+
+
+The focus is on 
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++LoopSemaphore !endProduct threadId: 46 9
+LoopsLogicLoopSemaphore  pArray: [0, 0, 7, 0]
+LoopsLogicLoopSemaphore  lowerboundsetsizearray: [0, -90, 90, 1]
+post sb1.acquire lowerBoundSetSizeArray: [0, -90, 90, 1]
+LoopSemaphore initial !endProduct threadId: 44
+LoopSemaphoreInitial sf2.acquire()144
+LoopListener.propertyChange figPArray,cashedFigPArray: [0, 0, 0, 1] [0, 0, 0, 1]
+LoopListener.propertyChange.wNum, moduloList 0   [1, 1, 2, 6, 24]
+
+The anthology of interest:
+
+.propertyChange first for loop.wCount: 2 
+LoopListener.computIndexZero.figPArray (before): [0, 0, 0, 1] pArray: [0, 0, 7, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 0, -24, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: -23 -131 1                                                             -----The numbers of importance
+Subsequent worker list init: listMax, listMin: -24 -42 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+
+.propertyChange first for loop.wCount: 1 
+LoopListener.computIndexZero.figPArray (before): [0, 0, -24, 1] pArray: [0, 0, 7, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 23, -24, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 0 -108 1
+Subsequent worker list init: listMax, listMin: -24 -42 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+.propertyChange first for loop.wCount: 0 
+LoopListener.computIndexZero.figPArray (before): [0, 23, -24, 1] pArray: [0, 0, 7, 0] cashedFigPArray: [0, 0, 0, 1]
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [0, 23, -24, 1] [0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: 0 -108 1
+Subsequent worker list init: listMax, listMin: -24 -42 2
+Subsequent worker list init: listMax, listMin: 6 6 3
+resultListID 600190
+
+The anthology is a wNum>1 while setSize loop reentrance.
+
+So .propertyChange 
+Has current pArray.
+loops from high wNum to low wNum.
+defining figPArray term by term 
+involves populating rListB wNum by wNum      -- Each loopList on rListB has listMax, listMin's defined.  
+
+the refactoring started with a simple array holding listMin listmax count...
+the required structure is 
+
+a list with each index representing wNum as loop.wCount
+the object at each index is list. with each list index representing each looplist at loop.wCount listMax, listMin:
+
+ .   arrayList LoopWCount<SubsequentWorkers>
+ .   arrayList SubsequentWorkers<MaxMin>
+ .   arrayList lbSetSize<max:int,min:int>  
+
+And the dimension of this object heirchy is:
+
+ .   for (int wCount=(dimension-1); wCount>-1; wCount--) 
+ .   for (int numerator=1; numerator<=(dimension) ; numerator++)  
+ .   two elements.
+
+Time to define the MinMax object
+But first who wants a reference to MinMax?
+LoopList does have a reference to     public List lbSetSize    
+LoopListener does have reference to     List lbSetSize;     --  and it's reference is used in constructing loopLists in updateRlistB.
+looks like just add loopList's lbSetSize to LoopListener's lbSetSize....
+
+So the listener passes to looplist constructor reference to array location to update.
+
+Each LoopList has a reference to List lbSetSize because it sets max/min values.
+LoopListener has same reference because it constructs LoopLists
+
+LoopLogicLoopSemaphore querries the loSetSize object on LoopList
+for set values.
+
+On a top level, the purpose of ZAD is to write the difference set of p for any
+valid pArray.  
+Writing a p in difference set is an iteration for defining each term in p. 
+The iteration includes a new LoopList at each point in iteration.  
+
+The whole of the iteraton from wNum high to wNum=0
+
+public class LoopListener
+List lbSetSize;
+
+9/24 
+
+    BigInteger lastWNumIncremented= new BigInteger("99");   -- attempted to share it.  instead pArray refactord with local field.
+
+
+
+
+https://www.youtube.com/watch?v=Nu8YGneFCWE
+
+While t-SNE is a dimensionality reduction technique, it is mostly used for visualization
+and not data pre-processing (like you might with PCA). For this reason, you almost always
+reduce the dimensionality down to 2 with t-SNE, so that you can then plot the data in two dimensions.
+
+https://towardsdatascience.com/why-you-are-using-t-sne-wrong-502412aab0c0
+
+
+https://www.youtube.com/watch?fbclid=IwAR0fEqwD5CCe_iKHAgit8xKxX5Avyf2djJgovST6VEkniTijsj1vblhfg9s&v=3AzphNf5ja8&feature=youtu.be
+https://www.youtube.com/watch?fbclid=IwAR18bCPOVo0ek_xCA7ENVvzWKhTKtAeD-EtPl_m2imYja4O1_D3BTzpvhvs&v=3AzphNf5ja8&feature=youtu.be
+
+
+https://www.graphaware.com/graphaware/2021/09/15/digital-breadcrumbs.html?mkt_tok=NzEwLVJSQy0zMzUAAAF_xuAbnYmG63QyXV1d9twp1lfabUCovXFOO7RORunj66hfjC0l-GzpFz4ctRBYzAQe5IP3sndO-LPxGr1S7wv_cS7PALxWKZKKDyLCWFbZGh-Bhw
+
+https://www.cantorsparadise.com/rsa-algorithm-in-depth-mathematical-walk-through-3bf33759022a?fbclid=IwAR3c4nh9z5J5ISbrWuePlb4eXHGA3jNPJA6WTzQyLbz0H3YK95cx8ZZ2HDI&gi=f89c15640af6
+
+
+
+
+public synchronized void incrementP(int index){             
+    System.out.println("                                                                                       (before) PolynomialArray.incrementP   pArray:   "+this.toString());
+    System.out.println("                                                                                                PolynomiaArray.increment index:   "+index);
+    int coefficient=(int)this.get(index)+1;
+    this.set(index, coefficient);
+    System.out.println("                                                                                       (after)  PolynomialArray.incrementP   pArray:   "+this.toString());
+}
+
+
+9/30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dnode ought to have the embedding property.
+But is currently not using one. 
+
+
+
+
+
+
+
+
+
+
+https://youtu.be/Im5ViTzqXtE
+
+
+https://youtu.be/ANS9YvcPlOI
+
+electro music coalition emc podcast qqoma (041)
+
+
+
+Less
+Current track: MinimaLESSMinimaLESS
+
+
+Deep Afterhour Less
+Less - Deep Afterhour Nr. 334 
+
+
+ Less
+7 Hours House 
+
+
+
+LoopListener.computIndexZero.figPArray,cashedFigPArray (after): [18522984, -4652070, 5915, -150, 1] [0, 0, 0, 0, 1]
+Subsequent worker list init: listMax, listMin: -4607616 -4646304 1
+Subsequent worker list init: listMax, listMin: 10944 7632 2
+Subsequent worker list init: listMax, listMin: -768 -864 3
+Subsequent worker list init: listMax, listMin: 24 24 4
+Large mu sleep......
+
+possibly lost notify()
+
+ private void appendMuBuffer(boolean noBufferRun) {
+
+   if (muList.size() > 25000) 
+   {
+       System.out.println("Large mu sleep......");
+       try {
+
+           synchronized (muList) {
+           muList.wait();           //Thread.sleep(100000);
+           }
+       } catch (InterruptedException ex) {
+           Logger.getLogger(LoopListener.class.getName()).log(Level.SEVERE, null, ex);
+       }
+   }
+       
+       int len=rListB.size();
+//   System.out.println("LoopListener.appendMuBuffer(noBufferRun) pArray " + pArray.toString() + " " + "figPArray: " + figPArray.toString()+ "  rListIndex: "+ rListIndex + "   (int)pArray.get(1)"+(int)pArray.get(1));  
+   
+   for (int index=0;index<len;index++) {
+ //  GaussBean1 gB1=new GaussBean1(figPArray,pArray.toString(),((LoopList)rListB.get(index)),resultListCounter,(int)pArray.get(1),(int)pArray.get(1)); 
+       synchronized(this) {   //latest thread issue  numerator should be 1 (the first element on rListB
+//        System.out.println("LoopListener.appendMuBuffer   New Gaussbean");
+        muList.add(new GaussBean1(figPArray,pArray.toString(),((LoopList)rListB.get(index)),resultListCounter,-2,(int)pArray.get(1),muMaskList));
+       //  System.out.println("  new gauss bean    new gauss bean");
+       muSem.release();
+      }    
+   }   
+  
+}
+
+
+        muList.add(new GaussBean1(figPArray,pArray.toString(),((LoopList)rListB.get(index)),resultListCounter,-2,(int)pArray.get(1),muMaskList));
+
+commented out.
+
+
+
+
+ 
+
+
+
+

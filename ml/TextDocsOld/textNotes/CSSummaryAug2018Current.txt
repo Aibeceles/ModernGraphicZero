@@ -1,0 +1,4637 @@
+﻿8/23 
+
+ZerosAndDifferences -  Current netbeans project.
+
+twoPolynomial -  Ancient netbeans project to revisit.
+
+VertexProgressionsSpreadsheet - quadratic algebra.
+
+2014ods.ods - convergence of vertex.
+
+copyofBook112223(2).ods - exposition of quadratic progression.   These are needed for work on Fermats statement "sum of squares of the form 4n+1 is prime".     //* get his accurate quote.
+
+ResultsForPolynomials.ods - modern quadratic progression.
+
+qfunct - quadratic progressions permutation of translation.
+
+
+
+
+qFunct looks like the f,g,h of x which generalizes quadratic progression translation.
+Looks like nmaxn performs a x coordinate translation. The effect is the arithmetic permutations.  
+the nmaxn worksheet:  Was opened with num selected to 2.   
+                      Can select other numbuers.
+
+Still looking for the worksheet for the induction of the base quadratic equation.
+
+The worksheet found is in 2014.ods.  VertexProg worksheet defines the induction on base quadratic.
+But there is still the primative composition of VertexProg quadratic.  
+It is found in Copy of Book 111222223.ods.  The worksheet is twopolycount.
+Addition of the twoPoly's is accomplished on resultspivot when multiple nums are selected.
+
+As with 4n+1 has n substituted as a twopolynomial,
+the twopolynomial itself has it's 2^n scalar substituted with its defining twoPolynomial. aprophricaly, the arithemtic works.
+Thus the definition of quadratics as all the factors defined???
+
+The goal:
+  get the bits of the algebra on neo4j.
+  document the new bits on fidformulas.
+  cypher maby read some related factors of one partial sum at x and translate it to factors of x+1.
+  cypher sum 2 squares=4n+1
+
+
+and remember Z mod n with polynomials for consideration of triagtriag_1.  that is reduce each in a set according to its i
+then assemble resulting p.  the factored triagtriag admits a zero for the ith index. 
+the +1 square, the subset of 2^n square...  have the latter in the pivot mentiond above.
+revisit the differences of the square.  what do the rows in rowsequence fit into as for each n there is a new row in sequence.  
+for each rowsequence there is a set of three finite length sequences.  what n polynomial defines them?   
+so how about when a triagtriag i has its factorial devisor, and suddenly have an argument modulo another i+_j?  
+so say normalizing p.  and also mapping set of zeros to annother sized set of zeros, in the homomporhism, the 
+one not considered in twoPolynomial.
+
+for zaddb:
+
+instead want each p's factors in each twopolynomial written out.  so that each can be expressed as zad parrays. 
+remember pArray as a root root array.
+
+Want to see which triagtriag zeros are expressed: their nparrays from zad.
+want to see what the combinations of twopolynomial i,j,...   as nparrays.
+need the equivelance index with nparray in same node.
+
+
+what is the best sensiblilty of using i,ii numbers instead of Z: how many in permutations of i,ii make sense.
+
+why are not zad numbers written to graphdb as twopolynomial factors.
+
+the stohastic matricies to be written out as nparrays for graphdb.
+
+graphdb will exibit evaluates resolved from triagtriag_i as linear parrays with corrosponding nparrays.
+
+what will graphdb applied to fermet connect.
+
+
+
+
+so, connecting linear args to sets of evauates as zaddb currently does with roots.
+the number of edges into each evaulate is the liniar scalar, the constant.
+ 
+
+what does generate binary iterate over? scalars of 2^n for each n indexing it's set of composition (.ods workbook).
+but now need the iteration with modulo f(i) as fallthrough.
+
+
+each parray index has the scalar of 2^n.  
+
+so have the two sides of graphdb.evaluate on one, its twopolynomial representation, on the other it's zad 
+representation. 
+
+so each evaluate's edge is numbered as the scalar into the 2^n in 2^N.
+
+so, am preparing for zad writing twopolynomials onto zaddb.
+
+insurse arithmetic is in one variable: for the range of index N all twopolynomials with index <N are written in terms of n.
+
+each subtwopolynomial, the aggragate is the defining quadratic are node attributes.
+
+the aggrigate is a zad.parray/narray and is for differencing.
+
+so,  loopsdriver configures generateBinary as a common product iterator or one with respect to 2^n congruences.
+the zeros accumulate in Z mod n because they would dissapeare if normalized, foward factord. so the common product iterator anyway.
+normalized as in carry scalar n squars into the next significiant coeeficient.
+
+any propertyChange.fire is an instruction to evaluate vmBean and post to zaddb.
+
+
+
+8/27
+
+  what is in the symeteric differece ring?
+
+
+ so, a thing needs an answer, and at the back end of triag have the constant, and the linear.  Express every constant, linear. Linear because
+ it it a simple product.
+ what constants, linears in particular do twopolynomial represent.
+
+twoPolynomial.twoTableDBThread.go does not write resultcounter,rexult,xCounter as seen on the results table
+                              .goResults does.
+
+
+             .twoTableDBThread1.goDrawProduct //  select powers of two for integer table 
+                               .goDrawCosets   // get values for each integer in myfile2
+                               .godrawCosets
+                               .godrawIntervals  // make table of intervals from cosets
+                               .goDrawMoreQuad    //  arithmetic of compresult table
+                               .godrawMoreQuadCosets
+
+well you haven't heard of many great naval engagements with the indians.
+
+8/28
+
+twoPolynomial on the e: drive is the most interesting of the build.
+It is for some reason, not wrapped as a java project and does not seem to load into 
+netbeans....  
+
+The purpose of rehashing twoPolynomial:
+
+Process of generating and then creating the product of twopolynomial is to be understood 
+with intent of arbitrary collection on zaddb.  twoPolynomial seems to progress to next table
+from manipulating current table. 
+
+Want to have current zad entries factored.  
+the division algorithm results per the classics read in august relate how to newtons differences.
+
+Why twoPolynomial and not just the counting rule????  the composition of a twopolynomial
+is in terms of its "additive" roots.  Trully the study of integers.
+
+so, what happens when a zad "x" parameter is substituted with twoPolynomial "additive" roots?
+
+8/31 roots code the inverses of twoPolynomial.
+
+9/3  August has the worksheetpage compleating the right side of zaddb.evaluates alongside the left of 
+     evaluates with zerosanddifferences. 
+
+some real refactoring is get the plrunthread loop in looplist semaphores worklists are each j.
+looks like plvRunThread and scoped objects also get refactored.    
+
+.plvrunthread
+             has an existing semaphore pattern; likely the buffer pattern.
+             pLVR is new vertexVector 
+             constructor sets jupper=nn,jlower.  They index the size of twopolynomial.
+
+             the run method initializes nMax.maxN,n
+             argument.argument,nRow.setA,B are all set to 1
+             twosequence.setSeq is set to 1
+             nRow.setC,setRocounter is zero.
+
+Note: nRow.incrementB,C occurs in .twoSequence but dosn't appear to be relevant to output.
+      nRow.RowCounter is a control variable for sequenceN.
+
+
+
+
+.rowBuilder
+
+             has n unique, an iteration index, .sequenceN. it is icremented, iterated over, in plvRunThread.
+             it introduces firstVertex at n=1
+
+
+9/4
+
+   rowBuilder is constructed soly with a no argument constructor.   
+  //  should be some static final fields.  don't need static fields, only one instance.
+   It is instiacated once within plvRunThread.
+   
+   .combSum recursivly 2x, 1x in sequenceN.
+   .firstVertex 1x in sequenceN.
+   .loadDBB  2x in combSum, 1x in sequenceN
+   .plvAdder 1x in sequenceN.
+ 
+
+   .sequenceN 1x in plvRunThread, 1X recursivly.
+ 
+
+       It iteratates(recurses) nRow.rowCounter=0 to N.  When called from plvRunThread is parameterized to start
+       iteration(recursion).
+       nRow.rowcounter has an analogue decrementSequence.
+       It manages argument by resetting it after .combSum and seperately after .loadDBB (to increment=1).
+       Synchronizes firstVertex, combSum and loadDBB method calls. 
+       Works with tl (termsList), not with any vertex's.        
+
+       It does write to the vertexBuffer. 
+       
+
+    .combSum 
+
+     Itereates decrementSequence down to lowest bound.
+     Conditionally calles (whenever decSeq>lowestBound) loadDBB.
+     Conditionally recurses.
+     Has a first recurse clause, controlled by argument, its main iteration, controlled by decSeq. 
+     Appends the .loadDBB appended termsList onto productListVector.  No new vertex's.
+
+
+     .loadDBB   
+   
+       Iterate over the number of termsLists on productListVector.
+       appendes termsList with a vertex  
+
+     . firstVertex
+
+       Instanciates vertex's, and termsLists.
+       Appends termsList to productListVector.
+
+
+Aside:   product list vector is appended a termslist composed of vertex within .firstVertex.
+         and sequenceN.
+
+         it is read from in 
+         loadDBB.  It seems a termsList is composed of termsLists is composed of vertex's.
+ 
+        An element on plv is located by a tripple i,j,k.
+         i is always the last vertexVector on plv.
+         j   
+         
+         termsList 
+
+Further more....   
+Its time to start system.out.println to see more that the above.  
+
+
+sequenceN and combSum do not create vertexes.
+
+when vertex's are created, they are set to a termList (tl), which is appended to plv immediatly as in 
+firstVertex, or after method fallthrough as in loadDBB.
+
+
+All Output consul system.out.printlns are currently within abcBean 
+   .setRowCounter                       -  plvRunThread
+   .incrementRowCounter                 -  rowBuilder.sequenceN
+   .incrementArgumentRowCounter         -  abcBean.incrementRowCounter 
+
+  
+The output bean is pLVR.lastElement().
+pLVR.lastElement() is pLVRlist.
+pLVRlist accepts t1, the output of loadDBB, and then plvAdder.
+
+.sequenceN instanciates dBBBean's for each termsList (t1).
+.plvRunThread instanciates dBBBean's for aggrigates of termsLists (t1's).
+
+
+
+
+plv has innermost object a list of quintupples. 
+then a list of list,
+then host list of lists. 
+
+object of the lab:  find the rows, and verify from workbooks.
+workbooks should have explicit row quadaratics.
+
+Remember, have the vertical translation function, and horizontal translation funcion.
+
+qfunct.hostpivot worksheet has data that matches current twopolynomial output.
+
+Have two ouput types from twopolynomial:
+           . output from plvAdder0
+           . output of input to plvAdder
+
+
+
+excel is "most used" after opening it twice.
+
+9/5 
+
+   The first vertex on plv is [[0 -8 0 0 0], [1 1 1 0 0].
+
+   nMaxNBean.formulaN subtracts first maxNfrom frm n then maxN from the prior result.
+
+
+   N=2
+   maxN=10                               localField        beanField          //formula in bean
+   firstScalar (aka decrementSequence=decrementSequence-nRow.rowCounter)=0-0=0
+   
+
+   0-(10-2)=-8   
+
+   The Vertex is constructed as (0,-8,0)
+"disregard the argument column it is an artifact of the  maybe it distinguishes between a constant and 
+variable vertex.
+java code." from e:copyofquadraticdata.ods
+
+
+Looking at the console scalars vs 2014.ods, the .ods scalars are half the corrosponding console output.
+twotabledbthread massagex the vertexs befor updating.
+Me thinkith the cosets are the range less than nMax.
+
+But with nMax, all prior twopolynomials have their rowCounter quadratics adjusted to using nMax.
+They originaly use the native nMax.
+
+
+9/6:
+
+   Need relation between .ods quadratics and twoPolynomial quadratics.  Hazy memory tells of logic behind 
+   rowbuilder.loaddbb.
+
+   Yesterdays System.out.println's need more system.out.printlns for company.
+   Looks like the argument variable in vertex is obsolete because it is wrapped as it's own object 
+   independent of vertex.
+
+
+
+9/7 dying for an .ods from about 5/3/2011   nMaxNBean.formulaN bTerm,maxN,n: 3 5 2
+
+  e:myfile1.ods -very clean. 
+    calc4.ods   even better.
+
+ so, something like if they both have a dimension then increase the dimension
+ if a dimension and not a dimension then keep the same dimension.
+
+ use the "b" formula, use the "c" formula.
+
+ breakthrough!!!  the copyofBook111222... fig representing the composition
+ the firstVertex is the bottommost term.
+
+Here is some lazy vs eager.  NmaxN.FormulaN computes when it it is used.
+                             vs compute at first opportunity. 
+
+9/8
+  N is defined in rowbuilder, very narrowly scoped.
+  It is the fifth field in sequenceN method call.
+     
+
+Seems twoPolynomial output is readable.
+  
+The first observation is the output does not seem to be in a form interesting to graphDB.
+However, the review of rowBuilder points to relevant modifications, expecially within .loaddb
+method. Importantly, can still use the .ods fig as graphDB template.
+
+https://www.youtube.com/watch?v=d4EgbgTm0Bg
+https://www.youtube.com/watch?v=zwAD6dRSVyI
+
+Norton and Dover in the basement at the Strand....
+
+
+9/9
+
+   chores:
+
+     wire zaddb into twoPolynomial.
+     get the bits onto graphDB so cypher can evaluate (back to cypher tomorrow) (yeah). 
+     want a new buffer for vertex's within rowBuilder.
+
+So, up to this point two polynomial has been identify the objects in the scope
+of execution.
+
+pLVRlist is appending common degree sum vertex's.
+pLV is appending tl's composed of vertex
+
+look at tl in plvAdder for objects to write to buffer.
+
+set up execution for counsol output of composition of each N < nNmax.
+but the consol data shows  the multiplication in the vertex's.
+so, into loadBB and find point of multiplication.  
+    and want a bean seperating out scalar=decrementSeq.multiply(thisScalar)
+    but writing the decrementSeq result to buffer bean.                   
+ 
+About decrementSeq:
+ 
+ for each nRow.getRowCounter<N  N<Jupper
+ each .sequenceN has a new sequenceN.decrementSequence.
+ it is first subtracted by nRow.getRowCounter.
+ in combSum method call, it it subtracted by one.
+ and then i 
+
+formulaN returns the same value throughout n<N (n Incremented in plvRunThread).
+
+n N
+
+
+Without reading any further, will pass into loadDBB, from combSum, two values
+the first the parameter for decrementSequence and the second, its function return.
+
+note: termsList.twoSeq is substituted as decrementSequence in loadDBB call from
+sequenceN.
+
+first vertex needs the decrementSequence substitution???
+so, it's scalar isn't associated with decrementSequence
+
+and none of the vertex's are associated with n,N.  
+
+First thing in AM
+Maybe these need to be rowBuilder state fields
+
+particularly, they are set in the .formulaN method. 
+                                and read for bufferBean.
+
+
+twoSeq, N, ffrowCounter, maxN in .sequenceN.   bigDecimal,bigDecimal,bigDecimal,bigDecimal.
+formulaN.bBTerm, maxN,n in .combSum.           bigDecimal,bigDecimal,bigDecimal.
+
+hmm, imagine row builder with state where each method aquires and 
+releases locks for r/w'ts.
+
+worried apparently about the .loaDBBB call in .combSum vs .loadDBB call in .sequenceN.
+loadDBB call in .sequenceN multiplies through by twoSequence.
+They consequence is tricker graphDB.  
+
+firstVertex doesn't seem to be part of the graphDB mix.
+but all other vertex's are collected onto buffer.
+
+.rowBuilder needs a reference to dBBuffer.  
+It will have it in its constructor.        // A bit of a mix as to how it resolves state.
+
+
+NOTE  // is this rowbean an example of an annonamus class? first construct it, then discretly
+enstate.
+
+Make a robust constructor.  and one off it onto dbVector.
+
+https://www.youtube.com/watch?v=bvbaW6kG1Ow phil donehu on albert spheer.
+
+9/11
+
+   zaddb is turned on.
+   The conf file is created under AppData\Roaming\Neo4j Community Edition ... maybe not.
+   zaddbTable1 is the graph.db thread for twoPolynomial.
+
+   The contents of twoPolynomial buffer can now be examined within zaddbTable1 becausse
+   its buffer is configured.
+
+9/12
+
+   Have the twoPolynomial output representing nodal and relational iratta for placement
+   in zaddb. tSeqDB dosn't seem correct.  it is now.
+
+   so, a final ammendum, for each (nn,flatfileRowCounter) have 
+   vertex scalars that were not multiplied through by twoSeqDB and those that were.
+   Vertex's multiplied through have their dbBean.tSeqDB field as a positive 2^n.
+   If not the dbBean.tSeqDB field is negative.
+   
+The moment waited for, since Sept 1.  A twoPolynomial dbBean looking for placement within
+zadDB.
+   
+   The Nodes and Relations pattern to implement:
+
+   For each evaluate defined by nMax, have two distinct collections of vertexDB's.
+   . the ones that aggrigate to evaluate with nMax parameter, 
+   . the ones that aggrigate to evaluate with tSeqDB and nMax parameter.
+
+
+  Note:  zaddbTable1 can read tSeqDB and replace with 1. 
+         Can simply record the tSeqDB allong with the unfactord nodes and forget about the
+         multiplied through ones.
+
+For nMax, have with each NN<Nmax a collection of dbBeans.
+The collection needs to be associated with its evaluate.
+nMax,nn,tSeqDB needs to be associated with the collection.
+      
+The looplist_worker zero index corrosponds to nMax??  in terms of factoring acrooss evaluate?
+The first zaddb result will attempt to factor out common terms contained within a 
+twoPolynomial arithmetic.
+
+So, with each dbBean:
+
+
+Merge nMaxx.
+Merge NN.     create relation NN,nMaxx
+
+Match nMaxx,NN  Merge twoSequence. create relation NN,twoSequence
+Merge flatFileRowCounter.   
+   
+And now, the review of zaddbTable, as done as the review of twoPolynomial, but this time
+more of a catalogue than an explanation of the algorythm.
+
+The zaddbTable1 constructors, 4 of them, each admit a different iterator class.  
+Maybe, an interface and just one constructor. use an enumerated type for each iterator 
+switch and call driver method. 
+.startConn connectivity method
+.endConn 
+.t1ToTable is not a zaddb method
+
+
+.go       -  first round of nodes on zaddb.
+.goCypher   a connection to zaddb test method.
+.run selects one of the 3 followng based on the constructor.
+.runFIDi
+.runFID
+.runLoopsDriver -  Buffer reading method.  It accepts the plvRun thread reference.
+.goCCypher - Control for following methods.
+.buildPoly                  MATCH (n:Node) return n pattern.
+.mergeVmResult              MERGE (d:Dnode {vmResult:?})
+.createWnumRcounter         CREATE (d:CreatedBy {resultId:?, wNum:?,pArray:?} )
+
+
+.createKnownByRelation      MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? 
+                                  AND k.wNum=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)
+
+
+
+.createEvaluates            MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? 
+                                  AND d.vmResult=? WITH d,e MERGE  (d)-[ee:Envalues]->(e)
+                or
+.createZMap                 MATCH  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?})
+                                   , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?})
+                                   MERGE (d)-[:zMap]->(dd)                  
+.goFidCypher   control for
+.mergeEvaluate              MERGE (e:Evaluate {Value:?}) SET e.n=?,e.d=?,e.nBinary=?
+ 
+
+misc.
+
+
+don't forget 6/18 commentary.
+
+
+who spoils the midsummer festival with admonished liquer
+shakspeer
+
+
+9/13
+
+Node name/property:
+
+.nn  
+.rowCounter 
+.nMaxx 
+.tSeqDB 
+
+.vertexDB is definedBy nn,rowCounter,nMaxx,tSeqDB  
+
+One node with first 3 properties and a seperate tSeqDB property.
+
+Could get daring and use mergeVertex to create relation to indexNode and sequenceNode.
+
+.createEvaluates            MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? 
+                                  AND d.vmResult=? WITH d,e MERGE  (d)-[ee:Envalues]->(e)
+                or
+.createZMap                 MATCH  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?})
+                                   , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?})
+                                   MERGE (d)-[:zMap]->(dd)  
+
+9/14
+
+     mergeIndexNode();      // NN,RowCounter,nMaxx
+     mergetSeqNode();       // tSeqDB           
+     mergeVertex();         // Vertex                        // bTermDB is not currently, on zaddb.
+   
+Create/Merge relation between indexNode and Vertex.
+Create/Merge relation between SeqNode and Vertex.
+
+Create evaluates
+Create/Merge relation between indexNode and evaluate.
+
+Reset graphdb to a blank db.
+
+Document and run muNumbers.
+
+Looks like FractionIntegerDriverIterate sets numerator,denominator prior to iteration.
+
+Screwed up gaussTable1.loopsDriver from twoPolynomial.  Need to recover it from usb.
+The .zaddb version of .runLoopsDriver is worthless.
+The GaussTable1.runLoopsDriver is fine.
+
+Am running FractionIntegerDriverIterate to populate a fresh zaddb.
+
+
+9/15
+
+Read on GaussTable1, still need evaluates before any new cyper. 
+Need to instanciate FractionIntegerDriverIterate.   
+
+Run fidi and see effect on zaddb.
+ZAD was found to be configured for LoopsDriver instance.
+
+FIDI is set to run for d=7.
+Note: twoPolynomial is not a library within ZAD.  It is its owne project.  but maybe refactor.
+
+thyco and galleo contemporaries. galleo could not prove the parralax.
+
+
+9/16
+
+match x 
+collect x
+match y in x
+
+when set is returned, unwind s set
+match path s [*] evaluate
+return nodes.
+
+new method .createTwoSeqValue relates twoSeq to appropriate vertex's.
+
+next method relates a vertex to it's aggrigate definition.
+
+
+     mergeIndexNode();      // NN,RowCounter,nMaxx     stringed
+     mergetSeqNode();       // tSeqDB                  stringed
+     mergeVertex();         // Vertex                        // bTermDB is not currently, on zaddb.    stringed
+     createTwoSeqValue();   // TwoSeq [] vertex        stringed
+     createTwoPowerEvaluate();   //relation between index and evaluate.  stringed
+     createVertexIndexedBy();  //                                        stringed
+
+Create/Merge relation between SeqNode and Vertex.            //    done
+Create/Merge relation between indexNode and evaluate.
+Create/Merge relation between indexNode and Vertex.
+
+
+
+
+
+
+
+9/17
+
+twoPolynomial:
+
+.plvManager                        - The twoSequence cosets as right hand side of Evaluates.
+
+ZerosAndDifferences:
+
+.LoopsDriver                       - Lefthand side of Evaluates as TriagTriag.
+.FractionIntegerDriverIterate      - The evaluates as Value,n,d
+                                     Set threadpoolsize,denominator and numeratorhigh.
+                                     looks like evaluates are created, not merged.
+
+       
+For the afternoon:
+
+First a fresh zaddb gets populated vis twoPolynomial.
+As mentioned earler in June, want some of the math behind the iteration eg. its completeness.
+
+So, maybe run twoPolynomial from one to 20.
+But only have to go to 16 which is a square value.
+
+Done.
+
+Ready to run twoPolynomial.
+
+
+it will be set to n=10 butn 
+
+
+with twoSeq being an algabraic integer, can multiply through and change the dimension of the result by one.
+this say from square to quartic that is the quartic is not complete as the square is; in terms of counting.
+(looks like some sort of surjection)
+
+by the way, all the methods of today need to be .setStrings not .setBigDecimals
+
+9/18
+
+  ****   Don't forget!    The algebraic integers vs the counting integers within the twoPolynomial cosets and 
+         substitution.  The ruberic of what adds and multiplies defines same or different resulting dimension.   ****
+          It's going to take a bit of time refactoring twoPolynomial. 
+
+
+Things are a bit screwy with zaddbTable1 (not to mention it is a twoPolynomial library).
+So, from the top:
+
+
+     mergeIndexNode();      // NN,RowCounter,nMaxx     
+     mergetSeqNode();       // tSeqDB                  
+     mergeVertex();         // Vertex                  
+     createTwoSeqValue();   // TwoSeq [] vertex        
+     createTwoPowerEvaluate();   //relation between index and evaluate.  stringed
+     createVertexIndexedBy();  //                                        stringed
+
+Create/Merge relation between SeqNode and Vertex.            //    done
+Create/Merge relation between indexNode and evaluate.
+Create/Merge relation between indexNode and Vertex.
+
+Been putting it off and off but no longer.  zaddbTable is going to need resultSet based methods.
+Look on muCorrolationThreaded.twotabledb???
+
+.twoTableDBThread
+
+.run 
+.t1ToTable
+----------
+.go                "insert into vertex values(?, ?, ?, ?, ?, ?)"
+.goResults         "insert into results values(?, ?, ?, ?, ?, ?, ?, ?)"
+
+.twoTableDBThread1
+
+.run
+-------
+
+.t1ToTable.goResults  
+                     "insert into results values(?, ?, ?, ?, ?, ?, ?, ?)"
+.goDrawProduct.goGetPoly        
+                     "select * from results where num=?"
+
+          //  prior is first occurance of .resultSet 
+
+.goDrawProduct.goGetPoly.goCompresults
+                       "insert into compresults values(?, ?, ?, ?, ?, ?, ?, ?)"
+                        
+
+
+.zaddbTable1
+
+.runTwoPolyDriver
+
+.mergeIndexNode
+                "MERGE (d:IndexedBy {N:?, RowCounter:?,MaxN:?} )"         
+.mergetSeqNode
+                 "MERGE (d:TwoSeqFactor {twoSeq:?} )"                          
+.mergeVertex
+                 "MERGE (v:VertexNode {Vertex:?} )"
+.createTwoSeqValue
+      " MATCH (i:IndexNode), (s:SeqNode) WHERE i.NN=? AND i.flatFileRowCounterr=? AND 
+               i.nMaxx=? AND s.TwoSeqFactor=? WITH i,s MERGE  (i)-[ee:TwoFactor]->(s)"  //  looks wrong,  thus indexNode will have two twofactor nodes.
+
+.createTwoPowerEvaluate()
+      " MATCH (v:VertexNode), (e:Evaluate) WHERE v.Vertex=? AND e.Value=? WITH v,e 
+        MERGE  (v)-[ee:TwoPowerEvaluate]->(e)"
+
+Want the indexBy node pointing to twoPowerEvaluate, not the vertex???
+Yes more refactoring the better.
+
+
+10/18
+
+twoPolynomial.zaddbTable1.ArithmeticCypher 
+
+getColumnCount()
+getColumnClassName(int column)
+getColumnDisplaySize(int column)
+getColumnLabel(int column)
+getColumnName(int column)
+
+Got the resultSet object. Looks like a map.
+
+The rs object casts to Map.  It is one key,value.
+Want to retrieve the name of the key and the name of value for school sake.
+That is read the result set not abridged as above but consisely. 
+
+twoPolynomial knows the labeles, but from the result set...
+
+So, for each rs.next need to .get key  
+
+Can get a set of keys and iterate  
+
+That is, get each rs.next onto map.
+
+Got to also get the resultset Metadata
+     ResultSet rs = stmt.executeQuery("SELECT a, b, c FROM TABLE2");
+     ResultSetMetaData rsmd = rs.getMetaData();
+     int numberOfColumns = rsmd.getColumnCount();
+     boolean b = rsmd.isSearchable(1);
+
+Got the keys, 
+Got the Values,
+Got the rest of the data in zaddb thread state.
+
+Don't know the meaning of rowCounter any more, maybe just a single index Node.
+
+Afternoon:
+  Have ArithmeticCypher resultSet each object a Map.
+   Have each Map object's keySet and for each key, its value.
+The state of zaddbTable1.java 
+Has two types:
+             . DBBuffer
+             . ArithmeticCypher
+
+So, that means runTwoPolyDriver() should not .arithmeticCypher.
+
+Who .runTwoPolyDriver()?
+The real fun thing this evening is I can set up a new thread.
+Not clutter up the mangee thread.
+
+So,
+New thread.
+New thread state.
+
+Make sure nMaxx is in original graph (looks like a refactoring and the cypher is going to
+   have to carry it throug);  
+But first, back to the origonal problem.
+
+with different quadratics (factors, but later) for say "8" what are the permutations of 
+arthmetic for each,  is the permutation set complete?
+
+10/19 
+
+  Got a new thread to handle ArithmeticCypher.  
+  .Main will .run.
+  New thread has the class state variables
+  The hanging constant in each twopolynomial is not graphed yet.
+
+
+  So, 
+     Complete .ArithmeticCypher 
+     Need zaddb interation methods referenced in cypherArithmetic.
+     Also, where does Evaluate.Value get related. 
+
+     Also, reducing writes:  Can twoPolynomial know when it is a merge or create.
+     Also, indexNode value can identify iterations of ArithmeticCypher with custom
+     String. As in, concatinate the two values.
+
+
+     Along with cypher observations of carring down aliases and the effect on return map.
+     Have the order of the return map keys vs the java resultSet (the java is authentic key,vaue).
+
+     There seems to be some type conversion with the this. graph attributes.
+     Are native bigDecimals, and vertex but looks like all but twoSeq are strings.
+     so, in cypherArithmitic constructor, set variables as bigDecimals.
+     will use negative values as indexes.
+
+     this.NN needs some attention. Origonally, it is the power of 2 index that the 
+     vertex pattern is to evaluate at.  
+   
+     seems multiple is a list.  maybe fix the cypher.
+ 
+10/22
+
+    Spent hours Friday getting cypherArithmitic return to instrument new nodes and relations.
+    Eventually got the nodes from return back on zaddb with appropriate relations.
+
+    Looks like Friday's refactoring, matchTwoFactor(), createTwoSeqValue() tell a tale of Match, Merge, and Create functionality.
+    
+    From the end of Friday, maybe the
+
+             createTwoSeqValue();
+                               "Merge (i:IndexedBy {N:?,  RowCounter:?, MaxN:?}), (s:TwoSeqFactor {twoSeq:?})
+                                WITH i,s MERGE  (i)-[ee:TwoFactor]->(s)"
+                                // Under observation, the above did not Merge a new TwoSeqFactor relation.
+                                // Under Friday observation the relatable nodes are available.
+                                // The likely conclusion is createTwoSeqValue is ineffectual.
+ 
+            matchTwoFactor();
+                               "Merge   p=(i:IndexedBy {N:?,  RowCounter:?, MaxN:?})-[ee:TwoFactor]->(s:TwoSeqFactor {twoSeq:?}) Return nodes(p)"
+                               // Merge paths.         
+                               // First observation is there are now 4 IndexedBy nodes with N:"40" and otherwise
+                                  the same. Three of them each have distinct TwoSeqFactor nodes,relations.
+                                  one does not.                    
+
+   On the way over here, Idea that something wonderfull will happen when expanded IndexedBy node is passed into 
+   the createTwoSeqValue(); matchTwoFactor() paradyne.  Which concludes the addage:  god forbid under these curcomstances
+   cypher returns more than one row.
+
+           
+
+    methods work.  Another highlight of cypher is how it worked.
+    Onward.  Fix 
+
+            createIndexedByEvaluate();
+            matchIndexedByEvaluate();                                    //  The zaddbTable1.java version.
+
+    Modeling this fix requires a bit of Friday's fix explained.
+
+    If I can then some testing of the CypherArithmitic Thread.
+
+    Run it on a pristine zaddb.  
+    Notice if createTwoSeqValue() or matchTwoFactor() is responsible for new TwoFactor relationships.
+
+    A just in exciting revelation:  The "40" series node keys are 40 As N and twoSeq as rowcounters.
+
+    .executeUpdate
+          vs
+     rs.executeQuerry     in cypher world where scripts end in return clause vs detach delete. 
+
+     Questions aside, maybe things are stratened out with first relation.
+
+     keep an eye on evaluates, have a problem.  what values are what?
+     (in reference to createindexnodeevaluate..)
+
+     according to referenceFig, am computing 16-8.
+``     but me thinkith(according to workbook, am really computing 8-4.
+
+     but realligning to 8-4 in compute targetvalue withn method of zaddbtable1, screwey.
+
+
+     The current big issue is the Evaluate:,IndexNode map.
+
+     Have the current zaddb state. Have the state from last week.
+     And the workbook.
+
+
+     A good use case is cypher arithmetic on this current map problem.
+     Meaning I want to see the pattern comprehension.  Meaning particullary,
+     why is the apparent output map full of negative multiples???
+
+10/23
+
+this.NN = 2,3    2*2 when .NN=2 and 2*2*2 when .NN=3
+
+                   2=targetEvaluate     1=targetEvaluateDB 
+dCounter = 0       2*2     
+         = 1    
+     
+Have some new output.   Supposedly EvaluateNode.Value = "4" is an interesting graph.
+                        Probably albit with twoSeq problems.
+                        And Certanly with -Rowcounters.
+                        So, negative rowCounters because negative twoSeqs.
+                        Maybe run the cypher in the browser for more info.                        
+                        Remember the subtractand is hard coded in CypherArithmetic.arithmeticCypher
+
+//                  mergeIndexNode();       //works 9/19
+//                  matchIndexedBy();       
+//                  mergetSeqNode();                
+//                  matchTwoSeqFactor();    
+//                  mergeVertex();          
+//                  matchVertex();              
+//                  createTwoSeqValue();
+(" Match (i:IndexedBy {N:?,  RowCounter:?, MaxN:?}), (s:TwoSeqFactor {twoSeq:?}) WITH i,s MERGE  (i)-[ee:TwoFactor]->(s)");
+//              //    matchTwoFactor();
+//                  createIndexedByEvaluate();
+("MATCH (i:IndexedBy {N:?, RowCounter:?,MaxN:? }),(e:Evaluate {Value:?}) WITH i,e MERGE (i) -[:IndexedByEvaluate]->(e)");
+//                  matchIndexedByEvaluate();
+                  createVertexIndexedBy();
+(" Match (i:IndexedBy {N:?,  RowCounter:?, MaxN:?}),(v:VertexNode {Vertex:?}) With i,v Create(i)-[:VertexIndexedBy]->(v)");
+                  matchVertexIndexedBy(); 
+                        
+  Expecially the mu experiment. me thikith say looking for 1/p 
+ 
+  Look number of indexes in each muSet expecially with quadratics.
+  Maybe graph related by number of indexes. Count compleated p or iterate is p compleated.
+  Also, zad has Evaluate endpoints. what does triagtriag1,2 comprehension mean.
+
+ But really:
+              .Concatinate evaluates for indexedby.n
+              .Get arithmitic cypher to iterate a range of differences with maximum size.
+              .SemaphorPattern Worker thread it.
+              .Avoid the random variable.
+              .The twoPolynomial constant must be accounted.  It is half the vertexes + tpConstant.
+
+10/24 
+
+      Horrable reasons overwhelmed arithmeticCypher.map usablility.  
+      Fortunatly and confidantly, can consider man readablility.
+      
+      Inside ZerosAndDifferences   
+
+      . Run ZAD onto zaddb with a mind towards quadratics.
+        Hmmmm.  Then maybe zaddb will detect roots.  Hopefully pairs. These pairs are robustly represented as mu numbers.  
+      . Polymorph a worker suitable for arithmeticCypher.
+        It seems that CypherArithmatic as a Thread is awsome.  Give it some usefull parameters for its constructor.
+                                                               And its ready to iterate.
+      Its all about ZAD right now.   
+
+      .Main was configured to run frationIntegerDriverIterate.
+      
+      .LoopsDriver parameters:
+      int dimension=6;          // will be working with dimension 2 but maybe 3
+      int integerRange=20;      // Length of loopList, pairs of roots not expected to have indices past 20                                 //  The loopListener needs to know this value for its runnable.   
+      int setProductRange=8;    // The last argument in loopSemaphore constructor.
+                                // The range of a scalar in pArray.  
+      PolynomialArray figPArray = new PolynomialArray(dimension,1);  // second argument is p scalar?      
+  
+      I do have an .ods for this.
+       SubDiffOfScalarsExample2.ods is the authority backing zad implementation.
+  
+       The first two worksheets tell the theory: 
+
+       Psi_i: 
+         Has argument P.  Differences are iterated out, factorial devisors are calculated,
+         and subsequent differences are also iterated.
+       TriTri_j=1 scalar: 
+         Match the pattern of Psi_1 first differences with p' of dimension 1 less.
+         as increment p's coefficients from least to most significant.
+
+       Returning to zaddb:  What is the relation to evaluates and mach .
+       There are legitimatly none with 1 a leading coefficient.
+       SDOS.ods to the rescue.  The leading coeficient as 1 or 2, will influence even or odd roots.
+       Abridged answer is want both in range on zaddb.
+
+       Where in ZAD can the above be accomidated.  // It happens in PolynomialArray.java.
+
+      Where in ZAD can the above be accomidated.  // It happens in PolynomialArray.java.
+
+       Me thinkith ZAD running on the same arguments skrews up zaddb.  
+       Holy schlitzskies batman, there are no evaluates on graphDB.  Will restore directory copy.
+      
+       The pArray iterator needs an examining.  
+       Give it the who what ....   Why does it aparently not draw an expected cross product.
+      
+10/25
+
+       pArray iterator day.  ZAD not offering pArray product as expected?
+       Looks like ZAD really understands.  For quadratics, pArray shoud exibit 
+       1 free variable.
+
+       Maybe need higher degreed leading coefficients. 
+       Maybe iterate over the constant term.       
+       Well, with no constant, one of the roots are zero.  
+       Combined with 1 leading scalar iterates over the odd root indeces
+                     2                iterates over the even root indicies.  // merit of subdiffofscalars!
+
+       Importantly,  The big experiment is use the quadratics from twoPolynomial and
+       see how they behave.
+    
+       It seems twoPolynomial needs to write objects zaddb can recognise.
+
+       
+10/28,29   bears and burgerlers banshees and ....  bewitched.
+
+    ZAD has great matrix capabilities.  The actors and readers for:
+
+    pArray         -  sized as dimension, each as zero.
+    figPArray      -  , last element is int parameter
+                      Is a Looplist constructor field know as pArray // maybe bad!! naming!!! 
+   
+         LoopList gbList00 = new LoopList(dimension+1,rListB,dimension,15,0,xPowers,figPArray,moduloList);
+         loadPArray(pArray);        - For each in integer range, multiply out figParray.          
+         .subsequentWorkerListInit  - differences out prior Looplists on rListB as current looplist.value.
+   
+Set figParray=twoPoly then create looplists for rlistB as in .loopsDriver.
+ResultListBean rListB =new ResultListBean();
+
+   LoopList gbList = new LoopList(dimension,rListB,dimension,integerRange,1,xPowers,figPArray, moduloList);
+   rListB.add(gbList);
+   cashedrListB.add(gbList);
+   gMain.gauss(muList,muSem,dimension,dimension+1,(double[][])gbList.getgMatrix(),new GaussBean1(figPArray.toString(),pArray.toString(),gbList,resultListCounter));
+   
+Needs alot of overHead.
+
+
+    LoopsDriver.run()     - set up rListB composed of LoopLists
+                          - set up workers composed of LoopSemaphors and listeners attached to LoopLists
+
+   // very messy to comment out for twoPolynomial.  Butt!!!  task the semaphore pattern.
+
+      LoopsDriver, refactored in twoTableDB thread style, for taking advantage of LoopList implementation,
+   will accept twoPolynomial.muBuffer objects and be converted to figPArray objects for transformation
+   into TriagTriag objects.  Note that system parallism is increased by one thread.  A thread for
+   writing the vertexes and another for TriagTraig.
+      Where to put this "LoopsDriverTable" thread.  It belongs in TwoPolynomial but has a lot of ZAD.java
+   classes.  As if its time to combine TwoPolynomial and ZerosAndDifferences.
+  
+   Looks like ZAD.main absorbs TwoPolynomial functionality.  Therefore, LoopsDriverTable goes with GaussTable.
+      
+Back to TwoPolynomial:
+
+    2^n for a range on n is produced for Zaddb.
+    Whenever a twoPolynomial is described in Zadd want it's TriagTriag also on Zaddb.
+    Want every pair available for cypherArithmetic.
+
+    Can use the semaphore pattern for this!!
+    To iterate a n set product need n + 1 workers.
+    setSize is twoPolyNomial.nMaxx.
+
+    The event triggers cypherArithmatic.  Its parameters are Evaluate.value_a,Evaluate.value_b.
+
+10/30 
+
+    LoopsDriverTable a refactor copy of GaussTable is in the ZAD main folder.
+    LoopsMain will implement LoopsDriverTable....
+
+    Have ZAD.main().  It is configured to implement the semaphore pattern with goal of triagtriag output for iterated set S.
+    Want to repurpose Zad.main.  It is to first plvManager.start.  
+    
+    Within LoopsMain, .plvManager is instanciated and will start.
+    Have not altered the usual vertex write to buffer.
+    Do want to write to a buffer that is referenced by 
+    LoopsDriverTable.
+
+10/31 
+
+   Otherwise, its time to interface the collection of database threads.
+   GaussTable1 can read LoopsDriverTable objects.  
+
+   LoopsDriverTable needs to read plvManager objects.
+   It needes a clone of tlSemaphore,dbVector along with mage.
+   
+   LoopsDriverTable needs its run method to release buffer objects.
+   The run work is building rListB.
+
+   The exact twoPolynomial is written onto the LoopsDriverTable buffer.
+   The scalars must be halved. The constant in consideration of N.
+
+   Afternoon:  LoopsDriverTable sees buffer objects aok.
+               Particularly, rowBean constructor with fields 
+                                    .setfields with fields.
+11/1 
+
+   Need LoopsDriverTable to transcribe resultSet into figPArrays. 
+   Firstly, first bit of figParray is low or high degree.
+   According to zero index is constany.
+
+   Got a figTParray for each twoPolynomial described in LoopsDriverTable buffer.
+
+11/2
+
+   Sleuthing the LoopsDriverTable buffer object as it enters LoopList constructor.
+   
+   Maybe pArray needs a little meaning.  Maybe manually set pArray by reading looplist.
+
+11/3
+
+     have not worked on parray within loopsDriverTable yet.
+     but maybe clear zaddb and see what happens.
+
+11/7
+
+11/7
+
+Your neo4j-desktop activation key expires at November 7, 2018 11:23 AM
+
+The latest addons/refactoring of ZAD might provide DiffOfScal graphics to ZADDB.
+But first, some ZAD functionality comprehension.
+
+Have four big Java classes along with their associated db classes:
+
+plvManager                         The TwoPolynomial generator thread.
+zaddbTable1                        Verify zaddbTable1 and LoopsDriverTable buffer are written to.
+
+LoopsDriverTable                   Reads TwoPolynomial buffer quadratics and then Gausses each difference.
+GaussTable1
+
+LoopsDriver                        LoopSeamphore managed pArray generated DOSP's.
+GaussTable1
+
+FractionIntegerDriverIterate       Mu number generator.
+GaussTable1
+
+There are three classes using the GaussTable1 Thread for ZADDB interation.
+Need the formal instructions for populating ZADDB.  
+Note that there are two versions of ZADDB.  One derrived
+from LoopsDriver and onederrived from LoopsDriverTable. 
+
+The ZADDB derrived from LoopsDriverTable is the object of interest.
+
+
+11/9 
+
+ -    11/7 identified actor threads in .main() needing refactoring if 
+   ZAD is to run from command.com. Motivation is to document  
+   populating ZADDB either by loopsdriver or loopsDriverTable from empty graph.db.
+   
+ -    Very much need the 1 bit mu's, 2 bit mu's, ....   
+   The above hypothesis as a ZAD lab.
+
+ -    Truely need ryhyme and reason, something alone the lines of P^2 generalized for 
+    P^n as written by loopsDriver, and a hypothesis like the above -.
+
+ -    Along with the refactoring, need a new functionality. 
+   The countably many different sequences for each nMaxN composed of N_i - N_j
+   need to become part of zaddb structure.  They are the subject of 
+
+ -    As TwoPolynomial is the ^2 zahlreal, need the above - included into ^n zahlreal.
+
+
+  
+The second and third results will, along with yet identified method or structure,
+a time and place to write the second - somewhere in a sequence within the countable,
+as a root.
+
+So, expetct to have maybe at least two versions of graphdb.  
+
+
+11/14
+
+   
+The query language of a gra
+ph
+database  typically  promotes  either  a
+graph  traversal
+or  a
+graph
+pattern match
+perspective.
+
+
+11/19
+   Looked at tinkerpop last two days.  Don't quite get it yet and maybe not needed yet because am studying 
+a pattern match and not a graph traversal. Therefore, am proceeding with nBinary laboratory using cypher.  
+   Posit a simple comprehension of Evaluate.nBinary.  Want to return all (List)Evaluate.nBinary of size=2.
+Problem is .nBinary is recorded as a string.  Maybe simple match and where string has one "" is the target. 
+   Possiblilty one:  refactor evaluate node to include size of list property.
+
+Implement possibility one.  11/7 is latest documentation for generating complete graph.
+
+FractionIntegerDriverIterate       Mu number generator.
+GaussTable1
+
+plvManager                         The TwoPolynomial generator thread.
+zaddbTable1                        Verify zaddbTable1 and LoopsDriverTable buffer are written to.
+
+LoopsDriverTable                   Reads TwoPolynomial buffer quadratics and then Gausses each difference.
+GaussTable1
+            // not interested in populating below at this time.   // LoopsDriver    LoopSeamphore managed pArray generated DOSP's.                                  // GaussTable1
+
+so, look for each fraction with size = 2.
+as a rehash, every evaluate uniquely defines num,den
+but num,den can be the same for multiple evaluates.
+
+so analyse zaddb with respect to evaluate node and its properties.
+and while keen for the size=2 field (those quadratics with these roots)
+want generalized cvs type output.
+
+11/20
+
+  apoc.export.csv Evaluates and determin 2bit compleatness.
+nope:
+Call apoc.export.csv.querry("Match (e:Evaluate) return e ",
+"evaluates112018",";")
+yep:
+Call apoc.export.csv.query("Match (e:Evaluate) return e.Value,e.d,e.Size,e.n,e.nBinary ",
+"evaluates112018.csv",{d:";"})
+
+Evaluates112018.ods has table showing robust yet not complete size 2 representation of (n,d).
+A growing variety of size exists as n -> d.  With (n,d) have repeats of size.
+Lab will show the functions for given d will predict hashes for both of the above.
+Can current .ods provide data for descriptive graphs?
+
+But the exciting conclusion is can proceed with building the whole graph.  
+Populate
+         .Evaluates
+         .twoPolynomials
+         .ZAD
+
+Maybe before hand, give Evaluate value also as integer.
+
+11/24 
+
+   Evaluates are on zaddb.  
+   A "working" copy of zaddb is current neo4j graph.
+
+11/26
+
+   match (e:Evaluate) Where e.Value IN ["2","4","8"] return e
+
+      mage.start();         - plvManager
+      bmage.start();
+      lDriver.start();      - LoopsDriverTable
+      gTable1.start();
+
+    twoPolynomials do not appear to be connected to zad.
+    good ol afternoon work.
+    suppose it means the need to read some output.
+    need some delete cypher for zad nodes.
+
+    Not many interesting roots so far.
+    Not unexpected.
+
+    A refinement on twoPolynomial:
+    Abhorantly, one of the twoPolynomials have a root. 
+    But, maybe translate the nMaxx set down such that roots 
+    exist.  What sayith that?
+
+    Need to look at the nMaxx series via .csv.
+    
+    Think the vertical displacement can be wired into twoPoly.  // into zad
+
+
+Each need to be put together as nBinary.  // which i think happens.
+
+Within LoopsDriverTable.run is
+PolynomialArray figTArray = new PolynomialArray(constant,linear,square); 
+Agragate figTarray for .csv.   
+
+Maybe at this point perform the vertical displacement.  
+A new runtime parameter: the displacement value.
+Also, can displace a range of values upto nMax for starters.
+The tomorrow lab above.
+
+11/27
+
+   The displacement of constant to occur in LoopsDriverTable.  // it is in loopListener.
+   Want to always csv from zaddb. Because of LoopsDriverTable, can do.  .
+   TwoPolynomial exists as Dnode.vmResult, the export target.
+
+   Dnode.vmResult is a string but want easy coefficients.  Maybe refactor Dnode 
+   for more int fields.  
+
+   Time to delve into zaddbTable1.  
+   Or further into where vmResult is set.  Haven't been there in a while.
+
+   PolynomialArray: this.add(constant);this.add(linear);this.add(square);
+   
+public class LoopsDriverTable extends Thread {
+    
+int dimension=2;    
+int integerRange=20;     //  The loopListener needs to know this value for its runnable.   
+int setProductRange=20;
+int vDisplacement=3;     // new field is constant-vDisplacement.
+
+public class LoopsDriverTwoP extends Thread {
+
+int dimension=2;    
+int integerRange=20;     //  The loopListener needs to know this value for its runnable.   
+int setProductRange=20;
+
+PolynomialArray pArray = new PolynomialArray(dimension);    // 
+PolynomialArray figPArray = new PolynomialArray(dimension,2);
+
+// the second field variable in figPArray is the leading P scalar.
+
+
+A huge problem: .mergeVmResult is hard codeded for quadratic entries (four psInsert's).
+Need the constant,linear,square so....  
+
+For the square:
+mergeVmResult(String vmResult,PolynomialArray fPArray)
+
+Have to find out difference between figPArray and pArray.  
+
+
+11/28
+
+   
+dnode112718.csv is innacurate.  
+AM: find out why.
+
+       plvManager mage = new plvManager(tlSemaphore,t2Semaphore,cosetSemaphore,dbVector,
+                                         dbVector1,dbVectorCST,tl1Semaphore,dbVector11);
+
+       LoopsDriverTable lDriver= new LoopsDriverTable(muList,muSem,loopsLogic,tl1Semaphore,
+                                                      dbVector11,mage,tl1Semaphore,dbVector11); 
+
+Thus t11Semaphore and dbVector11 are shared with the two work threads.
+
+And in plvManager:
+
+ plvRunThread mage = new plvRunThread(2,8,NN,tlSem,t2Sem,cosetSem,dbbVector,dbb1Vector,
+                                      dbbCSTVector,tl1Sem,dbbVector11);
+
+
+    synchronized(this) {   //latest thread issue
+ //    dbb1Vector.add(dBBean);
+ //    dbbCSTVector.add(dBBean);
+     dbbVector11.add(dBBean);
+//     System.out.println("plvRunThread dbbvector11.lastelement " + ((rowBean)dbbVector11.lastElement()).getTL().toString()+"  "+ ((rowBean)dbbVector11.lastElement()).getNN());
+     System.out.println("plvRunThread t11sem " + tl1Sem.availablePermits());
+     tl1Sem.release();
+//     t2Sem.release();
+//     cosetSem.release();
+    rowBean dBBean1= new rowBean();    // can be initialized in the constructor.
+    dBBean1.setvertex((vertex)pLVRlist.get(1));dBBean1.setNMaxx(nMax.getmaxN());dBBean1.setNN(N);
+    dbbVector11.add(dBBean1);
+    tl1Sem.release();
+        rowBean dBBean2= new rowBean();    // can be initialized in the constructor.
+    dBBean2.setvertex((vertex)pLVRlist.get(2));dBBean2.setNMaxx(nMax.getmaxN());dBBean2.setNN(N);
+    dbbVector11.add(dBBean2);
+    }
+
+maybe forgot to release the last semaphore permit.
+
+
+Call apoc.export.csv.query("Match (e:Dnode) return e.square,e.constant,e.linear ",
+"dnode112718.csv",{d:";"})
+
+denode 112818,csv reveals an improvement from previous.  
+PM: on with drilling for the answer.
+
+plvRunThresd    plVRlist
+
+[[1 -28 1 0 0, 1 2 2 0 0, 0 98 0 0 0]]
+
+[[1 -28 1 0 0, 1 2 2 0 0, 0 98 0 0 0], [1 -54 1 0 0, 1 4 2 0 0, 0 184 0 0 0]]
+
+[[1 -28 1 0 0, 1 2 2 0 0, 0 98 0 0 0], [1 -54 1 0 0, 1 4 2 0 0, 0 184 0 0 0], [1 -106 1 0 0, 1 8 2 0 0, 0 358 0 0 0]]
+
+[[1 -28 1 0 0, 1 2 2 0 0, 0 98 0 0 0], [1 -54 1 0 0, 1 4 2 0 0, 0 184 0 0 0], [1 -106 1 0 0, 1 8 2 0 0, 0 358 0 0 0], [1 -210 1 0 0, 1 16 2 0 0, 0 708 0 0 0]]
+
+[[1 -28 1 0 0, 1 2 2 0 0, 0 98 0 0 0], [1 -54 1 0 0, 1 4 2 0 0, 0 184 0 0 0], [1 -106 1 0 0, 1 8 2 0 0, 0 358 0 0 0], [1 -210 1 0 0, 1 16 2 0 0, 0 708 0 0 0], [1 -418 1 0 0, 1 32 2 0 0, 0 1410 0 0 0]]
+
+[[1 -28 1 0 0, 1 2 2 0 0, 0 98 0 0 0], [1 -54 1 0 0, 1 4 2 0 0, 0 184 0 0 0], [1 -106 1 0 0, 1 8 2 0 0, 0 358 0 0 0], [1 -210 1 0 0, 1 16 2 0 0, 0 708 0 0 0], [1 -418 1 0 0, 1 32 2 0 0, 0 1410 0 0 0], [1 -834 1 0 0, 1 64 2 0 0, 0 2816 0 0 0]]
+
+the plvRunThread.run synchronized block 
+and other locking schemes (multiple objects).
+
+rowBean is  correct, the onerus is off plvRunTrhread.
+Now for a looksee inside LoopsDriverTable.
+Actually working well.  There is the refinement to make with 
+argument, scalar, degree that is: the halve and add n.
+
+All good with the idea,  it is time to implement.
+
+Back to LoopsDriverTable...
+twopolynomial buffer went through loopsdrivertable all ok.
+
+A so interesting observation:  the first twoPolynomial is even.
+All the others are odd.
+
+Very interesting observation:  inside the range of each twoPolynomial
+is a power of two.  Meaning a vertical translation will exibit a consistant
+root appearing.  
+
+Something like take two polynomials pairwise and displace each respectivly
+vertically, and a pair of roots will appear.  
+
+What does the triagtriag experiment tell us?
+Maybe, set up the triagtriag lab for these quadratics.
+Maybe, even them out, or the triagtriag lab will do that automatically.
+
+So,  as recalled the semaphore pattern does the job with a seed quadratic.
+
+Remember the newest and best LoopsDriverTable?  A fine refactoring of 
+LoopsDriver.  But now, a refactoring!!!
+
+
+Each twoPolynomial, read from buffer as LoopsDriverTable, is a seed for 
+LoopsDriver and its semaphorePattern functionality.
+
+That is, for each twopolynomial buffer object, construct a LoopsDriver
+with seed. Outcome suspicison is only one root...
+
+LoopsDriver needs a refactor name:  LoopsDriverTwoP.
+It need to be constructed with a twoPolynomial field (figPArray).
+
+https://www.youtube.com/watch?v=FavUpD_IjVY
+
+Create root node.
+       The Lable is Dnode.
+       The figParray is [0 0 0 1].
+       The resultlistid is 0
+       pArray is null.
+
+.determine the appropriate property index
+.write the ZAD prepared statement.
+
+pArray:      For each index_i, exists p_difference_i (known in zad as LoopList.matrixA.gMatrx) 
+             and evaluates to zero at parray_i.
+figPArray:   P^n such that each P_difference_i (difference_i) has pArray property.
+
+
+So, figPArray is definately set in refactord constructor, 
+but what of pArray?  set to zero?  as it is known that no zeros exist 
+in any twoPolynomial.
+
+pArray has no zeros, not even at origin, therfore is initialized to zero.
+That is need a new constructor for pArray.
+
+11/29
+
+The union of the roots of each twopolynomial is target interest.
+Above is blah.
+
+   SubDiffOfScalars.ods provides possibly an answer into expectation
+of running ZAD for the TwoPolynomial output.  The buffer quadratics,
+as expected, do not have integer roots.  With the interest in 
+transforms that would exibit roots, two come to mind.  The first is
+a vertical translation by the twoPoly value.  There would result a 
+single root at the value.  The second is provided by zad.  For each
+pArray in Zad, there would be opportunity to include further displace
+vertically resulting in pairs of roots symmetric around the vertex.
+Both methods have problems.
+  The first method only provides for one root.  The second results in
+the same set of roots for each quadratic. Have a problem with this last
+statement, but have a refinement.  The worksheet exibits equivelant
+quadratics up to a different scalar which factors across each twoPoly.
+Can conjecture that all root sets are so equivelant. 
+
+ So, as the expected ZADDB composition is demonstratable within 
+the workbook, and the subset of roots is known, what are the available
+mu numbers?  
+  Maybe the therom:  If two polys of same degree with differnt scalars  
+have the same roots, then one is a multiple of the other.
+  
+Thrilled by the above.  Importantly, there is mu to concider.
+As simply asserting mu based on twoPoly definition results in a n/n 
+fraction, an alternative definition is in order.  The lab proposes 
+interpreting  the roots of a zad expanded twoPolynomial as indicies 
+for writing nBinary which will subsequently point to mu.
+
+So, maybe just sleuth the set of mu's representable.
+First pass at this:
+
+Have consecutive indices at x,x+1.
+Iterate as (x)-1,(x+1)+1
+          ((x)-1)-1,((x+1)+1)+1
+                ...
+                ...  
+
+Maybe for all x_initial, all expected pairs exist.
+And, want zaddb to represent the above function.
+So, want to refine the graph with a property describing
+nBinary in terms of how many indices are represented.
+Then Cypher it!!! and verify all pairs in the rule,
+not all pairs, only pairs with even number if indices between 
+target indices.
+
+
+
+Conjecture in the higher dimension:  Suppose the quadratics
+cannot complete all pairs, the above function, then use cubits.
+Another conjecture:  Suppose all integers are representable as 
+as linear combinations of powers of two, then all odds are 
+representable as as linear combinations of two +1.
+
+
+More enlightenment:   Even denominators have nBinary's of the above
+function's form.
+
+the machine exists!!!!
+
+So, a walk though:
+Assert TwoPolynomial=4.  Want it's inverse.
+Program zadd to generate quadratic with roots at 01100.
+That is, with roots at 2,3.  
+
+Which means, proceed with wiring ZerosAndDifferences.
+Want TwoPolynomials available for ZAD.
+Yesterday began the improvement with refactor copying LoopsDriver into the class LoopsDriverTwoP. 
+From memory, want a new constructor for this class as well as one
+for PolynomialArray.
+
+
+pArray:      For each index_i, exists p_difference_i (known in zad as LoopList.matrixA.gMatrx) 
+             and evaluates to zero at parray_i.
+figPArray:   p^n such that each p_difference_i (difference_i) has pArray property.
+
+Me thinkith LoopsDriverTwoP should be a refactor copy of LoopsDriverTable
+Also, maybe a lot of the leg work is done.  That is, just need to uncomment a 
+few lines of code. 
+
+wooo wooo woo,  LoopsDriverTable is configured to take a whole bunch of of TwoPolyNomials
+but LoopsDriverTable only takes one.
+
+So tell LoopsDriverTable to only take the first one.
+
+Maybe need a narrative of what is going on in LoopsDriver.
+
+Me thinkith the buffer read should be be in loops main.
+But spauning many LoopsDriver may not be thread safe.
+
+initiate quantom wierness into the tribe.
+
+
+11/30
+
+   LoopsDriverTwoP gets a refactoring.  .run() will read buffer, .zad() will be
+origonal .run().
+
+   The two methods above are now in LoopsDriverTwoP.  Ready to reference in Main(), 
+Need to figure how to pArray, figParray with buffer object.
+
+Maybe just set pArray to zero.
+               figPArray as 
+
+Maybe public PolynomialArray(int constant, int linear, int square) is all good.
+a new constructor for pArrays is needed initialized to zero's  note: prove out vmResults.
+
+So, first things first: need the figPArray that is consistant with inital pArray.
+
+he ehe he, time to read up on some ZerosAndDifferences.
+
+so zad asks?  with this figParray, what would figParray' be with this pArray??
+
+what if zad is only able to work with figParrays with no constant field??
+deep read refactoring.
+
+if figPArray is screwwey in LoopListener, then maybe screwwey in LoopList.
+
+LoopListener.computIndexZero starts with referencing LoopList.getgMatrix.
+So, is gMatrix constructed correctly?
+
+Looks like LoopList.loadPArray, part of the LoopList constructor, reads figPArray,
+known internally as pArray, correctly. // should refactor ambiguity 
+Actually not correctly, make it read up to dimension +1 not dimension.
+It needs to read three, not two list elements.
+
+red code in loadPArray inspection for agreemnt with new actual figPArray
+
+
+12/3
+
+   Looks like, from last week, LoopsDriverwoP.run() is expected to read the twoPoly
+buffer and select one for .zadTwoP() to difference out.   ZAD run does execute,
+but suspicion of correctness exists.
+   So....
+   The inital gbList's look correct and their gauss looks correct.  Now,
+   Looking again at LoopListener.computeIndexZero.
+   
+  
+Have LoopList initializations given figParray:
+
+                                              Did some work not all with regards
+                                              to re-indeing figParray
+
+     LoopListener:
+          Suspicion is on possibility that wrong index in figParray
+          is being updated.
+          
+  
+The gb00 list is gaused, its difference is gaussed.
+
+The pattern starts and LoopListenerComputeIndexZeor
+called.
+
+
+somewhare integerRange is being interpreted as
+15.   It is in LoopListener.updateRlistB.
+
+12/4:
+
+
+public LoopList (LoopList origonalLoopList, ResultListBean cashedRListB)
+
+LoopListener - rListB add(new LoopList(indexList,cashedrListB)
+
+
+public LoopList(int mDimension, ResultListBean rListB,int dimension,
+                 int integerRange,int workNum, MatrixA aMatrix, PolynomialArray
+                  pArray,ModuloList moduloList,Boolean b)
+
+LoopsDriverTable - LoopList gbList00= new LoopList
+
+
+public LoopList(int mDimension, ResultListBean rListB,int dimension,int 
+                integerRange,int workNum, MatrixA aMatrix, PolynomialArray 
+                pArray,ModuloList moduloList) {
+LoopListener
+LoopsDriver
+LoopsDriverTable
+LoopsDriverTwoP
+
+
+public LoopList(int mDimension, ResultListBean rListB,int dimension,int 
+                integerRange,int workNum, MatrixA aMatrix,List transferList) {
+
+LoopListenerRunnable
+PArrayResetListener
+
+
+public LoopList(int mDimension, ResultListBean rListB,int dimension,
+                int integerRange,int workNum,List deltaList,List ancestorlist,
+                List cashedrListB, MatrixA aMatrix)
+
+LoopsDriver
+LoopsDriverTwop
+
+ private void mergeVmResult(String vmResult,PolynomialArray fPArray)
+
+fPArray is an add on from nNovember.
+
+Seems to work for P^n, n>2 
+But oh why not n=2?
+Maybe on to something with LoopListener copyCashedFigPArrayValues.....
+
+figPArray,cashedFigPArray are instanciated in LoopsDriver.
+They must be the same at initialization.
+
+Likewise with LoopsDriverTwoP.
+
+
+
+
+1.0  1.0  1.0  71.0  
+4.0  2.0  1.0  50.0  
+9.0  3.0  1.0  33.0  
+
+
+                                                                                gauss fallthrough 
+1.0  0.0  0.0  2.0  
+0.0  1.0  0.0  -27.0  
+0.0  0.0  1.0  96.0  
+
+
+1.0  1.0  1.0  96.0  
+4.0  2.0  1.0  100.0  
+9.0  3.0  1.0  108.0  
+
+
+                                                                                gauss fallthrough 
+1.0  0.0  -0.5  -46.0  
+0.0  1.0  1.5  142.0  
+0.0  0.0  1.0  96.0  
+
+
+12/5
+
+    So, the above is the investigation.  LoopsDriverTwoP is not completing 
+the elimination.  See if the matrices are initialized correctly.
+
+
+private void loadPArray(PolynomialArray pArray,boolean b)  {
+from
+private void initializePArrayLoopList(PolynomialArray pArray,boolean b) {
+from
+public LoopList(int mDimension, ResultListBean rListB,int dimension,int integerRange,int workNum, MatrixA aMatrix, PolynomialArray pArray,ModuloList moduloList,Boolean b) {
+from 
+loopsDriverTable.
+
+
+ So, changed the dimension in the gaussMain.gauss() call signature.  
+It is a/the big difference between zad120418 and zad.  
+Zad assumes no constant term in fig.
+Zad120418 does.  Mostly in LoopList constructor and in updateRListB is where it apparently appears.
+
+
+Got a lot of good quality zaddb jive.  Finish the lab after lunch.  
+Need to manually perform the root providing translation.
+Quickest is: Thinkith the massage goes within GaussMain.
+
+
+Note the LoopDriverTwoP nodes are not yet connected to differenced twoPolynomial.
+
+
+
+      GaussCorrolation while loop true 60
+GaussBean1:   LoopLists.GaussBean1@2d6f6855 [96, -2, 2] [0, 0, 0] [0.0, 2.0, -2.0, 96.0]
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter [96, -2, 2] [0, 0, 0] 0 [0.0, 2.0, -2.0, 96.0] 0
+goCCypher() [96, 96, 100, 108, 120, 136, 156, 180, 208, 240, 276, 316, 360, 408, 460]
+GaussTablle1.mergeVmResult fParray: [96, -27, 2]
+     !!!! createEvaluates      !!!!!
+
+
+Sleuth the workers in the .zadTwoP  too many nodes...
+Done.  zaddb as expected.
+
+And now:  map to Evaluate's.
+
+observe:  the Dnode.square,constant,linear are not synchronized correctly.
+
+each vmResult,wNum=0 
+each looplist[i] 
+such that vmResult.constant-loopList[i] i>0,i<integerRange.
+
+is a new node with connections to an Evaluate node.
+
+
+something is funny about the new 
+gaussbeans created in 
+looplist.appendmuBuffer
+looplist.updaterlistb
+
+findings:  vmResult exists on looplist
+it is affixed within gaussMain.transcribeResult.
+
+So, the looplist actors within appendMu buffer are the operands for:
+.each vmResult,wNum=0 
+.each looplist[i] 
+.such that vmResult.constant-loopList[i] i>0,i<integerRange.
+
+seeds an updateRlistB.
+all that is needed for updateRlistB
+
+can be new method,  but in the cool world of concurrency....
+Back when if figured out the executor service.....
+
+or simply another iterator......
+
+Decide for ease of graph compleation...
+Or continue the java saga.....
+
+
+12/6
+
+LoopListener.verticalTranslatWZero is new method that reads each worker=0.
+
+It needs to subtract wZero.value_index from figPArray[0].
+Need to copy figPArray=figPArrayTranslate.
+PolynomialArray has a clone method.  
+Lets see how it does.  But first: what is its current use case?
+
+ 
+So,
+
+   Got some graph results.  Pretty good, pretty expected.
+   But the bad is wanted things connected but suspect maybe rListCounter 
+   is in the way, or even some other syncracy.  Meaning, don't use zmap
+   relation,  time for a new relation.  But refactor, even GaussBean itself,
+   a new constructor with boolean to mention these beans are differenced p's
+   With a related host p needing relation.  Maybe then proceed with usual 
+   relations.
+
+   
+
+            if (wNum==0) {
+                mergeVmResult(vmResult,fPArray);
+                createWnumRcounter(wNum,rCounter,pArray);
+                createKnownByRelation(vmResult,wNum,rCounter);
+                createEvaluates(loopList,vmResult);
+                
+            }
+            if (wNum>0)
+            {
+                mergeVmResultt(vmResult);
+                createWnumRcounter(wNum,rCounter,pArray);
+                createKnownByRelation(vmResult,wNum,rCounter);
+                createZMap(vmResult,rCounter,wNum);
+            }
+
+
+12/7
+
+The loop within verticalTranslateWZero is appended for output observation.
+Also the setproductrange  in LoopsDriverTwoP is appended for same reason.
+
+An example within current zaddb:
+
+twoPoly = 2,-27,96
+its first difference is 4,-25 
+    second differenc is 4 
+zad writes a zero at first difference's index=1
+and the resulting figPArray is 2,-6,96.
+its first difference is 4,-4
+    second differenc is 4.
+
+figPArray enters LoopListener.verticalTranslateWZero.
+newfigPArray =oldfigparry-96 = -6,2.
+newfigPArray is written to zaddb buffer.
+newfigPArray first difference is 4,-4
+
+All nodes referencing figPArray's and twoPolys exist
+newfigPArrayfirstdifference has no zMap relation
+to newfigPArray. It should but there is no common 
+resultID within respective createdby nodes.
+maybe try to comment out resultListCounter=resultListId.getrListId();
+commented out the above and graph looks ok.
+
+On to connecting twoPoly nodes with zad nodes.
+and the best way is....
+
+Seems that the two components are connected through Evaluates.
+But need some evaluates that connect. Graph too small to connect.
+Have to re-read workbook with muNumbers and sizes.
+Yes it's cypher time.
+
+LoopsDriverTwoP.zadTwop() has a faulty executorService that does 
+not shut down correctly.
+so control privided by:
+if (dbVector11Counter==6) { zadTwoP(); }
+Have to manually set int constant for completing graph?
+Will not work that way.  
+
+To do:
+
+Fix the above's executorService.  This also means find the executorService code
+in the origonal that works.
+Put in an executor service within LoopListener, which is where the working one 
+once domiciled.  
+
+Get executorService in the LoopsDriverTwoP into LoopsMain.
+
+Have workerStart + workerZero + worker + workerLast.
+Always have workerStart .
+Except for worker, always have 3 workers corresponding to .dimension=2.
+
+
+
+tMange withing gaussTable.isAlive because...
+
+
+
+
+12/8
+
+   Have inverses of each evaluate
+   Need inverses of the computation.  The relation of two inverses to the result.  i.e. a distict
+   traversal.
+
+   Expand the graph so relations exist at deeper triagtriag_i.  These relations traverse into p^n'.
+   Particularly how do the p^n_triagtriag such that nArray=1,1,1 or 1,1,1,1...
+   zaddb gets p^n'=3. 
+  
+
+12/10
+
+before .isTerminated() ThreadMXBean:    [19, 18, 17, 15, 14, 13, 11, 5, 4, 3, 2, 1]
+service.take generateBinaryStart return
+isTerminated() ThreadMXBean:    [18, 17, 15, 14, 13, 11, 5, 4, 3, 2, 1]
+
+                                                                         //generateBinaryStart is thread 19
+
+
+service.take Loops Semaphore  last18
+isTerminated() ThreadMXBean:    [17, 15, 14, 13, 11, 5, 4, 3, 2, 1]
+
+
+So, the big guess is workerZero does not exit.
+ZerosAndDifferences.run - output 
+
+For all but one propertyChange events  
+LoopSemaphoreLast.aquire() triggers LoopLister.propertyChange.
+Only the first .propertyChange is triggered by workerZero.
+
+A more complete narrative:
+
+LoopSemaphoreInitial,Last threads 17,18 .call() and  block at sf2.aquire().
+LoopSemaphoreInitial iterates due to developemnet .sizee value.
+Releases sf1 then is blocking on sb1.
+
+service.take generateBinaryStart.
+
+Looks like, so far, lsi falls through setsize.
+releases sf1 and lsl propertyChange in .setsizee loop 
+it releases sb2.  lsi renters while !endproduct. and above starts again.
+
+Set a condition for endProduct to be true and it works.
+Suspect maybe if it dosnt work for greater than 2 dimension.
+maybe loopSemaphore also needs to release a permit. 
+
+
+First, try it again.
+yep works for d=2.
+
+
+12/11
+
+   Look at yesterday's graph. 
+
+Updated Graph Apps
+
+Neo4j Browser
+
+3.2.15
+3.2.15
+Support deep links via Neo4j Desktop PR: #880
+
+Updated Graph Apps
+
+Neo4j Browser
+
+3.2.15
+3.2.15
+Support deep links via Neo4j Desktop PR: #880
+
+
+
+something fishy in loopListener.
+
+something to do with computeIndexZero with cashedRListB.
+and copyFigPArrayValues... this system seems to work but not with
+
+
+cashedFigParray
+cashedRListB     are the origonal figPArray's and rListB's passed in
+form LiipsDriverTwoPManager.
+
+
+
+the current project is JavaProjects\ZerosAndDifferences120418
+
+
+so the big fix is cloning figParray into cashedFigPArray
+did that in LoopsDriverTwoP
+
+
+
+12/12
+
+
+Cypher zaddb.  
+
+Maybe refactor zaddb.  
+The whole CreatedBy node thing once within virtical displacement a bit 
+overdone.
+
+
+      GaussCorrolation while loop false 495
+GaussBean1:   LoopLists.GaussBean1@2bb9de40 [-20, -18, 2] [0, 4, 0] [0.0, 2.0, -18.0, -20.0]
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter [-20, -18, 2] [0, 4, 0] 0 [0.0, 2.0, -18.0, -20.0] 5
+goCCypher() [-20, -36, -48, -56, -60, -60, -56, -48, -36, -20, 0, 24, 52, 84, 120]
+GaussTablle1.mergeVmResult fParray: [-140, -18, 2]
+     !!!! createEvaluates      !!!!!
+ -20 -36 -48 -56 -60 -60 -56 -48 -36 -20 0 X:10: -20.0 24 52 84 120
+
+created an evaluate relation to 10???
+
+Within GaussTable1.createEvaluates
+
+Commented out as  could be sillyness.
+
+And also, want to restrict the createdBy noded.  There are far to many of them.
+I think maybe a dummy=-99 resultlistCounter for the dbbean created in verticaltranslatewzero
+will be used for restricting .createdBy nodes.
+Maybe wrong.  Just Merge instead.   Lots of contention with potential conflict with loopsDriver.
+Looks like merge is working.
+
+Time to relate the LoopsDriverTwoPManager buffer objects with the TwoPolynomial buffer.
+Any TwoPolynomial buffer objects are know as their evaluate at nMaxx.
+ 
+So, have mergeVmResult() and it does act on twoPolynomial.
+Need createTwoPRelation() 
+
+
+match (d:Dnode) where d.vmResult="[0.0, 2.0, -27.0, 96.0]" or d.vmResult="[0.0, 2.0, -18.0, -20.0]" return d
+
+
+
+so the big fix is cloning figParray into cashedFigPArray
+did that in LoopsDriverTwoP
+
+
+
+12/12
+
+
+Cypher zaddb.  
+
+Maybe refactor zaddb.  
+The whole CreatedBy node thing once within virtical displacement a bit 
+overdone.
+
+
+      GaussCorrolation while loop false 495
+GaussBean1:   LoopLists.GaussBean1@2bb9de40 [-20, -18, 2] [0, 4, 0] [0.0, 2.0, -18.0, -20.0]
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter [-20, -18, 2] [0, 4, 0] 0 [0.0, 2.0, -18.0, -20.0] 5
+goCCypher() [-20, -36, -48, -56, -60, -60, -56, -48, -36, -20, 0, 24, 52, 84, 120]
+GaussTablle1.mergeVmResult fParray: [-140, -18, 2]
+     !!!! createEvaluates      !!!!!
+ -20 -36 -48 -56 -60 -60 -56 -48 -36 -20 0 X:10: -20.0 24 52 84 120
+
+created an evaluate relation to 10???
+
+Within GaussTable1.createEvaluates
+
+Commented out as  could be sillyness.
+
+And also, want to restrict the createdBy noded.  There are far to many of them.
+I think maybe a dummy=-99 resultlistCounter for the dbbean created in verticaltranslatewzero
+will be used for restricting .createdBy nodes.
+Maybe wrong.  Just Merge instead.   Lots of contention with potential conflict with loopsDriver.
+Looks like merge is working.
+
+Time to relate the LoopsDriverTwoPManager buffer objects with the TwoPolynomial buffer.
+Any TwoPolynomial buffer objects are know as their evaluate at nMaxx.
+ 
+So, have mergeVmResult() and it does act on twoPolynomial.
+Need createTwoPRelation() 
+
+
+match (d:Dnode) where d.vmResult="[0.0, 2.0, -27.0, 96.0]" or d.vmResult="[0.0, 2.0, -18.0, -20.0]" return d
+
+
+12/13
+
+ Finish first zaddb.  All twoPoly buffer objects argument a LoopsDriverTwoP Thread.
+ 4j will not let me delete dnode and then rerun zad with dnode's expected to reappear.
+ Remember:  CreadedBy nodes have pArray property probably important.
+
+ The question was, why some number maybe not integer range representes as nodes with roots.
+ Answer is the iterator only records in its owne way but maybe investigate... later...
+
+But otherwise put on two twoPolynomials instead of just the one. It jives up to the level
+of my dilegence.
+
+graph121318 is match (d:Dnode {vmResult:"[0.0, 2.0, -18.0, -20.0]"}) return d
+
+[0.0, 1.0, -14.0, 52.0]          nancy wilson jazz
+
+algebra facts.
+For a given figPArray_origonal,pArray_i,  the .verticalDisplacement nodes relation to evaluates are
+unique.
+ 
+match (d:Dnode) where d.vmResult="[0.0, 2.0, -27.0, 96.0]" or d.vmResult="[0.0, 1.0, -14.0, 52.0]" return d
+
+so, volume of run no match for system.  Many alternatives but maybe for now, just three twoPolynomials.
+
+[184, -53, 4]
+
+Something to do:  Just generate the twoPolynomial buffer for loopsDriverTwoPManager.  Not its
+zaddb thread.  LoopsDriverTwoPManager can then piecemeal load zaddb.  zaddbtable1 commented out.
+
+[360, -105, 8]
+[712, -209, 16]
+[1416, -417, 32]
+[0.0, 8.0, -105.0, 360.0]
+[0.0, 16.0, -209.0, 712.0]
+[0.0, 32.0, -417.0, 1416.0]
+
+
+Maybe 6 is the number of twoPolynomials and they are all accounted for.
+
+So, after lunch, want to look at this precieved error...
+
+match (d:Dnode) where d.vmResult="[0.0, 2.0, -27.0, 96.0]" or d.vmResult="[0.0, 1.0, -14.0, 52.0]" return d
+
+Some Theory:  Know the target muNumber.  It is represented as a single Evaluates.Value.
+              But why represent the mu number as P with requesite mu roots? 
+              Seems Power Set related.  So proced.
+
+me thinkith need a field for a verticalTranslate counter.
+
+A most celebrated narrative:
+
+(1)   With twoPolynomial=1. zad it.  
+ 
+(2)   traverse to root by (resultid,each workNum). 
+   
+(3)   Identify vmResult for pArray_0. difference it 
+
+(4)   from root traverse to   ((3),wnum=1),((3),wnum=0).  This has no evaluates and all it's vertical
+                                                         translates only have 1 root.
+(5)   Return to root.
+
+(6)   Subsequent wNum=1's will exibit pairs of roots within integerRange.
+      It is of keen interest to qualify these wNum's.
+      Remember the observation that with each root are Sizee number of wnum=1's 
+      And every root's wNum's similarly compose rootSet polynomials. But the 
+      factors are different by a scalar multiple.
+     
+(7)   Through (6) brainbox, select wnum=1 node with desired root pattern.
+
+
+
+Attempted to exibit verticalTranslate on .ods but crashed.  Repeat exibit.
+Want to explore the 1/p mu number.  Suspect it is the pArray[0,0,...,0] from p^n sequence.
+Got some sleuthing with zaddb.  Noticed fishey multiple dNodes where not expected.  They were
+tagged with createdBy nodes.  Will re draw zaddb and investigate.
+
+
+The trick observation....
+Requesite P is derived from pArray_0.
+
+And in general regarding a leading coefficient - it determines wNum_max constant.
+And that is how P^d_i relates to P^d_j.
+
+
+12/17  
+
+   The issue with piece-meal graph generation is resultCounter resets to zero.  
+   But that will break the graph.  Need a fix.  
+
+
+public ResultListID()   
+public ResultListID(int rListID)
+synchronized public int getrListId()
+
+This object above is instanciated within LoopsDriverTwoP.
+
+The consequence is configuring a run involves both setting the target buffer counter values
+in LoopsDriverTwoPManager.run() and the constructor int argument in LoopsDriverTwoP.call()
+
+At the end of threads, must report resultCounter on console output.  
+.LoopsDriverTwoP fall throug,  resultCounter: 51
+
+[0.0, 1.0, -14.0, 52.0]
+[0.0, 2.0, -27.0, 96.0]
+[0.0, 4.0, -53.0, 184.0]
+[0.0, 8.0, -105.0, 360.0]
+[0.0, 16.0, -209.0, 712.0]
+[0.0, 32.0, -417.0, 1416.0]
+
+what does it mean to have meaningfull roots.
+there could only be one,  the two's have pattern.
+
+much to say about improving the resultID=0 relation.
+way too many extra relations between nodes.
+ 
+Looks like pArray_0 for any twoPoly .... 
+
+match (d:Dnode) where d.vmResult="[0.0, 2.0, -27.0, 96.0]" or d.vmResult="[0.0, 1.0, -14.0, 52.0]" or d.vmResult="[0.0, 4.0, -53.0, 184.0]" or  d.vmResult="[0.0, 8.0, -105.0, 360.0]" or d.vmResult="[0.0, 16.0, -209.0, 712.0]" or d.vmResult="[0.0, 32.0, -417.0, 1416.0]"  return d
+
+
+
+12/18
+
+   Must understand zaddb CreatedBy.resultId=0 and CreatedBy.wNum=0 component. 
+   Does all the CreatedBy.resultID=0 nodes happen ony in first iteration of zad???
+   But it seems any twoPolynomial, expecially the one's in second iteration have
+   CreatedBy.resultID=0 nodes.   
+
+   Maybe, the above suspect nodes are each twoPolynomial's pArray_0.
+   And why do they all have the resultID=0 tag?
+
+
+   resultlistID is constructed with parameter within LoopsDriverTwoP.call().
+   It is otherwise only referenced.
+   The resultIDCounter is initialized as an int which defalted to a zero for each 
+   first entry into the listener.  Once incremented it would resolve proper value.
+   this is wrong.  resultIDCounter needs to be initialized to the .getResultListIDCounter from 
+   ResultListID class, as it now does.  
+
+
+ Noticed in browser for n=6,7,8 with cypher to return dNode's, have intra-connected
+nodes amungst the different n.  Is this how it shoud be?
+
+But now maybe it's cypher time.  
+[0.0, 64.0, -385.0]
+
+But first, somehow,
+[0.0, 8.0, -105.0, 360.0]
+[0.0, 16.0, -209.0, 712.0]
+[0.0, 32.0, -417.0, 1416.0]
+are CreatedBy the same resultId.
+
+
+12/19 
+
+Moved ResultListID constructor into LoopsDriverTwoPManager
+
+
+match (c:CreatedBy) where c.resultId=1 or c.resultId=2 or c.resultId=3 return c
+match (d:Dnode) where d.vmResult="[0.0, 64.0, -385.0]" return d
+
+psInsert = conn.prepareStatement("MERGE (e:Evaluate {Value:?}) SET e.n=?,e.d=?,e.nBinary=?,e.Size=?");
+
+
+The investigations of zaddb.
+
+     -   Evaluate.size=2 is a zaddb constraint for relating twoPolynomials.
+         This constraint is the subject of next cypher script.         
+         Something like want a traverser to visit first size=2, second size=2, ...
+         An algebra pattern to discern from traversal.
+
+     -   Including the traditional LoopsDriver node map is necessary.
+         As twoPolynomial differences are disjoint, they will become relatable in the next dimension.
+         The 1/p mu root vmResult is in a higher dimension.   
+
+     -   
+
+
+(1)   With twoPolynomial=1. zad it.  
+ 
+(2)   traverse to root by (resultid,each workNum). 
+   
+(3)   Identify vmResult for pArray_0. difference it 
+
+(4)   from root traverse to   ((3),wnum=1),((3),wnum=0).  This has no evaluates and all it's vertical
+                                                         translates only have 1 root.
+(5)   Return to root.
+
+(6)   Subsequent wNum=1's will exibit pairs of roots within integerRange.
+      It is of keen interest to qualify these wNum's.
+      Remember the observation that with each root are Sizee number of wnum=1's 
+      And every root's wNum's similarly compose rootSet polynomials. But the 
+      factors are different by a scalar multiple.
+     
+(7)   Through (6) brainbox, select wnum=1 node with desired root pattern.
+
+evaluates112018.ods has the pivot table corrolating e.d,e.n,e.size,e.Value.
+
+For the range of numerators with a denominator at size=2, the values are increasing.
+Maybe this happens with any size.
+Does this suggest that the first size 2 in an orderd return map corrospond to the smallest e.n?
+
+Know .verticalTranslate orders the vertex of .vmResult.
+
+
+So the question is how to know the Evaluate.size=2 vmResult is appropriate?
+The intention of the lab is this answer.
+It will tabulate the n'th occurance of size=2 with its Evaluate.
+
+Observation.
+
+The root is many,one.
+The many is ordered and each are linear vmResults.....
+and again.....
+
+for this lab to proceed....  need an upgraded zaddb.  Make sure 
+hmm, the space of the lab.
+
+
+
+This above is not browser pretty.
+Need to start constraining.
+That is evaluates.ods to the rescue but it seems that the current state of Evaluate node is in need of 
+improvement.  It is to be accomplished on the java side of things.  
+
+Match (e:Evaluates) where e.d="4" and e.Size="2" 
+Return e.nBinary
+
+e.nBinary is the node property of relevance to cypher but there is derrived information not yet expressed yet
+is necessary.   The above Match (e:Evaluates) returns the pair [2, 2], [3, 1] which are aliases for 0110 and 1001.
+
+Subtraction of each list's terms reveals the verticalTranslate index. But importantly, need the center index.
+Sleuthing things for a moment,  if the pair is the same then the center index is the first term.
+How about add one to least significant of pair, and simultainously subtract from the more significant term.
+once they are the same, then the center index is the first term......
+
+TwoPolynomial needs the work described above in a method. 
+Note: not TwoPolynomial, but FractionIntegerDriverIterate.
+
+
+//       FractionIntegerDriverIterate figI= new FractionIntegerDriverIterate(muList,muSem);     
+//       GaussTable1 gTable1 = new GaussTable1(muSem,muList,figI);
+
+public GaussTable1(Semaphore tlSema,List dbVector,FractionIntegerDriverIterate mang) 
+fiMangee=mang;
+
+private void runFIDi()
+
+     gbList.setGBList(new muNumDen(numerator,denominator,nextBigDecimal,
+                     ((ArrayList)nBinaryList.get(0)).toString(),
+                     ((ArrayList)nBinaryList.get(0)).size()));
+
+centerIndex
+verticalTranslateIndex
+
+this.bString=bString;    // but bString the string, needs as a list for above...    
+
+so, maybe the differenceOfTwoIndecies/2+least significant = centerIndex.   // Note: this is for even arithmetic.
+
+    private void setVerticalTranslateIndexCenterIndex() along with getters are new methods within muNumDen.java.
+
+The muNumDen() constructor does call getverticalTranslateIndex but must be conditional with size=2.
+
+
+100 00 001
+
+010 00 01
+
+
+12/29
+
+   ZADDB has fis=4,fis=8 as Evaluate set.
+   plvRunThread(2,8) will append relevant fis values
+
+   Remember when running zad:   
+                              . resultId=0  LoopsDriverTwoPManager
+                              . The buffer mask in LoopsDriverTwoP needs to be reset.  Run.
+                              . update resultID
+                              . update buffer mask.  Run. 
+
+
+MATCH (m:Movie)
+OPTIONAL MATCH (m)<-[:WORKED_ON]-(a:Animator)
+WITH m, a
+WHERE m.releaseYear > 1999 AND a IS NOT NULL
+RETURN m, collect(a) as animators
+
+Example of numer of relations:
+
+MATCH (:Person)-->(vehicle:Car)-->(:Company)<--
+      (:Country)
+RETURN count(vehicle)
+
+
+
+Family Trivia:
+
+what brand of soda was served in Rego Park
+
+
+globe school instructor
+
+buffons needle:  candidate can guess > N how many tosses crosses line: for passing grade.
+                               try > M times to cut string twice with lengths to make triangle. 
+
+How much variety from iteration to iteration with high increasing.
+How many iterations till a new center index appears.
+How many iterations till verticalTranslate become degenerate.
+
+What kind of twoPolynomial java constraint to include only relevant muNumDen.
+Is the constraint a function or a filter.
+
+
+
+ [5, 4]
+                       runFid      
+
+                       runFid      
+MuNumDen:   68  6   9   [6, 3]
+
+                       runFid      
+MuNumDen:   130  7   9   [7, 2]
+                       runFid      
+MuNumDen:   257  8   9   [8, 1]
+                       runFid      
+i've sceen this pattern before.
+
+MuNumDen:   72  6   10   [6, 4]
+                       runFid      
+MuNumDen:   137  6   10   [6, 3, 1]
+                       runFid      
+MuNumDen:   267  6   10   [6, 2, 1, 1]
+                       runFid      
+MuNumDen:   134  6   10   [6, 2, 2]
+                       runFid      
+MuNumDen:   519  7   10   [7, 1, 1, 1]
+                       runFid      
+MuNumDen:   132  7   10   [7, 3]
+                       runFid      
+MuNumDen:   261  7   10   [7, 2, 1]
+                       runFid      
+MuNumDen:   515  8   10   [8, 1, 1]
+                       runFid      
+MuNumDen:   258  8   10   [8, 2]
+                       runFid      
+MuNumDen:   513  9   10   [9, 1]
+
+
+MuNumDen:   80  6   11   [6, 5]
+                       runFid      
+MuNumDen:   145  6   11   [6, 4, 1]
+                       runFid      
+MuNumDen:   275  6   11   [6, 3, 1, 1]
+                       runFid      
+MuNumDen:   535  6   11   [6, 2, 1, 1, 1]
+                       runFid      
+MuNumDen:   138  6   11   [6, 3, 2]
+                       runFid      
+MuNumDen:   269  6   11   [6, 2, 2, 1]
+                       runFid      
+MuNumDen:   1039  7   11   [7, 1, 1, 1, 1]
+                       runFid      
+MuNumDen:   136  7   11   [7, 4]
+                       runFid      
+MuNumDen:   265  7   11   [7, 3, 1]
+                       runFid      
+MuNumDen:   523  7   11   [7, 2, 1, 1]
+                       runFid      
+MuNumDen:   262  7   11   [7, 2, 2]
+                       runFid      
+MuNumDen:   1031  8   11   [8, 1, 1, 1]
+                       runFid      
+MuNumDen:   260  8   11   [8, 3]
+                       runFid      
+MuNumDen:   517  8   11   [8, 2, 1]
+                       runFid      
+MuNumDen:   1027  9   11   [9, 1, 1]
+                       runFid      
+MuNumDen:   514  9   11   [9, 2]
+                       runFid      
+MuNumDen:   1025  10   11   [10, 1]
+                       runFid      
+MuNumDen:   1024  11   11   [11]
+
+
+MuNumDen:   96  6   12   [6, 6]
+                       runFid      
+MuNumDen:   161  6   12   [6, 5, 1]
+                       runFid      
+MuNumDen:   291  6   12   [6, 4, 1, 1]
+                       runFid      
+MuNumDen:   551  6   12   [6, 3, 1, 1, 1]
+                       runFid      
+MuNumDen:   140  6   12   [6, 3, 3]
+                       runFid      
+MuNumDen:   1071  6   12   [6, 2, 1, 1, 1, 1]
+                       runFid      
+MuNumDen:   146  6   12   [6, 4, 2]
+                       runFid      
+MuNumDen:   277  6   12   [6, 3, 2, 1]
+                       runFid      
+MuNumDen:   539  6   12   [6, 2, 2, 1, 1]
+                       runFid      
+MuNumDen:   270  6   12   [6, 2, 2, 2]
+                       runFid      
+MuNumDen:   2079  7   12   [7, 1, 1, 1, 1, 1]
+                       runFid      
+MuNumDen:   144  7   12   [7, 5]
+                       runFid      
+MuNumDen:   273  7   12   [7, 4, 1]
+                       runFid      
+MuNumDen:   531  7   12   [7, 3, 1, 1]
+                       runFid      
+MuNumDen:   1047  7   12   [7, 2, 1, 1, 1]
+                       runFid      
+MuNumDen:   266  7   12   [7, 3, 2]
+                       runFid      
+MuNumDen:   525  7   12   [7, 2, 2, 1]
+                       runFid      
+MuNumDen:   2063  8   12   [8, 1, 1, 1, 1]
+                       runFid      
+MuNumDen:   264  8   12   [8, 4]
+                       runFid      
+MuNumDen:   521  8   12   [8, 3, 1]
+                       runFid      
+MuNumDen:   1035  8   12   [8, 2, 1, 1]
+                       runFid      
+MuNumDen:   518  8   12   [8, 2, 2]
+                       runFid      
+MuNumDen:   2055  9   12   [9, 1, 1, 1]
+                       runFid      
+MuNumDen:   516  9   12   [9, 3]
+                       runFid      
+MuNumDen:   1029  9   12   [9, 2, 1]
+                       runFid      
+MuNumDen:   2051  10   12   [10, 1, 1]
+                       runFid      
+MuNumDen:   1026  10   12   [10, 2]
+                       runFid      
+MuNumDen:   2049  11   12   [11, 1]
+                       runFid      
+MuNumDen:   2048  12   12   [12]
+
+MuNumDen:   160  7   13   [7, 6]
+                       runFid      
+MuNumDen:   289  7   13   [7, 5, 1]
+                       runFid      
+MuNumDen:   547  7   13   [7, 4, 1, 1]
+                       runFid      
+MuNumDen:   1063  7   13   [7, 3, 1, 1, 1]
+                       runFid      
+MuNumDen:   268  7   13   [7, 3, 3]
+                       runFid      
+MuNumDen:   2095  7   13   [7, 2, 1, 1, 1, 1]
+                       runFid      
+MuNumDen:   274  7   13   [7, 4, 2]
+                       runFid      
+MuNumDen:   533  7   13   [7, 3, 2, 1]
+                       runFid      
+MuNumDen:   1051  7   13   [7, 2, 2, 1, 1]
+                       runFid      
+MuNumDen:   526  7   13   [7, 2, 2, 2]
+                       runFid      
+MuNumDen:   4127  8   13   [8, 1, 1, 1, 1, 1]
+                       runFid      
+MuNumDen:   272  8   13   [8, 5]
+                       runFid      
+MuNumDen:   529  8   13   [8, 4, 1]
+                       runFid      
+MuNumDen:   1043  8   13   [8, 3, 1, 1]
+                       runFid      
+MuNumDen:   2071  8   13   [8, 2, 1, 1, 1]
+                       runFid      
+MuNumDen:   522  8   13   [8, 3, 2]
+                       runFid      
+MuNumDen:   1037  8   13   [8, 2, 2, 1]
+                       runFid      
+MuNumDen:   4111  9   13   [9, 1, 1, 1, 1]
+                       runFid      
+MuNumDen:   520  9   13   [9, 4]
+                       runFid      
+MuNumDen:   1033  9   13   [9, 3, 1]
+                       runFid      
+MuNumDen:   2059  9   13   [9, 2, 1, 1]
+                       runFid      
+MuNumDen:   1030  9   13   [9, 2, 2]
+                       runFid      
+MuNumDen:   4103  10   13   [10, 1, 1, 1]
+                       runFid      
+MuNumDen:   1028  10   13   [10, 3]
+                       runFid      
+MuNumDen:   2053  10   13   [10, 2, 1]
+                       runFid      
+MuNumDen:   4099  11   13   [11, 1, 1]
+                       runFid      
+MuNumDen:   2050  11   13   [11, 2]
+                       runFid      
+MuNumDen:   4097  12   13   [12, 1]
+                       runFid      
+MuNumDen:   4096  13   13   [13]
+
+
+psInsert = conn.prepareStatement("match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+
+
+pm topic:
+           - The geometry of pArray.
+           - Get the pattern into cypher.
+           - A description of mu for the Cypher pattern.
+
+
+- The geometry of pArray:
+      Have rListB populated given figPArray.
+      ZAD proceeds to complete the pArray[] set.
+      It is observed:  Each pArray[] in pArray[] set iteration induces a consecutive pair of equivalant Evaluate.values at figPArray[index],figPArray[index+1].
+                      
+- A description of mu for the Cypher pattern:
+      (:Evaluate {Value} ) in first pattern match, defines .d and size is set to 2. For each .n in .d, want its .nBinaryList. 
+      For each .nBinaryList.size=2, have firstIndex,secondIndex.  Eg. 1001 =3/4.  It has firstIndex=1,secondIndex=4.  The difference is 2.
+      Want to look in pArray[0,2,0].  From index of firstConsectiveEqivelantValues=2 add 1 until index is reached. It is reached at index=4 therfor 
+      the verticalDisplacement index is 1.  So for the matched pArray, its index in vertical displacement set is 2.  The target of pattern and the 
+      vmResult with reqesite set of Evaluate's.   // A rough narrative but accurate up to arithmetic of indices.  Also, it highlighs the two 1 to many's 
+                                                  // Cypher will have to navigate.
+
+
+12/21
+
+  
+  what's this syntax??  WITH movie, [(movie)<-[:DIRECTED]-(director) | director] as directors,
+  It seems start gremlin, make sure neo4j server is off, then command a connection.
+
+
+12/26
+
+  And so, this PM, after lunch, there is Cypher to write.   
+The celebrated traversal is in order (sic.).
+
+
+1/2
+         // Maybe want distinct verticalTranslate index
+COLLECT(muEvaluate.verticalTranslateIndex) as targetVTI
+
+targetCI	targetVTI
+[2]	         [0, 1]     //  Note targetCI is pArray value,  while targetVTI is ordinal.
+
+
+The performance of Cypher queries using ORDER BY on node properties can be influenced by the existence and use of an index for finding the nodes.
+If the index can provide the nodes in the order requested in the query,
+
+State of the cypher observation:  Could be carring down a map like in october cypher, that maybe easier on the later 
+collected ordered createdbyLD.resultID.
+and then unwind the map for return to browser.
+Also, fortunatlly,   have pArray[] as an index already on gaussbean, but is a string.
+
+So a little ZAD.jave refactoring...
+
+
+Sht!!!! my graph does not have "1" node!!!!
+
+
+VerticalTranslateWZero is looking for an index in the new gbean() signature.
+
+1/3
+
+    Did write in a new constructor for GaussBean1.  It includes a new field  translateIndex. 
+    translateIndex has two meanings. When translateIndex=pArray[1] it defines the Cypher variable
+    centerIndex.  Otherwise translateIndex=verticalTranslateWZero.len; the verticalTranslateIndex.   
+
+    verticalTranslateWZero.len iterates across looplist, not from the centerIndex.  An accurate
+    translateIndex needs a function to corrolate .len with centerIndex.
+
+private void runLoopsDriverr() has // goCCCypher commented out
+
+
+[0, 0, 0]
+looplist: [52, 52, 54, 58, 64, 72, 82,   
+index: 0  [0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110, 132, 156, 182]
+index: 1  [0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110, 132, 156, 182]
+index: 2  [-2, -2, 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130, 154, 180]
+index: 3  [-6, -6, -4, 0, 6, 14, 24, 36, 50, 66, 84, 104, 126, 150, 176]
+index: 4  [-12, -12, -10, -6, 0, 8, 18, 30, 44, 60, 78, 98, 120, 144, 170]
+
+  
+[0, 1, 0]
+looplist: [52, 50, 50, 52, 56, 62
+index: 0  [0, -2, -2, 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130, 154]
+index: 1  [2, 0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110, 132, 156]
+index: 2  [2, 0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110, 132, 156] 
+index: 3  [0, -2, -2, 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130, 154]
+index: 4  [-4, -6, -6, -4, 0, 6, 14, 24, 36, 50, 66, 84, 104, 126, 150]
+
+[0, 2, 0]
+looplist: [52, 48, 46, 46, 48, 52, 58, 66, 76, 88, 102, 118, 136, 156, 178]
+index: 0  [0, -4, -6, -6, -4, 0, 6, 14, 24, 36, 50, 66, 84, 104, 126]
+index: 1  [4, 0, -2, -2, 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130]
+index: 2  [6, 2, 0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110, 132]
+index: 3  [6, 2, 0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110, 132]
+index: 4  [4, 0, -2, -2, 0, 4, 10, 18, 28, 40, 54, 70, 88, 108, 130]
+
+[0, 3, 0]
+looplist: [52, 46, 42, 40, 40, 42, 46, 52, 60, 70, 82, 96, 112, 130, 150]
+index: 0  [0, -6, -10, -12, -12, -10, -6, 0, 8, 18, 30, 44, 60, 78, 98]
+index: 1  [6, 0, -4, -6, -6, -4, 0, 6, 14, 24, 36, 50, 66, 84, 104]
+index: 2  [10, 4, 0, -2, -2, 0, 4, 10, 18, 28, 40, 54, 70, 88, 108]
+index: 3  [12, 6, 2, 0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110]
+index: 4  [12, 6, 2, 0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110]
+
+
+verticalTranslateWZero must not append muList with duplicate GaussBean1's.
+Maybe meaning, loopList iterator starts at pArray[1].  
+Also maybe loopList iterator stops after pArray[1] iterations.
+
+ 
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD 
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD, collect(createdbyLD.resultId) as createdbyLDS
+
+At this point, maybe the context of resultID drops from the graph. 
+
+Things look screwey...
+ZADDB missing about half the pArrays.
+verticalTranslate nodes have multiple CreatedBy's
+
+They do have multiple relations, because the createKnownByRelation 
+pattern must include the translateIndex.
+
+Looks like it works but with needing to add 1 to querry using centerIndex,vtI.
+
+
+He who knows:  A bit more refactoring of verticalTranslateWZero and probably the whole
+.listener when the twoPolynomials are extended to higher dimensions.  
+Note on the semiAlgebra:  Substitution of the algebraic integers into twoPolynomial may
+be the extension needed for all inverses in particular 1/twoPolynomial. 
+
+
+1/4
+19 after
+to string [52, -14, 1]
+LoopDriverTwoP.zadTwoP rListB .to string [[52, 39, 28, 19, 12, 7, 4, 3, 4, 7, 12, 19, 28, 39, 52, 67, 84, 103, 124, 147], [-13, -11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, -147], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -170, 147]]
+LoopSemaphoreLast  sf2.acquire()0 threadId: 19
+Generate BinaryStart ThredID 20 StartSemaphore permits0
+0
+before .isTerminated() ThreadMXBean:    [20, 19, 18, 17, 15, 14, 12, 11, 5, 4, 3, 2, 1]
+loopsemaphoreinitial pre sf1.release (it iterated)
+loopsemaphoreinitial post sf1.release
+LoopSemaphoreLast post sf2.acquire()1
+loopsemaphoreinitial pre sb1.aquire
+service.take generateBinaryStart return
+isTerminated() ThreadMXBean:    [20, 19, 18, 17, 15, 14, 12, 11, 5, 4, 3, 2, 1]
+LoopListener.propertyChange figPArray,cashedFigPArray: [52, -14, 1] [52, -14, 1]
+
+
+Looking at a pretty clean ZADDB.
+
+targetCI	targetVTI
+[2]	         [0, 1]     //  Note targetCI is pArray value,  while targetVTI is ordinal.
+
+strange if for every twoPolynomial targetCI.size()=1.
+
+
+dNode2 has CreatedBye relations to the linearDnodes 
+
+Will not be interested in the translateIndex=0 of linearDnode.  It appears to be common with all.
+
+Will there be a problem with below signature not concidering pArrayIndexValue????
+                  createKnownByRelation(vmResult,wNum,rCounter,0); 
+
+
+GaussBean1:   LoopLists.GaussBean1@793f7f4b [12, -7, 1] [0, 3, 0] [0.0, 1.0, -7.0, 12.0]pArrayIndexValue: 3
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex [12, -7, 1] [0, 3, 0] 0 [0.0, 1.0, -7.0, 12.0] 6  0
+goCCypher() [12, 6, 2, 0, 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110]
+GaussTablle1.mergeVmResult fParray: [6, -7, 1]
+createWnumRcounter wNum,rCounter,pArray,translateIndex,pArrayIndexValue: 0  6  [0, 3, 0]  0   0
+creatKnownByRelation vmResult,wNum,rCounter: [0.0, 1.0, -7.0, 12.0]  0  6
+     !!!! createEvaluates      !!!!!
+ 12 6 2 0    X:3     x.toString()  3     12.0 0    X:4     x.toString()  4     12.0 2 6 12 20 30 42 56 72 90 110
+      GaussCorrolation while loop false 206
+GaussBean1:   LoopLists.GaussBean1@3721c650 [12, -7, 1] [0, 3, 0] [0.0, 2.0, -6.0]pArrayIndexValue: 3
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex [12, -7, 1] [0, 3, 0] 1 [0.0, 2.0, -6.0] 6  0
+goCCypher() [-6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -110]
+createWnumRcounter wNum,rCounter,pArray,translateIndex,pArrayIndexValue: 1  6  [0, 3, 0]  0   0
+creatKnownByRelation vmResult,wNum,rCounter: [0.0, 2.0, -6.0]  1  6
+gausstable1.createZmap() wNm,vmResult,rCounter  1 [0.0, 2.0, -6.0] 6
+      GaussCorrolation while loop false 205
+GaussBean1:   LoopLists.GaussBean1@bac21f6 [12, -7, 1] [0, 3, 0] [0.0, 2.0]pArrayIndexValue: 3
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex [12, -7, 1] [0, 3, 0] 2 [0.0, 2.0] 6  0
+goCCypher() [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -130, 110]
+createWnumRcounter wNum,rCounter,pArray,translateIndex,pArrayIndexValue: 2  6  [0, 3, 0]  0   0
+creatKnownByRelation vmResult,wNum,rCounter: [0.0, 2.0]  2  6
+gausstable1.createZmap() wNm,vmResult,rCounter  2 [0.0, 2.0] 6
+
+so, end the day getting translateIndex to jive.  maybe now....
+
+
+1/5
+
+[0.0, 1.0, -14.0, 52.0]
+[0.0, 2.0, -27.0, 96.0]
+[0.0, 4.0, -53.0, 184.0]
+[0.0, 8.0, -105.0, 360.0]
+[0.0, 16.0, -209.0, 712.0]
+[0.0, 32.0, -417.0, 1416.0]
+
+
+ZADDB neeed the complete set of the above.
+
+Really badd problem with multiple twoPolynomials on same zaddb:
+The relevant cypher clause for linearDnodes returns the linearDnode
+set for each twoPolynomial in zaddb.  
+Can remedy:
+A new property for CreatedBy.  Hold it maybe have a usefull property.
+ZAD knows nMaxx and n.  It is in LoopsDriverTwoPManager's rowBean buffer.   
+The LoopListener needs to know so it can copy it into gaussBean.                 //         Next LAB Advisory                 ///
+The next lab.
+
+But first.  get the last three on zaddb and see if all 6
+appear in last week's cypher.
+
+
+ 
+
+                     runFid      
+MuNumDen:   255  1   8   [1, 1, 1, 1, 1, 1, 1, 1]  8
+                       runFid      
+MuNumDen:   255  1   8   [1, 1, 1, 1, 1, 1, 1, 1]  8
+
+
+
+
+                       runFid      
+MuNumDen:   191  2   8   [2, 1, 1, 1, 1, 1, 1]  7
+                       runFid      
+MuNumDen:   111  2   8   [2, 2, 1, 1, 1, 1]  6
+                       runFid      
+MuNumDen:   59  2   8   [2, 2, 2, 1, 1]  5
+                       runFid      
+MuNumDen:   30  2   8   [2, 2, 2, 2]  4
+                       runFid      
+
+
+
+MuNumDen:   191  2   8   [2, 1, 1, 1, 1, 1, 1]  7
+                       runFid      
+MuNumDen:   111  2   8   [2, 2, 1, 1, 1, 1]  6
+                       runFid      
+MuNumDen:   59  2   8   [2, 2, 2, 1, 1]  5
+                       runFid      
+MuNumDen:   30  2   8   [2, 2, 2, 2]  4
+
+
+                       runFid      
+MuNumDen:   159  3   8   [3, 1, 1, 1, 1, 1]  6
+                       runFid      
+MuNumDen:   51  3   8   [3, 3, 1, 1]  4
+                       runFid      
+MuNumDen:   87  3   8   [3, 2, 1, 1, 1]  5
+                       runFid      
+MuNumDen:   26  3   8   [3, 3, 2]  3
+                       runFid      
+MuNumDen:   45  3   8   [3, 2, 2, 1]  4
+                       runFid      
+
+
+
+MuNumDen:   159  3   8   [3, 1, 1, 1, 1, 1]  6
+                       runFid      
+MuNumDen:   51  3   8   [3, 3, 1, 1]  4
+                       runFid      
+MuNumDen:   87  3   8   [3, 2, 1, 1, 1]  5
+                       runFid      
+MuNumDen:   26  3   8   [3, 3, 2]  3
+                       runFid      
+MuNumDen:   45  3   8   [3, 2, 2, 1]  4
+
+
+
+                       runFid      
+MuNumDen:   143  4   8   [4, 1, 1, 1, 1]  5
+                       runFid      
+MuNumDen:   24  4   8   [4, 4]  2
+                       runFid      
+MuNumDen:   41  4   8   [4, 3, 1]  3
+                       runFid      
+MuNumDen:   75  4   8   [4, 2, 1, 1]  4
+                       runFid      
+MuNumDen:   38  4   8   [4, 2, 2]  3
+
+
+                       runFid      
+MuNumDen:   143  4   8   [4, 1, 1, 1, 1]  5
+                       runFid      
+MuNumDen:   24  4   8   [4, 4]  2
+                       runFid      
+MuNumDen:   41  4   8   [4, 3, 1]  3
+                       runFid      
+MuNumDen:   75  4   8   [4, 2, 1, 1]  4
+                       runFid      
+MuNumDen:   38  4   8   [4, 2, 2]  3
+
+
+                      runFid      
+MuNumDen:   135  5   8   [5, 1, 1, 1]  4
+                       runFid      
+MuNumDen:   36  5   8   [5, 3]  2
+                       runFid      
+MuNumDen:   69  5   8   [5, 2, 1]  3
+
+
+                       runFid      
+MuNumDen:   135  5   8   [5, 1, 1, 1]  4
+                       runFid      
+MuNumDen:   36  5   8   [5, 3]  2
+                       runFid      
+MuNumDen:   69  5   8   [5, 2, 1]  3
+
+
+MuNumDen:   131  6   8   [6, 1, 1]  3
+                       runFid      
+MuNumDen:   66  6   8   [6, 2]  2
+
+
+                       runFid      
+MuNumDen:   131  6   8   [6, 1, 1]  3
+                       runFid      
+MuNumDen:   66  6   8   [6, 2]  2
+
+
+
+                       runFid      
+MuNumDen:   129  7   8   [7, 1]  2
+                       runFid      
+MuNumDen:   129  7   8   [7, 1]  2
+
+
+
+
+                       runFid      
+MuNumDen:   128  8   8   [8]  1
+                       runFid      
+MuNumDen:   128  8   8   [8]  1
+
+
+
+
+                                     Slept? 
+                       runFid      
+MuNumDen:   255  1   8   [1, 1, 1, 1, 1, 1, 1, 1]  8
+                       runFid      
+MuNumDen:   191  2   8   [2, 1, 1, 1, 1, 1, 1]  7
+                       runFid      
+MuNumDen:   111  2   8   [2, 2, 1, 1, 1, 1]  6
+                       runFid      
+MuNumDen:   59  2   8   [2, 2, 2, 1, 1]  5
+                       runFid      
+MuNumDen:   30  2   8   [2, 2, 2, 2]  4
+                       runFid      
+MuNumDen:   159  3   8   [3, 1, 1, 1, 1, 1]  6
+                       runFid      
+MuNumDen:   51  3   8   [3, 3, 1, 1]  4
+                       runFid      
+MuNumDen:   87  3   8   [3, 2, 1, 1, 1]  5
+                       runFid      
+MuNumDen:   26  3   8   [3, 3, 2]  3
+                       runFid      
+MuNumDen:   45  3   8   [3, 2, 2, 1]  4
+                       runFid      
+MuNumDen:   143  4   8   [4, 1, 1, 1, 1]  5
+                       runFid      
+MuNumDen:   24  4   8   [4, 4]  2
+                       runFid      
+MuNumDen:   41  4   8   [4, 3, 1]  3
+                       runFid      
+MuNumDen:   75  4   8   [4, 2, 1, 1]  4
+                       runFid      
+MuNumDen:   38  4   8   [4, 2, 2]  3
+                       runFid      
+MuNumDen:   135  5   8   [5, 1, 1, 1]  4
+                       runFid      
+MuNumDen:   36  5   8   [5, 3]  2
+                       runFid      
+MuNumDen:   69  5   8   [5, 2, 1]  3
+                       runFid      
+MuNumDen:   131  6   8   [6, 1, 1]  3
+                       runFid      
+MuNumDen:   66  6   8   [6, 2]  2
+                       runFid      
+MuNumDen:   129  7   8   [7, 1]  2
+                       runFid      
+MuNumDen:   128  8   8   [8]  1
+
+
+But may lead yet to a pattern down the road.
+The pattern corrolates centerIndex and horizontal displacement.
+
+
+***** Intention is to add a filter for size =2 for all
+***** muBuffer objects.
+***** the filter will be in GaussTable1.  And convienently have .size to filter with.
+
+The filtered beans:something as mu exists as size 2 then it exists with size=2,size=3,
+                   then it exists .....
+ 
+                  
+MuNumDen:   6  2   4   [2, 2]  2
+MuNumDen:   9  3   4   [3, 1]  2
+
+MuNumDen:   24  4   8   [4, 4]  2
+MuNumDen:   36  5   8   [5, 3]  2
+MuNumDen:   66  6   8   [6, 2]  2
+MuNumDen:   129  7   8   [7, 1]  2
+
+MuNumDen:   384  8   16   [8, 8]  2
+MuNumDen:   576  9   16   [9, 7]  2
+MuNumDen:   1056  10   16   [10, 6]  2
+MuNumDen:   2064  11   16   [11, 5]  2
+MuNumDen:   4104  12   16   [12, 4]  2
+MuNumDen:   8196  13   16   [13, 3]  2
+MuNumDen:   16386  14   16   [14, 2]  2
+MuNumDen:   32769  15   16   [15, 1]  2
+
+MuNumDen:   98304  16   32   [16, 16]  2
+MuNumDen:   147456  17   32   [17, 15]  2
+MuNumDen:   270336  18   32   [18, 14]  2
+MuNumDen:   528384  19   32   [19, 13]  2
+MuNumDen:   1050624  20   32   [20, 12]  2
+
+
+32 is supposed to denumerate down to 1 but stops at 12.
+why does it happen so?
+
+so,,, look for last mentioned in fisi 32.
+
+and will prune iteration wit numerator low=15
+
+Point being:::
+                                    Slept? 
+MuNumDen:   6442450944  32   64   [32, 32]  2
+MuNumDen:   9663676416  33   64   [33, 31]  2
+MuNumDen:   17716740096  34   64   [34, 30]  2
+MuNumDen:   34628173824  35   64   [35, 29]  2
+MuNumDen:   68853694464  36   64   [36, 28]  2
+MuNumDen:   137506062336  37   64   [37, 27]  2
+MuNumDen:   274911461376  38   64   [38, 26]  2
+MuNumDen:   549772591104  39   64   [39, 25]  2
+MuNumDen:   1099520016384  40   64   [40, 24]  2
+MuNumDen:   2199027449856  41   64   [41, 23]  2
+MuNumDen:   4398048608256  42   64   [42, 22]  2
+MuNumDen:   8796094070784  43   64   [43, 21]  2
+MuNumDen:   17592186568704  44   64   [44, 20]  2
+MuNumDen:   35184372350976  45   64   [45, 19]  2
+MuNumDen:   70368744308736  46   64   [46, 18]  2
+MuNumDen:   140737488420864  47   64   [47, 17]  2
+MuNumDen:   281474976743424  48   64   [48, 16]  2
+MuNumDen:   562949953437696  49   64   [49, 15]  2
+MuNumDen:   1125899906850816  50   64   [50, 14]  2
+MuNumDen:   2251799813689344  51   64   [51, 13]  2
+
+did not finish with simple prune.
+
+And I wonder what failed???
+
+me thinkith implementing the pattern is of import.
+
+
+1/8
+
+  FractionIntegerDriverIterate constrained to twoPolynomials will not iterate to compleation.
+  The simple prune will help but falls short of substatial zaddb content.
+  And worse, FIDIterate works backwards; the meaningfull members of the iteration are towards the
+  end.  Maybe useable iteration after all.
+
+   
+  Each worker gets a numerator.....
+
+  The pruning experiment take 2:
+  Inside the workers.callable,  will set setSize to 2. 
+  With the intention that it stays inside the worker loop for only one iteration.
+
+   The pruning experiment take 3:
+   maybe need setsize as numerator, but still just one iteration.
+
+
+Within:
+
+      else
+      {  nBinaryList1.add((ArrayList)testList5.get(0));    
+         nextBigDecimal=lTNumber.getIntegerFromList((List)testList5.get(0));
+//    System.out.println(nextBigDecimal.toString() + " ");
+         returnList.add(nextBigDecimal.toString());
+  
+        gbList.setGBList(new muNumDen(numerator,denominator,nextBigDecimal,((List)testList5.get(0)).toString(),((List)testList5.get(0)).size(),((ArrayList)testList5.get(0)))); 
+        System.out.println("GenerateBinaryLastIterate Inside while (setSize>1) Numerator, Denomiator, nextBigDecimal: "+numerator + " " + denominator + " " + nextBigDecimal.toString());
+  //        gbList.setGBList(nextBigDecimal);
+  //       System.out.println("gbl inside loop ThredID" + threadId + " ReturnList" + returnList.toString());
+         setIndex++; 
+
+Below is the pruner, it halts the iteration after first muNumDen.
+  setSize=1; // latest prune test, after first setSize=1  
+       
+Things seem much improved.  However short of expectation.
+TwoPolynomial=128 does not completely iterate.
+
+ExecutorService executorService1 = Executors.newFixedThreadPool(20);
+maybe need more threads....
+
+
+And also load up some twop's...
+
+But now it is time to deal with setProductRange.   A creature in its own rite.
+
+There may be some similar pruning with sPR.  This time though it may be pruned from the other end.
+
+
+
+1/9  
+
+   Since New Year, since twoPolynomials are the arguments for ZAD:
+   The pattern from twoPolynomial back through the relevent dNodes to target Evaluates exists.
+   CreatedBy nodes have been embelished with index information for traversal from rootDnode back to the Evaluate nodes.
+   Constraints within each FractionIntegerSet workers now prune its iteration. 
+   Evaluate.value is deficient.  Its data type fails accuracy because of rounding and so is this AM topic.
+
+   fractionintegerset.muNumDen is precise.
+   ZADDB.Evaluate.Value is precise.    Therfore, the Evaluates.ods is performing some sort of wierd rounding not relevant to enquery.
+
+   And so, back to rebuilding ZADDB.
+   .Need the physical Evaluates connecting twoPolynomial's nodes with zad nodes.
+   .Need the mu Evaluates for zad for finishing the traversal.
+
+   Which means...   The yesterday implemented filter controller within each generateBinary, currently hard coded, needs to be parameterized. 
+
+   Which means...   Two iterations are perscribed for expressing n,nMaxx=8 twoPolynomials.
+
+   GenerateBinaryIterates will be constructed with a new field, the Boolean isMu=true will implement the constraint.  Boolean isMu=false will
+   iterate in entirety. 
+
+   isMu, new control functionality installed and configurable along with the other FractionIntegerDriverIterate control
+   parameters.
+   Maybe now a complete n,nMaxx=8 graph.
+
+private void runFIDi() {     //fraction integer driver iterate
+     while ((fiMangee.isAlive()) || (dbbVector.size()>0)) {       
+ //            System.out.println("                 runFID while loop " + fiMangee.isAlive() + " "+dbbVector.size());
+             try {
+                tlSem.acquire();
+ //              System.out.println("                       runFid      ");
+                if (dbbVector.size()>0) {
+                try {
+//                   System.out.println("MuNumDen:   "  +((BigDecimal)((muNumDen)dbbVector.get(0)).getMu()).toString()+"  "+ ((BigDecimal)((muNumDen)dbbVector.get(0)).getnumerator()).toString()+"   "+((BigDecimal)((muNumDen)dbbVector.get(0)).getDenominator()).toString()+"   "+((String)((muNumDen)dbbVector.get(0)).getBString())+ "  "+((muNumDen)dbbVector.get(0)).getbStringSize());     
+                 if (((muNumDen)dbbVector.get(0)).getbStringSize()==2) {
+Have some size control in fidi.
+
+
+   So, isMu=false for evaluates = twoPolynomial
+       isMu=true for evaluates in twoPolynomial semi-Algebra.
+
+
+MuNumDen:   3  1   2   [1, 1]  2
+
+MuNumDen:   5  2   3   [2, 1]  2
+   
+
+
+2
+3
+4
+5
+6
+7
+
+
+
+ MuNumDen:   31  1   5   [1, 1, 1, 1, 1]  5
+MuNumDen:   23  2   5   [2, 1, 1, 1]  4
+MuNumDen:   13  2   5   [2, 2, 1]  3
+MuNumDen:   19  3   5   [3, 1, 1]  3           +2 
+MuNumDen:   10  3   5   [3, 2]  2
+MuNumDen:   17  4   5   [4, 1]  2              +1
+MuNumDen:   16  5   5   [5]  1 
+
+
+MuNumDen:   63  1   6   [1, 1, 1, 1, 1, 1]  6
+MuNumDen:   47  2   6   [2, 1, 1, 1, 1]  5         +8
+MuNumDen:   27  2   6   [2, 2, 1, 1]  4
+MuNumDen:   14  2   6   [2, 2, 2]  3
+MuNumDen:   39  3   6   [3, 1, 1, 1]  4            +4
+MuNumDen:   12  3   6   [3, 3]  2
+MuNumDen:   21  3   6   [3, 2, 1]  3
+MuNumDen:   35  4   6   [4, 1, 1]  3               +2
+MuNumDen:   18  4   6   [4, 2]  2
+MuNumDen:   33  5   6   [5, 1]  2                  +1
+MuNumDen:   32  6   6   [6]  1                
+
+
+
+MuNumDen:   127  1   7   [1, 1, 1, 1, 1, 1, 1]  7
+MuNumDen:   95  2   7   [2, 1, 1, 1, 1, 1]  6
+MuNumDen:   55  2   7   [2, 2, 1, 1, 1]  5
+MuNumDen:   29  2   7   [2, 2, 2, 1]  4
+MuNumDen:   79  3   7   [3, 1, 1, 1, 1]  5
+MuNumDen:   25  3   7   [3, 3, 1]  3
+MuNumDen:   43  3   7   [3, 2, 1, 1]  4
+MuNumDen:   22  3   7   [3, 2, 2]  3
+MuNumDen:   71  4   7   [4, 1, 1, 1]  4
+MuNumDen:   20  4   7   [4, 3]  2
+MuNumDen:   37  4   7   [4, 2, 1]  3
+MuNumDen:   67  5   7   [5, 1, 1]  3
+MuNumDen:   34  5   7   [5, 2]  2
+MuNumDen:   65  6   7   [6, 1]  2
+MuNumDen:   64  7   7   [7]  1
+
+
+MuNumDen:   255  1   8   [1, 1, 1, 1, 1, 1, 1, 1]  8
+MuNumDen:   191  2   8   [2, 1, 1, 1, 1, 1, 1]  7
+MuNumDen:   111  2   8   [2, 2, 1, 1, 1, 1]  6
+MuNumDen:   59  2   8   [2, 2, 2, 1, 1]  5
+MuNumDen:   30  2   8   [2, 2, 2, 2]  4
+MuNumDen:   159  3   8   [3, 1, 1, 1, 1, 1]  6
+MuNumDen:   51  3   8   [3, 3, 1, 1]  4
+MuNumDen:   87  3   8   [3, 2, 1, 1, 1]  5
+MuNumDen:   26  3   8   [3, 3, 2]  3
+MuNumDen:   45  3   8   [3, 2, 2, 1]  4
+MuNumDen:   143  4   8   [4, 1, 1, 1, 1]  5
+MuNumDen:   24  4   8   [4, 4]  2
+MuNumDen:   41  4   8   [4, 3, 1]  3
+MuNumDen:   75  4   8   [4, 2, 1, 1]  4
+MuNumDen:   38  4   8   [4, 2, 2]  3
+MuNumDen:   135  5   8   [5, 1, 1, 1]  4
+MuNumDen:   36  5   8   [5, 3]  2
+MuNumDen:   69  5   8   [5, 2, 1]  3
+MuNumDen:   131  6   8   [6, 1, 1]  3
+MuNumDen:   66  6   8   [6, 2]  2
+MuNumDen:   129  7   8   [7, 1]  2
+MuNumDen:   128  8   8   [8]  1
+
+
+These iterations, 2-8, complete the twoPolynomial range (the end
+of each iteraton is the Evaluate.value zad needs to connect to.
+
+So, load ZAD beans.
+
+
+maybe don't make the bean if setsize>2 ///  isMu not isMU...
+
+
+interesting muNumDen beans when isMu=true.                                                                                         It is inside GaussCorrolation? 
+                                     Slept? 
+MuNumDen:   2147549183  16   32   [16, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  17
+MuNumDen:   98304  16   32   [16, 16]  2
+MuNumDen:   2147516415  17   32   [17, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  16
+MuNumDen:   147456  17   32   [17, 15]  2
+MuNumDen:   2147500031  18   32   [18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  15
+MuNumDen:   270336  18   32   [18, 14]  2
+MuNumDen:   2147491839  19   32   [19, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  14
+MuNumDen:   528384  19   32   [19, 13]  2
+MuNumDen:   2147487743  20   32   [20, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  13
+MuNumDen:   1050624  20   32   [20, 12]  2
+MuNumDen:   2147485695  21   32   [21, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  12
+MuNumDen:   2098176  21   32   [21, 11]  2
+MuNumDen:   2147484671  22   32   [22, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  11
+MuNumDen:   4194816  22   32   [22, 10]  2
+MuNumDen:   2147484159  23   32   [23, 1, 1, 1, 1, 1, 1, 1, 1, 1]  10
+MuNumDen:   8388864  23   32   [23, 9]  2
+MuNumDen:   2147483903  24   32   [24, 1, 1, 1, 1, 1, 1, 1, 1]  9
+MuNumDen:   16777344  24   32   [24, 8]  2
+MuNumDen:   2147483775  25   32   [25, 1, 1, 1, 1, 1, 1, 1]  8
+MuNumDen:   33554496  25   32   [25, 7]  2
+MuNumDen:   2147483711  26   32   [26, 1, 1, 1, 1, 1, 1]  7
+MuNumDen:   67108896  26   32   [26, 6]  2
+MuNumDen:   2147483679  27   32   [27, 1, 1, 1, 1, 1]  6
+MuNumDen:   134217744  27   32   [27, 5]  2
+MuNumDen:   2147483663  28   32   [28, 1, 1, 1, 1]  5
+MuNumDen:   268435464  28   32   [28, 4]  2
+MuNumDen:   2147483655  29   32   [29, 1, 1, 1]  4
+MuNumDen:   536870916  29   32   [29, 3]  2
+MuNumDen:   2147483651  30   32   [30, 1, 1]  3
+MuNumDen:   1073741826  30   32   [30, 2]  2
+MuNumDen:   2147483649  31   32   [31, 1]  2
+MuNumDen:   2147483648  32   32   [32]  1
+
+
+798
+
+
+
+
+
+[0.0, 1.0, -14.0, 52.0]
+[0.0, 2.0, -27.0, 96.0]
+[0.0, 4.0, -53.0, 184.0]
+[0.0, 8.0, -105.0, 360.0]      no linearDnodes returned in querry.
+[0.0, 16.0, -209.0, 712.0]
+[0.0, 32.0, -417.0, 1416.0]
+
+
+looks like pArray only goes to 14.  
+
+but below suggest further are necessay.
+but blind iteration, as with evaluates themselves, nomore. 
+Need only below to satisfy n,nMaxx=8.
+
+
+
+ targetCI	targetVTI
+[2]	[0, 1]
+[4]	[0, 1, 2, 3]
+[8]	[0, 1, 2, 3, 4, 5, 6, 7]
+[16]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+[32]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31] 
+[64]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+         35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+
+Meaning for a fast first prune, maybe, only when pArray=targetCI.
+
+blind iteration notes:::
+   SetProductRange is set in LoopsDriverTwoPManager but not properly
+   carried over into LoopsDriverTwoP.  Yet....  Break time.
+   A big zaddb size issue is the nodes necessary for pArray/setProductRange.
+   Maybe lots of room for refactoring.
+   Definatly too many....
+
+
+
+
+1/10
+
+[0.0, 1.0, -14.0, 52.0]
+[0.0, 2.0, -27.0, 96.0]
+[0.0, 4.0, -53.0, 184.0]
+[0.0, 8.0, -105.0, 360.0]      no linearDnodes returned in querry.
+[0.0, 16.0, -209.0, 712.0]
+[0.0, 32.0, -417.0, 1416.0]
+
+looks like pArray only goes to 14.  
+
+but below suggest further are necessay.
+but blind iteration, as with evaluates themselves, nomore. 
+Need only below to satisfy n,nMaxx=8.
+
+ targetCI	targetVTI
+[2]	[0, 1]
+[4]	[0, 1, 2, 3]
+[8]	[0, 1, 2, 3, 4, 5, 6, 7]
+[16]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+[32]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31] 
+[64]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+         35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+
+targetCI and targetVTI suggest a very descrete n,nMax=8 iteration.
+Though with deeper root sets, targetCI suspectedly is a composition.
+
+The good build would expect targetCI andtargetVTI be known by zad.
+
+Will otherwise provision zad.  
+ 
+The above iteration control variables need to jive with:
+
+ if (dbVector11Counter==3 || (dbVector11Counter==6) || (dbVector11Counter==9))
+
+[2]	[0, 1]
+[4]	[0, 1, 2, 3]
+[8]	[0, 1, 2, 3, 4, 5, 6, 7]
+
+Suggests Zad perform the querry and accept the map returned because don't quite want to jimmy a structure.  
+And is REQUIRED infrastructure.
+So this conclusion is will bullet list the cypher map and 
+Simply use single iteration variables for getting n,nMax=8 complete.
+
+the variables will be know as 
+
+public static final int targetCI=2;
+public static final int targetVTIlow=0;
+public static final int targetVTIhigh=1;
+
+And a bit more of the write up:
+
+pArray is an arrayList.  So targetCI rightfully
+is also an arrayList with indices corrolationg 
+with pArray.
+
+Important question:
+
+Can pArray be set...
+But the answer is in appendMu
+
+But the iterator is being compromised.
+But in further dimensions the iterator
+will not increment but "setNextTargetCI.
+
+So,  will just now allow iteration, but 
+do work only conditionally within appendMuBuffer.
+
+And
+
+   with verticalTranslateWZero equipped with 
+   targetVTIlow/high, 
+
+AppendMUBuffer has it's condition for targetCI
+verticalTranslatWZeor has condition for targetVTIhigh
+
+And now to test.
+
+note: pia to get a run in these days.
+
+[0.0, 1.0, -14.0, 52.0]
+[0.0, 2.0, -27.0, 96.0]
+[0.0, 4.0, -53.0, 184.0]
+[0.0, 8.0, -105.0, 360.0]      
+[0.0, 16.0, -209.0, 712.0]
+[0.0, 32.0, -417.0, 1416.0]        //   could be experiencing a strong case of missing evaluates.....   //    yep,   more evaluates are needed.
+                                
+ targetCI	targetVTI
+[2]	[0, 1]
+[4]	[0, 1, 2, 3]
+[8]	[0, 1, 2, 3, 4, 5, 6, 7]
+[16]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+[32]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31] 
+[64]	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+         35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+
+my margin of error is to set
+targetVTIhigh to last index+2
+
+NOTE:  For instance 28 not in zaddb.  So get more evaluates on.
+
+pretty good. will shut of the looplist.toStrings and 
+prove out the last.
+
+And so, the things to do:
+
+.Robust Evaluates, and maybe more formal effort in describing the fis iteration.
+.targetCI and targetVTI generated within ZAD for reading by ZAD.
+.write up the multiple of root (the .ods example).
+.really automate the generator.
+
+But in theory, can draw the n,nMaxx=8 graph.  
+And can start the indexing for higher dimensions. 
+
+1/11
+ [0, 10, 4, 0]
+The fis iterator and bigger (n,nMaxx) are contradictory.
+(targetCI,targetVTI) is the derrived mu iterator. 
+
+The working conjecture:
+ZADDB only wants evaluates in the form of 2^n.
+ZAD has limmited is consumption of muNumbers to those with nBinary.length=2.
+And have the observation from evaluates.ods that asks:  Who wants nBinary.lengh=3
+when do have nBinary.lenth=2.  Whis subsequently asks where are the threes that 
+are not expressed by twos.
+
+
+
+1/12
+
+   muNumbers not complete because they were iterated from 1/2 twoPolynomial to twoPolynomial.
+ 
+   With cypherResultMap adjoin nextIndex.
+   With the cubit:
+   set up the quadratic with a zero at each square.
+   so, it looks like want to set up a qubit and then cypher size 3's.
+   but am adding an index and don't have a semnantic yet.
+
+1/13
+
+  Will procede with LoopsDriverTwoPManager.dimension=3.
+  The buffer object:
+  The twoPolynomial buffer object had no zeros in loopList.worknum=1.
+  The subsequent zero's at pArray[1] were the subject of loopListener.verticalDisplacement.
+
+  The loopsDriver object has zeros defined.  
+  Reverse engineer so to speak.  Have eBinarys.size=3.
+  So, hyphothesis: if bufferObject has zeros (is defined) for pArray[initial] then don't need verticalTranslate.
+
+  So to speak:
+  Prepare to run loopsdrivertwopmanager dimension=3 figparray=[3]=1...
+  zaddb with "complete" evaluate set.    note: maybe set of just evaluates.value, many of them with no fis markup.
+
+  This above mentions a new LoopsDriverTwoPManager use case because LoopsDriver is not really tested against refactord LoopListener.
+  Dodgy but now will ignore the buffer (plvManager does not get run) and will hard set figPArry[initial].
+
+
+public class LoopsDriverTwoPManager extends Thread    {
+                        int dimension=2;    
+public static final int integerRange=150;     //  The loopListener needs to know this value for its runnable.   Now it does.
+public static final int targetCI=64;
+public static final int targetVTIlow=0;
+public static final int targetVTIhigh=72;
+int setProductRange=160;
+
+
+not to mention    private void appendMuBuffer() {   
+   if (LoopsDriverTwoPManager.targetCI==(int)pArray.get(1))  for controlling verticaltranslateWZero.
+
+LoopsDriverTwoPManager wants a reference to plvManager...
+need a different constructor for this use case.
+
+1/14
+
+   new constructor as well as method .noMuBufferRun().
+   
+
+THE MAP READING CYPHER QUERRY METHOD:      TOTALLY FORGOT IT WAS INSTALLED IN ZAD.FIS.  
+
+
+private void arithmeticCypher()  {
+    
+     //     String n;
+  //   String rowCounter;
+  //     String maxN;
+//     BigDecimal n = new BigDecimal(0);
+//     BigDecimal resultsInteger = new BigDecimal(0);
+     try
+     {  
+        s = conn.createStatement();
+        statements.add(s);
+            System.out.println(".matchArithmeticCypher");
+            psInsert = conn.prepareStatement("match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=? or i.N=?\n" +
+"WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i,e\n" +
+"With Collect(e.Value) as Values,factors,v,i,e\n" +
+"With collect(v.Vertex) as vV,factors,v,i,Values,e\n" +
+"WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV,Values,e\n" +
+"Unwind RANGE(0,SIZE(fact)-1) as ii\n" +
+"Unwind fact[ii] as ts\n" +
+"With collect(ts.TwoSeq) as cts,v,N,vV,Values,e\n" +
+"With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,e,Values\n" +
+"With v,N,vV,e,Values, Case\n" +
+"when e.Value=\"4\" Then 0-TotalTseq Else TotalTseq End as TotalTseq\n" +
+"With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV //,e\n" +
+"With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV//,e\n" +
+"with collect(output) as outputlist,outputMap,output,vV//,e\n" +
+"with DISTINCT vV as vVV, outputlist,outputMap,output//,e\n" +
+"with collect(outputMap.TotalT) as opMTT,vVV//,e\n" +
+"With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV//,e\n" +
+"With Collect(TotalTseqq) as result,vVV    // but e down here dosnt collapse map.\n" +
+"//Unwind RANGE(0,SIZE(output)-1) as iii\n" +
+"//Unwind output[iii] as ts\n" +
+"Return {Multiple:result,Vertex:vVV} // ,e.Value\n" +
+"//Return opMTT,vVV\n" +
+"//Return outputMap");
+            statements.add(psInsert);
+            psInsert.setString(1,"3" );
+            psInsert.setString(2, "2");
+ //           psInsert.setString(3, "4");
+            ResultSet rs = psInsert.executeQuery();
+            ResultSetMetaData rsmd =rs.getMetaData();
+            System.out.println(rsmd.getColumnCount() + " " +rsmd.getColumnName(1));//+ " " +rsmd.getColumnName(2));
+            //        ((Map)rs.getObject(1)).toString();
+            Map rsMap = new HashMap();
+            Set keySett= new HashSet();
+            ArrayList keyList = new ArrayList();
+            while ( rs.next() ) {
+//            String n = rs.getString(1);    
+//            String rowCounter = rs.getString(2); 
+//            String maxN = rs.getString(3);
+            rsMap=((Map)rs.getObject(1));
+            keySett=((Map)rs.getObject(1)).keySet();
+            System.out.println("(Map)rs.toString: " + ((Map)rs.getObject(1)).keySet());
+            keySett=((Map)rs.getObject(1)).keySet();
+            Iterator iterator=keySett.iterator();
+            while(iterator.hasNext())  {
+                String element = (String) iterator.next();
+                System.out.println("KeySet: "+ element   );
+                System.out.println("(Map)rs.toString: " + rsMap.get(element));
+            }
+
+                  this.NN=((rowBean)dbbVector.get(0)).getNN();
+                  this.flatFileRowCounterr=((rowBean)dbbVector.get(0)).getflatFileRowCounterr();
+                  this.nMaxx=((rowBean)dbbVector.get(0)).getNMax();
+                  this.tSeqDB=((rowBean)dbbVector.get(0)).gettSeqDB();
+                  this.bTermDB=((rowBean)dbbVector.get(0)).getbTermDB();
+                  this.vertexDB=((rowBean)dbbVector.get(0)).getvertex().toString();
+            System.out.println("KeySet: "+ keySett.toString()   );
+            //System.out.println("(KeySet: " + keySett.);
+            //       System.out.println("(Map)rs.toString: " + ((Map)rs.getObject(1)).);
+            //       ((HashMap)rs.getObject(1))
+            }
+        }
+         catch (SQLException sqle)
+        {
+            printSQLException(sqle);
+        } 
+        System.out.println(); 
+    
+    
+}
+
+
+ private void loadPArray(PolynomialArray pArray)
+x integer range
+      for (int y=0;  y<(dimension+1); y++){          // currentPcoeff is scalar 
+          BigDecimal currentPcoeff=new BigDecimal((int)pArray.get(y));
+
+
+ private void loadPArray(PolynomialArray pArray,boolean b)
+
+      for (int y=0;  y<(dimension+1); y++){          // currentPcoeff is scalar 
+          BigDecimal currentPcoeff=new BigDecimal((int)pArray.get(y+1));
+
+
+1/15
+
+The suspicsion is on what moduloList[wNum] is indexing.  
+And can trace the problem to pArray[index_zero].
+Load pArray is suspect loopListener is suspect.
+
+And now maybe look at where 
+
+ A=((LoopList)rListB.get(n)).getgMatrix(); 
+
+dimension=3
+
+LoopList gbList00 = new LoopList(dimension+1,rListB,dimension,integerRange,0,xPowers,figPArray, moduloList);   
+initializePArrayLoopList(pArray);loadPArray(pArray);
+LoopList gbList = new  LoopList(dimension,rListB,dimension,integerRange,1,xPowers,figPArray, moduloList,true);
+
+LoopList gbList1 = new LoopList(dimension-(numerator-1),rListB,dimension,integerRange,numerator,xPowers,figPArray, moduloList);
+LoopList gbList2 = new LoopList(0,rListB,dimension,integerRange,dimension,deltaList,ancestorlist,cashedrListB,xPowers);
+
+Initial looplists not gaussbeaned.  // loopsDriver abandoned.
+
+fixed signature of last gbList subsequent gaussMain.gauss.
+It was argued with improper dimensions.
+
+screamming question:  when does the quadratic of a qubit
+become part of a twoPolynomial. 
+Maybe because of multiples, instead of all the
+way back to linear, or even constant, find a good set.
+
+
+from evaluates... 3/8 = [3,3,2]= value=26
+
+gausstable1.createZmap() wNm,vmResult,rCounter  3 [0.0, 6.0] 715
+
+
+gausstable1.createZmap() wNm,vmResult,rCounter  3 [0.0, 6.0] 715
+
+Need p with roots at:
+[3, 3, 2]
+
+first say: 
+Need p with roots at:
+[0,3,3]= 
+
+
+[3,3,2]
+0011 3,4
+
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e) as evals
+where roots>1 
+return d,evals,roots
+
+which reminds me of odds and evens from the origonal noBufferRun=false.
+so:
+
+ took p=1,-33,272 with roots at 0,16,17 , pArray: [0, 5, 10, 0]
+but    =1,-33,236                               [   4, 10   ] 
+need vertical translation for roots at 0,17,18
+
+ect.ect. untill
+
+
+vmResult: [0.0, 1.0, -27.0, 182.0, -0.0] 
+pArray: [0, 4, 8, 0]
+
+[11,11] or probably any equivalence will exibit either a tripple under verticalDisplacement at x
+or actual zeros.
+
+maybe tripple zeros only happen at pArray=[0,0,0]
+meaning the zeros in pairs but not always.
+and then vertical translate like.
+
+maybe need rule for tripple zeros starting at index i.
+
+.get pArray[i,i,i]
+first get pArray[0,
+
+how about i+1,i+2 = -p(i), then "column b" for F term.  
+
+the search for zeros in dimension=3.
+
+explored fact that tripple zeros only occure at zero. unless under vertical displacement 
+at pArray[x,x]
+
+after x+2 can [x+2,x+i} i finite for resulting in a fixed pair at zero,1 and a moving root.
+but after finite a vertical translate occurs and new trippls appear.
+
+so, find the resulting mooving [arrays [[x_y,x_y] maybe from cypher.
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e) as evals
+where roots>1 
+return d,evals,roots
+
+it is: use the pattern from twoPolynomial; centerIndex,verticalTranslateInde for
+populating pArray[] and then determin merit of verticalTranslate'.
+
+1/16
+
+muCode                      Roots at
+
+[3,3,2] | 01011 therfor     {2,4,5}
+
+[2,1,1] | 11010 therfor    {1,2,4}
+ 
+
+But should I run verticalTranslate?
+But first maybe cypher a graph revealing all the twos.
+
+
+and it repeats 
+
+So, then after lunch... 
+Proceed with verticalTranslate.
+
+From twoPolynomial zad. targetCI corrolates with n,nMaxx.
+Subsequently, targetVTIlow,high iterates from targetCI.
+
+
+It looks like any tripple has a second tripple available 
+under vertical translate. Further, the index for the translate
+value is derrivable.  It also excapes the fixed zero at zero.
+
+suspect there is a minimum pArray[2] making vertical translate 
+interesting.
+
+Just found a second relavent translate occuring occuring  along 
+with initial vertical translate.
+
+
+how about the hypothesis that if pArray rootsetsize=2 then there are 2 interesting 
+verticalTranslate values (ones that produce 3 roots).
+and the s...
+
+
+A more thorough: 
+LoopList[pArray[1]] are values for interesting vertical translates.
+
+the pArray[2] is translateCI_i, the vertical translate_i is pair wise
+at ci+- verticalTranslate.  The thorough then arguments vertical translate.
+
+Which means LoopListener particularly, verticalTranslate gets a refactoring.
+And keeping in mind the how to's twoPolynomial translate worked....
+It did because rather clearly compleates the pairwise root space.
+
+maybe because scalar is one and not even the p[2] parabla is odd.
+that is vertical translate=x on positive side and translate=x-1 on negative side.
+
+The verticalTranslate from the prior zeros only produces certain kind of pairs.
+
+PowerSet set of bits catagories.
+
+twos' have the centralIndex,verticalTranslateIndex paradign
+assume one more adjoinment for threes'.
+
+maybe the new behavior will be demonstrated around each parray index equal.
+
+
+quartets respond to vertical translate.
+
+
+1	-8	-11	0
+1        x       x-3
+
+
+The target is -18.
+It occures within the narrow range of positive around zero. 
+presumabley the pattern of choise.
+
+maybe the zero search is a consequence.
+thus to zero or not to zero. 
+
+1/18
+
+  From yesterday:
+  d=3 Maps of {tripples,pArrays} and evedince of pattern.
+  These though, include zero.  It is apparent that 
+  ZAD does not output a complete set of tripples across setProductRange. 
+  Maybe conclude not to be expected.
+
+  How to complete set of tripples in d>3. 
+
+  Later .ods suggests other tripples with non-ZAD pArrays.
+
+  ZAD tripples have not been corrolated for their relvalence with mu
+  because need ZAD run with vertical translate. 
+
+
+  Lab ideas:
+  .run ZAD with verticalTranslate.
+  .run ZAD,d=4        
+  
+
+1/21-1/22
+
+   Greatest from last week:
+   Error in listener signature fixed. noBufferRun controls LoopsDriverTwoP.
+   Cypher {rootList,pArray} map to corrolate ZADDB with muNumbers.
+
+   The plan:
+    
+   Build general ZADDB with d=1..setProductRange.
+   
+   Will splice togeter runs of same dimension involves setting first pArray as well as 
+   set product range.
+   Keep track of resultID.
+
+   Need to look over noBufferRun=true pArray constructor.
+   Also, maybe initial case is -1 not zero.                                         //  but should be zero because it computes the zero?
+
+   Maybe, the lisener is creating all the buffer objects, they can't be garbage 
+   collected until zad exits and just GaussTable is removeing them one at a time.
+
+   Hmm.
+
+   Seems like the buffer should create the loopList.  
+
+   Or. create looplist on a list, the looplist goes on buffer, the 
+   list is cleared.
+
+   Maybe all good. rlistb alraeady exists and apendMuBuffer already reads from rlistB.   //  truely a fix.
+
+1/23
+
+    With the easy/challenging iteration.  Profile the easy and observe.
+
+    GaussTable1 is slow, thus objects accumulate on the heap.
+    Remedies include write to a file, then file into cypher through apoc.
+    Or by intention, make the heap bigger and slice and dice.
+
+    wiki.faq says defalt jvm is 1/4 to 1/3 ram.
+    so, procede with slicing and dicing.
+
+    . am using set size is 10
+    . will use integerRange=20.
+
+int dimension=5;
+
+int setProductRange=5;
+
+and then:
+
+int setProductRange=10;
+
+maybe that is not how to splice it.  
+maybe stop it at the semaphore level.
+
+because just holdig back the setproductrange quarters is.
+missing much from the initial split.
+
+but arent there two variables, setProductRange and setSize???
+
+
+
+so what really needs to happen is the semaphores need setSizee and SetSize 
+the start and finish counters.  //  They are not easly code configured.
+    
+    
+pArray [0, 0, 0, 0, 5, 0] figPArray: [0, 174, -325, 185, -35, 1]
+
+pArray [0, 4, 4, 4, 4, 0] figPArray: [0, 5944, -2070, 355, -30, 1]
+
+
+but pArrayResetListener needs some work.
+
+It needs the reset argument, before slice and dice it is zero.
+Now, name that argument in LoopsDriverTwoPManager and pass it along.
+
+parrayresetListener
+      for (int pIndex=0; pIndex<=indexS ; pIndex++) {
+        pArray.set(pIndex,0);
+        figPArray.set(pIndex, 0);    // wonder what happens.
+      }
+
+
+
+semaphore pattern is wacky.  disconnect functionality and observe iteration.
+
+or get real wierd and filter the buffer for duplicates????
+
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots=4 
+match (d)-[:CreatedBye]->(c:CreatedBy) 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d,c
+with "["+rootString+"]" as rootStringg,c.pArray as pArray
+return {RootList:rootStringg,PArray:pArray}
+//where roots>2 
+//return d,evals,roots
+
+
+1/24
+
+   Splicing spiele is inadaquate.  Real pia.
+   Get java to output a csv for apoc.
+
+   As in write the buffer to a .csv
+
+
+   goCCCypher has ZADDB methods commented out.
+   it along with runLoopsDriver have writer functionality and new .cvs writer methods referenced.
+
+
+
+name,age,beverage
+Selma,9,Soda
+Rana,12,Tea;Milk
+Selina,19,Cola
+
+CALL apoc.load.csv('/tmp/test.csv') yield lineNo, map, list
+RETURN *;
+
++---------------------------------------------------------------------------------------+
+| lineNo | list                       | map                                             |
++---------------------------------------------------------------------------------------+
+| 0      | ["Selma", "9", "Soda"]     | {name: "Selma", age: "9", beverage: "Soda"}     |
+| 1      | ["Rana", "12", "Tea;Milk"] | {name: "Rana", age: "12", beverage: "Tea;Milk"} |
+| 2      | ["Selina", "19", "Cola"]   | {name: "Selina", age: "19", beverage: "Cola"}   |
++-
+
+
+so with apoc, and csv a row is a row, and...
+
+
+mergeVmResult(vmResult,fPArray);
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,constant:?,linear:?,square:?}) ");
+
+createWnumRcounter(wNum,rCounter,pArray,translateIndex,pArrayIndexValue);
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,constant:?,linear:?,square:?}) ");
+
+createKnownByRelation(vmResult,wNum,rCounter,translateIndex,pArrayIndexValue);
+psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+
+createEvaluates(loopList,vmResult);
+psInsert = conn.prepareStatement(" MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? AND d.vmResult=? WITH d,e MERGE  (d)-[ee:Envalues]->(e)");
+
+createZMap(vmResult,rCounter,wNum);
+psInsert = conn.prepareStatement("match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+
+CALL apoc.load.csv('zaddim25.csv',{sep:";"})  YIELD map
+
+valueList.add(figPArray);
+valueList.add(pArray);
+valueList.add(loopList.toString());
+valueList.add((new Integer(wNum)).toString());
+valueList.add(vmResult);
+valueList.add((new Integer(rCounter)).toString());
+valueList.add(fPArray.toString());
+valueList.add((new Boolean(isTwoPolynomial)).toString());
+valueList.add((new Integer(translateIndex)).toString());
+valueList.add((new Integer(pArrayIndexValue)).toString());
+
+ZAD writes to a .csv not directly to cypher.
+
+
+1/28
+
+
+Observation:
+
+╞══════════════════════════════════════════════════╡
+│{"RootList":"[19,11,0]","PArray":"[0, 15, 9, 0]"} │
+├──────────────────────────────────────────────────┤
+│{"RootList":"[19,11,0]","PArray":"[0, 4, 9, 0]"}  │
+├──────────────────────────────────────────────────┤
+
+
+
+2/10
+
+  ArithmeticCypher projects a map composed of v.vertex, a list of t.twoSequences.
+  define a list of the list of t.twoSequences.
+  With each sub-list...
+
+
+
+  Nothing with cypher today.
+  Indeed.
+  Agencies.
+
+
+2/13
+
+  With 2/7 cypher...
+  With Quora:
+  More robust Fig.
+
+  CopyofBook....:  the prequil to quadratic progressions (discrete vaiable for each integer).
+
+  2014ods:  
+           .Vertex convergence.
+  qFunct
+           .f,g,h worksheet.
+
+  The above is the work for quadProg.
+
+  Question is where does the prequle // is in counting rule corallary.
+Thomas, you crossed 100 views on your answers today! 
+https://www.quora.com/How-are-rational-numbers-constructed-from-the-axioms-of-set-theory 
+
+So dig the jive with QP.  
+  And or But what to do with it.
+  Have ZAD and ZADDB.
+  Missing is a CopyofBook... with a SumOfSeries corrolary worksheet.
+  And fix the quora answer with it.
+  QP does have an example.
+  And importantly,  submit some cypher to to stackoverflow for comment.
+
+2/14
+
+  ZADDB:
+
+  .TwoPolynomial 
+      Only has N=8 represented.   
+      Cypher is defined for addition and subtraction.  //  but subtraction is broken...
+  .ZAD
+      Only has d=5 represented.
+      Cypher does identify d+2 inverses.
+      Cypher does collect roots of arbitrary set sizes.                  
+
+So the proceed is to submit cypher.
+
+Perfect the question.
+
+The Data.
+The evidence. 
+The cypher.
+
+2/16
+
+Cypher, the beginnings, it is implemented on these products, it is a language with growing interest
+and acceptance.
+It starts with "Each clause in a querry".
+Can implement clauses in any order as long as semantics don't change.
+Query execution in Neo4j follows a con-ventional model, outlined by the Volcano Optimizer Generator
+The query planning in Neo4j is based on the IDP algorithm [44,54],using a cost model described in [21].
+OPTIONAL MATCH(r)-[:SUPERVISES]->(s:Student)
+
+2/19
+
+The arithmetic cypher, expecially the subtraction needs some hard knowledge of which is the greater of the two
+evaluate.values.  
+
+2/20
+
+ArithmeticCypher is spelled out. 
+
+2/21 
+
+thinking about making something with twopolynomials that export to .ods.
+
+https://math.stackexchange.com/questions/3088005/a-well-defined-map-from-rational-numbers-to-integers/3121673#3121673
+
+MathLab!!!  Prove the isomorphism (use the vector algebra rule).
+
+Is the tritone (A4 / d5) still banned in Roman Catholic music? 
+
+https://www.randstadusa.com/jobs/search/308/S_722433/expert-excel-administrative-role-for-1-year-at-top-beauty-co_new-york/
+
+https://www.uspto.gov/patents-getting-started/patent-process-overview#step1
+
+New York, New York
+
+Library: Science, Industry, and Business Library, New York Public Library
+
+Phone: 212-592-7000
+
+
+
+  Lisa Stansfield mit dem Titel »All Around The World (Long Version) « vom Album »Blank & Jones Present: So80s (So Eighties) 6 (Deluxe Edition)« (2011)
+
+
+Nee
+ the string parced for zeros.  
+Need to conditionally create whenever zero at index i.
+
+
+RETURN substring('hello', 1, 3)   "ell"
+RETURN split('one,two', ',')
+
+
+GaussTable1.writeLine sb length: 380
+      runLoopsDriverr while loop false 17
+     runLoopsDriver pre t1Sem.acquire available permits:  2
+     runLoopsDriver post t1Sem.acquire            
+GaussTable1.writeLine sb length: 351
+GaussTable1.writeLine sb length: 352
+      runLoopsDriverr while loop false 16
+     runLoopsDriver pre t1Sem.acquire available permits:  1
+     runLoopsDriver post t1Sem.acquire            
+GaussTable1.writeLine sb length: 272
+GaussTable1.writeLine sb length: 273
+      runLoopsDriverr while loop false 15
+     runLoopsDriver pre t1Sem.acquire available permits:  0
+
+
+GaussTable1.writeLine sb length: 355
+GaussTable1.writeLine sb length: 356
+      runLoopsDriverr while loop false 40
+     runLoopsDriver pre t1Sem.acquire available permits:  1
+     runLoopsDriver post t1Sem.acquire            
+GaussTable1.writeLine sb length: 274
+GaussTable1.writeLine sb length: 275
+      runLoopsDriverr while loop false 39
+     runLoopsDriver pre t1Sem.acquire available permits:  0
+
+      runLoopsDriverr while loop false 41
+     runLoopsDriver pre t1Sem.acquire available permits:  2
+     runLoopsDriver post t1Sem.acquire            
+GaussTable1.writeLine sb length: 381
+GaussTable1.writeLine sb length: 382
+      runLoopsDriverr while loop false 40
+     runLoopsDriver pre t1Sem.acquire available permits:  1
+     runLoopsDriver post t1Sem.acquire            
+GaussTable1.writeLine sb length: 351
+GaussTable1.writeLine sb length: 352
+      runLoopsDriverr while loop false 39
+     runLoopsDriver pre t1Sem.acquire available permits:  0
+
+&&      Conditional-AND
+
+
+try {
+        Thread.sleep(700);
+  //    System.out.println("                                     Slept? ");
+      } catch (InterruptedException ex) {
+        Logger.getLogger(LoopListener.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+"/zaddim=5.csv"
+
+
+maybe the cuny theature group shakespeer production flyer illustrator.
+if there were more cuny theature group shakespeer productions needing flyer illustrators then..
+
+Java wonder:  list.toString but string.toList???  
+
+
+I think compleatly the set of wheels have traction.
+
+
+maybe ai/ml find fraud items for sale on web.
+
+
+
+GaussTable1.writeLine sb length: 335
+      runLoopsDriverr while loop false 34991
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 0, 0, 0, 0, 0] 1 [0.0, 4.999999999999999, -30.0, 55.0, -30.0, 0.0] 3  -2   0  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 255
+GaussTable1.writeLine sb length: 256
+      runLoopsDriverr while loop false 34990
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 0, 0, 0, 0, 0] 2 [0.0, 20.0, -60.0, 40.0, -0.0] 3  -2   0  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 236
+GaussTable1.writeLine sb length: 237
+      runLoopsDriverr while loop false 34989
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 0, 0, 0, 0, 0] 3 [0.0, 60.0, -60.0, 0.0] 3  -2   0  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 229
+GaussTable1.writeLine sb length: 230
+      runLoopsDriverr while loop false 34988
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 0, 0, 0, 0, 0] 4 [0.0, 120.0, -0.0] 3  -2   0  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 222
+GaussTable1.writeLine sb length: 223
+      runLoopsDriverr while loop false 34987
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 0, 0, 0, 0, 0] 5 [0.0, 120.0] 3  -2   0  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 216
+GaussTable1.writeLine sb length: 217
+      runLoopsDriverr while loop false 34986
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 1, 0, 0, 0, 0] 0 [0.0, 1.000000000000138, -10.000000000002323, 35.00000000001434, -50.000000000040416, 24.000000000051458, -2.3192114895258118E-11] 7  -2   1  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 334
+GaussTable1.writeLine sb length: 335
+      runLoopsDriverr while loop false 34985
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 1, 0, 0, 0, 0] 1 [0.0, 4.999999999999999, -30.0, 55.0, -30.0, 0.0] 7  -2   1  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 255
+GaussTable1.writeLine sb length: 256
+      runLoopsDriverr while loop false 34984
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 1, 0, 0, 0, 0] 2 [0.0, 20.0, -60.0, 40.0, -0.0] 7  -2   1  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 236
+GaussTable1.writeLine sb length: 237
+      runLoopsDriverr while loop false 34983
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 1, 0, 0, 0, 0] 3 [0.0, 60.0, -60.0, 0.0] 7  -2   1  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 229
+GaussTable1.writeLine sb length: 230
+      runLoopsDriverr while loop false 34982
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 1, 0, 0, 0, 0] 4 [0.0, 120.0, -0.0] 7  -2   1  [0, 0, 0, 0, 0, 1]   false   
+GaussTable1.writeLine sb length: 222
+GaussTable1.writeLine sb length: 223
+      runLoopsDriverr while loop false 34981
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter,translateIndex,pArrayIndexValue [0, 24, -50, 35, -10, 1] [0, 1, 0, 0, 0, 0] 5 [0.0, 120.0] 7  -2   1  [0, 0, 0, 0, 0, 1]   false 
+
+Max rCounter:
+5109
+
+https://www.youtube.com/watch?v=_YW0wjYdUPw
+
+
+ alacrity
+ bearsandunicycles
+
+baltering style
+
+Anthony Hopkins, “King Lear”
+
+
+yuri strongestbitch
+vlad gladimabitch.
+
+
+
+http://www.spiegel.de/kultur/kino/jonas-mekas-ist-tot-filmemacher-kuenstler-poet-a-1249657.html
+
+rocky and bulwinkle competed with lassie.
+
+boris badinov also yammato in midway.
+
+paul frees
+              
+
+   .propertyChange loops through dimension.
+
+     Pre-Condition:   pArray,figPArray,rListB.   
+
+
+     computeIndexZero(wCount,rModulo);  
+         the figPArray worker index value, a scalar is computed for the next worker index value of pArray
+         , a root vector value. the worker's looplist.gMatrix from rListB is the argument. 
+
+     updateRlistB();
+                      
+         LoopList gbList00 = new LoopList(dimension+1,rListB,dimension,15,0,xPowers,figPArray,
+                                          moduloList);
+    
+
+       gMain.gauss(...)
+
+
+
+some refactoring:  Give ZAD some static types.  It seems though that wNum is passed into the listener
+                   as an event field.     
+
+//  need the integerRange sent in as an int as the real integerRange
+    updateRlistB looks like nice machinery.  Very twoPolynomial relevant.
+    It wants pArray defined.
+
+
+    .computeIndeZero 
+                     figPArray transform.  From gMatrix(),                  
+    
+    .evalCoeff
+
+     private int evalCoeff(int index, int scalar, int denumerator)  {
+     int result=1;
+     for (int k = 0; k < denumerator; k++)  {  
+      result=result*index;   
+     }   
+     result=result*scalar;
+     return(result);
+     }             
+
+   GaussBean1 gB1=new GaussBean1(figPArray.toString(),pArray.toString(),((LoopList)rListB.get(index))
+                                  ,resultListCounter);
+
+
+
+     .firstworkerListInit         - but why just each Looplist.value index^dimension?
+
+
+
+
+
+    Boy, wouldn't I like to know how loopList works.
+    Like, why do I care what sebsequentWorkerListInit does.
+
+
+              mergeIndexNode();       //works 9/19
+              matchIndexedBy();       
+              mergetSeqNode();                
+              matchTwoSeqFactor();    
+        //          mergeVertex();          
+              matchVertex();              
+              createTwoSeqValue();
+              //    matchTwoFactor();
+               createIndexedByEvaluate();
+               matchIndexedByEvaluate();
+               createVertexIndexedBy();
+               matchVertexIndexedBy();      
+   https://www.youtube.com/watch?v=dxjscvPG4TE
+https://www.youtube.com/watch?v=Mxp95Zridp0
+
+    The today theory:
+    Have the set product of countably many mapping into Power Set.
+    The set_1 
+    Have the mu numbers.  
+    Interested in numbers {1/p}    
+    Interested in some mu number Theory:  Have the hypothesis that robust sets exist for representing mu with two root representation,
+    three root representation....
+    Output set for each equivalent n 
+
+warning: CypherArithmitic has this.vertexdb as vertex but just now changed to string.
+
+ f ok            mergeIndexNode();       
+                 matchIndexedBy();       
+ a ok            mergetSeqNode();                
+                 matchTwoSeqFactor();    
+ a ok            mergeVertex();          
+                 matchVertex();              
+                 createTwoSeqValue();
+                 matchTwoFactor();
+                 maybe the 8 above are working.
+                 createIndexedByEvaluate();
+                 matchIndexedByEvaluate();
+                 // for starters, the target Evaluate should be a field. As in, CypherArithmetic.targetEvaluate.
+                 // and secondly, have the erronus notion that it is time to fix the evaluate for the iteration of 
+                    zaddbTable1.
+                 createVertexIndexedBy();
+                 matchVertexIndexedBy(); 
+{
+  "RowCounter": "0",
+  "N": "40",
+  "MaxN": "8"
+}
+news flash:  need a different row counter for each vertex 
+to get patterend to the appropriate twoSeq.                    // know about that N in indexNod is the twoSeq that indexNode 
+It seems that morph is appropriate word.
+also good thing got new class CypherArithmetic.
+
+Looks like pattern comprehension, in terms of the
+above method seems to be more robust than simple.
+
+the boliler plate:
+
+CypherArithmetic wants IndexNode.rowCounter to 
+                 associate vertex with its twoSeq.
+
+in ArithmeticCypher return map, collect the set of             // Need to Collect set of Multiples map? 
+multiples map.  Index of the value is rowCounter.
+All ready to refactor arithmeticCypher.
+First thing get the resultSet on an appropriate map.
+Second Thing might as well get that "40" for the iteration
+correct.
+Seems like an easy thing to do is to 
+with the n="40" node create an index node with rowCounter=twoSeq.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

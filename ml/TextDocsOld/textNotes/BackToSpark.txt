@@ -1,0 +1,246 @@
+
+
+Big integers in dataframe's, rdd's....
+
+
+Spark will not act on transformations until we call an action, discussed shortly.
+specify narrow dependencies and those that specify wide dependencies.
+
+
+• actions to view data in the console;
+• actions to collect data to native objects in the respective language;•
+ and actions to write to output data sources.
+
+, triangle counting
+
+End-users»Line-of-business leaders
+»Data architects»Data scientists»Application architects»Software developers»Operations staff
+
+Scala REPL Variable and method definitions Scala syntax Scala’s type hierarchy
+ How to construct functional objects Collections: sequences Function values and higher-order functions For loops and for expressions Collections: sets and maps
+
+To make Scala convenient to use, add the full pathname of the bin directory to your PATH environment variable.  
+
+ it allows functions to be nested, and supports currying.
+
+-closures are constructed automatically depending on the expected type (tar-get typing).
+
+scala.SerialVersionUIDserialVersionUID(field)
+
+untyped lambda calculus.
+
+extendsApplication
+
+Advanced Analytics is the autonomous or semi-autonomous examination of data or content
+using sophisticated techniques and tools, typically beyond those of traditional business
+ intelligence (BI), to discover deeper insights, make predictions, or generate Advanced 
+Analytics and Machine Learning
+43recommendations. Advanced analytic techniques include those such as data/text mining,
+ machine learning, pattern matching, forecasting, visualization, semantic analysis,
+ sentiment analysis, network and cluster analysis, multivariate statistics, graph analysis, simulation, complex event processing, neural networks.
+
+
+scala> val textFile = sc.textFile("README.md")
+
+val df2 = spark.read.options(Map("sep"->";", "header"-> "true")).
+                    csv("quartet102419.csv")
+
+
+transformation ---   the ones corrosponding to cypher.
+
+scala> textFile.map(line => line.split(" ").size).reduce((a, b) => if (a > b) a else b)
+res4: Long = 15
+
+Scala function literals (closures)
+
+scala> val wordCounts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey((a, b) => a + b)
+wordCounts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[8] at reduceByKey at <console>:28
+
+scala> wordCounts.collect()
+res6: Array[(String, Int)] = Array((means,1), (under,2), (this,3), (Because,1), (Python,2), (agree,1), (cluster.,1), ...)
+
+Note that applications should define a main() method instead of extending scala.App. Subclasses of scala.App may not work correctly.
+
+Unlike the earlier examples with the Spark shell, which initializes its own SparkContext, we initialize a SparkContext as part of the program.
+
+Spark 2.4.3 is built and distributed to work with Scala 2.12 by default. (Spark can be built to work with other versions of Scala, too.) To write applications in Scala, you will need to use a compatible Scala version (e.g. 2.12.X).
+
+To write a Spark application, you need to add a Maven dependency on Spark. Spark is available through Maven Central at:   //  maby also haddop dependency.
+
+groupId = org.apache.spark
+artifactId = spark-core_2.12
+version = 2.4.3
+
+Once created, distFile can be acted on by dataset operations. For example, we can add up the sizes of all the lines using the map and reduce operations as follows: distFile.map(s => s.length).reduce((a, b) => a + b).
+
+If using a path on the local filesystem, the file must also be accessible at the same path on worker nodes. Either copy the file to all workers or use a network-mounted shared file system
+
+chaining types  // if remembered correctly.
+
+ SparkContext.doubleAccumulator() 
+
+powerful lambda functions
+
+http://maven.apache.org/download.cgi
+
+Hadoop InputFormat, and can also take a directory or a glob 
+
+Using closures is now possible in Java 8 with lambda expressions support,
+
+The following sequence shows how to build a JAR file from a Java app, using Mavenmaven.apache.org/guides/introduction/introduction-to-the-pom.html
+
+/*** SimpleApp.scala ***/!importorg.apache.spark.SparkContext!importorg.apache.spark.SparkContext._!!objectSimpleApp{!def main(args:Array[String]){!val logFile ="README.md"
+// Should be some file on your system!val sc =newSparkContext("local","Simple App","SPARK_HOME",!List("target/scala-2.10/simple-project_2.10-1.0.jar"))!val logData = sc.textFile(logFile,2).cache()!!val numAs = logData.filter(line => line.contains("a")).count()!val numBs = logData.filter(line => line.contains("b")).count()!!    println("Lines with a: %s, Lines with b: %s".format(numAs, numBs))!}!}
+
+deploy JAR to Hadoop cluster, using these alternatives:•discuss how to run atop Apache Mesos
+
+discuss how to run on EC2
+
+why dataframes instead of rdd's.
+
+
+maybe a caseclass field can be a bigDecimal/bigInteger.
+
+
+lists in scala.
+
+val l = List(s1,s2)
+
+now we can do
+
+val r1 = l.map(x => 
+  x match {
+    case Some(n) => n
+    case None => ""
+  }
+)
+
+Which gives us List("foo",""), which is good, but what if we don't want the None values in the result at all? Then we can do:
+
+val r2 = l.flatMap(x => x)
+
+integer and binds the selector valuexto the variableyof type integer.Scala’s pattern matching statement is most useful for matching on algebraic typesexpressed via case classes.
+
+
+scala.collection.mutable
+scala.collection.immutable
+
+https://www.quora.com/When-mathematicians-say-that-prime-numbers-appear-randomly-is-there-any-truth-to-this-Furthermore-does-it-make-any-sense-to-say-that-any-mathematically-defined-sequence-of-numbers-is-random-on-any-level
+
+TIP: Don’t like the command shell? There are other ways of running theinterpreter—see http://horstmann.com/scala/install.
+
+"Hello".intersect("World") // Yields "lo"In  this  expression,  the  java.lang.String  object  "Hello"  is  implicitly  converted  to  aStringOps object, and then the intersect method of the StringOps class is applied.
+
+See Chapter 21 for more information about implicitconversions
+
+Scala has no checked exceptions.
+
+This is very similar to the “enhanced” for loop in Java
+
+Some programmers with experience in functional programming prefer filterand map to guards and yield
+
+
+All Scala collectionsimplement these traits, and the differencebetw
+
+A must have a supertype B for which an“implicit” object of type Ordering[B] exists.
+
+val flavors = SystemFlavorMap.getDefaultFlavorMap().asInstanceOf[SystemFlavorMap]Then call the getNativesForFlavor method with parameter DataFlavor.imageFlavorand get the return value as a Scala buffer. (Why this obscure class? It’s hardto find uses of java.util.List in the standard Java library.
+
+  pattern  matching  in  a  Scala  for  loop
+
+import scala.collection.JavaConversions.
+
+sc.textFile("/data/spark/tweets.txt",6)sc.textFile("file:///data/spark/tweets.txt",6)sc.textFile("hdfs://server1:4014/data/spark/tweets.txt",6
+
+
+file:///E:/mastering-apache-spark.pdf
+Chapter 4[ 95 ]Apache Spark SQL
+
+public class SQLContext
+extends Object
+implements scala.Serializable
+
+The entry point for working with structured data (rows and columns) in Spark 1.x.
+
+As of Spark 2.0, this is replaced by SparkSession. However, we are keeping the class here for backward compatibility. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,46 @@
+KeyValueGroupedDataset
+
+Table 1. KeyValueGroupedDataset’s Aggregate Operators (KeyValueGroupedDataset API)
+Operator Description
+agg
+cogroup
+count
+flatMapGroups
+flatMapGroupsWithState
+keys
+keyAs
+mapGroups
+mapGroupsWithState
+mapValues
+reduceGroups
+KeyValueGroupedDataset holds keys that were used for the object.
+
+https://www.artima.com/pins1ed/for-expressions-revisited.html
+
+ResultSetIO[Person]
+
+<console>:34: error: overloaded method value cogroup with alternatives
+
+
+agg
+	
+cogroup
+count
+flatMapGroups
+
+flatMapGroupsWithState
+
+keys
+
+keyAs
+
+mapGroups
+
+mapGroupsWithState
+
+mapValues
+
+reduceGroups
+
+
+

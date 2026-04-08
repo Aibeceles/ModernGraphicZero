@@ -1,0 +1,152 @@
+
+Call apoc.export.csv.query("
+UNWIND range(2,19) AS n
+WITH toString(n) AS N, '20' as nMax
+
+//MATCH (cl:CollectedProductArgNode {Dimension:'128',MaxN:nMax,N:N})-[:Arguments]->(aN:ArgumentsNode)
+//With max(aN.ResultDivisor) as maxDivisor,N,nMax
+
+MATCH (cl:CollectedProductArgNode {Dimension:'256',MaxN:nMax,N:N,tft:2^(toInteger(N)-2)})-[:Arguments]->(aN:ArgumentsNode)
+WITH DISTINCT aN.ResultDivisor AS maxDivisor,N,nMax
+
+MATCH (cl:CollectedProductArgNode {Dimension:'256',MaxN:nMax,N:N})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,N as iN,nMax as iM,maxDivisor   //  ,cl.N as iN,cl.MaxN as iM
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,ResultDegree:aPTdsU.DegreeSum,ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                 
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,ResultDegree:aPTdsU.DegreeSum,ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+//WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,'0' as accumulator,maxDivisor,eTrm
+WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor,eTrm 
+WITH REDUCE(sum='0', x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm 
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN,eTrm
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,eTrm
+UNWIND dSList as dSListU
+WITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,eTrm
+RETURN tDegree,tScalar,iN,iM,pTD,eTrm
+"
+,
+"C:/Users/ChiefQuippy/.Neo4jDesktop/neo4jDatabases/database-c41a3534-7e82-4421-819a-dd170f561899/installation-3.4.1/import/D128N20S3T.csv",{d:";"})
+
+
+Call apoc.export.csv.query("
+UNWIND range(2,19) AS n
+WITH toString(n) AS N, '20' as nMax
+MATCH (cl:CollectedProductArgNode {Dimension:'256',MaxN:nMax,N:N,tft:2^(toInteger(N)-2)})-[:Arguments]->(aN:ArgumentsNode)
+WITH DISTINCT aN.ResultDivisor AS maxDivisor,N,nMax
+MATCH (cl:CollectedProductArgNode {Dimension:'256',MaxN:nMax,N:N})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,N as iN,nMax as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor    //,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor //  rDivisor,
+WITH REDUCE(sum='0', x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN 
+//  Below need a refactor - the degree should not be in the collected maps  -  the number.exact.mul should occure earlier in the script.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+WITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD
+RETURN tDegree,tScalar,pTD,iM,iN
+"
+,
+"C:/Users/ChiefQuippy/.Neo4jDesktop/neo4jDatabases/database-c41a3534-7e82-4421-819a-dd170f561899/installation-3.4.1/import/D256N20S3A.csv",{d:";"})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

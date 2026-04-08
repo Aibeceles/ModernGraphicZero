@@ -1,0 +1,21 @@
+{
+  "name": "Neo4jSinkTwoPoly",
+  "config": {
+    "connector.class": "org.neo4j.connectors.kafka.sink.Neo4jConnector",
+    "topics": "twoPoly",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": false,
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": false,
+
+    "consumer.override.auto.offset.reset": "earliest",
+
+    "neo4j.uri": "neo4j://localhost:7687",
+    "neo4j.database": "twopolynomial",
+    "neo4j.authentication.type": "BASIC",
+    "neo4j.authentication.basic.username": "neo4j",
+    "neo4j.authentication.basic.password": "ChiefQuippy",
+
+    "neo4j.cypher.topic.twoPoly": "MERGE (i:IndexedBy {N:event.NN, RowCounter:event.flatFileRowCounterr, MaxN:event.nMaxx, Dimension:'2'}) MERGE (t:TwoSeqFactor {twoSeq:event.tSeqDB}) MERGE (v:VertexNode {Vertex:event.vertexDBVertex, Scalar:event.vertexScalarDB, Degree:event.vertexDegreeDB}) MERGE (e:Evaluate {Value:event.targetEvaluate}) MERGE (i)-[:TwoFactor]->(t) MERGE (i)-[:IndexedByEvaluate]->(e) MERGE (i)-[:VertexIndexedBy]->(v)"
+  }
+}

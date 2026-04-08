@@ -1,0 +1,9 @@
+# Copy this file to db.properties and fill in your values.
+# db.properties is git-ignored and will not be committed.
+
+neo4j.url=jdbc:neo4j:bolt://localhost
+neo4j.user=neo4j
+neo4j.password=YOUR_PASSWORD_HERE
+neo4j.database=twopolynomial
+neo4j.import.path=C:/path/to/neo4j/import/
+kafka.bootstrap.servers=localhost:9092

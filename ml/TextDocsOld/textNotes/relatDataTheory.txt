@@ -1,0 +1,698 @@
+
+Note the interactionID,page is derrived from the webEventDatafile.
+
+
+interactionID,page.
+
+eat the .json.
+
+
+
+
+MATCH (movie:Movie)
+WITH movie, [(movie)<-[:ACTED_IN]-(p:Person) | p] as actors
+RETURN count(*)
+
+
+name,age,beverage
+Selma,9,Soda
+Rana,12,Tea;Milk
+Selina,19,Cola
+
+CALL apoc.load.csv('test.csv')
+YIELD lineNo, map, list
+RETURN *;
+
+lineNo 	list 	                    map
+
+0       ["Selma", "9", "Soda"]     {name: "Selma", age: "9", beverage: "Soda"}
+
+
+want 1,000,000 events , 4,000 pages.
+****************************************************************************************
+****************************************************************************************
+
+CREATE INDEX eventIndex IF NOT EXISTS
+FOR (n:Event)
+ON (n.id,
+    n.page)
+
+***************************************************************************************
+
+CREATE INDEX pageIndex IF NOT EXISTS
+FOR (n:Page)
+ON (n.id)
+
+***************************************************************************************
+***************************************************************************************
+
+CALL apoc.periodic.iterate("
+UNWIND range(1,1000000) as id
+RETURN id
+",
+"
+CREATE (m:Event {id:id, page:toInteger(rand() * 4000)})
+", {}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+**************************************************************************************
+
+CALL apoc.periodic.iterate("
+UNWIND range(1,4000) as id
+RETURN id
+",
+"
+CREATE (m:Page {id:id})
+", {}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+**************************************************************************************
+*************************************************************************************
+
+// maybe don't use this file.... 
+
+CALL apoc.export.json.query(
+    "MATCH (e:Event) return e.id,e.page",
+    "idPageRelate.json",
+    {params:{age:15}}
+)
+
+**************************************************************************************
+**************************************************************************************
+
+
+so, event has page and want to relate event.page to page.id  
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)}
+RETURN e
+*******************************************************************************
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+RETURN rows
+
+
+WITH rows.page as page,rows.ids as ids
+UNWIND ids as eachID
+MATCH (e:Event {id:eachID}),(p:Page {id:page})
+MERGE (e)-[r:IS_PAGE]->(p)
+RETURN count(r)
+
+RETURN rows
+
+
+
+
+
+CALL apoc.periodic.iterate(
+  "MATCH (e:Event)
+   WITH {page:e.page, ids:COLLECT(e.id)} as rows
+   RETURN rows",
+   "WITH rows.page as page,rows.ids as ids
+   UNWIND ids as eachID
+   MATCH (e:Event {id:eachID}),(p:Page {page:page})
+   MERGE (e)-[:IS_PAGE]->(p)",
+  {batchSize:1000, parallel:false})
+
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+//RETURN rows
+
+WITH rows.page as page,rows.ids as ids
+UNWIND ids as eachID
+
+WITH page,eachID
+MATCH (p:Page {id:page})
+//RETURN p
+WITH p,eachID LIMIT 1 
+//RETURN p,eachID
+MATCH (e:Event {id:eachID})
+//RETURN p,e
+MERGE (e)-[r:IS_PAGE]->(p)
+RETURN count(r)
+
+
+
+
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+//RETURN rows
+
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+RETURN count(r)
+
+
+
+CALL apoc.periodic.iterate(
+  "MATCH (e:Event)
+   WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+   RETURN rows
+   WITH rows.page as page,rows.ids as ids
+    MATCH (p:Page {id:page})
+    UNWIND ids as eachID
+    WITH p,eachID
+    MATCH (e:Event {id:eachID})
+    MERGE (e)-[r:IS_PAGE]->(p)",
+  {batchSize:100, parallel:false})
+
+
+CALL apoc.periodic.iterate(
+  "MATCH (e:Event)
+   WITH {page:e.page, ids:COLLECT(e.id)} as rows
+   RETURN rows",
+   "WITH rows.page as page,rows.ids as ids
+   UNWIND ids as eachID
+   MATCH (e:Event {id:eachID}),(p:Page {page:page})
+   MERGE (e)-[:IS_PAGE]->(p)",
+  {batchSize:1000, parallel:false})
+
+
+
+CALL apoc.periodic.iterate(
+  "MATCH (e:Event)
+   WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+   RETURN rows",
+   "WITH rows.page as page,rows.ids as ids
+    MATCH (p:Page {id:page})
+    UNWIND ids as eachID
+    WITH p,eachID LIMIT 1
+    MATCH (e:Event {id:eachID})
+    MERGE (e)-[r:IS_PAGE]->(p)",
+  {batchSize:1000, parallel:false})
+
+
+RETURN count(r)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH ()-[r:IS_PAGE]->() DELETE r
+
+
+
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+RETURN count(r)
+
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+RETURN count(r)
+
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:1000, parallel:false}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:10, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+***************************************************************************************
+***************************************************************************************
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:10, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+****************************************************************************************
+***************************************************************************************
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:100,concurrency:2, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+****************************************************************************************
+****************************************************************************************
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 10
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:100,concurrency:2, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 10
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:100,concurrency:2, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+cores  batch size    time        count
+2       100           482  
+4       100           446         2462
+4       1             142         2541
+4       1             136         2478
+4       10            471         2538
+
+
+
+************************************************************************************
+************************************************************************************
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 10
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:1,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+**********************************************************************************
+**********************************************************************************
+
+
+
+CALL apoc.meta.schema()
+YIELD value
+UNWIND keys(value) AS key
+RETURN key, value[key] AS value;
+
+
+
+
+
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 10
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:10,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:1,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+ 40472 ms.
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 1
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+return count(r)
+
+
+
+Created 277 relationships, started streaming 1 records after 10 ms and completed after 39332 ms.
+
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows 
+RETURN count(rows)
+
+
+
+MATCH (e:Event)
+WITH e LIMIT 277
+MATCH (p:Page {id:e.page})
+WITH p,e
+MERGE (e)-[r:IS_PAGE]->(p)
+return count(r)
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+RETURN e
+",
+"
+WITH e
+MATCH (p:Page {id:e.page})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:10,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+
+MATCH ()-[r:IS_PAGE]->()  
+CALL { 
+WITH r
+DETACH DELETE r
+} IN TRANSACTIONS OF 10000 ROWS;
+
+CALL apoc.periodic.iterate("
+MATCH ()-[r:IS_PAGE]->() 
+RETURN r
+",
+"
+DELETE r
+", {batchSize:2000,concurrency:4, parallel:false}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+RETURN e
+",
+"
+WITH e
+MATCH (p:Page {id:e.page})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:10,concurrency:4, parallel:false}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 10
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+", {batchSize:1,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 10
+WITH rows
+
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+MERGE (e)-[r:IS_PAGE]->(p)
+RETURN count(r)
+
+
+
+MATCH (e:Event)
+WITH e LIMIT 277
+MATCH (p:Page {id:e.page})
+WITH p,e
+MERGE (e)-[r:IS_PAGE]->(p)
+return count(r)
+
+
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows LIMIT 10
+RETURN rows
+",
+"
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+CREATE (e)-[r:IS_PAGE]->(p)
+", {batchSize:1,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+************************************************************************************
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows 
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+RETURN e,p
+",
+"
+CREATE (e)-[r:IS_PAGE]->(p)
+", {batchSize:100,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+Started streaming 1 records after 12 ms and completed after 35975 ms.
+
+
+CREATE INDEX ON :Page(id)
+CREATE INDEX ON :Event(id)
+CREATE INDEX ON :TwoSeqFactor(twoSeq)
+
+
+
+*************************************************************************************
+
+CALL apoc.periodic.iterate("
+wITH ['a','b'] as appendChar
+UNWIND RANGE(1,1) as timesData
+MATCH (e:Event)
+WITH e,toString(e.id)+appendChar[timesData] AS newId
+RETURN newId
+","
+CREATE (e:Event {page:e.page,id:newId})
+", {batchSize:100,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+RETURN count(e)
+
+
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows 
+RETURN count(rows)
+
+
+1,000,000 Started streaming 1 records after 2 ms and completed after 370 ms.
+2,000,000 Started streaming 1 records after 1 ms and completed after 848 ms.
+4,000,000 Started streaming 1 records after 25 ms and completed after 2262 ms.
+
+
+
+CALL apoc.periodic.iterate("
+MATCH (e:Event)
+WITH {page:e.page, ids:COLLECT(e.id)} as rows 
+WITH rows.page as page,rows.ids as ids
+MATCH (p:Page {id:page})
+UNWIND ids as eachID
+WITH p,eachID 
+MATCH (e:Event {id:eachID})
+RETURN e,p
+",
+"
+CREATE (e)-[r:IS_PAGE]->(p)
+", {batchSize:100,concurrency:4, parallel:true}) YIELD batches, total, errorMessages
+RETURN batches, total, errorMessages
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+stop and shop..
+
+brochliee 
+califlower
+carrots
+vidal onions
+
+canned fish
+soy milk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I'm guessing something like tom powell will charge.
+
+We now offer pick up service for those items too large for you to fit in your vehicle.
+Our base rate for items outside that can be handled by one person is $35.00 plus cost of disposal.
+If item(s) are inside, the minimum is $70.00 plus cost of disposal. You can use the get in touch
+form on this website, call the center (860) 799-5068 or send a text to (203)648-0318.
+We would be happy to provide an in person estimate.

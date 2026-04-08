@@ -1,0 +1,38 @@
+https://neo4j.com/labs/apoc/4.1/import/load-csv/
+
+https://neo4j.com/labs/apoc/4.4/import/load-csv/
+
+
+    Call apoc.periodic.iterate('
+
+        Call apoc.load.csv("file:///clickstream-enwiki-2021-02.tsv", {sep:"TAB", header:false}) yield list as line return line',
+
+        'MERGE (p1:Page {title: line[0]})
+
+        MERGE (p2:Page {title: line[1]})
+
+        CREATE (p1)-[:LINKS_TO {type: line[2], quantity: toInteger(line[3])}]->(p2)
+
+        ',
+
+        {batchSize:25000, iterateList:true, parallel:false});
+
+CALL apoc.periodic.iterate('
+CALL apoc.load.csv({url}) yield map as row return row
+','
+CREATE (p:Person) SET p = row
+', {batchSize:10000, iterateList:true, parallel:true});
+
+
+https://stackoverflow.com/questions/58562226/nested-apoc-iterate-with-apoc-load-jdbc-returns-cannot-conclude-with-call-mess
+
+https://groups.google.com/g/neo4j/c/-sme2sRe6as/m/qFYrDcSIBAAJ
+
+Yes apoc.periodic.iterate would help you there which you can combine with apoc.load.xxx as driving statement.
+
+It's about the memory needed for tx state.
+apoc.periodic.iterate creates new transactions (in separate threads) to be independent of the running top-level tx.
+
+HTH Michael
+
+

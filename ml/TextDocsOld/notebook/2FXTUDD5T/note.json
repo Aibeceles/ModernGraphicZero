@@ -1,0 +1,115 @@
+{
+  "paragraphs": [
+    {
+      "text": "object QuerryS12QuadQuerry {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nval s3 \u003d new DFScripts \n\ndef s12QuadQuerry(rLow:String,rHigh:String,nMax:String): ArrayBuffer[s12QQu] \u003d {\n\nval terms \u003d new ArrayBuffer[s12QQu]()\n//val s3 \u003d new DFScripts  \nval s12QQRS \u003d s3.s12QuadQ(rLow,rHigh,nMax)\n\nwhile (s12QQRS.next()) {\nterms +\u003d s12QQu(s12QQRS.getString(1),s12QQRS.getString(2),s12QQRS.getString(3),s12QQRS.getString(4),s12QQRS.getString(5),s12QQRS.getString(6))\n}\nterms\n}\n\ndef main(args:Array[String]) {\n\nval terms \u003d new ArrayBuffer[ArrayBuffer[s12QQu]]()\nval nMax \u003d args(0)                                 \n//for(a \u003c- 1 to 1; n \u003c- 7 to 7;b \u003c- 0 to (n-2)) {\nfor(a \u003c- 1 to 1; n \u003c- 2 to BigInt(args(0)).intValue()-1) {   //;b \u003c- 0 to 0\n     terms +\u003d s12QuadQuerry(n.toString,n.toString,nMax)\n}\n\nval mainTermss\u003dterms.flatMap(_.toList)\n\nval df \u003d spark.createDataFrame(mainTermss)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(args(1),df)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 09:30:01.809",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613658514250_-1402087770",
+      "id": "20210218-092834_1898350967",
+      "dateCreated": "2021-02-18 09:28:34.250",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "QuerryS12QuadQuerry.main(Array(\"8\",\"s12MaxN8\")) ",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 09:31:55.297",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613658518933_437563672",
+      "id": "20210218-092838_572686229",
+      "dateCreated": "2021-02-18 09:28:38.933",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613658518475_1422714446",
+      "id": "20210218-092838_1926708671",
+      "dateCreated": "2021-02-18 09:28:38.475",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613658517915_-1062520821",
+      "id": "20210218-092837_2083668701",
+      "dateCreated": "2021-02-18 09:28:37.915",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613658517495_99833235",
+      "id": "20210218-092837_868786415",
+      "dateCreated": "2021-02-18 09:28:37.495",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/GraphicZero-HigherDegreedP\u0027s",
+  "id": "2FXTUDD5T",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

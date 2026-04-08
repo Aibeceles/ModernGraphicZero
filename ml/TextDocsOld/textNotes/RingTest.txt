@@ -1,0 +1,4 @@
+java -jar ZADScripts.jar 2 19 30 2
+java -jar ZADScripts.jar 2 7 8 2
+java -jar ZADScripts.jar 2 9 10 2
+

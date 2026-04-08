@@ -1,0 +1,760 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\n It demonstrates p with two roots and p\u0027 with two seperate roots multiplied with the result having 4 roots.\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-05 09:53:16.033",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eIt demonstrates p with two roots and p\u0026rsquo; with two seperate roots multiplied with the result having 4 roots.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1612536737633_248561111",
+      "id": "20210205-095217_1716915132",
+      "dateCreated": "2021-02-05 09:52:17.633",
+      "dateStarted": "2021-02-05 09:53:16.034",
+      "dateFinished": "2021-02-05 09:53:16.044",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "CASE Class definitions",
+      "text": "import org.apache.spark.sql.types.DecimalType\nimport scala.collection.mutable.ArrayBuffer\ncase class s3TQu(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String)\ncase class s3TQuD(dimension:String,Degree:String,scalar:String,index:DecimalType,maxIndex:String,divisor:String,rowCounter:DecimalType)\ncase class s3TRe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String,result:String)\ncase class rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal)\ncase class indexSum(iSum:String,finalISum:String)\ncase class consistant(rowCounter:BigDecimal,n:BigDecimal, maxN:String,dim:BigDecimal)\ncase class tupleQuippy(terms:ArrayBuffer[s3TQu],result:BigDecimal)\n\ncase class s3AQu(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String)\n//case class s12IQu(N:String,MaxN:String,pD:String,vTwoSeq:String,vDivisor:String,vvDivisor:String,vvTwoSeq:String,p2Eval:String,TTScalar:String,AAScalar:String,TTDegree:String,AADegree:String,degreeSum:String,scalarProduct:String,resultDivisor:String,writeDimension:String)\ncase class s12IQu(scalarProduct:String,degreeSum:String,resultDivisor:String,rangeVal:String)\ncase class s12IRe(rangeVal:String,result:String)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-20 14:31:00.368",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.types.DecimalType\r\nimport scala.collection.mutable.ArrayBuffer\r\ndefined class s3TQu\r\ndefined class s3TQuD\r\ndefined class s3TRe\r\ndefined class rResult\r\ndefined class indexSum\r\ndefined class consistant\r\ndefined class tupleQuippy\r\ndefined class s3AQu\r\ndefined class s12IQu\r\ndefined class s12IRe\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610475881940_-1246307989",
+      "id": "20210112-132441_30083789",
+      "dateCreated": "2021-01-12 13:24:41.940",
+      "dateStarted": "2021-01-20 14:31:00.467",
+      "dateFinished": "2021-01-20 14:31:10.689",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Populate DataFrame with s12 querry ResultSet.",
+      "text": "object QuerryS12OQ {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nval s3 \u003d new DFScripts \n \n//def s12OQ(rLow:String,rHigh:String,nMax:String,d1:String,tC:String):ArrayBuffer[s12IQu] \u003d {\ndef s12OQ():ArrayBuffer[s12IQu] \u003d {\n\n\nval terms \u003d new ArrayBuffer[s12IQu]()\n  \n//val s12RS \u003d s3.s12Initial(rLow,rHigh,nMax,d1,d1,d1,tC)  \n//val s12RS \u003d s3.s12OQ(\"7\",\"7\",\"8\",\"2\",\"2\",\"4\",\"16\",\"7\",\"16\",\"16\")\nval s12RS \u003d s3.s12OQ(\"7\",\"7\",\"8\",\"2\",\"2\",\"4\",\"2\",\"7\",\"16\",\"16\")\n\nprintln(s12RS)\n\nwhile (s12RS.next()) {\n\nfor (rangeVal \u003c- 0 to 20)    \nterms +\u003d s12IQu(s12RS.getString(14),s12RS.getString(13),s12RS.getString(15),rangeVal.toString)\n\n    \n}\nterms\n}\n\ndef main(args:Array[String]) {\n\nval terms \u003d new ArrayBuffer[ArrayBuffer[s12IQu]]()\n//val nMax \u003d \"8\"                                 \n//for(a \u003c- 1 to 1; n \u003c- 5 to 5;b \u003c- 1 to (n-2)) {\n//     terms +\u003d s12InitialQuery(n.toString,n.toString,nMax,BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(b).toString)\n//}\n     terms +\u003d s12OQ()\n\n\nval mainTermss\u003dterms.flatMap(_.toList)\nval df \u003d spark.createDataFrame(mainTermss)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(\"s12OQDF\",df)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-20 14:34:54.192",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object QuerryS12OQ\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1611086018649_-2028510953",
+      "id": "20210119-145338_442322579",
+      "dateCreated": "2021-01-19 14:53:38.649",
+      "dateStarted": "2021-01-20 14:34:54.212",
+      "dateFinished": "2021-01-20 14:34:54.526",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Call object QuerryS12OQ",
+      "text": "QuerryS12OQ.main(null)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-20 14:35:02.477",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\norg.neo4j.jdbc.bolt.BoltNeo4jResultSet@68750904\r\norg.neo4j.jdbc.bolt.BoltNeo4jResultSet@68750904\r\n+-------------+---------+-------------+--------+\n|scalarProduct|degreeSum|resultDivisor|rangeVal|\n+-------------+---------+-------------+--------+\n|-20160       |1        |4            |0       |\n|-20160       |1        |4            |1       |\n|-20160       |1        |4            |2       |\n|-20160       |1        |4            |3       |\n|-20160       |1        |4            |4       |\n|-20160       |1        |4            |5       |\n|-20160       |1        |4            |6       |\n|-20160       |1        |4            |7       |\n|-20160       |1        |4            |8       |\n|-20160       |1        |4            |9       |\n|-20160       |1        |4            |10      |\n|-20160       |1        |4            |11      |\n|-20160       |1        |4            |12      |\n|-20160       |1        |4            |13      |\n|-20160       |1        |4            |14      |\n|-20160       |1        |4            |15      |\n|-20160       |1        |4            |16      |\n|-20160       |1        |4            |17      |\n|-20160       |1        |4            |18      |\n|-20160       |1        |4            |19      |\n|-20160       |1        |4            |20      |\n|1344         |2        |4            |0       |\n|1344         |2        |4            |1       |\n|1344         |2        |4            |2       |\n|1344         |2        |4            |3       |\n|1344         |2        |4            |4       |\n|1344         |2        |4            |5       |\n|1344         |2        |4            |6       |\n|1344         |2        |4            |7       |\n|1344         |2        |4            |8       |\n|1344         |2        |4            |9       |\n|1344         |2        |4            |10      |\n|1344         |2        |4            |11      |\n|1344         |2        |4            |12      |\n|1344         |2        |4            |13      |\n|1344         |2        |4            |14      |\n|1344         |2        |4            |15      |\n|1344         |2        |4            |16      |\n|1344         |2        |4            |17      |\n|1344         |2        |4            |18      |\n|1344         |2        |4            |19      |\n|1344         |2        |4            |20      |\n|-96          |3        |4            |0       |\n|-96          |3        |4            |1       |\n|-96          |3        |4            |2       |\n|-96          |3        |4            |3       |\n|-96          |3        |4            |4       |\n|-96          |3        |4            |5       |\n|-96          |3        |4            |6       |\n|-96          |3        |4            |7       |\n|-96          |3        |4            |8       |\n|-96          |3        |4            |9       |\n|-96          |3        |4            |10      |\n|-96          |3        |4            |11      |\n|-96          |3        |4            |12      |\n|-96          |3        |4            |13      |\n|-96          |3        |4            |14      |\n|-96          |3        |4            |15      |\n|-96          |3        |4            |16      |\n|-96          |3        |4            |17      |\n|-96          |3        |4            |18      |\n|-96          |3        |4            |19      |\n|-96          |3        |4            |20      |\n|1440         |2        |4            |0       |\n|1440         |2        |4            |1       |\n|1440         |2        |4            |2       |\n|1440         |2        |4            |3       |\n|1440         |2        |4            |4       |\n|1440         |2        |4            |5       |\n|1440         |2        |4            |6       |\n|1440         |2        |4            |7       |\n|1440         |2        |4            |8       |\n|1440         |2        |4            |9       |\n|1440         |2        |4            |10      |\n|1440         |2        |4            |11      |\n|1440         |2        |4            |12      |\n|1440         |2        |4            |13      |\n|1440         |2        |4            |14      |\n|1440         |2        |4            |15      |\n|1440         |2        |4            |16      |\n|1440         |2        |4            |17      |\n|1440         |2        |4            |18      |\n|1440         |2        |4            |19      |\n|1440         |2        |4            |20      |\n|-26880       |1        |4            |0       |\n|-26880       |1        |4            |1       |\n|-26880       |1        |4            |2       |\n|-26880       |1        |4            |3       |\n|-26880       |1        |4            |4       |\n|-26880       |1        |4            |5       |\n|-26880       |1        |4            |6       |\n|-26880       |1        |4            |7       |\n|-26880       |1        |4            |8       |\n|-26880       |1        |4            |9       |\n|-26880       |1        |4            |10      |\n|-26880       |1        |4            |11      |\n|-26880       |1        |4            |12      |\n|-26880       |1        |4            |13      |\n|-26880       |1        |4            |14      |\n|-26880       |1        |4            |15      |\n|-26880       |1        |4            |16      |\n|-26880       |1        |4            |17      |\n|-26880       |1        |4            |18      |\n|-26880       |1        |4            |19      |\n|-26880       |1        |4            |20      |\n|1792         |2        |4            |0       |\n|1792         |2        |4            |1       |\n|1792         |2        |4            |2       |\n|1792         |2        |4            |3       |\n|1792         |2        |4            |4       |\n|1792         |2        |4            |5       |\n|1792         |2        |4            |6       |\n|1792         |2        |4            |7       |\n|1792         |2        |4            |8       |\n|1792         |2        |4            |9       |\n|1792         |2        |4            |10      |\n|1792         |2        |4            |11      |\n|1792         |2        |4            |12      |\n|1792         |2        |4            |13      |\n|1792         |2        |4            |14      |\n|1792         |2        |4            |15      |\n|1792         |2        |4            |16      |\n|1792         |2        |4            |17      |\n|1792         |2        |4            |18      |\n|1792         |2        |4            |19      |\n|1792         |2        |4            |20      |\n|-128         |3        |4            |0       |\n|-128         |3        |4            |1       |\n|-128         |3        |4            |2       |\n|-128         |3        |4            |3       |\n|-128         |3        |4            |4       |\n|-128         |3        |4            |5       |\n|-128         |3        |4            |6       |\n|-128         |3        |4            |7       |\n|-128         |3        |4            |8       |\n|-128         |3        |4            |9       |\n|-128         |3        |4            |10      |\n|-128         |3        |4            |11      |\n|-128         |3        |4            |12      |\n|-128         |3        |4            |13      |\n|-128         |3        |4            |14      |\n|-128         |3        |4            |15      |\n|-128         |3        |4            |16      |\n|-128         |3        |4            |17      |\n|-128         |3        |4            |18      |\n|-128         |3        |4            |19      |\n|-128         |3        |4            |20      |\n|1920         |2        |4            |0       |\n|1920         |2        |4            |1       |\n|1920         |2        |4            |2       |\n|1920         |2        |4            |3       |\n|1920         |2        |4            |4       |\n|1920         |2        |4            |5       |\n|1920         |2        |4            |6       |\n|1920         |2        |4            |7       |\n|1920         |2        |4            |8       |\n|1920         |2        |4            |9       |\n|1920         |2        |4            |10      |\n|1920         |2        |4            |11      |\n|1920         |2        |4            |12      |\n|1920         |2        |4            |13      |\n|1920         |2        |4            |14      |\n|1920         |2        |4            |15      |\n|1920         |2        |4            |16      |\n|1920         |2        |4            |17      |\n|1920         |2        |4            |18      |\n|1920         |2        |4            |19      |\n|1920         |2        |4            |20      |\n|80640        |0        |4            |0       |\n|80640        |0        |4            |1       |\n|80640        |0        |4            |2       |\n|80640        |0        |4            |3       |\n|80640        |0        |4            |4       |\n|80640        |0        |4            |5       |\n|80640        |0        |4            |6       |\n|80640        |0        |4            |7       |\n|80640        |0        |4            |8       |\n|80640        |0        |4            |9       |\n|80640        |0        |4            |10      |\n|80640        |0        |4            |11      |\n|80640        |0        |4            |12      |\n|80640        |0        |4            |13      |\n|80640        |0        |4            |14      |\n|80640        |0        |4            |15      |\n|80640        |0        |4            |16      |\n|80640        |0        |4            |17      |\n|80640        |0        |4            |18      |\n|80640        |0        |4            |19      |\n|80640        |0        |4            |20      |\n|-5376        |1        |4            |0       |\n|-5376        |1        |4            |1       |\n|-5376        |1        |4            |2       |\n|-5376        |1        |4            |3       |\n|-5376        |1        |4            |4       |\n|-5376        |1        |4            |5       |\n|-5376        |1        |4            |6       |\n|-5376        |1        |4            |7       |\n|-5376        |1        |4            |8       |\n|-5376        |1        |4            |9       |\n|-5376        |1        |4            |10      |\n|-5376        |1        |4            |11      |\n|-5376        |1        |4            |12      |\n|-5376        |1        |4            |13      |\n|-5376        |1        |4            |14      |\n|-5376        |1        |4            |15      |\n|-5376        |1        |4            |16      |\n|-5376        |1        |4            |17      |\n|-5376        |1        |4            |18      |\n|-5376        |1        |4            |19      |\n|-5376        |1        |4            |20      |\n|384          |2        |4            |0       |\n|384          |2        |4            |1       |\n|384          |2        |4            |2       |\n|384          |2        |4            |3       |\n|384          |2        |4            |4       |\n|384          |2        |4            |5       |\n|384          |2        |4            |6       |\n|384          |2        |4            |7       |\n|384          |2        |4            |8       |\n|384          |2        |4            |9       |\n|384          |2        |4            |10      |\n|384          |2        |4            |11      |\n|384          |2        |4            |12      |\n|384          |2        |4            |13      |\n|384          |2        |4            |14      |\n|384          |2        |4            |15      |\n|384          |2        |4            |16      |\n|384          |2        |4            |17      |\n|384          |2        |4            |18      |\n|384          |2        |4            |19      |\n|384          |2        |4            |20      |\n|-5760        |1        |4            |0       |\n|-5760        |1        |4            |1       |\n|-5760        |1        |4            |2       |\n|-5760        |1        |4            |3       |\n|-5760        |1        |4            |4       |\n|-5760        |1        |4            |5       |\n|-5760        |1        |4            |6       |\n|-5760        |1        |4            |7       |\n|-5760        |1        |4            |8       |\n|-5760        |1        |4            |9       |\n|-5760        |1        |4            |10      |\n|-5760        |1        |4            |11      |\n|-5760        |1        |4            |12      |\n|-5760        |1        |4            |13      |\n|-5760        |1        |4            |14      |\n|-5760        |1        |4            |15      |\n|-5760        |1        |4            |16      |\n|-5760        |1        |4            |17      |\n|-5760        |1        |4            |18      |\n|-5760        |1        |4            |19      |\n|-5760        |1        |4            |20      |\n|6720         |2        |4            |0       |\n|6720         |2        |4            |1       |\n|6720         |2        |4            |2       |\n|6720         |2        |4            |3       |\n|6720         |2        |4            |4       |\n|6720         |2        |4            |5       |\n|6720         |2        |4            |6       |\n|6720         |2        |4            |7       |\n|6720         |2        |4            |8       |\n|6720         |2        |4            |9       |\n|6720         |2        |4            |10      |\n|6720         |2        |4            |11      |\n|6720         |2        |4            |12      |\n|6720         |2        |4            |13      |\n|6720         |2        |4            |14      |\n|6720         |2        |4            |15      |\n|6720         |2        |4            |16      |\n|6720         |2        |4            |17      |\n|6720         |2        |4            |18      |\n|6720         |2        |4            |19      |\n|6720         |2        |4            |20      |\n|-448         |3        |4            |0       |\n|-448         |3        |4            |1       |\n|-448         |3        |4            |2       |\n|-448         |3        |4            |3       |\n|-448         |3        |4            |4       |\n|-448         |3        |4            |5       |\n|-448         |3        |4            |6       |\n|-448         |3        |4            |7       |\n|-448         |3        |4            |8       |\n|-448         |3        |4            |9       |\n|-448         |3        |4            |10      |\n|-448         |3        |4            |11      |\n|-448         |3        |4            |12      |\n|-448         |3        |4            |13      |\n|-448         |3        |4            |14      |\n|-448         |3        |4            |15      |\n|-448         |3        |4            |16      |\n|-448         |3        |4            |17      |\n|-448         |3        |4            |18      |\n|-448         |3        |4            |19      |\n|-448         |3        |4            |20      |\n|32           |4        |4            |0       |\n|32           |4        |4            |1       |\n|32           |4        |4            |2       |\n|32           |4        |4            |3       |\n|32           |4        |4            |4       |\n|32           |4        |4            |5       |\n|32           |4        |4            |6       |\n|32           |4        |4            |7       |\n|32           |4        |4            |8       |\n|32           |4        |4            |9       |\n|32           |4        |4            |10      |\n|32           |4        |4            |11      |\n|32           |4        |4            |12      |\n|32           |4        |4            |13      |\n|32           |4        |4            |14      |\n|32           |4        |4            |15      |\n|32           |4        |4            |16      |\n|32           |4        |4            |17      |\n|32           |4        |4            |18      |\n|32           |4        |4            |19      |\n|32           |4        |4            |20      |\n|-480         |3        |4            |0       |\n|-480         |3        |4            |1       |\n|-480         |3        |4            |2       |\n|-480         |3        |4            |3       |\n|-480         |3        |4            |4       |\n|-480         |3        |4            |5       |\n|-480         |3        |4            |6       |\n|-480         |3        |4            |7       |\n|-480         |3        |4            |8       |\n|-480         |3        |4            |9       |\n|-480         |3        |4            |10      |\n|-480         |3        |4            |11      |\n|-480         |3        |4            |12      |\n|-480         |3        |4            |13      |\n|-480         |3        |4            |14      |\n|-480         |3        |4            |15      |\n|-480         |3        |4            |16      |\n|-480         |3        |4            |17      |\n|-480         |3        |4            |18      |\n|-480         |3        |4            |19      |\n|-480         |3        |4            |20      |\n+-------------+---------+-------------+--------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1611086018142_1095780665",
+      "id": "20210119-145338_807097117",
+      "dateCreated": "2021-01-19 14:53:38.142",
+      "dateStarted": "2021-01-20 14:35:02.497",
+      "dateFinished": "2021-01-20 14:35:02.999",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "object ResultUDF extends Serializable {\n\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\n//case class s12IQu(scalarProduct:String,degreeSum:String,resultDivisor:String,rangeVal:String)\n//case class s12IRe(rangeVal:String,result:String)\n\ndef extendResult(qQuerry:s12IQu): s12IRe \u003d {\n  val scalar \u003d new BigDecimal(qQuerry.scalarProduct)\n  val degree \u003d qQuerry.degreeSum.toInt\n  val divisor \u003d new BigDecimal(qQuerry.resultDivisor)\n//  val index \u003d new BigDecimal(qQuerry.maxIndex)\n  val index \u003d new BigDecimal(qQuerry.rangeVal)\n  val indexPower \u003d index.pow(degree)\n  val scalarDiv \u003d scalar.divide(divisor)\n  val result \u003d indexPower.multiply(scalarDiv)\n  val s\u003d  s12IRe(index.toPlainString,result.toPlainString)\n  println(result+\"\\n\")\n  s\n}\n\ndef main(args:Array[String]) {\n    \nval df\u003d z.get(\"s12OQDF\").asInstanceOf[DataFrame]   //  very strange error if asInstanceOf[Dataset[]\nval dfCount\u003ddf.count()\ndf.show(dfCount.toInt,false)    \nspark.udf.register(\"eResult\", extendResult _)\n\nval ds: Dataset[s12IQu] \u003d df.as[s12IQu]\nval dsCount\u003dds.count()\nds.show(dsCount.toInt,false)\nval dss\u003dds.map{f \u003d\u003e extendResult(s12IQu(f.scalarProduct,f.degreeSum,f.resultDivisor,f.rangeVal)) }\nval dssCount\u003dds.count()\ndss.show(dsCount.toInt,false)\n\nz.put(\"extendResultDS\",dss)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-20 14:33:20.921",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ResultUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1611086017602_-428817939",
+      "id": "20210119-145337_1984612576",
+      "dateCreated": "2021-01-19 14:53:37.602",
+      "dateStarted": "2021-01-20 14:33:20.963",
+      "dateFinished": "2021-01-20 14:33:21.328",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "ResultUDF.main(null)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-20 14:35:21.199",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------+---------+-------------+--------+\n|scalarProduct|degreeSum|resultDivisor|rangeVal|\n+-------------+---------+-------------+--------+\n|-20160       |1        |4            |0       |\n|-20160       |1        |4            |1       |\n|-20160       |1        |4            |2       |\n|-20160       |1        |4            |3       |\n|-20160       |1        |4            |4       |\n|-20160       |1        |4            |5       |\n|-20160       |1        |4            |6       |\n|-20160       |1        |4            |7       |\n|-20160       |1        |4            |8       |\n|-20160       |1        |4            |9       |\n|-20160       |1        |4            |10      |\n|-20160       |1        |4            |11      |\n|-20160       |1        |4            |12      |\n|-20160       |1        |4            |13      |\n|-20160       |1        |4            |14      |\n|-20160       |1        |4            |15      |\n|-20160       |1        |4            |16      |\n|-20160       |1        |4            |17      |\n|-20160       |1        |4            |18      |\n|-20160       |1        |4            |19      |\n|-20160       |1        |4            |20      |\n|1344         |2        |4            |0       |\n|1344         |2        |4            |1       |\n|1344         |2        |4            |2       |\n|1344         |2        |4            |3       |\n|1344         |2        |4            |4       |\n|1344         |2        |4            |5       |\n|1344         |2        |4            |6       |\n|1344         |2        |4            |7       |\n|1344         |2        |4            |8       |\n|1344         |2        |4            |9       |\n|1344         |2        |4            |10      |\n|1344         |2        |4            |11      |\n|1344         |2        |4            |12      |\n|1344         |2        |4            |13      |\n|1344         |2        |4            |14      |\n|1344         |2        |4            |15      |\n|1344         |2        |4            |16      |\n|1344         |2        |4            |17      |\n|1344         |2        |4            |18      |\n|1344         |2        |4            |19      |\n|1344         |2        |4            |20      |\n|-96          |3        |4            |0       |\n|-96          |3        |4            |1       |\n|-96          |3        |4            |2       |\n|-96          |3        |4            |3       |\n|-96          |3        |4            |4       |\n|-96          |3        |4            |5       |\n|-96          |3        |4            |6       |\n|-96          |3        |4            |7       |\n|-96          |3        |4            |8       |\n|-96          |3        |4            |9       |\n|-96          |3        |4            |10      |\n|-96          |3        |4            |11      |\n|-96          |3        |4            |12      |\n|-96          |3        |4            |13      |\n|-96          |3        |4            |14      |\n|-96          |3        |4            |15      |\n|-96          |3        |4            |16      |\n|-96          |3        |4            |17      |\n|-96          |3        |4            |18      |\n|-96          |3        |4            |19      |\n|-96          |3        |4            |20      |\n|1440         |2        |4            |0       |\n|1440         |2        |4            |1       |\n|1440         |2        |4            |2       |\n|1440         |2        |4            |3       |\n|1440         |2        |4            |4       |\n|1440         |2        |4            |5       |\n|1440         |2        |4            |6       |\n|1440         |2        |4            |7       |\n|1440         |2        |4            |8       |\n|1440         |2        |4            |9       |\n|1440         |2        |4            |10      |\n|1440         |2        |4            |11      |\n|1440         |2        |4            |12      |\n|1440         |2        |4            |13      |\n|1440         |2        |4            |14      |\n|1440         |2        |4            |15      |\n|1440         |2        |4            |16      |\n|1440         |2        |4            |17      |\n|1440         |2        |4            |18      |\n|1440         |2        |4            |19      |\n|1440         |2        |4            |20      |\n|-26880       |1        |4            |0       |\n|-26880       |1        |4            |1       |\n|-26880       |1        |4            |2       |\n|-26880       |1        |4            |3       |\n|-26880       |1        |4            |4       |\n|-26880       |1        |4            |5       |\n|-26880       |1        |4            |6       |\n|-26880       |1        |4            |7       |\n|-26880       |1        |4            |8       |\n|-26880       |1        |4            |9       |\n|-26880       |1        |4            |10      |\n|-26880       |1        |4            |11      |\n|-26880       |1        |4            |12      |\n|-26880       |1        |4            |13      |\n|-26880       |1        |4            |14      |\n|-26880       |1        |4            |15      |\n|-26880       |1        |4            |16      |\n|-26880       |1        |4            |17      |\n|-26880       |1        |4            |18      |\n|-26880       |1        |4            |19      |\n|-26880       |1        |4            |20      |\n|1792         |2        |4            |0       |\n|1792         |2        |4            |1       |\n|1792         |2        |4            |2       |\n|1792         |2        |4            |3       |\n|1792         |2        |4            |4       |\n|1792         |2        |4            |5       |\n|1792         |2        |4            |6       |\n|1792         |2        |4            |7       |\n|1792         |2        |4            |8       |\n|1792         |2        |4            |9       |\n|1792         |2        |4            |10      |\n|1792         |2        |4            |11      |\n|1792         |2        |4            |12      |\n|1792         |2        |4            |13      |\n|1792         |2        |4            |14      |\n|1792         |2        |4            |15      |\n|1792         |2        |4            |16      |\n|1792         |2        |4            |17      |\n|1792         |2        |4            |18      |\n|1792         |2        |4            |19      |\n|1792         |2        |4            |20      |\n|-128         |3        |4            |0       |\n|-128         |3        |4            |1       |\n|-128         |3        |4            |2       |\n|-128         |3        |4            |3       |\n|-128         |3        |4            |4       |\n|-128         |3        |4            |5       |\n|-128         |3        |4            |6       |\n|-128         |3        |4            |7       |\n|-128         |3        |4            |8       |\n|-128         |3        |4            |9       |\n|-128         |3        |4            |10      |\n|-128         |3        |4            |11      |\n|-128         |3        |4            |12      |\n|-128         |3        |4            |13      |\n|-128         |3        |4            |14      |\n|-128         |3        |4            |15      |\n|-128         |3        |4            |16      |\n|-128         |3        |4            |17      |\n|-128         |3        |4            |18      |\n|-128         |3        |4            |19      |\n|-128         |3        |4            |20      |\n|1920         |2        |4            |0       |\n|1920         |2        |4            |1       |\n|1920         |2        |4            |2       |\n|1920         |2        |4            |3       |\n|1920         |2        |4            |4       |\n|1920         |2        |4            |5       |\n|1920         |2        |4            |6       |\n|1920         |2        |4            |7       |\n|1920         |2        |4            |8       |\n|1920         |2        |4            |9       |\n|1920         |2        |4            |10      |\n|1920         |2        |4            |11      |\n|1920         |2        |4            |12      |\n|1920         |2        |4            |13      |\n|1920         |2        |4            |14      |\n|1920         |2        |4            |15      |\n|1920         |2        |4            |16      |\n|1920         |2        |4            |17      |\n|1920         |2        |4            |18      |\n|1920         |2        |4            |19      |\n|1920         |2        |4            |20      |\n|80640        |0        |4            |0       |\n|80640        |0        |4            |1       |\n|80640        |0        |4            |2       |\n|80640        |0        |4            |3       |\n|80640        |0        |4            |4       |\n|80640        |0        |4            |5       |\n|80640        |0        |4            |6       |\n|80640        |0        |4            |7       |\n|80640        |0        |4            |8       |\n|80640        |0        |4            |9       |\n|80640        |0        |4            |10      |\n|80640        |0        |4            |11      |\n|80640        |0        |4            |12      |\n|80640        |0        |4            |13      |\n|80640        |0        |4            |14      |\n|80640        |0        |4            |15      |\n|80640        |0        |4            |16      |\n|80640        |0        |4            |17      |\n|80640        |0        |4            |18      |\n|80640        |0        |4            |19      |\n|80640        |0        |4            |20      |\n|-5376        |1        |4            |0       |\n|-5376        |1        |4            |1       |\n|-5376        |1        |4            |2       |\n|-5376        |1        |4            |3       |\n|-5376        |1        |4            |4       |\n|-5376        |1        |4            |5       |\n|-5376        |1        |4            |6       |\n|-5376        |1        |4            |7       |\n|-5376        |1        |4            |8       |\n|-5376        |1        |4            |9       |\n|-5376        |1        |4            |10      |\n|-5376        |1        |4            |11      |\n|-5376        |1        |4            |12      |\n|-5376        |1        |4            |13      |\n|-5376        |1        |4            |14      |\n|-5376        |1        |4            |15      |\n|-5376        |1        |4            |16      |\n|-5376        |1        |4            |17      |\n|-5376        |1        |4            |18      |\n|-5376        |1        |4            |19      |\n|-5376        |1        |4            |20      |\n|384          |2        |4            |0       |\n|384          |2        |4            |1       |\n|384          |2        |4            |2       |\n|384          |2        |4            |3       |\n|384          |2        |4            |4       |\n|384          |2        |4            |5       |\n|384          |2        |4            |6       |\n|384          |2        |4            |7       |\n|384          |2        |4            |8       |\n|384          |2        |4            |9       |\n|384          |2        |4            |10      |\n|384          |2        |4            |11      |\n|384          |2        |4            |12      |\n|384          |2        |4            |13      |\n|384          |2        |4            |14      |\n|384          |2        |4            |15      |\n|384          |2        |4            |16      |\n|384          |2        |4            |17      |\n|384          |2        |4            |18      |\n|384          |2        |4            |19      |\n|384          |2        |4            |20      |\n|-5760        |1        |4            |0       |\n|-5760        |1        |4            |1       |\n|-5760        |1        |4            |2       |\n|-5760        |1        |4            |3       |\n|-5760        |1        |4            |4       |\n|-5760        |1        |4            |5       |\n|-5760        |1        |4            |6       |\n|-5760        |1        |4            |7       |\n|-5760        |1        |4            |8       |\n|-5760        |1        |4            |9       |\n|-5760        |1        |4            |10      |\n|-5760        |1        |4            |11      |\n|-5760        |1        |4            |12      |\n|-5760        |1        |4            |13      |\n|-5760        |1        |4            |14      |\n|-5760        |1        |4            |15      |\n|-5760        |1        |4            |16      |\n|-5760        |1        |4            |17      |\n|-5760        |1        |4            |18      |\n|-5760        |1        |4            |19      |\n|-5760        |1        |4            |20      |\n|6720         |2        |4            |0       |\n|6720         |2        |4            |1       |\n|6720         |2        |4            |2       |\n|6720         |2        |4            |3       |\n|6720         |2        |4            |4       |\n|6720         |2        |4            |5       |\n|6720         |2        |4            |6       |\n|6720         |2        |4            |7       |\n|6720         |2        |4            |8       |\n|6720         |2        |4            |9       |\n|6720         |2        |4            |10      |\n|6720         |2        |4            |11      |\n|6720         |2        |4            |12      |\n|6720         |2        |4            |13      |\n|6720         |2        |4            |14      |\n|6720         |2        |4            |15      |\n|6720         |2        |4            |16      |\n|6720         |2        |4            |17      |\n|6720         |2        |4            |18      |\n|6720         |2        |4            |19      |\n|6720         |2        |4            |20      |\n|-448         |3        |4            |0       |\n|-448         |3        |4            |1       |\n|-448         |3        |4            |2       |\n|-448         |3        |4            |3       |\n|-448         |3        |4            |4       |\n|-448         |3        |4            |5       |\n|-448         |3        |4            |6       |\n|-448         |3        |4            |7       |\n|-448         |3        |4            |8       |\n|-448         |3        |4            |9       |\n|-448         |3        |4            |10      |\n|-448         |3        |4            |11      |\n|-448         |3        |4            |12      |\n|-448         |3        |4            |13      |\n|-448         |3        |4            |14      |\n|-448         |3        |4            |15      |\n|-448         |3        |4            |16      |\n|-448         |3        |4            |17      |\n|-448         |3        |4            |18      |\n|-448         |3        |4            |19      |\n|-448         |3        |4            |20      |\n|32           |4        |4            |0       |\n|32           |4        |4            |1       |\n|32           |4        |4            |2       |\n|32           |4        |4            |3       |\n|32           |4        |4            |4       |\n|32           |4        |4            |5       |\n|32           |4        |4            |6       |\n|32           |4        |4            |7       |\n|32           |4        |4            |8       |\n|32           |4        |4            |9       |\n|32           |4        |4            |10      |\n|32           |4        |4            |11      |\n|32           |4        |4            |12      |\n|32           |4        |4            |13      |\n|32           |4        |4            |14      |\n|32           |4        |4            |15      |\n|32           |4        |4            |16      |\n|32           |4        |4            |17      |\n|32           |4        |4            |18      |\n|32           |4        |4            |19      |\n|32           |4        |4            |20      |\n|-480         |3        |4            |0       |\n|-480         |3        |4            |1       |\n|-480         |3        |4            |2       |\n|-480         |3        |4            |3       |\n|-480         |3        |4            |4       |\n|-480         |3        |4            |5       |\n|-480         |3        |4            |6       |\n|-480         |3        |4            |7       |\n|-480         |3        |4            |8       |\n|-480         |3        |4            |9       |\n|-480         |3        |4            |10      |\n|-480         |3        |4            |11      |\n|-480         |3        |4            |12      |\n|-480         |3        |4            |13      |\n|-480         |3        |4            |14      |\n|-480         |3        |4            |15      |\n|-480         |3        |4            |16      |\n|-480         |3        |4            |17      |\n|-480         |3        |4            |18      |\n|-480         |3        |4            |19      |\n|-480         |3        |4            |20      |\n+-------------+---------+-------------+--------+\n\r\n+-------------+---------+-------------+--------+\n|scalarProduct|degreeSum|resultDivisor|rangeVal|\n+-------------+---------+-------------+--------+\n|-20160       |1        |4            |0       |\n|-20160       |1        |4            |1       |\n|-20160       |1        |4            |2       |\n|-20160       |1        |4            |3       |\n|-20160       |1        |4            |4       |\n|-20160       |1        |4            |5       |\n|-20160       |1        |4            |6       |\n|-20160       |1        |4            |7       |\n|-20160       |1        |4            |8       |\n|-20160       |1        |4            |9       |\n|-20160       |1        |4            |10      |\n|-20160       |1        |4            |11      |\n|-20160       |1        |4            |12      |\n|-20160       |1        |4            |13      |\n|-20160       |1        |4            |14      |\n|-20160       |1        |4            |15      |\n|-20160       |1        |4            |16      |\n|-20160       |1        |4            |17      |\n|-20160       |1        |4            |18      |\n|-20160       |1        |4            |19      |\n|-20160       |1        |4            |20      |\n|1344         |2        |4            |0       |\n|1344         |2        |4            |1       |\n|1344         |2        |4            |2       |\n|1344         |2        |4            |3       |\n|1344         |2        |4            |4       |\n|1344         |2        |4            |5       |\n|1344         |2        |4            |6       |\n|1344         |2        |4            |7       |\n|1344         |2        |4            |8       |\n|1344         |2        |4            |9       |\n|1344         |2        |4            |10      |\n|1344         |2        |4            |11      |\n|1344         |2        |4            |12      |\n|1344         |2        |4            |13      |\n|1344         |2        |4            |14      |\n|1344         |2        |4            |15      |\n|1344         |2        |4            |16      |\n|1344         |2        |4            |17      |\n|1344         |2        |4            |18      |\n|1344         |2        |4            |19      |\n|1344         |2        |4            |20      |\n|-96          |3        |4            |0       |\n|-96          |3        |4            |1       |\n|-96          |3        |4            |2       |\n|-96          |3        |4            |3       |\n|-96          |3        |4            |4       |\n|-96          |3        |4            |5       |\n|-96          |3        |4            |6       |\n|-96          |3        |4            |7       |\n|-96          |3        |4            |8       |\n|-96          |3        |4            |9       |\n|-96          |3        |4            |10      |\n|-96          |3        |4            |11      |\n|-96          |3        |4            |12      |\n|-96          |3        |4            |13      |\n|-96          |3        |4            |14      |\n|-96          |3        |4            |15      |\n|-96          |3        |4            |16      |\n|-96          |3        |4            |17      |\n|-96          |3        |4            |18      |\n|-96          |3        |4            |19      |\n|-96          |3        |4            |20      |\n|1440         |2        |4            |0       |\n|1440         |2        |4            |1       |\n|1440         |2        |4            |2       |\n|1440         |2        |4            |3       |\n|1440         |2        |4            |4       |\n|1440         |2        |4            |5       |\n|1440         |2        |4            |6       |\n|1440         |2        |4            |7       |\n|1440         |2        |4            |8       |\n|1440         |2        |4            |9       |\n|1440         |2        |4            |10      |\n|1440         |2        |4            |11      |\n|1440         |2        |4            |12      |\n|1440         |2        |4            |13      |\n|1440         |2        |4            |14      |\n|1440         |2        |4            |15      |\n|1440         |2        |4            |16      |\n|1440         |2        |4            |17      |\n|1440         |2        |4            |18      |\n|1440         |2        |4            |19      |\n|1440         |2        |4            |20      |\n|-26880       |1        |4            |0       |\n|-26880       |1        |4            |1       |\n|-26880       |1        |4            |2       |\n|-26880       |1        |4            |3       |\n|-26880       |1        |4            |4       |\n|-26880       |1        |4            |5       |\n|-26880       |1        |4            |6       |\n|-26880       |1        |4            |7       |\n|-26880       |1        |4            |8       |\n|-26880       |1        |4            |9       |\n|-26880       |1        |4            |10      |\n|-26880       |1        |4            |11      |\n|-26880       |1        |4            |12      |\n|-26880       |1        |4            |13      |\n|-26880       |1        |4            |14      |\n|-26880       |1        |4            |15      |\n|-26880       |1        |4            |16      |\n|-26880       |1        |4            |17      |\n|-26880       |1        |4            |18      |\n|-26880       |1        |4            |19      |\n|-26880       |1        |4            |20      |\n|1792         |2        |4            |0       |\n|1792         |2        |4            |1       |\n|1792         |2        |4            |2       |\n|1792         |2        |4            |3       |\n|1792         |2        |4            |4       |\n|1792         |2        |4            |5       |\n|1792         |2        |4            |6       |\n|1792         |2        |4            |7       |\n|1792         |2        |4            |8       |\n|1792         |2        |4            |9       |\n|1792         |2        |4            |10      |\n|1792         |2        |4            |11      |\n|1792         |2        |4            |12      |\n|1792         |2        |4            |13      |\n|1792         |2        |4            |14      |\n|1792         |2        |4            |15      |\n|1792         |2        |4            |16      |\n|1792         |2        |4            |17      |\n|1792         |2        |4            |18      |\n|1792         |2        |4            |19      |\n|1792         |2        |4            |20      |\n|-128         |3        |4            |0       |\n|-128         |3        |4            |1       |\n|-128         |3        |4            |2       |\n|-128         |3        |4            |3       |\n|-128         |3        |4            |4       |\n|-128         |3        |4            |5       |\n|-128         |3        |4            |6       |\n|-128         |3        |4            |7       |\n|-128         |3        |4            |8       |\n|-128         |3        |4            |9       |\n|-128         |3        |4            |10      |\n|-128         |3        |4            |11      |\n|-128         |3        |4            |12      |\n|-128         |3        |4            |13      |\n|-128         |3        |4            |14      |\n|-128         |3        |4            |15      |\n|-128         |3        |4            |16      |\n|-128         |3        |4            |17      |\n|-128         |3        |4            |18      |\n|-128         |3        |4            |19      |\n|-128         |3        |4            |20      |\n|1920         |2        |4            |0       |\n|1920         |2        |4            |1       |\n|1920         |2        |4            |2       |\n|1920         |2        |4            |3       |\n|1920         |2        |4            |4       |\n|1920         |2        |4            |5       |\n|1920         |2        |4            |6       |\n|1920         |2        |4            |7       |\n|1920         |2        |4            |8       |\n|1920         |2        |4            |9       |\n|1920         |2        |4            |10      |\n|1920         |2        |4            |11      |\n|1920         |2        |4            |12      |\n|1920         |2        |4            |13      |\n|1920         |2        |4            |14      |\n|1920         |2        |4            |15      |\n|1920         |2        |4            |16      |\n|1920         |2        |4            |17      |\n|1920         |2        |4            |18      |\n|1920         |2        |4            |19      |\n|1920         |2        |4            |20      |\n|80640        |0        |4            |0       |\n|80640        |0        |4            |1       |\n|80640        |0        |4            |2       |\n|80640        |0        |4            |3       |\n|80640        |0        |4            |4       |\n|80640        |0        |4            |5       |\n|80640        |0        |4            |6       |\n|80640        |0        |4            |7       |\n|80640        |0        |4            |8       |\n|80640        |0        |4            |9       |\n|80640        |0        |4            |10      |\n|80640        |0        |4            |11      |\n|80640        |0        |4            |12      |\n|80640        |0        |4            |13      |\n|80640        |0        |4            |14      |\n|80640        |0        |4            |15      |\n|80640        |0        |4            |16      |\n|80640        |0        |4            |17      |\n|80640        |0        |4            |18      |\n|80640        |0        |4            |19      |\n|80640        |0        |4            |20      |\n|-5376        |1        |4            |0       |\n|-5376        |1        |4            |1       |\n|-5376        |1        |4            |2       |\n|-5376        |1        |4            |3       |\n|-5376        |1        |4            |4       |\n|-5376        |1        |4            |5       |\n|-5376        |1        |4            |6       |\n|-5376        |1        |4            |7       |\n|-5376        |1        |4            |8       |\n|-5376        |1        |4            |9       |\n|-5376        |1        |4            |10      |\n|-5376        |1        |4            |11      |\n|-5376        |1        |4            |12      |\n|-5376        |1        |4            |13      |\n|-5376        |1        |4            |14      |\n|-5376        |1        |4            |15      |\n|-5376        |1        |4            |16      |\n|-5376        |1        |4            |17      |\n|-5376        |1        |4            |18      |\n|-5376        |1        |4            |19      |\n|-5376        |1        |4            |20      |\n|384          |2        |4            |0       |\n|384          |2        |4            |1       |\n|384          |2        |4            |2       |\n|384          |2        |4            |3       |\n|384          |2        |4            |4       |\n|384          |2        |4            |5       |\n|384          |2        |4            |6       |\n|384          |2        |4            |7       |\n|384          |2        |4            |8       |\n|384          |2        |4            |9       |\n|384          |2        |4            |10      |\n|384          |2        |4            |11      |\n|384          |2        |4            |12      |\n|384          |2        |4            |13      |\n|384          |2        |4            |14      |\n|384          |2        |4            |15      |\n|384          |2        |4            |16      |\n|384          |2        |4            |17      |\n|384          |2        |4            |18      |\n|384          |2        |4            |19      |\n|384          |2        |4            |20      |\n|-5760        |1        |4            |0       |\n|-5760        |1        |4            |1       |\n|-5760        |1        |4            |2       |\n|-5760        |1        |4            |3       |\n|-5760        |1        |4            |4       |\n|-5760        |1        |4            |5       |\n|-5760        |1        |4            |6       |\n|-5760        |1        |4            |7       |\n|-5760        |1        |4            |8       |\n|-5760        |1        |4            |9       |\n|-5760        |1        |4            |10      |\n|-5760        |1        |4            |11      |\n|-5760        |1        |4            |12      |\n|-5760        |1        |4            |13      |\n|-5760        |1        |4            |14      |\n|-5760        |1        |4            |15      |\n|-5760        |1        |4            |16      |\n|-5760        |1        |4            |17      |\n|-5760        |1        |4            |18      |\n|-5760        |1        |4            |19      |\n|-5760        |1        |4            |20      |\n|6720         |2        |4            |0       |\n|6720         |2        |4            |1       |\n|6720         |2        |4            |2       |\n|6720         |2        |4            |3       |\n|6720         |2        |4            |4       |\n|6720         |2        |4            |5       |\n|6720         |2        |4            |6       |\n|6720         |2        |4            |7       |\n|6720         |2        |4            |8       |\n|6720         |2        |4            |9       |\n|6720         |2        |4            |10      |\n|6720         |2        |4            |11      |\n|6720         |2        |4            |12      |\n|6720         |2        |4            |13      |\n|6720         |2        |4            |14      |\n|6720         |2        |4            |15      |\n|6720         |2        |4            |16      |\n|6720         |2        |4            |17      |\n|6720         |2        |4            |18      |\n|6720         |2        |4            |19      |\n|6720         |2        |4            |20      |\n|-448         |3        |4            |0       |\n|-448         |3        |4            |1       |\n|-448         |3        |4            |2       |\n|-448         |3        |4            |3       |\n|-448         |3        |4            |4       |\n|-448         |3        |4            |5       |\n|-448         |3        |4            |6       |\n|-448         |3        |4            |7       |\n|-448         |3        |4            |8       |\n|-448         |3        |4            |9       |\n|-448         |3        |4            |10      |\n|-448         |3        |4            |11      |\n|-448         |3        |4            |12      |\n|-448         |3        |4            |13      |\n|-448         |3        |4            |14      |\n|-448         |3        |4            |15      |\n|-448         |3        |4            |16      |\n|-448         |3        |4            |17      |\n|-448         |3        |4            |18      |\n|-448         |3        |4            |19      |\n|-448         |3        |4            |20      |\n|32           |4        |4            |0       |\n|32           |4        |4            |1       |\n|32           |4        |4            |2       |\n|32           |4        |4            |3       |\n|32           |4        |4            |4       |\n|32           |4        |4            |5       |\n|32           |4        |4            |6       |\n|32           |4        |4            |7       |\n|32           |4        |4            |8       |\n|32           |4        |4            |9       |\n|32           |4        |4            |10      |\n|32           |4        |4            |11      |\n|32           |4        |4            |12      |\n|32           |4        |4            |13      |\n|32           |4        |4            |14      |\n|32           |4        |4            |15      |\n|32           |4        |4            |16      |\n|32           |4        |4            |17      |\n|32           |4        |4            |18      |\n|32           |4        |4            |19      |\n|32           |4        |4            |20      |\n|-480         |3        |4            |0       |\n|-480         |3        |4            |1       |\n|-480         |3        |4            |2       |\n|-480         |3        |4            |3       |\n|-480         |3        |4            |4       |\n|-480         |3        |4            |5       |\n|-480         |3        |4            |6       |\n|-480         |3        |4            |7       |\n|-480         |3        |4            |8       |\n|-480         |3        |4            |9       |\n|-480         |3        |4            |10      |\n|-480         |3        |4            |11      |\n|-480         |3        |4            |12      |\n|-480         |3        |4            |13      |\n|-480         |3        |4            |14      |\n|-480         |3        |4            |15      |\n|-480         |3        |4            |16      |\n|-480         |3        |4            |17      |\n|-480         |3        |4            |18      |\n|-480         |3        |4            |19      |\n|-480         |3        |4            |20      |\n+-------------+---------+-------------+--------+\n\r\n+--------+-------+\n|rangeVal|result |\n+--------+-------+\n|0       |0      |\n|1       |-5040  |\n|2       |-10080 |\n|3       |-15120 |\n|4       |-20160 |\n|5       |-25200 |\n|6       |-30240 |\n|7       |-35280 |\n|8       |-40320 |\n|9       |-45360 |\n|10      |-50400 |\n|11      |-55440 |\n|12      |-60480 |\n|13      |-65520 |\n|14      |-70560 |\n|15      |-75600 |\n|16      |-80640 |\n|17      |-85680 |\n|18      |-90720 |\n|19      |-95760 |\n|20      |-100800|\n|0       |0      |\n|1       |336    |\n|2       |1344   |\n|3       |3024   |\n|4       |5376   |\n|5       |8400   |\n|6       |12096  |\n|7       |16464  |\n|8       |21504  |\n|9       |27216  |\n|10      |33600  |\n|11      |40656  |\n|12      |48384  |\n|13      |56784  |\n|14      |65856  |\n|15      |75600  |\n|16      |86016  |\n|17      |97104  |\n|18      |108864 |\n|19      |121296 |\n|20      |134400 |\n|0       |0      |\n|1       |-24    |\n|2       |-192   |\n|3       |-648   |\n|4       |-1536  |\n|5       |-3000  |\n|6       |-5184  |\n|7       |-8232  |\n|8       |-12288 |\n|9       |-17496 |\n|10      |-24000 |\n|11      |-31944 |\n|12      |-41472 |\n|13      |-52728 |\n|14      |-65856 |\n|15      |-81000 |\n|16      |-98304 |\n|17      |-117912|\n|18      |-139968|\n|19      |-164616|\n|20      |-192000|\n|0       |0      |\n|1       |360    |\n|2       |1440   |\n|3       |3240   |\n|4       |5760   |\n|5       |9000   |\n|6       |12960  |\n|7       |17640  |\n|8       |23040  |\n|9       |29160  |\n|10      |36000  |\n|11      |43560  |\n|12      |51840  |\n|13      |60840  |\n|14      |70560  |\n|15      |81000  |\n|16      |92160  |\n|17      |104040 |\n|18      |116640 |\n|19      |129960 |\n|20      |144000 |\n|0       |0      |\n|1       |-6720  |\n|2       |-13440 |\n|3       |-20160 |\n|4       |-26880 |\n|5       |-33600 |\n|6       |-40320 |\n|7       |-47040 |\n|8       |-53760 |\n|9       |-60480 |\n|10      |-67200 |\n|11      |-73920 |\n|12      |-80640 |\n|13      |-87360 |\n|14      |-94080 |\n|15      |-100800|\n|16      |-107520|\n|17      |-114240|\n|18      |-120960|\n|19      |-127680|\n|20      |-134400|\n|0       |0      |\n|1       |448    |\n|2       |1792   |\n|3       |4032   |\n|4       |7168   |\n|5       |11200  |\n|6       |16128  |\n|7       |21952  |\n|8       |28672  |\n|9       |36288  |\n|10      |44800  |\n|11      |54208  |\n|12      |64512  |\n|13      |75712  |\n|14      |87808  |\n|15      |100800 |\n|16      |114688 |\n|17      |129472 |\n|18      |145152 |\n|19      |161728 |\n|20      |179200 |\n|0       |0      |\n|1       |-32    |\n|2       |-256   |\n|3       |-864   |\n|4       |-2048  |\n|5       |-4000  |\n|6       |-6912  |\n|7       |-10976 |\n|8       |-16384 |\n|9       |-23328 |\n|10      |-32000 |\n|11      |-42592 |\n|12      |-55296 |\n|13      |-70304 |\n|14      |-87808 |\n|15      |-108000|\n|16      |-131072|\n|17      |-157216|\n|18      |-186624|\n|19      |-219488|\n|20      |-256000|\n|0       |0      |\n|1       |480    |\n|2       |1920   |\n|3       |4320   |\n|4       |7680   |\n|5       |12000  |\n|6       |17280  |\n|7       |23520  |\n|8       |30720  |\n|9       |38880  |\n|10      |48000  |\n|11      |58080  |\n|12      |69120  |\n|13      |81120  |\n|14      |94080  |\n|15      |108000 |\n|16      |122880 |\n|17      |138720 |\n|18      |155520 |\n|19      |173280 |\n|20      |192000 |\n|0       |20160  |\n|1       |20160  |\n|2       |20160  |\n|3       |20160  |\n|4       |20160  |\n|5       |20160  |\n|6       |20160  |\n|7       |20160  |\n|8       |20160  |\n|9       |20160  |\n|10      |20160  |\n|11      |20160  |\n|12      |20160  |\n|13      |20160  |\n|14      |20160  |\n|15      |20160  |\n|16      |20160  |\n|17      |20160  |\n|18      |20160  |\n|19      |20160  |\n|20      |20160  |\n|0       |0      |\n|1       |-1344  |\n|2       |-2688  |\n|3       |-4032  |\n|4       |-5376  |\n|5       |-6720  |\n|6       |-8064  |\n|7       |-9408  |\n|8       |-10752 |\n|9       |-12096 |\n|10      |-13440 |\n|11      |-14784 |\n|12      |-16128 |\n|13      |-17472 |\n|14      |-18816 |\n|15      |-20160 |\n|16      |-21504 |\n|17      |-22848 |\n|18      |-24192 |\n|19      |-25536 |\n|20      |-26880 |\n|0       |0      |\n|1       |96     |\n|2       |384    |\n|3       |864    |\n|4       |1536   |\n|5       |2400   |\n|6       |3456   |\n|7       |4704   |\n|8       |6144   |\n|9       |7776   |\n|10      |9600   |\n|11      |11616  |\n|12      |13824  |\n|13      |16224  |\n|14      |18816  |\n|15      |21600  |\n|16      |24576  |\n|17      |27744  |\n|18      |31104  |\n|19      |34656  |\n|20      |38400  |\n|0       |0      |\n|1       |-1440  |\n|2       |-2880  |\n|3       |-4320  |\n|4       |-5760  |\n|5       |-7200  |\n|6       |-8640  |\n|7       |-10080 |\n|8       |-11520 |\n|9       |-12960 |\n|10      |-14400 |\n|11      |-15840 |\n|12      |-17280 |\n|13      |-18720 |\n|14      |-20160 |\n|15      |-21600 |\n|16      |-23040 |\n|17      |-24480 |\n|18      |-25920 |\n|19      |-27360 |\n|20      |-28800 |\n|0       |0      |\n|1       |1680   |\n|2       |6720   |\n|3       |15120  |\n|4       |26880  |\n|5       |42000  |\n|6       |60480  |\n|7       |82320  |\n|8       |107520 |\n|9       |136080 |\n|10      |168000 |\n|11      |203280 |\n|12      |241920 |\n|13      |283920 |\n|14      |329280 |\n|15      |378000 |\n|16      |430080 |\n|17      |485520 |\n|18      |544320 |\n|19      |606480 |\n|20      |672000 |\n|0       |0      |\n|1       |-112   |\n|2       |-896   |\n|3       |-3024  |\n|4       |-7168  |\n|5       |-14000 |\n|6       |-24192 |\n|7       |-38416 |\n|8       |-57344 |\n|9       |-81648 |\n|10      |-112000|\n|11      |-149072|\n|12      |-193536|\n|13      |-246064|\n|14      |-307328|\n|15      |-378000|\n|16      |-458752|\n|17      |-550256|\n|18      |-653184|\n|19      |-768208|\n|20      |-896000|\n|0       |0      |\n|1       |8      |\n|2       |128    |\n|3       |648    |\n|4       |2048   |\n|5       |5000   |\n|6       |10368  |\n|7       |19208  |\n|8       |32768  |\n|9       |52488  |\n|10      |80000  |\n|11      |117128 |\n|12      |165888 |\n|13      |228488 |\n|14      |307328 |\n|15      |405000 |\n|16      |524288 |\n|17      |668168 |\n|18      |839808 |\n|19      |1042568|\n|20      |1280000|\n|0       |0      |\n|1       |-120   |\n|2       |-960   |\n|3       |-3240  |\n|4       |-7680  |\n|5       |-15000 |\n|6       |-25920 |\n|7       |-41160 |\n|8       |-61440 |\n|9       |-87480 |\n|10      |-120000|\n|11      |-159720|\n|12      |-207360|\n|13      |-263640|\n|14      |-329280|\n|15      |-405000|\n|16      |-491520|\n|17      |-589560|\n|18      |-699840|\n|19      |-823080|\n|20      |-960000|\n+--------+-------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1611086016971_-1065516733",
+      "id": "20210119-145336_769869018",
+      "dateCreated": "2021-01-19 14:53:36.971",
+      "dateStarted": "2021-01-20 14:35:21.227",
+      "dateFinished": "2021-01-20 14:35:22.029",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.sql.{Encoder, Encoders}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\n//case class s12IRe(rangeVal:String,result:String)\n\nobject GroupedIndexRowsSum extends Aggregator[s12IRe, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  def reduce(buffer: indexSum, s3TR: s12IRe): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.result)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n  def finish(reduction: indexSum): String \u003d reduction.iSum\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n}\n\nval ds\u003d z.get(\"extendResultDS\").asInstanceOf[Dataset[s12IRe]]\nval extendResultDSCoun\u003dds.count()\nval indexResult \u003d GroupedIndexRowsSum.toColumn.name(\"index_Result\")\nval kDS\u003d ds.groupByKey(x\u003d\u003e(x.rangeVal.toInt,1))                    \n   .agg(indexResult)\n   .orderBy(asc(\"key\"))\nval kdsCount\u003dkDS.count()\nkDS.show(kdsCount.toInt,false)\nval iResult \u003d ds.select(indexResult)\niResult.show()\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-20 14:35:47.225",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------+------------+\n|key   |index_Result|\n+------+------------+\n|[0,1] |20160       |\n|[1,1] |8736        |\n|[2,1] |2496        |\n|[3,1] |0           |\n|[4,1] |0           |\n|[5,1] |1440        |\n|[6,1] |3456        |\n|[7,1] |5376        |\n|[8,1] |6720        |\n|[9,1] |7200        |\n|[10,1]|6720        |\n|[11,1]|5376        |\n|[12,1]|3456        |\n|[13,1]|1440        |\n|[14,1]|0           |\n|[15,1]|0           |\n|[16,1]|2496        |\n|[17,1]|8736        |\n|[18,1]|20160       |\n|[19,1]|38400       |\n|[20,1]|65280       |\n+------+------------+\n\r\n+------------+\n|index_Result|\n+------------+\n|      207648|\n+------------+\n\r\nimport org.apache.spark.sql.{Encoder, Encoders}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\nimport org.apache.spark.sql.types.DecimalType\r\ndefined object GroupedIndexRowsSum\r\nds: org.apache.spark.sql.Dataset[s12IRe] \u003d [rangeVal: string, result: string]\r\nextendResultDSCoun: Long \u003d 336\r\nindexResult: org.apache.spark.sql.TypedColumn[s12IRe,String] \u003d groupedindexrowssum() AS `index_Result`\r\nkDS: org.apache.spark.sql.Dataset[((Int, Int), String)] \u003d [key: struct\u003c_1: int, _2: int\u003e, index_Result: string]\r\nkdsCount: Long \u003d 21\r\niResult: org.apache.spark.sql.Dataset[String] \u003d [index_Result: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1611154994581_183939797",
+      "id": "20210120-100314_1604523990",
+      "dateCreated": "2021-01-20 10:03:14.581",
+      "dateStarted": "2021-01-20 14:35:47.244",
+      "dateFinished": "2021-01-20 14:35:50.373",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1611154993613_-744512469",
+      "id": "20210120-100313_1982002529",
+      "dateCreated": "2021-01-20 10:03:13.613",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1611154991785_1755991833",
+      "id": "20210120-100311_1097311472",
+      "dateCreated": "2021-01-20 10:03:11.785",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1611086015885_1642599475",
+      "id": "20210119-145335_950691327",
+      "dateCreated": "2021-01-19 14:53:35.885",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "s12Inital TwoPolynomial product. ",
+      "text": "object QuerryS12Initial {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nval s3 \u003d new DFScripts \n \ndef s12InitialQuery(rLow:String,rHigh:String,nMax:String,d1:String,tC:String):ArrayBuffer[s12IQu] \u003d {\n\nval terms \u003d new ArrayBuffer[s12IQu]()\n  \nval s12RS \u003d s3.s12Initial(rLow,rHigh,nMax,d1,d1,d1,tC)  \nwhile (s12RS.next()) {\nterms +\u003d s12IQu(s12RS.getString(1),s12RS.getString(2),s12RS.getString(3),s12RS.getString(4),s12RS.getString(5),s12RS.getString(6),s12RS.getString(7),s12RS.getString(8),s12RS.getString(9),s12RS.getString(10),s12RS.getString(11),s12RS.getString(12),s12RS.getString(13),s12RS.getString(14),s12RS.getString(15),\"4\")\n}\nterms\n}\n\ndef main(args:Array[String]) {\n\nval terms \u003d new ArrayBuffer[ArrayBuffer[s12IQu]]()\nval nMax \u003d \"8\"                                 \nfor(a \u003c- 1 to 1; n \u003c- 5 to 5;b \u003c- 1 to (n-2)) {\n     terms +\u003d s12InitialQuery(n.toString,n.toString,nMax,BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(b).toString)\n}\n\nval mainTermss\u003dterms.flatMap(_.toList)\n\nval df \u003d spark.createDataFrame(mainTermss)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(\"s12DF\",df)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-19 14:53:33.784",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\nwarning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\ndefined object QuerryS12Initial\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723374544_1738586487",
+      "id": "20210115-100934_1504068378",
+      "dateCreated": "2021-01-15 10:09:34.544",
+      "dateStarted": "2021-01-15 13:30:25.674",
+      "dateFinished": "2021-01-15 13:30:26.624",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "QuerryS12Initial.main(null)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-15 13:30:31.610",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n+---+----+---+-------+--------+---------+--------+------+--------+--------+--------+--------+---------+-------------+-------------+--------------+\n|N  |MaxN|pD |vTwoSeq|vDivisor|vvDivisor|vvTwoSeq|p2Eval|TTScalar|AAScalar|TTDegree|AADegree|degreeSum|scalarProduct|resultDivisor|writeDimension|\n+---+----+---+-------+--------+---------+--------+------+--------+--------+--------+--------+---------+-------------+-------------+--------------+\n|5  |8   |1  |2      |2       |2        |0       |99    |60      |0       |0       |0       |0        |60           |2            |4             |\n|5  |8   |1  |2      |2       |2        |0       |99    |2       |0       |2       |0       |2        |2            |2            |4             |\n|5  |8   |1  |2      |2       |2        |0       |99    |-12     |0       |1       |0       |1        |-12          |2            |4             |\n|5  |8   |1  |2      |2       |2        |0       |99    |-10     |0       |1       |0       |1        |-10          |2            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |42      |0       |0       |0        |1764         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |-7      |0       |1       |1        |-294         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |1       |0       |2       |2        |42           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |-6      |0       |1       |1        |-252         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |56      |0       |0       |0        |2352         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |1       |0       |2       |2        |42           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |-8      |0       |1       |1        |-336         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |-7      |0       |1       |1        |-294         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |42      |6       |0       |0       |0        |252          |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |42      |1       |0       |1        |-252         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |-7      |1       |1       |2        |42           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |1       |1       |2       |3        |-6           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |-6      |1       |1       |2        |36           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |56      |1       |0       |1        |-336         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |1       |1       |2       |3        |-6           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |-8      |1       |1       |2        |48           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |-7      |1       |1       |2        |42           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-6      |6       |1       |0       |1        |-36          |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |42      |1       |0       |1        |-294         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |-7      |1       |1       |2        |49           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |1       |1       |2       |3        |-7           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |-6      |1       |1       |2        |42           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |56      |1       |0       |1        |-392         |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |1       |1       |2       |3        |-7           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |-8      |1       |1       |2        |56           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |-7      |1       |1       |2        |49           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |-7      |6       |1       |0       |1        |-42          |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |42      |2       |0       |2        |42           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |-7      |2       |1       |3        |-7           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |1       |2       |2       |4        |1            |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |-6      |2       |1       |3        |-6           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |56      |2       |0       |2        |56           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |1       |2       |2       |4        |1            |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |-8      |2       |1       |3        |-8           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |-7      |2       |1       |3        |-7           |4            |4             |\n|5  |8   |1  |4      |2       |2        |1       |4     |1       |6       |2       |0       |2        |6            |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |1       |-14     |2       |1       |3        |-14          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |1       |2       |2       |2       |4        |2            |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |1       |112     |2       |0       |2        |112          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |1       |-16     |2       |1       |3        |-16          |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |-5      |2       |1       |3        |-5           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |1       |2       |2       |4        |1            |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |30      |2       |0       |2        |30           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |-6      |2       |1       |3        |-6           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |-7      |2       |1       |3        |-7           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |1       |2       |2       |4        |1            |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |42      |2       |0       |2        |42           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |-6      |2       |1       |3        |-6           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |1       |8       |2       |0       |2        |8            |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-7      |-14     |1       |1       |2        |98           |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-7      |2       |1       |2       |3        |-14          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-7      |112     |1       |0       |1        |-784         |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-7      |-16     |1       |1       |2        |112          |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |-5      |1       |1       |2        |35           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |1       |1       |2       |3        |-7           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |30      |1       |0       |1        |-210         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |-6      |1       |1       |2        |42           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |-7      |1       |1       |2        |49           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |1       |1       |2       |3        |-7           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |42      |1       |0       |1        |-294         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |-6      |1       |1       |2        |42           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-7      |8       |1       |0       |1        |-56          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |56      |-14     |0       |1       |1        |-784         |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |56      |2       |0       |2       |2        |112          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |56      |112     |0       |0       |0        |6272         |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |56      |-16     |0       |1       |1        |-896         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |-5      |0       |1       |1        |-280         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |1       |0       |2       |2        |56           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |30      |0       |0       |0        |1680         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |-6      |0       |1       |1        |-336         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |-7      |0       |1       |1        |-392         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |1       |0       |2       |2        |56           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |42      |0       |0       |0        |2352         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |-6      |0       |1       |1        |-336         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |56      |8       |0       |0       |0        |448          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-8      |-14     |1       |1       |2        |112          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-8      |2       |1       |2       |3        |-16          |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-8      |112     |1       |0       |1        |-896         |4            |4             |\n|5  |8   |1  |8      |2       |2        |2       |8     |-8      |-16     |1       |1       |2        |128          |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |-5      |1       |1       |2        |40           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |1       |1       |2       |3        |-8           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |30      |1       |0       |1        |-240         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |-6      |1       |1       |2        |48           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |-7      |1       |1       |2        |56           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |1       |1       |2       |3        |-8           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |42      |1       |0       |1        |-336         |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |-6      |1       |1       |2        |48           |4            |4             |\n|5  |8   |1  |8      |2       |2        |1       |8     |-8      |8       |1       |0       |1        |-64          |4            |4             |\n+---+----+---+-------+--------+---------+--------+------+--------+--------+--------+--------+---------+-------------+-------------+--------------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723373984_557402342",
+      "id": "20210115-100933_131396469",
+      "dateCreated": "2021-01-15 10:09:33.984",
+      "dateStarted": "2021-01-15 13:30:31.648",
+      "dateFinished": "2021-01-15 13:30:36.657",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723373430_1812599152",
+      "id": "20210115-100933_1328002803",
+      "dateCreated": "2021-01-15 10:09:33.430",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723372878_807437944",
+      "id": "20210115-100932_834509292",
+      "dateCreated": "2021-01-15 10:09:32.878",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723372327_-924737765",
+      "id": "20210115-100932_1694951526",
+      "dateCreated": "2021-01-15 10:09:32.327",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723371774_-55217474",
+      "id": "20210115-100931_761919029",
+      "dateCreated": "2021-01-15 10:09:31.774",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723371225_903521075",
+      "id": "20210115-100931_304746868",
+      "dateCreated": "2021-01-15 10:09:31.225",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610723370535_-74476777",
+      "id": "20210115-100930_1575746509",
+      "dateCreated": "2021-01-15 10:09:30.535",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "object QuerryS3ARC {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nval s3 \u003d new DFScripts \n\ndef s3ARCQuery(rLow:String,rHigh:String,nMax:String,d1:String,tC:Int):ArrayBuffer[s3AQu] \u003d {\n\nval terms \u003d new ArrayBuffer[s3AQu]()\n//val s3 \u003d new DFScripts  \nval s3RS \u003d s3.s3ARC(rLow,rHigh,nMax,d1,tC)      //  public ResultSet s3ARC(String rangeLow, String rangeHigh, String nMax, String dimension1, int rCounter)\nwhile (s3RS.next()) {\nterms +\u003d s3AQu(d1,s3RS.getString(1),s3RS.getString(2),s3RS.getString(5),s3RS.getString(4),s3RS.getString(3))\n}\nterms\n}\n\ndef main(args:Array[String]) {\n\n//type TTupple \u003d Tuple2[ArrayBuffer[s3TQu],BigDecimal]\nval terms \u003d new ArrayBuffer[ArrayBuffer[s3AQu]]()\nval nMax \u003d \"8\"                                 \nfor(a \u003c- 3 to 3; n \u003c- 5 to 5;b \u003c- (n-2) to (n-2)) {\n     terms +\u003d s3ARCQuery(n.toString,n.toString,nMax,BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(b).toInt)\n}\n\nval mainTermss\u003dterms.flatMap(_.toList)\n\nval df \u003d spark.createDataFrame(mainTermss)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(\"s12DF\",df)\n}\n}\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-15 10:10:58.578",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object QuerryS3ARC\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610475884248_-214600336",
+      "id": "20210112-132444_4286077",
+      "dateCreated": "2021-01-12 13:24:44.248",
+      "dateStarted": "2021-01-15 10:10:58.597",
+      "dateFinished": "2021-01-15 10:10:59.340",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "QuerryS3ARC.main(null)\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-12 16:53:10.166",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\n+---------+------+------+-----+--------+-------+\n|dimension|Degree|scalar|index|maxIndex|divisor|\n+---------+------+------+-----+--------+-------+\n|8        |0     |10752 |5    |8       |4      |\n|8        |2     |1226  |5    |8       |4      |\n|8        |3     |-114  |5    |8       |4      |\n|8        |4     |4     |5    |8       |4      |\n|8        |1     |-5904 |5    |8       |4      |\n+---------+------+------+-----+--------+-------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610475886782_1012293513",
+      "id": "20210112-132446_1892330226",
+      "dateCreated": "2021-01-12 13:24:46.782",
+      "dateStarted": "2021-01-12 16:53:10.181",
+      "dateFinished": "2021-01-12 16:53:12.804",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-12 13:41:28.689",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610475888737_903344429",
+      "id": "20210112-132448_1179875300",
+      "dateCreated": "2021-01-12 13:24:48.737",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-12 13:41:25.283",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610475892164_-1784148505",
+      "id": "20210112-132452_2080307566",
+      "dateCreated": "2021-01-12 13:24:52.164",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\nMatch (n)\nReturn count(n)\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-12 11:49:41.547",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "count(n)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "count(n)\n119410\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610470153814_2002202425",
+      "id": "20210112-114913_420173624",
+      "dateCreated": "2021-01-12 11:49:13.814",
+      "dateStarted": "2021-01-12 11:49:41.147",
+      "dateFinished": "2021-01-12 11:49:41.266",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval n \u003d \"abc\"\nprintlin(val) \n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-12 11:50:27.479",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003cconsole\u003e:2: error: illegal start of simple expression\r\nprintlin(val)\r\n         ^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610470181136_730105371",
+      "id": "20210112-114941_1550320343",
+      "dateCreated": "2021-01-12 11:49:41.136",
+      "dateStarted": "2021-01-12 11:50:27.503",
+      "dateFinished": "2021-01-12 11:50:36.877",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-12 11:50:27.482",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610470227479_1272272317",
+      "id": "20210112-115027_1960915009",
+      "dateCreated": "2021-01-12 11:50:27.479",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphicM",
+  "id": "2FXPVR7HZ",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

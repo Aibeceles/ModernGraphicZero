@@ -1,0 +1,446 @@
+{
+  "paragraphs": [
+    {
+      "title": "DividendS",
+      "text": "// MATCH and COLLECT the map of terms.\n\nUNWIND range(8,8) AS n                       \nWITH toString(n) AS N, \u002730\u0027 as nMax,\u002732\u0027 as dimension,32 as rowCounter      \nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:N,MaxN:nMax,Dimension:dimension,RowCounter:rowCounter})-[]-\u003e(e:Evaluate) \nWITH {TermList:Collect({Scalar:apoc.number.exact.div(v.Scalar,vI.divisor),Degree:v.Degree,Divisor:vI.divisor})} AS tLDividend,dimension,i\nWITH tLDividend.TermList as tLtL,tLDividend,dimension,i\n\n//  List comprehend and concatinate with above a map  a list of zero terms whenever range not in degree\n\nUNWIND tLtL as tLtLU\nWITH COLLECT(tLtLU.Degree) as degreeList,tLDividend,i\nWITH [x IN range(0,16) WHERE NOT (toString(x) IN degreeList) | {Scalar:\u00270\u0027,Degree:toString(x),Divisor:\u00271\u0027} ] AS zeroScalar,tLDividend,i\nWITH zeroScalar+tLDividend.TermList AS theDividend,i\n\n// Sort the map rows and collect individual term fields. \n\nUNWIND theDividend as tDividendU\nWITH {Scalar:tDividendU.Scalar,Degree:tDividendU.Degree,Divisor:tDividendU.Divisor} AS tDiv,i ORDER BY toInteger(tDividendU.Degree) DESC\nWITH COLLECT(tDiv.Scalar) AS tSca,COLLECT(tDiv.Degree) AS tDeg,COLLECT(tDiv.Divisor) AS tDiv,i\n\n// Construct List for determining index of highest term.\n\nWITH tSca,tDeg,tDiv,SIZE(tSca) AS tDivSize,i\nWITH [x IN range(0,16) WHERE NOT (tSca[x]\u003d\u00270\u0027 ) | x ] AS sIndexList,tDiv,tSca,tDeg,tDivSize,i\n//Return sIndexList\n\n// Determin index of highest term.\n\nUNWIND sIndexList as sIU\nWITH min(sIU) as indxHghstTerm,tDiv,tSca,tDeg,tDivSize,i\n//RETURN gDivisor,tDiv\n\n// Write p, p meta data to node.\n\nCREATE (c:NextDividend {Scalar:tSca,Degree:tDeg,Divisor:tDiv,ScalarO:tSca,DegreeO:tDeg,DivisorO:tDiv,ScalarSize:tDivSize, ScalarOSize:tDivSize,IndxHghstTerm:indxHghstTerm})\nMERGE (i) -[:PDivide]-\u003e(c)\nRETURN id(c)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-16 14:32:26.317",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id(c)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "id(c)\n2475297\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1590064424547_758464752",
+      "id": "20200521-083344_1965965857",
+      "dateCreated": "2020-05-21 08:33:44.548",
+      "dateStarted": "2020-06-16 14:32:26.523",
+      "dateFinished": "2020-06-16 14:32:27.180",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "DivisorS",
+      "text": "UNWIND range(5,5) AS n                       \nWITH toString(n) AS N, \u002730\u0027 as nMax,\u002716\u0027 as dimension, 2475297 as idD      //32 as rowCounter,   \nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedByArgument {N:N,MaxN:nMax,Dimension:dimension})-[]-\u003e(e:Evaluate) \nWITH {TermList:Collect({Scalar:apoc.number.exact.div(v.Scalar,vI.divisor),Degree:v.Degree,Divisor:vI.divisor})} AS tLDividend,dimension,i,idD\nWITH tLDividend.TermList as tLtL,tLDividend,dimension,idD\n\n//  List comprehend and concatinate with above a map  a list of zero terms whenever range not in degree\n\nUNWIND tLtL as tLtLU\nWITH COLLECT(tLtLU.Degree) as degreeList,tLDividend,idD\nWITH [x IN range(0,16) WHERE NOT (toString(x) IN degreeList) | {Scalar:\u00270\u0027,Degree:toString(x),Divisor:\u00271\u0027} ] AS zeroScalar,tLDividend,idD\nWITH zeroScalar+tLDividend.TermList AS theDividend,idD\n\n// Sort the map rows and collect individual term fields. \n\nUNWIND theDividend as tDividendU\nWITH {Scalar:tDividendU.Scalar,Degree:tDividendU.Degree,Divisor:tDividendU.Divisor} AS tDiv,idD ORDER BY toInteger(tDividendU.Degree) DESC\nWITH COLLECT(tDiv.Scalar) AS tSca,COLLECT(tDiv.Degree) AS tDeg,COLLECT(tDiv.Divisor) AS tDiv,idD  \n\n// Construct List for determining index of highest term.\n\nWITH tSca,tDeg,tDiv,SIZE(tSca) AS tDivSize,idD\nWITH [x IN range(0,16) WHERE NOT (tSca[x]\u003d\u00270\u0027 ) | x ] AS sIndexList,tDiv,tSca,tDeg,tDivSize,idD,COLLECT(\u00270\u0027) AS rDegree, COLLECT(\u00271\u0027) AS rScalar\n//Return sIndexList\n\n// Determin index of highest term.\n\nUNWIND sIndexList as sIU\nWITH min(sIU) as indxHghstTerm,tDiv,tSca,tDeg,tDivSize,idD, rScalar,rDegree      //, COLLECT(\u00270\u0027) AS rDegree, COLLECT(\u00271\u0027) AS rDivisor\n//RETURN indxHghstTerm,tDiv,tSca,tDeg,tDivSize,idD,rScalar,rDegree,rDivisor\n\n// Write p, p meta data to node.\n\nMATCH (d:NextDividend) WHERE id(d)\u003didD\nCREATE (c:NextDivisor {Scalar:tSca,Degree:tDeg,Divisor:tDiv,ScalarSize:tDivSize,IndxHghstTerm:indxHghstTerm,RScalar: rScalar,RDegree:rDegree })\nMERGE (d) -[:PDivide]-\u003e(c)\nRETURN id(c)  \n\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-16 14:36:54.094",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id(c)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "id(c)\n2475298\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1591365319651_974660118",
+      "id": "20200605-095519_942548997",
+      "dateCreated": "2020-06-05 09:55:19.653",
+      "dateStarted": "2020-06-16 14:36:54.213",
+      "dateFinished": "2020-06-16 14:36:54.821",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "DivisionS",
+      "text": "\nMATCH (nDividend:NextDividend) WHERE ID(nDividend)\u003d2475273\nWITH nDividend\nMATCH (nDivisor:NextDivisor) WHERE  ID(nDivisor)\u003d2475298\nWITH nDividend.Scalar AS scalar,nDividend.Degree AS degree,nDividend.Divisor AS divisor,nDividend.ScalarO AS scalarO,nDividend.DegreeO AS degreeO,nDividend.DivisorO AS divisorO,\n     nDividend.ScalarOSize AS scalarOSize ,nDividend.ScalarSize AS scalarSize ,nDividend.IndxHghstTerm AS indxHghstTerm, \n     nDivisor.Scalar AS scalarN, nDivisor.Degree AS degreeN, nDivisor.Divisor AS divisorN, nDivisor.ScalarSize AS scalarSizeN, nDivisor.IndxHghstTerm AS indxHghstTermN,nDivisor,nDividend as nD\n\nWITH scalar,degree,divisor,scalarO,degreeO,divisorO,scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nDivisor,nD\n\n//RETURN indxHghstTerm,indxHghstTermN\n//UNWIND RANGE(0,scalarSize-1) as indx\n//RETURN scalar[indx],degree[indx],scalarN[indx],degreeN[indx]\n//RETURN scalar[indxHghstTerm],scalarN[indHghstTermN]\n\nWITH apoc.number.exact.div(scalar[indxHghstTerm],scalarN[indxHghstTermN]) AS rScalar, apoc.number.exact.sub(degree[indxHghstTerm],degreeN[indxHghstTermN]) AS rDegree,scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nDivisor,nD    \n\n//UNWIND RANGE(0,scalarSizeN-1) AS indx //RETURN scalarN[indx],rScalar    Good to here.\n\nWITH [x IN RANGE(0,scalarSizeN-1) | {Scalar:CASE WHEN scalarN[x]\u003d\u00270\u0027 THEN \u00270\u0027 ELSE apoc.number.exact.mul(scalarN[x],rScalar) END, \n                                     Degree:CASE WHEN scalarN[x]\u003d\u00270\u0027 THEN degreeN[x] ELSE  apoc.number.exact.add(degreeN[x],rDegree) END ,Divisor:\u00271\u0027} ] AS termsForSub,\n                                     scalar,degree,divisor,scalarO,degreeO,divisorO,scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,\n                                     COLLECT(rScalar) AS rScalarC,COLLECT(rDegree) AS rDegreeC,nD,nDivisor,rScalar,rDegree \n//return indxHghstTermN,Size(termsForSub),indxHghstTerm\n//UNWIND RANGE(0,scalarSizeN-1) AS indx //RETURN termsForSub[indx].Scalar,termsForSub[indx].Degree,rScalar,rDegree\n\nSET nDivisor.RScalar \u003d nDivisor.RScalar+rScalarC, nDivisor.RDegree\u003dnDivisor.RDegree+rDegreeC    \n\n//UNWIND RANGE(indxHghstTermN+1,SIZE(termsForSub)-1) AS x //return x,(x-indxHghstTermN-1)+(indxHghstTerm+1) ,scalar[(x-indxHghstTermN-1)+(indxHghstTerm+1)],termsForSub[x].Scalar,degree[x]\n\nWITH [x IN RANGE(indxHghstTermN+1,SIZE(termsForSub)-1) | {Scalar:apoc.number.exact.sub(scalar[(x-indxHghstTermN-1)+(indxHghstTerm+1)],termsForSub[x].Scalar),Degree:degree[(x-indxHghstTermN-1)+(indxHghstTerm+1)],Divisor:\u00271\u0027}] as sbtractedTerms,scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nD\n\n//UNWIND RANGE(0,scalarSizeN-1) AS indx //RETURN sbtractedTerms[indx].Scalar,sbtractedTerms[indx].Degree\n\nWITH scalar,degree,divisor,scalarO,degreeO,divisorO,scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,sbtractedTerms,indxHghstTerm+(scalarSizeN-indxHghstTermN) as nextTermIndex,nD   \n//Return nextTermIndex\n            \nWITH {Scalar:scalarO[nextTermIndex], Degree:degreeO[nextTermIndex ], Divisor:divisorO[nextTermIndex ]} AS nextTerm,sbtractedTerms,scalarO,degreeO,divisorO,scalarOSize, nextTermIndex+1\u003escalarOSize AS lastDivision,nD           \nWITH COLLECT(nextTerm) AS nextTermC,sbtractedTerms,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD,nextTerm.Degree AS nTDegree\n//RETURN sbtractedTerms\n\nWITH sbtractedTerms + nextTermC as nextDividend  ,sbtractedTerms,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD,nTDegree\n//UNWIND RANGE(0,SIZE(nextDividend)-1) AS indx //RETURN nextDividend[indx].Scalar,nextDividend[indx].Degree\n//RETURN nextDividend,SIZE(nextDividend),lastDivision,nD\n\nUNWIND nextDividend AS nDU //RETURN nDU.Scalar,nDU.Degree,nDU.Divisor\nWITH COLLECT(nDU.Degree) AS tDeg ,nextDividend,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD,SIZE(nextDividend) AS nDividendSize,CASE WHEN nTDegree IS Null THEN 0 ELSE nTDegree END AS nTDegree\nWITH [x IN RANGE(toInteger(nTDegree),scalarOSize-1) WHERE NOT (toString(x) IN tDeg) | {Scalar:\u00270\u0027,Degree:toString(x),Divisor:\u00271\u0027} ] AS zeroScalar,\n     nextDividend,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD, nDividendSize,nTDegree     \nWITH zeroScalar+nextDividend as theDividend,nDividendSize,nTDegree,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD                                                \n//RETURN SIZE(sIndexList)\n\nUNWIND theDividend AS tDividendU\nWITH {Scalar:tDividendU.Scalar,Degree:tDividendU.Degree,Divisor:tDividendU.Divisor} AS tDiv,nDividendSize,nTDegree,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD ORDER BY toInteger(tDividendU.Degree) DESC\nWITH COLLECT(tDiv.Scalar) AS tSca,COLLECT(tDiv.Degree) AS tDeg,COLLECT(tDiv.Divisor) AS tDiv,nDividendSize,nTDegree,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n//RETURN tSca,tDeg,tDiv       \n                           \nWITH tSca,tDeg,tDiv,SIZE(tSca) AS tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\nWITH [x IN range(0,tDivSize-1) WHERE NOT (tSca[x]\u003d\u00270\u0027 ) | x ] AS sIndexList,tDiv,tSca,tDeg,tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n//Return sIndexList\n\nUNWIND sIndexList as sIU\nWITH min(sIU) as indxHghstTerm,tDiv,tSca,tDeg,tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n//RETURN indxHghstTerm,tDiv,tSca,tDeg,tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n\nCREATE (c:NextDividend {Scalar:tSca,Degree:tDeg,Divisor:tDiv,ScalarO:scalarO,DegreeO:degreeO,DivisorO:divisorO, ScalarSize:tDivSize, ScalarOSize:scalarOSize,IndxHghstTerm:indxHghstTerm})\nMERGE (nD) -[:PDivide]-\u003e(c)\nRETURN id(nD),id(c),lastDivision\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-16 14:45:27.983",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id(nD)": "string",
+                      "id(c)": "string",
+                      "lastDivision": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "id(nD)\tid(c)\tlastDivision\n2475273\t2475274\tTRUE\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1592246246699_-1249252431",
+      "id": "20200615-143726_474075450",
+      "dateCreated": "2020-06-15 14:37:26.702",
+      "dateStarted": "2020-06-16 14:45:28.058",
+      "dateFinished": "2020-06-16 14:45:28.403",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "DivisionS\u0027 Match by ID()",
+      "text": "MATCH (nDividend:NextDividend) - [:PDivide] -\u003e (nDivisor:NextDivisor) WHERE ID(nDividend)\u003d2475238 AND ID(nDivisor)\u003d2475236 \nWITH nDividend.Scalar AS scalar,nDividend.Degree AS degree,nDividend.Divisor AS divisor,nDividend.ScalarO AS scalarO,nDividend.DegreeO AS degreeO,nDividend.DivisorO AS divisorO,\n     nDividend.ScalarOSize AS scalarOSize ,nDividend.ScalarSize AS scalarSize ,nDividend.IndxHghstTerm AS indxHghstTerm, \n     nDivisor.Scalar AS scalarN, nDivisor.Degree AS degreeN, nDivisor.Divisor AS divisorN, nDivisor.ScalarSize AS scalarSizeN, nDivisor.IndxHghstTerm AS indxHghstTermN,nDivisor,nDividend as nD\n\nWITH scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm, \n     scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nDivisor,nD",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-12 08:45:10.350",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1591880854136_24278670",
+      "id": "20200611-090734_2022558740",
+      "dateCreated": "2020-06-11 09:07:34.139",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (nDividend:NextDividend),(nDivisor:NextDivisor) WHERE ID(nDividend)\u003d2475238 AND ID(nDivisor)\u003d2475236 \nWITH nDividend.Scalar AS scalar,nDividend.Degree AS degree,nDividend.Divisor AS divisor,nDividend.ScalarO AS scalarO,nDividend.DegreeO AS degreeO,nDividend.DivisorO AS divisorO,\n     nDividend.ScalarOSize AS scalarOSize ,nDividend.ScalarSize AS scalarSize ,nDividend.IndxHghstTerm AS indxHghstTerm, \n     nDivisor.Scalar AS scalarN, nDivisor.Degree AS degreeN, nDivisor.Divisor AS divisorN, nDivisor.ScalarSize AS scalarSizeN, nDivisor.IndxHghstTerm AS indxHghstTermN,nDivisor,nDividend as nD\n\nRETURN scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm, \n     scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nDivisor,nD",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-12 09:02:04.550",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1591966899866_1102844932",
+      "id": "20200612-090139_833738755",
+      "dateCreated": "2020-06-12 09:01:39.906",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH   p\u003d()\u003c-[]-(nDividend:NextDividend) - [:PDivide] -\u003e (nDivisor:NextDivisor) WHERE ID(nDividend)\u003d2475236\nUNWIND NODES(p) AS pU\nreturn pU",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-15 15:13:06.329",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1591894450056_396864499",
+      "id": "20200611-125410_1793697971",
+      "dateCreated": "2020-06-11 12:54:10.068",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Delete NDN",
+      "text": "UNWIND range(10,10) AS n                       \nWITH toString(n) AS N, \u002730\u0027 as nMax,\u002732\u0027 as dimension,32 as rowCounter      \n//MATCH (i:IndexedBy {N:N,MaxN:nMax,Dimension:dimension,RowCounter:rowCounter})-[:PDivide]-\u003e(c:NextDividendNode)\nMATCH (c:NextDividendNode)\nDETACH DELETE c\nRETURN COUNT(c)",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-05 14:41:33.302",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "COUNT(c)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "COUNT(c)\n1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1591379339460_2005999886",
+      "id": "20200605-134859_1742573605",
+      "dateCreated": "2020-06-05 13:48:59.487",
+      "dateStarted": "2020-06-05 14:41:33.384",
+      "dateFinished": "2020-06-05 14:41:33.527",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "DivisionS OLD",
+      "text": "MATCH (nDividend:NextDividend) - [:PDivide] -\u003e (nDivisor:NextDivisor) WHERE ID(nDividend)\u003d2475236 AND ID(nDivisor)\u003d2475237 \nWITH nDividend.Scalar AS scalar,nDividend.Degree AS degree,nDividend.Divisor AS divisor,nDividend.ScalarO AS scalarO,nDividend.DegreeO AS degreeO,nDividend.DivisorO AS divisorO,\n     nDividend.ScalarOSize AS scalarOSize ,nDividend.ScalarSize AS scalarSize ,nDividend.IndxHghstTerm AS indxHghstTerm, \n     nDivisor.Scalar AS scalarN, nDivisor.Degree AS degreeN, nDivisor.Divisor AS divisorN, nDivisor.ScalarSize AS scalarSizeN, nDivisor.IndxHghstTerm AS indxHghstTermN,nDivisor,nDividend as nD\n\nWITH scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm, \n     scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nDivisor,nD\n\nWITH apoc.number.exact.div(scalar[indxHghstTerm],scalarN[indxHghstTermN]) AS rScalar, apoc.number.exact.sub(degree[indxHghstTerm],degreeN[indxHghstTermN]) AS rDegree,scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nDivisor,nD    \n\nWITH [x IN RANGE(0,scalarSizeN-1) | {Scalar:CASE WHEN scalarN[x]\u003d\u00270\u0027 THEN \u00270\u0027 ELSE apoc.number.exact.mul(scalarN[x],rScalar) END, Degree:CASE WHEN scalarN[x]\u003d\u00270\u0027 THEN degreeN[x] ELSE  apoc.number.exact.add(degreeN[x],rDegree) END ,Divisor:\u00271\u0027} ] AS termsForSub,\n     scalar,degree,divisor,scalarO,degreeO,divisorO,scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,COLLECT(rScalar) AS rScalarC,COLLECT(rDegree) AS rDegreeC,nD,nDivisor \n\nSET nDivisor.RScalar \u003d nDivisor.RScalar+rScalarC, nDivisor.RDegree\u003dnDivisor.RDegree+rDegreeC\n\nWITH [x IN RANGE(1,SIZE(termsForSub)-1) | {Scalar:apoc.number.exact.sub(scalar[x],termsForSub[x].Scalar),Degree:degree[x],Divisor:\u00271\u0027}] as sbtractedTerms,scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,nD \n\nWITH scalar,degree,divisor,scalarO,degreeO,divisorO,\n     scalarOSize,scalarSize,indxHghstTerm,scalarN,degreeN,divisorN,scalarSizeN,indxHghstTermN,sbtractedTerms,indxHghstTerm+(scalarSizeN-indxHghstTermN) as nextTermIndex,nD   \n                      \nWITH {Scalar:scalarO[nextTermIndex + 1], Degree:degreeO[nextTermIndex + 1], Divisor:divisorO[nextTermIndex + 1]} AS nextTerm,sbtractedTerms,scalarO,degreeO,divisorO,scalarOSize, nextTermIndex+1\u003escalarOSize AS lastDivision,nD           \nWITH sbtractedTerms + nextTerm as nextDividend,nextTerm,sbtractedTerms,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n\n//RETURN nextDividend,SIZE(nextDividend),lastDivision,nD\n\nUNWIND nextDividend AS nDU\n//RETURN nDU.Scalar,nDU.Degree,nDU.Divisor\nWITH COLLECT(nDU.Scalar) AS tSca,COLLECT(nDU.Degree) AS tDeg,COLLECT(nDU.Divisor) AS tDiv,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n\nWITH tSca,tDeg,tDiv, SIZE(tSca) AS tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\nWITH [x IN range(0,tDivSize-1) WHERE NOT (toFloat(tSca[x])\u003d0.0) | x ] AS sIndexList,tDiv,tSca,tDeg,tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD,COLLECT(tDivSize) as tDivSizeC\nWITH sIndexList+tDivSizeC as sIndexList,tDiv,tSca,tDeg,tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n\n//RETURN SIZE(sIndexList)\n\nUNWIND sIndexList as sIU\nWITH  CASE WHEN SIZE(sIndexList)\u003d0 THEN 0 ELSE min(sIU) END as indxHghstTerm,tDiv,tSca,tDeg,tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n\n//RETURN indxHghstTerm,tDiv,tSca,tDeg,tDivSize,scalarO,degreeO,divisorO,scalarOSize,lastDivision,nD\n\nCREATE (c:NextDividend {Scalar:tSca,Degree:tDeg,Divisor:tDiv,ScalarO:tSca,DegreeO:tDeg,DivisorO:tDiv, ScalarSize:tDivSize, ScalarOSize:scalarOSize,IndxHghstTerm:indxHghstTerm})\nMERGE (nD) -[:PDivide]-\u003e(c)\nRETURN id(nD),id(c),lastDivision",
+      "user": "anonymous",
+      "dateUpdated": "2020-06-15 15:11:30.637",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id(nD)": "string",
+                      "id(c)": "string",
+                      "lastDivision": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true,
+        "tableHide": true,
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "id(nD)\tid(c)\tlastDivision\n2475236\t2475238\tFALSE\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1591731017411_2053438980",
+      "id": "20200609-153017_1018445280",
+      "dateCreated": "2020-06-09 15:30:17.412",
+      "dateStarted": "2020-06-12 09:21:49.654",
+      "dateFinished": "2020-06-12 09:21:51.515",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1591365324416_-554368813",
+      "id": "20200605-095524_556675293",
+      "dateCreated": "2020-06-05 09:55:24.416",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Division",
+  "id": "2FAJMXSGB",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "neo4j:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

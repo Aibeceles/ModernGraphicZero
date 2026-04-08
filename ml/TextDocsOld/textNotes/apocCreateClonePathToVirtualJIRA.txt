@@ -1,0 +1,33 @@
+https://github.com/neo4j-contrib/neo4j-apoc-procedures/blob/4.4/core/src/main/java/apoc/create/Create.java
+
+The apoc.create.clonePathToVirtual function as it appears in apoc.jar:
+
+
+    @Procedure
+    @Description("apoc.create.clonePathToVirtual")
+    public Stream<PathResult> clonePathToVirtual(@Name("path") Path path) {
+        return Stream.of(createVirtualPath(path));
+    }
+
+
+    private PathResult createVirtualPath(Path path) {
+        final Iterable<Relationship> relationships = path.relationships();
+        final Node first = path.startNode();
+        VirtualPath virtualPath = new VirtualPath(new VirtualNode(first, Iterables.asList(first.getPropertyKeys())));
+        for (Relationship rel : relationships) {
+            VirtualNode start = VirtualNode.from(rel.getStartNode());
+            VirtualNode end = VirtualNode.from(rel.getEndNode());
+            virtualPath.addRel(VirtualRelationship.from(start, end, rel));
+        }
+        return new PathResult(virtualPath);
+    }
+
+It seems to take a path argument and returns a virtual path composed 
+of virtual nodes with a redundant first node of origonal path argument???
+
+This function is not recognised by the browser.
+
+CREATE p=(:A {a:1})-[:r {b:2}]->(:B {c:3})
+RETURN apoc.create.clonePathToVirtual(p)
+
+Unknown function 'apoc.create.clonePathToVirtual' (line 2, column 8 (offset: 33))

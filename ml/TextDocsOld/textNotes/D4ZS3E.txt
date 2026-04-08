@@ -1,0 +1,1501 @@
+
+
+2/26
+
+D2 modernization:
+
+D2 .csv pattern evolved into the D* three script system.
+The D* script system currently can not be applied to D2. 
+
+Need a modified script 1 to write D2 .csv pattern into the 
+D* script comprehension.
+
+Modified Script 1 will:
+
+  .Read the Load.csv pattern.
+  .Write a D2 coded pattern featuring no argument relationships.
+
+Not so the above.
+D4,8,16 S3E is True.   Evaluates correctly.
+
+ZS3 tasked to D4.
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8',tft:32})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8',tft:32})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,
+                                      ATwoSeq:aN.ATwoSeq,ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+                                      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                   
+      ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}                                                            
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE toFloat(aPTdsU.ADegree)+toFloat(aPTdsU.TDegree) END,         
+    ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN         //*************************//
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:CASE WHEN maxDivisor/rDivisor > 1 THEN apoc.number.exact.mul(a.acc,toString(maxDivisor/rDivisor)) ELSE a.acc END}),DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM    ,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   //  The nMax to the N...  should not be here very expensive implement alternative
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+
+//  Thinkith D4 second script is obsolete.  ScalarProduct maybe null
+
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8')-[:Arguments]->(aN:ArgumentsNode)    //,tft:32}
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8')-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,
+                                      ATwoSeq:aN.ATwoSeq,ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+                                      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+
+
+RETURN aPTdsU.TDegree:,aPTdsU.TScalar:,aPTdsU.TDivisor:,aPTdsU.ADivisor,aPTdsU.ATwoSeq,aPTdsU.ADegree,aPTdsU.AScalar,aPTdsU.ScalarProduct,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+
+
+
+
+RETURN aPTdsU.ScalarProduct,   TScalar      aPTdsU.TDegree,   ,aPTdsU.ADegree   ,aPTdsU.ResultDivisor,aPafe,apD
+
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                   
+      ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}                                                        //This toFloat must be refactored.                                                        
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE toFloat(aPTdsU.ADegree)+toFloat(aPTdsU.TDegree) END,      //This toFloat must be refactored.              
+    ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN         //*************************//
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:CASE WHEN maxDivisor/rDivisor > 1 THEN apoc.number.exact.mul(a.acc,toString(maxDivisor/rDivisor)) ELSE a.acc END}),DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM    ,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   //  The nMax to the N...  should not be here very expensive implement alternative
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+
+RETURN v.Degree,apoc.number.exact.add(TTScalar,"0"),p1.Divisor,p2.Divisor,p2.T,vv.Degree,apoc.number.exact.add(AAScalar,"0"),TTScalar,AAScalar,p1.Divisor,p2.Divisor,pD
+
+
+
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                               TScalar:apoc.number.exact.add(TTScalar,"0"),
+                                               TDivisor:p1.Divisor,
+                                               ADivisor:p2.Divisor,
+                                               ATwoSeq:toInteger(p2.T),        //  Surviving integer type
+                                               ADegree:toInteger(vv.Degree),   //  Surviving integer type
+                                               AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                               ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                               ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) 
+                     where i.N="9" AND i.MaxN="10" AND i.Dimension="2" 
+WITH i.N as iN, i.MaxN as iM,e,v,t                        
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii)
+                    where ii.MaxN="10"  AND ii.Dimension="2"
+WITH iN,iM,e,v,vv,t,tt,ee
+RETURN iN,iM,e.Value,v.Vertex,v.Degree,v.Scalar,vv.Vertex,vv.Degree,vv.Scalar,t.twoSeq,tt.twoSeq,ee.value                                                     e,v,vv,t,tt,ee
+
+CREATE (p:ProductArgsNode {Divisor:t.twoSeq,Dimension:"2"})         
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq}] - (p)                           
+ Set p.Divisor = 2 )
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq}] - (p) 
+Set p.Divisor = 4   
+CREATE (p) - [:ProductRelationA {T:tt.twoSeq, Eval:ee.Value}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"4",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+return i,p,v,vv
+
+
+
+
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+RETURN v.Degree,apoc.number.exact.add(TTScalar,"0"),p1.Divisor,p2.Divisor,p2.T,vv.Degree,apoc.number.exact.add(AAScalar,"0"),TTScalar,AAScalar,p1.Divisor,p2.Divisor,pD
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                               TScalar:apoc.number.exact.add(TTScalar,"0"),
+                                               TDivisor:p1.Divisor,
+                                               ADivisor:p2.Divisor,
+                                               ATwoSeq:toInteger(p2.T),        //  Surviving integer type
+                                               ADegree:toInteger(vv.Degree),   //  Surviving integer type
+                                               AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                               ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                               ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+delete ProductArgNode Dimension=2 
+collectedProductArgNode Dimension=4
+
+
+//   always want to know is the p1 variable across seperate FOREACH all good.
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) 
+                     where i.N="4" AND i.MaxN="10" AND i.Dimension="2" 
+WITH i.N as iN, i.MaxN as iM,e,v,t                        
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii)
+                    where ii.MaxN="10"  AND ii.Dimension="2"
+WITH iN,iM,e,v,vv,t,tt,ee
+//RETURN iN,iM,e.Value,v.Vertex,v.Degree,v.Scalar,vv.Vertex,vv.Degree,vv.Scalar,toString(t.twoSeq),tt.twoSeq,ee.Value
+
+CREATE (p:ProductArgsNode {Divisor:t.twoSeq,Dimension:"2"})         
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p1:ProductRelationT {T:t.twoSeq}] - (p)                           
+ Set p.Divisor = 2 )
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p0:ProductRelationT {T:t.twoSeq}] - (p) 
+Set p.Divisor = 4   
+CREATE (p) - [p2:ProductRelationA {T:tt.twoSeq, Eval:ee.Value}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"4",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+
+return i.N,i.Dimension,i.MaxN,i.RowCounter,p.Divisor,p.Dimension,p1.T,p0.T,p2.T,p2.Eval,v,vv
+
+
+
+
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) 
+                     where i.N="2" AND i.MaxN="10" AND i.Dimension="2" 
+WITH i.N as iN, i.MaxN as iM,e,v,t                        
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii)
+                    where ii.MaxN="10"  AND ii.Dimension="2"
+WITH iN,iM,e,v,vv,t,tt,ee
+//RETURN iN,iM,e.Value,v.Vertex,v.Degree,v.Scalar,vv.Vertex,vv.Degree,vv.Scalar,toString(t.twoSeq),tt.twoSeq,ee.Value
+
+CREATE (p:ProductArgsNode {Divisor:t.twoSeq,Dimension:"2"})         
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq}] - (p)                           
+ Set p.Divisor = 2 )
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq}] - (p) 
+Set p.Divisor = 4   
+CREATE (p) - [p2:ProductRelationA {T:tt.twoSeq, Eval:ee.Value}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"4",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+RETURN p,v,vv,i,e
+
+return i.N,i.Dimension,i.MaxN,i.RowCounter,p.Divisor,p.Dimension,p1.T,p2.T,p2.Eval,v,vv
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+RETURN v.Degree,apoc.number.exact.add(TTScalar,"0"),p1.Divisor,p2.Divisor,p2.T,vv.Degree,apoc.number.exact.add(AAScalar,"0"),TTScalar,AAScalar,p1.Divisor,p2.Divisor,pD
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                               TScalar:apoc.number.exact.add(TTScalar,"0"),
+                                               TDivisor:p1.Divisor,
+                                               ADivisor:p2.Divisor,
+                                               ATwoSeq:toInteger(p2.T),        //  Surviving integer type
+                                               ADegree:toInteger(vv.Degree),   //  Surviving integer type
+                                               AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                               ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                               ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+
+
+
+MERGE (i:IndexedBy {N:iN,RowCounter:eTrm,MaxN:iM,Dimension:"8"} )  
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:VertexIndexedBy {twoSeq:eTrm, divisor:pTD}]->(v)
+
+
+MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:"8"} )  
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:VertexIndexedBy {twoSeq:"99", divisor:Divisor}]->(v)
+
+
+
+
+MATCH (v:VertexNode)<-[vI:VertexIndexedBy]-(i:IndexedBy)-[]->(e:Evaluate)          
+                     where i.N="9" AND i.MaxN="10" AND i.Dimension="8"
+WITH i.N as iN, i.MaxN as iM,e,v,vI,i                        
+OPTIONAL MATCH (vv:VertexNode)<-[vII:VertexIndexedBy]-(ii:IndexedByArgument)-[]->(ee:Evaluate {Value:toString(vI.twoSeq)})      
+                    where ii.MaxN="10"  AND ii.Dimension="8"
+WITH iN,iM,e,v,vv,ee,vI,vII
+//return iN,iM,e,v,vv,ee,vI,vII
+CREATE (p:ProductArgsNode {Divisor:vI.twoSeq,Dimension:"8"}) 
+FOREACH(snoreMe IN CASE  WHEN vv.Degree IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:vI.twoSeq,Divisor:vI.divisor}] - (p) )                                                      
+FOREACH(snoreMe IN CASE  WHEN vv.Degree IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:vI.twoSeq,Divisor:vI.divisor}] - (p)    
+CREATE (p) - [:ProductRelationA {T:vII.twoSeq, Eval:ee.Value,Divisor:vII.divisor}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"8",MaxN:iM,RowCounter:vI.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+RETURN i,p,v,vv,ee,vI,vII
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+RETURN v.Degree,apoc.number.exact.add(TTScalar,"0"),p1.Divisor,p2.Divisor,p2.T,vv.Degree,apoc.number.exact.add(AAScalar,"0"),TTScalar,AAScalar,p1.Divisor,p2.Divisor,pD
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                               TScalar:apoc.number.exact.add(TTScalar,"0"),
+                                               TDivisor:p1.Divisor,
+                                               ADivisor:p2.Divisor,
+                                               ATwoSeq:toInteger(p2.T),        //  Surviving integer type
+                                               ADegree:toInteger(vv.Degree),   //  Surviving integer type
+                                               AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                               ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                               ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+
+
+
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+
+
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode { TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN apoc.number.exact.add(v.Degree,"1") ELSE apoc.number.exact.add(v.Degree,"0") END,
+                                              TScalar:apoc.number.exact.add(TTScalar,"0"),
+                                              TDivisor:p1.Divisor,
+                                              ADivisor:p2.Divisor,
+                                              ATwoSeq:apoc.number.exact.add(p2.T,"0"),        
+                                              ADegree:apoc.number.exact.add(vv.Degree,"0"),   
+                                              AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                              ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                              ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+//////    CANDIDATE D4S1                     ///////////
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) 
+                     where i.N="9" AND i.MaxN="10" AND i.Dimension="2" 
+WITH i.N as iN, i.MaxN as iM,e,v,t                        
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii)
+                    where ii.MaxN="10"  AND ii.Dimension="2"
+WITH iN,iM,e,v,vv,t,tt,ee
+CREATE (p:ProductArgsNode {Divisor:"1",Dimension:"2"})         
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p1:ProductRelationT {T:t.twoSeq,Divisor:"2"}] - (p) )
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p1:ProductRelationT {T:t.twoSeq,Divisor:"2"}] - (p)   
+CREATE (p) - [p2:ProductRelationA {T:tt.twoSeq, Eval:ee.Value,Divisor:"2"}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"4",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+return i,p,v,vv,p1,p2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+
+RETURN v.Degree,apoc.number.exact.add(TTScalar,"0"),p1.Divisor,p2.Divisor,p2.T,vv.Degree,apoc.number.exact.add(AAScalar,"0"),TTScalar,AAScalar,p1.Divisor,p2.Divisor,pD
+
+
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                  
+      //ResultTwoSeq:aPTdsU.tft,
+      ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}                                                       //  toFloat cast                                                          
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE toFloat(aPTdsU.ADegree)+toFloat(aPTdsU.TDegree) END,     // ordinary arithmetic ready for number.exact    
+    ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN                                         //*************************//
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:CASE WHEN maxDivisor/rDivisor > 1 THEN apoc.number.exact.mul(a.acc,toString(maxDivisor/rDivisor)) ELSE a.acc END}),DivideBy:maxDivisor} AS pTerms,iM,iN
+
+ 
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor)),DivideBy:maxDivisor} AS pTerms,iM,iN
+
+
+                                //  ordinary division above ^^^^                                                             ^^^^^^^
+                                 //  without exact.compare ,   simply perform the multiplication.
+
+
+
+
+
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   //  The nMax to the N...  should not be here very expensive implement alternative
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+      //ResultTwoSeq:aPTdsU.tft,
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                  
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,     // ordinary arithmetic ready for number.exact    
+    ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor)),DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                  
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,     // ordinary arithmetic ready for number.exact    
+    ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))),DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                  
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,     // ordinary arithmetic ready for number.exact    
+    ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+WITH {     DSList:COLLECT(   {       Degree:rDRM,       Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}                            ,DivideBy:maxDivisor                  } AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                  
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,     // ordinary arithmetic ready for number.exact    
+    ResultDivisor:toFloat(aPTdsU.ResultDivisor)}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+WITH {     DSList:COLLECT(   {       Degree:rDRM,       Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor)) } )                           ,DivideBy:maxDivisor                  } AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                  
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,     // ordinary arithmetic ready for number.exact    
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter) not necessary in next line.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,dSListU.Degree)| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'8'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.TDegree,                                                                                  
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,     // ordinary arithmetic ready for number.exact    
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter)
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+RETURN argumentProduct.Divisor,argumentProduct.afe,argumentProduct.tft,argumentProduct.TDegree,argumentProduct.TScalar,
+       argumentProduct.TDivisor,argumentProduct.ADivisor,argumentProduct.ATwoSeq,argumentProduct.ADegree,argumentProduct.AScalar,argumentProduct.ScalarProduct,
+       argumentProduct.ResultDivisor,iN,iM,maxDivisor
+
+
+
+
+3/2 
+
+//  This scirpt when applied in D4 must properly handle the condition Degree = -1.  done
+
+
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                              //CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE apoc.number.exact.add(aPTdsU.ADegree,aPTdsU.TDegree) END,        
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+
+RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  // Divisor (aka rowCounter)
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+
+
+3/3
+
+//   proof copy nMax=10,n
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+
+//  Refactord into D4ZS3T-multiple Divisors
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor,eTrm
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN,eTrm 
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN,eTrm
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,eTrm
+UNWIND dSList as dSListU
+WITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,eTrm
+RETURN tDegree,tScalar,iN,iM,pTD,eTrm
+
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+3/4
+
+
+//   proof copy nMax=10,n
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+//  Refactor to D4S3Arguments
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor  //,resultMap.ET as eTrm
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor  //,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor   //,eTrm
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,pTermss[pT].Degree AS pTDegree
+
+CREATE (aa:Accumulator { acc:"0"})
+WITH dSList,iN,iM,pTD,pTDegree,aa
+FOREACH (n IN dSList | SET aa.acc = apoc.number.exact.add(aa.acc,toString(n.Scalar)))
+WITH {Scalar:aa.acc,Degree:pTDegree,DivideBy:pTD} as pTermsss,iN,iM
+WITH pTermsss.Scalar as tScalar,pTermsss.Degree as tDegree,pTermsss.DivideBy as Divisor,iN,iM
+return tScalar,tDegree,Divisor,iN,iM
+
+MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:"8"} )  
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:VertexIndexedBy {twoSeq:"99", divisor:Divisor}]->(v)
+
+RETURN i,v,e
+
+
+
+
+
+
+
+
+
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor  //,resultProduct.ET as eT
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor  //,eT
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor //,resultMap.ET as eTrm
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor  //,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor                         //,eTrm
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor    //,eTrm
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN        //,eTrm 
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN  //,eTrm
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN     //,eTrm
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD       //,eTrm
+UNWIND dSList as dSListU
+WITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD        // ,eTrm
+RETURN tDegree,tScalar,iN,iM,pTD
+
+//  refactor to argument nodes attempt  All Divisors
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor    //,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+WITH COLLECT(rSLI.RScalar) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rDivisor} AS pTerms,iM,iN 
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+//RETURN pTerms
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD
+WITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD
+
+MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:"8"} )  
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:VertexIndexedBy {twoSeq:"99", divisor:Divisor}]->(v)
+
+RETURN i,v,e
+
+
+
+
+
+
+
+
+
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+
+
+//  refactor to argument nodes attempt  Max  Divisor
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor    //,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDivisor,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor   ///  Here is where number.exact.mul should occure.
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:maxDivisor} AS pTerms,iM,iN 
+
+//  Below need a refactor - the degree should not be in the collected maps  -  the number.exact.mul should occure earlier in the script.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD,iM,iN
+
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'7'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+      TScalar:aN.TScalar,TDivisor:aN.TDivisor,ADivisor:aN.ADivisor,ATwoSeq:aN.ATwoSeq,
+      ADegree:aN.ADegree,AScalar:aN.AScalar,DegreeSum:aN.DegreeSum,ScalarProduct:aN.ScalarProduct,
+      ResultDivisor:aN.ResultDivisor})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+//RETURN aPTdsU.ScalarProduct,aPTdsU.TScalar,aPTdsU.AScalar,aPTdsU.TDivisor,aPTdsU.ADivisor,aPTdsU.ADegree,aPTdsU.TDegree,aPTdsU.ResultDivisor,aPafe,iN,iM,apD,aPclafe,maxDivisor
+WITH CASE WHEN aPclafe = 99 THEN                                                                                 
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                                                                               
+      ResultDegree:aPTdsU.DegreeSum,
+      ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}                                                                                                               
+ELSE
+{DS:COLLECT({ResultScalar:aPTdsU.ScalarProduct,                       
+    ResultDegree:aPTdsU.DegreeSum,                                      
+    ResultDivisor:aPTdsU.ResultDivisor}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+//RETURN resultProduct
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor    //,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor,eTrm
+WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor //  rDivisor, ///  Here is where number.exact.mul should occure.
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))  
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:maxDivisor} AS pTerms,iM,iN 
+
+//  Below need a refactor - the degree should not be in the collected maps  -  the number.exact.mul should occure earlier in the script.
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:apoc.number.exact.mul(a.acc,apoc.number.exact.div(maxDivisor,rDivisor))}),DivideBy:maxDivisor} AS pTerms,iM,iN
+
+WITH COLLECT(pTerms) as pTermss,iM,iN
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+UNWIND dSList as dSListU
+//RETURN dSListU.Degree,dSListU.Scalar,pTD,iM,iN
+WITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD
+
+MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:"8"} )  
+CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:VertexIndexedBy {twoSeq:"99", divisor:Divisor}]->(v)
+
+RETURN i,v,e
+
+
+
+
+
+
+CREATE (c:Accumulator {acc:"1"})   
+FOREACH (n IN RANGE(1,toInteger(dSListU.Degree))| SET c.acc = apoc.number.exact.mul(c.acc,toString(iM)))   //  dSListU.Degree must be integer
+With apoc.number.exact.mul(dSListU.Scalar,c.acc) as scalarDegreeProduct,pTD
+WITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap
+//Return termsMap
+WITH COLLECT(termsMap) AS termsMapC
+UNWIND RANGE(0,SIZE(termsMapC)-1) as pTT
+CREATE (b:Accumulator { acc:"0" ,db:toString(termsMapC[pTT].DivideBy) })
+FOREACH (n IN termsMapC[pTT].SDP| SET b.acc = apoc.number.exact.add(b.acc,n))
+WITH apoc.number.exact.div(b.acc,toString(b.db)) AS pResult,b
+return b.acc,toString(b.db), pResult
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

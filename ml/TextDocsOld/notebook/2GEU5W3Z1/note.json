@@ -1,0 +1,631 @@
+{
+  "paragraphs": [
+    {
+      "title": "0.",
+      "text": "CALL gds.graph.drop(\u0027myGraph\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-24 09:24:19.771",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "graphName": "string",
+                      "database": "string",
+                      "memoryUsage": "string",
+                      "sizeInBytes": "string",
+                      "nodeProjection.DNode.properties.d.property": "string",
+                      "nodeProjection.DNode.properties.d.defaultValue": "string",
+                      "nodeProjection.DNode.label": "string",
+                      "relationshipProjection.zMap.orientation": "string",
+                      "relationshipProjection.zMap.aggregation": "string",
+                      "relationshipProjection.zMap.type": "string",
+                      "nodeQuery": "string",
+                      "relationshipQuery": "string",
+                      "nodeCount": "string",
+                      "relationshipCount": "string",
+                      "nodeFilter": "string",
+                      "relationshipFilter": "string",
+                      "density": "string",
+                      "creationTime": "string",
+                      "modificationTime": "string",
+                      "schema.relationships.zMap_TRAINGRAPH.label": "string",
+                      "schema.relationships.zMap_TESTGRAPH.label": "string",
+                      "schema.nodes.DNode.d": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Failed to invoke procedure `gds.graph.drop`: Caused by: java.util.NoSuchElementException: Graph with name `myGraph` does not exist on database `neo4j`."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629725668599_718434116",
+      "id": "20210823-093428_850394368",
+      "dateCreated": "2021-08-23 09:34:28.599",
+      "dateStarted": "2021-08-24 09:24:19.832",
+      "dateFinished": "2021-08-24 09:24:19.964",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "1.",
+      "text": "call gds.graph.create(\n    \u0027myGraph\u0027,\n    {\n        DNode: {\n        label: \u0027Dnode\u0027,\n        properties: [\u0027dd\u0027]\n    }\n    },{\n        zMap: {\n        type: \u0027zMap\u0027,\n        orientation: \u0027UNDIRECTED\u0027    \n        }\n    }\n    )",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-25 12:45:27.129",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "nodeProjection.DNode.properties.dd.property": "string",
+                      "nodeProjection.DNode.properties.dd.defaultValue": "string",
+                      "nodeProjection.DNode.label": "string",
+                      "relationshipProjection.zMap.orientation": "string",
+                      "relationshipProjection.zMap.aggregation": "string",
+                      "relationshipProjection.zMap.type": "string",
+                      "graphName": "string",
+                      "nodeCount": "string",
+                      "relationshipCount": "string",
+                      "createMillis": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nodeProjection.DNode.properties.dd.property\tnodeProjection.DNode.properties.dd.defaultValue\tnodeProjection.DNode.label\trelationshipProjection.zMap.orientation\trelationshipProjection.zMap.aggregation\trelationshipProjection.zMap.type\tgraphName\tnodeCount\trelationshipCount\tcreateMillis\ndd\t\tDnode\tUNDIRECTED\tDEFAULT\tzMap\t\"myGraph\"\t56\t110\t53\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483597013_-2063016353",
+      "id": "20210820-141957_852087778",
+      "dateCreated": "2021-08-20 14:19:57.013",
+      "dateStarted": "2021-08-25 12:45:24.449",
+      "dateFinished": "2021-08-25 12:45:27.024",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "2.",
+      "text": "CALL gds.alpha.ml.splitRelationships.mutate(\u0027myGraph\u0027, {\n  relationshipTypes: [\u0027zMap\u0027],\n  remainingRelationshipType: \u0027zMap_REMAINING\u0027,\n  holdoutRelationshipType: \u0027zMap_TESTGRAPH\u0027,\n  holdoutFraction: 0.2,\n  negativeSamplingRatio:1.0\n}) YIELD relationshipsWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-25 12:45:33.239",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "relationshipsWritten": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "relationshipsWritten\n110\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483606097_1190382929",
+      "id": "20210820-142006_1819730941",
+      "dateCreated": "2021-08-20 14:20:06.097",
+      "dateStarted": "2021-08-25 12:45:33.259",
+      "dateFinished": "2021-08-25 12:45:33.339",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "3.",
+      "text": "CALL gds.alpha.ml.splitRelationships.mutate(\u0027myGraph\u0027, {\n  relationshipTypes: [\u0027zMap_REMAINING\u0027],\n  remainingRelationshipType: \u0027zMap_IGNORED_FOR_TRAINING\u0027,\n  holdoutRelationshipType: \u0027zMap_TRAINGRAPH\u0027,\n  holdoutFraction: 0.2,\n  negativeSamplingRatio: 1.0\n}) YIELD relationshipsWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-25 12:45:37.949",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "relationshipsWritten": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "relationshipsWritten\n88\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483605472_657901127",
+      "id": "20210820-142005_1755032627",
+      "dateCreated": "2021-08-20 14:20:05.472",
+      "dateStarted": "2021-08-25 12:45:37.968",
+      "dateFinished": "2021-08-25 12:45:38.014",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "4.",
+      "text": "call gds.beta.fastRPExtended.mutate(\n                         \u0027myGraph\u0027,\n                         {\n                         relationshipTypes:[\u0027zMap_IGNORED_FOR_TRAINING\u0027],\n                         mutateProperty: \u0027frp\u0027,\n                         embeddingDimension:512,\n                         propertyDimension: 256,\n                         randomSeed: 42,\n                         featureProperties: [\u0027dd\u0027]\n                         }\n                    )     ",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-25 12:45:55.819",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "nodePropertiesWritten": "string",
+                      "mutateMillis": "string",
+                      "nodeCount": "string",
+                      "createMillis": "string",
+                      "computeMillis": "string",
+                      "configuration.relationshipWeightProperty": "string",
+                      "configuration.concurrency": "string",
+                      "configuration.randomSeed": "string",
+                      "configuration.propertyDimension": "string",
+                      "configuration.normalizationStrength": "string",
+                      "configuration.iterationWeights": "string",
+                      "configuration.embeddingDimension": "string",
+                      "configuration.nodeLabels": "string",
+                      "configuration.sudo": "string",
+                      "configuration.relationshipTypes": "string",
+                      "configuration.featureProperties": "string",
+                      "configuration.mutateProperty": "string",
+                      "configuration.username": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nodePropertiesWritten\tmutateMillis\tnodeCount\tcreateMillis\tcomputeMillis\tconfiguration.relationshipWeightProperty\tconfiguration.concurrency\tconfiguration.randomSeed\tconfiguration.propertyDimension\tconfiguration.normalizationStrength\tconfiguration.iterationWeights\tconfiguration.embeddingDimension\tconfiguration.nodeLabels\tconfiguration.sudo\tconfiguration.relationshipTypes\tconfiguration.featureProperties\tconfiguration.mutateProperty\tconfiguration.username\n56\t0\t56\t0\t18\t\t4\t42\t256\t0.0\t[0.0,1.0,1.0]\t512\t[\"*\"]\tfalse\t[\"zMap_IGNORED_FOR_TRAINING\"]\t[\"dd\"]\tfrp\t\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483604788_-1329624396",
+      "id": "20210820-142004_992909929",
+      "dateCreated": "2021-08-20 14:20:04.788",
+      "dateStarted": "2021-08-25 12:45:55.829",
+      "dateFinished": "2021-08-25 12:45:55.884",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "5.",
+      "text": "call gds.alpha.ml.linkPrediction.train(\n                          \u0027myGraph\u0027,\n                          {\n                           trainRelationshipType: \u0027zMap_TESTGRAPH\u0027,\n                           testRelationshipType:\u0027zMap_TRAINGRAPH\u0027,\n                           modelName: \u0027model\u0027,\n                           featureProperties: [\u0027frp\u0027],\n                           validationFolds: 5,\n                           negativeClassWeight: 1.0,\n                           randomSeed: 42,\n                           concurrency: 4,\n                           params: [\n                           {penalty: 0.0001,  maxEpochs: 100, linkFeatureCombiner: \u0027HADAMARD\u0027},\n                           {penalty: 1.0,     maxEpochs: 100, linkFeatureCombiner: \u0027HADAMARD\u0027},\n                           {penalty: 10000.0, maxEpochs: 100, linkFeatureCombiner: \u0027HADAMARD\u0027},\n                           {penalty: 0.0001,  maxEpochs: 100, linkFeatureCombiner: \u0027L2\u0027},\n                           {penalty: 1.0,     maxEpochs: 100, linkFeatureCombiner: \u0027L2\u0027},\n                           {penalty: 10000.0, maxEpochs: 100, linkFeatureCombiner: \u0027L2\u0027},\n                           {penalty: 0.0001,  maxEpochs: 100, linkFeatureCombiner: \u0027COSINE\u0027},\n                           {penalty: 1.0,     maxEpochs: 100, linkFeatureCombiner: \u0027COSINE\u0027},\n                           {penalty: 10000.0, maxEpochs: 100, linkFeatureCombiner: \u0027COSINE\u0027}\n                           ]\n                        })\n                        YIELD modelInfo\n                        RETURN modelInfo.metrics.AUCPR.test AS test_auc, modelInfo.metrics.AUCPR.outerTrain AS train_auc,modelInfo.bestParameters AS BestParameters\n                        \n                           \n                           \n                           ",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-25 12:46:03.440",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "test_auc": "string",
+                      "train_auc": "string",
+                      "BestParameters.maxEpochs": "string",
+                      "BestParameters.minEpochs": "string",
+                      "BestParameters.penalty": "string",
+                      "BestParameters.patience": "string",
+                      "BestParameters.linkFeatureCombiner": "string",
+                      "BestParameters.batchSize": "string",
+                      "BestParameters.sharedUpdater": "string",
+                      "BestParameters.tolerance": "string",
+                      "BestParameters.concurrency": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "test_auc\ttrain_auc\tBestParameters.maxEpochs\tBestParameters.minEpochs\tBestParameters.penalty\tBestParameters.patience\tBestParameters.linkFeatureCombiner\tBestParameters.batchSize\tBestParameters.sharedUpdater\tBestParameters.tolerance\tBestParameters.concurrency\n0.6367330586080585\t0.8635987749624114\t100\t1\t1.0E-4\t1\tL2\t100\tfalse\t0.001\t4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483603913_-62504715",
+      "id": "20210820-142003_864138898",
+      "dateCreated": "2021-08-20 14:20:03.913",
+      "dateStarted": "2021-08-25 12:46:03.459",
+      "dateFinished": "2021-08-25 12:46:03.729",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "6.",
+      "text": "CALL gds.alpha.ml.linkPrediction.predict.mutate(\u0027myGraph\u0027, {modelName: \u0027model\u0027, mutateRelationshipType: \u0027predictedLink\u0027, topN: 20, threshold: 0.0})",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-25 12:46:25.379",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "relationshipsWritten": "string",
+                      "mutateMillis": "string",
+                      "postProcessingMillis": "string",
+                      "createMillis": "string",
+                      "computeMillis": "string",
+                      "configuration.modelName": "string",
+                      "configuration.threshold": "string",
+                      "configuration.nodeLabels": "string",
+                      "configuration.sudo": "string",
+                      "configuration.batchSize": "string",
+                      "configuration.relationshipTypes": "string",
+                      "configuration.mutateProperty": "string",
+                      "configuration.mutateRelationshipType": "string",
+                      "configuration.topN": "string",
+                      "configuration.username": "string",
+                      "configuration.concurrency": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "relationshipsWritten\tmutateMillis\tpostProcessingMillis\tcreateMillis\tcomputeMillis\tconfiguration.modelName\tconfiguration.threshold\tconfiguration.nodeLabels\tconfiguration.sudo\tconfiguration.batchSize\tconfiguration.relationshipTypes\tconfiguration.mutateProperty\tconfiguration.mutateRelationshipType\tconfiguration.topN\tconfiguration.username\tconfiguration.concurrency\n40\t0\t0\t0\t10\tmodel\t0.0\t[\"*\"]\tfalse\t100\t[\"*\"]\tprobability\tpredictedLink\t20\t\t4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483602615_-1450706012",
+      "id": "20210820-142002_1198658189",
+      "dateCreated": "2021-08-20 14:20:02.615",
+      "dateStarted": "2021-08-25 12:46:25.394",
+      "dateFinished": "2021-08-25 12:46:25.459",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "7.",
+      "text": "CALL gds.graph.writeRelationship(\u0027myGraph\u0027, \u0027predictedLink\u0027, \u0027probability\u0027)\nYIELD relationshipsWritten, propertiesWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-25 12:46:30.889",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "relationshipsWritten": "string",
+                      "propertiesWritten": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "relationshipsWritten\tpropertiesWritten\n40\t40\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483601606_-493532675",
+      "id": "20210820-142001_71482866",
+      "dateCreated": "2021-08-20 14:20:01.606",
+      "dateStarted": "2021-08-25 12:46:30.899",
+      "dateFinished": "2021-08-25 12:46:31.114",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1629483600391_763888962",
+      "id": "20210820-142000_1640874101",
+      "dateCreated": "2021-08-20 14:20:00.391",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphiML2",
+  "id": "2GEU5W3Z1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

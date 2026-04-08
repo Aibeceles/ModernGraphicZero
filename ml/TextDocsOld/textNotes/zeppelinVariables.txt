@@ -1,0 +1,27 @@
+chdir zeppelin-0.8.2-bin-all\bin
+zeppelin
+
+
+2GFSHZQJQ
+
+neo4j.auth.password 	ChiefQuippy
+neo4j.auth.type 	BASIC
+neo4j.auth.user 	neo4j
+neo4j.max.concurrency 	50
+neo4j.url 	bolt://localhost:7687 
+
+
+Environment variable
+
+System variables:
+
+JAVA_HOME=C:\Program Files\Java\jdk1.8.0_261
+
+Included in path variable:
+
+C:\Program Files\Common Files\Oracle\Java\javapath
+C:\Program Files (x86)\Common Files\Oracle\Java\javapath
+%JAVA_HOME%\bin
+
+
+

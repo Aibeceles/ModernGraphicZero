@@ -1,0 +1,57 @@
+Want to use the n to q code to emulate rational arithmetic.   //  seems believable these days.
+
+Lots of ZAD Discription to document.
+If the power set exists as roots is most interesting.
+If the seed fractions exists is next most interesting.
+The Differences.ods motivates finding patterns invariant from one seed p to another:
+    So the rule for mapping p into p' (with this roos set is)...   See the column of zeros exanple.
+The ZAD graph is a geometric progression in terms of number of nodes to concider.
+    A four degreed p wans ZAD of size 4 is 4^4 nodes
+                                      8 is 8^8 nodes   less redundancies when the node has multiple roots 
+                                                       (the other root combiniations resolve the same p).
+                                    
+Dec,Jan:  GraphicZero notes...   conclusions:  lower dimensional embedding vs bigger word. No need to Binomial translate.
+Feb:  Last of the Notes. 
+      Start the ZAD revisit.
+      Start the ML vist.
+Mar:  Start ZAD includes rootset as Mu numbers on Dnode.
+      Dive into ML
+Apr:  The semaphore skip pattern for ZAD
+      ZAD explanation the introduction.
+      4/23 The typical ZAD.
+May:  Neo4j Graph tenancy in memory, fabric.
+
+Barely aware of the ML science.
+Though very did the requisite math curriculum.
+
+The first MLGraph:
+
+https://neo4j.com/docs/graph-data-science/current/algorithms/ml-models/node-classification/
+https://neo4j.com/docs/graph-data-science/current/algorithms/ml-models/linkprediction/
+
+Does intriegue.
+Node Classification:
+Train/Test both in high 90's.
+Link prediction:
+Universally connects the bottom node to each in top node.
+
+The minimum to present for prospect.
+
+The Linkedin
+    The youtube
+    The GitHub
+
+Live cloud compute???
+
+file:///C:/Users/Aibes/Downloads/Pluralsight_20Patterns_ebook.pdf
+
+
+
+
+
+
+
+
+
+youtube subtitles not great, very good.
+

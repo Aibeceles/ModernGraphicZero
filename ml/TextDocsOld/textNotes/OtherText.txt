@@ -1,0 +1,710 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='5' AND i.MaxN='6' AND i.Dimension="4"
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD
+WITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                      TScalar:CASE WHEN toInteger(v.Degree)=-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,
+                                      ATwoSeq:toInteger(p2.T),
+                                      ADegree:toInteger(vv.Degree),   
+                                      AScalar:CASE WHEN toInteger(vv.Degree)=-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e
+Return argumentProduct
+
+Below is the set of MATCH clauses:
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),
+      (i:IndexedBy)-[:VertexIndexedBy]->(pp:ProductArgsNode)-[pR1:ProductRelationT|ProductRelationA]->(p:ProductArgsNode),
+      (ii:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode)
+
+WHERE i.N='5' AND i.MaxN='6' AND i.Dimension="8" AND i.RowCounter=2    //  ii has to be constrained with Dimension.
+
+WITH i,e,p,i.N as iN, i.MaxN as iM,pp,pR1.T as pR1T,pp.Divisor as ppD1,pR1.Eval as pR1E
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM,pp,pR1T,pp.Divisor as pD1,pR1E,p1.T as p1TT,ppD1 
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,pp,pR1T,pR1E,ppD1, p1TT,p2.T as p2TT,p2.Eval as p2EE
+RETURN i,e,pp,p,v
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH (v:VertexNode) <-[pR:ProductRelationT] -  (p:ProductArgsNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate) 
+      where i.N='5' AND i.MaxN='6' AND i.Dimension="4" and i.RowCounter=8
+Return i,count(p)
+
+OPTIONAL MATCH (pp:ProductArgsNode)<-[]- (ii:IndexedBy)-[]->(ee:Evaluate {Value:"8"})
+      where ii.MaxN='6'  AND ii.Dimension="4"  // and ee.Value="4"
+Return ii,pp
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),
+      (i:IndexedBy)-[:VertexIndexedBy]->(pp:ProductArgsNode)-[pR1:ProductRelationA]->(p:ProductArgsNode),
+      (ii:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode)
+WHERE i.N='5' AND i.MaxN='6' AND i.Dimension="8" AND i.RowCounter=4
+Return i,count(pp)
+
+╒═══════════════════════════════════════════════════╤═══════════╕
+│"i"                                                │"count(pp)"│
+╞═══════════════════════════════════════════════════╪═══════════╡
+│{"Dimension":"8","RowCounter":4,"N":"5","MaxN":"6"}│324        │
+└───────────────────────────────────────────────────┴───────────┘
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate  {Value:"8"} ),
+      (i:IndexedBy)-[:VertexIndexedBy]->(pp:ProductArgsNode)-[pR1:ProductRelationA]->(p:ProductArgsNode),
+      (ii:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode)
+
+WHERE i.N='5' AND i.MaxN='6' AND i.Dimension="8" AND i.RowCounter=4
+
+Return i,count(pp)
+
+OPTIONAL MATCH (pp:ProductArgsNode)<-[]- (ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"})
+      where ii.MaxN='6'  AND ii.Dimension="8"  // and ee.Value="4"
+return ii,pp
+
+But still some divisor semantics for comprehension.
+
+service host sysmaain
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+jave code checker "Error Prone".
+
+
+r u s h oyster bay.
+
+
+
+
+PLAYLIST Episode 96 // 5.6.2019
+Church of the Cosmic Skull - Mountain Heart
+Monkey3 - Ellipsis
+The 13th Floor Elevators - You're Gonna Miss Me [R.I.P. Roky Erickson]
+Roky Erickson & The Aliens - White Faces
+ZZ Top - Beer Drinkers & Hell Raisers
+Spirit Adrift - Angel & Abyss
+The Shrine - Dance On A Razor's Edge
+AC/DC - Rocker [für Roller Derby Karlsruhe]
+BLACK LUNG - Bad Lands
+Black Mountain - Future Shade + Wucan
+INTER ARMA - Stillness
+Pungent Stench - Madcatmacho Psychoromantik 🍌🍌
+Karl Dall - Itzi Bitzi Ibiza (Edit.)
+Wormwitch - Disciple Of The Serpent Star + Dancing In The Ashes
+Little Richard - Lucille
+Satan's Pilgrims - Siniestro
+Sunn O))) - Troubled Air [Live @ HfG Karlsruhe, 8. Oktober]
+
+
+We may distinguish the term from which the relation proceeds as thereferent, and the term to which it proceeds as the relatum.
+
+
+Identity,  however,  is  still  a  sym-metrical relation
+
+
+; Being is, or has being; 1 is one, or has unity; concept is conceptual: termis  a  term;  class-concept  is  a  class-concept.
+  All  these  are  of  one  of  the  threeequivalent  types  which  we  distinguished  at  the  beginning  of  Chapter  5,
+
+ since  subjects  cannot  in  general  bepredicated of their predicates.
+
+
+ It  is  to  be  held  that  to  have  a  given  relation  to  a  given  term  is  apredicate, so that all terms having 
+this relation to this term form a class. It is tobe  held  further  that
+to  have  a  given  relation  at  all  is  a  predicate,
+
+
+coppicing.
+
+https://attendee.gotowebinar.com/survey/5082886524448014603/thomaspries@aol.com/6697565529325436939/16788109
+
+Chapter  5,which may be called respectively subject-predicate propositions, propositionsasserting the relation of predication, and propositions asserting membershipof a class
+
+
+ moiré patterns 
+
+
+The abstract's claims are promising research that includes constructing a tensor in a graph with weighted linear relationships.
+
+
+with minimal support.
+
+program called Reverse Mathematics
+
+The primary function of either, etc., is to emphasize the perfect indifference of the two (or more) things or courses .
+
+ompleteness theorem
+
+Hilbert, D. (1927).The Foundations of Mathematics.
+categorical arithmetic;
+f a coherent and consistent knowledge graph such as KBpedia is used as the starting point, along with existing machine learning algorithms such as DeepWalk
+
+A  natural  suggestion  for  escaping  from  the  contradiction  would  be  todemur to the notion 
+of all terms or of all classes. It might be urged that nosuch sum-total is conceivable; and if all
+ indicates a whole, our escape from thecontradiction requires us to admit this. But we have already
+ abundantly seenthat if this view were maintained against any term, all formal truth would beimpossible, 
+and Mathematics, whose characteristic is the statement of truthsconcerning any  term,  would  be  abolished  
+at  one  stroke.  Thus  the  correctstatement of formal truths requires the notion of any term or every term,
+ butnot the collective notion of all terms
+
+
+https://www.uspto.gov/learning-and-resources/global-intellectual-property-academy-gipa/uspto-webinars-and-ip-e-learning
+
+Process
+Means to an end the tangable result.
+
+Algorythms are just math.
+
+novelty 
+utility- must function as intended.
+non-obviousness.
+
+Arithmetic implemented with arbitray Polonomic Dimensions representable on
+Graph Database.
+
+00:12:02,560 --> 00:12:04,580
+Does the invention have utility?
+
+159
+00:12:04,580 --> 00:12:07,240
+Is the invention new or novel?
+
+160
+00:12:07,240 --> 00:12:12,350
+Is it non-obvious to a person having ordinary
+skill in the art (or technology)?
+
+161
+00:12:12,350 --> 00:12:17,010
+And has specific disclosure of the invention
+utilizing certain requirements been made in
+
+162
+00:12:17,010 --> 00:12:19,570
+the patent application?
+
+See 35 U.S.C. § 101. The requirement that the invention be useful is called the utility requirement.
+ In essence, in order for an invention to be useful the invention must work. It can work crudely, but
+ it has to do what is claimed.
+
+
+The purpose of this requirement is to make sure that the invention is useful to the public as disclosed
+ in its current form, not that it may prove useful at some future date after further research
+
+Thus a “substantial utility” defines a “real world” use.
+This means that the lack of utility cannot be sustained without proof of total incapacity. 
+
+Functional resumes work well for senior management positions, where what you can do is more important
+ than what you have done
+
+
+Use a traditional resume font like Helvetica, Garamond, or Georgia
+
+
+skill
+/skil/
+Learn to pronounce
+noun
+noun: skill
+
+    the ability to do something well; expertise.
+    "difficult work, taking great skill"
+    synonyms:	expertise, skillfulness, expertness, adeptness, adroitness, deftness, dexterity, ability, prowess, mastery, competence, competency, capability, efficiency, aptitude, artistry, art, finesse, flair, virtuosity, experience, professionalism, talent, cleverness, smartness, ingenuity, versatility, knack, readiness, handiness; informalknow-how
+    "once again, he demonstrated his skill as a politician"
+    antonyms:	incompetence
+        a particular ability.
+        plural noun: skills
+        "the basic skills of cooking"
+        synonyms:	accomplishment, strength, gift, forte
+        "bringing up a family gives you many skills"
+
+
+
+
+
+https://aeon.co/ideas/why-speaking-to-yourself-in-the-third-person-makes-you-wiser?utm_source=pocket-newtab
+
+ solutio
+
+
+eveloped by using the solution of the antinomies of transfinite numbers-by means of the system developed by Russell and Whitehead-as a unifying th
+
+the paradox of number [Paradox der Zahl] lies at the heart of mathematics. R
+
+. In its ordinal form it resembles the Burali-Forti paradox
+
+
+Behmann does not use the term 'context principle', he speaks of Erkenntnis- zusammenhang (epistemic contex
+
+ the principles of contradiction and of the excluded middle.
+
+elementary propositions are closed un- der negation and disjunction
+
+Cousin lemma is essential for the development of thegaugeintegral, a generalisation of the Lebesgue and improper
+Riemann integrals thatalso uniquely provides a direct formalisation of Feynman’spath integral.
+
+treat uncountable setsas though they werefinite or countable, namelyopen-cover compactnessand theLindel ̈of property
+huncountable covers, and the lattercannot be formulated in the language of second-order arithmetic
+classicalcomputabilitytheory 
+ogical frameworkricherthan the languageL2(See Sec
+
+predicative arithmetic([67]) 
+
+
+(Heine-Borel) compactness foruncountablecovers
+
+
+Gandy’ssuperjump, the aforementioned ‘higher-order’Halting problem
+
+The latter four together withRCA0form the ‘BigFive’ and the aforementioned observation that most mathematical theorems fall
+ intoone of the Big Five categories, is called theBig Five phenomenon([54, p. 432])
+
+
+Reverse Mathematics zoo
+
+
+TheG ̈odel hierarchyisa collection of logical systems ordered via consistency strengt
+
+supercompact cardinal
+
+
+examples of logical systems that fall outside of the G ̈odel hierarchy, likespecial casesof Ramsey’s theorem and the axiom of determinacy
+
+
+ordered semi-ring
+
+Bolzano-Weierstrass theorem:every net in the unit interval has a convergent sub-net. Nets (aka Moore-Smith sequences) provide
+a generalisation of the concept ofsequences beyond countable index sets, going back a century 
+
+
+
+Datasets. This API is not available in Python and R, because those are dynamically typed language
+
+ convert a social network represented by two DataFrames to a PropertyGraph
+
+write spark applications in java.
+
+spark in ide.
+
+jupyter notebooks hosted on github.  vs zepplin
+
+millions of nodes neo just fine
+billions of nodes spark.
+
+Cypher for Apache Spark™
+
+http://www.opencypher.org/blog/2017/10/25/Introducing-CAPS/?ref=blog
+
+
+Morpheus: Cypher for Apache Spark
+
+
+https://towardsdatascience.com/building-a-graph-data-pipeline-with-zeppelin-spark-and-neo4j-8b6b83f4fb70
+
+https://zeppelin.apache.org/docs/0.5.6-incubating/manual/interpreters.html
+https://zeppelin.apache.org/docs/0.5.5-incubating/interpreter/spark.html
+
+
+https://hortonworks.com/tutorial/setting-up-a-spark-development-environment-with-java/
+
+
+
+
+
+I confess I don't know much about the student loan debacle, but a friend of mine has a legal specialty in this area. He recently posted the following in response to another friend's posting about her loans.
+
+From Bruce Ralston: Many of my student loan clients find themselves this situation (owing more after paying for years). By far the most common reason is that they put their loans into forbearance rather than getting into the right Income-Driven Repayment plan (IDR). And they often do it repeatedly over the years, not realizing that interest is growing and capitalizing. Their main focus is eating and keeping a roof over their heads, so they either take the forbearance or simply stop paying. Both are mistakes.
+The real problem is the servicing agencies (private companies that have contracted with the Dept. of Education to manage these loans). Their mandate is supposed to be to help the borrowers manage the process and stay out of default, but they all do a poor job, with some being worse than others. They not only hide the ball, but they often encourage people to apply for forbearance rather than setting up a proper IDR. And even when they do suggest IDR, they don't ask the right questions, so borrowers often end up in the wrong repayment plan, or they misunderstand the rules about the plan they are in.
+Why? Two reasons, both of which boil down to the fact that they are private corporations who see their primary function as making money for their stockholders.
+(A) It takes about 10 minutes to set up a forbearance, but it can take 45 - 60 minutes analyze the situation and process the numbers so as to set up the right IDR. Said another way, in the time it takes to set up a proper IDR, they can do 5 or 6 forbearances. They see it as a productivity issue.
+(B) They make more money when things go wrong. They get the late fees and part of the added interest, and when the account does do into default the Dept of Ed pays them a bunch of money to take over the account. The system is designed for failure.
+In 2016 Ed was putting the finishing touches on a new system that would have simplified and centralized the process. But then the election happened, and the new president put someone in charge whose personal interests were directly contrary to those of the borrowers. The new system was scrapped, and in some ways the old system became even worse. Of course, it's impossible to say how well that new system would have worked, but it certainly showed promise.
+Maybe I shouldn't complain. For me it's job security. If the services would simply do their jobs, then the vast majority of my student loan clients wouldn't need to hire me. Frankly, I would rather do other things which are sexier and which pay much better, but as long as the need exists I will try to supply the fix.
+But seriously, folks. Just vote. And tell everyone that you know to do the same.
+
+
+"Dead End Streets" from Revco’s 2006 Cocked and Loaded.
+
+Billy Gibbons and Rick Nielsen play slide guitar leads. Vocals by Jello Biafra and Phildo Owen. 
+
+Jupyter Notebook
+
+
+Predict the costs of used cars given the data collected from various sources and distributed across various locations in India
+
+
+https://docs.databricks.com/spark/latest/data-sources/neo4j.html
+
+
+
+http://spark.apache.org/docs/latest/graphx-programming-guide.html
+
+https://jaceklaskowski.gitbooks.io/mastering-apache-spark/spark-driver.html
+
+ and hence most of the time provides better performance for certain applications, e.g. iterative algorithms or interactive
+ data mining (read Spark officially sets a new record in large-scale sorting).
+
+
+
+
+Spark MLlib
+
+Statistics
+
+Linear Algebra
+
+
+
+
+must use windows symbol + v to past into zeppelin.
+
+and so, zeppein can execute cypher through the jdbc configured interpreter.
+
+
+
+Currently Zeppelin supports many interpreters such as Scala(with Apache Spark),
+ Python(with Apache Spark), SparkSQL, Hive, Markdown and Shell
+
+
+https://tbgraph.wordpress.com/2019/04/04/eigenvector-graph-centrality-analysis-on-subreddit-hyperlink-network-with-neo4j-and-cypher-projection/
+
+
+file:///C:/Users/Aibes/variousCS/Java%20Code%20Examples%20org.apache.zeppelin.interpreter.Interpreter.html
+
+
+
+file:///C:/Users/Aibes/variousCS/Apache%20Zeppelin%200.7.0%20Documentation%20%20Beam%20interpreter%20in%20Apache%20Zeppelin.html
+
+
+file:///C:/Users/Aibes/variousCS/Apache%20Zeppelin%200.7.0%20Documentation%20%20Beam%20interpreter%20in%20Apache%20Zeppelin.html
+
+
+
+file:///C:/Users/Aibes/variousCS/neo4j%20-%20How%20to%20build%20Parameterized%20Cypher%20Query%20in%20Java%20Application%20Code%20%20-%20Stack%20Overflow.html
+
+https://www.quora.com/unanswered/How-does-the-Jenkins-Traub-algorithm-work-for-polynomials-with-real-coefficients
+
+apache-maven-3.6.2  is there but...
+but have to navagate throug to maven\bin folder  ????
+
+mvn -Dplugin=install help:describe
+
+someting absurd and insulting....
+
+unpacking index for central repository.
+
+Navigate to the directory where you want to create the NetBeans Platform application.
+Type the following command, on a single line, in a terminal window (also known as the command prompt): 
+
+The reason why to set path environment variable (above).
+
+
+
+GitHub
+
+UserName: Aibeceles
+EmailAddress: thomaspries@aol.com
+Password: ChiefQuippy1
+
+https://github.com/Aibeceles/ZeppelinIsomorphism
+
+Took 0 sec. Last updated by anonymous at September 13 2019, 7:59:58 AM. (outdated)
+
+The following example is for loading a Maven Artifact.
+
+
+package com.journaldev.files;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class JavaFilePath {
+
+	public static void main(String[] args) throws IOException, URISyntaxException {
+		File file = new File("/Users/pankaj/test.txt");
+		printPaths(file);
+		// relative path
+		file = new File("test.xsd");
+		printPaths(file);
+		// complex relative paths
+		file = new File("/Users/pankaj/../pankaj/test.txt");
+		printPaths(file);
+		// URI paths
+		file = new File(new URI("file:///Users/pankaj/test.txt"));
+		printPaths(file);
+	}
+
+	private static void printPaths(File file) throws IOException {
+		System.out.println("Absolute Path: " + file.getAbsolutePath());
+		System.out.println("Canonical Path: " + file.getCanonicalPath());
+		System.out.println("Path: " + file.getPath());
+	}
+
+}
+
+On Microsoft Windows systems, a relative pathname is made absolute by resolving it against the current directory of the drive named by the pathname, if any; if not, it is resolved against the current user directory.
+getCanonicalPath(): This path method returns the canonical pathname that is both absolute and unique. This method first converts this pathname to absolute form if necessary, as if by invoking the getAbsolutePath method, and then maps it to its unique form in a system-dependent way.
+
+syntactic operations
+https://docs.oracle.com/javase/tutorial/essential/io/pathOps.html
+
+must be online for 
+Creating an Enterprise Application Using Maven
+Need to access maven central repository.
+
+
+difference between jetty and glassfish
+
+ bind a Maven goal to an IDE action.
+
+
+maven from consul vs ide.
+
+%html interpreter
+
+which shell in zeppelin Shell Scripts 
+
+EMR spark job
+
+who uses this styesheet?
+C:\Users\Aibes\Zeppelin\zeppelin-0.8.1-bin-all\zeppelin-0.8.1-bin-all\conf
+
+
+the minimum interpreter bindings for notebook.
+
+mongo-java-driver
+
+where in zeppelin is spark?
+
+log4j
+
+jersey 
+jetty
+lucene
+
+zeppelin with neo4j bloom
+
+property graphs based on DataFrames to Spark
+
+different interpreters for different paragraphs???
+
+zeppelin %spark is scala 
+         %neo4j is cypher
+
+zeppelin-bin-all\bin\notebook\.git  ??
+
+
+zeppelin.dep.localrepo 	
+local-repo 
+zeppelin.helium.node.installer.url 	
+https://nodejs.org/dist/
+zeppelin.helium.npm.installer.url 	
+http://registry.npmjs.org/
+zeppelin.helium.registry 	
+helium,https://s3.amazonaws.com/helium-package/helium.json
+zeppelin.helium.yarnpkg.installer.url 	
+https://github.com/yarnpkg/yarn/releases/download/
+zeppelin.home 	
+C:\Users\Aibes\Zeppelin\zeppelin-0.8.1-bin-all\zeppelin-0.8.1-bin-all
+zeppelin.interpreter.callback.portRange 	
+:
+zeppelin.interpreter.connect.timeout 	
+30000
+zeppelin.interpreter.dep.mvnRepo 	
+http://repo1.maven.org/maven2/ 
+
+can reference SparkInterpreter to get SparkContext from it while they're in the same group.
+
+You can include org.apache.zeppelin:zeppelin-interpreter:[VERSION] artifact in your build system. 
+
+Zeppelin uses static initialization
+
+file:///C:/Users/Aibes/variousCS/Explore%20Apache%20Zeppelin%20UI.html
+
+SparkContext, SQLContext, ZeppelinContext are automatically created 
+and exposed as variable names 'sc', 'sqlContext' and 'z', respectively,
+ both in scala and python environments.
+
+ZeppelinContext extends map ...  // See the javadoc please.
+definatly want access to z,sc..
+
+https://zeppelin.apache.org/docs/0.5.5-incubating/manual/dynamicform.html
+how does localhost... get a file...  see ZAD dbTread access...
+will want zeppelin/spark do it.
+
+file:///C:/Users/Aibes/variousCS/Examples%20%20%20Apache%20Spark.html
+
+Apache Zeppelin not showing Spark output
+
+https://stackoverflow.com/questions/40767146/passing-url-parameters-to-apache-zeppelin-paragraph?rq=1&rq=1
+https://stackoverflow.com/questions/51888873/running-zeppelin-on-an-external-ec2-to-connect-to-an-amazon-emr?rq=1&rq=1
+https://zeppelin.apache.org/docs/latest/interpreter/spark.html#zeppelincontext
+
+
+val COSMODE_Wind = sqlContext.sql("SELECT lat0, l
+
+Apache - Zeppelin using variables across paragraphs
+
+// Put object from scala
+%spark
+val myObject = ...
+z.put("objName", myObject)
+
+# Get object from python
+%spark.pyspark
+myObject = z.get("objName") 
+
+Still cannot println in %spark.
+
+%sh
+# restart SparkContext
+curl -X PUT http://localhost:8080/api/interpreter/setting/restart/spark
+
+Creates Programmatically (scope: note)
+
+The difference in the method names:
+Scope paragraph 	Scope note
+input (or textbox) 	noteTextbox
+select 	noteSelect
+checkbox 	noteCheckbox
+
+http://repo1.maven.org/maven2/
+Enabling SSL requires a few configuration changes. First, you need to create certificates and then update necessary configurations to enable server side SSL and/or client side certificate authentication.
+
+When using GitHub to track notebooks
+
+spark context vs zeppelin contex.
+
+curl "https://s3.amazonaws.com/apache-zeppelin/tutorial/bank/bank.csv" -o "bank.csv"
+
+scala/spark on netbeans
+http://sparktutorials.net/setup-your-zeppelin-notebook-for-data-science-in-apache-spark
+
+
+https://zeppelin.apache.org/docs/0.8.0-SNAPSHOT/usage/interpreter/interpreter_binding_mode.html
+
+ Set the property “zeppelin.spark.printREPLOutput” to true
+
+  ZEPPELIN_MEM is 1024m by default, and ZEPPELIN_INTP_MEM defaults to ZEPPELIN_MEM. For the MLLIB experiments conducted in the last few blogs these settings needed to be increased to 4GB.
+Can GitHub render Zeppelin notebook?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,307 @@
+{
+  "paragraphs": [
+    {
+      "text": "Match (n)\nReturn count(n)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-21 18:47:14.019",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "fontSize": 9.0,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "count(n)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "count(n)\n301452\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608594434018_929684750",
+      "id": "20201202-121026_647586781",
+      "dateCreated": "2020-12-21 18:47:14.018",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3T",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(6,6) AS n\nWITH toString(n) AS iN, \"1000\" as iM\nMATCH (cl:CollectedProductArgNode {Dimension:\u002716\u0027,MaxN:iM,N:iN,tft:16})-[:Arguments]-\u003e(aN:ArgumentsNode)\nWITH max(aN.ResultDivisor) AS maxDivisor,iN,iM\nMATCH (cl:CollectedProductArgNode {Dimension:\u002716\u0027,MaxN:iM,N:iN,tft:16})-[:Arguments]-\u003e(aN:ArgumentsNode)\n//RETURN aN.ScalarProduct,aN.DegreeSum,aN.ResultDivisor,cl.tft,cl.Divisor,iN,iM\nWITH {DS:COLLECT({ResultScalar:aN.ScalarProduct, ResultDegree:aN.DegreeSum, ResultDivisor:aN.ResultDivisor}), ET:cl.tft, Divisor:cl.Divisor} AS resultProduct,iN,iM,maxDivisor\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor,eTrm \nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor,eTrm\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm \nWITH COLLECT(pTerms) as pTermss,iM,iN,eTrm\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,eTrm\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,eTrm\nRETURN tDegree,tScalar,iN,iM,pTD,eTrm",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-21 19:31:18.732",
+      "config": {
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "tDegree": "string",
+                      "tScalar": "string",
+                      "iN": "string",
+                      "iM": "string",
+                      "pTD": "string",
+                      "eTrm": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "tDegree\ttScalar\tiN\tiM\tpTD\teTrm\n\"9\"\t\"-127591413454510315872\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"5\"\t\"-127164106375811385397603993269760\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"12\"\t\"5814228976\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"11\"\t\"-23237403688976\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"8\"\t\"191226635324775323447136\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"3\"\t\"-23082018930986246756284648235555303424\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"0\"\t\"63252953058812469898902714245354634215424000\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"7\"\t\"-218361501404037936183848704\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"2\"\t\"5765671153408748141815781684526009483264\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"6\"\t\"190906155204333270015135130112\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"4\"\t\"63528775539491041768177654673289984\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"1\"\t\"-886283459564367632426123678746044693479424\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"10\"\t\"63849256162819056\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"13\"\t\"-895248\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n\"14\"\t\"64\"\t\"6\"\t\"1000\"\t\"131072\"\t16\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608594434022_-966228472",
+      "id": "20201202-121155_597100995",
+      "dateCreated": "2020-12-21 18:47:14.022",
+      "dateStarted": "2020-12-21 19:31:18.744",
+      "dateFinished": "2020-12-21 19:31:18.767",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3A",
+      "text": "CYPHER runtime\u003dinterpreted\nUNWIND range(20,20) AS n\nWITH toString(n) AS iN, \"1000\" as iM\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u002764\u0027})-[]-\u003e(e:Evaluate)\nWITH iN, iM, max(vI.divisor) as maxDivisor\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u002764\u0027})-[]-\u003e(e:Evaluate)\n// return v.Scalar,v.Degree,vI.divisor,vI.twoSeq\nWITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n\nWITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS aDegree,dSListU.Scalar AS aScalar,iN,iM,pTD\nRETURN aDegree,aScalar,pTD,iM,iN",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-29 13:19:36.068",
+      "config": {
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "aDegree": "string",
+                      "aScalar": "string",
+                      "pTD": "string",
+                      "iM": "string",
+                      "iN": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "aDegree\taScalar\tpTD\tiM\tiN\n\"1\"\t\"-61990810116180098486445041775893500735215995777918437070553323214227038179338674068985264549567062832.414955883485970344892734829045366495847702026367187500000000000000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"12\"\t\"444579332331816676357319063241623555177089817419744657845597409179457396583.702558706775245360864056394298149590706668594225492441296410106588155031204223632812500000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"5\"\t\"-392421385101397550888133685789177788047567417529308963455941918036648022163016997746687242164.946472014914009021516010100594229470516438595950603485107421875000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"14\"\t\"930991484327288137643228228364658618397486420962366652938041578253896.836005701998014364318139799003959291223429307372827512523372206487692892551422119140625000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"6\"\t\"1768508445825494142845845781048843080833622700654757559379767033377011761621568445045921134.187202366629200933698383728029379646784491342259570956230163574218750000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"11\"\t\"-253670016249493717526889204643256266944960507862068189236426303675109097556022.924573585959454501782222508261697825160223274121307213135878555476665496826171875000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"9\"\t\"-54982844014153568120736542572773634402616833841332691069734439760482216503961257015.290284991969889656425344153486739397912463900297552754636853933334350585937500000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"3\"\t\"-9637020425782698700361249059896765964531692392411074404858882048775205083491820679064251285663099.469665201273455061581341141163647989742457866668701171875000000000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"10\"\t\"126647633220929688514547107411777451300909280037662607988118575693782868778003173.746091934765124917813823835317206271326544164690375282589229755103588104248046875000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"30\"\t\"1002955982969737.309968878758710406388313801651079870680405292659997940063476562500000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"7\"\t\"-6578462830929905083786034289073834242272885613428558536167574612320179081974316213760677.447784376977211649792901980091097691172308259410783648490905761718750000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"4\"\t\"69971744588730062983267312566244098330388777913181941819983305187723559234493078716987684275998.577404902999831720058696027386702098738169297575950622558593750000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"15\"\t\"-1118842877107010956637188167158543125234463907659051022992171601989.101367929624972936900526353330270365082439916210726993384128036268521100282669067382812500000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"13\"\t\"-684980199213944771311978909088946549841500666554499612942572185454312531.223858279341942386245394391369044602545115927455521287470219249371439218521118164062500000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"0\"\t\"1934351881835696465292320185768236957516656702554504399223902655533746123511481754076899225605413606411.688197149914288264227479885448701679706573486328125000000000000000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"8\"\t\"20588108433226348933618814811187259028237838741832797320911239970712116115564723769560.746852128908119371189457589050469422942146735522328526712954044342041015625000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"2\"\t\"962278725427041790256469892051698241411181840134208647857183527373889162207780676779600536070242890.695163762081939605452785002626114874146878719329833984375000000000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"25\"\t\"-6755906535722365551171864882981559.415993307328520940459151834862075787421375230564282721168467560346471145749092102050781250000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"29\"\t\"-10014733856327654689.097460923646528404620147014565308422797546006322022549284156411886215209960937500000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"23\"\t\"-56132927806662670486992417041363108845417.588208902909821299088291027475574799520518099859439642429492778319399803876876831054687500000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"28\"\t\"72499494541433801950423.515235075286970375477471532747942307240473728679065051894170323976140934973955154418945312500000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"32\"\t\"2028080.465859284595353528857231140136718750000000000000000000000000000000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"20\"\t\"449869649970234191337225528915239135762231498404433.562299759841898668596847748093850037452355314154198856479993651191762182861566543579101562500000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"18\"\t\"936514317659540617855637808091218490389053800278513268468.384487247929814175742047131028177899655119676130404782199434521317016333341598510742187500000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"16\"\t\"1190529627745055616733877859979141863393375793756947215462766554.026918404558773617013884857845187675260584144994527311389731494273291900753974914550781250000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"21\"\t\"-257448827771789322855334740586511489720951430825.042028576675047605625059471846438846855553044586789601666509952337946742773056030273437500000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"17\"\t\"-1122156573245246609247671292281110730998999281755104325013876.253202274287078301458663426659607057591780187666766210874413900455692782998085021972656250000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"22\"\t\"128914929821034234198108117067614094507757300.715320721909681081715923577659750884395693771265756222277332199155353009700775146484375000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"26\"\t\"1821590287693150569297071853561.299687554281462027650898030080287047434732181083738566940155578777194023132324218750000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"19\"\t\"-691084395277591379199568049652700253994688551517941159.969204217527781158170068515319420148602113810947997207811965836299350485205650329589843750000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"27\"\t\"-405397052279416417936604045.663900627103086522283285534694554645659872444242791122981373064249055460095405578613281250000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"24\"\t\"21081004358737024251093674489515694278.577320014128437058891826018593455112848575791462645001583808834766387008130550384521484375000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n\"31\"\t\"-64802633782.352184191745148478247529055806808173656463623046875000000000000000000000000000000000000000000000000\"\t\"8589934592\"\t\"1000\"\t\"20\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608594434023_-601639945",
+      "id": "20201209-110122_666822635",
+      "dateCreated": "2020-12-21 18:47:14.023",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "S3E",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(2,20) AS n\nWITH toString(n) AS iN, \"1000\" as iM\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\nWITH iN, iM, max(vI.divisor) as maxDivisor\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\nWITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n\nWITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\n\nWITH REDUCE(sum\u003d\u00271\u0027, x in RANGE(1,toInteger(dSListU.Degree)) | apoc.number.exact.mul(sum,toString(iM))) as acc,iN,iM,dSListU,pTD\nWith apoc.number.exact.mul(dSListU.Scalar,acc) as scalarDegreeProduct,iN,iM,pTD\nWITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap,iN,iM\nWITH COLLECT(termsMap) AS termsMapC,iN,iM\nUNWIND RANGE(0,SIZE(termsMapC)-1) AS pTT\nWITH REDUCE(sum\u003d\u00270\u0027, x IN termsMapC[pTT].SDP | apoc.number.exact.add(sum,toString(x))) AS acc,toString(termsMapC[pTT].DivideBy) AS dB,iM,iN\nWITH apoc.number.exact.div(acc,dB) AS pResult,acc,dB,iM,iN\nWITH COLLECT(pResult) AS evaluates,iN,iM\nWITH REDUCE (sum\u003d\u00270\u0027, n IN evaluates| apoc.number.exact.add(sum,n)) AS acc \nRETURN acc as Value",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-21 18:49:50.715",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Value": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Value\n\"4\"\n\"8\"\n\"16\"\n\"32\"\n\"64\"\n\"128\"\n\"256\"\n\"512\"\n\"1024\"\n\"2048\"\n\"4096\"\n\"8192\"\n\"16384\"\n\"32768\"\n\"65536\"\n\"131072\"\n\"262144\"\n\"524288\"\n\"1048576\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608594434024_520790669",
+      "id": "20201209-110120_1086011639",
+      "dateCreated": "2020-12-21 18:47:14.024",
+      "dateStarted": "2020-12-21 18:49:50.734",
+      "dateFinished": "2020-12-21 18:49:51.286",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2020-12-21 18:47:14.025",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1608594434024_-1412970674",
+      "id": "20201209-105839_1666542036",
+      "dateCreated": "2020-12-21 18:47:14.024",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "S3\u0027sWithRowCounter",
+  "id": "2FSUJQEWT",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

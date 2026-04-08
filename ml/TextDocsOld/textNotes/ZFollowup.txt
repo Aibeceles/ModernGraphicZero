@@ -1,0 +1,63 @@
+
+
+C:\Users\Aibes\zeppelin-0.8.2-bin-all\notebook\2F9KYDMY1
+
+C:\Users\Aibes\zeppelin-0.8.2-bin-all
+
+neo4j 3.4 ish                                 neo4j 4.*
+
+neo4j interpreter zeppelin-neo4j-0.8.2         zeppelin-neo4j-0.9.0-preview2
+
+
+org.neo4j.driver.v1.exceptions.ServiceUnavailableException: Failed to receive any data from the connected address localhost:7687. Please ensure a working connection to the database.
+org.neo4j.driver.v1.exceptions.ServiceUnavailableException: Connection to the database terminated. This can happen due to network instabilities, or due to restarts of the database
+
+kafka to neo4j 4.
+
+neo4j-streams-3.5.8 out neo4j-streams-4.0.3
+
+
+
+
+
+The Zepl lab -    A use case relevant for work I did at Carfinance.com/Eloan back around year 2000.
+               Along with other notebooks presented by Zepl are relevant to work done at Leviton Mfg (my linked in,
+               also a work in progress is https://www.linkedin.com/in/thomas-pries-307ba21b0. https://www.linkedin.com/in/konstellation/
+               is my talented 10 year facebook friend/doppelgänger) compel myself to Zeppelin and Zepl alike.
+                  My analytics project is taken from algebraic number theory and in its final stages do face techincal issues before Zepl is
+               usefull in my science/business activities.  Work with zeppelin-0.8.2 involved paragraphs running java jar's to jdbc data over into neo4j hosted
+               on my AWS ec2, neo4j cypher scripts paragraphs run to build out the graph, and cypher/spark paragraphs present the graphs features.  Techincal
+               issues with the model are solved with including kafka with four topics in in the data pipeline.  My problems with Zepelin began with an upgrade
+               from Neo4j 3.8 to Neo4j 4.0.  neo4j interpreter zeppelin-neo4j-0.8.2 and zeppelin-neo4j-0.9.0-preview2 produce errors in zeppelin paragraphs:  
+               org.neo4j.driver.v1.exceptions.ServiceUnavailableException: Failed to receive any data from the connected address localhost:7687. Please ensure a working connection to the database.
+               org.neo4j.driver.v1.exceptions.ServiceUnavailableException: Connection to the database terminated. This can happen due to network instabilities, or due to restarts of the database
+                  I think it is about Neo4j 4.0 as a kafka problem was solved by using neo4j-streams-4.0.3 instead of neo4j-streams-3.5.8.  My lenovo y740 is currently a Windows machine
+               so I cannot take possible advantage of zeppelin-0.9.0-preview2 (where I got zeppelin-neo4j-0.9.0-preview2 interpreter)  untill it is dual bootable.  The interpreter
+               problem is my last challenge before Zepl.com is usefull and am interested in any info provided.
+
+Thanks, 
+
+Thomas Pries    
+            
+
+
+Zack to ensure we follow-up on your technical questions.
+
+Techincal questions:
+
+ 
+
+Linkedin https://www.linkedin.com/in/thomas-pries-307ba21b0/
+
+
+
+
+
+
+
+
+
+
+
+
+

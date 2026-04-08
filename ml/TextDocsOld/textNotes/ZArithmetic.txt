@@ -1,0 +1,399 @@
+Important Notes:
+D2             - Origonal Scripts
+D4             - Only use of of origonal MATCH pattern.
+D128           - The goto note of first quater 2020 
+                 S1,S2,S3* (T,A,E).
+RefactorS3     - Cleaned up S3* scripts.  These are the scripts the .jar uses.
+                 Pieces are available for examining ZADDB from a variety of perspectives.
+                 As in, can look at RowCounter p's from S3T, the whole p from S3A, and 
+                 verify an MaxN,N evaluation.
+RowTelemetry   - Attempts to quantify COUNT 's in S* query returns.
+XPlusYtotheZ   - The p whenever want to use index' instead of index.
+ZeroExperiment - Experiments with multiply p for exibiting multiple roots.
+Division       - Divide selected p's.
+
+
+And the next of it all is:
+
+. redirect .jar to Kafka for populating MaxN,D*.
+. Divide and Multply (the important apriori for I,II arithmetic)...
+. The modulo arithmetic for working with the constant term. 
+
+The first bullet is last technical hurdel.
+The second and third compose most of the science enquery.
+  
+The third has not been scrutenized even curserary yet.  Crutial to ring theory,  
+it sees to be the subject of tomorrow AM.
+
+7/7
+
+Persuit of modulo arithmetic.
+
+ZADZeppelin has two available data return patterns.
+- Cypher export to .csv, subsequent paragraph read into data frame.
+- Cypher RETURN
+
+ZADZeppelin needs to operate on data return.
+Likely quick and dirty, return the modulo, as Cypher calculates it, into a .csv.
+Benifits are:
+ - can subsequently datafram pivot for new technology practice.
+ - can open office it for the big proof.
+
+
+Important preamble:
+
+The D2 scripts need modernization. - rather clunky compared to modern ones.
+What does the -jar say about this???
+
+
+
+
+The mathematical operators comprise:
+
+    addition: +
+    subtraction or unary minus: -
+    multiplication: *
+    division: /
+    modulo division: %
+    exponentiation: ^
+
+C:\Windows.old\Users\Aibes\Zeppelin\zeppelin-0.8.1-bin-all\zeppelin-0.8.1-bin-all\bin   
+
+
+So, think that only index=30 has anything above quadratics written out.
+Also, do not have index=16 loaded onto ZADDB.
+Meaning want to look at the 4,8 MaxN.
+Firstly as native quadratics.
+It does not involve ZADZeppelin. Can work from the browser.
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) WHERE (i.N="2" OR i.N="2") AND (i.MaxN="8") AND (i.Dimension="2")
+WITH {TwoSeq:COLLECT({TwoSeq:toInteger(t.twoSeq)}),Vertex:v.Vertex} as factors,v,i,i.MaxN as iMax
+WITH COLLECT(v.Vertex) as vV,factors,v,i,iMax
+WITH COLLECT(factors.TwoSeq) as fact,v,i.N as N,vV,iMax
+UNWIND RANGE(0,SIZE(fact)-1) as ii
+UNWIND fact[ii] as ts
+WITH collect(ts.TwoSeq) as cts,v,N,vV,iMax
+WITH REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,iMax
+WITH [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV,iMax
+WITH {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV,iMax
+WITH collect(output) as outputlist,outputMap,output,vV,iMax
+WITH DISTINCT vV as vVV, outputlist,outputMap,output,iMax
+WITH collect(outputMap.TotalT) as opMTT,vVV,iMax
+WITH REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV,iMax
+WITH Collect(TotalTseqq) as result,vVV,iMax
+
+// Return {Multiple:result,Vertex:vVV} //  Uncomment and for instance: {"Vertex":"1 1 2 0 0","Degree":"2","Scalar":"1"}  are the Polynomial terms processed below 
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) WHERE (i.N="2" OR i.N="2") AND (i.MaxN="8") AND (i.Dimension="2")
+WITH {TwoSeq:COLLECT({TwoSeq:toInteger(t.twoSeq)}),Vertex:v.Vertex} as factors,v,i,i.MaxN as iMax
+WITH COLLECT(v.Vertex) as vV,factors,v,i,iMax
+WITH COLLECT(factors.TwoSeq) as fact,v,i.N as N,vV,iMax
+UNWIND RANGE(0,SIZE(fact)-1) as ii
+UNWIND fact[ii] as ts
+WITH collect(ts.TwoSeq) as cts,v,N,vV,iMax
+WITH REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,iMax
+WITH [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV,iMax
+WITH {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV,iMax,N
+WITH collect(output) as outputlist,outputMap,output,vV,iMax,N
+WITH DISTINCT vV as vVV, outputlist,outputMap,output,iMax,N
+WITH collect(outputMap.TotalT) as opMTT,vVV,iMax,N
+WITH REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV,iMax,N
+WITH Collect(TotalTseqq) as result,vVV,iMax,N
+
+Return result As multiple,vVV AS vertex, iMax,N
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) WHERE (i.N="2" OR i.N="2") AND (i.MaxN="8") AND (i.Dimension="2")
+WITH {TwoSeq:COLLECT({TwoSeq:toInteger(t.twoSeq)}),Vertex:v.Vertex} as factors,v,i,i.MaxN as iMax
+WITH COLLECT(v.Vertex) as vV,factors,v,i,iMax
+WITH COLLECT(factors.TwoSeq) as fact,v,i.N as N,vV,iMax
+UNWIND RANGE(0,SIZE(fact)-1) as ii
+UNWIND fact[ii] as ts
+WITH collect(ts.TwoSeq) as cts,v,N,vV,iMax
+WITH REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,iMax
+WITH [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV,iMax
+WITH {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV,iMax
+WITH collect(output) as outputlist,outputMap,output,vV,iMax
+WITH DISTINCT vV as vVV, outputlist,outputMap,output,iMax
+WITH collect(outputMap.TotalT) as opMTT,vVV,iMax
+WITH REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV,iMax
+WITH Collect(TotalTseqq) as result,vVV,iMax
+
+// Return {Multiple:result,Vertex:vVV} //  Uncomment and for instance: {"Vertex":"1 1 2 0 0","Degree":"2","Scalar":"1"}  are the Polynomial terms processed below 
+
+UNWIND vVV as vVVV
+WITH vVVV as lL,result as d,iMax
+WITH lL,Size(lL) AS lLS,d,iMax                    
+WITH lL,lLS-2 AS lLss,d,iMax                     
+WITH SUBSTRING(lL,1,lLss) AS lLs,d,iMax          
+WITH COLLECT(split(lLs,' ')) AS lList,d,iMax              
+
+UNWIND RANGE(0,size(lList)-1) AS rC 
+WITH  lList[rC] as vtx,d,iMax
+WITH collect( toInteger((d[0]*(CASE WHEN toInteger(vtx[2])=-1 THEN toInteger(vtx[1])*2 ELSE toInteger(vtx[1]) END*(toInteger(iMax) ^ CASE WHEN toInteger(vtx[2])=-1 THEN toInteger(vtx[2])+1 ELSE toInteger(vtx[2]) END )))/2))  as rSlt
+WITH REDUCE(tSum=0,ff IN rSlt  | tSum +ff) As TotalrSlt
+RETURN TotalrSlt
+
+Above is real primitive.... the degree = -1, unique to quadratics is a barrier for an easy test.  
+
+Otherwise work with the jar and use quartets....
+
+7/8
+
+to proceed with 4,8,16,32,
+need to know indices,degrees on ZADDB.
+
+16,32 need twopolynomial run.
+
+Generate the quadratics:
+C:\Windows.old\Users\Aibes\JavaProjects\TwoPolynomialGenerator\dist\TwoPolynmialGenerator.jar
+
+For instance:
+
+java -jar TwoPolynomialGenerator 07082020.csv 16
+
+above is wrong the args[] are name.csv 
+
+
+
+And the need to know: does the above append?
+
+Aunamate next degree scripts
+C:\Users\ChiefQuippy\Documents\NetBeansProjects\ZADScripts\dist\ZADScripts.jar
+
+For instance:
+
+java -jar ZADScripts.jar 2 9 10 2
+
+java -jar ZADScripts.jar 2 9 10 2
+java -jar ZADScripts.jar 2 9 10 8
+java -jar ZADScripts.jar 2 9 10 16
+java -jar ZADScripts.jar 2 9 10 32
+
+Zeppelin note D64 has latest and greatest delete scripts.
+Current graph.db may have currupted MaxN=10 scripts
+
+MATCH (i:IndexedBy)
+WITH toInteger(i.MaxN) as iMaxNN Order By toInteger(i.MaxN)  
+RETURN COLLECT(DISTINCT iMaxNN)      // ORDER BY toInteger(i.MaxN)
+//RETURN iMaxNN
+
+MATCH (i:IndexedBy {MaxN:'10'})
+RETURN DISTINCT i
+
+WITH toInteger(i.MaxN) as iMaxNN Order By toInteger(i.MaxN)  
+RETURN COLLECT(DISTINCT iMaxNN)      // ORDER BY toInteger(i.MaxN)
+//RETURN iMaxNN
+
+And the answer is:
+There are no IndexedBy nodes with dimension:4 because 
+ZADScripts writes the quartets as dimension:8 because
+these nodes are the precursers for the d8 s1 script.
+
+So, maybe MaxN:10 is not properly defined?  it does appear so.
+The Plan:
+.Mount FreshGraph
+.TwoPolynomialGenerator 16,32
+.ZADScripts 10,16,32 into quartets.
+
+So need to map args[] for TwoPolynomialGenerator.jar
+
+args[0] is name.csv
+ BigDecimal(args[1]),new BigDecimal(args[2]),new BigDecimal(args[3]
+
+,BigDecimal upper,BigDecimal lower,BigDecimal range
+
+       this.NN=upper;
+       this.lower=lower;
+       this.range=range;
+
+plvRunThread(this.range.intValue(),this.lower.intValue(),this.NN.intValue()
+
+plvRunThread( int range,    int jLower, int jUpper,
+
+C:\Windows.old\Users\Aibes\JavaProjects\TwoPolynomialGenerator\dist\TwoPolynmialGenerator.jar
+
+so, maybe run the jar as 1632.csv 16 2 16
+and                      1632.csv 32 2 32
+and                      0064.csv 64 2 64
+
+so to run the whole progression, range should be jUpper.
+
+C:\Users\ChiefQuippy\Documents\NetBeansProjects\ZADScripts\dist\ZADScripts.jar
+
+java -jar ZADScripts.jar 2 15 16 2
+
+java -jar ZADScripts.jar 2 31 32 2   does demonstrate the correct bit in the constant term.
+java -jar ZADScripts.jar 2 31 32 8   should be run and corraborate the prior  was run till 22 of 32
+
+java -jar ZADScripts.jar 2 10 64 2   node only running half the n sequence
+java -jar ZADScripts.jar 2 10 64 8   also to be run.
+
+the above were run.
+
+                                    
+the binary representation of the calculation (4,8,16,32 nmax's) are 			
+similar to the 10 represention of the caluclation(10,100,1000).			
+in that the constant term contains the answer up to the sigificant			
+digits of the calculation.			
+
+so, to look for the permutations of 4, it is in the compositons
+of the p back to the linear.
+
+
+ready to tease the theorm into a notebook.
+
+and the things to do are -  get the jars running in zeppelin
+the 2,4,8 seem to work.
+test the 3,9,27,81.
+
+
+7/9
+
+want 3,9,27..81 
+as well as 10,100,1000 on ZADdb.
+
+do need a decimal to cubit converter.
+
+C:\Windows.old\Users\Aibes\JavaProjects\TwoPolynomialGenerator\dist\TwoPolynmialGenerator.jar
+
+java -jar TwoPolynomialGenerator.jar 03.csv 3 2 3
+java -jar TwoPolynomialGenerator.jar 09.csv 9 2 9
+java -jar TwoPolynomialGenerator.jar 27.csv 27 2 10
+
+
+C:\Users\ChiefQuippy\Documents\NetBeansProjects\ZADScripts\dist\ZADScripts.jar
+
+java -jar ZADScripts.jar 2 2 3 2
+java -jar ZADScripts.jar 2 2 3 8
+java -jar ZADScripts.jar 2 8 9 2
+java -jar ZADScripts.jar 2 8 9 8
+java -jar ZADScripts.jar 2 8 27 2
+java -jar ZADScripts.jar 2 8 27 8
+
+Are the scripts to run.
+
+They ran complete.
+
+So, they were not, however loaded.
+So, what happened when the jar for 27 was run?
+
+
+3 and 9 were on ZADdb so the scripts ran.
+
+java -jar ZADScripts.jar 2 8 27 2
+java -jar ZADScripts.jar 2 8 27 8
+
+27 needs to be loaded on zad.
+
+done.
+
+And what would make the archive complete these days?
+
+
+The effort for aquiring an integer base x to integer base y .jar
+resides in constructing a bigInteger (string,radex) max radix is 36.
+
+need to be able to add bigintegers of arbitrary radix.
+
+that would be:  add in the usual bigInteger.add() way.
+then bigIntegerToString(radix)
+
+public String toString(int radix)
+
+
+7/10
+
+https://en.wikipedia.org/wiki/Horner%27s_method
+
+
+java.io.IOEception: could not locate executable nul\bin\winutils.ex in the hadoop binary
+
+so, next up is declare the array and substitute null.
+
+
+The '$' character is a reserved keyword in Scala
+
+
+
+
+Concurrency support inspired by Erlang
+
+https://getpocket.com/explore/item/a-new-theory-explains-how-consciousness-evolved?utm_source=pocket-newtab
+https://getpocket.com/explore/item/the-four-desires-driving-all-human-behavior-bertrand-russell-s-magnificent-nobel-prize-acceptance?utm_source=pocket-newtab
+
+
+object Test {
+ def main(args: Array[String]) {
+ var a = 0;
+ val numList = List(1,2,3,4,5,6,7,8,9,10);
+ // for loop execution with a yield
+ var retVal = for{ a <- numList
+ if a != 3; if a < 8
+ }yield a
+ // Now print returned values using another loop.
+ for( a <- retVal){
+ println( "Value of a: " + a );
+ }
+ }
+}
+
+
+Scala does not support
+break or continue statement like Java d
+
+Currying Functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
+
+

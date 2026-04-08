@@ -1,0 +1,224 @@
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.add(v.Degree,"1") ELSE apoc.number.exact.add(v.Degree,"0") END ) AS TTDegree,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.add(vv.Degree,"1") ELSE apoc.number.exact.add(vv.Degree,"0")  END) AS AADegree
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode { TDegree:TTDegree,
+                                              TScalar:apoc.number.exact.add(TTScalar,"0"),  
+                                              TDivisor:p1.Divisor,
+                                              ADivisor:p2.Divisor,
+                                              ATwoSeq:apoc.number.exact.add(p2.T,"0"),        
+                                              ADegree:AADegree,   
+                                              AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                              DegreeSum:CASE WHEN vv.Degree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree),
+                                              ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                              ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+WITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                      TScalar:CASE WHEN toInteger(v.Degree)=-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,
+                                      ATwoSeq:toInteger(p2.T),
+                                      ADegree:toInteger(vv.Degree),   
+                                      AScalar:CASE WHEN toInteger(vv.Degree)=-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e
+
+
+
+
+//   First and second versions of D4S2.
+
+
+//MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+//WITH i,e,p,i.N as iN, i.MaxN as iM
+//MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+//WITH i,e,p,v,p1,iN,iM
+//OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+//WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+//     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+//     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+
+
+//Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+//CREATE (cl)-[:Arguments]->(aN:ArgumentsNode {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+//                                               TScalar:apoc.number.exact.add(TTScalar,"0"),
+//                                               TDivisor:p1.Divisor,
+//                                               ADivisor:p2.Divisor,
+//                                               ATwoSeq:toInteger(p2.T),        //  Surviving integer type
+//                                               ADegree:toInteger(vv.Degree),   //  Surviving integer type
+//                                               AScalar:apoc.number.exact.add(AAScalar,"0"),
+//                                               ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+//                                               ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END //})
+//RETURN cl,aN
+
+
+// Integer types ae now number.exact
+
+//MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+//WITH i,e,p,i.N as iN, i.MaxN as iM
+//MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+//WITH i,e,p,v,p1,iN,iM
+//OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+//WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+//     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalar,
+//     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar     
+
+
+//Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+//CREATE (cl)-[:Arguments]->(aN:ArgumentsNode { TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN apoc.number.exact.add(v.Degree,"1") ELSE apoc.number.exact.add(v.Degree,"0") END,
+//                                              TScalar:apoc.number.exact.add(TTScalar,"0"),
+//                                              TDivisor:p1.Divisor,
+//                                              ADivisor:p2.Divisor,
+//                                              ATwoSeq:apoc.number.exact.add(p2.T,"0"),        
+//                                              ADegree:apoc.number.exact.add(vv.Degree,"0"),   
+//                                              AScalar:apoc.number.exact.add(AAScalar,"0"),
+//                                              ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(v.Scalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+//                                              ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END //})
+//RETURN cl,aN
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM,TTScalarRowCounter,toString( CASE WHEN toString(i.RowCounter)="2" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar,     
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.add(v.Degree,"1") ELSE apoc.number.exact.add(v.Degree,"0") END ) AS TTDegree,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.add(vv.Degree,"1") ELSE apoc.number.exact.add(vv.Degree,"0")  END) AS AADegree
+
+
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode { TDegree:TTDegree,
+                                              TScalar:apoc.number.exact.add(TTScalar,"0"),  
+                                              TDivisor:p1.Divisor,
+                                              ADivisor:p2.Divisor,
+                                              ATwoSeq:apoc.number.exact.add(p2.T,"0"),        
+                                              ADegree:AADegree,   
+                                              AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                              DegreeSum:CASE WHEN vv.Degree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+                                              ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                              ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) 
+                     where i.N="7" AND i.MaxN="10" AND i.Dimension="2" 
+WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii)
+                    where ii.MaxN="10"  AND ii.Dimension="2"
+WITH iN,iM,e,v,vv,t,tt,ee,i,ii
+RETURN i.N,i.MaxN,i.RowCounter,v.Degree,v.Scalar,vv.Degree,vv.Scalar,t.twoSeq,tt.twoSeq,e.Value,ee.Value,ii.RowCounter
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) 
+                     where i.N="4" AND i.MaxN="10" AND i.Dimension="2" 
+WITH i.N as iN, i.MaxN as iM,e,v,t,i
+return iN,iM,e,v,t,i  
+
+
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM,toString( CASE WHEN toString(i.RowCounter)="2" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+ 
+
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE toString(vv.Scalar) END) AS AAScalar,     
+                                   
+                                                                                                         apoc.number.exact.mul(toString(vv.Scalar),"p2.T")
+
+
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.add(v.Degree,"1") ELSE apoc.number.exact.add(v.Degree,"0") END ) AS TTDegree,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.add(vv.Degree,"1") ELSE apoc.number.exact.add(vv.Degree,"0")  END) AS AADegree
+
+
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode { TDegree:TTDegree,
+                                              TScalar:apoc.number.exact.add(TTScalar,"0"),  
+                                              TDivisor:p1.Divisor,
+                                              ADivisor:p2.Divisor,
+                                              ATwoSeq:apoc.number.exact.add(p2.T,"0"),        
+                                              ADegree:AADegree,   
+                                              AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                              DegreeSum:CASE WHEN vv.Degree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+                                              ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                              ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='9' AND i.MaxN='10' AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM,toString( CASE WHEN toString(i.RowCounter)="2" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,CASE WHEN p2 IS null THEN 99 ELSE  toInteger(p2.Eval) END as p2Eval,
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.mul(toString(v.Scalar),"2") ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.mul(toString(vv.Scalar),"2") ELSE apoc.number.exact.mul(toString(vv.Scalar),p2.T) END) AS AAScalar,     
+     toString( CASE WHEN toString(v.Degree)="-1" THEN apoc.number.exact.add(v.Degree,"1") ELSE apoc.number.exact.add(v.Degree,"0") END ) AS TTDegree,
+     toString( CASE WHEN toString(vv.Degree)="-1" THEN apoc.number.exact.add(vv.Degree,"1") ELSE apoc.number.exact.add(vv.Degree,"0")  END) AS AADegree
+
+
+Merge (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'9',Divisor:pD,afe:p2Eval,tft:toInteger(p1.T)})                                       
+CREATE (cl)-[:Arguments]->(aN:ArgumentsNode { TDegree:TTDegree,
+                                              TScalar:apoc.number.exact.add(TTScalar,"0"),  
+                                              TDivisor:p1.Divisor,
+                                              ADivisor:p2.Divisor,
+                                              ATwoSeq:apoc.number.exact.add(p2.T,"0"),        
+                                              ADegree:AADegree,   
+                                              AScalar:apoc.number.exact.add(AAScalar,"0"),
+                                              DegreeSum:CASE WHEN vv.Degree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+                                              ScalarProduct:CASE WHEN vv.Scalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+                                              ResultDivisor:CASE WHEN vv.Scalar IS Null THEN toString(p1.Divisor) ELSE apoc.number.exact.mul( toString(p1.Divisor),apoc.number.exact.mul(toString(p2.Divisor),toString(pD))) END })
+RETURN cl,aN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

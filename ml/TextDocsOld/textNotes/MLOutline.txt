@@ -1,0 +1,159 @@
+Data science vs ai..
+
+identify problem
+
+business sponser:  objective success criteria project plan timeline target variable definition reporting specs sighn off
+data preperation: data inventory data quality review reove duplicates missing value review finalize eda file sign off
+data exploration:  table statistics summary  univariate decisioin trees identify interation terms calculate scaling options historgram plots coliniarity testing sign off
+transform and select:   class imbalance adjustment binarization quadratic plots dimension reduction transform testing norm sigmoid conversion sign off
+predictive modeling:  gmm clustering cart/cs distributed evolutionary algorithms support vector machines convolutional neural networks lstm gradient boosting trees encoding sign off
+validate models:  area under curve log loss avarage prediction f1 score recall vs prediction sign off
+deploy models:  tbo sign off
+evaluate monitor: results scoring times population stability report performance sign off
+
+Building training sets      2      *
+cleaning and organizing data 60    *
+collecting data sets 19            *
+mining data for patterns 9
+refining algorithms 4
+other 5
+
+Tip 1 craft over process.
+    2 try to simplify relationships to either binary flags or straight lines.
+    3 automate continuous variable transformations for testing.
+    4 consider ensembling individual engineered features -  each feature can be its own mini model.
+      what transformation can we apply to an individual variable as if it was a model of that variable.
+       heck -  80% of the variables will be thrown out.
+    5 use target mean encoding for categorical inputs  a technique not an algorithm
+    6 replace traditional binning with decision trees.
+      bin a continuous variable vs tree  
+    7 leverage random forests in two ways: feature importanse, indifidual trees as engineered 
+      features.
+    8 consider binning 0 values separately in monetary values.
+       - zero as a flag, not a continuous variable.
+    9 desision trees for "pultting it all together".
+
+
+https://neo4j.com/developer/graph-data-science/
+https://neo4j.com/developer/graph-data-science/link-prediction/graph-data-science-library/
+https://neo4j.com/developer/graph-data-science/node-classification/
+
+
+https://towardsdatascience.com/multiclass-classification-algorithm-from-scratch-with-a-project-in-python-step-by-step-guide-485a83c79992
+https://towardsdatascience.com/graph-database-graphql-and-machine-learning-for-carbohydrate-active-enzymes-dba8500b45cf
+
+May/June/July summary:
+
+May began with java -jar commands for populating typical twoPolynomials used in GraphicZero analysis.
+These typical polynomials are on a graph in NewtweonsDifferencePolynomials??
+The first survey of gds.* algorithms with 042321 graph.
+More theory.
+GraphQL theory.
+
+June began with plenty more theory.
+DiffDataExplore note fleshed out.
+Differences graph includes determined field.
+Experiment with :Dnode accepting a wNum field. - not implemented.
+Skip pattern written into ZAD using auxillary nodes.  The pattern is recorded on CreatedBy nodes.
+Start the :Configure node refactor.
+
+Jul:
+Complete next ZAD revision.
+It does populate graph very mostly as expected.
+
+
+
+Latest narrative:    7/22 need latestt narrative.
+
+LoopsMain instanciates two threads.  
+
+FractionIntegerDriverIterate is a thread defining
+sets representing mu numbers.  A FIDI mu set is characterized
+by the mu denominater.  Iterating across all numerators, for a range of
+denominators, compleates a FIDI run.  It is to note though,  when paired
+with LDTPM,  The interest is in the binary representation of mu, and not 
+the fraction itself.      
+
+LoopsDriverTwoPManager, the second thread, implements a Newton's difference 
+algorithm described in the video link.  Each iteration in a LDTPM defines a set
+of related P's each with determined/under determined sets of roots and the corrosponding
+mu number defined by the roots.  Each set of P's along with relevant root sets and mu number
+(in this case the mu fraction is significant) are written to the graph DB.     
+
+The simple iteration of LoopsDriverTwoPManager is not a complete description of the 
+difference space. It is not necessary to define a zero at a particular triag_i or for that matter
+a set of triag's.  FIDI's binary mu sets (a power set of permutations) provide masks LDTPM applys
+to thread iterations.  The P sets generated with masked iterations contribute the P space without
+changing the specified parameters of Newton's difference algorithm.
+
+Issues with FIDI and LDTPM integration:
+
+Out of memory crash.  
+The proposed remediation is uncouple the simultanious iterations.
+FIDI is to write to mlGraph a simple list of nodes representing its
+iteration output over a range of denominators.
+LDTPN can querry for nextMask pattern.
+
+Other issues:
+
+FIDI seeds the iteration with a simple monomial. It is paramiterized with
+"setProductRange" the furthest zero index to transform p.  PArray, the
+setProductRange record during iteration, is initialized to zero.    
+It needs to be able to append a prior iteration.  For a append setProductRange
+iteration, pArray must be predefined, not as a zeroed array, but with the 
+last complete setProductRange variable.  
+
+The Gauss reduction result of the difference p at triag_i is imprecise.  
+More to the point is implement the algebraic definition as P(x)-P(x-1).
+
+Of graphic interest is interConnected triag_i p's wholy defined.
+
+The sets are written to a buffer
+shared with LoopsDriverTwoPManager.  
+
+Runtime
+parameters numeratorHigh,denominator are hard coded.  FIDI writes
+to a buffer shared with LoopsDriverTwoPManager, also a thread.
+
+GraphicFirstML.json           - Cypher scripts implementing Neo4j ML algorithms. 
+GraphicScrips.json            - Primary cypher scrips used for manipulating integer representing polynomials.
+GraphicZero.json              - Spark Scala notebook exibiting algebraic properties of generated polynomials.     
+GraphiZeroTheQuadratics.json  - Spark Scala notebook exibitiing properties of generated quadratics.
+KafkaStreamsTopics.json       - neo4j .conf scrips integrating kafka and neo4j
+
+ZADScripts.jar            - Generate arbitrary degreed polynomial starting with generated quadratics (uses Kafka).
+ZeroAndDifferences.jar    - Implement Newton's difference algorithm along with jdbc methods for populating graphDB.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+        CYPHER runtime=interpreted 
+        UNWIND range(toInteger('5'),toInteger('5)) AS n
+        WITH toString(n) AS iN, '1000' as iM
+        MATCH (v:VertexNode {Degree:?})<-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:?})
+        WITH iN, iM, max(vI.divisor) as maxDivisor
+        MATCH (v:VertexNode {Degree:?})<-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:?})
+        WITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor
+        
+        WITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+        UNWIND RANGE(0,SIZE(rPC)-1) as iI
+        WITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor
+        UNWIND rPCDS as rPCDSU
+        WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+        WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+        UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+        WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor
+        UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+        UNWIND rSL[iIII] as rSLI
+        
+        //RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor
+        WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor
+        WITH REDUCE(sum='0', x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor
+        WITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor
+        WITH REDUCE(sum='0', x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor
+        WITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN 
+        WITH COLLECT(pTerms) as pTermss,iM,iN
+        UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+        WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD
+        UNWIND dSList as dSListU
+        WITH dSListU.Degree AS aDegree,dSListU.Scalar AS aScalar,iN,iM,pTD
+        WITH {dimension:?,tDegree:aDegree,tScalar:aScalar,pTD:pTD,iM:iM,iN:iN} AS line
+        RETURN line

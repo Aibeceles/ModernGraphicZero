@@ -1,0 +1,272 @@
+{
+  "paragraphs": [
+    {
+      "title": "P(8,5,8)",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(5,5) AS n\nWITH toString(n) AS iN, \"8\" as iM\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\nWITH iN, iM, max(vI.divisor) as maxDivisor\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\n// return v.Scalar,v.Degree,vI.divisor,vI.twoSeq\nWITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n\nWITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS aDegree,dSListU.Scalar AS aScalar,iN,iM,pTD\nRETURN aDegree,aScalar,pTD,iM,iN",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-11 10:10:52.275",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "aDegree": "string",
+                      "aScalar": "string",
+                      "pTD": "string",
+                      "iM": "string",
+                      "iN": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "aDegree\taScalar\tpTD\tiM\tiN\n\"0\"\t\"15328\"\t\"4\"\t\"8\"\t\"5\"\n\"2\"\t\"1786\"\t\"4\"\t\"8\"\t\"5\"\n\"3\"\t\"-168\"\t\"4\"\t\"8\"\t\"5\"\n\"4\"\t\"6\"\t\"4\"\t\"8\"\t\"5\"\n\"1\"\t\"-8508\"\t\"4\"\t\"8\"\t\"5\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610377695348_-1413379522",
+      "id": "20210111-100815_358531308",
+      "dateCreated": "2021-01-11 10:08:15.348",
+      "dateStarted": "2021-01-11 10:09:26.288",
+      "dateFinished": "2021-01-11 10:09:26.542",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Retrieve (16,5,8)",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(5,5) AS n\nWITH toString(n) AS iN, \"16\" as iM\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\nWITH iN, iM, max(vI.divisor) as maxDivisor\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)\n// return v.Scalar,v.Degree,vI.divisor,vI.twoSeq\nWITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n\nWITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\nWITH dSListU.Degree AS aDegree,dSListU.Scalar AS aScalar,iN,iM,pTD\nRETURN aDegree,aScalar,pTD,iM,iN",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-11 11:12:48.779",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "aDegree": "string",
+                      "aScalar": "string",
+                      "pTD": "string",
+                      "iM": "string",
+                      "iN": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "aDegree\taScalar\tpTD\tiM\tiN\n\"4\"\t\"6\"\t\"4\"\t\"16\"\t\"5\"\n\"2\"\t\"8122\"\t\"4\"\t\"16\"\t\"5\"\n\"3\"\t\"-360\"\t\"4\"\t\"16\"\t\"5\"\n\"1\"\t\"-81628\"\t\"4\"\t\"16\"\t\"5\"\n\"0\"\t\"308288\"\t\"4\"\t\"16\"\t\"5\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610377854385_1551148750",
+      "id": "20210111-101054_1741898642",
+      "dateCreated": "2021-01-11 10:10:54.385",
+      "dateStarted": "2021-01-11 10:11:57.287",
+      "dateFinished": "2021-01-11 10:11:57.481",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "(8,5,8) crossed with xyz(8)",
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(0,4) AS n\nWITH toString(n) AS N, \u00278\u0027 as nMax\nMATCH (v:VertexNode {Degree:N})\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:\"5\",MaxN:nMax,Dimension:\u00278\u0027})-[]-\u003e(e:Evaluate)   // and vI.twoSeq\nWITH i.N as iN, i.MaxN as iM,e,v,vI,i,N\nOPTIONAL MATCH (vXY:VertexNodeXY)\u003c-[vI:VertexIndexedBy]-(iXY:IndexedByXY {Dimension:N,Constant:\"8\"}) \n//OPTIONAL MATCH (vv:VertexNode)\u003c-[vII:VertexIndexedBy]-(ii:IndexedByArgument)-[]-\u003e(ee:Evaluate {Value:toString(vI.twoSeq)})      \n//                    where ii.MaxN\u003diM  AND ii.Dimension\u003d\u00278\nreturn i,v,iXY,vXY",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-11 11:39:29.317",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id": "string",
+                      "label": "string",
+                      "Dimension": "string",
+                      "RowCounter": "string",
+                      "N": "string",
+                      "MaxN": "string",
+                      "Degree": "string",
+                      "Scalar": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "NETWORK",
+            "data": "{\"nodes\":[{\"id\":47360,\"data\":{\"Degree\":\"1\",\"Scalar\":\"-2528\"},\"label\":\"VertexNode\"},{\"id\":47361,\"data\":{\"Degree\":\"4\",\"Scalar\":\"2\"},\"label\":\"VertexNode\"},{\"id\":47362,\"data\":{\"Degree\":\"2\",\"Scalar\":\"552\"},\"label\":\"VertexNode\"},{\"id\":47363,\"data\":{\"Degree\":\"0\",\"Scalar\":\"4368\"},\"label\":\"VertexNode\"},{\"id\":47364,\"data\":{\"Degree\":\"0\",\"Scalar\":\"60\"},\"label\":\"VertexNode\"},{\"id\":47365,\"data\":{\"Dimension\":\"8\",\"RowCounter\":2,\"N\":\"5\",\"MaxN\":\"8\"},\"label\":\"IndexedBy\"},{\"id\":47366,\"data\":{\"Degree\":\"1\",\"Scalar\":\"-22\"},\"label\":\"VertexNode\"},{\"id\":47367,\"data\":{\"Degree\":\"2\",\"Scalar\":\"2\"},\"label\":\"VertexNode\"},{\"id\":47368,\"data\":{\"Degree\":\"2\",\"Scalar\":\"2\"},\"label\":\"VertexNode\"},{\"id\":47369,\"data\":{\"Dimension\":\"8\",\"RowCounter\":1,\"N\":\"5\",\"MaxN\":\"8\"},\"label\":\"IndexedBy\"},{\"id\":47370,\"data\":{\"Degree\":\"1\",\"Scalar\":\"-16\"},\"label\":\"VertexNode\"},{\"id\":47371,\"data\":{\"Degree\":\"0\",\"Scalar\":\"44\"},\"label\":\"VertexNode\"},{\"id\":47352,\"data\":{\"Degree\":\"3\",\"Scalar\":\"-114\"},\"label\":\"VertexNode\"},{\"id\":47353,\"data\":{\"Dimension\":\"8\",\"RowCounter\":8,\"N\":\"5\",\"MaxN\":\"8\"},\"label\":\"IndexedBy\"},{\"id\":47354,\"data\":{\"Degree\":\"2\",\"Scalar\":\"1226\"},\"label\":\"VertexNode\"},{\"id\":47355,\"data\":{\"Degree\":\"1\",\"Scalar\":\"-5904\"},\"label\":\"VertexNode\"},{\"id\":47356,\"data\":{\"Degree\":\"4\",\"Scalar\":\"4\"},\"label\":\"VertexNode\"},{\"id\":47357,\"data\":{\"Degree\":\"0\",\"Scalar\":\"10752\"},\"label\":\"VertexNode\"},{\"id\":47358,\"data\":{\"Degree\":\"3\",\"Scalar\":\"-54\"},\"label\":\"VertexNode\"},{\"id\":47359,\"data\":{\"Dimension\":\"8\",\"RowCounter\":4,\"N\":\"5\",\"MaxN\":\"8\"},\"label\":\"IndexedBy\"}],\"edges\":[],\"labels\":{\"IndexedBy\":\"#150109\",\"Evaluate\":\"#7530CF\",\"TwoSeqFactor\":\"#417860\",\"VertexNode\":\"#CA94A1\",\"ArgumentsNode\":\"#D2C646\",\"CollectedProductArgNode\":\"#40F602\",\"IndexedByArgument\":\"#D60241\",\"IndexedByXY\":\"#CC9005\",\"VertexNodeXY\":\"#39DC7A\",\"VertexNodeXy\":\"#01FDC7\",\"IndexedByArgumentXY\":\"#059AC3\"},\"types\":[\"IndexedByEvaluate\",\"TwoFactor\",\"Arguments\",\"VertexIndexedBy\"],\"directed\":true}"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610377852404_1756523161",
+      "id": "20210111-101052_1965462656",
+      "dateCreated": "2021-01-11 10:10:52.404",
+      "dateStarted": "2021-01-11 11:39:29.330",
+      "dateFinished": "2021-01-11 11:39:29.353",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610381573164_1130572993",
+      "id": "20210111-111253_1942459416",
+      "dateCreated": "2021-01-11 11:12:53.164",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610381570573_378522401",
+      "id": "20210111-111250_279264150",
+      "dateCreated": "2021-01-11 11:12:50.573",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1610377766279_588152541",
+      "id": "20210111-100926_2117097636",
+      "dateCreated": "2021-01-11 10:09:26.279",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "BinomialTranslationExperiment",
+  "id": "2FWD5K8ER",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

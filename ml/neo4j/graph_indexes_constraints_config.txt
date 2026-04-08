@@ -1,0 +1,41 @@
+CREATE DATABASE myDatabaseName
+
+CREATE DATABASE d5AppendExperiment
+
+-- Primary MERGE key for Dnode (used in wZeroPattern/wPattern)
+CREATE CONSTRAINT dnode_key IF NOT EXISTS
+  FOR (d:Dnode) REQUIRE (d.vmResult, d.n) IS NODE KEY;
+
+-- Primary MERGE key for CreatedBy (used in wZeroPattern/wPattern)
+CREATE CONSTRAINT createdby_key IF NOT EXISTS
+  FOR (c:CreatedBy) REQUIRE (c.resultId, c.wNum) IS NODE KEY;
+
+-- Supporting index for createKnownByRelation WHERE d.vmResult=?
+CREATE INDEX dnode_vmresult IF NOT EXISTS FOR (d:Dnode) ON (d.vmResult);
+
+-- Critical: equality lookup on wNum
+CREATE INDEX createdby_wnum IF NOT EXISTS FOR (c:CreatedBy) ON (c.wNum);
+
+
+// ZAD uses this configuration for populating the graph.
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange:3, integerRange:200, setProductRAngeIncrement:20,maxSetProductRange:10,pArray:"[-1, -1, -1, -1, -1, 0]"})
+
+
+
+
+ChiefQuippy
+
+src/MainClass/GaussTable1.java and core/config.py both reference the same neo4j graph instance.
+the .java code writes to the database according to current main class and the config.py reads from in with regards to sequence_predictor_migrated.ipynb.   have plan for populating new graph db.  need to know relevant graph indexes for ETL and Read queries. 
+
+
+
+
+
+
+// ZAD uses this configuration for populating the graph.
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange:20, integerRange:200, setProductRAngeIncrement:20,maxSetProductRange:10,pArray:"[-1, -1, -1, -1, 0]"})
+
+This graph node is read in the ZerosAndDifferences/src/MainClass - java project
+Need "configure_node.md" written and explaining the configuration with regard to each of the properties.   
+believe some of the properties effect the duration of the code run, some are initial condition parameters. 

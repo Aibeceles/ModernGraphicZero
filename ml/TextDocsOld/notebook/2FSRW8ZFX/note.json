@@ -1,0 +1,885 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\nThe GraphicZero project (video link at bottom) defines polynomials in terms of sets of integer quadratics that when added together evaluate\nto a predictable power of 2.  These sets are abstracted to be defined in terms of an arbitrary free integer variable. \nFurther, the project outlines a method for extending sets of quadratics into higher degreed polynomials while maintaing\nthe abstraction of P definition in terms the free integer variable.\n\nGraphicZero is further motivated with qustion: Why go through multiplying out and adding terms of P for defining ordinary Int?\nMultiplication yes, expecially when two P\u0027s are involved (spoiler alert) but P analysis may reveal alternative.\nGraphicZero exibits an algebraic feature of GraphHack\u0027ed P\u0027s meriting the Zero Degree Constant Term Hypotheis (ZDCTH).\n\nZDCTH: Observation of the P\u0027s constant term (it is invariant under the variable) suggests it may represent Int.\nIn fact, given the Int, choose a radix r as the P generator and a free variable generated from r, then p\u0027s constant term,\nexpresed in the radix, contains the the Int within the first size(Int) number of significant digits.\n\nNote the generator is the usual sieve of positive integers not a power of a prior integer.  The generator is the base\nradix and powers of the generator determine the number of significant digits the constant term constrains Int to.    \nIn the following MaxIndex\u003d10000\u003d10^5 with significant digits of 32 \u003d2.  2\u003c\u003d5 therfore the constant term returned\nexpresses the two significant digits correctly.  Likewise MaxIndex\u003d64 is 2^6 and radix 2 32 is 100000 \u003d 6 digits.\n6\u003c\u003d6 and expressive of Int correctly.\n\nFor instance DFScripts.s3A(10000,5,3) defining 2^5\u003d32 returns a DataSet (the entire P defining 32) using\n10, the usual radix. Note also 10000 is in the generator of 10. Interest is in the zero degreed term.  The first two significant\ndigits of the zero degree term (32 has two significant digits) are identical to the definition of P(10000,5,3) which is 32. \n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-31 12:46:10.439",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eThe GraphicZero project (video link at bottom) defines polynomials in terms of sets of integer quadratics that when added together evaluate\u003cbr/\u003eto a predictable power of 2. These sets are abstracted to be defined in terms of an arbitrary free integer variable.\u003cbr/\u003eFurther, the project outlines a method for extending sets of quadratics into higher degreed polynomials while maintaing\u003cbr/\u003ethe abstraction of P definition in terms the free integer variable.\u003c/p\u003e\n\u003cp\u003eGraphicZero is further motivated with qustion: Why go through multiplying out and adding terms of P for defining ordinary Int?\u003cbr/\u003eMultiplication yes, expecially when two P\u0026rsquo;s are involved (spoiler alert) but P analysis may reveal alternative.\u003cbr/\u003eGraphicZero exibits an algebraic feature of GraphHack\u0026rsquo;ed P\u0026rsquo;s meriting the Zero Degree Constant Term Hypotheis (ZDCTH).\u003c/p\u003e\n\u003cp\u003eZDCTH: Observation of the P\u0026rsquo;s constant term (it is invariant under the variable) suggests it may represent Int.\u003cbr/\u003eIn fact, given the Int, choose a radix r as the P generator and a free variable generated from r, then p\u0026rsquo;s constant term,\u003cbr/\u003eexpresed in the radix, contains the the Int within the first size(Int) number of significant digits.\u003c/p\u003e\n\u003cp\u003eNote the generator is the usual sieve of positive integers not a power of a prior integer. The generator is the base\u003cbr/\u003eradix and powers of the generator determine the number of significant digits the constant term constrains Int to.\u003cbr/\u003eIn the following MaxIndex\u003d10000\u003d10^5 with significant digits of 32 \u003d2. 2\u0026lt;\u003d5 therfore the constant term returned\u003cbr/\u003eexpresses the two significant digits correctly. Likewise MaxIndex\u003d64 is 2^6 and radix 2 32 is 100000 \u003d 6 digits.\u003cbr/\u003e6\u0026lt;\u003d6 and expressive of Int correctly.\u003c/p\u003e\n\u003cp\u003eFor instance DFScripts.s3A(10000,5,3) defining 2^5\u003d32 returns a DataSet (the entire P defining 32) using\u003cbr/\u003e10, the usual radix. Note also 10000 is in the generator of 10. Interest is in the zero degreed term. The first two significant\u003cbr/\u003edigits of the zero degree term (32 has two significant digits) are identical to the definition of P(10000,5,3) which is 32.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609265262279_1847722289",
+      "id": "20201229-130742_1946790402",
+      "dateCreated": "2020-12-29 13:07:42.279",
+      "dateStarted": "2021-05-31 12:46:10.441",
+      "dateFinished": "2021-05-31 12:46:11.957",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Typical Polynomial defining Integer\u003d32 (10000 is free variable).",
+      "text": "import org.apache.spark.sql.{Encoder, Encoders, SparkSession}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\n\nobject IndexRowsSum extends Aggregator[s3ARe, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  \n  def reduce(buffer: indexSum, s3TR: s3ARe): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.result)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  \n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n \n  def finish(reduction: indexSum): String \u003d reduction.iSum\n\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n}\n\nval ds\u003d z.get(\"udf1000054\").asInstanceOf[Dataset[s3ARe]]\nds.schema\nds.show(false) \n\nval indexResult \u003d IndexRowsSum.toColumn.name(\"index_Result\")\nval iResult \u003d ds.select(indexResult)\niResult.show(false)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 08:59:34.037",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+-------------------------------------+-----+--------+-------+------------------------------------------+\n|dimension|Degree|scalar                               |index|maxIndex|divisor|result                                    |\n+---------+------+-------------------------------------+-----+--------+-------+------------------------------------------+\n|32       |1     |-1918544578258922693643356152576.00  |5    |10000   |256    |-74943147588239167720443599710000.00      |\n|32       |3     |-134327219277178226952144.00         |5    |10000   |256    |-524715700301477449031812500000000.0000   |\n|32       |5     |-1343563257837178.00                 |5    |10000   |256    |-524829397592647656250000000000000.0000000|\n|32       |0     |2397920963717856732144780725768192.00|5    |10000   |256    |9366878764522877859940549710032.00        |\n|32       |6     |67185440964.00                       |5    |10000   |256    |262443128765625000000000000000000.000000  |\n|32       |2     |671563344571783404164327808.00       |5    |10000   |256    |262329431473352892251690550000000.00      |\n|32       |8     |24.00                                |5    |10000   |256    |9375000000000000000000000000000.00000     |\n|32       |4     |16792721445858905674.00              |5    |10000   |256    |655965681478863502890625000000000.0000000 |\n|32       |7     |-1919792.00                          |5    |10000   |256    |-74991875000000000000000000000000.0000    |\n+---------+------+-------------------------------------+-----+--------+-------+------------------------------------------+\n\r\n+------------+\n|index_Result|\n+------------+\n|32.0000000  |\n+------------+\n\r\nimport org.apache.spark.sql.{Encoder, Encoders, SparkSession}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\ndefined object IndexRowsSum\r\nds: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\r\nindexResult: org.apache.spark.sql.TypedColumn[s3ARe,String] \u003d indexrowssum() AS `index_Result`\r\niResult: org.apache.spark.sql.Dataset[String] \u003d [index_Result: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609964664199_-1854455275",
+      "id": "20210106-152424_1883220489",
+      "dateCreated": "2021-01-06 15:24:24.199",
+      "dateStarted": "2021-01-07 09:39:46.075",
+      "dateFinished": "2021-01-07 09:39:47.391",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n\n\nDFScripts.s3A(64,5,3), also a P defining Int\u003d32, with 64 in the generator of 2, returns a DataSet in the radix 10\nand inspection of the first two significant digits in the zero degreed term are not identical.\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-07 10:49:17.497",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eDFScripts.s3A(64,5,3), also a P defining Int\u003d32, with 64 in the generator of 2, returns a DataSet in the radix 10\u003cbr/\u003eand inspection of the first two significant digits in the zero degreed term are not identical.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609965557654_-46650253",
+      "id": "20210106-153917_476523037",
+      "dateCreated": "2021-01-06 15:39:17.654",
+      "dateStarted": "2021-01-07 10:49:17.497",
+      "dateFinished": "2021-01-07 10:49:17.507",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "8 Degreed Polynomial with 64 as free variable.",
+      "text": "import org.apache.spark.sql.{Encoder, Encoders, SparkSession}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\n\nobject IndexRowsSum extends Aggregator[s3ARe, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  \n  def reduce(buffer: indexSum, s3TR: s3ARe): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.result)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  \n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n \n  def finish(reduction: indexSum): String \u003d reduction.iSum\n\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n}\n\nval ds\u003d z.get(\"udf6454\").asInstanceOf[Dataset[s3ARe]]\nds.schema\nds.show(false) \n\nval indexResult \u003d IndexRowsSum.toColumn.name(\"index_Result\")\nval iResult \u003d ds.select(indexResult)\niResult.show(false)\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 08:59:46.576",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+-------------------+-----+--------+-------+-------------------------+\n|dimension|Degree|scalar             |index|maxIndex|divisor|result                   |\n+---------+------+-------------------+-----+--------+-------+-------------------------+\n|32       |3     |-1325910870864.00  |5    |64      |256    |-1357732731764736.0000   |\n|32       |2     |41724722862720.00  |5    |64      |256    |667595565803520.00       |\n|32       |1     |-750349022274304.00|5    |64      |256    |-187587255568576.00      |\n|32       |0     |5903914408927232.00|5    |64      |256    |23062165659872.00        |\n|32       |5     |-334797562.00      |5    |64      |256    |-1404242753486848.0000000|\n|32       |7     |-12080.00          |5    |64      |256    |-207532819742720.0000    |\n|32       |6     |2660292.00         |5    |64      |256    |714116696113152.000000   |\n|32       |4     |26335645354.00     |5    |64      |256    |1725932853919744.0000000 |\n|32       |8     |24.00              |5    |64      |256    |26388279066624.00000     |\n+---------+------+-------------------+-----+--------+-------+-------------------------+\n\r\n+------------+\n|index_Result|\n+------------+\n|32.0000000  |\n+------------+\n\r\nimport org.apache.spark.sql.{Encoder, Encoders, SparkSession}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\ndefined object IndexRowsSum\r\nds: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\r\nindexResult: org.apache.spark.sql.TypedColumn[s3ARe,String] \u003d indexrowssum() AS `index_Result`\r\niResult: org.apache.spark.sql.Dataset[String] \u003d [index_Result: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609966580814_2075898905",
+      "id": "20210106-155620_1345333241",
+      "dateCreated": "2021-01-06 15:56:20.814",
+      "dateStarted": "2021-01-07 09:40:43.271",
+      "dateFinished": "2021-01-07 09:40:44.075",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nHowever, the zero degreed term translated into the base 2 radix is\n101001111100110010100001100010010000011100000. With 32\u003d2^5 representable within MaxN\u003d64\u003d2^6,\nThe 5 significant digits necessary for radix 2 expressed 32 can be constrained \nby the constant term of P in 64.",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-06 16:30:53.899",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eHowever, the zero degreed term translated into the base 2 radix is\u003cbr/\u003e101001111100110010100001100010010000011100000. With 32\u003d2^5 representable within MaxN\u003d64\u003d2^6,\u003cbr/\u003eThe 5 significant digits necessary for radix 2 expressed 32 can be constrained\u003cbr/\u003eby the constant term of P in 64.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609967242950_1609342669",
+      "id": "20210106-160722_1287575911",
+      "dateCreated": "2021-01-06 16:07:22.950",
+      "dateStarted": "2021-01-06 16:30:53.899",
+      "dateFinished": "2021-01-06 16:30:55.473",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Binary Result of (64,5,4)",
+      "text": "ToBinaryUDF.main(Array(\"zero6454\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 07:29:35.664",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+-------------------+-----+--------+-------+-----------------+\n|dimension|Degree|             scalar|index|maxIndex|divisor|           result|\n+---------+------+-------------------+-----+--------+-------+-----------------+\n|       32|     0|5903914408927232.00|    5|      64|    256|23062165659872.00|\n+---------+------+-------------------+-----+--------+-------+-----------------+\n\r\n+---------+------+-------------------+-----+--------+-------+---------------------------------------------+\n|dimension|Degree|scalar             |index|maxIndex|divisor|result                                       |\n+---------+------+-------------------+-----+--------+-------+---------------------------------------------+\n|32       |0     |5903914408927232.00|5    |64      |256    |101001111100110010100001100010010000011100000|\n+---------+------+-------------------+-----+--------+-------+---------------------------------------------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609963486499_42789475",
+      "id": "20210106-150446_1735538257",
+      "dateCreated": "2021-01-06 15:04:46.499",
+      "dateStarted": "2021-01-06 15:07:47.357",
+      "dateFinished": "2021-01-06 15:07:47.669",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nThe first table below exibits constant terms of P\u0027s of radix\u003d10, free variable\u003d10000 defining Ints {4,8,16,32} with significant digits of constant terms defining Int.\nThe second table\u0027s constant terms are P\u0027s of radix\u003d10 free variable\u003d64 defining same ints.  Note sigificant digits of constant term do not define Int.\nThe last table is the constant terms of P\u0027s of radix 10 free variable\u003d64 transformed into radix\u003d2, free variable\u003d64.  Note the binary representation of \nthe significant digits.  They define the target set of Int\u0027s.\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-07 11:04:46.401",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eThe first table below exibits constant terms of P\u0026rsquo;s of radix\u003d10, free variable\u003d10000 defining Ints {4,8,16,32} with significant digits of constant terms defining Int.\u003cbr/\u003eThe second table\u0026rsquo;s constant terms are P\u0026rsquo;s of radix\u003d10 free variable\u003d64 defining same ints. Note sigificant digits of constant term do not define Int.\u003cbr/\u003eThe last table is the constant terms of P\u0026rsquo;s of radix 10 free variable\u003d64 transformed into radix\u003d2, free variable\u003d64. Note the binary representation of\u003cbr/\u003ethe significant digits. They define the target set of Int\u0026rsquo;s.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610031636087_1815537014",
+      "id": "20210107-100036_892501949",
+      "dateCreated": "2021-01-07 10:00:36.088",
+      "dateStarted": "2021-01-07 11:04:46.402",
+      "dateFinished": "2021-01-07 11:04:46.410",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "The constant terms of a range of Polynomials representing  Integers 4,8,16,32 with 10000 as free variable.",
+      "text": "import org.apache.spark.sql.{DataFrame,Dataset}\nimport spark.implicits._\nimport org.apache.spark.sql.{Encoder, Encoders}\nval ds\u003dz.get(\"udf10000Range\").asInstanceOf[Dataset[s3ARe]] \n//ds.show(false)\nval dss\u003dds.filter(_.Degree \u003d\u003d \"0\")\ndss.show(false)\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 08:59:59.628",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+------------------------------------------------------------------+-----+--------+-------+---------------------------------------------------------------+\n|dimension|Degree|scalar                                                            |index|maxIndex|divisor|result                                                         |\n+---------+------+------------------------------------------------------------------+-----+--------+-------+---------------------------------------------------------------+\n|32       |0     |199960008                                                         |2    |10000   |2      |99980004                                                       |\n|32       |0     |399900016                                                         |3    |10000   |2      |199950008                                                      |\n|32       |0     |799440239936012158464179171844096                                 |4    |10000   |256    |3122813437250047494000699890016                                |\n|32       |0     |2397920963717856732144780725768192.00                             |5    |10000   |256    |9366878764522877859940549710032.00                             |\n|32       |0     |12485322214254746710806891990663873495088414646195216384.000000000|6    |10000   |256    |48770789899432604339089421838530755840189119711700064.000000000|\n+---------+------+------------------------------------------------------------------+-----+--------+-------+---------------------------------------------------------------+\n\r\nimport org.apache.spark.sql.{DataFrame, Dataset}\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.{Encoder, Encoders}\r\nds: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\r\ndss: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609946211512_-1552297197",
+      "id": "20210106-101651_1722670678",
+      "dateCreated": "2021-01-06 10:16:51.512",
+      "dateStarted": "2021-01-06 14:50:07.417",
+      "dateFinished": "2021-01-06 14:50:08.571",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "The constant terms of a range of Polynomials representing Integers 4,8,16,32 with 64 as free variable and 10 the radix.",
+      "text": "import org.apache.spark.sql.{DataFrame,Dataset}\nimport spark.implicits._\nimport org.apache.spark.sql.{Encoder, Encoders}\nval ds\u003dz.get(\"udf64range\").asInstanceOf[Dataset[s3ARe]] \n//ds.show(false)\nval dss\u003dds.filter(_.Degree \u003d\u003d \"0\")\ndss.show(false)\nz.put(\"zero64Range\",dss)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 09:00:06.333",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+-----------------------------------+-----+--------+-------+--------------------------------+\n|dimension|Degree|scalar                             |index|maxIndex|divisor|result                          |\n+---------+------+-----------------------------------+-----+--------+-------+--------------------------------+\n|32       |0     |7944                               |2    |64      |2      |3972                            |\n|32       |0     |15760                              |3    |64      |2      |7880                            |\n|32       |0     |2021334694318080                   |4    |64      |256    |7895838649680                   |\n|32       |0     |5903914408927232.00                |5    |64      |256    |23062165659872.00               |\n|32       |0     |2016705341739624433860608.000000000|6    |64      |256    |7877755241170407944768.000000000|\n+---------+------+-----------------------------------+-----+--------+-------+--------------------------------+\n\r\nimport org.apache.spark.sql.{DataFrame, Dataset}\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.{Encoder, Encoders}\r\nds: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\r\ndss: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609959322279_-587365381",
+      "id": "20210106-135522_1144814822",
+      "dateCreated": "2021-01-06 13:55:22.279",
+      "dateStarted": "2021-01-07 10:37:07.999",
+      "dateFinished": "2021-01-07 10:37:08.795",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Binary Result of (64,range,4)",
+      "text": "\nToBinaryUDF.main(Array(\"zero64Range\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 09:00:20.951",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 178.7,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+-----------------------------------+-----+--------+-------+-------------------------------------------------------------------------+\n|dimension|Degree|scalar                             |index|maxIndex|divisor|result                                                                   |\n+---------+------+-----------------------------------+-----+--------+-------+-------------------------------------------------------------------------+\n|32       |0     |7944                               |2    |64      |2      |111110000100                                                             |\n|32       |0     |15760                              |3    |64      |2      |1111011001000                                                            |\n|32       |0     |2021334694318080                   |4    |64      |256    |1110010111001100100101010000110110101010000                              |\n|32       |0     |5903914408927232.00                |5    |64      |256    |101001111100110010100001100010010000011100000                            |\n|32       |0     |2016705341739624433860608.000000000|6    |64      |256    |1101010110000110111010000110011011011010101011001110111100111001001000000|\n+---------+------+-----------------------------------+-----+--------+-------+-------------------------------------------------------------------------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609962339220_-1050679154",
+      "id": "20210106-144539_2056170176",
+      "dateCreated": "2021-01-06 14:45:39.220",
+      "dateStarted": "2021-01-07 10:37:21.903",
+      "dateFinished": "2021-01-07 10:37:22.360",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Link to introductory video:",
+      "text": "%md\n\nThe video link:   https://www.youtube.com/watch?v\u003dFqSzCCxxdVY\nThe project link: https://neo4j.com/blog/global-graphhack-projects-help-us-pick-winners/?mkt_tok\u003deyJpIjoiT1dReVpqSmlNV05rTlRabCIsInQiOiJWek9mK2R2bGNHR3VQa2pGR1U3bkFMWXQ1bHJFd1M2YTRcL2pqbzlqOUdVYnJVSG9odGJ0Z25PMnlTcUtBRzJuNlhOWFU2NTdJRWdcL2IrMG43WkUxMG5nN1lSUlBSZllzVWN0MFFMR1pzV0F0eHB2YTc4WWN3aHZ1NXY2YUp2QU50In0%3D\u0026fbclid\u003dIwAR3EF7q8rW7qZnd1a0kCheKlx-JU0BoWmZlIxCsl9ylvIsmxnQ3PAd1m91U\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-07 12:54:49.135",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "title": true,
+        "tableHide": false,
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eThe video link: \u003ca href\u003d\"https://www.youtube.com/watch?v\u003dFqSzCCxxdVY\"\u003ehttps://www.youtube.com/watch?v\u003dFqSzCCxxdVY\u003c/a\u003e\u003cbr/\u003eThe project link: \u003ca href\u003d\"https://neo4j.com/blog/global-graphhack-projects-help-us-pick-winners/?mkt_tok\u003deyJpIjoiT1dReVpqSmlNV05rTlRabCIsInQiOiJWek9mK2R2bGNHR3VQa2pGR1U3bkFMWXQ1bHJFd1M2YTRcL2pqbzlqOUdVYnJVSG9odGJ0Z25PMnlTcUtBRzJuNlhOWFU2NTdJRWdcL2IrMG43WkUxMG5nN1lSUlBSZllzVWN0MFFMR1pzV0F0eHB2YTc4WWN3aHZ1NXY2YUp2QU50In0%3D\u0026fbclid\u003dIwAR3EF7q8rW7qZnd1a0kCheKlx-JU0BoWmZlIxCsl9ylvIsmxnQ3PAd1m91U\"\u003ehttps://neo4j.com/blog/global-graphhack-projects-help-us-pick-winners/?mkt_tok\u003deyJpIjoiT1dReVpqSmlNV05rTlRabCIsInQiOiJWek9mK2R2bGNHR3VQa2pGR1U3bkFMWXQ1bHJFd1M2YTRcL2pqbzlqOUdVYnJVSG9odGJ0Z25PMnlTcUtBRzJuNlhOWFU2NTdJRWdcL2IrMG43WkUxMG5nN1lSUlBSZllzVWN0MFFMR1pzV0F0eHB2YTc4WWN3aHZ1NXY2YUp2QU50In0%3D\u0026fbclid\u003dIwAR3EF7q8rW7qZnd1a0kCheKlx-JU0BoWmZlIxCsl9ylvIsmxnQ3PAd1m91U\u003c/a\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1610035783430_-1006935170",
+      "id": "20210107-110943_448685387",
+      "dateCreated": "2021-01-07 11:09:43.430",
+      "dateStarted": "2021-01-07 12:54:49.136",
+      "dateFinished": "2021-01-07 12:54:49.165",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "1. case class paragraph.",
+      "text": "import org.apache.spark.sql.types.DecimalType\nimport scala.collection.mutable.ArrayBuffer\ncase class s3AQu(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String)\ncase class s3AQuD(dimension:String,Degree:String,scalar:String,index:DecimalType,maxIndex:String,divisor:String,rowCounter:DecimalType)\ncase class s3ARe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String)\ncase class rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal)\ncase class indexSum(iSum:String,finalISum:String)\ncase class consistant(rowCounter:BigDecimal,n:BigDecimal, maxN:String,dim:BigDecimal)\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 09:27:38.255",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.types.DecimalType\r\nimport scala.collection.mutable.ArrayBuffer\r\ndefined class s3AQu\r\ndefined class s3AQuD\r\ndefined class s3ARe\r\ndefined class rResult\r\ndefined class indexSum\r\ndefined class consistant\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609268526809_602323600",
+      "id": "20201229-140206_753033922",
+      "dateCreated": "2020-12-29 14:02:06.809",
+      "dateStarted": "2021-02-19 09:27:38.412",
+      "dateFinished": "2021-02-19 09:27:49.455",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "2. QuerryS3A object.",
+      "text": "\nobject QuerryS3A {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\ndef s3AQuerry(rLow:String,rHigh:String,nMax:String,d1:String): ArrayBuffer[s3AQu] \u003d {\n\nval terms \u003d new ArrayBuffer[s3AQu]()\nval s3 \u003d new DFScripts  \nval s3RS \u003d s3.s3A(rLow,rHigh,nMax,d1)\n\nwhile (s3RS.next()) {\nterms +\u003d s3AQu(d1,s3RS.getString(1),s3RS.getString(2),s3RS.getString(5),s3RS.getString(4),s3RS.getString(3))\n}\nterms\n}\n\ndef main(args:Array[String]) {  //     args[nMax,alower,aupper,indexlower,indexupper.datasetname\n\nval terms \u003d new ArrayBuffer[ArrayBuffer[s3AQu]]()\nval nMax \u003d args(0)                             \n\nfor(a \u003c- BigInt(args(1)).intValue() to BigInt(args(2)).intValue(); n \u003c- BigInt(args(3)).intValue() to BigInt(args(4)).intValue()) {    //  2^a is dimension, n is usual range, b is rowCounter\n   terms +\u003d QuerryS3A.s3AQuerry(n.toString,n.toString,nMax,BigDecimal(2).pow(a+1).toString())\n  }\n\nval mainTermss\u003dterms.flatMap(_.toList)\nval df \u003d spark.createDataFrame(mainTermss)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(args(5),df)\n}\n}\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-06-11 10:29:53.297",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\nwarning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\ndefined object QuerryS3A\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609265324622_-1622344987",
+      "id": "20201229-130844_738001913",
+      "dateCreated": "2020-12-29 13:08:44.622",
+      "dateStarted": "2021-02-19 09:27:52.706",
+      "dateFinished": "2021-02-19 09:27:53.892",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "3. QuerryS3A calls.",
+      "text": "\nQuerryS3A.main(Array(\"10000\",\"4\",\"4\",\"5\",\"5\",\"s3A1000054\"))\nQuerryS3A.main(Array(\"64\",\"4\",\"4\",\"5\",\"5\",\"s3A6454\"))\nQuerryS3A.main(Array(\"64\",\"4\",\"4\",\"2\",\"6\",\"s3A64Range\"))\nQuerryS3A.main(Array(\"10000\",\"4\",\"4\",\"2\",\"6\",\"s3A10000Range\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 09:29:13.137",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\n+---------+------+-------------------------------------+-----+--------+-------+\n|dimension|Degree|scalar                               |index|maxIndex|divisor|\n+---------+------+-------------------------------------+-----+--------+-------+\n|32       |1     |-1918544578258922693643356152576.00  |5    |10000   |256    |\n|32       |3     |-134327219277178226952144.00         |5    |10000   |256    |\n|32       |5     |-1343563257837178.00                 |5    |10000   |256    |\n|32       |0     |2397920963717856732144780725768192.00|5    |10000   |256    |\n|32       |6     |67185440964.00                       |5    |10000   |256    |\n|32       |2     |671563344571783404164327808.00       |5    |10000   |256    |\n|32       |8     |24.00                                |5    |10000   |256    |\n|32       |4     |16792721445858905674.00              |5    |10000   |256    |\n|32       |7     |-1919792.00                          |5    |10000   |256    |\n+---------+------+-------------------------------------+-----+--------+-------+\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\n+---------+------+-------------------+-----+--------+-------+\n|dimension|Degree|scalar             |index|maxIndex|divisor|\n+---------+------+-------------------+-----+--------+-------+\n|32       |3     |-1325910870864.00  |5    |64      |256    |\n|32       |2     |41724722862720.00  |5    |64      |256    |\n|32       |1     |-750349022274304.00|5    |64      |256    |\n|32       |0     |5903914408927232.00|5    |64      |256    |\n|32       |5     |-334797562.00      |5    |64      |256    |\n|32       |7     |-12080.00          |5    |64      |256    |\n|32       |6     |2660292.00         |5    |64      |256    |\n|32       |4     |26335645354.00     |5    |64      |256    |\n|32       |8     |24.00              |5    |64      |256    |\n+---------+------+-------------------+-----+--------+-------+\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\n+---------+------+-----------------------------------+-----+--------+-------+\n|dimension|Degree|scalar                             |index|maxIndex|divisor|\n+---------+------+-----------------------------------+-----+--------+-------+\n|32       |2     |2                                  |2    |64      |2      |\n|32       |1     |-252                               |2    |64      |2      |\n|32       |0     |7944                               |2    |64      |2      |\n|32       |2     |4                                  |3    |64      |2      |\n|32       |0     |15760                              |3    |64      |2      |\n|32       |1     |-502                               |3    |64      |2      |\n|32       |4     |8895980736                         |4    |64      |256    |\n|32       |2     |14189192251136                     |4    |64      |256    |\n|32       |3     |-449385380352                      |4    |64      |256    |\n|32       |5     |-112715136                         |4    |64      |256    |\n|32       |6     |892656                             |4    |64      |256    |\n|32       |0     |2021334694318080                   |4    |64      |256    |\n|32       |1     |-256030699386112                   |4    |64      |256    |\n|32       |7     |-4040                              |4    |64      |256    |\n|32       |8     |8                                  |4    |64      |256    |\n|32       |3     |-1325910870864.00                  |5    |64      |256    |\n|32       |2     |41724722862720.00                  |5    |64      |256    |\n|32       |1     |-750349022274304.00                |5    |64      |256    |\n|32       |0     |5903914408927232.00                |5    |64      |256    |\n|32       |5     |-334797562.00                      |5    |64      |256    |\n|32       |7     |-12080.00                          |5    |64      |256    |\n|32       |6     |2660292.00                         |5    |64      |256    |\n|32       |4     |26335645354.00                     |5    |64      |256    |\n|32       |8     |24.00                              |5    |64      |256    |\n|32       |8     |23844695617878.187500000           |6    |64      |256    |\n|32       |4     |126632496846660057207.500000000    |6    |64      |256    |\n|32       |3     |-2909519798719361970084.000000000  |6    |64      |256    |\n|32       |11    |-11465723.031250000                |6    |64      |256    |\n|32       |1     |-446800522931291468996608.000000000|6    |64      |256    |\n|32       |13    |-110.531250000                     |6    |64      |256    |\n|32       |2     |45960652153029821157984.000000000  |6    |64      |256    |\n|32       |12    |45379.718750000                    |6    |64      |256    |\n|32       |9     |-251635662639.187500000            |6    |64      |256    |\n|32       |6     |95169305975889473.000000000        |6    |64      |256    |\n|32       |10    |1991728120.218750000               |6    |64      |256    |\n|32       |5     |-4008504436882283901.000000000     |6    |64      |256    |\n|32       |0     |2016705341739624433860608.000000000|6    |64      |256    |\n|32       |7     |-1721584025957867.500000000        |6    |64      |256    |\n|32       |14    |0.125000000                        |6    |64      |256    |\n+---------+------+-----------------------------------+-----+--------+-------+\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\n\r\n+---------+------+------------------------------------------------------------------+-----+--------+-------+\n|dimension|Degree|scalar                                                            |index|maxIndex|divisor|\n+---------+------+------------------------------------------------------------------+-----+--------+-------+\n|32       |1     |-39996                                                            |2    |10000   |2      |\n|32       |2     |2                                                                 |2    |10000   |2      |\n|32       |0     |199960008                                                         |2    |10000   |2      |\n|32       |0     |399900016                                                         |3    |10000   |2      |\n|32       |1     |-79990                                                            |3    |10000   |2      |\n|32       |2     |4                                                                 |3    |10000   |2      |\n|32       |2     |223882435993600729553921792                                       |4    |10000   |256    |\n|32       |7     |-639944                                                           |4    |10000   |256    |\n|32       |4     |5598040359968001216                                               |4    |10000   |256    |\n|32       |6     |22396080240                                                       |4    |10000   |256    |\n|32       |5     |-447882414399360                                                  |4    |10000   |256    |\n|32       |3     |-44780404799360048638464                                          |4    |10000   |256    |\n|32       |0     |799440239936012158464179171844096                                 |4    |10000   |256    |\n|32       |1     |-639608143968004863539235837184                                   |4    |10000   |256    |\n|32       |8     |8                                                                 |4    |10000   |256    |\n|32       |1     |-1918544578258922693643356152576.00                               |5    |10000   |256    |\n|32       |3     |-134327219277178226952144.00                                      |5    |10000   |256    |\n|32       |5     |-1343563257837178.00                                              |5    |10000   |256    |\n|32       |0     |2397920963717856732144780725768192.00                             |5    |10000   |256    |\n|32       |6     |67185440964.00                                                    |5    |10000   |256    |\n|32       |2     |671563344571783404164327808.00                                    |5    |10000   |256    |\n|32       |8     |24.00                                                             |5    |10000   |256    |\n|32       |4     |16792721445858905674.00                                           |5    |10000   |256    |\n|32       |7     |-1919792.00                                                       |5    |10000   |256    |\n|32       |4     |1250200324679762184930498337580996936669511.500000000             |6    |10000   |256    |\n|32       |7     |-4287480394576622589533570532323.500000000                        |6    |10000   |256    |\n|32       |1     |-17480917907555059258464266267898436728038024129259520.000000000  |6    |10000   |256    |\n|32       |14    |0.125000000                                                       |6    |10000   |256    |\n|32       |8     |375186019975393386191463069.187500000                             |6    |10000   |256    |\n|32       |2     |11363550161902448562755931630199637341706102386464.000000000      |6    |10000   |256    |\n|32       |0     |12485322214254746710806891990663873495088414646195216384.000000000|6    |10000   |256    |\n|32       |3     |-4545801512383210247454436513338288733780433412.000000000         |6    |10000   |256    |\n|32       |12    |1137309072.218750000                                              |6    |10000   |256    |\n|32       |13    |-17498.531250000                                                  |6    |10000   |256    |\n|32       |9     |-25014500575377688096398.187500000                                |6    |10000   |256    |\n|32       |11    |-45488544916205.031250000                                         |6    |10000   |256    |\n|32       |6     |37512305228047784369326093537650665.000000000                     |6    |10000   |256    |\n|32       |5     |-250061048826728524811783118879689888733.000000000                |6    |10000   |256    |\n|32       |10    |1250830001638803599.718750000                                     |6    |10000   |256    |\n+---------+------+------------------------------------------------------------------+-----+--------+-------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609267188198_-974401294",
+      "id": "20201229-133948_1359889533",
+      "dateCreated": "2020-12-29 13:39:48.198",
+      "dateStarted": "2021-02-19 09:29:13.184",
+      "dateFinished": "2021-02-19 09:29:19.096",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "4. ResultUDF object.",
+      "text": "object ResultUDF extends Serializable {\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\ndef extendResult(qQuerry:s3AQu): s3ARe \u003d {\n  val scalar \u003d new BigDecimal(qQuerry.scalar)\n  val degree \u003d qQuerry.Degree.toInt\n  val divisor \u003d new BigDecimal(qQuerry.divisor)\n  val index \u003d new BigDecimal(qQuerry.maxIndex)\n  val indexPower \u003d index.pow(degree)\n  val scalarDiv \u003d scalar.divide(divisor)\n  val result \u003d indexPower.multiply(scalarDiv)\n  val s\u003d  s3ARe(qQuerry.dimension,qQuerry.Degree,qQuerry.scalar,qQuerry.index,qQuerry.maxIndex,qQuerry.divisor,result.toPlainString)\n  println(result+\"\\n\")\n  s\n}\n\ndef main(args:Array[String]) {\n    \nimport org.apache.spark.sql.DataFrame\nval df\u003d z.get(args(0)).asInstanceOf[DataFrame]\nspark.udf.register(\"eResult\", extendResult _)\n\nval ds: Dataset[s3AQu] \u003d df.as[s3AQu]\nval dss\u003dds.map{f \u003d\u003e extendResult(s3AQu(f.dimension,f.Degree,f.scalar,f.index,f.maxIndex,f.divisor)) }\nz.put(args(1),dss)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 09:00:49.603",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ResultUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609343481599_1007906540",
+      "id": "20201230-105121_1395629389",
+      "dateCreated": "2020-12-30 10:51:21.599",
+      "dateStarted": "2021-01-07 10:35:03.408",
+      "dateFinished": "2021-01-07 10:35:03.997",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "5. ResultUDF calls.",
+      "text": "ResultUDF.main(Array(\"s3A1000054\",\"udf1000054\"))\nResultUDF.main(Array(\"s3A6454\",\"udf6454\"))\nResultUDF.main(Array(\"s3A64Range\",\"udf64range\"))\nResultUDF.main(Array(\"s3A10000Range\",\"udf10000Range\"))\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 09:00:56.431",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false,
+        "title": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1609343479378_1363051399",
+      "id": "20201230-105119_462052139",
+      "dateCreated": "2020-12-30 10:51:19.378",
+      "dateStarted": "2021-01-07 10:35:12.744",
+      "dateFinished": "2021-01-07 10:35:13.324",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "6. ToBinaryUDF object.",
+      "text": "object ToBinaryUDF extends Serializable {\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport java.math.BigInteger\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\ndef extendResult(qQuerry:s3ARe): s3ARe \u003d {\n\n   val bD \u003d new BigDecimal(qQuerry.result);\n   val bII \u003d bD.toBigInteger();\n   val s\u003d  s3ARe(qQuerry.dimension,qQuerry.Degree,qQuerry.scalar,qQuerry.index,qQuerry.maxIndex,qQuerry.divisor,bII.toString(2))\n   s\n}\n\ndef main(args:Array[String]) {\n    \nimport org.apache.spark.sql.DataFrame\nval df\u003d z.get(args(0)).asInstanceOf[DataFrame]\nspark.udf.register(\"eResult\", extendResult _)\n\nval ds: Dataset[s3ARe] \u003d df.as[s3ARe]\nval dss\u003dds.map{f \u003d\u003e extendResult(s3ARe(f.dimension,f.Degree,f.scalar,f.index,f.maxIndex,f.divisor,f.result)) }\ndss.show(false)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 09:01:01.277",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ToBinaryUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609343477432_394615722",
+      "id": "20201230-105117_157761801",
+      "dateCreated": "2020-12-30 10:51:17.432",
+      "dateStarted": "2021-01-07 10:35:39.606",
+      "dateFinished": "2021-01-07 10:35:39.989",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "7.udf6454 filtered for constant term.",
+      "text": "import org.apache.spark.sql.{DataFrame,Dataset}\nimport spark.implicits._\nimport org.apache.spark.sql.{Encoder, Encoders}\nval ds\u003dz.get(\"udf6454\").asInstanceOf[Dataset[s3ARe]] \n//ds.show(false)\nval dss\u003dds.filter(_.Degree \u003d\u003d \"0\")\ndss.show(false)\nz.put(\"zero6454\",dss)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 09:01:09.437",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+-------------------+-----+--------+-------+-----------------+\n|dimension|Degree|scalar             |index|maxIndex|divisor|result           |\n+---------+------+-------------------+-----+--------+-------+-----------------+\n|32       |0     |5903914408927232.00|5    |64      |256    |23062165659872.00|\n+---------+------+-------------------+-----+--------+-------+-----------------+\n\r\nimport org.apache.spark.sql.{DataFrame, Dataset}\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.{Encoder, Encoders}\r\nds: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\r\ndss: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609959321575_-1468164951",
+      "id": "20210106-135521_1936020549",
+      "dateCreated": "2021-01-06 13:55:21.575",
+      "dateStarted": "2021-01-07 10:35:19.717",
+      "dateFinished": "2021-01-07 10:35:20.595",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "8.udf1000054 filtered for constant term.8.",
+      "text": "import org.apache.spark.sql.{DataFrame,Dataset}\nimport spark.implicits._\nimport org.apache.spark.sql.{Encoder, Encoders}\nval ds\u003dz.get(\"udf1000054\").asInstanceOf[Dataset[s3ARe]] \n//ds.show(false)\nval dss\u003dds.filter(_.Degree \u003d\u003d \"0\")\ndss.show(false)",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-08 09:01:15.567",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true,
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+-------------------------------------+-----+--------+-------+----------------------------------+\n|dimension|Degree|scalar                               |index|maxIndex|divisor|result                            |\n+---------+------+-------------------------------------+-----+--------+-------+----------------------------------+\n|32       |0     |2397920963717856732144780725768192.00|5    |10000   |256    |9366878764522877859940549710032.00|\n+---------+------+-------------------------------------+-----+--------+-------+----------------------------------+\n\r\nimport org.apache.spark.sql.{DataFrame, Dataset}\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.{Encoder, Encoders}\r\nds: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\r\ndss: org.apache.spark.sql.Dataset[s3ARe] \u003d [dimension: string, Degree: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609959320642_1686152699",
+      "id": "20210106-135520_1721261543",
+      "dateCreated": "2021-01-06 13:55:20.642",
+      "dateStarted": "2021-01-07 10:35:28.905",
+      "dateFinished": "2021-01-07 10:35:29.667",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import scala.math.BigDecimal\n\nval x \u003d BigDecimal(\"3973135466576806355588096.00\")\nval y \u003d  BigDecimal(\"23350810976\")\n val yy\u003d y.longValue()\n println(yy.toBinaryString)\n\n//val str \u003d \"164684281624105728700859137021585353518858414404087779745838597528522311559416841283713334047050178706586893255418481532372097842269434943170707629909537392420143212607642726590936641821577898169453259404364574199494625367287648046428223077945181211186908.5048675537109375\"\n//println(str.length())\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-01-07 10:59:22.049",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": true,
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "10101101111110100010001100101100000\r\nimport scala.math.BigDecimal\r\nx: scala.math.BigDecimal \u003d 3973135466576806355588096.00\r\ny: scala.math.BigDecimal \u003d 23350810976\r\nyy: Long \u003d 23350810976\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1609267187993_-62332793",
+      "id": "20201229-133947_1330873833",
+      "dateCreated": "2020-12-29 13:39:47.993",
+      "dateStarted": "2021-01-05 10:50:35.794",
+      "dateFinished": "2021-01-05 10:50:35.942",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-29 13:39:47.784",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1609267187778_-1150075372",
+      "id": "20201229-133947_1189023550",
+      "dateCreated": "2020-12-29 13:39:47.779",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphicZero",
+  "id": "2FSRW8ZFX",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}

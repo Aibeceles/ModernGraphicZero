@@ -1,0 +1,152 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark.dep\nz.load(\"org.opencypher:spark-cypher:0.2.3\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-10 13:16:40.040",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@3bac6cb\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1568135753391_-1266771670",
+      "id": "20190910-131553_1478108969",
+      "dateCreated": "2019-09-10 13:15:53.392",
+      "dateStarted": "2019-09-10 13:16:40.133",
+      "dateFinished": "2019-09-10 13:17:03.973",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport org.opencypher.okapi.api.util.ZeppelinSupport._",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-10 13:20:50.645",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.opencypher.okapi.api.util.ZeppelinSupport._\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1568135800046_1476531013",
+      "id": "20190910-131640_1440153810",
+      "dateCreated": "2019-09-10 13:16:40.046",
+      "dateStarted": "2019-09-10 13:20:50.706",
+      "dateFinished": "2019-09-10 13:21:19.221",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n[![Maven Central](https://img.shields.io/badge/Maven_Central-0.4.2-blue.svg?label\u003dMaven%20Central)](https://search.maven.org/#artifactdetails%7Corg.opencypher%7Cmorpheus-spark-cypher%7C0.4.2%7Cjar) # Morpheus: Cypher for Apache Spark Morpheus extends [Apache Sparkâ„¢](https://spark.apache.org) with [Cypher](https://neo4j.com/docs/developer-manual/current/cypher/), the industry\u0027s most widely used [property graph](https://github.com/opencypher/openCypher/blob/master/docs/property-graph-model.adoc) query language defined and maintained by the [openCypher](http://www.opencypher.org) project. It allows for the **integration** of many **data sources** and supports **multiple graph** querying. It enables you to use your Spark cluster to run **analytical graph queries**. Queries can also return graphs to create **processing pipelines**. **Note** This is the repo formerly known as opencypher/cypher-for-apache-spark ## Intended audience Morpheus allows you to develop complex processing pipelines orchestrated by a powerful and expressive high-level language. In addition to **developers** and **big data integration specialists**, Morpheus is also of practical use to **data scientists**, offering tools allowing for disparate data sources to be integrated into a single graph. From this graph, queries can extract subgraphs of interest into new result graphs, which can be conveniently exported for further processing. Morpheus builds on the Spark SQL DataFrame API, offering integration with standard Spark SQL processing and also allows integration with GraphX. To learn more about this, please see our [examples](https://github.com/opencypher/morpheus/tree/master/morpheus-examples). ## Current status: Pre-release The functionality and APIs are stabilizing but surface changes (e.g. to the Cypher syntax and semantics for multiple graph processing and graph projections/construction) are still likely to occur. We invite you to try out the project, and we welcome feedback and contributions. If you are interested in contributing to the project we would love to hear from you; email us at `opencypher@neo4j.org` or just raise a PR. Please note that this is an openCypher project and contributions can only be accepted if youâ€™ve agreed to the [openCypher Contributors Agreement (oCCA)](CONTRIBUTING.adoc). ## Morpheus Features Morpheus is built on top of the Spark DataFrame API and uses features such as the Catalyst optimizer. The Spark representations are accessible and can be converted to representations that integrate with other Spark libraries. Morpheus supports [a subset of Cypher](https://github.com/opencypher/morpheus/blob/master/documentation/asciidoc/cypher-cypher9-features.adoc) and is the first implementation of [multiple graphs](https://github.com/boggle/openCypher/blob/CIP2017-06-18-multiple-graphs/cip/1.accepted/CIP2017-06-18-multiple-graphs.adoc) and graph query compositionality. Morpheus currently supports importing graphs from Hive, Neo4j, relational database systems via JDBC and from files stored either locally, in HDFS or S3. Morpheus has a data source API that allows you to plug in custom data importers for external graphs. ## Morpheus Roadmap Morpheus is under rapid development and we are planning to offer support for: - a large subset of the Cypher language - new Cypher Multiple Graph features - injection of custom graph data sources ## Spark Project Improvement Proposal Currently Morpheus is a third-party add-on to the Spark ecosystem. We, however, believe that property graphs and graph processing has the potential to be come a vital part of data analytics. We are thus working, in cooperation with *Databricks*, on making Morpheus a core part of Spark. The first step on this road is the specification of a __PropertyGraph API__, similar to __SQL__ and __Dataframes__, along with porting Cypher 9 features of Morpheus to the core Spark project in a so called __Spark Project Improvement Proposal__ (SPIP). We are currently in the second phase of this process, after having successfully [passed the vote for inclusion](http://apache-spark-developers-list.1001551.n3.nabble.com/VOTE-RESULT-SPIP-DataFrame-based-Property-Graphs-Cypher-Queries-and-Algorithms-td26401.html) into Apache Spark 3.0. The SPIP describing the motivation and goals is published here [SPARK-25994](https://issues.apache.org/jira/browse/SPARK-25994). Additionally [SPARK-26028](https://issues.apache.org/jira/browse/SPARK-26028) proposes an API design and implementation strategies. ## Supported Spark and Scala versions As of Morpheus `0.3.0`, the project has migrated to Scala 2.12 and Spark 2.4 series. [As of Spark 2.4.1](https://spark.apache.org/releases/spark-release-2-4-1.html) Scala 2.12 is officially supported for Spark. However, only Spark `2.4.2` uses Scala 2.12 for its prebuilt convenience binaries, which means that in order to use Morpheus with a later Spark version, one needs to build it manually. ## Get started with Morpheus Morpheus is currently easiest to use with Scala. Below we explain how you can import a simple graph and run a Cypher query on it. ### Building Morpheus Morpheus is built using Gradle ``` ./gradlew build ``` #### Add the Morpheus dependency to your project In order to use Morpheus add the following dependency: Maven: ``` org.opencypher morpheus-spark-cypher 0.4.2 ``` sbt: ``` libraryDependencies +\u003d \"org.opencypher\" % \"morpheus-spark-cypher\" % \"0.4.2\" ``` Remember to add `fork in run :\u003d true` in your `build.sbt` for scala projects; this is not Morpheus specific, but a quirk of spark execution that will help [prevent problems](https://stackoverflow.com/questions/44298847/why-do-we-need-to-add-fork-in-run-true-when-running-spark-sbt-application). ### Hello Morpheus Cypher is based on the [property graph](https://github.com/opencypher/openCypher/blob/master/docs/property-graph-model.adoc) data model, comprising labelled nodes and typed relationships, with a relationship either connecting two nodes, or forming a self-loop on a single node. Both nodes and relationships are uniquely identified by an ID (Morpheus internally uses `Array[Byte]` to represent identifiers and auto-casts `Long`, `String` and `Integer` values), and contain a set of properties. The following example shows how to convert a social network represented by two DataFrames to a `PropertyGraph`. Once the property graph is constructed, it supports Cypher queries via its `cypher` method. ```scala import org.apache.spark.sql.DataFrame import org.opencypher.morpheus.api.MorpheusSession import org.opencypher.morpheus.api.io.{MorpheusNodeTable, MorpheusRelationshipTable} import org.opencypher.morpheus.util.App /** * Demonstrates basic usage of the Morpheus API by loading an example graph from [[DataFrame]]s. */ object DataFrameInputExample extends App { // 1) Create Morpheus session and retrieve Spark session implicit val morpheus: MorpheusSession \u003d MorpheusSession.local() val spark \u003d morpheus.sparkSession import spark.sqlContext.implicits._ // 2) Generate some DataFrames that we\u0027d like to interpret as a property graph. val nodesDF \u003d spark.createDataset(Seq( (0L, \"Alice\", 42L), (1L, \"Bob\", 23L), (2L, \"Eve\", 84L) )).toDF(\"id\", \"name\", \"age\") val relsDF \u003d spark.createDataset(Seq( (0L, 0L, 1L, \"23/01/1987\"), (1L, 1L, 2L, \"12/12/2009\") )).toDF(\"id\", \"source\", \"target\", \"since\") // 3) Generate node- and relationship tables that wrap the DataFrames. The mapping between graph elements and columns // is derived using naming conventions for identifier columns. val personTable \u003d MorpheusNodeTable(Set(\"Person\"), nodesDF) val friendsTable \u003d MorpheusRelationshipTable(\"KNOWS\", relsDF) // 4) Create property graph from graph scans val graph \u003d morpheus.readFrom(personTable, friendsTable) // 5) Execute Cypher query and print results val result \u003d graph.cypher(\"MATCH (n:Person) RETURN n.name\") // 6) Collect results into string by selecting a specific column. // This operation may be very expensive as it materializes results locally. val names: Set[String] \u003d result.records.table.df.collect().map(_.getAs[String](\"n_name\")).toSet println(names) } ``` The above program prints: ``` Set(Alice, Bob, Eve) ``` More examples, including [multiple graph features](morpheus-examples/src/main/scala/org/opencypher/morpheus/examples/MultipleGraphExample.scala), can be found [in the examples module](morpheus-examples). ### Run example Scala apps via command line You can use Gradle to run a specific Scala application from command line. For example, to run the `DataFrameInputExample` within the `morpheus-examples` module, we just call: ``` ./gradlew morpheus-examples:runApp -PmainClass\u003dorg.opencypher.morpheus.examples.DataFrameInputExample ``` #### Next steps - How to use Morpheus in [Apache Zeppelin](https://github.com/opencypher/morpheus/wiki/Use-CAPS-in-a-Zeppelin-notebook) - Look at and contribute to the [Wiki](https://github.com/opencypher/morpheus/wiki) ## How to contribute We would love to find out about any [issues](https://github.com/opencypher/morpheus/issues) you encounter and are happy to accept contributions following a Contributors License Agreement (CLA) signature as per the process outlined in our [contribution guidelines](CONTRIBUTING.adoc). ## License The project is licensed under the Apache Software License, Version 2.0, with an extended attribution notice as described in [the license header](/etc/licenses/headers/NOTICE-header.txt). ## Copyright Â© Copyright 2016-2019 Neo4j, Inc. Apache Sparkâ„¢, Spark, and Apache are registered trademarks of the [Apache Software Foundation](https://www.apache.org/). \n",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-11 07:38:09.692",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003e\u003ca href\u003d\"https://search.maven.org/#artifactdetails%7Corg.opencypher%7Cmorpheus-spark-cypher%7C0.4.2%7Cjar\"\u003e\u003cimg src\u003d\"https://img.shields.io/badge/Maven_Central-0.4.2-blue.svg?label\u003dMaven%20Central\" alt\u003d\"Maven Central\" /\u003e\u003c/a\u003e # Morpheus: Cypher for Apache Spark Morpheus extends \u003ca href\u003d\"https://spark.apache.org\"\u003eApache Sparkâ„¢\u003c/a\u003e with \u003ca href\u003d\"https://neo4j.com/docs/developer-manual/current/cypher/\"\u003eCypher\u003c/a\u003e, the industry\u0026rsquo;s most widely used \u003ca href\u003d\"https://github.com/opencypher/openCypher/blob/master/docs/property-graph-model.adoc\"\u003eproperty graph\u003c/a\u003e query language defined and maintained by the \u003ca href\u003d\"http://www.opencypher.org\"\u003eopenCypher\u003c/a\u003e project. It allows for the \u003cstrong\u003eintegration\u003c/strong\u003e of many \u003cstrong\u003edata sources\u003c/strong\u003e and supports \u003cstrong\u003emultiple graph\u003c/strong\u003e querying. It enables you to use your Spark cluster to run \u003cstrong\u003eanalytical graph queries\u003c/strong\u003e. Queries can also return graphs to create \u003cstrong\u003eprocessing pipelines\u003c/strong\u003e. \u003cstrong\u003eNote\u003c/strong\u003e This is the repo formerly known as opencypher/cypher-for-apache-spark ## Intended audience Morpheus allows you to develop complex processing pipelines orchestrated by a powerful and expressive high-level language. In addition to \u003cstrong\u003edevelopers\u003c/strong\u003e and \u003cstrong\u003ebig data integration specialists\u003c/strong\u003e, Morpheus is also of practical use to \u003cstrong\u003edata scientists\u003c/strong\u003e, offering tools allowing for disparate data sources to be integrated into a single graph. From this graph, queries can extract subgraphs of interest into new result graphs, which can be conveniently exported for further processing. Morpheus builds on the Spark SQL DataFrame API, offering integration with standard Spark SQL processing and also allows integration with GraphX. To learn more about this, please see our \u003ca href\u003d\"https://github.com/opencypher/morpheus/tree/master/morpheus-examples\"\u003eexamples\u003c/a\u003e. ## Current status: Pre-release The functionality and APIs are stabilizing but surface changes (e.g. to the Cypher syntax and semantics for multiple graph processing and graph projections/construction) are still likely to occur. We invite you to try out the project, and we welcome feedback and contributions. If you are interested in contributing to the project we would love to hear from you; email us at \u003ccode\u003eopencypher@neo4j.org\u003c/code\u003e or just raise a PR. Please note that this is an openCypher project and contributions can only be accepted if youâ€™ve agreed to the \u003ca href\u003d\"CONTRIBUTING.adoc\"\u003eopenCypher Contributors Agreement (oCCA)\u003c/a\u003e. ## Morpheus Features Morpheus is built on top of the Spark DataFrame API and uses features such as the Catalyst optimizer. The Spark representations are accessible and can be converted to representations that integrate with other Spark libraries. Morpheus supports \u003ca href\u003d\"https://github.com/opencypher/morpheus/blob/master/documentation/asciidoc/cypher-cypher9-features.adoc\"\u003ea subset of Cypher\u003c/a\u003e and is the first implementation of \u003ca href\u003d\"https://github.com/boggle/openCypher/blob/CIP2017-06-18-multiple-graphs/cip/1.accepted/CIP2017-06-18-multiple-graphs.adoc\"\u003emultiple graphs\u003c/a\u003e and graph query compositionality. Morpheus currently supports importing graphs from Hive, Neo4j, relational database systems via JDBC and from files stored either locally, in HDFS or S3. Morpheus has a data source API that allows you to plug in custom data importers for external graphs. ## Morpheus Roadmap Morpheus is under rapid development and we are planning to offer support for: - a large subset of the Cypher language - new Cypher Multiple Graph features - injection of custom graph data sources ## Spark Project Improvement Proposal Currently Morpheus is a third-party add-on to the Spark ecosystem. We, however, believe that property graphs and graph processing has the potential to be come a vital part of data analytics. We are thus working, in cooperation with \u003cem\u003eDatabricks\u003c/em\u003e, on making Morpheus a core part of Spark. The first step on this road is the specification of a \u003cstrong\u003ePropertyGraph API\u003c/strong\u003e, similar to \u003cstrong\u003eSQL\u003c/strong\u003e and \u003cstrong\u003eDataframes\u003c/strong\u003e, along with porting Cypher 9 features of Morpheus to the core Spark project in a so called \u003cstrong\u003eSpark Project Improvement Proposal\u003c/strong\u003e (SPIP). We are currently in the second phase of this process, after having successfully \u003ca href\u003d\"http://apache-spark-developers-list.1001551.n3.nabble.com/VOTE-RESULT-SPIP-DataFrame-based-Property-Graphs-Cypher-Queries-and-Algorithms-td26401.html\"\u003epassed the vote for inclusion\u003c/a\u003e into Apache Spark 3.0. The SPIP describing the motivation and goals is published here \u003ca href\u003d\"https://issues.apache.org/jira/browse/SPARK-25994\"\u003eSPARK-25994\u003c/a\u003e. Additionally \u003ca href\u003d\"https://issues.apache.org/jira/browse/SPARK-26028\"\u003eSPARK-26028\u003c/a\u003e proposes an API design and implementation strategies. ## Supported Spark and Scala versions As of Morpheus \u003ccode\u003e0.3.0\u003c/code\u003e, the project has migrated to Scala 2.12 and Spark 2.4 series. \u003ca href\u003d\"https://spark.apache.org/releases/spark-release-2-4-1.html\"\u003eAs of Spark 2.4.1\u003c/a\u003e Scala 2.12 is officially supported for Spark. However, only Spark \u003ccode\u003e2.4.2\u003c/code\u003e uses Scala 2.12 for its prebuilt convenience binaries, which means that in order to use Morpheus with a later Spark version, one needs to build it manually. ## Get started with Morpheus Morpheus is currently easiest to use with Scala. Below we explain how you can import a simple graph and run a Cypher query on it. ### Building Morpheus Morpheus is built using Gradle \u003ccode\u003e./gradlew build\u003c/code\u003e #### Add the Morpheus dependency to your project In order to use Morpheus add the following dependency: Maven: \u003ccode\u003eorg.opencypher morpheus-spark-cypher 0.4.2\u003c/code\u003e sbt: \u003ccode\u003elibraryDependencies +\u003d \u0026quot;org.opencypher\u0026quot; % \u0026quot;morpheus-spark-cypher\u0026quot; % \u0026quot;0.4.2\u0026quot;\u003c/code\u003e Remember to add \u003ccode\u003efork in run :\u003d true\u003c/code\u003e in your \u003ccode\u003ebuild.sbt\u003c/code\u003e for scala projects; this is not Morpheus specific, but a quirk of spark execution that will help \u003ca href\u003d\"https://stackoverflow.com/questions/44298847/why-do-we-need-to-add-fork-in-run-true-when-running-spark-sbt-application\"\u003eprevent problems\u003c/a\u003e. ### Hello Morpheus Cypher is based on the \u003ca href\u003d\"https://github.com/opencypher/openCypher/blob/master/docs/property-graph-model.adoc\"\u003eproperty graph\u003c/a\u003e data model, comprising labelled nodes and typed relationships, with a relationship either connecting two nodes, or forming a self-loop on a single node. Both nodes and relationships are uniquely identified by an ID (Morpheus internally uses \u003ccode\u003eArray[Byte]\u003c/code\u003e to represent identifiers and auto-casts \u003ccode\u003eLong\u003c/code\u003e, \u003ccode\u003eString\u003c/code\u003e and \u003ccode\u003eInteger\u003c/code\u003e values), and contain a set of properties. The following example shows how to convert a social network represented by two DataFrames to a \u003ccode\u003ePropertyGraph\u003c/code\u003e. Once the property graph is constructed, it supports Cypher queries via its \u003ccode\u003ecypher\u003c/code\u003e method. \u003ccode\u003escala import org.apache.spark.sql.DataFrame import org.opencypher.morpheus.api.MorpheusSession import org.opencypher.morpheus.api.io.{MorpheusNodeTable, MorpheusRelationshipTable} import org.opencypher.morpheus.util.App /** * Demonstrates basic usage of the Morpheus API by loading an example graph from [[DataFrame]]s. */ object DataFrameInputExample extends App { // 1) Create Morpheus session and retrieve Spark session implicit val morpheus: MorpheusSession \u003d MorpheusSession.local() val spark \u003d morpheus.sparkSession import spark.sqlContext.implicits._ // 2) Generate some DataFrames that we\u0026#39;d like to interpret as a property graph. val nodesDF \u003d spark.createDataset(Seq( (0L, \u0026quot;Alice\u0026quot;, 42L), (1L, \u0026quot;Bob\u0026quot;, 23L), (2L, \u0026quot;Eve\u0026quot;, 84L) )).toDF(\u0026quot;id\u0026quot;, \u0026quot;name\u0026quot;, \u0026quot;age\u0026quot;) val relsDF \u003d spark.createDataset(Seq( (0L, 0L, 1L, \u0026quot;23/01/1987\u0026quot;), (1L, 1L, 2L, \u0026quot;12/12/2009\u0026quot;) )).toDF(\u0026quot;id\u0026quot;, \u0026quot;source\u0026quot;, \u0026quot;target\u0026quot;, \u0026quot;since\u0026quot;) // 3) Generate node- and relationship tables that wrap the DataFrames. The mapping between graph elements and columns // is derived using naming conventions for identifier columns. val personTable \u003d MorpheusNodeTable(Set(\u0026quot;Person\u0026quot;), nodesDF) val friendsTable \u003d MorpheusRelationshipTable(\u0026quot;KNOWS\u0026quot;, relsDF) // 4) Create property graph from graph scans val graph \u003d morpheus.readFrom(personTable, friendsTable) // 5) Execute Cypher query and print results val result \u003d graph.cypher(\u0026quot;MATCH (n:Person) RETURN n.name\u0026quot;) // 6) Collect results into string by selecting a specific column. // This operation may be very expensive as it materializes results locally. val names: Set[String] \u003d result.records.table.df.collect().map(_.getAs[String](\u0026quot;n_name\u0026quot;)).toSet println(names) }\u003c/code\u003e The above program prints: \u003ccode\u003eSet(Alice, Bob, Eve)\u003c/code\u003e More examples, including \u003ca href\u003d\"morpheus-examples/src/main/scala/org/opencypher/morpheus/examples/MultipleGraphExample.scala\"\u003emultiple graph features\u003c/a\u003e, can be found \u003ca href\u003d\"morpheus-examples\"\u003ein the examples module\u003c/a\u003e. ### Run example Scala apps via command line You can use Gradle to run a specific Scala application from command line. For example, to run the \u003ccode\u003eDataFrameInputExample\u003c/code\u003e within the \u003ccode\u003emorpheus-examples\u003c/code\u003e module, we just call: \u003ccode\u003e./gradlew morpheus-examples:runApp -PmainClass\u003dorg.opencypher.morpheus.examples.DataFrameInputExample\u003c/code\u003e #### Next steps - How to use Morpheus in \u003ca href\u003d\"https://github.com/opencypher/morpheus/wiki/Use-CAPS-in-a-Zeppelin-notebook\"\u003eApache Zeppelin\u003c/a\u003e - Look at and contribute to the \u003ca href\u003d\"https://github.com/opencypher/morpheus/wiki\"\u003eWiki\u003c/a\u003e ## How to contribute We would love to find out about any \u003ca href\u003d\"https://github.com/opencypher/morpheus/issues\"\u003eissues\u003c/a\u003e you encounter and are happy to accept contributions following a Contributors License Agreement (CLA) signature as per the process outlined in our \u003ca href\u003d\"CONTRIBUTING.adoc\"\u003econtribution guidelines\u003c/a\u003e. ## License The project is licensed under the Apache Software License, Version 2.0, with an extended attribution notice as described in \u003ca href\u003d\"/etc/licenses/headers/NOTICE-header.txt\"\u003ethe license header\u003c/a\u003e. ## Copyright Â© Copyright 2016-2019 Neo4j, Inc. Apache Sparkâ„¢, Spark, and Apache are registered trademarks of the \u003ca href\u003d\"https://www.apache.org/\"\u003eApache Software Foundation\u003c/a\u003e.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1568136050645_1200438594",
+      "id": "20190910-132050_1433673691",
+      "dateCreated": "2019-09-10 13:20:50.646",
+      "dateStarted": "2019-09-10 18:29:11.232",
+      "dateFinished": "2019-09-10 18:29:21.346",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-10 18:29:11.023",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1568154551002_2107439316",
+      "id": "20190910-182911_1554826935",
+      "dateCreated": "2019-09-10 18:29:11.003",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/TestNode35",
+  "id": "2ENUN6MTD",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

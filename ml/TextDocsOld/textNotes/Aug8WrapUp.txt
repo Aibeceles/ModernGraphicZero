@@ -1,0 +1,381 @@
+Definition of element in power set:
+
+Transformed p on graph D_n  represents a member of a power set of size n
+when p's set/subset of roots exist in the range 1..n.
+
+Graphs tested:
+
+D_3 -10 To 10
+D_4 -10 To 10
+D_5 -5  To 5
+D_6 -6 To 6
+D_6  0 To 6
+
+     Two tests of a power set member inclusion in graph are applied.
+The member is MATCHed at wNum=0 or at an arbitrary wNum.
+Further granularity of inclusion is the expansion of pArray range
+used in transforming p's ith difference.   
+
+     A graph of D_n is expected to contain a power set of n elements.
+Do the presented graphs argument complete populations of power sets
+of respective n's?
+
+     The candidate conclusion across the graphs tested is 
+each D_n graph does not complete the n sized power set.
+Testing wNum=0's ability to complete power set vs testing
+entire graph does reveals the power set n is just as well
+represented with only concidering wNum=0 vs the whole graph.    
+Need to verify but the extended pArray range allows for
+all but one member to be represented.  
+However, believe, subject to further testing, that D_n+1 will contain
+D's power set.
+
+   The above experiment on the D* set of graphs allows for subsets of p's roots 
+in determining power set inclusion.  It does not concider qualifing p as
+determined or underdetermined. Therfore the proposed p transform algorithm may
+not be deterministic (in the algorithmic sence).    
+    Stronger analysis of D* will conclude if only determined p's in D_n can 
+complete power set.  Furter, can determined p's in D_n who's entire root set is
+used in defining power set element complete power set?
+
+
+8/4
+
+MuNumbers on D6Test-6To6 represent power set of 6 elements.
+Does this pattern: MATCH (n:Dnode {d:toInteger(mDen)}) - [] -> (c:CreatedBy {wNum:0})  
+return Dnode set.....
+
+
+MATCH (n:Dnode) RETURN n LIMIT 25
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"vmResult":"[0.0, 1.0, -0.0, 0.0, -0.0, 0.0, -0.0, 0.0]","muList":"[]│
+│","d":0,"totalZero":1,"determined":0,"n":0}                           │
+├──────────────────────────────────────────────────────────────────────┤
+
+MATCH (n:MuNumber) RETURN n
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"d":"1","size":1,"nBinary":"[1]","Value":"1","maxRange":1,"n":"1"}   │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+RETURN n LIMIT 25
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"size":5,"d":"9","nBinary":"[2, 2, 2, 2, 1]","Value":"61","maxRange":│
+│2,"n":"2"}                                                            │
+├──────────────────────────────────────────────────────────────────────┤
+│{"size":4,"d":"10","nBinary":"[3, 3, 3, 1]","Value":"57","maxRange":3,│
+│"n":"3"}                                                              │
+├──────────────────────────────────────────────────────────────────────┤
+│{"size":4,"d":"10","nBinary":"[3, 3, 2, 2]","Value":"54","maxRange":3,│
+│"n":"3"}                                                              │
+└──────────────────────────────────────────────────────────────────────┘
+
+(note searched entire graph)
+Above are remaining.  Nearly the entire power set.
+
+So, beg the question:  Is power set of 5 complete?????
+
+MATCH (n:Dnode {d:toInteger(mDen)}) - [] -> (c:CreatedBy {wNum:0})  
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})  - [] -> (c:CreatedBy {wNum:0})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"size":5,"d":"9","nBinary":"[2, 2, 2, 2, 1]","Value":"61","maxRange":│
+│2,"n":"2"}                                                            │
+├──────────────────────────────────────────────────────────────────────┤
+│{"size":4,"d":"10","nBinary":"[3, 3, 3, 1]","Value":"57","maxRange":3,│
+│"n":"3"}                                                              │
+├──────────────────────────────────────────────────────────────────────┤
+│{"size":4,"d":"10","nBinary":"[3, 3, 2, 2]","Value":"54","maxRange":3,│
+│"n":"3"}                                                              │
+└──────────────────────────────────────────────────────────────────────┘
+
+Also has the above set of nodes remaining.  
+Importantly as d=6 expects representations of fractions of 6 this is still 
+a good result.  
+
+
+
+8/5
+
+D5Test-5To5
+
+%neo4j
+
+MATCH (n:MuNumber) 
+WITH n.nBinary as nB, size(n.nBinary) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+WITH n, listNB, toInteger(listNB[0]) + size(listNB) -1 AS muSize WHERE muSize > 5
+DELETE n
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})  - [] -> (c:CreatedBy {wNum:0})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"size":4,"d":"7","nBinary":"[2, 2, 2, 1]","Value":"29","maxRange":2,"│
+│n":"2"}                                                               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"size":4,"d":"7","nBinary":"[2, 2, 2, 1]","Value":"29","maxRange":2,"│
+│n":"2"}                                                               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+Note similarly to D=6 -6 to 6, the powerset is not completely represented.
+
+Now test on graph D=6 0 to 6.
+
+
+
+D6,0To6
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})  - [] -> (c:CreatedBy {wNum:0})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"d":"5","size":4,"nBinary":"[2, 1, 1, 1]","Value":"23","maxRange":2,"│
+│n":"2"}                                                               │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"5","size":3,"nBinary":"[2, 2, 1]","Value":"13","maxRange":2,"n":│
+│"2"}                                                                  │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"7","size":5,"nBinary":"[2, 2, 1, 1, 1]","Value":"55","maxRange":│
+│2,"n":"2"}                                                            │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"7","size":4,"nBinary":"[2, 2, 2, 1]","Value":"29","maxRange":2,"│
+│n":"2"}                                                               │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"9","size":5,"nBinary":"[2, 2, 2, 2, 1]","Value":"61","maxRange":│
+│2,"n":"2"}                                                            │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"10","size":4,"nBinary":"[3, 3, 3, 1]","Value":"57","maxRange":3,│
+│"n":"3"}                                                              │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"10","size":4,"nBinary":"[3, 3, 2, 2]","Value":"54","maxRange":3,│
+│"n":"3"}                                                              │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"11","size":4,"nBinary":"[3, 3, 3, 2]","Value":"58","maxRange":3,│
+│"n":"3"}                                                              │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"d":"7","size":5,"nBinary":"[2, 2, 1, 1, 1]","Value":"55","maxRange":│
+│2,"n":"2"}                                                            │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"7","size":4,"nBinary":"[2, 2, 2, 1]","Value":"29","maxRange":2,"│
+│n":"2"}                                                               │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"9","size":5,"nBinary":"[2, 2, 2, 2, 1]","Value":"61","maxRange":│
+│2,"n":"2"}                                                            │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"10","size":4,"nBinary":"[3, 3, 3, 1]","Value":"57","maxRange":3,│
+│"n":"3"}                                                              │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"10","size":4,"nBinary":"[3, 3, 2, 2]","Value":"54","maxRange":3,│
+│"n":"3"}                                                              │
+├──────────────────────────────────────────────────────────────────────┤
+│{"d":"11","size":4,"nBinary":"[3, 3, 3, 2]","Value":"58","maxRange":3,│
+│"n":"3"}                                                              │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+Very interesting....   the negative pArrays do help complete powerSet representation.
+
+So.... 
+
+The afternoon laboratory:
+
+D4-10To10
+
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:4, setProductRange:20, integerRange:200, setProductRAngeIncrement:20,maxSetProductRange:10,pArray:"[-10, -10, -10, -10, 0]"})
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})  - [] -> (c:CreatedBy {wNum:0})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"size":3,"d":"5","nBinary":"[2, 2, 1]","Value":"13","maxRange":2,"n":│
+│"2"}                                                                  │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})  - [] -> (c:CreatedBy {wNum:0})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"size":3,"d":"5","nBinary":"[2, 2, 1]","Value":"13","maxRange":2,"n":│
+│"2"}                                                                  │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+D3-10To10
+
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:3, setProductRange:20, integerRange:200, setProductRAngeIncrement:20,maxSetProductRange:10,pArray:"[-10, -10, -10, 0]"})
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})  - [] -> (c:CreatedBy {wNum:0})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+)
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"d":"3","size":2,"nBinary":"[2, 1]","Value":"5","maxRange":2,"n":"2"}│
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+MATCH (m:MuNumber) 
+WITH m,toInteger(m.d) as denominator,toInteger(m.n) as numerator
+OPTIONAL MATCH (d:Dnode {d:denominator,n:numerator})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+  DETACH DELETE m
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"d":"3","size":2,"nBinary":"[2, 1]","Value":"5","maxRange":2,"n":"2"}│
+└──────────────────────────────────────────────────────────────────────┘
+
+
+....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

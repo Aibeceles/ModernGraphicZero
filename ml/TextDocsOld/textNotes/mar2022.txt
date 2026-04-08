@@ -1,0 +1,1195 @@
+
+
+
+
+
+3/1  quadratics plotted look pretty vanilla.  maybe a global min 0, in a valley.
+     there appear to be two valleys.  The square plot is slighly insufficent 
+     as the each of the corners will whip up to magnitudes more in value (z).
+
+     will plot quartet...  expected graph... pedestrian in all sense. 
+     
+     GraphicMultiVar1 
+     GraphicMultiVarQuartets2   
+
+     have the current plot scheme.   
+
+
+    Have to build a new worksheet:
+    GraphicMultiVarPartialDifferent works with quadratics.
+    All good up to Harvest partial applied functions.
+    That is want to clone it...
+
+case class pcTrms(deg1:String,sca1:String,div1:String,deg2:String,sca2:String,div2:String,nMax1:String,nMax2:String)
+
+GraphicMultiVArPartialDifferencesPlot
+SteapestDescent is repurposed...
+
+
+PlotDataa.main(Array("GraphArgs"))
+// QuerryS12QuadQuerry.main(Array("8","5","N5MaxN8"))   2nd derivative of quartet
+//QuerryS12QuadQuerry.main(Array("16","6","N6MaxN16"))  quartet
+
+Exemplifies minimum question: is there one, where is it...  
+                              want to query the data for it...
+
+take the log of big decimal.... a newton method application.
+
+3/2
+
+GraphicConvergance  
+
+              Prove the vertices in a quadratic sequence defines a sequence of converging rationals.
+              GraphicConvergance illustrates the scalars in each quadratic progression as individual sequences {A},{B},{C}.
+              The sequences each feature a power of two minus one multiplied by by an initial change in value from index one to index two.
+              An initial value is added to result of multiplication. 
+ 
+GraphicConvergancenN-2 Subsequence/complement to above.  
+
+              N-2 subsequence has imilar definition of  {-B}{2A}.
+              The complement note does need a final division, in this case by 7, to produce 2^n sequence.
+
+GraphicConverganceWithoutRowCounter
+
+              Progression of quadratics without the rowScalar multiplication.
+              The {-B}/{2A} sequences are composed of a quadratic {-B} and linear {2A}. {C} is a cubic.
+              The ratio diverges.  
+
+GraphicMU            December state of ZAD.  Compares a ZAD instance's ability to complete 
+                     powerset representation of integers.  ZAD is a  Newton's Differences graph. 
+                     A node's p() has a determined/underdetermined set of roots.  A graph is compared 
+                     with a complete set of expected roots.  
+
+GraphicZeroThePs..   graphing MaxN,N,D ; same maxN,N.  the graph
+                     inspires finding the crittical point of each curve.
+                     The belief is when multiplying two of these curves, 
+                     have to concider the multiplication of the two mins.
+                     Mayby have to concider the min in relation to where 
+                     curve1 is less than / greater than curve2.
+
+                     first gradient descent, newtons method, mentions sturm,
+                     uses zeppelin to graph.
+
+GraphicMultiVar1     Multiplies two quadratics and grapsh them. No evidence of local
+                     mins...  Though did not log(result)...  Inspires Lipshitz/Kantovorac
+                     for existance.  Note though: positive definate.
+
+GraphicMuliVarQuart2 See above, with two quartets...
+
+GraphicMultiVarPartialDifferentials  
+                     Quadratics querried.
+                     Partially differenced.
+                     Gradient, Hessian defined.
+                     Newtons Method applied.
+                     The result of lab 1 being no convergance occured....
+                     need to look at logrithm of big graph.
+                             perform the textbook analysis.
+
+GraphicMultiVarPDQuadsForPlot  
+
+GraphicMultiVarPDQuartetsForPlot1
+                     Quartets*a partially differentiated Quartet is plotted.
+                     Log of xy result is z.  Includes surface and level graphs.
+                     Note aparent minimum.  Need to apply Newton's method and
+                     verify correctness.
+   
+GraphCrypto
+                     query p's in base 2 expansion of base26 message.
+
+GraphicD*            Plot ZAD Dnode.vmResults.
+
+OtherNoteBooks
+
+GraphCheckDecimalKey
+                    S3T query with result udf.  Does verify evaluation of s3t query resultSet. 
+
+GraphicQuadraticProgressions 
+                                Last ran Oct 2021, does read into a dataframe a MaxN progression.
+                                UDFs, Grouped aggregators, and subsequent pivot writes a datframe
+                                with rows summing to the power of two represented by the quadratic. 
+                   
+As above:
+
+PlotDataa.main(Array("GraphArgs"))
+// QuerryS12QuadQuerry.main(Array("8","5","N5MaxN8"))   2nd derivative of quartet     (logrithmic scale)
+//QuerryS12QuadQuerry.main(Array("16","6","N6MaxN16"))  quartet
+
+appears to have a minimum and want newton's method to confirm it.  
+
+As Need a new worksheet with some intermediatary paragraphs that will provide 
+as specified s3AQu dataframes...  from partial diff dataframes apriori to the
+hessian gradient dataframes....
+
+Will append work sheet... 
+
+Do want proper axis and not just ticks on graph.
+
+GraphicMultiVarPDQuartetsForPlot1
+
+.queries for two large d (quartets or better) p's.
+.2X differentiates them.
+.selects a pair in the partial differential datafram for graphing.  
+
+DiffArgs object has the needed n method intermediate objects.
+The partial x, partial y p's of interest need to populate z context s3AQu dataframes.
+
+Object ZLists does select the plottable function from the crossjoined dataframe of x,y's partials.  
+
+A datarame refactor needs to occur????
+Need the fully differentiated dataframe for steapestDescent. 
+
+DiffArgs.main(Array("s3080805","s3081606",    "ParX","ParY",     "PartialsX","PartialsY"))
+ 
+                                            prep for N-Method
+   0       1       2      3    4     5        6       7       8      9  
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+|     4|     6|       4|   8|  5|        8|      3|     24|       2|      72|
+|     3|  -168|       4|   8|  5|        8|      2|   -504|       1|   -1008|
+|     0| 15328|       4|   8|  5|        8|      0|      0|       0|       0|
+|     2|  1786|       4|   8|  5|        8|      1|   3572|       0|    3572|
+|     1| -8508|       4|   8|  5|        8|      0|  -8508|       0|       0|
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+
++------+-------+--------+----+---+---------+-------+-------+--------+--------+
+|degree| scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|
++------+-------+--------+----+---+---------+-------+-------+--------+--------+
+|     2|  18492|       4|  16|  6|        8|      1|  36984|       0|   36984|
+|     1|-183448|       4|  16|  6|        8|      0|-183448|       0|       0|
+|     0| 683648|       4|  16|  6|        8|      0|      0|       0|       0|
+
+
+
+To paraphrase an old Soviet "Armenian Radio" joke:
+
+    A caller asks Radio Moscow: "is it true that Russia is standing on the edge of the abyss?"
+
+    Radio Moscow answers: "no, it is completely false. We have taken a big step forward since then."
+
+
+
+def getCategoryStats(columnName: String) = tips.select(col(columnName)).groupBy(col(columnName)).count().as[(String, Long)].collect.toList
+
+
+The chore is:
+
+GraphicMultiVarPDQuartetsForPlot1 zeppelin note.
+
+newtons method is not converging...  
+will equip note with gradient descent paragraph.  
+
+ 
+
+3/4
+
+
+object MatrixAndVectorFunctionsandNewton  preportedly performs Newton's Method.
+Refactoring back into Gradient Descent...
+
++------+------+--------+----+---+---------+
+|degree|scalar|divisior|MaxN|  N|dimension|
++------+------+--------+----+---+---------+
+|     2|    72|       4|   0|  0|        0|  882
+|     1| -1008|       4|   0|  0|        0| -1764
+|     0|     0|       4|   0|  0|        0|
+|     0|  3572|       4|   0|  0|        0|  893
+|     0|     0|       4|   0|  0|        0|
++------+------+--------+----+---+---------+
+
++------+-------+--------+----+---+---------+
+|degree| scalar|divisior|MaxN|  N|dimension|
++------+-------+--------+----+---+---------+
+|     2|  18492|       4|   0|  0|        0|
+|     1|-183448|       4|   0|  0|        0|
+|     0| 683648|       4|   0|  0|        0|
+|     3|   -830|       4|   0|  0|        0|
+|     4|     14|       4|   0|  0|        0|
++------+-------+--------+----+---+---------+
+  0      1        2      3    4     5        6       7        8      9        10      11     12       13  14     15       16       17     18       19
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+-------+--------+----+---+---------+-------+-------+--------+--------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|degree| scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+-------+--------+----+---+---------+-------+-------+--------+--------+
+|     2|    72|       4|   0|  0|        0|      1|    144|       0|     144|     2|  18492|       4|   0|  0|        0|      1|  36984|       0|   36984|
+|     2|    72|       4|   0|  0|        0|      1|    144|       0|     144|     1|-183448|       4|   0|  0|        0|      0|-183448|       0|       0|
+|     2|    72|       4|   0|  0|        0|      1|    144|       0|     144|     0| 683648|       4|   0|  0|        0|      0|      0|       0|       0|
+|     2|    72|       4|   0|  0|        0|      1|    144|       0|     144|     3|   -830|       4|   0|  0|        0|      2|  -2490|       1|   -4980|
+|     2|    72|       4|   0|  0|        0|      1|    144|       0|     144|     4|     14|       4|   0|  0|        0|      3|     56|       2|     168|
+|     1| -1008|       4|   0|  0|        0|      0|  -1008|       0|       0|     2|  18492|       4|   0|  0|        0|      1|  36984|       0|   36984|
+|     1| -1008|       4|   0|  0|        0|      0|  -1008|       0|       0|     1|-183448|       4|   0|  0|        0|      0|-183448|       0|       0|
+|     1| -1008|       4|   0|  0|        0|      0|  -1008|       0|       0|     0| 683648|       4|   0|  0|        0|      0|      0|       0|       0|
+|     1| -1008|       4|   0|  0|        0|      0|  -1008|       0|       0|     3|   -830|       4|   0|  0|        0|      2|  -2490|       1|   -4980|
+|     1| -1008|       4|   0|  0|        0|      0|  -1008|       0|       0|     4|     14|       4|   0|  0|        0|      3|     56|       2|     168|
+|     0|     0|       4|   0|  0|        0|      0|      0|       0|       0|     2|  18492|       4|   0|  0|        0|      1|  36984|       0|   36984|
+|     0|     0|       4|   0|  0|        0|      0|      0|       0|       0|     1|-183448|       4|   0|  0|        0|      0|-183448|       0|       0|
+|     0|     0|       4|   0|  0|        0|      0|      0|       0|       0|     0| 683648|       4|   0|  0|        0|      0|      0|       0|       0|
+|     0|     0|       4|   0|  0|        0|      0|      0|       0|       0|     3|   -830|       4|   0|  0|        0|      2|  -2490|       1|   -4980|
+|     0|     0|       4|   0|  0|        0|      0|      0|       0|       0|     4|     14|       4|   0|  0|        0|      3|     56|       2|     168|
+|     0|  3572|       4|   0|  0|        0|      0|      0|       0|       0|     2|  18492|       4|   0|  0|        0|      1|  36984|       0|   36984|
+|     0|  3572|       4|   0|  0|        0|      0|      0|       0|       0|     1|-183448|       4|   0|  0|        0|      0|-183448|       0|       0|
+|     0|  3572|       4|   0|  0|        0|      0|      0|       0|       0|     0| 683648|       4|   0|  0|        0|      0|      0|       0|       0|
+|     0|  3572|       4|   0|  0|        0|      0|      0|       0|       0|     3|   -830|       4|   0|  0|        0|      2|  -2490|       1|   -4980|
+|     0|  3572|       4|   0|  0|        0|      0|      0|       0|       0|     4|     14|       4|   0|  0|        0|      3|     56|       2|     168|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+-------+--------+----+---+---------+-------+-------+--------+--------+
+
+fixed newton method  the passed x in steapest descent was not updataed....
+
+eFun 14,6: graphArgsD(7.0,12.0,3256.0)
+eFun 14,4: graphArgsD(14.0,4.0,4.3799864E7)
+First Guess: 7.0 12.0
+nextGradient: 0.0 -3938.0
+Hessian: 9.384384384384384E-5 -0.0 -0.0 2.5680534155110427E-4
+Hessian*Gradient: DenseVector(0.0, -1.0112994350282487)
+xVectorNextIterate: DenseVector(7.0, 13.01129943502825)
+xVectorNextIterate: DenseVector(7.0, 13.689805783865078)
+xVectorNextIterate: DenseVector(7.0, 14.106810728717196)
+xVectorNextIterate: DenseVector(7.0, 14.283160947979663)
+xVectorNextIterate: DenseVector(7.0, 14.310074204323712)
+xVectorNextIterate: DenseVector(7.0, 14.310599676085644)
+xVectorNextIterate: DenseVector(7.0, 14.31059986968755)
+xVectorNextIterate: DenseVector(7.0, 14.310599869687577)
+xVectorNextIterate: DenseVector(7.0, 14.310599869687577)
+
+
+and now test with gradient descent....
+
+slowly iterating correctly....
+
+
+me thinkith though x, y are inverted somewhere on the graph or in the gradient....
+
+72x^2-1008x + 3572
+
+10168704 - 1028736
+
+
+Big tech accomplished ...  Window function,  Curry,  the partial diff calculation method...
+
+
+def evalGradient(xF:(nextXYD)=>graphArgsD,yF:(nextXYD)=>graphArgsD)(xY:nextXYD): nextXYD = {      
+    val polyE=nextXYD(xF(xY).result,yF(xY).result)
+    polyE
+}
+
+def evalHessian(aF:(nextXYD)=>graphArgsD,bF:(nextXYD)=>graphArgsD,cF:(nextXYD)=>graphArgsD,dF:(nextXYD)=>graphArgsD)(xY:nextXYD): hess = {     
+    val a=aF(xY).result;val b=bF(xY).result;val c=cF(xY).result;val d=dF(xY).result;
+    val det= 1/((a*d)-(b*c))
+//    println("evalHessian det:"+ det)
+//    println("evalHessian "+a+" "+b+" "+c+" "+d)
+    val polyE=hess( d*det,-b*det,-c*det,a*det)      
+    polyE
+}
+
+
+def evalHessian1(aF:(nextXYD)=>graphArgsD,bF:(nextXYD)=>graphArgsD,cF:(nextXYD)=>graphArgsD,dF:(nextXYD)=>graphArgsD)(xY:nextXYD): hess = {     
+    val a=aF(xY).result;val b=bF(xY).result;val c=cF(xY).result;val d=dF(xY).result;
+    val det= 1/((a*d)-(b*c))
+    println("EvalHessian1 "+a+" "+b+" "+c+" "+d)
+    val polyE=hess(a,b,c,d)      
+    polyE
+}
+
+//case class graphArgsD(x:Double,y:Double,result:Double)
+//case class nextXYD(x:Double,y:Double)
+//case class hess(a:Double,b:Double,c:Double,d:Double)
+
+so the wrapup
+
+suppose two ordinary p(s), say the same maxN,N one as x one as y...  then their product has min at x=y.    -  perhaps the next lab....
+
+how so to make multiple local mins....????
+
+maybe add two p's with different mins..in the same variable... and plot....
+
+ 
+so need add two selected p's... in the same variable or different...  or whenever they have different mins...
+
+QueryS3AQuery.main(Array("8","8","5","s3080805"))    // as dimension,maxN,n,dataframe name
+QueryS3AQuery.main(Array("8","16","6","s3081606"))    // as dimension,maxN,n,dataframe name
+
+xVectorNextIterate: DenseVector(7.0, 14.310599869687577)
+xVectorNextIterate: DenseVector(7.0, 14.310599869687577)
+
+
+
+xVectorNextIterate: DenseVector(6.394072125772593, 14.310599869687577)
+xVectorNextIterate: DenseVector(6.394072125772593, 14.310599869687577)
+
+
+//val fA =p1DF.map(r => s3AQu(r.ddDegree,r.ddScalar,r.divisior,"0","0","0"))  
+   val fA =p1DF.map(r => s3AQu(r.degree,r.scalar,r.divisior,"0","0","0"))
+     val fB =p2DF.map(r => s3AQu(r.degree,r.scalar,r.divisior,"0","0","0"))
+
+toggling fA, according to newtons method moves the x coordinate of minimum...
+
+
+
+so, have to do the multiply two p's as first argument, with same second argument....
+
+do need to multiply and graph result....
+maybe polyEvaluate with same argument is the multiplication....
+
+
+3/10 
+
+Build a 4,3,2 with configure nodes as on zadrun test it and prepare it for aurora (csv dump).
+
+Do run the GD,GS3 pipelines...
+
+seem to remember ZAD is run from netbeans.
+
+Name of candidate Database
+432Differenced
+
+COUNT(n)
+384
+
+COUNT(n)
+387
+
+
+did something like made graph of muNumbers.... 
+pruned them....
+then compared determined and deleted with match.
+then counted remaining....  = completness of iteration.....
+
+graphicMu has utility.  
+It does read muNumbers, and filter the appropriate members for powerset inclusion.
+It does join with the D* graph.  The join dataframe has members in powerset and along with count
+completes audit of powerset completion.   
+
+Can run on 432
+So, back to 432Differenced...
+
+Need wNum on Dnode.
+
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:0})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:1})
+SET d.wNum=k.wNum
+RETURN d.wNum
+ 
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:2})
+SET d.wNum=k.wNum
+RETURN d.wNum 
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:3})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:4})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:5})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+
+remember... composite graphs need createdBy resultid unique....
+
+try again with run....
+
+The big answer is.  need zadfork to take advantage of compound graph (multiple configure nodes on same graph).
+Proceed with recreating d4 determined.   
+
+
+
+MATCH (n:Dnode) 
+WITH n.muList as nB, size(n.muList) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+SET n.muListSize=size(listNB)
+RETURN COUNT(n) as NodesUpdated
+
+
+MATCH (m:MuNumber) 
+WITH m                                               
+OPTIONAL MATCH (d:Dnode {muList:m.nBinary})
+WITH m,d
+FOREACH(x IN (CASE WHEN d IS NULL THEN [] else [1] END) |
+DELETE m)
+
+
+MATCH (d:Dnode)
+WITH d
+SET d.allZerosMu=0
+FOREACH(x IN (CASE WHEN d.muListSize=d.totalZero THEN [1] else [0] END) |
+SET d.allZerosMu=1)
+
+
+
+MATCH (d:Dnode)-[p:predictedLink]->(dd:Dnode) WHERE d.dd=dd.dd
+DELETE p
+MERGE (d)-[:zMap]->(dd)
+RETURN COUNT(p)
+
+MATCH (:Dnode)-[r:predictedLink]->(:Dnode)
+DELETE r
+
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy)   
+Set n.wNum=c.wNum
+return count(n)
+
+
+CALL gds.beta.graphSage.train(
+  'myGraph',
+  {
+     modelName: 'myGraphh',
+     epochs:75
+    , aggregator: 'pool'
+//    , aggregator: 'mean'
+    , activationFunction: 'relu'
+    , featureProperties: ['dd']
+    , projectedFeatureDimension: 1
+    , sampleSizes: [25, 10]
+    , searchDepth: 25
+  }
+)
+
+
+ Therefore, increasing the walk length can introduce undesired information sharing between nodes
+having a too large K can even cause having the same embedding for all nodes.
+
+
+Current Node Lable predictions always write the greater distribution as predicted.
+if more undetermined then all predicted are undetermined.
+if more determined then all predicted are determined
+
+maybe wNum, num zeros predict determined
+
+maybe have to rewrite wNum to indicate expected number of zeros....
+
+
+from sept2021.txt
+
+"one":0,"three":0,"two":0,"n":0,"zero":1,
+
+
+MATCH (d:Dnode) 
+WITH d 
+FOREACH(x IN (CASE WHEN d.totalZero=0 THEN [1] else [0] END) | SET d.zero=1)  
+return count(d)    
+FOREACH(x IN (CASE WHEN d.totalZero=1 THEN [1] else [0] END) | SET d.one=1)
+FOREACH(x IN (CASE WHEN d.totalZero=2 THEN [1] else [0] END) | SET d.two=1)
+FOREACH(x IN (CASE WHEN d.totalZero=3 THEN [1] else [0] END) | SET d.three=1)
+RETURN COUNT(d)
+
+
+MATCH (d:Dnode) 
+set d.zero=0
+with d, case when d.totalZero=0 then [1] else [] end as update
+foreach (x in update | set d.zero=1)
+return count(d)
+
+MATCH (d:Dnode) 
+set d.one=0
+WITH d, CASE WHEN d.totalZero=1 then [1] else [] end as update
+foreach (x in update | set d.one=1)
+return count(d)
+
+MATCH (d:Dnode) 
+set d.two=0
+WITH d, CASE WHEN d.totalZero=2 then [1] else [] end as update
+foreach (x in update | set d.two=1)
+return count(d)
+
+MATCH (d:Dnode) 
+set d.three=0
+WITH d, CASE WHEN d.totalZero=3 then [1] else [] end as update
+foreach (x in update | set d.three=1)
+return count(d)
+
+MATCH (d:Dnode) 
+set d.four=0
+WITH d, CASE WHEN d.totalZero=4 then [1] else [] end as update
+foreach (x in update | set d.four=1)
+return count(d)
+
+chdir .Neo4jDesktop\relate-data\dbmss\dbms-eec8766a-09ce-4189-ab17-3d24cc2bc95b\bin
+neo4j-admin dump
+
+neo4j-admin.bat dump --database=graph.db --to=c:\dump\article_citation_graph.dump
+
+ neo4j-admin dump --database=neo4j --to=C:\Users\Aibes\neo4j1.dump
+
+zeppelin wants old java version .8
+
+
+
+MATCH (n:Dnode {determined:1}  ) RETURN count(n)
+
+MATCH (n:Dnode {predictedDetermined:1, determined:0}  ) RETURN n
+
+MATCH (n:Dnode) 
+set n.predictedDetermined=-1
+set n.predictedProbabilities=-1
+return count(n)
+
+MATCH (n:Dnode) where n.wNum is NULL return n
+
+
+
+3/16
+
+
+Important graphs:  
+
+MuNumbers           - Filterable collection of muNumbers.
+D4Differenced       - Legacy ZAD Setsize=4.
+
+D4Fork              - Does this graph complete power set?
+
+
+A task for GraphicMu
+
+Using D4Fork
+      D4Differenced
+
+These three graphs to archive on d:\\
+
+D4Fork does complete powerset.      Though 18 million nodes required.
+D4Differenced does not.
+
+With regard to D4Fork:  Need the proper "What is it?".
+a composition of 
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:4, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+CREATE (n:Configure {maxFigPScalar:4, dimension:3, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+CREATE (n:Configure {maxFigPScalar:12, dimension:2, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+
+iterations.
+
+With regard to the p's:
+The idea of two variables...
+The idea of three variables...
+....
+
+These are the factoids...
+
+whats in my space??  various comprehensions of expetation.
+
+3/17
+
+The D*Fork roundup/analysis:
+
+First a question:
+Have the usual definition of p: multiply out a p's roots.
+And multiply out the roots so that power set p is defined.
+               vs
+the traversial.
+
+is the same complexity expected???
+
+
+3/18
+
+GraphicMu:
+  Do want JoinMU also filtering unique rows after inner join. 
+  MultiGraph use case is the D* Fork/Legacy graph.
+  Which members of multigraph are not on D*Legacy.
+
+As in Write up Complete Power Set.
+
+Where on ZAD are TwoPolynomials?
+
+And manual identify the min of the quadratics/quartets.
+
+Write the radix cypher.
+
+QwNumQuery.main(Array("4","D3Legacy"))   -  need to compute muList size.
+                                            must jive with wNum or filter out.
+
++-----------+---------+----+----------+-------------+
+|denominator|numerator|wNum|determined|muList       |
++-----------+---------+----+----------+-------------+
+|3          |1        |0   |1         |[1, 1, 1]    |
+|6          |5        |0   |1         |[1, 5]       |
+|7          |4        |0   |1         |[3, 4]       |
+
+QwNumQuery.main(Array("4","D3pArrayFork"))
+
++-----------+---------+----+----------+------------+
+|denominator|numerator|wNum|determined|muList      |
++-----------+---------+----+----------+------------+
+|5          |4        |0   |1         |[1, 4]      |
+|6          |3        |0   |1         |[3, 3]      |
+|6          |4        |0   |1         |[2, 4]      |
+
+QFidQuery.main(Array("muNumbers"))
+
++--------+---+----+---+------------------------------------------------------------------------+
+|value   |d  |size|n  |nBinary                                                                 |
++--------+---+----+---+------------------------------------------------------------------------+
+|1       |1  |1   |1  |[1]                                                                     |
+|3       |2  |2   |1  |[1, 1]                                                                  |
+|2       |2  |1   |2  |[2]                                                                     |
+|7       |3  |3   |1  |[1, 1, 1]                                                               |
+|5       |3  |2   |2  |[2, 1]                                                                  |
+|4       |3  |1   |3  |[3]                                                                     |
+|15      |4  |4   |1  |[1, 1, 1, 1]                                                            | 
+ 
+JoinMu object needs a refinement.  
+
+case class muFieldsELength(value:String,d:String,size:String,n:String,nBinary:String,length:Int)
+
+import java.util.ArrayList;
+
+val nBinaryArray = NBinaryUtility.arrayStringToIntegerArrayList(mQuery.nBinary) 
+
+
++-----+---+----+---+------------------+------+
+|value|d  |size|n  |nBinary           |length|
++-----+---+----+---+------------------+------+
+|1    |1  |1   |1  |[1]               |1     |
+|3    |2  |2   |1  |[1, 1]            |2     |
+|2    |2  |1   |2  |[2]               |2     |
+|7    |3  |3   |1  |[1, 1, 1]         |3     |
+|5    |3  |2   |2  |[1, 2]            |3     |
+|4    |3  |1   |3  |[3]               |3     |
+|15   |4  |4   |1  |[1, 1, 1, 1]      |4     |
+|11   |4  |3   |2  |[1, 1, 2]         |4     |
+|6    |4  |2   |2  |[2, 2]            |3     |
+|9    |4  |2   |3  |[1, 3]            |4     |
+
+
+3/22
+
+
+
+QwNumQuery.main(Array("4","D3Legacy"))   -  need to compute muList size.
+                                            must jive with wNum or filter out.
+
++-----------+---------+----+----------+-------------+
+|denominator|numerator|wNum|determined|muList       |
++-----------+---------+----+----------+-------------+
+|3          |1        |0   |1         |[1, 1, 1]    |
+|6          |5        |0   |1         |[1, 5]       |
+|7          |4        |0   |1         |[3, 4]       |
+
+QwNumQuery.main(Array("4","D3pArrayFork"))
+
++-----------+---------+----+----------+------------+
+|denominator|numerator|wNum|determined|muList      |
++-----------+---------+----+----------+------------+
+|5          |4        |0   |1         |[1, 4]      |
+|6          |3        |0   |1         |[3, 3]      |
+|6          |4        |0   |1         |[2, 4]      |
+
+
+val nBinaryArray = NBinaryUtility.arrayStringToIntegerArrayList(mQuery.nBinary) 
+val length =  NBinaryUtility.sizeMu(nBinaryArray)
+
+Both D* graphs need above applied and muFieldsELength case class returned.
+And filter if
+ determined  and  length<=*  and          - wNum 
+
+
+size    wNum     True/False
+
+0       0  
+        1
+        2
+        3
+        4
+        5         
+
+1       0       False
+        1       False
+        2       False
+        3       True
+        4       False
+        5       False
+
+2       0        False
+        1        False
+        2        True
+        3        False
+        4        False
+        5        False
+
+3       0        False
+        1        True
+        2        False
+        3        False
+        4        False
+        5        False
+
+4       0        True
+        1        False
+        2        False
+        3        False
+        4        False
+        5        False
+
+
+If size+wNum=GraphD and length<=GrapD       Note: Determined may include zeros outside
+                                                  power set.
+
+3/23
+
++-----------+---------+----+----------+-------------+------+----+
+|denominator|numerator|wNum|determined|muList       |length|size|
++-----------+---------+----+----------+-------------+------+----+
+|3          |1        |0   |1         |[1, 1, 1]    |3     |3   |
+|6          |5        |0   |1         |[1, 5]       |6     |2   |
+|7          |4        |0   |1         |[3, 4]       |5     |2   |
+|6          |2        |0   |1         |[2, 2, 2]    |4     |3   |
+|9          |3        |0   |1         |[3, 3, 3]    |5     |3   |
+
+
++----+------+------------+---------+-----------+----+
+|size|length|muList      |numerator|denominator|wNum|
++----+------+------------+---------+-----------+----+
+|4   |4     |[1, 1, 1, 1]|1        |4          |0   |
+|3   |3     |[1, 1, 1]   |1        |3          |1   |
+|2   |2     |[1, 1]      |1        |2          |2   |
+|1   |1     |[1]         |1        |1          |3   |
+|1   |2     |[2]         |2        |2          |3   |
+|1   |3     |[3]         |3        |3          |3   |
+|0   |0     |[]          |0        |0          |4   |
++----+------+------------+---------+-----------+----+
+
+
++----+------+------------+---------+-----------+----+
+|size|length|muList      |numerator|denominator|wNum|
++----+------+------------+---------+-----------+----+
+|4   |4     |[1, 1, 1, 1]|1        |4          |0   |
+|3   |3     |[1, 1, 1]   |1        |3          |1   |
+|3   |4     |[2, 2, 2]   |2        |6          |1   |
+|2   |2     |[1, 1]      |1        |2          |2   |
+|2   |4     |[1, 3]      |3        |4          |2   |
+|2   |3     |[2, 2]      |2        |4          |2   |
+|2   |4     |[3, 3]      |3        |6          |2   |
+|1   |1     |[1]         |1        |1          |3   |
+|1   |2     |[2]         |2        |2          |3   |
+|1   |3     |[3]         |3        |3          |3   |
+|1   |4     |[4]         |4        |4          |3   |
+|0   |0     |[]          |0        |0          |4   |
++----+------+------------+---------+-----------+----+
+
+
+GraphicMu does now have length and size argumented D* dataframes.  
+New Conclusion:
+It is not currently producing a complete power set....
+Because....   
+Are the legacy CreatedBy pArrays included in the fork iteration????
+is the next question.  
+
+
+arrayStringToIntegerArrayListNR
+
+C:\Users\Aibes\JavaProjects\ZADScriptsK\ZADScripts\dist\
+
+C:\Users\Aibes\JavaProjects\ZADScriptsK\ZADScripts\dist\ZADScripts.jar
+
+3/24
+
+
+need some pArray sleuthing cypher.
+In particular, with D*Fork, mystery of pArray semantics.
+
+Refactord GrapicMu does not prove power set.
+Legacy GraphicMu does, though with improper interpretation of muList (may be less than totalZero.
+Note: D2Fork does iterate correctly. 
+
+So,  Redraw D3Fork is up.
+
+No bueno constraint in multi configure node graph.
+ //val dss = ds.select($"size", $"length",$"muList",$"numerator",$"denominator",$"wNum").where(($"length" < 4) && ($"size"+$"wNum"===3))  //.sort($"c02_level")
+
+
+ZAD run note:
+behoves to increase setsize by one to complete set.
+
+compound graph note (multiple configure nodes):  there will be redundant 
+
+along with increasing setSize, drow wNum from query dataframe.
+
+D3 as:
+
++-----------+---------+----+----------+---------+------+----+---------+
+|denominator|numerator|wNum|determined|muList   |length|size|totalZero|
++-----------+---------+----+----------+---------+------+----+---------+
+|2          |1        |0   |1         |[1, 1]   |2     |2   |2        |
+|3          |1        |0   |1         |[1, 1, 1]|3     |3   |3        |
+|4          |2        |0   |1         |[2, 2]   |3     |2   |2        |
+|3          |2        |0   |1         |[1, 2]   |3     |2   |2        |
+|2          |1        |1   |1         |[1, 1]   |2     |2   |2        |
+|1          |1        |1   |1         |[1]      |1     |1   |1        |
+|4          |2        |1   |1         |[2, 2]   |3     |2   |2        |
+|2          |2        |1   |1         |[2]      |2     |1   |1        |
+|3          |3        |1   |1         |[3]      |3     |1   |1        |
+|0          |0        |2   |1         |[]       |0     |0   |0        |
+|1          |1        |2   |1         |[1]      |1     |1   |1        |
+|2          |2        |2   |1         |[2]      |2     |1   |1        |
+|3          |3        |2   |1         |[3]      |3     |1   |1        |
+|0          |0        |3   |1         |[]       |0     |0   |0        |
++-----------+---------+----+----------+---------+------+----+---------+
+
+
++-----------+---------+----+----------+---------+------+----+---------+
+|denominator|numerator|wNum|determined|muList   |length|size|totalZero|
++-----------+---------+----+----------+---------+------+----+---------+
+|3          |1        |0   |1         |[1, 1, 1]|3     |3   |3        |
+|2          |1        |1   |1         |[1, 1]   |2     |2   |2        |
+|4          |2        |1   |1         |[2, 2]   |3     |2   |2        |
+|1          |1        |2   |1         |[1]      |1     |1   |1        |
+|2          |2        |2   |1         |[2]      |2     |1   |1        |
+|3          |3        |2   |1         |[3]      |3     |1   |1        |
+|0          |0        |3   |1         |[]       |0     |0   |0        |
++-----------+---------+----+----------+---------+------+----+---------+
+
+
+Maybe re run D4Fork???
+it is missing that same last [4] that d3 was missing [3].
+15 others accounted for.  
+
+appending the fork graph is up... maybe a beast of a jira.
+
+do need to comprehend pArrays....
+
+
+
+3/25
+
+
+The divisibility test of 4 and 8 are slightly similar. In the divisibility test of 4,
+we check the last two digits, if the last two digits are zeros or the number formed by 
+the last two digits of a number is exactly divisible by 4 then the original number is 
+also divisible by 4.
+
+Test one:
+
+neo - a base 26 number
+is represented in base 10 as 15936 (use a radix converter).
+
+and 
+
+in base 2 as 1   1   1   1   1   0   0   1   0   0   0   0   0   0.
+             13  12  11  10  9   8   7   6   5   4   3   2   1   0
+
+ 8192 
+ 4096
+ 2048
+ 1024
+  512
+   64
+
+=15936
+
+egg
+10011010101000 
+9896
+                       13  12  11  10  9   8   7   6   5   4   3   2   1   0
+                       1   0   0   1   1   0   1   0   1   0   1   0   0   0 
+
+
+
+
+According to the base2 representation need up to the 13th element in the free variable sequence.
+
+Using the GraphicZero template:
+
+Note: The correct index of any radix will write the cypher.  
+      The 3 digit precision of radix 26 will spell the cypher.
+
+Populate a graph with... 
+
+n=4 =16
+nMax=10000 
+dim=8 is a quadratic.
+zero degree term is 499850059989  0016 last 4 digits 
+
+and
+n=4 =16
+nMax=10000
+dim=16 is an octet.
+zero degree term is 12,493,751,999,650,059,974,89   0016 last 4 digits 
+
+therfore it seems dimension is irrelevant in the encoding it is all about the free variable.
+
+so.. 
+The exposition is:
+Write the word. Number of letters is letterCount.  
+Convert the word(is base 26) into base 2.     http://www.easysurf.cc/cnver17.htm
+translate each bit into 2^n (base 10) arithmetic.
+
+Define the polynomials in the arithmetic using and arbitrary maxN. 
+convert the zero degree term to radix 26 will not spell the word.
+evaualte the resulting polynomial and convert to radix 26 will spell the word.
+
+Define the polynomials using 26^letterCount as maxN.
+convert the zero degree term to radix 26 will spell the word.  
+
+
+The Crytograme note:
+Needs to accept a letter word.
+Acccept an arbitrary maxN(radix).
+define the indices needed in the base 2 expansion.
+query an arbitrary maxN for the indices.
+query the 26^lettercount maxN.
+
+so, from the 2^n arithmitic.
+write into a particular maxN set.  note evaluate this p will give the base 10 number
+it will convert into radix 26 and de-encode.  
+move into appropriate power sieve of 26 and will constant term de-encode.  
+note if don't know which maxN encoded into will be jive.
+
+
+the base 10 interpretation of the base 2 arithemtic set.  onto the hidden arbitrary radix....
+need this arbitrary radix to translate to radix 26.
+
+
+compose per GraphicZero.
+
+3/28
+
++---+------+------+----+
+|  N|     0|     1|   2|
++---+------+------+----+
+|  2| 104.0| -28.0| 2.0|
+|  3| 192.0| -54.0| 4.0|
+|  4| 368.0|-106.0| 8.0|
+|  5| 720.0|-210.0|16.0|
+|  6|1424.0|-418.0|32.0|
++---+------+------+----+
+
+The above, from GZP'sAndQ's are the MaxN=8 progression (and remember divide by 2),  appear consistantly on differences.ods
+between the linear index 6 and 7 -  they appear in setproductRange=8 forked graph.
+Though, the constant 52 is not in the range provided by same setproductrange.  is near though the 6,7 index rage...
+
+conclusion is though,  not on zadfork graph...
+
+
+
+
+                MaxN=16  are between index 14 and 15.
+
+
+
+
+And where so are the quartets???
+
+
+3/29
+
+TwoPolynomials are written up.  
+P's on D* need some ETL before the workbook.
+Interest is in Dnode's vmResult field.
+It is a string representation of a p.
+The string is a list of floats.  
+The floats need to be rounded and 
+cast to integers.
+
+The trim() method removes whitespace from both ends of a string.
+Float(String s)
+
+And not sure want Collection.reverse yet.
+
+Now have:  public static ArrayList<Float> arrayStringToFloatArrayListNR(String arrayString){
+
+C:\Users\Aibes\JavaProjects\ZADScriptsK\ZADScripts\dist\
+
+public ResultSet wNumDnodes(int wNum) 
+
+psInsert = conn.prepareStatement("MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?})\n" +
+                                 "WITH DISTINCT n,toString(c.wNum) as wNum\n" +
+                                 "RETURN toString(n.vmResult) as vmResult"); 
+
+Need a cypher query.    - Recall GraphicMu refactor.  Paragraph 2, the wNumQuery function processes muList, a string, into
+                          int array.
+Need a new note.
+
+
+reading vmResult.  it is a string for conversion to float array.
+want to populate the polynomial dataframe in the usual way.  
+though, this time around, need key,scalar, degree.
+key is unique for each p on dataframe.
+
+[0.0, -0.0, 0.0, -0.0, 1.0, 0.0]
+[0.0, -6.0, 11.0, -6.0, 0.9999999999999998, 0.0]
+[-23.999999999999318, -6.000000000001364, 11.000000000000888, -6.0000000000002345, 1.0000000000000213, 0.0]
+[0.0, -30.0, 11.0, -6.0, 0.9999999999999991, 0.0]
+[23.999999999999318, -29.999999999998636, 10.999999999999105, -5.9999999999997655, 0.9999999999999791, 0.0]
+[47.999999999998636, -29.99999999999727, 10.999999999998224, -5.999999999999531, 0.9999999999999574, 0.0]
+[71.99999999999795, -29.999999999995907, 10.999999999997314, -5.999999999999297, 0.9999999999999396, 0.0]
+
+
+3/30
+
+what to include from graphicZerothepsnMax8:
+
+do not need groupedDegreesum object,
+            MapKVUDF,
+            DropKeyColumn,
+
+
+
++------+-------------------+---+
+|degree|scalar             |key|
++------+-------------------+---+
+|0     |0.0                |0  |
+|1     |-0.0               |0  |
+|2     |0.0                |0  |
+|3     |-0.0               |0  |
+|4     |1.0                |0  |
+|5     |0.0                |0  |
+|0     |0.0                |1  |
+|1     |-6.0               |1  |
+
+
++------+-------------------+---+----+-------------------+-------+
+|degree|scalar             |key|xArg|result             |xAxis  |
++------+-------------------+---+----+-------------------+-------+
+|0     |0.0                |0  |7.95|0.0                |79500.0|
+|0     |0.0                |0  |7.85|0.0                |78500.0|
+|0     |0.0                |0  |7.75|0.0                |77500.0|
+|0     |0.0                |0  |7.65|0.0                |76500.0|
+
+
+
+
+
+
+
+
+
+
+
+10011010101000
+
+Make the happy easter cypher....
+
+Query the above arithmetic arguments. 
+Add the polynomial arguments.
+  
+CREATE INDEX ON :IndexedBy(N,MaxN)
+CREATE INDEX ON :Evaluate(Value)
+CREATE INDEX ON :TwoSeqFactor(twoSeq)
+CREATE INDEX ON :CollectedProductArgNode(MaxN,N)
+CREATE INDEX ON :IndexedByArgument(N,MaxN)
+
+java -jar TwoPolynomialGenerator.jar test.csv 8 2 9         67               
+java -jar TwoPolynomialGenerator.jar test.csv 16 2 17       240       
+java -jar TwoPolynomialGenerator.jar test.csv 32 2 33       476                
+java -jar TwoPolynomialGenerator.jar test.csv 64 2 65       3082             
+
+java -jar TwoPolynomialGenerator.jar test.csv 10 2 11       3134                   
+java -jar TwoPolynomialGenerator.jar test.csv 100 2 101     8361       
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 101    13607          
+java -jar TwoPolynomialGenerator.jar test.csv 10000 2 101   18853    
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+
+java -jar ZADScripts.jar 2 7 8 2        19001                                                
+java -jar ZADScripts.jar 2 7 8 8        19852
+java -jar ZADScripts.jar 2 7 8 16       20241      
+java -jar ZADScripts.jar 2 7 8 32       21552
+
+java -jar ZADScripts.jar 2 7 8 64
+java -jar ZADScripts.jar 2 7 8 128
+java -jar ZADScripts.jar 2 7 8 256
+java -jar ZADScripts.jar 2 7 8 512     247806
+java -jar ZADScripts.jar 2 7 8 1024
+java -jar ZADScripts.jar 2 7 8 2048   
+
+java -jar ZADScripts.jar 2 13 16 2      26892             
+java -jar ZADScripts.jar 2 13 16 8      28466      
+java -jar ZADScripts.jar 2 13 16 16     33192                           
+java -jar ZADScripts.jar 2 13 16 32     43224  
+
+java -jar ZADScripts.jar 2 13 32 2      48564                
+java -jar ZADScripts.jar 2 13 32 8      50598         
+java -jar ZADScripts.jar 2 13 32 16     54864                    
+java -jar ZADScripts.jar 2 13 32 32     64881    
+
+java -jar ZADScripts.jar 2 13 64 2      70236                    
+java -jar ZADScripts.jar 2 13 64 8      72020           
+java -jar ZADScripts.jar 2 13 64 16     76300                  
+java -jar ZADScripts.jar 2 13 64 32     86568
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 10000 2 17  105009
+
+java -jar ZADScripts.jar 2 10 10000 2     88916
+java -jar ZADScripts.jar 2 10 10000 8     89978   
+java -jar ZADScripts.jar 2 10 10000 16    91964                      
+java -jar ZADScripts.jar 2 10 10000 32    96002
+java -jar ZADScripts.jar 2 10 10000 64    104558
+java -jar ZADScripts.jar 2 10 10000 128   122762
+java -jar ZADScripts.jar 2 10 10000 256   160734
+java -jar ZADScripts.jar 2 10 10000 512
+
+
+
+
+
+
+
+
+
+lieben mit de welt im netz.
+
+
+
+
+
+
+
+
+
+
+
+https://www.cs.cornell.edu/courses/cs4780/2018fa/lectures/lecturenote07.html
+
+
+
+
+
+
+def main(args:Array[String]) {
+
+     val p1DF= z.get(args(0)).asInstanceOf[DataFrame]
+     val p2DF= z.get(args(1)).asInstanceOf[DataFrame]
+//     val augsDF=z.get(args(2)).asInstanceOf[DataFrame]
+     val ds0=p1DF.crossJoin(p2DF).asInstanceOf[DataFrame]   
+
+     ds0.show()
+
+     val ds1 =ds0.map(row => pcTrms(row.getString(0), row.getString(1), row.getString(2), row.getString(6), row.getString(7), row.getString(8), row.getString(3), row.getString(9) ))
+     val fPL = ds1.collect.toList
+     def polyEvalwP=polyEvaluate(fPL)_
+
+    val terms = new ArrayBuffer[List[Double]]()
+    val termX = new BigDecimal("-10.00")
+    val termY = new BigDecimal("-10.00")
+    val step = new BigDecimal("0.05")
+
+    for (x <- 1 to 1000)  { 
+    val yTerms = new ArrayBuffer[graphArgsD]()   
+    for (y <- 1 to 1000)  {        
+      val xx=new BigDecimal(x)   
+      val yy=new BigDecimal(y)
+      val nextStepX= step.multiply(xx)
+      val nextStepY= step.multiply(yy)
+      val nextXX=termX.add(nextStepX)
+      val nextYY=termY.add(nextStepY)  
+
+      yTerms+=polyEvalwP(nextXYD(nextXX.doubleValue(),nextYY.doubleValue())) 
+    }
+     val rList = yTerms.map(f => f.result).toList    // is a list of Double      
+//    println("rList: "+rList)
+     terms+=rList
+    }
+    val termsL=terms.toList
+     z.put(args(2)),termsL)
+  }
+}
+
+
+

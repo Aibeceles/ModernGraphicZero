@@ -1,0 +1,29 @@
+
+
+Dec note 1/1/21 the 2020 activities log is at end.
+
+
+
+sht:
+
+Write the Java class libraries/Cypher Scripts necessary for data needed to implement
+even-dimensional polonomic addition isomorphic to integer arithmetic. Consume output in
+Neo4j Graph Database.
+● Implement JAVA API including Executors, ResultSets, and deep Clones among others.
+● Generate Cypher Scripts for populating Graph with relevant pattern, increasing graph dimension with
+projection of current node pattern, and graph traversal to relevant inverses.
+
+
+
+
+Developed a Graph Database application that maps arbitrary polynomials representing integers into
+polynonimials representing rationals.
+Wrote algorithms in Java for encoding, mapping, and decoding the polynomials. 
+      Cypher scripts as jdbc methods and Kafka sink topics for onboarding java output into Neo4j database.
+      Spark/Scala scripts for algebraic insights and determining algorithmetic correctness. 
+      Cypher scripts implementing the Neo4j ML libriary for performing statistical (Node and Link) prediction.
+
+
+
+
+Financial analyst with a strong financial background in manufacturing. Experience includes: budget preparation, forecasting, month end close and accounting for multi-million dollar businesses; financial reporting and analysis, process improvement, and , as well as working directly with management and staff on various projects. Experience with Oracle, and Microsoft Office suite applications including Word, Excel, Access, PowerPoint & Outlook.  Business experience recently argumented with Web 3.0 technologies including NoSql Database, Spark Scala, AWS Cloud, and Web-bases notebooks.

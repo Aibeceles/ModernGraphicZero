@@ -1,0 +1,89 @@
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="8" AND t.twoSeq=16 AND i.MaxN='9'
+WITH [{T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)}] as targetFactors
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) where ii.N="4" AND ii.MaxN='9'
+WITH [{TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:toFloat(vv.Scalar)}]
+      as argumentFactors,targetFactors
+UNWIND argumentFactors as argumentF
+UNWIND targetFactors as targetF
+WITH [{TDegree:targetF.Degree,TScalar:targetF.Scalar,ATwoSeq:argumentF.TT,ADegree:argumentF.Degree,AScalar:
+CASE WHEN argumentF.Degree=-1 THEN argumentF.Scalar*2 ELSE argumentF.Scalar END}]  AS argumentProduct
+UNWIND argumentProduct as argumentProductt
+WITH [{ResultScalar:(argumentProductt.TScalar*argumentProductt.AScalar*argumentProductt.ATwoSeq)/4,
+      ResultDegree: CASE WHEN argumentProductt.ADegree=-1 THEN argumentProductt.TDegree ELSE argumentProductt.ADegree+argumentProductt.TDegree END,
+      ResultTwoSeq:argumentProductt.ATwoSeq}] as resultProduct
+UNWIND resultProduct as rP
+WITH {RScalarList:COLLECT({RScalar:rP.ResultScalar}),RDegree:rP.ResultDegree} as ResultMap
+WITH COLLECT(ResultMap.RScalarList) AS RScalar,ResultMap
+Unwind RANGE(0,SIZE(RScalar)-1) as ii
+Unwind RScalar[ii] as ts
+With collect(ts.RScalar) as cts,ResultMap
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalRScalar,ResultMap
+With [ResultMap.RDegree,TotalRScalar] as output
+Return output
+
+output
+[3, -56.5]
+[4, 2.0]
+[2, 601.0]
+[1, -2847.5]
+[0, 5061.0]
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N='8' AND i.MaxN='9'
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)}),T:toString(t.twoSeq)} as targetFactors,i.N as iN, i.MaxN as iM  
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN='9'
+WITH {DS:Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:toFloat(vv.Scalar) }),Evaluate:ee.Value}  as argumentFactors  ,targetFactors,iN,iM
+WITH COLLECT(targetFactors) as targetF,targetFactors.T as tFT,argumentFactors,iN,iM 
+WITH COLLECT(argumentFactors) as argumentF,argumentFactors.Evaluate as aFE,targetF,tFT,iN,iM
+UNWIND RANGE(0,SIZE(targetF)-1) as ii
+WITH targetF[ii].DS as tFDS, argumentF[ii].DS as aFDS,tFT,aFE,iN,iM
+UNWIND tFDS as tFDSU
+UNWIND aFDS as aFDSU
+WITH {afe:aFE,tft:tFT,DS: COLLECT( {  TDegree:tFDSU.Degree,TScalar:tFDSU.Scalar,ATwoSeq:aFDSU.TT,ADegree:aFDSU.Degree,AScalar:CASE WHEN aFDSU.Degree=-1 THEN aFDSU.Scalar*2 ELSE aFDSU.Scalar END })    }  AS argumentProduct,iN,iM
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.afe as aPafe,iN,iM
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM
+UNWIND aPTds as aPTdsU
+WITH {DS:COLLECT({ResultScalar:(aPTdsU.TScalar*aPTdsU.AScalar*aPTdsU.ATwoSeq)/4, ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe} as resultProduct,iN,iM
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT} as resultMap,iN,iM
+WITH COLLECT(resultMap) as resultMapC,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,eTrm,rDRM,iN,iM
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,eTrm,rDRM,iN,iM
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalRScalar,eTrm,rDRM,iN,iM
+RETURN TotalRScalar,eTrm,rDRM,iN,iM
+
+TotalRScalar	eTrm	rDRM	iN	iM
+8.0	"64"	4	"8"	"9"
+-56.5	"16"	3	"8"	"9"
+1368.0	"32"	2	"8"	"9"
+1875.0	"8"	0	"8"	"9"
+-26.5	"8"	3	"8"	"9"
+-12.5	"4"	3	"8"	"9"
+-16640.5	"64"	1	"8"	"9"
+5061.0	"16"	0	"8"	"9"
+670.0	"4"	0	"8"	"9"
+4.0	"32"	4	"8"	"9"
+601.0	"16"	2	"8"	"9"
+-6935.5	"32"	1	"8"	"9"
+-256.5	"64"	3	"8"	"9"
+263.0	"8"	2	"8"	"9"
+33732.0	"64"	0	"8"	"9"
+115.5	"4"	2	"8"	"9"
+13244.0	"32"	0	"8"	"9"
+-120.5	"32"	3	"8"	"9"
+0.5	"4"	4	"8"	"9"
+1.0	"8"	4	"8"	"9"
+3093.0	"64"	2	"8"	"9"
+-2847.5	"16"	1	"8"	"9"
+2.0	"16"	4	"8"	"9"
+-461.5	"4"	1	"8"	"9"
+-1152.5	"8"	1	"8"	"9"
+
+
+

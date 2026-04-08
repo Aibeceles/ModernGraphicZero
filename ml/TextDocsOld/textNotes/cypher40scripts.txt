@@ -1,0 +1,300 @@
+        psInsert = conn.prepareStatement("UNWIND range(toInteger(?),toInteger(?)) AS n\n" +
+        "WITH toString(n) AS N, ? as nMax\n" +
+        "MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=? AND t.twoSeq=? \n" +
+        "WITH i.N as iN, i.MaxN as iM,e,v,t,i                       \n" +
+        "OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension=?\n" +
+        "WITH\n" +
+        "'1'  AS pDivisor, \n" +
+        "'2' AS pDimension,\n" +
+        "'2' AS vDivisor,\n" +
+        "tt.twoSeq AS vvTwoSeq,\n" +
+        "ee.Value AS eeValue,\n" +
+        "'2'  AS vvDivisor,\n" +
+        "iN,\n" +
+        "'4' AS iDimension,\n" +
+        "iM,\n" +
+        "t.twoSeq AS vTwoSeq,\n" +
+        "v.Degree AS vDegree,\n" +
+        "vv.Degree AS vvDegree,\n" +
+        "v.Scalar AS vScalar,\n" +
+        "vv.Scalar AS vvScalar,  \n" +
+        "toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter\n" +
+        "WITH\n" +
+        "iN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD\n" +
+        "CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n" +
+        "     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,\n" +
+        "     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     \n" +
+        "     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,\n" +
+        "     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree\n" +
+        "\n" +
+        "With {iN:iN,iM:iM,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN \"0\" ELSE vvTwoSeq END,p2Eval:p2Eval,\n" +
+        "       TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN \"0\" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN \"0\" ELSE AADegree END,\n" +
+        "       degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,\n" +
+        "       scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,\n" +
+        "       resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,\n" +
+        "       writeDimension:?} as lines\n" +
+
+        "RETURN lines");
+
+UNWIND range(4,4) AS n
+WITH toString(n) AS N, '1000' as nMax
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' 
+WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='2'
+WITH
+'1'  AS pDivisor, 
+'2' AS pDimension,
+'2' AS vDivisor,
+tt.twoSeq AS vvTwoSeq,
+ee.Value AS eeValue,
+'2'  AS vvDivisor,
+iN,
+'4' AS iDimension,
+iM,
+t.twoSeq AS vTwoSeq,
+v.Degree AS vDegree,
+vv.Degree AS vvDegree,
+v.Scalar AS vScalar,
+vv.Scalar AS vvScalar,  
+toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+WITH
+iN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD
+CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+RETURN
+iM,iN,pD,p2Eval,vTwoSeq,TTDegree,TTScalar,vDivisor,vvDivisor,vvTwoSeq,AADegree,AAScalar,
+CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END AS degreeSum,
+CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END as scalarProduct,
+CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END as resultDivisor,
+rand() as rKeyU
+
+
+UNWIND range(2,19) AS n
+WITH toString(n) AS N, '30' as nMax
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' //  AND t.twoSeq='32'
+WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='2'
+WITH
+'1'  AS pDivisor, 
+'2' AS pDimension,
+'2' AS vDivisor,
+tt.twoSeq AS vvTwoSeq,
+ee.Value AS eeValue,
+'2'  AS vvDivisor,
+iN,
+'4' AS iDimension,
+iM,
+t.twoSeq AS vTwoSeq,
+v.Degree AS vDegree,
+vv.Degree AS vvDegree,
+v.Scalar AS vScalar,
+vv.Scalar AS vvScalar,  
+toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+WITH
+iN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD
+CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+RETURN
+iM,iN,pD,p2Eval,vTwoSeq,TTDegree,TTScalar,vDivisor,vvDivisor,vvTwoSeq,AADegree,AAScalar,
+CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END AS degreeSum,
+CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END as scalarProduct,
+CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END as resultDivisor,
+rand() as rKeyU
+
+
+
+
+UNWIND range(toInteger(4),toInteger(4)) AS n
+        WITH toString(n) AS N, ? as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2'   // AND t.twoSeq=? 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='2'
+        WITH
+        '1'  AS pDivisor,
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,    //iN,
+        '4' AS iDimension,
+               //iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,   //iN,iM,
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        With {iN:i.N,iM:i.MaxN,pD:pD,
+              vTwoSeq:vTwoSeq,
+              vDivisor:vDivisor,
+              vvDivisor:vvDivisor,
+              vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN "0" ELSE vvTwoSeq END,
+              p2Eval:p2Eval,
+              TTScalar:TTScalar,
+              AAScalar:CASE WHEN AAScalar IS NULL THEN "0" ELSE AAScalar END,
+              TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN "0" ELSE AADegree END,
+              degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+              scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+              resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+              writeDimension:?} as lines
+
+
+
+UNWIND range(toInteger('4'),toInteger('4')) AS n
+        WITH toString(n) AS N, '1000' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' //AND t.twoSeq=? 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+return iN,iM,e,v,t,i
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension=?
+
+
+UNWIND range(toInteger(4),toInteger(4)) AS n
+        WITH toString(n) AS N, '1000' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' //AND t.twoSeq=? 
+return  i.N as iN, i.MaxN as iM,e,v,t,i  
+
+
+UNWIND range(toInteger(4),toInteger(4)) AS n
+        WITH toString(n) AS N, '1000' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' //AND t.twoSeq=? 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='2'
+        return
+        '1'  AS pDivisor,
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+        iN as iN,
+        '4' AS iDimension,
+        iM as iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+
+
+UNWIND range(toInteger(4),toInteger(4)) AS n
+        WITH toString(n) AS N, '1000' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' //AND t.twoSeq=? 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='2'
+        return
+        '1'  AS pDivisor,
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+        i,
+        '4' AS iDimension,
+//        iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+
+System.out.println("s3T" + rangeLow+" "+rangeHigh+" "+nMax+" "+dimension1+" "+dimension2+" "+dimension3+" "+tConstraint);
+
+s3T2 2 1000 4 4 8 1
+
+UNWIND range(toInteger('2'),toInteger('2')) AS n
+WITH toString(n) AS iN, '1000' as iM
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:iM,N:iN,tft:1})-[:Arguments]->(aN:ArgumentsNode )
+WITH max(aN.ResultDivisor) AS maxDivisor,iN,iM
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:iM,N:iN,tft:1})-[:Arguments]->(aN:ArgumentsNode )
+//RETURN aN.ScalarProduct as ans,aN.DegreeSum as and,aN.ResultDivisor as anr,cl.tft,cl.Divisor,iN,iM,aN
+WITH {DS:COLLECT({ResultScalar:aN.ScalarProduct, ResultDegree:aN.DegreeSum, ResultDivisor:aN.ResultDivisor}), ET:cl.tft, Divisor:cl.Divisor} AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor,eTrm 
+WITH REDUCE(sum='0', x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+WITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm 
+WITH COLLECT(pTerms) as pTermss,iM,iN,eTrm
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,eTrm
+UNWIND dSList as dSListU
+WITH dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,eTrm 
+                
+WITH {dimension:?,tDegree:tDegree,tScalar:tScalar,iN:iN,iM:iM,pTD:pTD,eTrm:eTrm} AS line
+
+
+        psInsert.setString(1,rangeLow);
+        psInsert.setString(2,rangeHigh);
+        psInsert.setString(3,nMax);
+        psInsert.setString(4,dimension1);
+        psInsert.setInt(5, tConstraint);
+//        psInsert.setString(6,dConstraint);
+        psInsert.setString(6,dimension1);
+        psInsert.setInt(7, tConstraint);
+//        psInsert.setString(9,dConstraint);        
+        psInsert.setString(8,dimension3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

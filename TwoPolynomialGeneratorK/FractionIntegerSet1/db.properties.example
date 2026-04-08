@@ -1,0 +1,7 @@
+# Copy this file to db.properties and fill in your values.
+# db.properties is git-ignored and will not be committed.
+
+derby.url=jdbc:derby:
+derby.user=your_derby_user
+derby.password=YOUR_PASSWORD_HERE
+derby.database=muTableDB

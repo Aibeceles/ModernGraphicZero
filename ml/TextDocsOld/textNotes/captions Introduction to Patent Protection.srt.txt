@@ -1,0 +1,1652 @@
+﻿1
+00:00:03,639 --> 00:00:08,260
+Hello, my name is Elizabeth Shaw, and I am
+the International Relations Advisor in the
+
+2
+00:00:08,260 --> 00:00:12,920
+Office of Policy and International Affairs
+at the United States Patent and Trademark
+
+3
+00:00:12,920 --> 00:00:13,920
+Office.
+
+4
+00:00:13,920 --> 00:00:19,390
+Today, I will be introducing you to patents
+– what a patent is, what a patent protects,
+
+5
+00:00:19,390 --> 00:00:22,310
+and how a patent is obtained in the United
+States.
+
+6
+00:00:22,310 --> 00:00:26,710
+The details surrounding these topics are included
+in the laws and regulations of the United
+
+7
+00:00:26,710 --> 00:00:32,200
+States including the most recent changes in
+U.S. patent law enacted under the Leahy-Smith
+
+8
+00:00:32,200 --> 00:00:38,780
+America Invents Act of 2011, or the AIA, and
+in the Manual of Patent Examining Procedure,
+
+9
+00:00:38,780 --> 00:00:40,930
+or the MPEP.
+
+10
+00:00:40,930 --> 00:00:45,539
+My goal today is to give you useful facts
+that will enable you to understand the basics
+
+11
+00:00:45,539 --> 00:00:50,579
+of patents and how inventions are protected
+in the United States and not to get too far
+
+12
+00:00:50,579 --> 00:00:55,489
+off into the complexities of patent law and
+patent examination practice.
+
+13
+00:00:55,489 --> 00:01:00,800
+At the end of this presentation, I will provide
+links to web sites and web pages where you
+
+14
+00:01:00,800 --> 00:01:07,180
+can explore in detail the intricate laws,
+regulations, and examination guidelines for
+
+15
+00:01:07,180 --> 00:01:09,939
+patents in the United States.
+
+16
+00:01:09,939 --> 00:01:15,230
+In addition, the USPTO offers a variety of
+assistance to independent inventors and to
+
+17
+00:01:15,230 --> 00:01:17,320
+small and medium size businesses.
+
+18
+00:01:17,320 --> 00:01:24,100
+A link to those resources will also be found
+at the end of this presentation.
+
+19
+00:01:24,100 --> 00:01:29,201
+Patented technology today is everywhere: from
+our smart phones and electronic tablets; to
+
+20
+00:01:29,201 --> 00:01:34,659
+our medicine cabinets at home; to the cars
+we drive; and in how I am reaching you today
+
+21
+00:01:34,659 --> 00:01:38,330
+with this presentation.
+
+22
+00:01:38,330 --> 00:01:43,340
+Patents encourage innovation by incentivizing
+the creation of new products and services
+
+23
+00:01:43,340 --> 00:01:49,380
+that can greatly enrich the quality of our
+lives.
+
+24
+00:01:49,380 --> 00:01:54,240
+Obtaining a patent in the United States and
+in most countries can be a complex process
+
+25
+00:01:54,240 --> 00:01:59,430
+involving laws and regulations that outline
+the various requirements and conditions that
+
+26
+00:01:59,430 --> 00:02:01,229
+need to be met.
+
+27
+00:02:01,229 --> 00:02:07,000
+For today, I want you to become familiar with
+3 important aspects of the patenting procedure.
+
+28
+00:02:07,000 --> 00:02:10,920
+We will accomplish this by answering three
+questions.
+
+29
+00:02:10,920 --> 00:02:13,910
+Question One – what is a patent?
+
+30
+00:02:13,910 --> 00:02:17,760
+Here we will look at the history of patents
+in the United States and define what a patent
+
+31
+00:02:17,760 --> 00:02:19,480
+is.
+
+32
+00:02:19,480 --> 00:02:22,660
+Question Two – what does a patent protect?
+
+33
+00:02:22,660 --> 00:02:28,680
+To answer this question, we will explore what
+kinds of inventions are eligible for a patent.
+
+34
+00:02:28,680 --> 00:02:33,420
+And Question Three – what is required to
+get patent protection?
+
+35
+00:02:33,420 --> 00:02:38,960
+We will answer this question in 2 parts – first
+by identifying conditions that an invention
+
+36
+00:02:38,960 --> 00:02:45,720
+must meet to be patentable and second by exploring
+the patent examination process.
+
+37
+00:02:45,720 --> 00:02:51,250
+Because patents laws are complex and patents
+can be very valuable, we usually recommend
+
+38
+00:02:51,250 --> 00:02:56,319
+that inventors who are unfamiliar with the
+patent system seek the assistance of a patent
+
+39
+00:02:56,319 --> 00:02:59,540
+attorney or agent.
+
+40
+00:02:59,540 --> 00:03:04,379
+The patent system was provided for during
+the founding of the United States and is included
+
+41
+00:03:04,379 --> 00:03:11,069
+in the U.S. Constitution, Article 1, Section
+8, Clause 8 where the founders of the United
+
+42
+00:03:11,069 --> 00:03:17,239
+States granted “Congress the power to create
+a patent system that would promote the progress
+
+43
+00:03:17,239 --> 00:03:23,590
+of science and the useful arts, by securing
+for limited times to authors and inventors
+
+44
+00:03:23,590 --> 00:03:28,110
+the exclusive right to their respective writings
+and discoveries.”
+
+45
+00:03:28,110 --> 00:03:33,069
+This clause is also the source for the U.S.
+copyright system, and today we understand
+
+46
+00:03:33,069 --> 00:03:37,700
+the term “useful arts” as referring to
+technology.
+
+47
+00:03:37,700 --> 00:03:39,409
+Why do we have patents?
+
+48
+00:03:39,409 --> 00:03:41,519
+Are patents beneficial to the United States?
+
+49
+00:03:41,519 --> 00:03:43,379
+Yes, they are.
+
+50
+00:03:43,379 --> 00:03:48,549
+They encourage investment in new technologies,
+allowing not only the creation of these new
+
+51
+00:03:48,549 --> 00:03:53,340
+technologies, but also the resources to bring
+them to the marketplace which brings them
+
+52
+00:03:53,340 --> 00:03:56,170
+to individuals like you and me.
+
+53
+00:03:56,170 --> 00:04:02,300
+Abraham Lincoln, our 16th president and the
+only president to ever receive a patent, famously
+
+54
+00:04:02,300 --> 00:04:08,090
+said in a speech in 1858 that the “patent
+system … added the fuel of interest to the
+
+55
+00:04:08,090 --> 00:04:14,200
+fire of genius, in the discovery and production
+of new and useful things.”
+
+56
+00:04:14,200 --> 00:04:18,320
+Here we are at our first question - what is
+a patent?
+
+57
+00:04:18,320 --> 00:04:23,910
+In the United States, a patent is a property
+right granted by the United States government
+
+58
+00:04:23,910 --> 00:04:25,700
+to an inventor.
+
+59
+00:04:25,700 --> 00:04:30,700
+This property right grants to the inventor
+the right, for a limited time, to exclude
+
+60
+00:04:30,700 --> 00:04:37,030
+others from making, using, selling, or offering
+for sale the invention throughout the United
+
+61
+00:04:37,030 --> 00:04:42,330
+States, or from importing the invention into
+the United States.
+
+62
+00:04:42,330 --> 00:04:48,020
+The patent is granted in exchange of the inventor
+fully disclosing the invention to the public,
+
+63
+00:04:48,020 --> 00:04:51,330
+where it otherwise might have remained unknown.
+
+64
+00:04:51,330 --> 00:04:57,630
+This disclosure is important because it promotes
+follow-on innovation.
+
+65
+00:04:57,630 --> 00:05:03,070
+A patent is also territorial meaning that
+it is only enforceable in the territory or
+
+66
+00:05:03,070 --> 00:05:05,080
+country where it was obtained.
+
+67
+00:05:05,080 --> 00:05:10,710
+So, a patent granted in the United States
+can only be protected in the United States.
+
+68
+00:05:10,710 --> 00:05:14,890
+And, the U.S. patent right is a private right.
+
+69
+00:05:14,890 --> 00:05:20,200
+That means the patent holder is tasked with
+protecting and enforcing the patented invention
+
+70
+00:05:20,200 --> 00:05:23,170
+– the U.S. government cannot do it for you.
+
+71
+00:05:23,170 --> 00:05:31,120
+There are 3 types of U.S. patents and they
+are: a utility patent; a design patent; and
+
+72
+00:05:31,120 --> 00:05:33,220
+a plant patent.
+
+73
+00:05:33,220 --> 00:05:39,020
+Utility patents, the most common type of patent
+sought by inventors, are awarded to useful
+
+74
+00:05:39,020 --> 00:05:43,000
+inventions, and they have a 20 year term from
+the date of filing.
+
+75
+00:05:43,000 --> 00:05:49,840
+The first utility patent in the United States
+was issued on July 31, 1790, to Samuel Hopkins
+
+76
+00:05:49,840 --> 00:05:55,050
+of Philadelphia, Pennsylvania for an improvement
+in “the making of pot ash and pearl ash
+
+77
+00:05:55,050 --> 00:05:57,770
+by a new apparatus and process.”
+
+78
+00:05:57,770 --> 00:06:04,300
+In 1790, patents were granted by members of
+the Patent Board which included Thomas Jefferson
+
+79
+00:06:04,300 --> 00:06:09,800
+who was then Secretary of State and considered
+to be the first administrator of the American
+
+80
+00:06:09,800 --> 00:06:14,350
+patent system and the first patent examiner.
+
+81
+00:06:14,350 --> 00:06:19,610
+The original paper patent grant to Samuel
+Hopkins, which was signed by the first U.S.
+
+82
+00:06:19,610 --> 00:06:23,901
+President, George Washington, is still in
+existence today in the collections of the
+
+83
+00:06:23,901 --> 00:06:26,310
+Chicago Historical Society.
+
+84
+00:06:26,310 --> 00:06:31,060
+Here we have an example of a utility patent
+– an underwater dolly with propellers that
+
+85
+00:06:31,060 --> 00:06:35,270
+make it easier for a camera operator to maneuver
+in water.
+
+86
+00:06:35,270 --> 00:06:39,300
+It was invented by filmmaker and inventor,
+James Cameron.
+
+87
+00:06:39,300 --> 00:06:45,020
+He created this for his brother Michael to
+film underwater scenes for the movie “The
+
+88
+00:06:45,020 --> 00:06:49,970
+Abyss, “ and this underwater dolly was patented
+in 1989.
+
+89
+00:06:49,970 --> 00:06:55,660
+While a utility patent represents the functional
+aspects of an invention, a design patent covers
+
+90
+00:06:55,660 --> 00:07:00,190
+the ornamental design or the shape for an
+article of manufacture.
+
+91
+00:07:00,190 --> 00:07:05,160
+Increasingly, businesses are becoming more
+aware of design patents in providing them
+
+92
+00:07:05,160 --> 00:07:09,350
+with a competitive edge to protect their product
+designs.
+
+93
+00:07:09,350 --> 00:07:15,140
+This example of a design patent shows a drawing
+from 1931 of an early Minnie Mouse.
+
+94
+00:07:15,140 --> 00:07:21,560
+Walt Disney received his design patent for
+Mickey Mouse a year earlier in 1930.
+
+95
+00:07:21,560 --> 00:07:25,350
+The third type of United States patent is
+the plant patent.
+
+96
+00:07:25,350 --> 00:07:27,940
+Some may ask why plant varieties should be
+protected.
+
+97
+00:07:27,940 --> 00:07:33,100
+After all, plant varieties are products of
+nature and should be freely accessible to
+
+98
+00:07:33,100 --> 00:07:34,420
+everyone.
+
+99
+00:07:34,420 --> 00:07:38,650
+What this opinion overlooks is that a plant
+breeder who develops a new variety that may
+
+100
+00:07:38,650 --> 00:07:45,120
+be disease resistant, drought resistant, cold
+tolerant, or simply aesthetically more pleasing,
+
+101
+00:07:45,120 --> 00:07:51,530
+is no less an inventor than someone who improves
+an automobile engine or develops a new pharmaceutical.
+
+102
+00:07:51,530 --> 00:07:56,990
+The only difference is that the medium with
+which the plant breeder works is living material
+
+103
+00:07:56,990 --> 00:07:59,880
+rather than inanimate matter.
+
+104
+00:07:59,880 --> 00:08:05,360
+Here is an example of a plant patent - for
+a Hydrangea plant named Limelight which has
+
+105
+00:08:05,360 --> 00:08:09,590
+become a popular landscape plant used across
+North America.
+
+106
+00:08:09,590 --> 00:08:14,470
+The football-shaped flowers look fresh and
+clean in summer’s heat, and Limelight blooms
+
+107
+00:08:14,470 --> 00:08:16,590
+even in cold climates.
+
+108
+00:08:16,590 --> 00:08:19,830
+Next we’ll take a look at what is patent
+eligible.
+
+109
+00:08:19,830 --> 00:08:24,440
+This will help to answer our second question
+– what does a patent protect?
+
+110
+00:08:24,440 --> 00:08:31,500
+In 1980, the United States Supreme Court answered
+the question, “what is patent eligible,”
+
+111
+00:08:31,500 --> 00:08:36,260
+in the landmark decision of Diamond versus
+Chakrabarty, which involved the patenting
+
+112
+00:08:36,260 --> 00:08:38,120
+of life forms.
+
+113
+00:08:38,120 --> 00:08:43,660
+In this case, the Supreme Court stated that
+Congress’ intention was that patent eligible
+
+114
+00:08:43,660 --> 00:08:48,400
+subject matter included “anything under
+the sun that is made by man…”
+
+115
+00:08:48,400 --> 00:08:53,390
+Now, does this literally mean anything made
+by humans is eligible for a patent?
+
+116
+00:08:53,390 --> 00:08:55,870
+The answer to that question is “no.”
+
+117
+00:08:55,870 --> 00:09:01,760
+To be patent eligible, an invention must fall
+into one of the following 4 categories.
+
+118
+00:09:01,760 --> 00:09:08,760
+An invention must be a process, machine, manufacture,
+or composition of matter OR the invention
+
+119
+00:09:08,760 --> 00:09:12,280
+must be an improvement of one of these 4 categories.
+
+120
+00:09:12,280 --> 00:09:18,690
+Even if an invention falls within one of the
+4 previous identified statutory, or lawful,
+
+121
+00:09:18,690 --> 00:09:24,490
+categories of invention, it may still not
+be patent eligible if it also falls into one
+
+122
+00:09:24,490 --> 00:09:30,830
+of these three judicially-created, or court-created,
+exceptions to patentability.
+
+123
+00:09:30,830 --> 00:09:36,901
+These exceptions include: laws of nature (for
+instance, Newton’s law of motion); natural
+
+124
+00:09:36,901 --> 00:09:43,960
+phenomena (that would be such things as wind,
+sunrise, germination, erosion, or gravity)
+
+125
+00:09:43,960 --> 00:09:48,890
+and abstract ideas (for instance, a mental
+process – such as adding up numbers in your
+
+126
+00:09:48,890 --> 00:09:50,690
+head).
+
+127
+00:09:50,690 --> 00:09:55,780
+More examples of inventions not eligible for
+patent protection in the United States include:
+
+128
+00:09:55,780 --> 00:10:01,630
+mathematical algorithms; computer software
+code per se; and a newly discovered mineral
+
+129
+00:10:01,630 --> 00:10:04,900
+as it exists in nature.
+
+130
+00:10:04,900 --> 00:10:11,150
+You can find more information on patent eligibility
+in Chapter 2100 of the Manual of Patent Examining
+
+131
+00:10:11,150 --> 00:10:14,140
+Procedure or MPEP.
+
+132
+00:10:14,140 --> 00:10:21,160
+The MPEP is published by the USPTO and provides
+patent examiners, applicants, attorneys, and
+
+133
+00:10:21,160 --> 00:10:26,590
+agents with a reference work on the practices
+and procedures relative to the prosecution
+
+134
+00:10:26,590 --> 00:10:30,190
+of patent applications before the USPTO.
+
+135
+00:10:30,190 --> 00:10:35,310
+It contains instructions to examiners and
+outlines the current procedures which a patent
+
+136
+00:10:35,310 --> 00:10:40,450
+examiner is required to follow in the normal
+examination of a patent application.
+
+137
+00:10:40,450 --> 00:10:44,520
+You will find a link to the MPEP at the end
+of this presentation.
+
+138
+00:10:44,520 --> 00:10:50,190
+Earlier, we learned that the United States
+Constitution provides for rights to inventors
+
+139
+00:10:50,190 --> 00:10:52,170
+for “limited times.”
+
+140
+00:10:52,170 --> 00:10:54,660
+What are the time limits for a U.S. patent?
+
+141
+00:10:54,660 --> 00:10:58,400
+How long does an inventor have the benefit
+of a patent?
+
+142
+00:10:58,400 --> 00:11:04,530
+For utility patents filed after June 8, 1995,
+the patent term is generally 20 years from
+
+143
+00:11:04,530 --> 00:11:10,500
+the date the patent application was filed
+at the USPTO, and once issued, utility patents
+
+144
+00:11:10,500 --> 00:11:15,390
+have maintenance fees that are due during
+the 20-year patent term at 3.5 years, 7.5
+
+145
+00:11:15,390 --> 00:11:19,060
+years, and 11.5 years.
+
+146
+00:11:19,060 --> 00:11:23,440
+If the maintenance fees are not paid, the
+patent can be abandoned and the inventor can
+
+147
+00:11:23,440 --> 00:11:26,690
+lose his or her patent rights.
+
+148
+00:11:26,690 --> 00:11:31,190
+Plant patents also have a term of 20 years
+from the date of filing but have no maintenance
+
+149
+00:11:31,190 --> 00:11:32,190
+fees.
+
+150
+00:11:32,190 --> 00:11:37,690
+A design patent term lasts 15 years from the
+date of issue and also have no maintenance
+
+151
+00:11:37,690 --> 00:11:39,480
+fees.
+
+152
+00:11:39,480 --> 00:11:43,620
+Now that we know what is eligible for patent
+protection, or what kinds of inventions a
+
+153
+00:11:43,620 --> 00:11:48,000
+patent might protect here in the United States,
+let’s start to answer our third question
+
+154
+00:11:48,000 --> 00:11:51,160
+– What is required to get a patent?
+
+155
+00:11:51,160 --> 00:11:54,920
+As I said earlier, we will answer this question
+in 2 parts.
+
+156
+00:11:54,920 --> 00:12:00,240
+The first part is to identify the conditions
+of patentability or what is required of an
+
+157
+00:12:00,240 --> 00:12:02,560
+invention for it to be patentable.
+
+158
+00:12:02,560 --> 00:12:04,580
+Does the invention have utility?
+
+159
+00:12:04,580 --> 00:12:07,240
+Is the invention new or novel?
+
+160
+00:12:07,240 --> 00:12:12,350
+Is it non-obvious to a person having ordinary
+skill in the art (or technology)?
+
+161
+00:12:12,350 --> 00:12:17,010
+And has specific disclosure of the invention
+utilizing certain requirements been made in
+
+162
+00:12:17,010 --> 00:12:19,570
+the patent application?
+
+163
+00:12:19,570 --> 00:12:23,550
+We will now look at these conditions of patentability
+one at a time.
+
+164
+00:12:23,550 --> 00:12:25,880
+First, let’s look at utility.
+
+165
+00:12:25,880 --> 00:12:30,610
+An invention submitted for a patent in the
+United States must be useful – it must have
+
+166
+00:12:30,610 --> 00:12:36,220
+some function, and it must perform as described
+in the patent application.
+
+167
+00:12:36,220 --> 00:12:43,310
+Under U.S. law, the invention must have specific
+utility, substantial utility, and credible
+
+168
+00:12:43,310 --> 00:12:44,340
+utility.
+
+169
+00:12:44,340 --> 00:12:48,840
+These determinations are made by a patent
+examiner who is highly skilled in the subject
+
+170
+00:12:48,840 --> 00:12:51,160
+matter of the claimed invention.
+
+171
+00:12:51,160 --> 00:12:56,930
+The USPTO has issued guidelines to assist
+both patent examiners and the public is assessing
+
+172
+00:12:56,930 --> 00:13:00,820
+whether an invention has utility that complies
+with the law.
+
+173
+00:13:00,820 --> 00:13:06,590
+These guidelines are available in Chapter
+2107 of the MPEP.
+
+174
+00:13:06,590 --> 00:13:11,920
+We have also referenced the pertinent law
+where patent utility is discussed, 35 U.S.C.
+
+175
+00:13:11,920 --> 00:13:18,350
+(or United States Code) section 101, and you
+will find a link to that section of laws and
+
+176
+00:13:18,350 --> 00:13:21,790
+the MPEP at the end of this presentation.
+
+177
+00:13:21,790 --> 00:13:28,500
+Now, before moving on to novelty and non-obviousness,
+we need to talk about prior art.
+
+178
+00:13:28,500 --> 00:13:34,020
+To determine if an invention is novel (or
+new) and non-obvious, a comparison of the
+
+179
+00:13:34,020 --> 00:13:36,890
+claimed invention with the prior art is required.
+
+180
+00:13:36,890 --> 00:13:40,040
+So what is prior art?
+
+181
+00:13:40,040 --> 00:13:44,480
+Prior art is the state of the art (or the
+technology) prior to the filing date of a
+
+182
+00:13:44,480 --> 00:13:46,360
+patent application.
+
+183
+00:13:46,360 --> 00:13:51,029
+It is used to determine whether an invention
+is patentable or not and consists of the body
+
+184
+00:13:51,029 --> 00:13:56,510
+of published information or prior existing
+disclosures of the relevant field of technology
+
+185
+00:13:56,510 --> 00:14:01,300
+claimed in a patent application made anywhere
+in the world.
+
+186
+00:14:01,300 --> 00:14:06,870
+If an inventor discloses his or her invention
+before filing a patent application for that
+
+187
+00:14:06,870 --> 00:14:10,860
+invention, the inventor may lose out on getting
+a patent.
+
+188
+00:14:10,860 --> 00:14:15,100
+Disclosure of an invention can be made in
+many different ways – for instance: sale
+
+189
+00:14:15,100 --> 00:14:20,540
+of the invention; exhibiting the invention
+at a trade show; or an oral disclosure made
+
+190
+00:14:20,540 --> 00:14:26,430
+anywhere in the world such as discussing an
+invention in a paper presented at a conference.
+
+191
+00:14:26,430 --> 00:14:31,680
+However, in the United States, the law provides
+for a 12 month grace period.
+
+192
+00:14:31,680 --> 00:14:37,810
+This means that certain disclosures by the
+inventor, or others who derived their disclosure
+
+193
+00:14:37,810 --> 00:14:43,970
+from the inventor, may not be used as prior
+art if that disclosure occurred within 12
+
+194
+00:14:43,970 --> 00:14:48,170
+months prior to the effective filing date
+of the patent application.
+
+195
+00:14:48,170 --> 00:14:53,630
+You should also be aware that in some countries
+there is no grace period or a more limited
+
+196
+00:14:53,630 --> 00:14:55,560
+grace period.
+
+197
+00:14:55,560 --> 00:15:01,210
+Remember: disclosure of the invention outside
+of the 12 month grace period is considered
+
+198
+00:15:01,210 --> 00:15:04,800
+prior art, and a patent will not be granted.
+
+199
+00:15:04,800 --> 00:15:11,529
+Next, we will look at the novelty requirement
+which can be found in the U.S. law at 35 U.S.C.
+
+200
+00:15:11,529 --> 00:15:13,029
+section 102.
+
+201
+00:15:13,029 --> 00:15:18,020
+To be novel, an invention must not be disclosed
+in the prior art.
+
+202
+00:15:18,020 --> 00:15:23,300
+When comparing the claimed invention to the
+existing prior art to determine novelty, we
+
+203
+00:15:23,300 --> 00:15:28,300
+determine whether a disclosure of the identical
+invention has been made in writing or through
+
+204
+00:15:28,300 --> 00:15:34,070
+another type of disclosure such as oral disclosure,
+public use, or sale.
+
+205
+00:15:34,070 --> 00:15:39,670
+However, as I pointed out before, if disclosure
+occurred during the 12 month grace period
+
+206
+00:15:39,670 --> 00:15:44,830
+prior to filing the patent application, it
+may not be considered prior art and will not
+
+207
+00:15:44,830 --> 00:15:49,880
+affect the novelty of the invention if the
+disclosure was by the inventor or by others
+
+208
+00:15:49,880 --> 00:15:53,440
+who derived their disclosure from the inventor.
+
+209
+00:15:53,440 --> 00:15:59,560
+Now - even if disclosure of the identical
+invention is not shown in the prior art, patentability
+
+210
+00:15:59,560 --> 00:16:05,830
+requirements also state the invention must
+not be obvious in view of the prior art.
+
+211
+00:16:05,830 --> 00:16:07,270
+What is non-obviousness?
+
+212
+00:16:07,270 --> 00:16:12,730
+Again, we are comparing the claimed invention
+against the existing prior art.
+
+213
+00:16:12,730 --> 00:16:17,610
+The question being asked for non-obviousness
+is whether or not the invention would have
+
+214
+00:16:17,610 --> 00:16:23,060
+been obvious to a person having ordinary,
+or an average level of skill, in the art in
+
+215
+00:16:23,060 --> 00:16:25,100
+the field of the invention.
+
+216
+00:16:25,100 --> 00:16:29,980
+In addition, the patent law requires that
+the assessment be “at the time the invention
+
+217
+00:16:29,980 --> 00:16:31,410
+was made.”
+
+218
+00:16:31,410 --> 00:16:36,960
+This requirement means that patent examiners
+must be historical detectives, piecing together
+
+219
+00:16:36,960 --> 00:16:39,710
+what was known at the time the invention was
+made.
+
+220
+00:16:39,710 --> 00:16:44,480
+The law also states that patentability will
+not be denied by the manner in which the invention
+
+221
+00:16:44,480 --> 00:16:45,740
+was made.
+
+222
+00:16:45,740 --> 00:16:50,960
+That means that the assessment of obviousness
+does not depend on whether the invention took
+
+223
+00:16:50,960 --> 00:16:56,180
+10,000 hours to develop through trial and
+error, or was developed relatively quickly,
+
+224
+00:16:56,180 --> 00:16:58,520
+as a result of a flash of genius!
+
+225
+00:16:58,520 --> 00:17:04,490
+The key is whether the differences between
+the claimed invention and the prior art are
+
+226
+00:17:04,490 --> 00:17:10,270
+non-obvious, even if the invention is not
+identically disclosed and considered novel.
+
+227
+00:17:10,270 --> 00:17:14,380
+We learned earlier that a patent grants an
+inventor certain rights to their invention
+
+228
+00:17:14,380 --> 00:17:20,870
+– and for a limited time the right to exclude
+others from making, using, selling, or offering
+
+229
+00:17:20,870 --> 00:17:25,870
+for sale the invention throughout the United
+States, or importing the invention into the
+
+230
+00:17:25,870 --> 00:17:27,579
+United States.
+
+231
+00:17:27,579 --> 00:17:32,170
+In exchange for a patent, the inventor is
+required to make sure that the claimed invention
+
+232
+00:17:32,170 --> 00:17:36,760
+is communicated (or disclosed) to the public
+in a meaningful way.
+
+233
+00:17:36,760 --> 00:17:42,360
+A patent application is required to have specific
+information as to ensure that anyone skilled
+
+234
+00:17:42,360 --> 00:17:48,260
+in the art (or technology of the invention)
+is able to make and use the invention.
+
+235
+00:17:48,260 --> 00:17:53,370
+In the disclosure, the specific information
+of the manner and process of making and using
+
+236
+00:17:53,370 --> 00:18:00,300
+the invention must be in full, clear, concise,
+and exact terms so that anyone skilled in
+
+237
+00:18:00,300 --> 00:18:04,710
+the art of the claimed invention can make
+it and use it on their own.
+
+238
+00:18:04,710 --> 00:18:09,920
+That is, the disclosure must be an enabling
+and clear disclosure.
+
+239
+00:18:09,920 --> 00:18:14,300
+More information on these requirements of
+written description and enablement can be
+
+240
+00:18:14,300 --> 00:18:19,570
+found in 35 U.S.C. section 112 and in the
+MPEP.
+
+241
+00:18:19,570 --> 00:18:23,860
+We have now reviewed many of the critical
+statutory requirements that must be met to
+
+242
+00:18:23,860 --> 00:18:26,960
+receive a patent grant in the United States.
+
+243
+00:18:26,960 --> 00:18:32,330
+Now let’s look at how a patent application
+processes through the USPTO.
+
+244
+00:18:32,330 --> 00:18:36,929
+Patent examination is a process by which a
+patent examiner reviews the contents of a
+
+245
+00:18:36,929 --> 00:18:40,780
+patent application for compliance with U.S.
+legal requirements.
+
+246
+00:18:40,780 --> 00:18:44,860
+These are the requirements that we have talked
+about earlier in the presentation.
+
+247
+00:18:44,860 --> 00:18:50,510
+After a thorough examination of the application,
+the patent examiner comes to a conclusion
+
+248
+00:18:50,510 --> 00:18:56,020
+as to the invention’s patentability and
+decides whether to grant or reject the patent
+
+249
+00:18:56,020 --> 00:18:57,400
+application.
+
+250
+00:18:57,400 --> 00:19:02,290
+All patent examiners at the USPTO have at
+least a bachelor’s degree relative to the
+
+251
+00:19:02,290 --> 00:19:07,040
+subject matter applications that they will
+be assigned to examine, though many have graduate
+
+252
+00:19:07,040 --> 00:19:08,610
+degrees as well.
+
+253
+00:19:08,610 --> 00:19:15,150
+For example, USPTO patent examiners have degrees
+in; engineering including electronical, mechanical,
+
+254
+00:19:15,150 --> 00:19:22,750
+and chemical; biology and microbiology; physics;
+and design examiners may have degrees in architecture,
+
+255
+00:19:22,750 --> 00:19:25,670
+applied arts, or graphics.
+
+256
+00:19:25,670 --> 00:19:31,010
+Every new examiner receives both on-the-job
+and formal training which cover all aspects
+
+257
+00:19:31,010 --> 00:19:36,660
+of basic and advanced examining functions
+and corresponding legal concepts.
+
+258
+00:19:36,660 --> 00:19:40,890
+And the burden lies first with the patent
+examiner to prove that the claimed invention
+
+259
+00:19:40,890 --> 00:19:46,130
+fails to comply with one or more of the patentability
+requirements.
+
+260
+00:19:46,130 --> 00:19:50,610
+The first step is to file an application for
+a patent, and I want to point out one of the
+
+261
+00:19:50,610 --> 00:19:55,790
+most important changes that the America Invents
+Act made to the U.S. patent system.
+
+262
+00:19:55,790 --> 00:20:01,260
+That is, the United States switched from being
+a “first-to-invent” system to a “first-
+
+263
+00:20:01,260 --> 00:20:03,110
+inventor- to-file” system.
+
+264
+00:20:03,110 --> 00:20:07,470
+Changing to first inventor to file brought
+the United States in line with other countries’
+
+265
+00:20:07,470 --> 00:20:11,570
+laws and brought more certainty to the U.S.
+patent process.
+
+266
+00:20:11,570 --> 00:20:17,740
+All patent applications filed in the United
+States after March 16, 2013, are filed under
+
+267
+00:20:17,740 --> 00:20:20,790
+the first inventor to file rules.
+
+268
+00:20:20,790 --> 00:20:25,220
+A patent application may be filed either electronically
+or in paper form.
+
+269
+00:20:25,220 --> 00:20:30,679
+But, be aware that the America Invents Act
+provides for an additional fee for filings
+
+270
+00:20:30,679 --> 00:20:33,299
+made by non-electronic means.
+
+271
+00:20:33,299 --> 00:20:39,920
+The USPTO has a series of informational videos
+specifically on first inventor to file changes,
+
+272
+00:20:39,920 --> 00:20:45,380
+and these videos, along with others relative
+to the America Invents Act, can be found on
+
+273
+00:20:45,380 --> 00:20:48,270
+our web site at www.uspto.gov.
+
+274
+00:20:48,270 --> 00:20:56,320
+I have also provided the link to the web page
+with AIA informational videos at the end of
+
+275
+00:20:56,320 --> 00:20:57,910
+this presentation.
+
+276
+00:20:57,910 --> 00:21:02,030
+Here are the requirements for a utility patent
+application – it must include a written
+
+277
+00:21:02,030 --> 00:21:07,590
+description or specification of the invention
+(we talked about that requirement earlier),
+
+278
+00:21:07,590 --> 00:21:14,610
+at least one claim, drawings if necessary
+to understand the invention, an oath or declaration
+
+279
+00:21:14,610 --> 00:21:20,580
+stating among other things that the inventor
+or inventors truly came up with the invention,
+
+280
+00:21:20,580 --> 00:21:29,400
+and for biotechnology inventions, a nucleotide
+and/or amino acid sequence listing if necessary.
+
+281
+00:21:29,400 --> 00:21:34,010
+Patent claims define the legal scope of the
+patent and can be compared to the deed to
+
+282
+00:21:34,010 --> 00:21:36,640
+a house or piece of land.
+
+283
+00:21:36,640 --> 00:21:41,650
+Like a property deed, the claims define the
+legal boundary between what constitutes a
+
+284
+00:21:41,650 --> 00:21:48,020
+trespass of the property rights, or in the
+patent world, what is an infringing or non-infringing
+
+285
+00:21:48,020 --> 00:21:49,830
+action.
+
+286
+00:21:49,830 --> 00:21:55,090
+When the application is received at the USPTO,
+the office will conduct a formalities review
+
+287
+00:21:55,090 --> 00:22:00,540
+of the application and will notify the applicant
+of any deficiencies found.
+
+288
+00:22:00,540 --> 00:22:05,580
+This is more of an administrative check to
+ensure all patent application documents have
+
+289
+00:22:05,580 --> 00:22:09,090
+been property filled out or included.
+
+290
+00:22:09,090 --> 00:22:14,280
+Once the application has passed the formalities
+review, is it then assigned to an examiner
+
+291
+00:22:14,280 --> 00:22:18,780
+who will evaluate the application based on
+the patentability requirements we discussed
+
+292
+00:22:18,780 --> 00:22:20,400
+earlier.
+
+293
+00:22:20,400 --> 00:22:25,090
+Once the application is taken up by the patent
+examiner for examination, the examiner will
+
+294
+00:22:25,090 --> 00:22:30,500
+read the patent application to gain an understanding
+of the invention and the claims.
+
+295
+00:22:30,500 --> 00:22:34,080
+Next, a search of the prior art begins.
+
+296
+00:22:34,080 --> 00:22:39,000
+These pictures were taken in the early and
+the mid-20th century showing how examiners
+
+297
+00:22:39,000 --> 00:22:42,960
+in the U.S. Patent Office used to search for
+prior art.
+
+298
+00:22:42,960 --> 00:22:47,650
+Before computers changed how we all work,
+patent searches were done by hand through
+
+299
+00:22:47,650 --> 00:22:52,850
+stacks and stacks of granted patents and by
+searching other printed materials such as
+
+300
+00:22:52,850 --> 00:22:56,630
+books, treatises, magazines, and newspapers.
+
+301
+00:22:56,630 --> 00:23:01,820
+Today, patent examiners have access to the
+latest electronic databases and resources
+
+302
+00:23:01,820 --> 00:23:07,470
+to search for prior art related to the technology
+of an invention claimed in a patent application
+
+303
+00:23:07,470 --> 00:23:12,720
+and can perform patent application searches
+at any location that has computer access to
+
+304
+00:23:12,720 --> 00:23:14,540
+the Internet.
+
+305
+00:23:14,540 --> 00:23:18,870
+Once the search is completed, the examiner
+will prepare a written communication called
+
+306
+00:23:18,870 --> 00:23:24,950
+an office action indicating the examiner’s
+decisions regarding compliance or non-compliance
+
+307
+00:23:24,950 --> 00:23:29,940
+with the patentability requirements, with
+supporting reasoning and evidence.
+
+308
+00:23:29,940 --> 00:23:34,870
+If at any point in the process the patent
+examiner is satisfied that the claimed invention
+
+309
+00:23:34,870 --> 00:23:40,059
+is fully compliant with all legal requirements,
+the application is allowed to be issued as
+
+310
+00:23:40,059 --> 00:23:41,390
+a patent.
+
+311
+00:23:41,390 --> 00:23:48,070
+If, however, the examiner determines that
+one or more laws have not been complied with,
+
+312
+00:23:48,070 --> 00:23:53,980
+the examiner will send an office action containing
+a rejection or rejections to the applicant
+
+313
+00:23:53,980 --> 00:23:55,740
+for response.
+
+314
+00:23:55,740 --> 00:23:59,870
+The applicant must then respond to the patent
+examiner’s rejections.
+
+315
+00:23:59,870 --> 00:24:05,100
+The response can include cancellation of any
+rejected claims, amendments of those claims
+
+316
+00:24:05,100 --> 00:24:10,390
+to overcome the rejection, arguments that
+the rejection does not apply, or evidence
+
+317
+00:24:10,390 --> 00:24:13,800
+that calls into question the basis of the
+rejection.
+
+318
+00:24:13,800 --> 00:24:18,010
+If the examiner is still not convinced by
+the inventor’s response that the rejection
+
+319
+00:24:18,010 --> 00:24:22,840
+should be withdrawn, the examiner may make
+the rejection final.
+
+320
+00:24:22,840 --> 00:24:26,720
+Does an inventor have any options after receiving
+a final rejection?
+
+321
+00:24:26,720 --> 00:24:29,380
+The answer is yes.
+
+322
+00:24:29,380 --> 00:24:34,530
+After receiving a final rejection, the inventor
+has the option to appeal the examiner’s
+
+323
+00:24:34,530 --> 00:24:39,980
+decision to the Patent Trial and Appeal Board
+(or PTAB) for further review.
+
+324
+00:24:39,980 --> 00:24:46,220
+The inventor also has the option to file a
+request for continued examination (or RCE)
+
+325
+00:24:46,220 --> 00:24:49,919
+to begin another round of examination where
+the inventor can introduce some additional
+
+326
+00:24:49,919 --> 00:24:52,210
+claim amendments or arguments.
+
+327
+00:24:52,210 --> 00:24:57,300
+And finally, if the inventor does not respond
+to the final rejection, the patent application
+
+328
+00:24:57,300 --> 00:25:02,150
+will be abandoned and no further action will
+be taken on it by the USPTO.
+
+329
+00:25:02,150 --> 00:25:07,290
+If the claimed invention is found by the examiner
+to be fully compliant with all the U.S. patent
+
+330
+00:25:07,290 --> 00:25:11,620
+laws, the application will be allowed and
+a patent will be granted.
+
+331
+00:25:11,620 --> 00:25:16,590
+Once a patent is granted, the inventor or
+patent owner has the right to exclude others
+
+332
+00:25:16,590 --> 00:25:18,750
+from exploiting the invention.
+
+333
+00:25:18,750 --> 00:25:23,220
+The patent grant is now an asset that can
+allow the inventor time to enter and develop
+
+334
+00:25:23,220 --> 00:25:29,520
+a market for the invention, attract investors
+to risk their capital in financing the commercialization
+
+335
+00:25:29,520 --> 00:25:34,730
+of the invention, or to license the patent
+to others who seek to develop the technology.
+
+336
+00:25:34,730 --> 00:25:40,210
+Now, this has been a very simplified version
+of the patent examination process, and in
+
+337
+00:25:40,210 --> 00:25:44,840
+the case of a real patent application, the
+process could have many more steps and take
+
+338
+00:25:44,840 --> 00:25:46,480
+many months to complete.
+
+339
+00:25:46,480 --> 00:25:51,761
+I hope you now have a good understanding of
+the basics of patents: what they are; what
+
+340
+00:25:51,761 --> 00:25:56,850
+they protect; and what it takes to get patent
+protection in the United States.
+
+341
+00:25:56,850 --> 00:26:03,390
+For more detailed information on U.S. patent
+laws and regulations, the USPTO examination
+
+342
+00:26:03,390 --> 00:26:10,700
+process, the America Invents Act, and resources
+available from the USPTO for inventors including
+
+343
+00:26:10,700 --> 00:26:15,880
+the Patent Pro Bono Program, where free legal
+assistance is available to under-resourced
+
+344
+00:26:15,880 --> 00:26:22,030
+inventors interested in securing patent protection
+for their inventions, and the Pro Se Assistance
+
+345
+00:26:22,030 --> 00:26:26,160
+Program, where inventors who may not have
+the resources to hire a patent attorney or
+
+346
+00:26:26,160 --> 00:26:31,770
+agent can get help meeting their goals of
+protecting their valuable intellectual property,
+
+347
+00:26:31,770 --> 00:26:40,350
+please use the links shown on this slide or
+visit our web site at www.uspto.gov.
+

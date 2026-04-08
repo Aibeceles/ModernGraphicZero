@@ -1,0 +1,736 @@
+﻿figPArray;pArray;loopList;wNum;vmResult;rCounter;fPArray;isTwoPolynomial;translateIndex;pArrayIndexValue;evaluateValue
+
+//  Don't need evaluateValue for cypher but twopolynomial needs it...  so it is included.
+
+
+CREATE INDEX ON :dNode(vmResult)
+
+USING PERIODIC COMMIT 9000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim25.csv" AS line FIELDTERMINATOR ";"
+MERGE (d:dNode {vmResult:line.vmResult,fPArray:line.fPArray})
+RETURN count(d)
+
+
+╒══════════╕
+│"count(d)"│
+╞══════════╡
+│114054    │
+└──────────┘
+
+
+
+
+CREATE INDEX ON :CreatedBy(resultId)
+
+USING PERIODIC COMMIT 9000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim25.csv" AS line FIELDTERMINATOR ";"
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+RETURN count(d)
+
+
+
+
+
+USING PERIODIC COMMIT 9000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim25.csv" AS line FIELDTERMINATOR ";"
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray})
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+
+
+╒══════════╤═══════════╕
+│"count(d)"│"count(dd)"│
+╞══════════╪═══════════╡
+│114054    │114054     │
+└──────────┴───────────┘
+
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim30.csv" AS line FIELDTERMINATOR ";"
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:line.loopList})
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+count(d)	count(dd)
+79866	79866
+
+
+
+resultListID 12698
+CASE WHEN line.wNum="0" THEN line.loopList ELSE " " END as loopListL
+
+FOREACH(LL IN (CASE WHEN line.wNum="0" THEN line.loopList ELSE " " END as loopListL) | 
+
+
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim30.csv" AS line FIELDTERMINATOR ";",
+CASE WHEN line.wNum="0" THEN line.loopList ELSE " " END as loopListL
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+FOREACH(LL IN (CASE WHEN line.wNum="0" THEN [1] ELSE [] END | 
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:loopListL}) )
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+
+no aliases(loopListL) hence the vector 
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim30.csv" AS line FIELDTERMINATOR ";"
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+FOREACH(LL IN CASE WHEN line.wNum="0" THEN [1] ELSE [] END | 
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:line.loopList}) )
+FOREACH(LL IN CASE WHEN line.wNum<>"0" THEN [1] ELSE [] END | 
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray}) )
+
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim30.csv" AS line FIELDTERMINATOR ";"
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+FOREACH(LL IN (CASE WHEN line.wNum="0" THEN [1] ELSE [] END) | 
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:line.loopList}) )
+FOREACH(LL IN (CASE WHEN line.wNum<>"0" THEN [1] ELSE [] END) | 
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray}) )
+
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim30.csv" AS line FIELDTERMINATOR ";"
+WITH line,
+CASE WHEN line.wNum="0" THEN line.loopList ELSE " " END as loopListL
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:loopListL}) 
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+
+
+UNWIND RANGE(1961,1960,-1) AS rCNT
+WITH rCNT
+UNWIND RANGE(5,1,-1) AS wNUM
+WITH rCNT,wNUM,wNUM-1 AS wNUMM
+WITH toString(rCNT) as rCNTT,toString(wNUM) as wNUMS,toString(wNUMM) as wNUMMS,rCNT
+MATCH (c:CreatedBy {resultId:rCNTT , wNum:wNUMS}) -[:CreatedBye]->(d:dNode)
+WITH c,d,rCNTT,wNUMMS
+MATCH (cc:CreatedBy {resultId:rCNTT , wNum:wNUMMS})-[:CreatedBye]->(dd:dNode)
+WITH c,d, cc,dd   //rCNTT,wNUMS,wNUMMS
+MERGE (d)-[:zMap]->(dd)
+return count(d)
+
+count(d)
+63485
+
+UNWIND RANGE(5,1,-1) AS wNUM
+WITH wNUM,wNUM-1 AS wNUMM
+return wNUM,wNUMM
+
+
+Because of LoopList.  It is always going to create a new node.
+Only want loopList at wNum=0;
+
+
+
+MATCH (c:CreatedBy {resultId:"7" , wNum:"0"}) -[:CreatedBye]->(d:dNode)
+WITH d.loopList AS lL
+With lL,Size(lL) AS lLS
+WITH lL,lLS-2 as lLss
+WITH substring(lL,1,lLss) AS lLs
+WITH split(lLs,',') as lList
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else
+lLists END as lListss
+
+RETURN lListss
+
+MATCH (c:CreatedBy {resultId:"7" , wNum:"0"}) -[:CreatedBye]->(d:dNode)
+WITH d.loopList AS lL
+With lL,Size(lL) AS lLS
+WITH lL,lLS-2 AS lLss
+WITH substring(lL,1,lLss) AS lLs
+WITH split(lLs,',') AS lList
+UNWIND lList AS lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss
+WITH COLLECT(lListss) AS lLT
+UNWIND RANGE(0,20,1) AS  llRange
+With llRange,lLT
+WHERE lLT[llRange]="0"
+RETURN llRange
+//RETURN lListss
+
+
+═════════╕
+│"llRange"│
+╞═════════╡
+│0        │
+├─────────┤
+│1        │
+├─────────┤
+│2        │
+├─────────┤
+│3        │
+├─────────┤
+│4        │
+└─────────┘
+
+ MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? AND d.vmResult=?
+ WITH d,e MERGE  (d)-[ee:Envalues]->(e)"
+
+
+MATCH (c:CreatedBy {resultId:"7" , wNum:"0"}) -[:CreatedBye]->(d:dNode)
+WITH d.loopList AS lL,d
+With lL,Size(lL) AS lLS,d
+WITH lL,lLS-2 AS lLss,d
+WITH substring(lL,1,lLss) AS lLs,d
+WITH split(lLs,',') AS lList,d
+UNWIND lList AS lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d
+WITH COLLECT(lListss) AS lLT,d
+UNWIND RANGE(0,20,1) AS  llRange
+WITH llRange,lLT,d
+WHERE lLT[llRange]="0"
+MATCH (e:Evaluate {Value:toString(llRange)})
+WITH d,e MERGE  (d)-[ee:Envalues]->(e)
+RETURN d
+//RETURN llRange,d
+//RETURN lListss
+
+
+2/1
+
+
+
+
+
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim30.csv" AS line FIELDTERMINATOR ";"
+WITH line,
+CASE WHEN line.wNum="0" THEN line.loopList ELSE " " END as loopListL
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:loopListL}) 
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+
+
+
+
+
+
+
+UNWIND RANGE(1961,1960,-1) AS rCNT
+WITH rCNT
+UNWIND RANGE(5,1,-1) AS wNUM
+WITH rCNT,wNUM,wNUM-1 AS wNUMM
+WITH toString(rCNT) as rCNTT,toString(wNUM) as wNUMS,toString(wNUMM) as wNUMMS,rCNT
+MATCH (c:CreatedBy {resultId:rCNTT , wNum:wNUMS}) -[:CreatedBye]->(d:dNode)
+WITH c,d,rCNTT,wNUMMS
+MATCH (cc:CreatedBy {resultId:rCNTT , wNum:wNUMMS})-[:CreatedBye]->(dd:dNode)
+WITH c,d, cc,dd   //rCNTT,wNUMS,wNUMMS
+MERGE (d)-[:zMap]->(dd)
+return count(d)
+
+
+
+
+
+
+
+UNWIND RANGE(1,60000,1) AS rCNT
+WITH toString(rCNT) as rCNTT
+MATCH (c:CreatedBy {resultId:rCNTT , wNum:"0"}) -[:CreatedBye]->(d:dNode)
+WITH d.loopList AS lL,d
+WITH lL,Size(lL) AS lLS,d
+WITH lL,lLS-2 AS lLss,d
+WITH substring(lL,1,lLss) AS lLs,d
+WITH split(lLs,',') AS lList,d
+UNWIND lList AS lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d   //  can use whitespace trim().
+WITH COLLECT(lListss) AS lLT,d
+UNWIND RANGE(0,20,1) AS  llRange
+WITH llRange,lLT,d
+WHERE lLT[llRange]="0"
+MATCH (e:Evaluate {Value:toString(llRange)})
+WITH d,e MERGE  (d)-[ee:Envalues]->(e)
+RETURN d
+//RETURN llRange,d
+//RETURN lListss
+
+
+2/7
+
+[value IN list WHERE predicate(value) | expression(value)]
+
+RETURN [x IN range(1,10) WHERE x % 2 = 0 | x * x] -> [4, 16, 36, 64, 100]
+
+
+MATCH (e:Evaluate {Value:"15"})         // d:4,n:1,Value:15 
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH [Range(19,5,-1)] as piComplement,pi
+MATCH (d:dNode)-[env:Envalues]->(ee:Evaluate) Where ee.Value IN pi AND NOT ee.Value in piComplement  
+WITH distinct d,ee
+WITH {vmResult:d.vmResult,Evaluate:Collect(distinct ee.Value)} as Nds
+WITH Range(19,5,-1) as piComplement,Nds 
+RETURN Nds
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH (e:Evaluate {Value:"15"})         // d:4,n:1,Value:15 
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+//UNWIND pi AS pU
+MATCH (d:dNode)-[env:Envalues]->(ee:Evaluate) Where ee.Value IN pi  //["2","3"]   //="2" or ee.Value="3" //WHERE ee.Value IN pU  
+WITH distinct d,ee
+WITH {vmResult:d.vmResult,Evaluate:Collect(distinct ee.Value)} as Nds
+RETURN Nds
+
+
+
+
+
+
+
+
+
+
+
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH collect(pi) as pii
+WITH Size(pii)-1 AS piiS,pii
+//UNWIND RANGE(0,piiS,1) AS  pRange
+//MATCH (ee:Evaluate) WHERE ee.Value IN pii[1]
+WITH pii   //,pRange  //,pi,size(pi) as pis  ee,
+Unwind pii[1] as piiU
+MATCH (d:dNode)-[env:Envalues]->(ee:Evaluate {Value:piiU})  //WHERE ee.Value IN pii[1]
+With {Value:collect(distinct ee.Value),VMResult:d.vmResult} AS rP
+//WITH collect(ee.Value) as eList,d,ee,pii //i,pRange 
+//WITH eList,d,ee,pii WHERE ALL(x IN pii[1] where x in eList)
+Return  rP //d,ee.Value    // as m                  //pii[0]     //ee   //nodes(p)   //  d,ee
+
+
+
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH collect(pi) as pii
+WITH Size(pii)-1 AS piiS,pii
+//UNWIND RANGE(0,piiS,1) AS  pRange
+//MATCH (ee:Evaluate) WHERE ee.Value IN pii[1]
+WITH pii   //,pRange  //,pi,size(pi) as pis  ee,
+Unwind pii[1] as piiU
+MATCH (d:dNode)-[env:Envalues]->(ee:Evaluate {Value:"2"})  //WHERE ee.Value IN pii[1]
+//WITH collect(ee.Value) as eList,d,ee,pii //i,pRange 
+//WITH eList,d,ee,pii WHERE ALL(x IN pii[1] where x in eList)
+Return d,ee.Value    // as m                  //pii[0]     //ee   //nodes(p)   //  d,ee
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH collect(pi) as pii
+WITH Size(pii)-1 AS piiS,pii
+UNWIND RANGE(0,piiS,1) AS  pRange
+MATCH (ee:Evaluate) WHERE ee.Value IN pii[pRange]
+WITH ee,pii,pRange  //,pi,size(pi) as pis
+MATCH (d:dNode)-[env:Envalues]->(ee)
+WITH collect(ee.Value) as eList,d,ee,pii,pRange 
+WITH eList,d,ee,pii,pRange WHERE ALL(x IN pii[pRange] where x in eList)
+Return d
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH collect(pi) as pii
+WITH Size(pii)-1 AS piiS,pii
+//UNWIND RANGE(0,piiS,1) AS  pRange
+MATCH (ee:Evaluate) WHERE ee.Value IN pii[1]
+WITH ee,pii   //,pRange  //,pi,size(pi) as pis
+MATCH p=(d:dNode)-[env:Envalues]->(ee)
+//WITH collect(ee.Value) as eList,d,ee,pii //i,pRange 
+//WITH eList,d,ee,pii WHERE ALL(x IN pii[1] where x in eList)
+Return nodes(p)   //  d,ee
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH collect(pi) as pii
+WITH Size(pii)-1 AS piiS,pii
+UNWIND RANGE(0,piiS,1) AS  pRange
+MATCH (ee:Evaluate) WHERE ee.Value IN pii[pRange]
+WITH ee,pii,pRange  //,pi,size(pi) as pis
+MATCH (d:dNode)-[env:Envalues]->(ee)
+WITH collect(ee) as eList,d,ee,pii,pRange 
+//WITH eList,d,ee,pii,pRange WHERE ALL(x IN pii[pRange] where x in eList)
+Return d,ee
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+
+WITH collect(pi) as pii                                                                    // rows of pii vs LIst of List
+
+WITH [ x IN pii |   ] as pi
+
+
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+
+WITH ee,pi,size(pi) as pis
+MATCH (d:dNode)-[env:Envalues]->(ee) 
+
+
+
+WITH collect(ee) as eList,d,ee,pi 
+WHERE ALL(x IN pi where x in eList)
+
+
+Size(pii) AS piiS
+UNWIND RANGE(0,piis,1) AS  pRange
+WITH pRange
+         pii[pRange]
+
+WHERE ALL(x IN pii[pRange] where x in eList)
+
+
+Return d,ee
+
+
+
+
+//WITH d,pi,pis,collect(d) as dList,collect(ee) as eList
+//MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+//return DISTINCT pi,pis
+//WITH pi,d,eee,pis,count(enva) as envac  //collect(eee.Value) as eeVal,
+//WHERE envac=pis           //ALL(x IN pi where x in eeVal)
+//return d,collect(eee.Value) as eeVal,envac   //.vmResult,d.loopList
+
+
+
+(no changes, no records)
+
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH collect(pi) as pii
+//MATCH (ee:Evaluate) WHERE ee.Value IN pii 
+return pii
+//WITH ee,pi,size(pi) as pis
+//MATCH (d:dNode)-[env:Envalues]->(ee)
+//WITH d,pi,pis,collect(d) as dList,collect(ee) as eList
+//MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+//return DISTINCT pi,pis
+//WITH pi,d,eee,pis,count(enva) as envac  //collect(eee.Value) as eeVal,
+//WHERE envac=pis           //ALL(x IN pi where x in eeVal)
+//return d,collect(eee.Value) as eeVal,envac   //.vmResult,d.loopList
+
+
+╒═══════════════════════════════════════════════════════════╕
+│"pii"                                                      │
+╞═══════════════════════════════════════════════════════════╡
+│[["1","2","3","4"],["1","2","4"],["2","3"],["1","4"],["4"]]│
+└───────────────────────────────────────────────────────────┘
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+WITH ee,pi,size(pi) as pis
+//MATCH (d:dNode)-[env:Envalues]->(ee) 
+//WITH d,pi,pis,collect(d) as dList,collect(ee) as eList
+//MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+return DISTINCT pi,pis
+//WITH pi,d,eee,pis,count(enva) as envac  //collect(eee.Value) as eeVal,
+//WHERE envac=pis           //ALL(x IN pi where x in eeVal)
+//return d,collect(eee.Value) as eeVal,envac   //.vmResult,d.loopList
+
+
+╒═════════════════╤═════╕
+│"pi"             │"pis"│
+╞═════════════════╪═════╡
+│["1","2","3","4"]│4    │
+├─────────────────┼─────┤
+│["1","2","4"]    │3    │
+├─────────────────┼─────┤
+│["2","3"]        │2    │
+├─────────────────┼─────┤
+│["1","4"]        │2    │
+├─────────────────┼─────┤
+│["4"]            │1    │
+└─────────────────┴─────┘
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+WITH ee,pi,size(pi) as pis
+MATCH (d:dNode)-[env:Envalues]->(ee) 
+WITH d,pi,pis,collect(d) as dList,collect(ee) as eList
+MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+WITH pi,d,eee,pis,count(enva) as envac  //collect(eee.Value) as eeVal,
+WHERE envac=pis           //ALL(x IN pi where x in eeVal)
+return d,collect(eee.Value) as eeVal,envac   //.vmResult,d.loopList
+
+
+
+╒══════════════════════════════════════════════════════════════════════╤════════════════════════╤═══════╕
+│"d"                                                                   │"eeVal"                 │"envac"│
+╞══════════════════════════════════════════════════════════════════════╪════════════════════════╪═══════╡
+│{"vmResult":"[0.0, 0.9999999999655491, -9.999999999419288, -265.000000│["0","4"]               │1      │
+│00358403, 2650.0000000100954, -5976.00000001285, 5.791662260902106E-9]│                        │       │
+│","loopList":"[0, -3600, -3600, -1800, 0, 120, -2880, -10080, -22080, │                        │       │
+│-38880, -59760, -83160, -106560, -126360, -137760, -134640, -109440, -│                        │       │
+│53040, 45360, 198360]","fPArray":"[0, 0, 0, 0, 0, 1]"}                │                        │       │
+├──────────────────────────────────────────────────────────────────────┼────────────────────────┼───────┤
+│{"vmResult":"[0.0, 1.0000000000450957, -60.00000000081127, 1015.000000│["4","0","11","8"]      │1      │
+│0052945, -6420.000000015527, 13024.000000020313, -9.31322574617424E-9]│                        │       │
+│","loopList":"[0, 7560, 7560, 4080, 0, -2880, -3720, -2520, 0, 2520, 3│                        │       │
+│240, 0, -9600, -28080, -57960, -101640, -161280, -238680, -335160, -45│                        │       │
+│1440]","fPArray":"[0, 0, 0, 0, 0, 1]"}                                │                        │       │
+├──────────────────────────────────────────────────────────────────────┼────────────────────────┼───────┤
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  old map
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"map"                                                                 │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"vmResult":"[0.0, 1.0, -0.0, 0.0, -0.0, 0.0, -0.0]","pArray":"[0, 0, │
+│0, 0, 0, 0]","figPArray":"[0, 0, 0, 0, 0, 1]","isTwoPolynomial":"true"│
+│,"pArrayIndexValue":"0","fPArray":"[0, 0, 0, 0, 0, 1]","loopList":"[0,│
+│ 1, 32, 243, 1024, 3125, 7776, 16807, 32768, 59049, 100000, 161051, 24│
+│8832, 371293, 537824, 759375, 1048576, 1419857, 1889568, 2476099]","wN│
+│um":"0","translateIndex":"0","rCounter":"1"}                          │
+├──────────────────────────────────────────────────────────────────────┤

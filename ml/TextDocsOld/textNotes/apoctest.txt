@@ -1,0 +1,11 @@
+CALL apoc.periodic.iterate(
+  "MATCH (p:IndexedBy),(q:IndexedBy) WHERE p.MaxN="8" AND q.MaxN="16" RETURN p,q",
+  "MERGE p-[:TEST_RELATION]->(q)",
+  {batchSize:10000,concurency:2, parallel:true})
+
+
+CALL apoc.periodic.iterate(
+  "MATCH (p:IndexedBy),(q:IndexedBy) WHERE p.MaxN='8' AND q.MaxN='16' RETURN p,q",
+  "MERGE (p)-[:TEST_RELATION]->(q)",
+  {batchSize:10000,concurency:2, parallel:true})
+

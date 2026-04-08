@@ -1,0 +1,177 @@
+{
+  "paragraphs": [
+    {
+      "text": "UNWIND range(18,18) AS n\nWITH toString(n) AS N, \"20\" as nMax\n\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N})\nRETURN cl",
+      "user": "anonymous",
+      "dateUpdated": "2020-05-04 08:56:46.988",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id": "string",
+                      "label": "string",
+                      "afe": "string",
+                      "tft": "string",
+                      "Divisor": "string",
+                      "Dimension": "string",
+                      "N": "string",
+                      "MaxN": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "NETWORK",
+            "data": "{\"nodes\":[{\"id\":4831049,\"data\":{\"afe\":2048,\"tft\":2048,\"Divisor\":2048,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4637605,\"data\":{\"afe\":16,\"tft\":16,\"Divisor\":16,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4644737,\"data\":{\"afe\":64,\"tft\":64,\"Divisor\":64,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":5415669,\"data\":{\"afe\":65536,\"tft\":65536,\"Divisor\":65536,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4638029,\"data\":{\"afe\":99,\"tft\":1,\"Divisor\":1,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4679114,\"data\":{\"afe\":256,\"tft\":256,\"Divisor\":256,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4712810,\"data\":{\"afe\":512,\"tft\":512,\"Divisor\":512,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4914887,\"data\":{\"afe\":4096,\"tft\":4096,\"Divisor\":4096,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4638024,\"data\":{\"afe\":99,\"tft\":2,\"Divisor\":2,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":5131996,\"data\":{\"afe\":16384,\"tft\":16384,\"Divisor\":16384,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4637939,\"data\":{\"afe\":8,\"tft\":8,\"Divisor\":8,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":5265512,\"data\":{\"afe\":32768,\"tft\":32768,\"Divisor\":32768,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4764627,\"data\":{\"afe\":1024,\"tft\":1024,\"Divisor\":1024,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4638106,\"data\":{\"afe\":32,\"tft\":32,\"Divisor\":32,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":5015121,\"data\":{\"afe\":8192,\"tft\":8192,\"Divisor\":8192,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4637976,\"data\":{\"afe\":4,\"tft\":4,\"Divisor\":4,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"},{\"id\":4655193,\"data\":{\"afe\":128,\"tft\":128,\"Divisor\":128,\"Dimension\":\"256\",\"N\":\"18\",\"MaxN\":\"20\"},\"label\":\"CollectedProductArgNode\"}],\"edges\":[],\"labels\":{\"IndexedBy\":\"#0C7185\",\"TwoSeqFactor\":\"#8F0FA1\",\"VertexNode\":\"#DA4E0D\",\"Evaluate\":\"#44AE2D\",\"IndexedByArgument\":\"#E57A9A\",\"CollectedProductArgNode\":\"#0DE8F4\",\"ArgumentsNode\":\"#DC906D\",\"Accumulator\":\"#A29536\"},\"types\":[\"IndexedByEvaluate\",\"TwoFactor\",\"Arguments\",\"VertexIndexedBy\"],\"directed\":true}"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1588596718913_-289417303",
+      "id": "20200504-085158_1564959205",
+      "dateCreated": "2020-05-04 08:51:58.913",
+      "dateStarted": "2020-05-04 08:56:43.610",
+      "dateFinished": "2020-05-04 08:56:44.877",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "UNWIND range(18,18) AS n\nWITH toString(n) AS N, \"20\" as nMax\nMATCH (cl:CollectedProductArgNode {Dimension:\u0027256\u0027,MaxN:nMax,N:N})-[:Arguments]-\u003e(aN:ArgumentsNode)\nRETURN DISTINCT cl.tft as eTrm, COUNT(aN) ORDER BY eTrm",
+      "user": "anonymous",
+      "dateUpdated": "2020-05-04 09:07:16.992",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "eTrm": "string",
+                      "COUNT(aN)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "eTrm\tCOUNT(aN)\n1\t3\n2\t3\n4\t45\n8\t45\n16\t810\n32\t1485\n64\t6630\n128\t10455\n256\t23920\n512\t33695\n1024\t51816\n2048\t66421\n4096\t83850\n8192\t100233\n16384\t116874\n32768\t133515\n65536\t150156\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1588596724301_-285945366",
+      "id": "20200504-085204_300503250",
+      "dateCreated": "2020-05-04 08:52:04.301",
+      "dateStarted": "2020-05-04 09:07:17.050",
+      "dateFinished": "2020-05-04 09:07:19.006",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1588596726930_-230726016",
+      "id": "20200504-085206_165270272",
+      "dateCreated": "2020-05-04 08:52:06.930",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1588596729729_-796230051",
+      "id": "20200504-085209_1791108989",
+      "dateCreated": "2020-05-04 08:52:09.729",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/RowTelemetry256",
+  "id": "2F9PBR13V",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

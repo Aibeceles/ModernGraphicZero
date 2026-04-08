@@ -1,0 +1,796 @@
+{
+  "paragraphs": [
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"4\"\nWITH i,e,p,i.N as iN, i.MaxN as iM\n\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD\nUNWIND aPTds as aPTdsU\nWITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 \n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), \n      ResultDegree:aPTdsU.TDegree,\n      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}\nELSE\n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), \n      ResultDegree: CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,\n      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT,Divisor:rpD1} as resultMap,iN,iM\n\nWITH COLLECT(resultMap) as resultMapC,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,eTrm,rDRM,iN,iM,rpD2\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\nWITH COLLECT(rSLI.RScalar) as cts,eTrm,rDRM,iN,iM,rpD2\n\nWith REDUCE(tSum\u003d0,ff IN cts | tSum +ff) As TotalRScalar,eTrm,rDRM,iN,iM,rpD2\nWith TotalRScalar/rpD2 as TotalRScalaR,eTrm,rDRM,iN,iM                        \n//RETURN TotalRScalar,eTrm,rDRM,iN,iM\nRETURN TotalRScalaR,toInteger(eTrm),toInteger(rDRM),toInteger(iN),toInteger(iM)\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-11 09:25:46.971",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "TotalRScalaR": "string",
+                      "toInteger(eTrm)": "string",
+                      "toInteger(rDRM)": "string",
+                      "toInteger(iN)": "string",
+                      "toInteger(iM)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TotalRScalaR\ttoInteger(eTrm)\ttoInteger(rDRM)\ttoInteger(iN)\ttoInteger(iM)\n12.0\t2\t0\t5\t6\n-560.0\t8\t1\t5\t6\n-4.0\t1\t1\t5\t6\n0.5\t4\t4\t5\t6\n-20.5\t8\t3\t5\t6\n1.0\t2\t2\t5\t6\n-226.0\t4\t1\t5\t6\n750.0\t8\t0\t5\t6\n10.0\t1\t0\t5\t6\n-9.5\t4\t3\t5\t6\n1.0\t1\t2\t5\t6\n159.5\t8\t2\t5\t6\n280.0\t4\t0\t5\t6\n-7.0\t2\t1\t5\t6\n69.0\t4\t2\t5\t6\n1.0\t8\t4\t5\t6\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575989676818_-560540566",
+      "id": "20191210-095436_2111423009",
+      "dateCreated": "2019-12-10 09:54:36.818",
+      "dateStarted": "2019-12-11 09:25:44.712",
+      "dateFinished": "2019-12-11 09:25:45.228",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\n\nMATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"4\"\nWITH i,e,p,i.N as iN, i.MaxN as iM\n\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD\nUNWIND aPTds as aPTdsU\nWITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 \n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), \n      ResultDegree:aPTdsU.TDegree,\n      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}\nELSE\n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), \n      ResultDegree: CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,\n      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT,Divisor:rpD1} as resultMap,iN,iM\n\nWITH COLLECT(resultMap) as resultMapC,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,eTrm,rDRM,iN,iM,rpD2\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\nWITH COLLECT(rSLI.RScalar) as cts,eTrm,rDRM,iN,iM,rpD2\nWith REDUCE(tSum\u003d0,ff IN cts | tSum +ff) As TotalRScalar,eTrm,rDRM,iN,iM,rpD2  //  eTrm aka rowCounter for later\n\nWith {Degree:rDRM,Divisor:rpD2,Scalar:Collect(TotalRScalar)} AS pTerms      // rpD2 is invariant throughout eTrm\n//WITH COLLECT(pTerms) as pTermsC,pTerms.Degree as DegreeP,pTerms.Divisor as DivisorP\nWITH pTerms.Scalar as pTermsS,pTerms.Degree as pTermsD,pTerms.Divisor as pTermsDiv\n//UNWIND RANGE(0,SIZE(pTermsS)-1) as iJ\n//UNWIND pTermsS[iJ] as pTermsSI\nWith REDUCE(tSum\u003d0,ff IN pTermsS | tSum +ff) As TRScalar,pTermsD,pTermsDiv\n\nRETURN TRScalar,pTermsD,pTermsDiv\n//RETURN TotalRScalar,eTrm,rDRM,iN,iM,rpD2\n//With TotalRScalar/rpD2 as TotalRScalaR,eTrm,rDRM,iN,iM                        \n//RETURN TotalRScalar,eTrm,rDRM,iN,iM\n//RETURN TotalRScalaR,toInteger(eTrm),toInteger(rDRM),toInteger(iN),toInteger(iM)",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-12 09:58:24.076",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "TRScalar": "string",
+                      "pTermsD": "string",
+                      "pTermsDiv": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "TRScalar\tpTermsD\tpTermsDiv\n-120.0\t3\t4\n4.0\t2\t2\n4120.0\t0\t4\n914.0\t2\t4\n-22.0\t1\t2\n6.0\t4\t4\n-3144.0\t1\t4\n44.0\t0\t2\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575990824295_1752825890",
+      "id": "20191210-101344_2146800660",
+      "dateCreated": "2019-12-10 10:13:44.295",
+      "dateStarted": "2019-12-11 09:41:30.922",
+      "dateFinished": "2019-12-11 09:41:31.437",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"4\"\nWITH i,e,p,i.N as iN, i.MaxN as iM\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD\nUNWIND aPTds as aPTdsU\nWITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 \n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), \n      ResultDegree:aPTdsU.TDegree,\n      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}\nELSE\n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), \n      ResultDegree: CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,\n      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT,Divisor:rpD1} as resultMap,iN,iM\n\nWITH COLLECT(resultMap) as resultMapC,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,eTrm,rDRM,iN,iM,rpD2\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\nWITH COLLECT(rSLI.RScalar) as cts,eTrm,rDRM,iN,iM,rpD2\nreturn cts,eTrm,rDRM,iN,iM,rpD2",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-10 09:56:30.672",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "cts",
+                        "visible": true,
+                        "width": 417.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "eTrm",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "rDRM",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "iN",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "iM",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "rpD2",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1.0,
+                      "paginationPageSize": 250.0
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "cts": "string",
+                      "eTrm": "string",
+                      "rDRM": "string",
+                      "iN": "string",
+                      "iM": "string",
+                      "rpD2": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "cts\teTrm\trDRM\tiN\tiM\trpD2\n[-150.0,-30.0,-100.0,-100.0,-120.0,-80.0,-24.0,-80.0,-100.0,-120.0]\t4\t1\t\"5\"\t\"6\"\t4\n[240.0,360.0,1800.0,600.0]\t8\t0\t\"5\"\t\"6\"\t4\n[-8.0,-6.0]\t2\t1\t\"5\"\t\"6\"\t2\n[-5.0,-5.0,-4.0,-5.0,-6.0,-5.0,-4.0,-4.0]\t4\t3\t\"5\"\t\"6\"\t4\n[1.0,1.0]\t1\t2\t\"5\"\t\"6\"\t2\n[600.0,120.0,400.0]\t4\t0\t\"5\"\t\"6\"\t4\n[18.0,20.0,25.0,20.0,15.0,60.0,50.0,60.0,30.0,60.0,30.0,12.0,60.0,72.0,20.0,8.0,24.0,30.0,24.0]\t8\t2\t\"5\"\t\"6\"\t4\n[24.0]\t2\t0\t\"5\"\t\"6\"\t2\n[-3.0,-2.0,-2.0,-1.0]\t1\t1\t\"5\"\t\"6\"\t2\n[1.0,2.0,1.0]\t8\t4\t\"5\"\t\"6\"\t4\n[25.0,20.0,20.0,6.0,20.0,30.0,16.0,20.0,30.0,25.0,20.0,24.0,20.0]\t4\t2\t\"5\"\t\"6\"\t4\n[-72.0,-100.0,-60.0,-40.0,-300.0,-120.0,-90.0,-150.0,-300.0,-120.0,-360.0,-360.0,-120.0,-48.0]\t8\t1\t\"5\"\t\"6\"\t4\n[2.0,6.0,12.0]\t1\t0\t\"5\"\t\"6\"\t2\n[2.0]\t2\t2\t\"5\"\t\"6\"\t2\n[-5.0,-10.0,-10.0,-5.0,-4.0,-12.0,-12.0,-4.0,-5.0,-3.0,-6.0,-6.0]\t8\t3\t\"5\"\t\"6\"\t4\n[1.0,1.0]\t4\t4\t\"5\"\t\"6\"\t4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575476828593_2095554145",
+      "id": "20191204-112708_106907072",
+      "dateCreated": "2019-12-04 11:27:08.593",
+      "dateStarted": "2019-12-04 11:27:37.291",
+      "dateFinished": "2019-12-04 11:27:49.508",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"4\"\nWITH i,e,p,i.N as iN, i.MaxN as iM\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD\nUNWIND aPTds as aPTdsU\nWITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 \n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), \n      ResultDegree:aPTdsU.TDegree,\n      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}\nELSE\n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), \n      ResultDegree: CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,\n      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT,Divisor:rpD1} as resultMap,iN,iM\nreturn resultMap,iN,iM",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-10 09:53:06.777",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "resultMap.Divisor": "string",
+                      "resultMap.RDegree": "string",
+                      "resultMap.RScalarList": "string",
+                      "resultMap.ET": "string",
+                      "iN": "string",
+                      "iM": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "resultMap.Divisor\tresultMap.RDegree\tresultMap.RScalarList\tresultMap.ET\tiN\tiM\n4\t3\t[{\"RScalar\":-5.0},{\"RScalar\":-10.0},{\"RScalar\":-10.0},{\"RScalar\":-5.0},{\"RScalar\":-4.0},{\"RScalar\":-12.0},{\"RScalar\":-12.0},{\"RScalar\":-4.0},{\"RScalar\":-5.0},{\"RScalar\":-3.0},{\"RScalar\":-6.0},{\"RScalar\":-6.0}]\t8\t\"5\"\t\"6\"\n4\t1\t[{\"RScalar\":-72.0},{\"RScalar\":-100.0},{\"RScalar\":-60.0},{\"RScalar\":-40.0},{\"RScalar\":-300.0},{\"RScalar\":-120.0},{\"RScalar\":-90.0},{\"RScalar\":-150.0},{\"RScalar\":-300.0},{\"RScalar\":-120.0},{\"RScalar\":-360.0},{\"RScalar\":-360.0},{\"RScalar\":-120.0},{\"RScalar\":-48.0}]\t8\t\"5\"\t\"6\"\n2\t1\t[{\"RScalar\":-3.0},{\"RScalar\":-2.0},{\"RScalar\":-2.0},{\"RScalar\":-1.0}]\t1\t\"5\"\t\"6\"\n2\t0\t[{\"RScalar\":24.0}]\t2\t\"5\"\t\"6\"\n2\t2\t[{\"RScalar\":2.0}]\t2\t\"5\"\t\"6\"\n4\t3\t[{\"RScalar\":-5.0},{\"RScalar\":-5.0},{\"RScalar\":-4.0},{\"RScalar\":-5.0},{\"RScalar\":-6.0},{\"RScalar\":-5.0},{\"RScalar\":-4.0},{\"RScalar\":-4.0}]\t4\t\"5\"\t\"6\"\n4\t1\t[{\"RScalar\":-150.0},{\"RScalar\":-30.0},{\"RScalar\":-100.0},{\"RScalar\":-100.0},{\"RScalar\":-120.0},{\"RScalar\":-80.0},{\"RScalar\":-24.0},{\"RScalar\":-80.0},{\"RScalar\":-100.0},{\"RScalar\":-120.0}]\t4\t\"5\"\t\"6\"\n4\t2\t[{\"RScalar\":18.0},{\"RScalar\":20.0},{\"RScalar\":25.0},{\"RScalar\":20.0},{\"RScalar\":15.0},{\"RScalar\":60.0},{\"RScalar\":50.0},{\"RScalar\":60.0},{\"RScalar\":30.0},{\"RScalar\":60.0},{\"RScalar\":30.0},{\"RScalar\":12.0},{\"RScalar\":60.0},{\"RScalar\":72.0},{\"RScalar\":20.0},{\"RScalar\":8.0},{\"RScalar\":24.0},{\"RScalar\":30.0},{\"RScalar\":24.0}]\t8\t\"5\"\t\"6\"\n4\t0\t[{\"RScalar\":240.0},{\"RScalar\":360.0},{\"RScalar\":1800.0},{\"RScalar\":600.0}]\t8\t\"5\"\t\"6\"\n4\t4\t[{\"RScalar\":1.0},{\"RScalar\":2.0},{\"RScalar\":1.0}]\t8\t\"5\"\t\"6\"\n2\t0\t[{\"RScalar\":2.0},{\"RScalar\":6.0},{\"RScalar\":12.0}]\t1\t\"5\"\t\"6\"\n2\t2\t[{\"RScalar\":1.0},{\"RScalar\":1.0}]\t1\t\"5\"\t\"6\"\n2\t1\t[{\"RScalar\":-8.0},{\"RScalar\":-6.0}]\t2\t\"5\"\t\"6\"\n4\t4\t[{\"RScalar\":1.0},{\"RScalar\":1.0}]\t4\t\"5\"\t\"6\"\n4\t2\t[{\"RScalar\":25.0},{\"RScalar\":20.0},{\"RScalar\":20.0},{\"RScalar\":6.0},{\"RScalar\":20.0},{\"RScalar\":30.0},{\"RScalar\":16.0},{\"RScalar\":20.0},{\"RScalar\":30.0},{\"RScalar\":25.0},{\"RScalar\":20.0},{\"RScalar\":24.0},{\"RScalar\":20.0}]\t4\t\"5\"\t\"6\"\n4\t0\t[{\"RScalar\":600.0},{\"RScalar\":120.0},{\"RScalar\":400.0}]\t4\t\"5\"\t\"6\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575476857150_2129007901",
+      "id": "20191204-112737_1532216050",
+      "dateCreated": "2019-12-04 11:27:37.150",
+      "dateStarted": "2019-12-04 11:28:31.011",
+      "dateFinished": "2019-12-04 11:28:31.136",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"4\"\nWITH i,e,p,i.N as iN, i.MaxN as iM\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD\nUNWIND aPTds as aPTdsU\nWITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 \n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), \n      ResultDegree:aPTdsU.TDegree,\n      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}\nELSE\n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), \n      ResultDegree: CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,\n      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM\nreturn resultProduct",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-10 09:52:43.576",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "resultProduct.Divisor": "string",
+                      "resultProduct.DS": "string",
+                      "resultProduct.ET": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "resultProduct.Divisor\tresultProduct.DS\tresultProduct.ET\n4\t[{\"ResultDegree\":1,\"ResultScalar\":-150.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-30.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-100.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":25.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-5.0,\"ResultTwoSeq\":1},{\"ResultDegree\":4,\"ResultScalar\":1.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-100.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-5.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-4.0,\"ResultTwoSeq\":1},{\"ResultDegree\":0,\"ResultScalar\":600.0,\"ResultTwoSeq\":1},{\"ResultDegree\":0,\"ResultScalar\":120.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-120.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-5.0,\"ResultTwoSeq\":1},{\"ResultDegree\":4,\"ResultScalar\":1.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":6.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-6.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":30.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":16.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-80.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-24.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":30.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-5.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":25.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-4.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-80.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-100.0,\"ResultTwoSeq\":1},{\"ResultDegree\":0,\"ResultScalar\":400.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-120.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":24.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-4.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1}]\t4\n2\t[{\"ResultDegree\":0,\"ResultScalar\":2.0,\"ResultTwoSeq\":null},{\"ResultDegree\":2,\"ResultScalar\":1.0,\"ResultTwoSeq\":null},{\"ResultDegree\":1,\"ResultScalar\":-3.0,\"ResultTwoSeq\":null},{\"ResultDegree\":1,\"ResultScalar\":-2.0,\"ResultTwoSeq\":null},{\"ResultDegree\":2,\"ResultScalar\":1.0,\"ResultTwoSeq\":null},{\"ResultDegree\":1,\"ResultScalar\":-2.0,\"ResultTwoSeq\":null},{\"ResultDegree\":0,\"ResultScalar\":6.0,\"ResultTwoSeq\":null},{\"ResultDegree\":0,\"ResultScalar\":12.0,\"ResultTwoSeq\":null},{\"ResultDegree\":1,\"ResultScalar\":-1.0,\"ResultTwoSeq\":null}]\t1\n4\t[{\"ResultDegree\":1,\"ResultScalar\":-72.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":18.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":25.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-100.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-5.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-60.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-40.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":15.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-10.0,\"ResultTwoSeq\":2},{\"ResultDegree\":2,\"ResultScalar\":60.0,\"ResultTwoSeq\":2},{\"ResultDegree\":2,\"ResultScalar\":50.0,\"ResultTwoSeq\":2},{\"ResultDegree\":1,\"ResultScalar\":-300.0,\"ResultTwoSeq\":2},{\"ResultDegree\":1,\"ResultScalar\":-120.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-90.0,\"ResultTwoSeq\":1},{\"ResultDegree\":0,\"ResultScalar\":240.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-150.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":60.0,\"ResultTwoSeq\":2},{\"ResultDegree\":3,\"ResultScalar\":-10.0,\"ResultTwoSeq\":2},{\"ResultDegree\":2,\"ResultScalar\":30.0,\"ResultTwoSeq\":1},{\"ResultDegree\":0,\"ResultScalar\":360.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":60.0,\"ResultTwoSeq\":2},{\"ResultDegree\":0,\"ResultScalar\":1800.0,\"ResultTwoSeq\":2},{\"ResultDegree\":1,\"ResultScalar\":-300.0,\"ResultTwoSeq\":2},{\"ResultDegree\":3,\"ResultScalar\":-5.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-120.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":30.0,\"ResultTwoSeq\":1},{\"ResultDegree\":0,\"ResultScalar\":600.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-360.0,\"ResultTwoSeq\":2},{\"ResultDegree\":3,\"ResultScalar\":-4.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":12.0,\"ResultTwoSeq\":1},{\"ResultDegree\":4,\"ResultScalar\":1.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":60.0,\"ResultTwoSeq\":2},{\"ResultDegree\":1,\"ResultScalar\":-360.0,\"ResultTwoSeq\":2},{\"ResultDegree\":3,\"ResultScalar\":-12.0,\"ResultTwoSeq\":2},{\"ResultDegree\":2,\"ResultScalar\":72.0,\"ResultTwoSeq\":2},{\"ResultDegree\":1,\"ResultScalar\":-120.0,\"ResultTwoSeq\":1},{\"ResultDegree\":4,\"ResultScalar\":2.0,\"ResultTwoSeq\":2},{\"ResultDegree\":3,\"ResultScalar\":-12.0,\"ResultTwoSeq\":2},{\"ResultDegree\":2,\"ResultScalar\":20.0,\"ResultTwoSeq\":1},{\"ResultDegree\":4,\"ResultScalar\":1.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-4.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-5.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":8.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-3.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-6.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":24.0,\"ResultTwoSeq\":1},{\"ResultDegree\":3,\"ResultScalar\":-6.0,\"ResultTwoSeq\":1},{\"ResultDegree\":1,\"ResultScalar\":-48.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":30.0,\"ResultTwoSeq\":1},{\"ResultDegree\":2,\"ResultScalar\":24.0,\"ResultTwoSeq\":1}]\t8\n2\t[{\"ResultDegree\":1,\"ResultScalar\":-8.0,\"ResultTwoSeq\":null},{\"ResultDegree\":2,\"ResultScalar\":2.0,\"ResultTwoSeq\":null},{\"ResultDegree\":0,\"ResultScalar\":24.0,\"ResultTwoSeq\":null},{\"ResultDegree\":1,\"ResultScalar\":-6.0,\"ResultTwoSeq\":null}]\t2\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575476910948_1441442977",
+      "id": "20191204-112830_316861584",
+      "dateCreated": "2019-12-04 11:28:30.948",
+      "dateStarted": "2019-12-04 11:29:10.460",
+      "dateFinished": "2019-12-04 11:29:10.601",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\u00274\u0027\nWITH i,e,p,i.N as iN, i.MaxN as iM\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD                                     \n Return aPafe,iN,iM,apD,argumentProductt",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-10 09:52:29.282",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "aPafe",
+                        "visible": true,
+                        "width": 150.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "iN",
+                        "visible": true,
+                        "width": 150.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "iM",
+                        "visible": true,
+                        "width": 150.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "apD",
+                        "visible": true,
+                        "width": 150.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "argumentProductt",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1.0,
+                      "paginationPageSize": 250.0
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "aPafe": "string",
+                      "iN": "string",
+                      "iM": "string",
+                      "apD": "string",
+                      "argumentProductt": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "aPafe\tiN\tiM\tapD\targumentProductt\n4\t\"5\"\t\"6\"\t4\t[{\"afe\":4,\"Divisor\":4,\"tft\":4,\"DS\":[{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":6.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-4.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":30.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":0,\"AScalar\":6.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-6.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":2,\"AScalar\":6.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":20.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-6.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":30.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":6.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-4.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":20.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-4.0}]}]\n8\t\"5\"\t\"6\"\t4\t[{\"afe\":8,\"Divisor\":4,\"tft\":8,\"DS\":[{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":12.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-3.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":12.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":8.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-3.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-4.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-3.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":0,\"AScalar\":8.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":2,\"AScalar\":30.0,\"TScalar\":1.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":12.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":0,\"AScalar\":30.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-4.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":20.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-6.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-4.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":12.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-6.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":20.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-4.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":2,\"AScalar\":8.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-3.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":8.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-6.0}]}]\n1\t\"5\"\t\"6\"\t2\t[{\"afe\":null,\"Divisor\":2,\"tft\":1,\"DS\":[{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":2.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":2,\"AScalar\":null,\"TScalar\":1.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-3.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-2.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":2,\"AScalar\":null,\"TScalar\":1.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-2.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":6.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":12.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-1.0}]}]\n2\t\"5\"\t\"6\"\t2\t[{\"afe\":null,\"Divisor\":2,\"tft\":2,\"DS\":[{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-4.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":2,\"AScalar\":null,\"TScalar\":1.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":12.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-3.0}]}]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575476950367_-381052695",
+      "id": "20191204-112910_194294370",
+      "dateCreated": "2019-12-04 11:29:10.367",
+      "dateStarted": "2019-12-04 11:30:26.759",
+      "dateFinished": "2019-12-04 11:30:26.822",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\u00274\u0027\nWITH i,e,p,i.N as iN, i.MaxN as iM\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n Return argumentProduct//argumentProduct",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-10 09:52:19.457",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "argumentProduct.afe",
+                        "visible": true,
+                        "width": 248.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "argumentProduct.Divisor",
+                        "visible": true,
+                        "width": 482.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "argumentProduct.tft",
+                        "visible": true,
+                        "width": 456.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "argumentProduct.DS",
+                        "visible": true,
+                        "width": 784.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1.0,
+                      "paginationPageSize": 250.0
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "argumentProduct.afe": "string",
+                      "argumentProduct.Divisor": "string",
+                      "argumentProduct.tft": "string",
+                      "argumentProduct.DS": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "argumentProduct.afe\targumentProduct.Divisor\targumentProduct.tft\targumentProduct.DS\n\t2\t2\t[{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-4.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":2,\"AScalar\":null,\"TScalar\":1.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":12.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-3.0}]\n8\t4\t8\t[{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":12.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-3.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":12.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":8.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-3.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-4.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-3.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":0,\"AScalar\":8.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":2,\"AScalar\":30.0,\"TScalar\":1.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":12.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":0,\"AScalar\":30.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-4.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":20.0,\"TScalar\":30.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-6.0,\"TScalar\":30.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-4.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":12.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-6.0},{\"ATwoSeq\":2,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":2,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-6.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":20.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-4.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":2,\"AScalar\":8.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-3.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":8.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-6.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-6.0}]\n\t2\t1\t[{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":2.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":2,\"AScalar\":null,\"TScalar\":1.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-3.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-2.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":2,\"AScalar\":null,\"TScalar\":1.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-2.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":6.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":0,\"AScalar\":null,\"TScalar\":12.0},{\"ATwoSeq\":null,\"ADegree\":null,\"TDegree\":1,\"AScalar\":null,\"TScalar\":-1.0}]\n4\t4\t4\t[{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":6.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-4.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":30.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":0,\"AScalar\":6.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-6.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-5.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":2,\"AScalar\":1.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":2,\"AScalar\":6.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":20.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":2,\"AScalar\":-6.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":2,\"AScalar\":30.0,\"TScalar\":1.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-4.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":20.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":-1,\"TDegree\":1,\"AScalar\":6.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-5.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":0,\"AScalar\":1.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-4.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":0,\"AScalar\":-5.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":0,\"AScalar\":20.0,\"TScalar\":20.0},{\"ATwoSeq\":1,\"ADegree\":0,\"TDegree\":1,\"AScalar\":30.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-6.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":2,\"TDegree\":1,\"AScalar\":1.0,\"TScalar\":-4.0},{\"ATwoSeq\":1,\"ADegree\":1,\"TDegree\":1,\"AScalar\":-5.0,\"TScalar\":-4.0}]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575477026650_-2129779660",
+      "id": "20191204-113026_1625409057",
+      "dateCreated": "2019-12-04 11:30:26.650",
+      "dateStarted": "2019-12-04 11:32:41.309",
+      "dateFinished": "2019-12-04 11:32:41.528",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"4\"\nWITH i,e,p,i.N as iN, i.MaxN as iM\n\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD\nUNWIND aPTds as aPTdsU\nWITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 \n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), \n      ResultDegree:aPTdsU.TDegree,\n      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}\nELSE\n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), \n      ResultDegree: CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,\n      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT,Divisor:rpD1} as resultMap,iN,iM\n\nWITH COLLECT(resultMap) as resultMapC,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,eTrm,rDRM,iN,iM,rpD2\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\nWITH COLLECT(rSLI.RScalar) as cts,eTrm,rDRM,iN,iM,rpD2\nWith REDUCE(tSum\u003d0,ff IN cts | tSum +ff) As TotalRScalar,eTrm,rDRM,iN,iM,rpD2  //  eTrm aka rowCounter for later\n\nWith {Degree:rDRM,Divisor:rpD2,Scalar:Collect(TotalRScalar)} AS pTerms      // rpD2 is invariant throughout eTrm\n//WITH COLLECT(pTerms) as pTermsC,pTerms.Degree as DegreeP,pTerms.Divisor as DivisorP\nWITH pTerms.Scalar as pTermsS,pTerms.Degree as pTermsD,pTerms.Divisor as pTermsDiv\n//UNWIND RANGE(0,SIZE(pTermsS)-1) as iJ\n//UNWIND pTermsS[iJ] as pTermsSI\nWith REDUCE(tSum\u003d0,ff IN pTermsS | tSum +ff) As TRScalar,pTermsD,pTermsDiv\n\nRETURN TRScalar,pTermsD,pTermsDiv\n//RETURN TotalRScalar,eTrm,rDRM,iN,iM,rpD2\n//With TotalRScalar/rpD2 as TotalRScalaR,eTrm,rDRM,iN,iM                        \n//RETURN TotalRScalar,eTrm,rDRM,iN,iM\n//RETURN TotalRScalaR,toInteger(eTrm),toInteger(rDRM),toInteger(iN),toInteger(iM)",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-12 11:02:15.278",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1575477077461_-1280325007",
+      "id": "20191204-113117_2028990838",
+      "dateCreated": "2019-12-04 11:31:17.461",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\n\nMATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode) where i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"4\"\nWITH i,e,p,i.N as iN, i.MaxN as iM\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM\nOPTIONAL MATCH  (p) - [p2:ProductRelationA] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD\nWITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,\n                                      TScalar:CASE WHEN toInteger(v.Degree)\u003d-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,\n                                      ATwoSeq:toInteger(p2.T),\n                                      ADegree:toInteger(vv.Degree),   \n                                      AScalar:CASE WHEN toInteger(vv.Degree)\u003d-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e\n\nWITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD\nUNWIND RANGE(0,SIZE(argumentProductt)-1) as iii\nWITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD\nUNWIND aPTds as aPTdsU\nWITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 \n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), \n      ResultDegree:aPTdsU.TDegree,\n      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}\nELSE\n{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), \n      ResultDegree: CASE WHEN aPTdsU.ADegree\u003d-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,\n      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}\nEND\nAS resultProduct,iN,iM\nWITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT,Divisor:rpD1} as resultMap,iN,iM\n\nWITH COLLECT(resultMap) as resultMapC,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,eTrm,rDRM,iN,iM,rpD2\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n//WITH COLLECT(rSLI.RScalar) as cts,eTrm,rDRM,iN,iM,rpD2\n//return cts,eTrm,rDRM,iN,iM,rpD2\nRETURN rSLI.RScalar,eTrm,rDRM,iN,iM,rpD2\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-12 11:08:11.358",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "rSLI.RScalar": "string",
+                      "eTrm": "string",
+                      "rDRM": "string",
+                      "iN": "string",
+                      "iM": "string",
+                      "rpD2": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "rSLI.RScalar\teTrm\trDRM\tiN\tiM\trpD2\n-150.0\t4\t1\t\"5\"\t\"6\"\t4\n-30.0\t4\t1\t\"5\"\t\"6\"\t4\n-100.0\t4\t1\t\"5\"\t\"6\"\t4\n-100.0\t4\t1\t\"5\"\t\"6\"\t4\n-120.0\t4\t1\t\"5\"\t\"6\"\t4\n-80.0\t4\t1\t\"5\"\t\"6\"\t4\n-24.0\t4\t1\t\"5\"\t\"6\"\t4\n-80.0\t4\t1\t\"5\"\t\"6\"\t4\n-100.0\t4\t1\t\"5\"\t\"6\"\t4\n-120.0\t4\t1\t\"5\"\t\"6\"\t4\n240.0\t8\t0\t\"5\"\t\"6\"\t4\n360.0\t8\t0\t\"5\"\t\"6\"\t4\n1800.0\t8\t0\t\"5\"\t\"6\"\t4\n600.0\t8\t0\t\"5\"\t\"6\"\t4\n-8.0\t2\t1\t\"5\"\t\"6\"\t2\n-6.0\t2\t1\t\"5\"\t\"6\"\t2\n-5.0\t4\t3\t\"5\"\t\"6\"\t4\n-5.0\t4\t3\t\"5\"\t\"6\"\t4\n-4.0\t4\t3\t\"5\"\t\"6\"\t4\n-5.0\t4\t3\t\"5\"\t\"6\"\t4\n-6.0\t4\t3\t\"5\"\t\"6\"\t4\n-5.0\t4\t3\t\"5\"\t\"6\"\t4\n-4.0\t4\t3\t\"5\"\t\"6\"\t4\n-4.0\t4\t3\t\"5\"\t\"6\"\t4\n1.0\t1\t2\t\"5\"\t\"6\"\t2\n1.0\t1\t2\t\"5\"\t\"6\"\t2\n600.0\t4\t0\t\"5\"\t\"6\"\t4\n120.0\t4\t0\t\"5\"\t\"6\"\t4\n400.0\t4\t0\t\"5\"\t\"6\"\t4\n18.0\t8\t2\t\"5\"\t\"6\"\t4\n20.0\t8\t2\t\"5\"\t\"6\"\t4\n25.0\t8\t2\t\"5\"\t\"6\"\t4\n20.0\t8\t2\t\"5\"\t\"6\"\t4\n15.0\t8\t2\t\"5\"\t\"6\"\t4\n60.0\t8\t2\t\"5\"\t\"6\"\t4\n50.0\t8\t2\t\"5\"\t\"6\"\t4\n60.0\t8\t2\t\"5\"\t\"6\"\t4\n30.0\t8\t2\t\"5\"\t\"6\"\t4\n60.0\t8\t2\t\"5\"\t\"6\"\t4\n30.0\t8\t2\t\"5\"\t\"6\"\t4\n12.0\t8\t2\t\"5\"\t\"6\"\t4\n60.0\t8\t2\t\"5\"\t\"6\"\t4\n72.0\t8\t2\t\"5\"\t\"6\"\t4\n20.0\t8\t2\t\"5\"\t\"6\"\t4\n8.0\t8\t2\t\"5\"\t\"6\"\t4\n24.0\t8\t2\t\"5\"\t\"6\"\t4\n30.0\t8\t2\t\"5\"\t\"6\"\t4\n24.0\t8\t2\t\"5\"\t\"6\"\t4\n24.0\t2\t0\t\"5\"\t\"6\"\t2\n-3.0\t1\t1\t\"5\"\t\"6\"\t2\n-2.0\t1\t1\t\"5\"\t\"6\"\t2\n-2.0\t1\t1\t\"5\"\t\"6\"\t2\n-1.0\t1\t1\t\"5\"\t\"6\"\t2\n1.0\t8\t4\t\"5\"\t\"6\"\t4\n2.0\t8\t4\t\"5\"\t\"6\"\t4\n1.0\t8\t4\t\"5\"\t\"6\"\t4\n25.0\t4\t2\t\"5\"\t\"6\"\t4\n20.0\t4\t2\t\"5\"\t\"6\"\t4\n20.0\t4\t2\t\"5\"\t\"6\"\t4\n6.0\t4\t2\t\"5\"\t\"6\"\t4\n20.0\t4\t2\t\"5\"\t\"6\"\t4\n30.0\t4\t2\t\"5\"\t\"6\"\t4\n16.0\t4\t2\t\"5\"\t\"6\"\t4\n20.0\t4\t2\t\"5\"\t\"6\"\t4\n30.0\t4\t2\t\"5\"\t\"6\"\t4\n25.0\t4\t2\t\"5\"\t\"6\"\t4\n20.0\t4\t2\t\"5\"\t\"6\"\t4\n24.0\t4\t2\t\"5\"\t\"6\"\t4\n20.0\t4\t2\t\"5\"\t\"6\"\t4\n-72.0\t8\t1\t\"5\"\t\"6\"\t4\n-100.0\t8\t1\t\"5\"\t\"6\"\t4\n-60.0\t8\t1\t\"5\"\t\"6\"\t4\n-40.0\t8\t1\t\"5\"\t\"6\"\t4\n-300.0\t8\t1\t\"5\"\t\"6\"\t4\n-120.0\t8\t1\t\"5\"\t\"6\"\t4\n-90.0\t8\t1\t\"5\"\t\"6\"\t4\n-150.0\t8\t1\t\"5\"\t\"6\"\t4\n-300.0\t8\t1\t\"5\"\t\"6\"\t4\n-120.0\t8\t1\t\"5\"\t\"6\"\t4\n-360.0\t8\t1\t\"5\"\t\"6\"\t4\n-360.0\t8\t1\t\"5\"\t\"6\"\t4\n-120.0\t8\t1\t\"5\"\t\"6\"\t4\n-48.0\t8\t1\t\"5\"\t\"6\"\t4\n2.0\t1\t0\t\"5\"\t\"6\"\t2\n6.0\t1\t0\t\"5\"\t\"6\"\t2\n12.0\t1\t0\t\"5\"\t\"6\"\t2\n2.0\t2\t2\t\"5\"\t\"6\"\t2\n1.0\t4\t4\t\"5\"\t\"6\"\t4\n1.0\t4\t4\t\"5\"\t\"6\"\t4\n-5.0\t8\t3\t\"5\"\t\"6\"\t4\n-10.0\t8\t3\t\"5\"\t\"6\"\t4\n-10.0\t8\t3\t\"5\"\t\"6\"\t4\n-5.0\t8\t3\t\"5\"\t\"6\"\t4\n-4.0\t8\t3\t\"5\"\t\"6\"\t4\n-12.0\t8\t3\t\"5\"\t\"6\"\t4\n-12.0\t8\t3\t\"5\"\t\"6\"\t4\n-4.0\t8\t3\t\"5\"\t\"6\"\t4\n-5.0\t8\t3\t\"5\"\t\"6\"\t4\n-3.0\t8\t3\t\"5\"\t\"6\"\t4\n-6.0\t8\t3\t\"5\"\t\"6\"\t4\n-6.0\t8\t3\t\"5\"\t\"6\"\t4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1576166786143_-1067521132",
+      "id": "20191212-110626_1362799949",
+      "dateCreated": "2019-12-12 11:06:26.143",
+      "dateStarted": "2019-12-12 11:08:06.064",
+      "dateFinished": "2019-12-12 11:08:08.846",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-12 11:08:05.798",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1576166885796_-1843753025",
+      "id": "20191212-110805_1823180105",
+      "dateCreated": "2019-12-12 11:08:05.796",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/QuadraticCypher Broken Apart",
+  "id": "2EVJDT7D2",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

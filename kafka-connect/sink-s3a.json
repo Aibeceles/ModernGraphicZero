@@ -1,0 +1,21 @@
+{
+  "name": "Neo4jSinkS3a",
+  "config": {
+    "connector.class": "org.neo4j.connectors.kafka.sink.Neo4jConnector",
+    "topics": "s3a",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": false,
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": false,
+
+    "consumer.override.auto.offset.reset": "earliest",
+
+    "neo4j.uri": "neo4j://localhost:7687",
+    "neo4j.database": "twopolynomial",
+    "neo4j.authentication.type": "BASIC",
+    "neo4j.authentication.basic.username": "neo4j",
+    "neo4j.authentication.basic.password": "ChiefQuippy",
+
+    "neo4j.cypher.topic.s3a": "CREATE (v:VertexNode {Scalar:event.tScalar, Degree:toString(event.tDegree)}) MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) MERGE (i:IndexedByArgument {N:event.iN, MaxN:event.iM, Dimension:event.dimension}) MERGE (i)-[:IndexedByEvaluate]->(e) MERGE (i)-[:VertexIndexedBy {twoSeq:'99', divisor:event.pTD}]->(v)"
+  }
+}

@@ -1,0 +1,210 @@
+The top level concept is non-linear programming.
+GZP'sAndQ's
+                     Dataframes for writing terms of Quadratic Progression at MaxN.
+
+GraphicZeroTheQuadratics
+                     Roots of the quadratics.  RowCounter explained...                               // 3/6 groundwork
+
+GraphicConvergance   november inspiration of crittical points.  Prove the vertex
+                     in a quadratic sequence defines a sequence of converging rationals.            //  3/6 Groundwork
+
+GraphicMU            December state of ZAD.  Compares a ZAD instance's ability to complete 
+                     powerset representation of integers.  ZAD is a  Newton's Differences graph. 
+                     A node's p() has a determined/underdetermined set of roots.  A graph is compared 
+                     with a complete set of expected roots.  
+
+GraphicZeroThePs..   graphing MaxN,N,D ; same maxN,N.  the graph
+                     inspires finding the crittical point of each curve.
+                     The belief is when multiplying two of these curves, 
+                     have to concider the multiplication of the two mins.
+                     Mayby have to concider the min in relation to where 
+                     curve1 is less than / greater than curve2.
+
+                     first gradient descent, newtons method, mentions sturm, montiCarlo arch lengh.
+                     uses zeppelin to graph.                                                         //  3/6 of importance
+
+GraphicMultiVar
+GraphicMultiVar1     Multiplies two quadratics and grapsh them. No evidence of local
+                     mins...  Though did not log(result)...  Inspires Lipshitz/Kantovorac
+                     for existance.  Note though: positive definate.
+
+                     (first go at it, depricated)
+
+GraphicMuliVarQuart2 See above, with two quartets...
+
+GraphicMultiVarPartialDifferentials  
+                     Quadratics querried.
+                     Partially differenced.
+                     Gradient, Hessian defined.
+                     Newtons Method applied.
+                     The result of lab 1 being no convergance occured....
+                     need to look at logrithm of big graph.
+                             perform the textbook analysis.
+
+GraphicMultiVarPDQuadsForPlot  Does diverge... solve the gradient manually.                         // 3/6 of importance
+
+GraphicMultiVarPDQuartetsForPlot1
+                     Quartets*a partially differentiated Quartet is plotted.
+                     Log of xy result is z.  Includes surface and level graphs.
+                     Note aparent minimum.  Need to apply Newton's method and
+                     verify correctness.  Update: NM does converge....  Motivates the review        // 3/6 of importance
+
+The review:
+
+   Two p's from TheIntegers are selected and defined as dataframes.
+Transforms and actions differentiate and multiply (crossjoin) the dataframes.
+Pairs of crossjoined columns argument a plot.  Newton's method and Gradient Descent
+algorithms applied to the dataframe representing a two varariable function can resolve a
+single minimum.  
+   
+   To date, two quadratics selected, plotted and argued for NM do not prove a minimum.
+However two quartets selected similarly are affable to plotting and arguing.  Minimum
+is apparent from both plot and algorithms.  Further, results from the algorithms suggest
+different p's for first x variable of two variable funtion resolve different x coordinate 
+mins.  They were multiplied by the same y variable function.  The algorithms determined 
+a same y coordiante for resolving min.  
+
+   The seemingly missing min of two quadratics needs a second look. 
+Closed form methods can determin a rational min.  The crossjoined quartets, to date, only
+resolve one minimum.  And where are countably many minimums?  A catalogue of the 
+quartets and their derivatives crossjoined and analyzed for minimums is due.  The
+single min analyis should result with routine for defining a surface with mininim
+at arbitrary x,y coordinate. 
+
+Production  of multiple minimum graphs needs a methodology:
+
+   TheIntegers contains p's believed to have only one crittical point and no roots.  The 
+above analysis seems plausable.  ZAD, logically, is the next course of study.  It
+id's p's with respect to number and location of roots.   
+
+
+The whole picture:
+
+The beginnings:
+
+N->Q theorm         
+Two polynomial.     - from an observation of the q chart (binary permutations/combinations)
+                    - the absurd search for dual use binary arithmetic.
+Differences.ods.    - Newtons differencing p's literature
+
+The goal:  GradientDescent,Newton's method use case.
+           A multiVariable polynomial with basins of attraction having arbitrary (x,y) coordinates as minimumns.   
+ 
+Along the way:
+
+Higher Degreed Analogus of TwoPolynomials  (HDATP):  Multiplied, graphed and min argued.  They have one critical point
+                                                     and expected mins under multiplication.               
+TheQuadratics, ZDCTH, Convergence sequences.
+
+The "D" series graphs.
+Mu analysis.
+"D" series Fork.
+
+"ComposedDFork"  is the most comprhensive graph to date.  
+It does complete mu set (power set) represted as set of determined polynomials 
+
+"D" graphs provide the next step in goal.  Did concider p's with no roots.  Now concider p's with one root.  
+Did concider the analogues of twoPolys.  Now define One root analogues.  Note still start with quadratics.  
+
+
+Question:  Where are twoPolys on the "D" graph... 
+           Where are the analogues....
+
+Ask the expert:
+
+The "Newton's Differences" Graph.
+Explined with text and the video.
+
+GraphicDetermined
+GraphSage3              -  
+
+Have:
+
+Legacy Graph
+Forked Graph
+Composite Graph.
+
+TwoPolynomial Analysis.
+ZAD analysis
+
+Issue:
+
+TwoPolynomials are non-linear systems with only one arbitrary minimum.
+
+The crossed p's have x and y min as ...  Known to date is each p contributes only to respective x or y coordinat of 
+crossed function.
+IS important next step to document mins of quadratics alone and under composition.   All well then proced with Quartet example.
+
+As:
+Choose two quadratics.  
+Identify each closed form min  (x,value), NM min (x,value).
+CrossJoin the two, plot.
+Closed form solution to the mins (x,value), NM, Gradient Descent min. 
+
+The mins are not at integers.  The p's require a horizontal translation to properly locate their mins.  
+
+
+ZAD exists without a purpose.
+
+It does respond favorably to ML algorithms.
+Though the predictions asked of it are currently curiosities  (Toy Graph sindrom).
+The predictions are based on legacy graph arguments.
+
+As:
+Audit D4Fork for compleation. 
+Is it composite?
+
+Where are/would the simplest quadratics/quartets/octets be located
+on D*Fork?
+
+Techincal issues with ZAD
+
+GrapicDetermined
+GraphSage3        - The link prediction itself is somewhat contrived.
+                    The technicals are worthwhile.  
+                    Setting parameters,  Accepting the link predicition.
+                    Current experiment itinerary.  
+
+                    Particular question:  .Accepting a link prediciton and then the necessary re-embedding, predicting..
+                                          .How an embedding works locally.  The link suggestion is accepted...  which embeddings
+                                           get created/updated?
+
+
+
+The future:
+ZAD and P's together...
+
+From the farside:  rational aritimetic in one variable.
+
+Mention something about the project:
+
+Method of nonliniar integer definition (a polynomial).
+Ordinary polynomial arithmetic though ZDCTH exists.
+Multiplication a beast.  Attempt is translate definition for better suited min.
+
+The p's are not from thin air.  
+They exist in ZAD.
+But ZAD "performs rational aritmetic"
+
+
+Everythin to expect out of this effort.
+The ambitious....
+ 
+ 
+
+
+
+
+
+
+
+
+https://www.reddit.com/r/CombatFootage/
+
+
+
+
+
+
+
+

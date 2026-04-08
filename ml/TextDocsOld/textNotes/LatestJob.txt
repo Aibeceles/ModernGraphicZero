@@ -1,0 +1,141 @@
+Data Lineage.
+
+Develop api:
+
+API (Application Programming Interface software) is a set of instructions, standards or requirements that enables a software or 
+app to employ features/services of another app, platform or device
+for better services. In short, it’s something that lets apps communicate with each other.
+
+Neo4j Performance Tuning
+OS Memory Sizing
+Page Cache Sizing
+Heap Sizing
+Logical Logs
+Number of Open Files
+
+
+GraphicZero 
+
+Developed a Graph Database application that maps arbitrary polynomials representing integers into polynomials representing rationals.
+Wrote:
+ - Java Algorithms for encoding, mapping, and decoding the polynomials. 
+ - Cypher scripts as jdbc methods and Kafka sink topics for onboarding java output into Neo4j database.
+ - Spark/Scala scripts for algebraic insights and determining algorithmic correctness. 
+ - Cypher scripts implementing the Neo4j ML library for performing statistical (Node and Link) prediction.
+
+LPG (Labled Property Graph)
+
+     Developed GraphicZero, a Graph DataBase project useful for quadratic and general integer polynomial analyis with applications in 
+Cryptography, Multi-Variable Calculus, and Graph Machine Learing.  Project development involved three phases. First 
+Java jars for generating data were written.  Second, a multi-graph (LPG) Neo4j database expressing composition of individual polynomials,
+heirchays of sets of polynomials, and reference information was instanciated and populated.  Third, Apache Zeppelin notebooks written in Scala
+provide technology for experiencing use cases.
+
+Developed GraphicZero, A Graph DataBase project useful for quadratic and general integer polynomial analysis with applications in 
+Cryptography, Multi-Variable Calculus, and Graph Machine Learning.  Project development involved three phases. First 
+Java jars for generating data were written.  Second, a multi-graph (LPG) Neo4j database expressing composition of individual polynomials,
+hierarchies of sets of polynomials, and reference information was instantiated and populated.  Third, Apache Zeppelin notebooks written in Scala
+provide technology for experiencing use cases.
+
+     .  Wrote 100+ class Java jars implementing algorithms for generating data using Java technologies such as threads and executors,
+        Semaphores, propertyChange listeners, copy constructors and other Java 8 technologies. 
+     .  Defined node, relation, and property schema for each graph in database.
+     .  Wrote API with 20+ primary Cypher scripts wrapped in a utility jar using a jdbc connector for implementing ETL/ELT operatons.                   
+     .  Configured Neo4j instance for accepting Kafka JSON messages written to by Java jars and recieved by Neo4j argumenting ETL activities.
+     .  Defined ML piplines in notebook for Link/Node algebra predictions.  
+     .  Wrote Scala notbook implementing multi-variable analysis of maximums, minimums and various covergance of products of stored data.
+     .  Wrote Scala notbook for using data store in cryptography application. 
+
+The Team
+
+PI Data Engineering team (part of Personal Investing Technology BU) is focused on delivery data and ML solutions for the organization. As part of this team, you will be responsible for building advanced analytics solutions using various cloud technologies to robustly scale up to the large volumes of data in production.
+
+The Expertise You Have
+
+·        Bachelor’s or Master’s Degree in a technology related field (e.g. Engineering, Computer Science, etc.).
+
+·        Demonstrable experience in implementing Big data solutions in data analytics space.
+
+·        Working experience with knowledge graphs/graph databases (Neo4j preferred).
+
+·        Expertise with Graph database technology (Neo4J preferred)
+
+·        Experience Tuning Graph databases (Neo4j preferred)    
+
+·        Experience with graph data models (LPG, RDF) and graph languages (Cypher, Gremlin, SparQL), exposure to various graph data modeling techniques for common use cases (e.g., Customer 360, data lineage, recommenders) for analytical (OLAP) workloads.
+
+·        Solid understanding of graph data modeling, graph schema  -revolves around key    development, graph data design.      
+
+·        Experience developing graph algorithms, optimizing complex queries, designing indexes and constraints.   ... utterly,  implementing involves current syntax..
+
+·        Experience developing APIs using knowledge graph data    utterly.,..
+
+·        Experience in designing and building highly scalable Knowledge Graphs in production
+
+·        Experience with building data pipelines in getting the data required to build and evaluate ML models, using tools like Apache Spark or other distributed data processing frameworks.
+
+·        Data movement technologies (ETL/ELT), Messaging/Streaming Technologies (AWS SQS, Kinesis/Kafka), Relational and NoSQL databases (DynamoDB, EKS, Graph database), API and in-memory technologies.  fabric vs
+               jvm vs spark memeory  that is in memory compute can be different from the jvm memory...   
+
+·        Solid understanding of developing highly scalable distributed systems using Open-source technologies.   spark notebooks consume graph data.
+
+·        Experience with CI/CD tools (e.g., Jenkins or equivalent), version control (Git), orchestration/DAGs tools (AWS Step Functions, Airflow, Luigi, Kubeflow, or equivalent).
+
+·        Solid experience in Agile methodologies (Kanban and SCRUM).
+
+The Skills You Bring
+
+·        You have the ability to deal with ambiguity and work in fast paced environment.
+
+·        Your experience supporting critical applications.
+
+·        Your Data wrangling experience with structured, semi-structure and unstructured data.
+
+·        You have superb communication skills, both through written and verbal channels.
+
+·        You have excellent collaboration skills to work with multiple teams in the organization.
+
+·        Your ability to understand and adapt to changing business priorities and technology advancements in Big data and Data Science ecosystem.
+
+The Value You Deliver
+
+·        Build Knowledge Graph solutions leveraging large-scale datasets to solve various business use cases.
+
+·        Design and build graph database schemas to support variety of use cases including knowledge graphs
+
+·        Design and build graph database load processes to efficiently populate the knowledge graphs
+
+·        Use AWS to host and manage the knowledge graphs
+
+·        Support ML activities against the knowledge graph to expose insights
+
+·        Build both batch and real-time update processes to keep the knowledge graphs in sync
+
+·        Collaborate across Data Platform teams to use existing data assets in the knowledge graph and to drive the creation of additional data assets
+
+·        Guiding teams to improve development agility and productivity.
+
+·        Resolving technical roadblocks and mitigating potential risks.
+
+·        Delivering system automation by setting up continuous integration/continuous delivery pipelines.
+
+
+Beltran, Jonathan <jonathan.beltran@ftsjobs.com>
+to:	Greg Silvestri - Piper Companies <gsilvestri@pipercompanies.com>,
+Tyler Jerome - Piper Companies <tjerome@pipercompanies.com>,
+"tomaspries@gmail.com" <tomaspries@gmail.com>
+
+steve meiser an affialiate to piper in Mass.
+401 292 7217 
+ 
+Kandala, Kiran
+Golubovic, Mladen 
+
+
+Ramlakan, Jayant
+Vulikh, Boris 
+
+Hello and looking for a Data Engineer 
+     
+
+

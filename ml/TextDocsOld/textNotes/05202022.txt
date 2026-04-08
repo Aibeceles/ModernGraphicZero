@@ -1,0 +1,263 @@
+QA  stackoverflow.
+
+transactions
+
+multicore.....
+
+https://github.com/neo4j/neo4j/blob/3.1/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java
+
+public class ParallelBatchImporter implements BatchImporter
+
+
+https://github.com/neo4j/neo4j-python-driver/issues/236
+on May 7, 2018 
+
+There are currently no plans for the driver to support multiprocessing. 
+
+It's non-trivial to allow Driver to work multiprocess as sockets cannot be pickled
+ and the Driver hosts a connection pool.
+
+Therefore multithreading may be a good choice in your case. If not, your only option
+ is to move Driver construction inside the process:
+
+....When working with Airflow pipelines, it would be better to split it into multiple tasks in a dag
+instead of running multiprocess in a single task. The sample code is provided below
+....
+
+https://github.com/amundsen-io/amundsen/issues/1610
+
+Surprisingly, the bottleneck is not the db query, it’s the statement creation.
+The process is basically
+
+    loop each row in csv
+    parse the row into a dictionary
+
+NEO4J_DEADLOCK_NODE_LABELS     - and keeping the txn size small.
+
+
+
+
+Chapter 18. Transaction Management
+
+Specifically:
+
+    All database operations that access the graph, indexes, or the schema must be performed in a transaction.
+    The default isolation level is READ_COMMITTED.
+    Data retrieved by traversals is not protected from modification by other transactions.
+    Non-repeatable reads may occur (i.e., only write locks are acquired and held until the end of the transaction).
+    One can manually acquire write locks on nodes and relationships to achieve higher level of isolation (SERIALIZABLE).
+    Locks are acquired at the Node and Relationship level.
+    Deadlock detection is built into the core transaction management. 
+
+https://neo4j.com/docs/2.3.5/transactions-interaction.html
+
+Transactions are thread confined and can be nested as “flat nested transactions”.
+ Flat nested transactions means that all nested transactions are added to the scope of the top level
+ transaction. A nested transaction can mark the top level transaction for rollback, meaning the entire
+ transaction will be rolled back. To only rollback changes made in a nested transaction is not
+ possible.
+
+which means they will see data as soon as it has been committed and will not see data in other
+ transactions that have not yet been committed. This type of isolation is weaker than serialization
+ but offers significant performance advantages whilst being sufficient 
+
+bad
+
+MATCH (n:X {id: 42})
+SET n.prop = n.prop + 1
+
+good
+
+MATCH (n:X {id: 42})
+SET n._LOCK_ = true
+SET n.prop = n.prop + 1
+REMOVE n._LOCK_
+
+The locks will be added to the transaction and released when the transaction finishes.
+
+
+
+
+
+
+In 3.5 an entity (node, relationship, path) could be acquired in one transaction and safely reused by another.
+
+However, in 4.0 these entities do hold a reference to their originating transaction.
+
+CALL apoc.periodic.iterate('MATCH (:Account)-[r:ASSOCIATED_WITH]->() RETURN id(r) as id',
+    'MATCH ()-[r]->() WHERE id(r)=id CALL apoc.do.case(.....) YIELD value RETURN value',
+    {batchSize: 10000, parallel: false, iterateList: true});
+
+Note that in the first (outer statement), we changed RETURN r to RETURN id(r) as id.
+
+
+
+
+
+
+
+https://towardsdatascience.com/batching-transactions-in-neo4j-1001d12c9a4a
+
+In this example, we will use the above bi-partite network and project a monopartite
+ network representing officers, and the relationships between them will define if and
+ how many entities they have in common.
+
+Unfortunately, the Neo4j Sandbox instance has only 1GB of heap memory. Consequently,
+creating more than a million relationships in a single transaction is likely to run into memory issues. 
+
+Before we continue, we need to increase the transaction timeout setting. By default, the Sandbox instances have a transaction timeout of
+30 seconds, meaning that if a transaction lasts longer than 30 seconds, it will be automatically terminated
+
+CALL dbms.setConfigValue(‘dbms.transaction.timeout’,’0');
+
+On the contrary, the APOC variant has no problem if an intermediate batch fails and will iterate through all
+ the batches regardless. Furthermore, APOC also has the option to define retries in case of a failing batch,
+ which is something that native Cypher transaction batching lacks.
+
+
+Another feature that apoc.periodic.iteratehas is the option to run update statements in parallel.
+ We need to ensure that we won’t run into any deadlocks when doing parallel updates. Otherwise, the
+ transaction execution will fail. As a rule of thumb, you can’t use parallel execution when creating
+relationships because the query might try to create several relationships starting or ending from the same node,
+ which will result in a node deadlock and failed execution. However, when you update a single node property once,
+ you can be confident that you won’t run into any deadlocks. For example, if you wanted to store the node degree as
+ a node property you could use parallel execution.
+
+
+All in all, it seems that the apoc.periodic.iterate is the older and more mature brother from the transaction procedure
+ family. As of now, I am more inclined to use the APOC batching instead of native Cypher batching. The only advantage to
+ the Cypher approach I see is if you want to terminate the operation after a single failed batch, otherwise I would still
+ suggest to use APOC.
+
+
+
+
+
+https://en.wikipedia.org/wiki/Data_dictionary
+
+ The software package for a stand-alone data dictionary or data repository may interact
+ with the software modules of the DBMS, but it is mainly used by the designers, users and
+ administrators of a computer system for information resource management.
+
+
+ Another important piece of information that a data dictionary can provide is the relationship
+ between Tables. This is sometimes referred to in Entity-Relationship diagrams, or if using Set
+ descriptors, identifying which Sets database Tables participate in. 
+
+
+In an active data dictionary constraints may be placed upon the underlying data. For instance, a
+ Range may be imposed on the value of numeric data in a data element (field), or a Record in a Table
+ may be FORCED to participate in a set relationship with another Record-Type. Additionally, a
+ distributed DBMS may have certain location specifics described within its active data dictionary
+ (e.g. where Tables are physically located)
+
+
+any middleware between dictionary and dbms's?
+
+
+
+use of glossery realy time will impact transaction execution time (increase).
+
+
+Neo4j will however detect any deadlock (caused by acquiring a lock) before they happen and throw an exception. 
+
+For example given two specific nodes (A and B), adding or deleting relationships to both these nodes
+in random order for each transaction will result in deadlocks when there are two or more transactions
+ doing that concurrently.
+
+There are three main strategies for ensuring uniqueness, and they all work across High Availability and single-instance deployments.
+
+
+https://neo4j.com/labs/apoc/4.2/cypher-execution/parallel/
+
+
+The parallel put the collection to parallelize - in this case, people in a java.util.parallelStream()
+
+
+Then, it created a java.util.concurrent.Future 
+
+Generally, the apoc.cypher.parallel2 procedure is more recommended than the apoc.cypher.parallel.
+
+
+https://stackoverflow.com/questions/51171928/difference-between-apoc-periodic-iterate-and-apoc-periodic-commit-when-deleting
+
+...
+
+The breakdown of iterate() into 2 queries is what allows it to be performant. It won't hold the entire result set in memory,
+ just pull as results are found and then execute the inner query on each batch. The single query call above, if it were possible,
+ would behave the same way as the match and delete query without the procedure call, in that it would have to hold references to every
+ single one of those nodes in memory and commit in a single batch, which could be a problem on a large graph. You could blow up your heap
+
+
+call apoc.periodic.iterate("MATCH (n) return n", "DETACH DELETE {n}", {batchSize:1000}) 
+yield batches, total return batches, total
+
+https://medium.com/neo4j/the-power-of-subqueries-in-neo4j-4-x-4f1888739bec
+
+https://graphaware.com/neo4j/2020/01/17/post-union-processing-explained.html
+
+
+https://www.homedepot.com/p/Glacier-Bay-2-piece-1-1-GPF-1-6-GPF-High-Efficiency-Dual-Flush-Complete-Elongated-Toilet-in-White-Seat-Included-N2316/100676582
+
+
+
+
+
+
+https://aws.amazon.com/events/summits/new-york/agenda/?amer-summit-card.sort-by=item.additionalFields.startDateTime&amer-summit-card.sort-order=asc&awsf.amer-summit-session=*all&awsf.amer-summit-level=*all&awsf.amer-summit-category=*all&awsf.amer-summit-customer-persona=*all
+
+
+Real-time analytics on streaming data with Amazon Kinesis
+
+Exam readiness: AWS Certified Cloud Practitioner
+
+
+
+
+
+
+bi-partite 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

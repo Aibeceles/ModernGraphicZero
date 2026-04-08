@@ -1,0 +1,86 @@
+jars:
+.FractionIntegerDriverIterate
+.TwoPolynomialGenerator
+.DFScripts
+.ZAD
+
+Tenant graphs: 
+.differenceGraph
+.integerpolys
+.skipmu
+.createbymu
+
+classification label of a node v in network may depend on
+.features of v
+.labels of the nodes in v's neighborhood
+.features of the nodes in v's neighborhood.
+
+Want ZAD graph summary. 
+
+Is root power set complete?
+Is mu root set complete?
+What percentage of the power set is determined/under determined?
+
+Do need each 4,8 skip pattern (power set) on respective tenant graphs. 
+
+LoopsDriverTwoPManager has int fIDI
+
+if -1 then noBufferRun with muListBoolean(all false) 
+if 0 then muQuerry  and if not empty noBufferRun with muListBoolen(skip list)
+
+Note: LoopsDriverTwoPManager does one muQuerry take and falls through.
+
+The ZAD jar accepts args[] composed of a TwoPolyNomial coordinate N,MaxN,D or null.
+
+
+Summary of yesterday:
+
+DifferencesOfPolynomials.ods pattern observation:
+
+Maybe a hypo (another off-hand hypothesis in need of proof) about the number of
+consecutive zeros at w0 (p itself). if w1 at index has zero then trivial for w0
+to have zero at index.  If w1, w2 at index has zero then trivial for w0 to have two
+consecutive zeros starting at index.
+....
+This speaks of an algorithm for writing an arbitrary number of consecutive zeros starting
+at an arbitrary index of w0.  
+
+Suppose want algorithem (p transform instructions) for writing an arbitrary pattern of
+zeros at w0 (want a pattern in set of mu as resulting p). 
+
+ZAD irratta:
+
+Did populate The Project 2 FractionIntegerDriverIterate folder's default neo4j graph 
+with mu numbers with denominators from 1 to 25. Note 1 to 50 is an imense number of mu's.  
+The intention was feasability of populating a ZAD graph by argumenting LoopsDriverTwoP
+with individual MuNumber.nBinary list for a single iteration of LoopsDriverTwoP.call()'s
+semaphore pattern.  The feature request appears feasable and will probably exit gracefully.
+However, the graph ZAD would populate increases geometricly in size and even a D=8 p
+is a graph of 8^8 nodes...   Many, Many nodes.
+
+Today work is graph tenancy.
+
+The GraphicZero p's need ZAD representation.  Yesterday's effort suggests the infeasability
+of brute forcing ZAD with an eight dimensional GraphicZero P.  Dimension 4 P's though, are
+ZAD iterable without the ZAD irratta feature.  Can make due though with GraphicZero P's
+of dimension 2, 4 in tenancy. 
+
+Need a muQuerry like method for retrieving GraphicZero P's from a dedicated tenant graph. 
+Apriori, need the tenant graph created and populated.  Note this graph, like the muNumbers
+graph, is composed of unconnected nodes.
+
+
+Project2 FractionIntegerDriverIterate should be reanamed.
+         MLGraph1 (the twoPolynomials) should be a tenant graph in renamed FIDI.
+
+
+
+
+
+
+
+
+
+
+
+

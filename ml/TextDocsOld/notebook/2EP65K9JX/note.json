@@ -1,0 +1,378 @@
+{
+  "paragraphs": [
+    {
+      "text": "\nimport java.util.HashMap;\nimport java.util.Map;\nimport org.apache.zeppelin.java.JavaInterpreterUtils;\n\npublic class HelloWorld {\n\n    public static void main(String[] args) {\n\n        Map\u003cString, Long\u003e counts \u003d new HashMap\u003c\u003e();\n        counts.put(\"hello\",4L);\n        counts.put(\"world\",5L);\nSystem.out.print(\"hello world\");\n        //System.out.print(JavaInterpreterUtils.displayTableFromSimpleMap(\"Word\",\"Count\", counts));\n\n    }\n\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 12:12:15.695",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003cconsole\u003e:5: error: \u0027;\u0027 expected but \u0027class\u0027 found.\r\npublic class HelloWorld {\r\n       ^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567181245326_223616279",
+      "id": "20190830-120725_1606158677",
+      "dateCreated": "2019-08-30 12:07:25.326",
+      "dateStarted": "2019-08-30 12:12:15.816",
+      "dateFinished": "2019-08-30 12:12:15.855",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport java.util.HashMap;\nimport java.util.Map;\nimport org.apache.zeppelin.java.JavaInterpreterUtils;\nimport static java.lang.System.out\n\npublic class HelloWorld {\n\n    public static void main(String[] args) {\n\n        Map\u003cString, Long\u003e counts \u003d new HashMap\u003c\u003e();\n        counts.put(\"hello\",4L);\n        counts.put(\"world\",5L);\n\n        out.print(JavaInterpreterUtils.displayTableFromSimpleMap(\"Word\",\"Count\", counts));\n\n    }\n\n}\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 13:09:46.884",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003cconsole\u003e:4: error: \u0027.\u0027 expected but identifier found.\r\nimport static java.lang.System.out\r\n              ^\n\u003cconsole\u003e:6: error: identifier expected but \u0027;\u0027 found.\r\npublic class HelloWorld {\r\n^\n\u003cconsole\u003e:6: error: \u0027;\u0027 expected but \u0027class\u0027 found.\r\npublic class HelloWorld {\r\n       ^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567181323371_665192401",
+      "id": "20190830-120843_763860794",
+      "dateCreated": "2019-08-30 12:08:43.371",
+      "dateStarted": "2019-08-30 13:09:46.965",
+      "dateFinished": "2019-08-30 13:09:47.030",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n@Test\npublic void basicRDDTransformationAndActionTest() throws IOException {\n  // create new note\n  Note note \u003d ZeppelinServer.notebook.createNote();\n\n  // run markdown paragraph, again\n  Paragraph p \u003d note.addParagraph();\n  Map config \u003d p.getConfig();\n  config.put(\"enabled\", true);\n  p.setConfig(config);\n  p.setText(\"%spark print(sc.parallelize(1 to 10).reduce(_ + _))\");\n  note.run(p.getId());\n  waitForFinish(p);\n  assertEquals(Status.FINISHED, p.getStatus());\n  assertEquals(\"55\", p.getResult().message());\n  ZeppelinServer.notebook.removeNote(note.id());\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 12:39:17.529",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003cconsole\u003e:2: error: expected start of definition\r\npublic void basicRDDTransformationAndActionTest() throws IOException {\r\n^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567181772225_1659271558",
+      "id": "20190830-121612_1979163418",
+      "dateCreated": "2019-08-30 12:16:12.225",
+      "dateStarted": "2019-08-30 12:39:17.638",
+      "dateFinished": "2019-08-30 12:39:17.696",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val data \u003d sc.parallelize(0 until 10000)\nval local \u003d data.collect \nprintln(s\"local.size\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 12:43:29.308",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "local.size\r\ndata: org.apache.spark.rdd.RDD[Int] \u003d ParallelCollectionRDD[0] at parallelize at \u003cconsole\u003e:25\r\nlocal: Array[Int] \u003d Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 1..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567183106028_951995460",
+      "id": "20190830-123826_1063584318",
+      "dateCreated": "2019-08-30 12:38:26.028",
+      "dateStarted": "2019-08-30 12:43:29.421",
+      "dateFinished": "2019-08-30 12:43:40.015",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val a \u003d \"Hello World!\"",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 12:56:13.430",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "a: String \u003d Hello World!\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567183409308_891909368",
+      "id": "20190830-124329_2045004136",
+      "dateCreated": "2019-08-30 12:43:29.308",
+      "dateStarted": "2019-08-30 12:56:13.587",
+      "dateFinished": "2019-08-30 12:56:14.869",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "print(\"hello zeppelin\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 13:05:55.761",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "hello zeppelin"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567184173430_-1963004319",
+      "id": "20190830-125613_628739069",
+      "dateCreated": "2019-08-30 12:56:13.430",
+      "dateStarted": "2019-08-30 13:05:55.981",
+      "dateFinished": "2019-08-30 13:05:57.508",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport java.util.HashMap;\nimport java.util.Map;\nimport org.apache.zeppelin.java.JavaInterpreterUtils;\nimport java.lang;\n\npublic class HelloWorld {\n\n    public static void main(String[] args) {\n        String strng\u003d\"Word\";\n        Map\u003cString, Long\u003e counts \u003d new HashMap\u003c\u003e();\n        counts.put(\"hello\",4L);\n        counts.put(\"world\",5L);\n\n        System.out.println(\"string\");\n\n    }\n\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 13:19:54.495",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1567184755761_-1187627271",
+      "id": "20190830-130555_212984246",
+      "dateCreated": "2019-08-30 13:05:55.761",
+      "dateStarted": "2019-08-30 13:19:54.555",
+      "dateFinished": "2019-08-30 13:19:54.575",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n object HelloWorld extends App {\n   System.out.println(\"Hello, World!\")\n }\n System.out.println(\"hello\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 13:26:21.381",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "hello\r\ndefined object HelloWorld\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567185047291_-434251279",
+      "id": "20190830-131047_386724160",
+      "dateCreated": "2019-08-30 13:10:47.291",
+      "dateStarted": "2019-08-30 13:26:21.446",
+      "dateFinished": "2019-08-30 13:26:23.034",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\nimport java.util.HashMap;\nimport java.util.Map;\nimport java.lang\nimport org.apache.zeppelin.java.JavaInterpreterUtils;\n\npublic class HelloWorld {\n\n    public static void main(String[] args) {\n\n        Map\u003cString, Long\u003e counts \u003d new HashMap\u003c\u003e();\n        counts.put(\"hello\",4L);\n        counts.put(\"world\",5L);\n\n        System.out.println(JavaInterpreterUtils.displayTableFromSimpleMap(\"Word\",\"Count\", counts));\n\n    }\n\n}\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-30 13:28:48.602",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/sh"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003e was unexpected at this time.\r\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "ExitValue: 1"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567185701367_260541748",
+      "id": "20190830-132141_227253674",
+      "dateCreated": "2019-08-30 13:21:41.368",
+      "dateStarted": "2019-08-30 13:28:48.665",
+      "dateFinished": "2019-08-30 13:28:48.981",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1567186040105_1684844225",
+      "id": "20190830-132720_908947563",
+      "dateCreated": "2019-08-30 13:27:20.105",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/TestNote6",
+  "id": "2EP65K9JX",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "neo4j:shared_process": [],
+    "sh:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

@@ -1,0 +1,172 @@
+public void s1Initial(String rangeLow, String rangeHigh, String nMax, String dimension1, String dimension2)  {
+     List valueList=new ArrayList();    
+     try
+     {  
+        s = conn.createStatement();
+        statements.add(s);
+        System.out.println("S1 Export");
+        psInsert = conn.prepareStatement("UNWIND range(toInteger(?),toInteger(?)) AS n\n" +
+        "WITH toString(n) AS N, ? as nMax\n" +
+        "MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=? \n" +
+        "WITH i.N as iN, i.MaxN as iM,e,v,t,i                        \n" +
+        "OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension=?\n" +
+        "WITH\n" +
+        "'1'  AS pDivisor, \n" +
+        "'2' AS pDimension,\n" +
+        "'2' AS vDivisor,\n" +
+        "tt.twoSeq AS vvTwoSeq,\n" +
+        "ee.Value AS eeValue,\n" +
+        "'2'  AS vvDivisor,\n" +
+        "iN,\n" +
+        "'4' AS iDimension,\n" +
+        "iM,\n" +
+        "t.twoSeq AS vTwoSeq,\n" +
+        "v.Degree AS vDegree,\n" +
+        "vv.Degree AS vvDegree,\n" +
+        "v.Scalar AS vScalar,\n" +
+        "vv.Scalar AS vvScalar,  \n" +
+        "toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter\n" +
+        "WITH\n" +
+        "iN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD\n" +
+        "CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,\n" +
+        "     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,\n" +
+        "     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     \n" +
+        "     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,\n" +
+        "     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree\n" +
+        "RETURN\n" +
+        "iM,iN,pD,p2Eval,vTwoSeq,TTDegree,TTScalar,vDivisor,vvDivisor,vvTwoSeq,AADegree,AAScalar,\n" +
+        "CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END AS degreeSum,\n" +
+        "CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END as scalarProduct,\n" +
+        "CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END as resultDivisor");
+        statements.add(psInsert);
+        psInsert.setString(1,rangeLow);
+        psInsert.setString(2,rangeHigh);
+        psInsert.setString(3,maxN);
+        psInsert.setString(4,dimension1);
+        psInsert.setString(5,dimension2);
+        ResultSet rs = psInsert.executeQuery();
+        while ( rs.next() ) {
+           for (int j=1; j< 16; j++) { 
+            try {
+                 valueList.add(rs.getString(j)); 
+ //                System.out.println("rs(j): " + rs.getString(j).toString());  
+               }
+            catch(NullPointerException npe) {
+//            System.out.println("Null");
+ //           valueList.add("Null");
+            }   
+            }
+            System.out.println(valueList.toString());
+            try {
+                //wCsv.writeLine(valueList,';',' ');
+                wCsv.writeLine(valueList,';','"');
+                valueList.clear();
+            } catch (IOException ex) {
+                Logger.getLogger(ScriptsAutomation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+        }
+         catch (SQLException sqle)
+        {
+            printSQLException(sqle);
+        }       
+}
+
+
+public void s3T(String rangeLow, String rangeHigh, String nMax, String dimension1, String dimension2)  {
+     List valueList=new ArrayList();    
+     try
+     {  
+        s = conn.createStatement();
+        statements.add(s);
+        System.out.println("S1 Export");
+        psInsert = conn.prepareStatement("   ");
+        statements.add(psInsert);
+        psInsert.setString(1,rangeLow);
+        psInsert.setString(2,rangeHigh);
+        psInsert.setString(3,maxN);
+        psInsert.setString(4,dimension1);
+        psInsert.setString(5,dimension2);
+        ResultSet rs = psInsert.executeQuery();
+        while ( rs.next() ) {
+           for (int j=1; j< 16; j++) { 
+            try {
+                 valueList.add(rs.getString(j)); 
+ //                System.out.println("rs(j): " + rs.getString(j).toString());  
+               }
+            catch(NullPointerException npe) {
+//            System.out.println("Null");
+ //           valueList.add("Null");
+            }   
+            }
+            System.out.println(valueList.toString());
+            try {
+                //wCsv.writeLine(valueList,';',' ');
+                wCsv.writeLine(valueList,';','"');
+                valueList.clear();
+            } catch (IOException ex) {
+                Logger.getLogger(ScriptsAutomation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+        }
+         catch (SQLException sqle)
+        {
+            printSQLException(sqle);
+        }       
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

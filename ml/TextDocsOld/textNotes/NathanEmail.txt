@@ -1,0 +1,102 @@
+https://www.zepl.com/O29KECBZT/notebooks/1338bf64ed534548b0ddc52e04624688
+connect url:https://ec2-3-134-98-189.us-east-2.compute.amazonaws.com:7473
+
+
+
+Subject: Re: connect?
+From: 	Nathan Blazek <nathan.blazek@databricks.com>
+To: 	Thomas Pries <thomaspries@aol.com>
+Date: 	Tue, Apr 14, 2020 3:17 pm
+Hi Thomas,
+
+To be respectful of your time, I'd love to get some context around what you're most interested in in order to provide you with the most relevant information.
+
+Below are a couple of questions that I have:
+ 
+1. What is your familiarity with Spark, as well as Databricks? (Currently use Spark and Databricks, currently use Spark, but not Databricks)
+2. If yes to above, what are you using Spark and/or Databricks for?
+3. Is there a certain use case that you'd hope to see presented at Spark Summit that you're currently working on?
+4. Is your data currently in the cloud?
+
+Thanks for your clarification, and looking forward to connecting!
+--
+Request a meeting with me
+
+Nathan Blazek
+
+402.309.4650
+
+Databricks, Inc
+
+http://databricks.com
+
+Nathan:
+
+Thank you for moving this forward.  
+
+My data science is backed by this Quora question:
+
+What are the scientific implications of the polonomic representation of integers?
+Answer:  Maybe representations exist where the "carry the one" isn't necessary.
+         Maybe interesting root sets exist. 
+
+    Enter my exit paper for Math Degree at Stony Brook University.  
+Detailed in java as a data producing jar.  Presented as as a Neo4j
+Graph DB use case at September's GraphHack2019.  Late '19 my AWS Web
+Service exists with a Zepl.com note book front end.  The work presented
+is what was submitted to GraphHack2019. It does use Spark functionality
+at a cursery level.  Currently, mid 2020 and robust cypher scripts consume
+rows of .jar data beyond my laptop's 8 gig capablilities.
+    So, the model now exists and am ready to build a larger graph and experiment.
+Among other things, look at arithmetic permutation groups.  My understanding 
+is that there is overlap in capablilities of transforms, actions needed between
+Cypher and Spark.  Otherwise spark's cluster compute is an attractive build
+proposition as there are volumes of data to concider.
+    I am not familiar with Databricks beyond the downloaded e-book from DataBricks.  
+It was good reading and did expose the formentiond overlap.  I would like to 
+know about the value of Databricks over Spark included with Zeppelin.  I have
+seen Spark Summit on the web.  Though not familiar maybe a point is should I
+concider participating?
+    This week I am migrating the last several month's work to AWS.  I would like 
+talking with you and take some notes on feedback, possibly also a look over of
+my Zepl.com work for more pointed ideas.
+
+Kindly,
+
+Thomas Pries
+347-968-7034
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

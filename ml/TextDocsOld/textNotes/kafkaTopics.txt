@@ -1,0 +1,168 @@
+9/9
+
+//        "WITH COLLECT(lines) as lines\n" +
+//        "UNWIND lines as line\n" +
+//        "WITH line, CASE WHEN line.AAScalar IS NULL THEN \"0\" ELSE line.AAScalar END AS AAScalar,CASE WHEN line.AADegree IS NULL THEN \"0\" ELSE line.AADegree END AS AADegree,CASE WHEN line.vvTwoSeq IS NULL THEN \"0\" ELSE line.vvTwoSeq END AS vvTwoSeq \n" +                    
+
+S12initial
+
+topic s12
+
+  "WITH line, CASE WHEN line.AAScalar IS NULL THEN \"0\" ELSE line.AAScalar END AS AAScalar,CASE WHEN line.AADegree IS NULL THEN \"0\" ELSE line.AADegree END AS AADegree,CASE WHEN line.vvTwoSeq IS NULL THEN \"0\" ELSE line.vvTwoSeq END AS vvTwoSeq \n" +                    
+ 
+
+CREATE (aN:ArgumentsNode { TDegree:event.TTDegree,
+TScalar:event.TTScalar,                  
+TDivisor:event.vDivisor,
+ADivisor:event.vvDivisor,
+ATwoSeq: CASE WHEN line.vvTwoSeq IS NULL THEN \"0\" ELSE line.vvTwoSeq END AS                                                          
+ADegree: CASE WHEN line.AADegree IS NULL THEN "0" ELSE line.AADegree END                                                                                                               
+AScalar: CASE WHEN event.AAScalar IS NULL THEN "0" ELSE event.AAScalar END                                                             
+DegreeSum:event.degreeSum,
+ScalarProduct:event.scalarProduct,
+ResultDivisor:event.resultDivisor }) 
+WITH COLLECT(aN) as aNc,event.iM as MaxN,event.iN as N,event.pD as Divisor,event.p2Eval as afe,toInteger(event.vTwoSeq) as tft 
+Merge (cl:CollectedProductArgNode {Dimension:event.writeDimension,MaxN:MaxN,N:N,Divisor:Divisor,afe:afe,tft:tft}) 
+WITH aNc,cl 
+UNWIND aNc as aNcU 
+CREATE (cl) - [:Arguments] -> (aNcU)         
+
+twopolynomialgenerator created a map object and populated it.
+then sent it.
+
+and what of the map returned in s12i in terms of kafka?
+don't re-map it, just json string it.
+
+s12Dc()
+
+//        "WITH COLLECT(line) as lines\n" +
+//        "UNWIND lines AS line\n" +
+//        "WITH line, CASE WHEN line.AAScalar IS NULL THEN \"0\" ELSE line.AAScalar END AS AAScalar,CASE WHEN line.AADegree IS NULL THEN \"0\" ELSE line.AADegree END AS AADegree,CASE WHEN line.vvTwoSeq IS NULL THEN \"0\" ELSE line.vvTwoSeq END AS vvTwoSeq \n" +                      
+// 
+//        "CREATE (aN:ArgumentsNode { TDegree:line.TTDegree,\n" +
+//        "                                              TScalar:line.TTScalar,                    \n" +
+//        "                                              TDivisor:line.vDivisor,\n" +
+//        "                                              ADivisor:line.vvDivisor,\n" +
+//        "                                              ATwoSeq:line.vvTwoSeq,                          \n" +
+//        "                                              ADegree:line.AADegree,   \n" +
+//        "                                              AScalar:line.AAScalar,                  \n" +
+//        "                                              DegreeSum:line.degreeSum,\n" +
+//        "                                              ScalarProduct:line.scalarProduct,\n" +
+//        "                                              ResultDivisor:line.resultDivisor }) \n "  +
+//        "WITH COLLECT(aN) as aNc,line.iM as MaxN,line.iN as N,line.pD as Divisor,line.p2Eval as afe,toInteger(line.vTwoSeq) as tft \n" +
+//        "Merge (cl:CollectedProductArgNode {Dimension:?,MaxN:MaxN,N:N,Divisor:Divisor,afe:afe,tft:tft}) " +
+//        "WITH aNc,cl,size(aNc) as saNc \n" +
+//        "UNWIND aNc as aNcU \n" +
+//        "CREATE (cl) - [:Arguments] -> (aNcU) \n" +        
+//        "RETURN saNc");
+
+
+
+public void s3TEc
+
+
+CREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)} )
+WITH COLLECT(v) AS vC,event.iN as N,event.eTrm as RowCounter,event.iM as MaxN,event.pTD as pTD,event.dimension as dimension     
+MERGE (i:IndexedBy {N:N,RowCounter:RowCounter,MaxN:MaxN,Dimension:dimension} )  
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(N)))}) 
+MERGE (i) -[:IndexedByEvaluate]->(e)\n
+WITH vC,i,RowCounter,pTD,size(vC) as svC            
+UNWIND vC as v       
+MERGE  (i)-[eee:VertexIndexedBy {twoSeq:RowCounter, divisor:pTD}]->(v) 
+
+
+        while ( rs.next() ) {
+           Map rsMap = new HashMap();
+           rsMap=((Map)rs.getObject(1));
+           jSMapString =  new ObjectMapper().writeValueAsString(rsMap);
+           System.out.println( jSMapString);
+
+         ProducerRecord record = new ProducerRecord("S12",null,jSMapString);
+        try {
+         RecordMetadata m =   (RecordMetadata) producer.send(record).get();
+        System.out.println("Message produced, offset: " + m.offset());
+        System.out.println("Message produced, partition : " + m.partition());
+        System.out.println("Message produced, topic: " + m.topic());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ScriptsAutomation.class.getName()).log(Level.SEVERE, null, ex);
+          System.out.println("InterruptedException"+ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(ScriptsAutomation.class.getName()).log(Level.SEVERE, null, ex);
+          System.out.println("ExecutionException"+ex);
+        }
+        }
+
+
+s3ADc()
+
+
+//        "WITH COLLECT(line) AS lines\n" +
+//        "WITH SIZE(lines) as lSize,lines \n"+
+//        "UNWIND RANGE(0,lSize-1) as lSR \n"+
+//        "WITH lSize,lines[lSR].aDegree as tDegree,lines[lSR].tScalar as tScalar,lines[lSR].pTD as pTD,lines[lSR].iM as iM,lines[lSR].iN as iN \n"+        
+//        "CREATE (v:VertexNode {Scalar:tScalar,Degree:toString(tDegree)})\n" +
+//        "MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) \n" +
+//        "MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:?} )  \n" +
+//        "MERGE (i) -[:IndexedByEvaluate]->(e)\n" +   
+//        "MERGE  (i)-[eee:VertexIndexedBy {twoSeq:\"99\", divisor:pTD}]->(v)    \n" +
+//        "RETURN lSize");
+
+
+"UNWIND range(toInteger(?),toInteger(?)) AS n\n" +
+        "WITH toString(n) AS iN, ? as iM\n" +
+        "MATCH (v:VertexNode {Degree:?})<-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:?})\n" +
+        "WITH iN, iM, max(vI.divisor) as maxDivisor\n" +
+        "MATCH (v:VertexNode {Degree:?})<-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:?})\n" +
+        "WITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n" +
+        "\n" +
+        "WITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\n" +
+        "UNWIND RANGE(0,SIZE(rPC)-1) as iI\n" +
+        "WITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\n" +
+        "UNWIND rPCDS as rPCDSU\n" +
+        "WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\n" +
+        "WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\n" +
+        "UNWIND RANGE(0,SIZE(resultMapC)-1) as iII\n" +
+        "WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\n" +
+        "UNWIND RANGE(0,SIZE(rSL)-1) as iIII\n" +
+        "UNWIND rSL[iIII] as rSLI\n" +
+        "\n" +
+        "//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\n" +
+        "WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\n" +
+        "WITH REDUCE(sum='0', x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\n" +
+        "WITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\n" +
+        "WITH REDUCE(sum='0', x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\n" +
+        "WITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \n" +
+        "WITH COLLECT(pTerms) as pTermss,iM,iN\n" +
+        "UNWIND RANGE(0,SIZE(pTermss)-1) as pT\n" +
+        "WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\n" +
+        "UNWIND dSList as dSListU\n" +
+        "WITH dSListU.Degree AS aDegree,dSListU.Scalar AS aScalar,iN,iM,pTD \n " +
+        "WITH {aDegree:aDegree,tScalar:aScalar,pTD:pTD,iM:iM,iN:iN} AS line\n" +
+ 
+       "WITH COLLECT(line) AS lines\n" +
+        "WITH SIZE(lines) as lSize,lines \n"+
+        "UNWIND RANGE(0,lSize-1) as lSR \n"+
+        "WITH lSize,lines[lSR].aDegree as tDegree,lines[lSR].tScalar as tScalar,lines[lSR].pTD as pTD,lines[lSR].iM as iM,lines[lSR].iN as iN \n"+        
+ 
+        WITH {tDegree:lines[lSR].aDegree,tScalar:lines[lSR].tScalar,pTD:lines[lSR].pTD,iM:
+
+
+
+
+        CREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)})
+        MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) 
+        MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:event.dimension} ) 
+        MERGE (i) -[:IndexedByEvaluate]->(e)   
+        MERGE  (i)-[eee:VertexIndexedBy {twoSeq:"99", divisor:pTD}]->(v)    
+     
+
+
+
+
+
+
+
+
+
+
+

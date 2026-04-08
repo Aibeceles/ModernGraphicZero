@@ -1,0 +1,35 @@
+The prequil:  What kind of p's are these?
+
+D2 p's inspected.
+
+     The index,degree dataframe is interpreted with rows composing p's scalars representing 2^(index+1) for the
+determined integer free variable x and three columns as individual sequences of scalars.  The three sequences 
+are defined in terms of respective sequence delta which is multiplied by the series result of the 2^n sequence at n
+and an appropriate initial value.  With an algebraic definition of the sequences in terms of the index n, a sequence 
+of vertices is defined by composing the sequnce {D_n}={-B_n}/{2A__n}.  The sequence {D_n} has as terms the
+derivative of the quadratic at the dataframe's row index. {D_n} is proven to converge to -triag_b/2triag_a.   
+         
+
+It is observed that each of the sequences {A},{B},{C} diverge though the composition {-B}/{2A} converges.
+It is noted that at n, each sequence scalar is defined from a set of scalars previously defined.  There is 
+the curiosity of an unusable polonomic representation of the scalar.  Un-usable because a constant_i must 
+be multiplied through.  
+
+The higher-degreed analog of D2 p's:
+Sturm Theorom can test arbitrary D*p for one real root.  
+What sequence describes that critical point?
+Which limit squezes which?  Are they the same point?  - don't think so because arc lengh probably different for
+respective n.
+
+Note the abridged p defining 2^n probably has nicer sequences though higher d analogs not explored.
+
+
+The necessary and sufficient criterija to the question "What kind of p's are these?"  
+ 
+
+
+
+
+ Thomae's function
+
+

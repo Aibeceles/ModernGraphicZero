@@ -1,0 +1,459 @@
+4/1
+
+GraphicD* needs plotly applied to ZAD resultSets.
+
++------+------------------+---+
+|degree|scalar            |key|
++------+------------------+---+
+|0     |0.0               |1  |
+|1     |-6.0              |1  |
+|2     |11.0              |1  |
+|3     |-6.0              |1  |
+|4     |0.9999999999999998|1  |
+|5     |0.0               |1  |
++------+------------------+---+
+
+ 
+
+QNumQuery needs an arg selecting which dnode to filter.
+
+case class pcTrms(deg1:String,sca1:String,deg2:String,sca2:String)
+
++------+-------------------+---+------+------------------+---+
+|degree|             scalar|key|degree|            scalar|key|
++------+-------------------+---+------+------------------+---+
+|     0|-47.999999999998636|  3|     0|               0.0|  2|
+|     0|-47.999999999998636|  3|     1|              -6.0|  2|
+|     0|-47.999999999998636|  3|     2|              11.0|  2|
+|     0|-47.999999999998636|  3|     3|              -6.0|  2|
+|     0|-47.999999999998636|  3|     4|0.9999999999999998|  2|
+|     0|-47.999999999998636|  3|     5|               0.0|  2|
+|     1|  53.99999999999727|  3|     0|               0.0|  2|
+|     1|  53.99999999999727|  3|     1|              -6.0|  2|
+|     1|  53.99999999999727|  3|     2|              11.0|  2|
+
+case class graphArgsD(x:Double,y:Double,result:Double)
+case class nextXYD(x:Double,y:Double)
+
+
+def extendResult(qQuery:wNumDX): wNumDXR = {       
+
+  val scalar = qQuery.scalar
+  val degree = qQuery.degree
+  val index = new BigDecimal(qQuery.xArg).doubleValue()
+  val indexPower = scala.math.pow(index,degree.toDouble)
+
+  val result = scalar*indexPower
+  val scale= new BigDecimal("10000").doubleValue()
+  val xAxis=index*scale
+
+  val s=  wNumDXR(degree,scalar,qQuery.key,qQuery.xArg,result.toString,xAxis.toString)
+  s
+}
+
+4/4 
+
+Since spring began, hve worked on GraphicMu,D*,GrapicCrypto.
+D* reads and plots zad dnode.vmResults. 
+GraphicMu has more informative query results.
+GraphicCrypto performs one variable cyphers. 
+
+from last friday and 3/25:
+
+
+in base 2 as 1   1   1   1   1   0   0   1   0   0   0   0   0   0.
+             13  12  11  10  9   8   7   6   5   4   3   2   1   0
+
+ 8192 
+ 4096
+ 2048
+ 1024
+  512
+   64
+
+=15936      Take the factor set of the resuting number and proced with combinations
+            to represent the different variabled p's.   Though if p is prime....
+
+egg
+10011010101000 
+9896
+                13  12  11  10  9   8   7   6   5   4   3   2   1   0
+                1   0   0   1   1   0   1   0   1   0   1   0   0   0 
+
+
+and looks more like introduce a 2nd variable scheme:
+
+2  4  8  16  32  64  128  256  510
+   
+a scheme:  
+for each index i in index set,   write index i-1,  multiply index i-1 * 2 in 
+different free variable.  
+in twoPolynomial case, write index i-2 multiply by 4 in different free variable. 
+
+note egg indicies can be shifted back 8...
+
+similarly for indices with square roots, one index with one square root,
+another index in the second square root (both variable p's define the same integer).
+
+generally though, 
+
+the index has a factor set. 
+the set can be combined to represent two distinct factors representable as two distinct
+p's with different free variables.   
+
+and what would these p's plotlied look like???
+
+Note on the log plots of ZAD dnodes...  move the equation sufficiently up so all terms 
+are positive. 
+
+So, interested in plotlied ZAD 
+                       and Cryptos, per above. particularly plots of squared indices.  
+  
+compare the plots for different multiplication schemes...  
+
+and note this described above can include 3,4,... free variables. 
+
+4/5:
+
+it is time to compare the simple subset of twoPolynomials.
+their crittical point... 
+their quartet surfaces...
+
+4/6
+
+And graphsage experiments. 
+
+4/7
+
+Convergance:   
+
+GraphicConvergance is in three parts.
+
+.  Legacy twoPolynomial vertex convergance.
+.  TwoPolynomial subsequence convergance.
+.  Lipschitz convergance with qads and quarts.  
+
+GraphicCripto can be embelished.
+It defined up to speculation on methods of introducing multi-variable public keys.
+Include the twopolynomial subsequence.  
+
+Today mission is get the subsequence into zeppelin.  
+
+With MaxN have the N sequence.
+The interest is in the N-2 rowIndex.  
+This rowIndex, as rowCounter, is computed as 2^(n-3) 
+
+╒════════════════════╕
+│"n"                 │
+╞════════════════════╡
+│{"twoSeq":"1"}      │
+├────────────────────┤
+│{"twoSeq":"2"}      │
+├────────────────────┤
+│{"twoSeq":"4"}      │
+├────────────────────┤
+│{"twoSeq":"8"}      │
+├────────────────────┤
+
+public ResultSet s12QuadQ(String rangeLow,String rangeHigh,String index) 
+
+returns all rows in rowCounter.  Need new method s12QuadQR with parameter 
+matching twoSeq row requisite.
+
+public ResultSet s12QuadQR(String rangeLow,String rangeHigh,String index, String rCounter) 
+
+C:\Users\Aibes\JavaProjects\ZADScriptsK\ZADScripts\dist\ZADScripts.jar
+
+GraphicConverganceSubsequence suggests that the MaxN,N,rowCounter=n-2 sequence of quadratics,
+also evaluating to a power of 2, does converge.  the a_n,b_n sequences are of the same 
+general sequence first described definition first described in GraphicConvergance.  
+
+so why care that the vertex is a converging sequence????
+
+and remember there is one more sequence of power of two p's to consider"
+the complement of the rowcounter = n-2 sequence. that is all the rowcounters not =  n-2.
+
+have therefore three distinct sequences of p's, up to horizontal translation.  
+
+
+4/8
+
+GraphicConvergence:
+val s12QQRS = s3.s12QuadQ(rLow,rHigh,nMax)
+
+GraphicConvergance N-2ComplementSubSequence
+val s12QQRS = s3.s12QuadQ(rLow,rHigh,nMax)
+
+GraphicConvergance N-2SubSequence
+val s12QQRS = s3.s12QuadQR(rLow,rHigh,nMax,rowR)
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor )<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' AND t.twoSeq=?
+
+
+for(n <- 4 to BigInt(args(0)).intValue()-1) {                     
+     terms += s12QuadQuerry(n.toString,n.toString,nMax, scala.math.pow(2,n-3).toInt.toString)      //  need to compute the 2^(n-3) value   
+     println(scala.math.pow(2,n-3).toString)
+}
+
+The n-2 complement sequence doubbles, though not a power of two. 
+
+so maybe abandon the complement work and move on....
+
+though what to make of a sequence of vertexs in itself?
+
+
+1    -2x_2          1     -2y_2         0     
+2x_1  1             2y_1  1
+
+250
+
+4/11
+
+GraphicConvergance identified the terms sequence templet with convergance proof.  
+The templant was applied to the whole MaxN,N p definition and the rowcounter-2 subsequence.  
+It remains to apply to the n-2 complement subsequence and the p not multiplied through by rowcounter.
+
+Lipschitz is on.
+Zad graphsage on standby. 
+
+
+4/12
+
+object ResultUDF does return
+
+  case class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)
+
+Note the result:STring field is 
+
+val s=  s12Re("2",qQuerry.degree,scaRScalar.toPlainString,qQuerry.index,qQuerry.MaxN,qQuerry.divisor,scalarDiv.toPlainString,qQuerry.rowScalar)
+
+val scalar = new BigDecimal(qQuerry.scalar)
+val divisor = new BigDecimal(qQuerry.divisor)
+val scalarDiv = scalar.divide(divisor)
+
+from n=4,
+for each n,                          
+iterate 1 to n-3
+
+     
+ 
+GraphicConvergance  
+
+              Prove the vertices in a quadratic sequence defines a sequence of converging rationals.
+              GraphicConvergance illustrates the scalars in each quadratic progression as individual sequences {A},{B},{C}.
+              The sequences each feature a power of two minus one multiplied by by an initial change in value from index one to index two.
+              An initial value is added to result of multiplication. 
+ 
+GraphicConvergancenN-2 Subsequence/complement to above.  
+
+              N-2 subsequence has imilar definition of  {-B}{2A}.
+              The complement note does need a final division, in this case by 7, to produce 2^n sequence.
+
+GraphicConverganceWithoutRowCounter
+
+              Progression of quadratics without the rowScalar multiplication.
+              The {-B}/{2A} sequences are composed of a quadratic {-B} and linear {2A}. {C} is a cubic.
+              The ratio diverges.   
+
+Conclusion:  
+             
+             Initial parameters triag A,B {A_0} {B_0}  will descirbe a converging sequence of vertexes.  Maybe/probably not though
+             powers of two evaluated at sequence indices.  
+
+Hypothesis:  
+
+             The n-2 subsequence complement can be generalized. 
+             from n=4, for each n, iterate 1 to n-3, the rows definining each p, can be arbitrarly selected, though consistantly.  
+
+             Can write countably many sequences describing powers of two by writing appropriate c sequence.
+             For instance, the GraphicConveerganceComplementSubsequence takes the subset of rowCounters less the n-2 row.
+             It does not evaluate to a power of two yet doubles.  Is there a {c} that will re-define the results as powers of two???
+          
+
+4/13
+
+Lipschitz/Kantorovich
+Yea old "Quadratic Form"  and latest crypto quadratic progressions....
+
+"The natural way to limit how fast the derivative can change is to bound the second derivative."
+
+In one dimension, Cauchy proved that Newtons method converges.
+
+Alexander Ostrowski proof in second dimensional ase.
+
+Kantorovich approchad problem from point of viow of nonlinear problems in Banach spaces.
+
+principal of inclusion exclusion.
+
+4/14
+
+
+length of matrix A (definition 1.4.10) maybe also known as Frobenious norm.
+"The square root of the sum of the squaes of all its entries."
+
+norm of matrix (definition 2.9.6)
+
+4/15
+
+https://math.stackexchange.com/questions/362817/show-polynomial-is-a-lipschitz-function
+
+
+4/18
+
+https://neo4j.com/blog/rdf-triple-store-vs-labeled-property-graph-difference/
+
+"The natural way to limit how fast the dereivative can change is to bound the
+scond derivative; you probably ran into the when studying Taylor's theorem with remainder."
+
+
+
+244
+
+https://math.stackexchange.com/questions/1819065/supremum-and-infimum-of-function-of-two-variables
+
+
+  251
+  18
+
+ 
+
+4/19
+
+
+
+362  larange multipliers
+
+
+kseina kamikaza "chill out"
+
+"Aqua Luna"
+
+remeber the usual 1 dimensional definition of derivative,  it's alternative form subtracting f'(a)m = 0
+and the lenght of vector because cannot divide by a vector.
+
+Because R^n-> R^1 the gradient.
+and as the gradient is the transpose of the derivative... important because then the space is equipped with 
+an innter product.
+
+p 139
+p141 directional derivatives.
+
+
+Chapter 1 sets the stage for newton...
+
+
+
+
+
+4/25
+
+If v is a vector in an inner product space, such as Rn
+
+The implicit function theorem will tell whether the locus defined by an equation is a smooth manifold. 
+
+Definition 3.1.1 (Graph)
+
+Familiar with graphs of functions f : R -> R  - the ordinary twoPoly and higher degree analogues.
+The graph is a subset of R^2 (x,F(x))  .
+
+Surfaces:
+
+Cross (multiply) selected twoPolys or their analogues and have (x,y, f(x,y))  - Three variables in graph.  
+                                                                                One variable is expressed in terms
+                                                                                of two variables.  Therfore a 2
+                                                                                dimensional manifold.
+A graph "lives" in the dimension of domain + co-domain.
+
+
+"Locally" means that every point x in M (manifold) has a neoghborhood U in R^n
+such that the intersection of M and U (the part of M in U) is the graph of a mapping
+....
+
+And the theme that locally means the ball of radus r....
+
+So,  are interested in extrema of a function f when f is restricted to some manifold X in R^n.
+But seldom will a constrained/restricted mmaximum be an unconstrained/restricted maximum;
+seldom will the derivative of the function vanish at a critical point of the restricted/constrained function.
+
+At an extremum of a function restricted to a manifold, the derivative of the function is 0 when evaluated on any
+vector that is tangent to the manifold.  
+
+as: 
+Finding constrained critical points using derivatives.
+ 
+
+
+so is the gradient a parameterization of the derivative???
+
+
+4/29
+
+and what is cloudfront???   
+
+Amazon CloudFront is a content delivery network operated by Amazon Web Services
+
+
+Amazon Simple Storage Service User Guide
+Buckets overview
+Creating, configuring, and working
+with Amazon S3 buckets
+
+114
+
+Amazon S3) is an object storage service 
+big data analytics
+
+Transforming objects with S3 Object Lambda
+
+one standard access point and thus one Amazon S3 bucket. 
+
+Create an IAM user
+
+https://aws_account_id_or_alias.signin.aws.amazon.com/console
+
+After you sign up for AWS, you're ready to create a bucket in Amazon S3 using the AWS Management
+Console. 
+
+You don't have permissions to list buckets
+After you or your AWS administrator have updated your permissions to allow the s3:ListAllMyBuckets action, refresh this page.
+Learn more about Identity and access management in Amazon S3
+
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingObjects.html#access-control
+
+
+https://neo4j.com/graphacademy/
+
+
+https://community.neo4j.com/t/starting-neo4j-on-fresh-ec2-install-with-neo4j-enterprise-ami/31946
+
+N.Virginia ami-0caebb418d7e8f3f1
+
+
+
+https://aws.amazon.com/marketplace/pp/prodview-akmzjikgawgn4?sr=0-1&ref_=beagle&applicationId=AWSMPContessa
+
+
+https://aws.amazon.com/marketplace/seller-profile?id=23ec694a-d2af-4641-b4d3-b7201ab2f5f9&ref=dtl_B071P26C9D
+
+https://www.google.com/search?client=firefox-b-1-d&q=CLOUDFORMATION
+
+https://aws.amazon.com/marketplace/pp/prodview-akmzjikgawgn4?sr=0-1&ref_=beagle&applicationId=AWSMPContessa#pdp-usage
+
+https://us-east-2.console.aws.amazon.com/cloudformation/designer/home?region=us-east-2&templateURL=https%3A%2F%2Fs3.amazonaws.com%2Fawsmp-fulfillment-cf-templates-prod%2F513a3a85-20f7-4809-bb9f-aab293ce1e1d.003113a6-ae5b-4be6-870e-12721c7c297e.template#
+
+realtime predictions...
+
+
+
+
+"Ozymandias" is a sonnet written by the English Romantic poet Percy Bysshe Shelley. It was first published in the 11 January 1818 issue of The Examiner of London
+https://www.quantamagazine.org/deep-learning-poised-to-blow-up-famed-fluid-equations-20220412/
+
+
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+From ZAD:
+
+Pvertexes need to be produced as .csv.
+The .csv needs a range of indices.
+Maybe also include the 10,100,1000 index.
+
+Flesh out the ZADProject discription.
+
+ZADProject looks for a complete discription of a+b (plenty of details; something concise).
+7+4 implies membership in class of equivalent result.
+
+
+
+ZAD is the data.
+Zeppein is the "view".
+
+At the present time, ZADProject is local.
+Zeppelin, neo4j are in Aibes directory.
+
+
+Where to host a zeppelin (it is cypher scripts and %md)?
+Implies where also to host neo4j.
+No host is build with github repository.
+
+The Afternoon Lab:
+
+Will generate the  .csv.
+
+But first, max out ZADDB with current run configuration.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+what happens when you play a country record backwards:
+
+get your job back, wife back, crops grow.
+lyle lovet makes me cry.
+alternative country
+walmart country
+
+leadbelly
+
+
+
+

@@ -1,0 +1,12 @@
+# Copy this file to db.properties and fill in your values.
+# db.properties is git-ignored and will not be committed.
+
+neo4j.url=jdbc:neo4j:bolt://localhost
+neo4j.user=neo4j
+neo4j.password=YOUR_PASSWORD_HERE
+neo4j.database=your_database_name
+derby.url=jdbc:derby:
+derby.user=your_derby_user
+derby.password=YOUR_PASSWORD_HERE
+derby.database=muTableDB
+derby.database.two=twoTableDB

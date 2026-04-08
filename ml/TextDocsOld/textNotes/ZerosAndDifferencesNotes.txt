@@ -1,0 +1,1555 @@
+From differences.txt:
+
+   The structure of DOSPT is composed of vertical and horizontal branches rooted in
+Psi_i.  Vertical expansion of a root corrosponds to nodes each representing one its TriagTriag's polynomials. 
+Any node of DOSPT is itself a root for DOSPT' and a horizontal branch begins that node's set of TriagTriag
+representative polynomials.  DOSPT only expands the first member of a vertical set.  
+  Coordinates of nodes with this structure can be assigned for this tree from the Psi_i root.
+There are 1..degree of Psi_1 horizontal nodes and a decreasing number of vertical nodes for each
+horizontal node. Starting with the first horizontal node, which has the degree of Psi_i number of vertical
+members, the n'th subsequent nodes has degree of Psi _i-n+1  vertical nodes.  Therfore, any node is the xth horizontal node,
+i'th vertical node. Two nodes, the first located at (n,m), and the second at (n+1,m-1), thus on a tree diagonal
+are relatable.  
+  Finally, there is an initial value defined as the degree of Psi_i.   
+
+
+FIS asserts an arbitrary polynomial Psi.
+A sequence representation of Psi (indexed results across a range) is generated and then
+differences are iterated out to a constant value. 
+
+FIS is intended to name each iterated difference sequence.
+Values are sampled, a VanderMode matrix is constructed and GaussMain
+outputs the representative polynomial.  
+
+The representative polynomials of the differences of Psi are not
+the only interesting P's.  Any of Psi's differences sequences can be factored.
+Each of the factord differences are seeds for Psi', another polynomal to be differenced.
+
+The collection of these named difference Polynomials constitute a fig. 
+
+      .Main was configured to run frationIntegerDriverIterate.
+      
+      .LoopsDriver parameters:
+      int dimension=6;          // will be working with dimension 2 but maybe 3
+      int integerRange=20;      // Length of loopList, pairs of roots not expected to have indices past 20                                 //  The loopListener needs to know this value for its runnable.   
+      int setProductRange=8;    // The last argument in loopSemaphore constructor.
+                                // The range of a scalar in pArray.  
+      PolynomialArray figPArray = new PolynomialArray(dimension,1);  // second argument is p scalar?      
+  
+      I do have an .ods for this.
+       SubDiffOfScalarsExample2.ods is the authority backing zad implementation.
+
+Have four big Java classes along with their associated db classes:
+
+plvManager                         The TwoPolynomial generator thread.
+zaddbTable1                        Verify zaddbTable1 and LoopsDriverTable buffer are written to.
+
+LoopsDriverTable                   Reads TwoPolynomial buffer quadratics and then Gausses each difference.
+GaussTable1
+
+LoopsDriver                        LoopSeamphore managed pArray generated DOSP's.
+GaussTable1
+
+FractionIntegerDriverIterate       Mu number generator.
+GaussTable1
+
+There are three classes using the GaussTable1 Thread for ZADDB interation.
+Need the formal instructions for populating ZADDB.  
+Note that there are two versions of ZADDB.  One derrived
+from LoopsDriver and onederrived from LoopsDriverTable. 
+
+The ZADDB derrived from LoopsDriverTable is the object of interest.
+
+
+1/25
+
+   Big enough all work review completed.  
+   ZAD was built.    
+
+   SubDiffOfScalarsExample2.ods is the starting point for ZAD comprehension.
+   Belief is, need DOSBT as DAG needed to map arbitrary Quippy P into rationals.  
+
+   SDOSE2 is renamed ReComp.ods.
+   The idea of FidFig.odg is workbooked.
+   FidFig is a tree type whose nodes subscibe to ReComp's difference of scalars comprehension.
+
+   Psi_i, the entrance sheet, takes an initial p and differences it.    
+   FidFig exibits initial p's permuted as if FIS iterated over dimension,range.
+
+   Two types of difference calculations are performed.  The horizontal difference, 
+   a usual difference of difference,...
+   And a vertical where extended differences are calculate.
+
+   FidFig boasts a ReComp generated conclusion not evident at this time.
+   However ReComp was purposed for laudable goal of mapping Psi_i (p) to 
+   permutation sets of roots as p'.  It is the inspiration of ZAD.
+
+   Will the above review comprehend ZAD or more sleuthing???
+   Why were extended differences fleshed out?
+
+   Observation:  Mu only accepts positive integers in the code.  Negative roots are masked in the interpretation.
+
+   So, for example,  x^3 - 3X^2 + 2 has roots at {0,1,2}.
+   The first difference of the above has roots at {0,1} and is a quadratic so unambiguous.
+   What is the equation of first difference?     - Is exactly what ReComp illustrates.
+
+
+   So, did look at Cypher1.pdf.  It appears to almost be a DAG, however the leaves are unorderd.
+   Suppose each leaf is ordered with respect to.....
+   Or maybe iterate over leaves from low to high.
+
+   Note:  Fid fig was manually drawn out.
+
+
+1/26
+
+  So, did look at Cypher1.pdf.  It appears to almost be a DAG, however the leaves are unorderd.
+   Suppose each leaf is ordered with respect to.....  Or maybe iterate over leaves from low to high.
+
+   The certain requirement:  The arbitrary TwoPoly = I in degree d needs a DAG with leaves n/I=mu.
+   Have the relation between I and the necessary degree for compleating {N}.
+   Is ordering a requirement?  Can have a field in the nodes along the way indicating {n} in {N}.  
+   Is there a different DAG for each I? 
+
+   Need mu intel.  As in a new topic: "GraphicMu".
+   Something along the lines of what ReComp is talking about.  
+   ReComp is now MuDag.  
+
+   MuDag dialog:
+    
+      P is defined as a set of scalars.  For a range of values defined by P, a set of iterated
+   differences, (triagTriag) is drawn out.  P is manipulated/transformed by adding or subtracting a value to
+   individual scalars.  The transform motivation is setting a zero to an individual range value
+   of P at a particular difference, triagTriag_i. 
+     
+     The scalar degree determines which difference or differences are effected.
+   As in, a change of the zero degree term of P does not effect any difference, only the
+   function value itself.  The first degree term only effects the first difference (triagTriag_1).
+   The second degree term effects both the first and second difference (triagTriag_1,triagTraig_2).
+   The third, the first three differences, ect...  Note though, want to effect the highest degree term 
+   first as it fixes the last difference (triagTriag_last) and subsequent scalar changes will not effect
+   differences of scalars of higher degree.
+
+      A base P to be transformed usually consists of a single degreed term.  The degree
+   determins the the size of the set of differences.  For instance a single fourth degree 
+   term can be iterativly differenced four times and fixes the last difference to a constant.        
+   P then gets transformed with an adjustment to the third degee term, currently with a zero
+   scalar.  This adjustment effects the differences from the third difference, up to the value
+   of the function.  Similarly, want iterative adjustments to the second, first, and zero degree
+   terms.  And interest in the zeros (roots) of the final p after each adjustment is made.  
+   
+      P(0)= x^4 at triagTriag_3=36, and want p' defined with p'(0)= x^4 + bx^3.
+   at triagTriag_3=0. b is the value to adjust P's third degree term, which mentioned is zero.
+   Solving for b involves using the function  - f(x) at triagTriag_i  / i factorial as 36/3!=36/6=-6.
+   Therefor p' = x^4 - 6x3 has at f(0),triagTriag_3 a value 0.  Next up is an adjustment to the second
+   degree term.  p(0) at triagTriag_2 is -22.  with -22/2! = -11, add 11 to scalar 0 for x^2 and p''
+   is x^4 - 6x^3 + 11x^2.  Now adjust the first degree scalar currently 0 as p''(0) at triagTriag_2 = 6
+   as -6/1! = -6.  p''' = x^4 -6x^3 + 11x^2 - 6x.  It does have roots at x=0,1,2,3.     
+ 
+      Each difference (triagTriag_1 in the set of differences is described as an individual p (each triagTriag
+   can be transcribed to an appropriate vandermode and solved with gauss elimination).  It is 
+   noted that the set of p's corrosponding to the set of differences is a progression of 
+   p's from zero degree, a constant defined by the highest degree term of the target P,
+   up to the first difference, a p of degree P_maxDegree minus 1 set by the first degree term 
+   of the target P.  Whithin this set of p's are p's each with interesting roots. 
+     
+     Want a robust set of these sets.  The individual p's can be graphed by depth with i a path length.
+   The intention is graphic representation of the power set of root permutations.  It is a laudable goal.
+   More to the point, need representation of a complete mu set.  Say mu[16].  Or for that matter an
+   arbitrary twoPoly at arbitray degree.  Can ZAD graph the set?  Note this graph is a DAG.  Its traversal
+   is a map from a twoP at degree to each in it's mu set.  A further question is is there another 
+   different DAG?  One that maps twoP as binary into p with roots?  This would take the traversal node 
+   set as an add/subtract/multiply/divide instruction at each node. 
+
+      The former DAG involves running ZAD. ZAD/cypher exists.  The latter is a new graph project.
+   But just the same firstfig can be repurposed for traversal.  It though needs to be graphed.
+   The former, once generated can be repurposed as add/subtract/multiply/divide.      
+ 
+   Does MuDag/dialog need note page?  Can calc/cloud worksheet be imbedded in a zeppelin note???
+
+   Have to write up a ZAD java blog.  It is te sequle to MuDag dialogue.
+
+   Dying to know how to run ZAD with an arbitrary initial degree P.
+
+   //  How to choose a value to change a degree scalar 
+
+      The attempt is to define expressive P's.  These are P's having well represented zeros
+   in each of the differenced p's in the set of differences.    
+
+
+1/27
+
+
+Bits and Bytes of ZAD and the DAG.
+
+ZAD Dialogue speaks
+
+      The former DAG involves running ZAD. ZAD/cypher exists.  The latter is a new graph project.
+   But just the same firstfig can be repurposed for traversal.  It though needs to be graphed.
+   The former, once generated can be repurposed as add/subtract/multiply/divide.     
+
+firstfig is not the DAG it is a style.  It is, though, somewhat explanatory of DAG.   
+ZAD not expecting correct size root sets at any triagtriag_i.  If so,
+then firstfig style  - thin air the linear for including the root in root set of target.  
+
+But because always start from last triagTriag maybe firstFig is usefull as DAG.
+Maybe do not want incomplete root set members in triagTriagP's.  
+The linear is the leaf of FirstFig.  Then DAG.  
+
+Generate FirstFigGraph  - Implement fraction integere set:  
+                          Minimal cypher support.  There are no relations generated. 
+                          It not mapped to triagTriag.
+                          Is efficient.
+            
+                      or
+
+ZAD with refinement.    - If when triagTriag range not complete zero set; nextNicrement.
+                          A little heavier.
+
+ZAD with refinment will one to one with fistFig up to morphism.
+
+
+And remember fractions of Q - eg two zeros complete half.  What does each root set size do to the ratio 
+                              of compleation?
+
+Basicly, FirstFig is still percieved as only usefull for the counting rule.
+ZAD scripts is robust but need work.  Java as well as Cypher.
+ 
+ZADdb needs:
+
+    mu nodes at triagTriag.
+    Uninteresting zeroset at triagTriag fall through.  
+    Start at (TwoPoly,degree) a cypher querry in the GraphicZero context.
+
+Need ZADjava Dialogue:
+
+LoopDriverTwoPManager:
+
+
+has two executions strategies indicated by noBufferRun boolean = false (currently set false).
+
+noBufferRun=false
+aquire permits regarding mage thread output and sets buffer variable state.
+mage is plvManager object.  A generator, and not a Quippy ResultSet.
+figParray,cashedFigPArray and pArray are populated with current buffer state for LoopsDriverTwoP.callable
+but execution is commented out.
+
+so 
+
+noBufferRun=true
+
+int maxFigPScalar=1;                - used in figp initilization
+int dimension=2;
+
+   Callable worker = (Callable) new 
+
+   LoopsDriverTwoP(
+   muList,muSem,                                               - passed to gMain.gauss
+   loopsLogic,                                                 - worker state, sf2Aquire method script.
+   muSem1,muList1,                                             - unused 
+   mage,                                                       - unused
+   tl1Semaphore,dbVector11,                                    - unused 
+   (PolynomialArray)figPArray.clone(),
+   (PolynomialArray)cashedFigPArray.clone(),
+   (PolynomialArray)pArray.clone(),
+   nMaxx.intValue(),   new BigDecimal(1);
+   resultListId,       new ResultListID(60000);
+   setProductRange,     =12;
+   TRUE,
+   dimension,           =2
+   integerRange,        =20
+   lbSetProductRange,   =0
+   pArrayResetValue);   =0
+ 
+
+LoopsDriverTwoP
+
+service.submit(workerStart)  releases permit     -  everything in call() is set up and then the action.
+
+The typical worker is constructed with:
+
+a LoopSemaphore((
+
+Semaphore)semaphoreListF.get(semaphoreListSizeF-2),(Semaphore)semaphoreListB.get(semaphoreListSizeB-2),(Semaphore)semaphoreListF.get(semaphoreListSizeF-3),(Semaphore)semaphoreListB.get(semaphoreListSizeB-3),  
+                            -the four semaphores; pairs shared between prior and next worker. 
+endProduct,                 -boolean wrapper. Not explicitly set                
+loopsLogic1,                -a LoopsLogicLoopSemaphore(
+                                                       LoopList gbList,                            new LoopList(1,
+                                                                                                                rListB,                              - The list of all LoopLists                  - one per worker.
+                                                                                                                dimension,integerRange,dimension,
+                                                                                                                deltaList,                           - The list of all delta terms                - one per worker  
+                                                                                                                ancestorlist,                        - The list of all ancestor ancestor lists    - one per worker
+                                                                                                                cashedrListB,                        - another -different purpose- list of all looplist 
+                                                                                                                xPowers                              - new MatrixA(dimension+1)
+                                                                                                                figPArray,                           - originated in LoopsDriverTwoP constructor.  new PolynomialArray(dimension,maxFigPScalar=1,true);
+                                                                                                                moduloList                           - ModuloList(dimension+1) -  list of factorials
+                                                                                                                );                                   
+                                                       int workerNum,
+                                                       int integerRange, 
+                                                       PolynomialArray pArray                                 - equipped with propertyChange support, initiallizes an array of size dimension to zeros. origonated in loopsdrivertwopmanager  - shared with all workers.
+                                                      )
+loopsCondition1,            -a boolean wrapper
+setProductRange,            - **** value set in LoopSemaphore constructor.
+lbSetProductRange           - **** value set in LoopSemaphore constructor.
+
+); 
+
+The typical worker behavior:
+
+blocks until permit aquire.
+
+looplist has looplistener a property change listener 
+its method setgblist fires the redirection.          munumdem only exists as parameter object -  never a class field.
+
+
+the propertyChange event:
+
+     computeIndexZero(wCount,rModulo);
+      updateRlistB(); - gausses.
+
+and what is resultlist id?
+
+
+And of course not running quite yet.
+
+Observations are:
+LoopSemaphoreInital has semaphore aquire/release commented out in while loop.
+
+LoopSemaphore is waiting for permit.
+
+
+Maybe worker zero shut off because with d=2 and need worker last....
+Lousy way to implement the pattern.  It was also shut off in the 2018 copy.
+
+Looking at valuelist and checking on .ods though,  seems to be working.   
+So next up is re implement LoopSemaphoreInitial  // un-comment functionality.  
+So without LoopSemaphoerInital, it mearly means is drawn out without changing the linear.
+It should mearly mean so.
+
+Three things happen inside LoopSemaphore:
+sf2Aquire
+loopsLogic.sf2Aquire,setSizee++
+sb2release
+
+And of course intent is to -jar for the command line.
+And of course,  setting up for a run....
+Will use D=3
+
+GaussTable
+
+LoopsDriverTwoPManager lDriver
+new GaussTable1(muSem,muList,lDriver);
+tMangee=mang;
+runLoopsDriverr();
+
+goCCypher(String figPArray,String pArray,LoopList loopList,int wNum,String vmResult,int rCounter, PolynomialArray fPArray,boolean isTwoPolynomial,String evaluateValue,int translateIndex,int pArrayIndexValue) throws IOException  {
+why o why cypher create methods commented out???
+
+Looks like fractionintegerset (the javaproject, not library in ZAD, it is pre-neo4j) (lots of tables to look at in newDB class)    morphed into zad - which uses neo4j.  
+it is set to run with parameters:
+
+int dimension=5;            --  degree of p to evaluate
+int integerRange=15;        --  range of p evaluated.   
+int setProductRange=7;      --  something to do with the loopsemaphore while loop....   damn need to know about it.   
+                                loopSemaphore uses set size as a while condition boundary  -- I think a range of indexs.
+                                the generatebinary analog uses numerator as the while condition boundary.
+
+The anthology of work as java classes date modified.
+
+ZEROSADDIFFERENCES packages:
+
+TwoPolynomial written in 2012.
+
+
+MUCORROLATIONTHREADED written in 2015 - 2016    --  uses derby.   -- seems to only write quadratics. --  reads from roots.  --  who writes what to roots??
+                                                    twotabledbthread_1 writes to roots. 
+                                                    the current guess is it writes a P (quadratic) whose roots are...   Looks like the library inspired ZAD proper.  
+
+mubinary written in 6/2016
+
+
+maincldas written in 11/2018-1/2019      // includes LoopsDriverTwoPManager and LoopsDriverTwoP  -  most current, top of the list in loopsmain.  
+                                         
+LoopSemaphorePattern from 10/24/2016 - some 2017 - last updated 1/31/2019
+
+
+LoopsLogic from 10/2016 - 2/2018
+
+
+LoopLists from 11/2017 through last update 1/19/2019
+
+
+fractionIntegerset from 8/23/15 through 2016 with last update 1/13/2019          // first class representation in loops.main
+
+Denominator defines a mu number range generation.   ---  not confusing to run seems though, the evaluate precondition may exist.  How does fis handle missing evaluates???
+
+
+ZADscripts/ZADScriptsK:
+
+zadscripts 04/2020 - 05/2020
+
+9/2020,11/2020  - current work
+
+
+is there an efficient twoPoly to choose for differencing?
+
+
+ text notes has:  cssummaryaug2018current.txt has a bit about twopolynomial
+C:\Users\Aibes\JavaProjects\ZerosAndDifferences050319 has differences.txt      -second half of 2017
+2014 ods does the convergance of vertex.
+
+
+ZADNotes 9/29/19
+looks like by 5/22/19 was back in twopoly.
+cypher012919 last updated 4/12/19 has lots of ZAD in it.
+subdifofscalarsexample looks like the idea.
+
+QuadraticCypher1.odt looks the the archive containg ZAD scripts - and the zad execution on graphdb.  - e drive various ods.
+FIDFormulas.odt looks like a formula summary.
+
+Where o where notes on ZAD jar.
+
+Two most important notes from ago.  
+older notes appear rubbish.
+do not see so much yet with zad. differences has a lot. 
+lots of cypher scraps.
+
+The wish list.
+GraphicVertex.   - the cone/vertex progression and convergance.
+Diophantine exibit.  - interesting in NewtonsTraversal.
+Fractions of Q
+Wilson
+
+note: yea old twopoly counting rule fig is a traversal.
+      NewtonsDifferences likewise is a traversal.
+
+Looks like zerosanddifferences has arges[null].
+lots to comment uncomment for run.
+Looks like run from ide.
+
+
+GauseTable1 has dozen or so cypherscriptmethods.    --  talk about kafak topic fun...
+And oh what joy of a record to have zad versioning complete.
+
+GaussTable1 gTable1 = new GaussTable1(muSem,muList,lDriver) 
+is overloaded for type of ldriver, an individual graph generating feature of ZAD.
+
+is overloaded for type of ldriver, an individual graph generating feature of ZAD.
+
+Things start with:
+       plvManager mage = new plvManager(tlSemaphore,t2Semaphore,cosetSemaphore,dbVector,dbVector1,dbVectorCST,tl1Semaphore,dbVector11);
+       zaddbTable1 bmage = new zaddbTable1(tlSemaphore,dbVector,mage);
+
+       Does load twopolys.
+
+
+
+//  Seems the interesting of the lot.
+
+  LoopsDriverTwoPManager lDriver= new LoopsDriverTwoPManager(muList,muSem,loopsLogic,tl1Semaphore,dbVector11,mage,tl1Semaphore,dbVector11,true);  
+  GaussTable1 gTable1 = new GaussTable1(muSem,muList,lDriver); 
+
+       tMangee=mang
+       runLoopsDriverr();
+       goCCypher
+
+                mergeVmResultt(vmResult);
+                createWnumRcounter(wNum,rCounter,pArray,0,0);
+                createKnownByRelation(vmResult,wNum,rCounter,0,0);
+                createZMap(vmResult,rCounter,wNum);
+
+ 
+
+LoopsDriverTwoPManager has a noBufferRun method that hands over execution to LoopsDriverTwoP callable method.
+The noBufferRun is a boolean in one of two constructor signatures.
+
+
+
+ LoopsDriverTable lDriver= new LoopsDriverTable(muList,muSem,loopsLogic,tl1Semaphore,dbVector11,mage,tl1Semaphore,dbVector11);  
+  GaussTable1 gTable1 = new GaussTable1(muSem,muList,lDriver); 
+
+       lMangee=mang;
+       runLoopsDriverr();
+       goCCypher
+
+//  otherwise looks ready to go.
+
+
+  LoopsDriver lDriver= new LoopsDriver(muList,muSem,loopsLogic);  
+  GaussTable1 gTable1 = new GaussTable1(muSem,muList,lDriver);
+
+       ttMangee=mang;
+       runFIDi()
+       goFidCypher(
+       psInsert = conn.prepareStatement("MERGE (e:Evaluate {Value:?}) SET e.n=?,e.d=?,e.nBinary=?,e.size=?,e.centerIndex=?,e.verticalTranslateIndex=?");
+ 
+
+  FractionIntegerDriverIterate figI= new FractionIntegerDriverIterate(muList,muSem); 
+
+
+  FractionIntegerDriverIterate figI= new FractionIntegerDriverIterate(muList,muSem);     
+  GaussTable1 gTable1 = new GaussTable1(muSem,muList,figI);
+
+      fiMangee=mang;
+      runFIDi()
+      goFidCypher(
+
+
+   MuCorrolation1 muCorr = new MuCorrolation1(t1Sema,rootBuffer,fig,muList,muSem);
+   MuCorrolation11Iterated muCorrI = new MuCorrolation11Iterated(t1Sema,rootBuffer,figI,muList,muSem);
+   twoTableDBThread tTDBT = new twoTableDBThread(t1Sema,rootBuffer,muCorrI);
+ 
+      mangee=mang;
+      go                   //  This uses mysql.
+
+
+  GaussCorrolation gCorr = new GaussCorrolation(t2Sema,gaussBuffer);
+  GaussTable gTable = new GaussTable(t2Sema,gaussBuffer,gCorr);
+
+     mangee=mang;
+     go                   //  This uses mysql.   
+
+
+
+   GaussTable(Semaphore tlSema,List dbVector,MuCorrolation1 mang)        
+   twoTableDBThread_1 tTdbt1 = new twoTableDBThread_1();
+
+
+
+And the api's needing execution for QDB functionality...
+
+
+
+
+C:\Users\Aibes\JavaProjects\ZerosAndDifferences050319
+
+e;variousODs\quadraticcypher1
+e variousODS\zadcypherfig.odg
+
+aibes\textNotes\zadonotes
+
+
+e\varousods\fidformulas.odt
+
+e:\variousods\fidfig
+
+
+difference bettween api and library...
+
+
+
+       if (mangee!=null ) {
+        runLoopsDriver();
+
+             mergeVmResult(vmResult,fPArray);
+            //    if (rCounter!=-99) {
+                   createWnumRcounter(wNum,rCounter,pArray,0,0);      // zero is dummy to satisfy cypher.
+                   createKnownByRelation(vmResult,wNum,rCounter,0,0);
+           //     }   
+                createEvaluates(loopList,vmResult);
+                
+            }
+            if (wNum>0)
+            {
+                mergeVmResultt(vmResult);
+            //    if (rCounter!=-99) {
+                createWnumRcounter(wNum,rCounter,pArray,0,0);
+                createKnownByRelation(vmResult,wNum,rCounter,0,0);
+            //    }
+                createZMap(vmResult,rCounter,wNum);
+
+
+
+
+lMangee!=null || tMangee!= null) {  try {
+           runLoopsDriverr();
+
+
+         if (fMangee!=null  )  runFID(); else {runFIDi();}
+
+
+x2    //  sb2.release();              //  is there really a sb2 release in initial? 
+
+//     loopsLogic.rentrentReset();
+
+
+did reload zad from thumb key.  Suppose more to slueth.
+
+un commenting in loopSemaphoer inital does perform the iteration.
+Although the last value of first iterator is off by 1.   yep definatly snipped a few off the run. 
+and a suspicion on duplicates....  confirm with neo4j or sleuth.
+
+So, screw around with the workbook some more or back to the gaussstable.    
+And still trying to remember why the scripts were turned off.
+
+and running ZAD pre supposes munumbers are present.
+
+so, make the monster???
+
+Make it build a quadaratic,quartet,octet,hexadectet.
+
+The no buffer run graph of a single termd P,degree.   - fast zad conclusions.
+               vs
+quadartic,quartet,octet,hexadectet            -  need the cypher querry. Is though the 
+                                                 inspiration of ZAD.
+
+rcounter is part of GraphDB pattern....  
+
+the LoopsDriverTwoPManager nobufferrun uses ccypher with verticaltranslateindex....something of
+an ordering attemp in a twopolynomial run.
+
+the short signature gocccypher also uses rCounter, no verticaltranslateindex.
+
+merge vmresult 
+
+figparray is a P
+parray is an iteration coordinate.
+
+looks in general like went at it getting twopolys to graph sensibly...
+
+do want keys for this.
+
+if (wNum==0) {
+    mergeVmResult(vmResult,fPArray);
+            psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,constant:?,linear:?,square:?}) ");
+    //    if (rCounter!=-99) {
+    createWnumRcounter(wNum,rCounter,pArray,0,0);      // zero is dummy to satisfy cypher.
+            psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?} )");
+    createKnownByRelation(vmResult,wNum,rCounter,0,0);
+            psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+    //     }   
+    createEvaluates(loopList,vmResult);
+             psInsert = conn.prepareStatement(" MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? AND d.vmResult=? WITH d,e MERGE  (d)-[ee:Envalues]->(e)");               
+    }
+    if (wNum>0)
+    {
+    mergeVmResultt(vmResult);
+            psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?}) ");
+   //    if (rCounter!=-99) {
+   createWnumRcounter(wNum,rCounter,pArray,0,0);
+            psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?} )");
+   createKnownByRelation(vmResult,wNum,rCounter,0,0);
+            psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+   //    }
+   createZMap(vmResult,rCounter,wNum);
+            psInsert = conn.prepareStatement("match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+
+
+
+}
+
+
+2/2 
+
+AM
+
+The modern interpretation of DOSPT:
+
+P is differenced. last difference p is subDifofScal(lastdiffP)      -note the new name of the function.  It envites spark computation.
+Each worker gets subDiffofScal(lastdiffP,indexOffset).
+Are interested with gbLists with appropriate sized number of roots.  And also with appropriate muValue   
+Implication is have (MaxN,D,I) and (MaxN',D',I) - I invariant.
+Then triagTriab_last will have same figP[_].   A traversal  (MaxN,D,I) - [ITraveersal] -> (MaxN',D',I)
+
+
+Implication is plan for building ZAD
+
+
+Argument using Evaluate=32, N=5.
+Implies  MaxN=6 is sufficient.  Note 6 is in power sieve of 3. 
+Implies  need all I<=6
+
+Problem:     
+           want 32 explained.
+           1/32,2/32.3/32,...
+           quadratics only iterate 1/2 q.
+           work the powerset of 32 may inculed unnessary mu's.
+             
+Intent:
+           
+           (MaxN,D,I)
+             (6,2,5)
+
+How to build a robust ZADDB.
+
+ZAD expects Evaluates from muCorrolation threaded.
+
+Integrate ZAD with spark functionality.
+
+Spark expects udf's and aggrigators of ZAD's.    
+Spark interacts with DFScripts ZADScripts.
+
+An executor "sizes up" (6,2,5).  - Define its initial triagTriag set.  
+Interested in last not constant triagTriag.  
+Give each worker subDiffofScal(lastdiffP,indexOffset,figparray)  - maybe dont have to give figparray, it would be a list op with result.
+They would perform the loopListener event.
+
+subDiffofScal(lastdiffP,indexOffset,figparray) return implys figparry ready for (6,4,5,nextTriagTriag).
+
+
+The whole mu thing:
+
+It has a surjection that in the ZAD sence of things becomes massivly redundant.
+Want to know most efficent enumeration of */denominator.
+The enumeration that compleats from the bottom up fastest. 
+
+mu is stated as an evaluate field. 
+Maybe the listener needs to lookup/interpert range resut as mu.
+Means mu should be a dNode field.   
+
+PM
+
+The AM discussion maintains two points:
+
+What ZAD does and possible spark interoperatibility.
+Mu reconciliation
+
+
+What are the components of a model?
+
+Have the seed:             (MaxN,D,I)
+                           (6,2,5)
+
+Need the mu traversals in terms of ZAD iterations.
+Need up to D=32 for necessary value 1/32 mu space.
+
+It does mean  wow... Do want to run someting like 6,32,5. Imagin giving ZAD (6,32,5) the iteration!  
+
+
+Observations are:
+LoopSemaphoreInital has semaphore aquire/release commented out in while loop.
+
+LoopSemaphore is waiting for permit.
+
+
+Maybe worker zero shut off because with d=2 and need worker last....
+Lousy way to implement the pattern.  It was also shut off in the 2018 copy.
+
+Looking at valuelist and checking on .ods though,  seems to be working.   
+So next up is re implement LoopSemaphoreInitial  // un-comment functionality.  
+So without LoopSemaphoerInital, it mearly means is drawn out without changing the linear.
+It should mearly mean so.
+
+Three things happen inside LoopSemaphore:
+sf2Aquire
+loopsLogic.sf2Aquire,setSizee++
+sb2release
+
+And of course intent is to -jar for the command line.
+And of course,  setting up for a run....
+Will use D=3
+
+
+
+
+
+LoopsMain.Main instanciates
+
+plvManager mage                - does not start.  but LDTPM wants a reference it will not use.
+
+LoopsDriverTwoPManager lDriver - usual signature with nobufferrun=true.
+GaussTable1 gTable1            - usual signature with lDriver reference. tMangee=mang;          
+                                 runLoopsDriverr();                                    - is commented out  
+
+lDriver runtime args[] below:
+
+boolean noBufferRun=false;     // differencing twoPolynomials=false differencing figNewton=true  but is set in noBufferRun() is set in constructor.
+int maxFigPScalar=1;           // for noBuffeer=true
+int dimension=3; 
+int setProductRange=3;        //  pArray.set(4, 5);  splicing second half of setProductRange in noBufferRun.
+int lbSetProductRange=0;       // splicing pArray value (zero or max from prior run
+int pArrayResetValue=0;       //  should be the loSetProductRange;
+public static final int integerRange=20;     //  The loopListener needs to know this value for its runnable.   Now it does.
+
+private  ResultListID resultListId=new ResultListID(60000);
+
+LoopsDriverTwoP  - no runtime args to set.  all good with constructors.
+
+So, compile, run and see what happens...  - does execute and gracefull exit.
+
+
+gausbean is the tell all dbvector object.
+
+
+
+
+goCCypher(
+
+.getfigPArray(),
+.getpArray(),
+.getLoopList(),
+.getLoopList().getworkNum(),
+.getLoopList().getVmResult(),
+.getresultlistid(),
+.getfPArray(),
+.getisTwoPolynomial(),
+//                     ((GaussBean1)dbbVector.get(0)).getevaluateValue(),((GaussBean1)dbbVector.get(0)).gettranslateIndex(),((GaussBean1)dbbVector.get(0)).getpArrayIndexValue()); 
+cEvaluateVAlue,
+.gettranslateIndex(),
+.getpArrayIndexValue()); 
+
+
+
+goCCCypher (long signature) valueList: 
+[
+[0, 0, 0, 1], 
+[0, 0, 0, 0], 
+[0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000, 1331, 1728, 2197, 2744, 3375, 4096, 4913, 5832, 6859], 
+0, 
+[0.0, 1.0, -0.0, 0.0, -0.0], 
+60001, 
+[0, 0, 0, 1], 
+true, 
+0, 
+0, 
+1
+]
+
+twotabledbthread dbVectorSize195 runLoopsDriverr while loop false 195 goCCCypher (long signature) valueList: 
+[
+[0, 0, 0, 1], 
+[0, 0, 0, 0], 
+[1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397, 469, 547, 631, 721, 817, 919, 1027, -6859], 
+1, 
+[0.0, 3.0, 3.0, 1.0], 
+60001, 
+[0, 0, 0, 1], 
+false, 
+0, 
+0,  
+
+]
+
+maybe many duplicates because the first semaphore pattern is shut off.  
+
+
+      runLoopsDriverr while loop false 196
+goCCCypher (long signature) valueList: [[0, 0, 0, 1], [0, 0, 0, 0], [0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000, 1331, 1728, 2197, 2744, 3375, 4096, 4913, 5832, 6859], 0, [0.0, 1.0, -0.0, 0.0, -0.0], 60001, [0, 0, 0, 1], true, 0, 0, 1]
+twotabledbthread dbVectorSize195
+      runLoopsDriverr while loop false 195
+goCCCypher (long signature) valueList: [[0, 0, 0, 1], [0, 0, 0, 0], [1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397, 469, 547, 631, 721, 817, 919, 1027, -6859], 1, [0.0, 3.0, 3.0, 1.0], 60001, [0, 0, 0, 1], false, 0, 0,  ]
+twotabledbthread dbVectorSize194
+      runLoopsDriverr while loop false 194
+goCCCypher (long signature) valueList: [[0, 0, 0, 1], [0, 0, 0, 0], [6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, 108, -7886, 6859], 2, [0.0, 6.0, 6.0], 60001, [0, 0, 0, 1], false, 0, 0,  ]
+twotabledbthread dbVectorSize193
+      runLoopsDriverr while loop false 193
+goCCCypher (long signature) valueList: [[0, 0, 0, 1], [0, 0, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -7994, 14745, -6859], 3, [0.0, 6.0], 60001, [0, 0, 0, 1], false, 0, 0,  ]
+twotabledbthread dbVectorSize192
+      runLoopsDriverr while loop false 192
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60002, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize191
+      runLoopsDriverr while loop false 191
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60002, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize190
+      runLoopsDriverr while loop false 190
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60002, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize189
+      runLoopsDriverr while loop false 189
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60002, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize188
+      runLoopsDriverr while loop false 188
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60005, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize187
+      runLoopsDriverr while loop false 187
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60005, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize186
+      runLoopsDriverr while loop false 186
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60005, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize185
+      runLoopsDriverr while loop false 185
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60005, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize184
+      runLoopsDriverr while loop false 184
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 0, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60006, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize183
+      runLoopsDriverr while loop false 183
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 0, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60006, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize182
+      runLoopsDriverr while loop false 182
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 0, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60006, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize181
+      runLoopsDriverr while loop false 181
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 0, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60006, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize180
+      runLoopsDriverr while loop false 180
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60003, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize179
+      runLoopsDriverr while loop false 179
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60003, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize178
+      runLoopsDriverr while loop false 178
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60003, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize177
+      runLoopsDriverr while loop false 177
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60003, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize176
+      runLoopsDriverr while loop false 176
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60007, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize175
+      runLoopsDriverr while loop false 175
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60007, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize174
+      runLoopsDriverr while loop false 174
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60007, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize173
+      runLoopsDriverr while loop false 173
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 1, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60007, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize172
+      runLoopsDriverr while loop false 172
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 1, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60009, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize171
+      runLoopsDriverr while loop false 171
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 1, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60009, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize170
+      runLoopsDriverr while loop false 170
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 1, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60009, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize169
+      runLoopsDriverr while loop false 169
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 1, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60009, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize168
+      runLoopsDriverr while loop false 168
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 1, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60010, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize167
+      runLoopsDriverr while loop false 167
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 1, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60010, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize166
+      runLoopsDriverr while loop false 166
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 1, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60010, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize165
+      runLoopsDriverr while loop false 165
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [2, 1, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60010, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize164
+      runLoopsDriverr while loop false 164
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788, 5700], 0, [0.0, 1.0, -3.0, -4.0, -0.0], 60008, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize163
+      runLoopsDriverr while loop false 163
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [-6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, 912, -5700], 1, [0.0, 3.0, -3.0, -6.0], 60008, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize162
+      runLoopsDriverr while loop false 162
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6612, 5700], 2, [0.0, 6.0, -0.0], 60008, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize161
+      runLoopsDriverr while loop false 161
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6714, 12312, -5700], 3, [0.0, 6.0], 60008, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize160
+      runLoopsDriverr while loop false 160
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788, 5700], 0, [0.0, 1.0, -3.0, -4.0, -0.0], 60011, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize159
+      runLoopsDriverr while loop false 159
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [-6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, 912, -5700], 1, [0.0, 3.0, -3.0, -6.0], 60011, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize158
+      runLoopsDriverr while loop false 158
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6612, 5700], 2, [0.0, 6.0, -0.0], 60011, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize157
+      runLoopsDriverr while loop false 157
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [0, 2, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6714, 12312, -5700], 3, [0.0, 6.0], 60011, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize156
+      runLoopsDriverr while loop false 156
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [1, 2, 0, 0], [0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788, 5700], 0, [0.0, 1.0, -3.0, -4.0, -0.0], 60013, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize155
+      runLoopsDriverr while loop false 155
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [1, 2, 0, 0], [-6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, 912, -5700], 1, [0.0, 3.0, -3.0, -6.0], 60013, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize154
+      runLoopsDriverr while loop false 154
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [1, 2, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6612, 5700], 2, [0.0, 6.0, -0.0], 60013, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize153
+      runLoopsDriverr while loop false 153
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [1, 2, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6714, 12312, -5700], 3, [0.0, 6.0], 60013, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize152
+      runLoopsDriverr while loop false 152
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [2, 2, 0, 0], [0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788, 5700], 0, [0.0, 1.0, -3.0, -4.0, -0.0], 60014, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize151
+      runLoopsDriverr while loop false 151
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [2, 2, 0, 0], [-6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, 912, -5700], 1, [0.0, 3.0, -3.0, -6.0], 60014, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize150
+      runLoopsDriverr while loop false 150
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [2, 2, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6612, 5700], 2, [0.0, 6.0, -0.0], 60014, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize149
+      runLoopsDriverr while loop false 149
+goCCCypher (long signature) valueList: [[0, -4, -3, 1], [2, 2, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6714, 12312, -5700], 3, [0.0, 6.0], 60014, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize148
+      runLoopsDriverr while loop false 148
+goCCCypher (long signature) valueList: [[0, -16, -3, 1], [0, 3, 0, 0], [0, -18, -36, -48, -48, -30, 12, 84, 192, 342, 540, 792, 1104, 1482, 1932, 2460, 3072, 3774, 4572, 5472], 0, [0.0, 1.0, -3.0, -16.0, -0.0], 60012, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize147
+      runLoopsDriverr while loop false 147
+goCCCypher (long signature) valueList: [[0, -16, -3, 1], [0, 3, 0, 0], [-18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, 798, 900, -5472], 1, [0.0, 3.0, -3.0, -18.0], 60012, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize146
+      runLoopsDriverr while loop false 146
+goCCCypher (long signature) valueList: [[0, -16, -3, 1], [0, 3, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6372, 5472], 2, [0.0, 6.0, -0.0], 60012, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize145
+      runLoopsDriverr while loop false 145
+goCCCypher (long signature) valueList: [[0, -16, -3, 1], [0, 3, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6474, 11844, -5472], 3, [0.0, 6.0], 60012, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize144
+      runLoopsDriverr while loop false 144
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60015, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize143
+      runLoopsDriverr while loop false 143
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60015, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize142
+      runLoopsDriverr while loop false 142
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60015, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize141
+      runLoopsDriverr while loop false 141
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60015, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize140
+      runLoopsDriverr while loop false 140
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60017, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize139
+      runLoopsDriverr while loop false 139
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60017, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize138
+      runLoopsDriverr while loop false 138
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60017, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize137
+      runLoopsDriverr while loop false 137
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [0, 0, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60017, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize136
+      runLoopsDriverr while loop false 136
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [0, 0, 0, 6, 24, 60, 120, 210, 336, 504, 720, 990, 1320, 1716, 2184, 2730, 3360, 4080, 4896, 5814], 0, [0.0, 1.0, -3.0, 2.0, -0.0], 60018, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize135
+      runLoopsDriverr while loop false 135
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, 918, -5814], 1, [0.0, 3.0, -3.0, 0.0], 60018, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize134
+      runLoopsDriverr while loop false 134
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, -6732, 5814], 2, [0.0, 6.0, -0.0], 60018, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize133
+      runLoopsDriverr while loop false 133
+goCCCypher (long signature) valueList: [[0, 2, -3, 1], [1, 0, 0, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -6834, 12546, -5814], 3, [0.0, 6.0], 60018, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize132
+      runLoopsDriverr while loop false 132
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60004, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize131
+      runLoopsDriverr while loop false 131
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60004, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize130
+      runLoopsDriverr while loop false 130
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60004, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize129
+      runLoopsDriverr while loop false 129
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60004, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize128
+      runLoopsDriverr while loop false 128
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60019, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize127
+      runLoopsDriverr while loop false 127
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60019, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize126
+      runLoopsDriverr while loop false 126
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60019, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize125
+      runLoopsDriverr while loop false 125
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 0, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60019, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize124
+      runLoopsDriverr while loop false 124
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60021, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize123
+      runLoopsDriverr while loop false 123
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60021, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize122
+      runLoopsDriverr while loop false 122
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60021, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize121
+      runLoopsDriverr while loop false 121
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60021, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize120
+      runLoopsDriverr while loop false 120
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60022, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize119
+      runLoopsDriverr while loop false 119
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60022, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize118
+      runLoopsDriverr while loop false 118
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60022, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize117
+      runLoopsDriverr while loop false 117
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60022, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize116
+      runLoopsDriverr while loop false 116
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60016, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize115
+      runLoopsDriverr while loop false 115
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60016, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize114
+      runLoopsDriverr while loop false 114
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60016, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize113
+      runLoopsDriverr while loop false 113
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60016, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize112
+      runLoopsDriverr while loop false 112
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60023, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize111
+      runLoopsDriverr while loop false 111
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60023, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize110
+      runLoopsDriverr while loop false 110
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60023, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize109
+      runLoopsDriverr while loop false 109
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 1, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60023, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize108
+      runLoopsDriverr while loop false 108
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 1, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60025, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize107
+      runLoopsDriverr while loop false 107
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 1, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60025, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize106
+      runLoopsDriverr while loop false 106
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 1, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60025, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize105
+      runLoopsDriverr while loop false 105
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 1, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60025, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize104
+      runLoopsDriverr while loop false 104
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 1, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60026, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize103
+      runLoopsDriverr while loop false 103
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 1, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60026, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize102
+      runLoopsDriverr while loop false 102
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 1, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60026, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize101
+      runLoopsDriverr while loop false 101
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 1, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60026, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize100
+      runLoopsDriverr while loop false 100
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60024, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize99
+      runLoopsDriverr while loop false 99
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60024, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize98
+      runLoopsDriverr while loop false 98
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60024, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize97
+      runLoopsDriverr while loop false 97
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60024, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize96
+      runLoopsDriverr while loop false 96
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60027, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize95
+      runLoopsDriverr while loop false 95
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60027, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize94
+      runLoopsDriverr while loop false 94
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60027, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize93
+      runLoopsDriverr while loop false 93
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [0, 2, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60027, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize92
+      runLoopsDriverr while loop false 92
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 2, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60029, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize91
+      runLoopsDriverr while loop false 91
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 2, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60029, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize90
+      runLoopsDriverr while loop false 90
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 2, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60029, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize89
+      runLoopsDriverr while loop false 89
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [1, 2, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60029, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize88
+      runLoopsDriverr while loop false 88
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 2, 1, 0], [0, 6, 6, 6, 12, 30, 66, 126, 216, 342, 510, 726, 996, 1326, 1722, 2190, 2736, 3366, 4086, 4902], 0, [0.0, 1.0, -6.0, 11.0, -0.0], 60030, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize87
+      runLoopsDriverr while loop false 87
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 2, 1, 0], [6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, 816, -4902], 1, [0.0, 3.0, -9.0, 6.0], 60030, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize86
+      runLoopsDriverr while loop false 86
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 2, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5718, 4902], 2, [0.0, 6.0, -6.0], 60030, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize85
+      runLoopsDriverr while loop false 85
+goCCCypher (long signature) valueList: [[0, 11, -6, 1], [2, 2, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5814, 10620, -4902], 3, [0.0, 6.0], 60030, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize84
+      runLoopsDriverr while loop false 84
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 3, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60028, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize83
+      runLoopsDriverr while loop false 83
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 3, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60028, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize82
+      runLoopsDriverr while loop false 82
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 3, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60028, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize81
+      runLoopsDriverr while loop false 81
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [0, 3, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60028, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize80
+      runLoopsDriverr while loop false 80
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60031, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize79
+      runLoopsDriverr while loop false 79
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60031, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize78
+      runLoopsDriverr while loop false 78
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60031, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize77
+      runLoopsDriverr while loop false 77
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60031, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize76
+      runLoopsDriverr while loop false 76
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60033, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize75
+      runLoopsDriverr while loop false 75
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60033, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize74
+      runLoopsDriverr while loop false 74
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60033, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize73
+      runLoopsDriverr while loop false 73
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [1, 0, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60033, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize72
+      runLoopsDriverr while loop false 72
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [0, 0, -6, -12, -12, 0, 30, 84, 168, 288, 450, 660, 924, 1248, 1638, 2100, 2640, 3264, 3978, 4788], 0, [0.0, 1.0, -6.0, 5.0, -0.0], 60034, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize71
+      runLoopsDriverr while loop false 71
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, 810, -4788], 1, [0.0, 3.0, -9.0, 0.0], 60034, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize70
+      runLoopsDriverr while loop false 70
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [-6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, -5598, 4788], 2, [0.0, 6.0, -6.0], 60034, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize69
+      runLoopsDriverr while loop false 69
+goCCCypher (long signature) valueList: [[0, 5, -6, 1], [2, 0, 1, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -5694, 10386, -4788], 3, [0.0, 6.0], 60034, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize68
+      runLoopsDriverr while loop false 68
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, 0, -12, -30, -48, -60, -60, -42, 0, 72, 180, 330, 528, 780, 1092, 1470, 1920, 2448, 3060, 3762], 0, [0.0, 1.0, -9.0, 8.0, -0.0], 60020, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize67
+      runLoopsDriverr while loop false 67
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, -12, -18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, -3762], 1, [0.0, 3.0, -15.0, 0.0], 60020, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize66
+      runLoopsDriverr while loop false 66
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4464, 3762], 2, [0.0, 6.0, -12.0], 60020, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize65
+      runLoopsDriverr while loop false 65
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4554, 8226, -3762], 3, [0.0, 6.0], 60020, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize64
+      runLoopsDriverr while loop false 64
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, 0, -12, -30, -48, -60, -60, -42, 0, 72, 180, 330, 528, 780, 1092, 1470, 1920, 2448, 3060, 3762], 0, [0.0, 1.0, -9.0, 8.0, -0.0], 60035, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize63
+      runLoopsDriverr while loop false 63
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, -12, -18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, -3762], 1, [0.0, 3.0, -15.0, 0.0], 60035, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize62
+      runLoopsDriverr while loop false 62
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4464, 3762], 2, [0.0, 6.0, -12.0], 60035, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize61
+      runLoopsDriverr while loop false 61
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4554, 8226, -3762], 3, [0.0, 6.0], 60035, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize60
+      runLoopsDriverr while loop false 60
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [0, 0, -12, -30, -48, -60, -60, -42, 0, 72, 180, 330, 528, 780, 1092, 1470, 1920, 2448, 3060, 3762], 0, [0.0, 1.0, -9.0, 8.0, -0.0], 60037, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize59
+      runLoopsDriverr while loop false 59
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [0, -12, -18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, -3762], 1, [0.0, 3.0, -15.0, 0.0], 60037, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize58
+      runLoopsDriverr while loop false 58
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4464, 3762], 2, [0.0, 6.0, -12.0], 60037, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize57
+      runLoopsDriverr while loop false 57
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4554, 8226, -3762], 3, [0.0, 6.0], 60037, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize56
+      runLoopsDriverr while loop false 56
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [2, 0, 2, 0], [0, 0, -12, -30, -48, -60, -60, -42, 0, 72, 180, 330, 528, 780, 1092, 1470, 1920, 2448, 3060, 3762], 0, [0.0, 1.0, -9.0, 8.0, -0.0], 60038, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize55
+      runLoopsDriverr while loop false 55
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [2, 0, 2, 0], [0, -12, -18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, -3762], 1, [0.0, 3.0, -15.0, 0.0], 60038, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize54
+      runLoopsDriverr while loop false 54
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [2, 0, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4464, 3762], 2, [0.0, 6.0, -12.0], 60038, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize53
+      runLoopsDriverr while loop false 53
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [2, 0, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4554, 8226, -3762], 3, [0.0, 6.0], 60038, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize52
+      runLoopsDriverr while loop false 52
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [0, 12, 12, 6, 0, 0, 12, 42, 96, 180, 300, 462, 672, 936, 1260, 1650, 2112, 2652, 3276, 3990], 0, [0.0, 1.0, -9.0, 20.0, -0.0], 60032, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize51
+      runLoopsDriverr while loop false 51
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [12, 0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, -3990], 1, [0.0, 3.0, -15.0, 12.0], 60032, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize50
+      runLoopsDriverr while loop false 50
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4704, 3990], 2, [0.0, 6.0, -12.0], 60032, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize49
+      runLoopsDriverr while loop false 49
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4794, 8694, -3990], 3, [0.0, 6.0], 60032, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize48
+      runLoopsDriverr while loop false 48
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [0, 12, 12, 6, 0, 0, 12, 42, 96, 180, 300, 462, 672, 936, 1260, 1650, 2112, 2652, 3276, 3990], 0, [0.0, 1.0, -9.0, 20.0, -0.0], 60039, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize47
+      runLoopsDriverr while loop false 47
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [12, 0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, -3990], 1, [0.0, 3.0, -15.0, 12.0], 60039, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize46
+      runLoopsDriverr while loop false 46
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4704, 3990], 2, [0.0, 6.0, -12.0], 60039, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize45
+      runLoopsDriverr while loop false 45
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [0, 1, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4794, 8694, -3990], 3, [0.0, 6.0], 60039, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize44
+      runLoopsDriverr while loop false 44
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [1, 1, 2, 0], [0, 12, 12, 6, 0, 0, 12, 42, 96, 180, 300, 462, 672, 936, 1260, 1650, 2112, 2652, 3276, 3990], 0, [0.0, 1.0, -9.0, 20.0, -0.0], 60041, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize43
+      runLoopsDriverr while loop false 43
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [1, 1, 2, 0], [12, 0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, -3990], 1, [0.0, 3.0, -15.0, 12.0], 60041, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize42
+      runLoopsDriverr while loop false 42
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [1, 1, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4704, 3990], 2, [0.0, 6.0, -12.0], 60041, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize41
+      runLoopsDriverr while loop false 41
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [1, 1, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4794, 8694, -3990], 3, [0.0, 6.0], 60041, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize40
+      runLoopsDriverr while loop false 40
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [2, 1, 2, 0], [0, 12, 12, 6, 0, 0, 12, 42, 96, 180, 300, 462, 672, 936, 1260, 1650, 2112, 2652, 3276, 3990], 0, [0.0, 1.0, -9.0, 20.0, -0.0], 60042, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize39
+      runLoopsDriverr while loop false 39
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [2, 1, 2, 0], [12, 0, -6, -6, 0, 12, 30, 54, 84, 120, 162, 210, 264, 324, 390, 462, 540, 624, 714, -3990], 1, [0.0, 3.0, -15.0, 12.0], 60042, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize38
+      runLoopsDriverr while loop false 38
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [2, 1, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4704, 3990], 2, [0.0, 6.0, -12.0], 60042, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize37
+      runLoopsDriverr while loop false 37
+goCCCypher (long signature) valueList: [[0, 20, -9, 1], [2, 1, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4794, 8694, -3990], 3, [0.0, 6.0], 60042, [0, 0, 0, 1], false, -2, 1,  ]
+twotabledbthread dbVectorSize36
+      runLoopsDriverr while loop false 36
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [0, 18, 24, 24, 24, 30, 48, 84, 144, 234, 360, 528, 744, 1014, 1344, 1740, 2208, 2754, 3384, 4104], 0, [0.0, 1.0, -9.0, 26.0, -0.0], 60040, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize35
+      runLoopsDriverr while loop false 35
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [18, 6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, -4104], 1, [0.0, 3.0, -15.0, 18.0], 60040, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize34
+      runLoopsDriverr while loop false 34
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4824, 4104], 2, [0.0, 6.0, -12.0], 60040, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize33
+      runLoopsDriverr while loop false 33
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4914, 8928, -4104], 3, [0.0, 6.0], 60040, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize32
+      runLoopsDriverr while loop false 32
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [0, 18, 24, 24, 24, 30, 48, 84, 144, 234, 360, 528, 744, 1014, 1344, 1740, 2208, 2754, 3384, 4104], 0, [0.0, 1.0, -9.0, 26.0, -0.0], 60043, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize31
+      runLoopsDriverr while loop false 31
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [18, 6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, -4104], 1, [0.0, 3.0, -15.0, 18.0], 60043, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize30
+      runLoopsDriverr while loop false 30
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4824, 4104], 2, [0.0, 6.0, -12.0], 60043, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize29
+      runLoopsDriverr while loop false 29
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 2, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4914, 8928, -4104], 3, [0.0, 6.0], 60043, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize28
+      runLoopsDriverr while loop false 28
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [1, 2, 2, 0], [0, 18, 24, 24, 24, 30, 48, 84, 144, 234, 360, 528, 744, 1014, 1344, 1740, 2208, 2754, 3384, 4104], 0, [0.0, 1.0, -9.0, 26.0, -0.0], 60045, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize27
+      runLoopsDriverr while loop false 27
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [1, 2, 2, 0], [18, 6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, -4104], 1, [0.0, 3.0, -15.0, 18.0], 60045, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize26
+      runLoopsDriverr while loop false 26
+Feb 23, 2021 1:54:39 PM org.neo4j.driver.internal.logging.JULogger info
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [1, 2, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4824, 4104], 2, [0.0, 6.0, -12.0], 60045, [0, 0, 0, 1], false, -2, 2,  ]
+INFO: Closing driver instance 1308653651
+twotabledbthread dbVectorSize25
+      runLoopsDriverr while loop false 25
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [1, 2, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4914, 8928, -4104], 3, [0.0, 6.0], 60045, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize24
+      runLoopsDriverr while loop false 24
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [2, 2, 2, 0], [0, 18, 24, 24, 24, 30, 48, 84, 144, 234, 360, 528, 744, 1014, 1344, 1740, 2208, 2754, 3384, 4104], 0, [0.0, 1.0, -9.0, 26.0, -0.0], 60046, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize23
+      runLoopsDriverr while loop false 23
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [2, 2, 2, 0], [18, 6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, -4104], 1, [0.0, 3.0, -15.0, 18.0], 60046, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize22
+      runLoopsDriverr while loop false 22
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [2, 2, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4824, 4104], 2, [0.0, 6.0, -12.0], 60046, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize21
+      runLoopsDriverr while loop false 21
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [2, 2, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4914, 8928, -4104], 3, [0.0, 6.0], 60046, [0, 0, 0, 1], false, -2, 2,  ]
+twotabledbthread dbVectorSize20
+      runLoopsDriverr while loop false 20
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 3, 2, 0], [0, 18, 24, 24, 24, 30, 48, 84, 144, 234, 360, 528, 744, 1014, 1344, 1740, 2208, 2754, 3384, 4104], 0, [0.0, 1.0, -9.0, 26.0, -0.0], 60044, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize19
+      runLoopsDriverr while loop false 19
+Feb 23, 2021 1:54:39 PM org.neo4j.driver.internal.logging.JULogger info
+INFO: Closing connection pool towards localhost:7687
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 3, 2, 0], [18, 6, 0, 0, 6, 18, 36, 60, 90, 126, 168, 216, 270, 330, 396, 468, 546, 630, 720, -4104], 1, [0.0, 3.0, -15.0, 18.0], 60044, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize18
+      runLoopsDriverr while loop false 18
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 3, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4824, 4104], 2, [0.0, 6.0, -12.0], 60044, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize17
+      runLoopsDriverr while loop false 17
+goCCCypher (long signature) valueList: [[0, 26, -9, 1], [0, 3, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4914, 8928, -4104], 3, [0.0, 6.0], 60044, [0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize16
+      runLoopsDriverr while loop false 16
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, 0, -12, -30, -48, -60, -60, -42, 0, 72, 180, 330, 528, 780, 1092, 1470, 1920, 2448, 3060, 3762], 0, [0.0, 1.0, -9.0, 8.0, -0.0], 60047, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize15
+      runLoopsDriverr while loop false 15
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, -12, -18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, -3762], 1, [0.0, 3.0, -15.0, 0.0], 60047, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize14
+      runLoopsDriverr while loop false 14
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4464, 3762], 2, [0.0, 6.0, -12.0], 60047, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize13
+      runLoopsDriverr while loop false 13
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4554, 8226, -3762], 3, [0.0, 6.0], 60047, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize12
+      runLoopsDriverr while loop false 12
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, 0, -12, -30, -48, -60, -60, -42, 0, 72, 180, 330, 528, 780, 1092, 1470, 1920, 2448, 3060, 3762], 0, [0.0, 1.0, -9.0, 8.0, -0.0], 60049, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize11
+      runLoopsDriverr while loop false 11
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [0, -12, -18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, -3762], 1, [0.0, 3.0, -15.0, 0.0], 60049, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize10
+      runLoopsDriverr while loop false 10
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4464, 3762], 2, [0.0, 6.0, -12.0], 60049, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize9
+      runLoopsDriverr while loop false 9
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [0, 0, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4554, 8226, -3762], 3, [0.0, 6.0], 60049, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize8
+      runLoopsDriverr while loop false 8
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [0, 0, -12, -30, -48, -60, -60, -42, 0, 72, 180, 330, 528, 780, 1092, 1470, 1920, 2448, 3060, 3762], 0, [0.0, 1.0, -9.0, 8.0, -0.0], 60050, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize7
+      runLoopsDriverr while loop false 7
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [0, -12, -18, -18, -12, 0, 18, 42, 72, 108, 150, 198, 252, 312, 378, 450, 528, 612, 702, -3762], 1, [0.0, 3.0, -15.0, 0.0], 60050, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize6
+      runLoopsDriverr while loop false 6
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [-12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, -4464, 3762], 2, [0.0, 6.0, -12.0], 60050, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize5
+      runLoopsDriverr while loop false 5
+goCCCypher (long signature) valueList: [[0, 8, -9, 1], [1, 0, 2, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -4554, 8226, -3762], 3, [0.0, 6.0], 60050, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize4
+      runLoopsDriverr while loop false 4
+goCCCypher (long signature) valueList: [[0, 11, -12, 1], [0, 0, 3, 0], [0, 0, -18, -48, -84, -120, -150, -168, -168, -144, -90, 0, 132, 312, 546, 840, 1200, 1632, 2142, 2736], 0, [0.0, 1.0, -12.0, 11.0, -0.0], 60036, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize3
+      runLoopsDriverr while loop false 3
+goCCCypher (long signature) valueList: [[0, 11, -12, 1], [0, 0, 3, 0], [0, -18, -30, -36, -36, -30, -18, 0, 24, 54, 90, 132, 180, 234, 294, 360, 432, 510, 594, -2736], 1, [0.0, 3.0, -21.0, 0.0], 60036, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize2
+      runLoopsDriverr while loop false 2
+goCCCypher (long signature) valueList: [[0, 11, -12, 1], [0, 0, 3, 0], [-18, -12, -6, 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, -3330, 2736], 2, [0.0, 6.0, -18.0], 60036, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize1
+      runLoopsDriverr while loop false 1
+goCCCypher (long signature) valueList: [[0, 11, -12, 1], [0, 0, 3, 0], [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, -3414, 6066, -2736], 3, [0.0, 6.0], 60036, [0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize0
+GaussTable1.runLoopsDriverr() flowthrough, resultListId.
+twotabledbthread ended
+LoopsMain post gTable1.join()
+BUILD SUCCESSFUL (total time: 22 seconds)
+
+
+suppose can look at mucorrolationthreaded generate binary zero pattern for proper permit schedule.
+
+
+2/24
+
+The above is the usual iteration.   
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lunch time:
+
+
+Hello:
+
+Update on the work:
+The Last four Thursdays, myself Amy and Peter have been taking 
+New Milford dump runs.  There are 1 or two left.
+Photos of the detrious are available.  Prior to that, and 
+the winter snow,  The down trees on the driveway and next to 
+the house have been chopped up and properly stacked.
+  More Zeppelin notebooks are on my git hub, though the zepl.com
+viewer is down (have to get a zepl account).  My graph feature
+is getting a Graph ML suitablility review in two weeks.  Maybe
+an updated plan in two weeks.  Tom        
+
+
+Wintering over well.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

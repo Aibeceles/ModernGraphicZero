@@ -1,0 +1,317 @@
+{
+  "paragraphs": [
+    {
+      "title": "Case class definitions.",
+      "text": "\nimport scala.collection.mutable.ArrayBuffer\ncase class s3TQu(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String)\ncase class s3TRe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String,result:String)\ncase class rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal)\ncase class indexSum(iSum:String,finalISum:String)\ncase class consistant(rowCounter:BigDecimal,n:BigDecimal, maxN:String,dim:BigDecimal)\ncase class tupleQuippy(terms:ArrayBuffer[s3TQu],result:BigDecimal)",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-20 08:13:08.557",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import scala.collection.mutable.ArrayBuffer\r\ndefined class s3TQu\r\ndefined class s3TRe\r\ndefined class rResult\r\ndefined class indexSum\r\ndefined class consistant\r\ndefined class tupleQuippy\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607704271332_2121451767",
+      "id": "20201211-113111_582893509",
+      "dateCreated": "2020-12-11 11:31:11.332",
+      "dateStarted": "2020-12-18 12:35:59.619",
+      "dateFinished": "2020-12-18 12:36:09.658",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "N,MaxN,D parameter querries to DFScripts.s3T.  The ResultSets populate a DataFrame of s3TQu case classes.  DataFrame is persisted to z context.",
+      "text": "object QuerryS3T {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\ndef s3TQuerry(rLow:String,rHigh:String,nMax:String,d1:String,d2:String,d3:String,tC:Int): ArrayBuffer[s3TQu] \u003d {\n\nval terms \u003d new ArrayBuffer[s3TQu]()\nval s3 \u003d new DFScripts  \nval s3RS \u003d s3.s3T(rLow,rHigh,nMax,d1,d2,d3,tC)\n\nwhile (s3RS.next()) {                       \nterms +\u003d s3TQu(s3RS.getString(1),s3RS.getString(2),s3RS.getString(3),s3RS.getString(4),s3RS.getString(5),s3RS.getString(6),s3RS.getString(7))\n}\nterms\n}\n\ndef main(args:Array[String]) {\ntype TTupple \u003d Tuple2[ArrayBuffer[s3TQu],BigDecimal]\nval terms \u003d new ArrayBuffer[rResult]()\nval nMax \u003d \"1000\"                                 \nval a \u003d 2                                          \nval n \u003d 7                                          \nval mainTerms \u003d List.range(0, n-1) flatMap (b \u003d\u003e QuerryS3T.s3TQuerry(n.toString,n.toString,nMax,BigDecimal(2).pow(a+1).toString(),BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(b).toInt)) \n\n//val mainTermss\u003dmainTerms.toSeq\n//println(mainTermss+\" \"+\"\\n\")\nval df \u003d spark.createDataFrame(mainTerms.toSeq)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(\"s12DF\",df)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-20 08:14:10.208",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\nwarning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\ndefined object QuerryS3T\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607704310285_-476765308",
+      "id": "20201211-113150_732372778",
+      "dateCreated": "2020-12-11 11:31:50.285",
+      "dateStarted": "2020-12-18 12:36:15.439",
+      "dateFinished": "2020-12-18 12:36:16.199",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Invoke QuerryS3T object.",
+      "text": "QuerryS3T.main(null)",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-18 13:07:17.773",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\ns3T7 7 1000 8 4 4 1\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\ns3T7 7 1000 8 4 4 2\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\ns3T7 7 1000 8 4 4 4\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\ns3T7 7 1000 8 4 4 8\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\ns3T7 7 1000 8 4 4 16\r\n\r\nLoaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n\r\ns3T7 7 1000 8 4 4 32\r\n\r\n+---------+------+--------------------------+-----+--------+-------+----------+\n|dimension|Degree|scalar                    |index|maxIndex|divisor|rowCounter|\n+---------+------+--------------------------+-----+--------+-------+----------+\n|4        |2     |2                         |7    |1000    |2      |1         |\n|4        |1     |-3976                     |7    |1000    |2      |1         |\n|4        |0     |1976088                   |7    |1000    |2      |1         |\n|4        |2     |2                         |7    |1000    |2      |2         |\n|4        |1     |-3982                     |7    |1000    |2      |2         |\n|4        |0     |1982040                   |7    |1000    |2      |2         |\n|4        |3     |-79560831408              |7    |1000    |32     |4         |\n|4        |4     |59780208                  |7    |1000    |32     |4         |\n|4        |5     |-23956                    |7    |1000    |32     |4         |\n|4        |6     |4                         |7    |1000    |32     |4         |\n|4        |2     |59561246225088            |7    |1000    |32     |4         |\n|4        |1     |-23780830226174784        |7    |1000    |32     |4         |\n|4        |0     |3956207409086784768       |7    |1000    |32     |4         |\n|4        |5     |-95840                    |7    |1000    |64     |8         |\n|4        |3     |-318402894060             |7    |1000    |64     |8         |\n|4        |4     |239200724                 |7    |1000    |64     |8         |\n|4        |1     |-95202890186444800        |7    |1000    |64     |8         |\n|4        |2     |238404338183224           |7    |1000    |64     |8         |\n|4        |6     |16                        |7    |1000    |64     |8         |\n|4        |0     |15840722063220801536      |7    |1000    |64     |8         |\n|4        |4     |1115109948825784          |7    |1000    |256    |16        |\n|4        |5     |-893063981764             |7    |1000    |256    |16        |\n|4        |6     |447020664                 |7    |1000    |256    |16        |\n|4        |2     |445069937674670582736     |7    |1000    |256    |16        |\n|4        |7     |-127860                   |7    |1000    |256    |16        |\n|4        |3     |-891113257663124856       |7    |1000    |256    |16        |\n|4        |8     |16                        |7    |1000    |256    |16        |\n|4        |1     |-127023972843102597460224 |7    |1000    |256    |16        |\n|4        |0     |15860661769772870724228096|7    |1000    |256    |16        |\n|4        |4     |6693586098916164          |7    |1000    |512    |32        |\n|4        |3     |-5349601437864633352      |7    |1000    |512    |32        |\n|4        |5     |-5360142447780            |7    |1000    |512    |32        |\n|4        |6     |2682711076                |7    |1000    |512    |32        |\n|4        |2     |2672170057896916076480    |7    |1000    |512    |32        |\n|4        |7     |-767244                   |7    |1000    |512    |32        |\n|4        |8     |96                        |7    |1000    |512    |32        |\n|4        |1     |-762726414964588096951808 |7    |1000    |512    |32        |\n|4        |0     |95247067796141372471808000|7    |1000    |512    |32        |\n+---------+------+--------------------------+-----+--------+-------+----------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607704309743_-155357056",
+      "id": "20201211-113149_331271410",
+      "dateCreated": "2020-12-11 11:31:49.743",
+      "dateStarted": "2020-12-18 12:36:22.439",
+      "dateFinished": "2020-12-18 12:36:27.095",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "ResultUDF object maps \"s12df\" in z context to UDF extendResult, a caluclation of each term in P().",
+      "text": "object ResultUDF extends Serializable {\n\n// case class s3TRe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String,result:String)\n// case class s3TQu(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String)  \nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\n\ndef extendResult(qQuerry:s3TQu): s3TRe \u003d {\n  val scalar \u003d BigDecimal(qQuerry.scalar)\n  val degree \u003d qQuerry.Degree.toInt\n  val divisor \u003d BigDecimal(qQuerry.divisor)\n  val index \u003d BigDecimal(qQuerry.maxIndex)\n  val indexPower \u003d index.pow(degree)\n  val scalarDiv \u003d scalar/divisor\n  val result \u003d  indexPower * scalarDiv\nval s\u003d  s3TRe(qQuerry.dimension,qQuerry.Degree,qQuerry.scalar,qQuerry.index,qQuerry.maxIndex,qQuerry.divisor,qQuerry.rowCounter,result.bigDecimal.toPlainString)\nprintln(result+\"\\n\")\ns\n}\n\ndef main(args:Array[String]) {\n    \nimport org.apache.spark.sql.DataFrame\nval df\u003d z.get(\"s12DF\").asInstanceOf[DataFrame]\ndf.schema\ndf.show    \nspark.udf.register(\"eResult\", extendResult _)\n\nval ds: Dataset[s3TQu] \u003d df.as[s3TQu]\nval dsCount\u003dds.count()\nds.show(dsCount.toInt,false)\n\nval dss\u003dds.map{f \u003d\u003e extendResult(s3TQu(f.dimension,f.Degree,f.scalar,f.index,f.maxIndex,f.divisor,f.rowCounter)) }\n\ndss.show\n\n//val dff \u003d spark.createDataFrame(mainTerms.toSeq)\n//val dffCount \u003d dss.count()\n//dss.show(dffCount.toInt,false)\nz.put(\"extendResultDS\",dss)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-18 13:12:16.936",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ResultUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607704308634_1196382051",
+      "id": "20201211-113148_197956050",
+      "dateCreated": "2020-12-11 11:31:48.634",
+      "dateStarted": "2020-12-18 12:36:34.911",
+      "dateFinished": "2020-12-18 12:36:35.737",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Invoke object ResultUDF.",
+      "text": "ResultUDF.main(null)",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-18 13:13:01.897",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+--------------------+-----+--------+-------+----------+\n|dimension|Degree|              scalar|index|maxIndex|divisor|rowCounter|\n+---------+------+--------------------+-----+--------+-------+----------+\n|        4|     2|                   2|    7|    1000|      2|         1|\n|        4|     1|               -3976|    7|    1000|      2|         1|\n|        4|     0|             1976088|    7|    1000|      2|         1|\n|        4|     2|                   2|    7|    1000|      2|         2|\n|        4|     1|               -3982|    7|    1000|      2|         2|\n|        4|     0|             1982040|    7|    1000|      2|         2|\n|        4|     3|        -79560831408|    7|    1000|     32|         4|\n|        4|     4|            59780208|    7|    1000|     32|         4|\n|        4|     5|              -23956|    7|    1000|     32|         4|\n|        4|     6|                   4|    7|    1000|     32|         4|\n|        4|     2|      59561246225088|    7|    1000|     32|         4|\n|        4|     1|  -23780830226174784|    7|    1000|     32|         4|\n|        4|     0| 3956207409086784768|    7|    1000|     32|         4|\n|        4|     5|              -95840|    7|    1000|     64|         8|\n|        4|     3|       -318402894060|    7|    1000|     64|         8|\n|        4|     4|           239200724|    7|    1000|     64|         8|\n|        4|     1|  -95202890186444800|    7|    1000|     64|         8|\n|        4|     2|     238404338183224|    7|    1000|     64|         8|\n|        4|     6|                  16|    7|    1000|     64|         8|\n|        4|     0|15840722063220801536|    7|    1000|     64|         8|\n+---------+------+--------------------+-----+--------+-------+----------+\nonly showing top 20 rows\n\r\n+---------+------+--------------------------+-----+--------+-------+----------+\n|dimension|Degree|scalar                    |index|maxIndex|divisor|rowCounter|\n+---------+------+--------------------------+-----+--------+-------+----------+\n|4        |2     |2                         |7    |1000    |2      |1         |\n|4        |1     |-3976                     |7    |1000    |2      |1         |\n|4        |0     |1976088                   |7    |1000    |2      |1         |\n|4        |2     |2                         |7    |1000    |2      |2         |\n|4        |1     |-3982                     |7    |1000    |2      |2         |\n|4        |0     |1982040                   |7    |1000    |2      |2         |\n|4        |3     |-79560831408              |7    |1000    |32     |4         |\n|4        |4     |59780208                  |7    |1000    |32     |4         |\n|4        |5     |-23956                    |7    |1000    |32     |4         |\n|4        |6     |4                         |7    |1000    |32     |4         |\n|4        |2     |59561246225088            |7    |1000    |32     |4         |\n|4        |1     |-23780830226174784        |7    |1000    |32     |4         |\n|4        |0     |3956207409086784768       |7    |1000    |32     |4         |\n|4        |5     |-95840                    |7    |1000    |64     |8         |\n|4        |3     |-318402894060             |7    |1000    |64     |8         |\n|4        |4     |239200724                 |7    |1000    |64     |8         |\n|4        |1     |-95202890186444800        |7    |1000    |64     |8         |\n|4        |2     |238404338183224           |7    |1000    |64     |8         |\n|4        |6     |16                        |7    |1000    |64     |8         |\n|4        |0     |15840722063220801536      |7    |1000    |64     |8         |\n|4        |4     |1115109948825784          |7    |1000    |256    |16        |\n|4        |5     |-893063981764             |7    |1000    |256    |16        |\n|4        |6     |447020664                 |7    |1000    |256    |16        |\n|4        |2     |445069937674670582736     |7    |1000    |256    |16        |\n|4        |7     |-127860                   |7    |1000    |256    |16        |\n|4        |3     |-891113257663124856       |7    |1000    |256    |16        |\n|4        |8     |16                        |7    |1000    |256    |16        |\n|4        |1     |-127023972843102597460224 |7    |1000    |256    |16        |\n|4        |0     |15860661769772870724228096|7    |1000    |256    |16        |\n|4        |4     |6693586098916164          |7    |1000    |512    |32        |\n|4        |3     |-5349601437864633352      |7    |1000    |512    |32        |\n|4        |5     |-5360142447780            |7    |1000    |512    |32        |\n|4        |6     |2682711076                |7    |1000    |512    |32        |\n|4        |2     |2672170057896916076480    |7    |1000    |512    |32        |\n|4        |7     |-767244                   |7    |1000    |512    |32        |\n|4        |8     |96                        |7    |1000    |512    |32        |\n|4        |1     |-762726414964588096951808 |7    |1000    |512    |32        |\n|4        |0     |95247067796141372471808000|7    |1000    |512    |32        |\n+---------+------+--------------------------+-----+--------+-------+----------+\n\r\n+---------+------+--------------------+-----+--------+-------+----------+--------------------+\n|dimension|Degree|              scalar|index|maxIndex|divisor|rowCounter|              result|\n+---------+------+--------------------+-----+--------+-------+----------+--------------------+\n|        4|     2|                   2|    7|    1000|      2|         1|             1000000|\n|        4|     1|               -3976|    7|    1000|      2|         1|            -1988000|\n|        4|     0|             1976088|    7|    1000|      2|         1|              988044|\n|        4|     2|                   2|    7|    1000|      2|         2|             1000000|\n|        4|     1|               -3982|    7|    1000|      2|         2|            -1991000|\n|        4|     0|             1982040|    7|    1000|      2|         2|              991020|\n|        4|     3|        -79560831408|    7|    1000|     32|         4|-2486275981500000...|\n|        4|     4|            59780208|    7|    1000|     32|         4|18681315000000000...|\n|        4|     5|              -23956|    7|    1000|     32|         4|-7486250000000000...|\n|        4|     6|                   4|    7|    1000|     32|         4|12500000000000000...|\n|        4|     2|      59561246225088|    7|    1000|     32|         4| 1861288944534000000|\n|        4|     1|  -23780830226174784|    7|    1000|     32|         4| -743150944567962000|\n|        4|     0| 3956207409086784768|    7|    1000|     32|         4|  123631481533962024|\n|        4|     5|              -95840|    7|    1000|     64|         8|-1497500000000000...|\n|        4|     3|       -318402894060|    7|    1000|     64|         8|-4975045219687500...|\n|        4|     4|           239200724|    7|    1000|     64|         8|37375113125000000...|\n|        4|     1|  -95202890186444800|    7|    1000|     64|         8|-1487545159163200000|\n|        4|     2|     238404338183224|    7|    1000|     64|         8|37250677841128750...|\n|        4|     6|                  16|    7|    1000|     64|         8|25000000000000000...|\n|        4|     0|15840722063220801536|    7|    1000|     64|         8|  247511282237825024|\n+---------+------+--------------------+-----+--------+-------+----------+--------------------+\nonly showing top 20 rows\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1607704307132_1789345025",
+      "id": "20201211-113147_2084524139",
+      "dateCreated": "2020-12-11 11:31:47.132",
+      "dateStarted": "2020-12-18 12:36:47.826",
+      "dateFinished": "2020-12-18 12:36:48.514",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "IndexRowsSum object aggrigates result column of  \"extendResultDS\" Dataset. ",
+      "text": "import org.apache.spark.sql.{Encoder, Encoders, SparkSession}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\n\nobject IndexRowsSum extends Aggregator[s3TRe, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  \n  def reduce(buffer: indexSum, s3TR: s3TRe): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.result)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  \n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n \n  def finish(reduction: indexSum): String \u003d reduction.iSum\n\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n}\n\nval ds\u003d z.get(\"extendResultDS\").asInstanceOf[Dataset[s3TRe]]\nds.schema\nds.show \n\n val indexResult \u003d IndexRowsSum.toColumn.name(\"index_Result\")\nval iResult \u003d ds.select(indexResult)\niResult.show()",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-18 13:17:14.827",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+--------------------+-----+--------+-------+----------+--------------------+\n|dimension|Degree|              scalar|index|maxIndex|divisor|rowCounter|              result|\n+---------+------+--------------------+-----+--------+-------+----------+--------------------+\n|        4|     2|                   2|    7|    1000|      2|         1|             1000000|\n|        4|     1|               -3976|    7|    1000|      2|         1|            -1988000|\n|        4|     0|             1976088|    7|    1000|      2|         1|              988044|\n|        4|     2|                   2|    7|    1000|      2|         2|             1000000|\n|        4|     1|               -3982|    7|    1000|      2|         2|            -1991000|\n|        4|     0|             1982040|    7|    1000|      2|         2|              991020|\n|        4|     3|        -79560831408|    7|    1000|     32|         4|-2486275981500000...|\n|        4|     4|            59780208|    7|    1000|     32|         4|18681315000000000...|\n|        4|     5|              -23956|    7|    1000|     32|         4|-7486250000000000...|\n|        4|     6|                   4|    7|    1000|     32|         4|12500000000000000...|\n|        4|     2|      59561246225088|    7|    1000|     32|         4| 1861288944534000000|\n|        4|     1|  -23780830226174784|    7|    1000|     32|         4| -743150944567962000|\n|        4|     0| 3956207409086784768|    7|    1000|     32|         4|  123631481533962024|\n|        4|     5|              -95840|    7|    1000|     64|         8|-1497500000000000...|\n|        4|     3|       -318402894060|    7|    1000|     64|         8|-4975045219687500...|\n|        4|     4|           239200724|    7|    1000|     64|         8|37375113125000000...|\n|        4|     1|  -95202890186444800|    7|    1000|     64|         8|-1487545159163200000|\n|        4|     2|     238404338183224|    7|    1000|     64|         8|37250677841128750...|\n|        4|     6|                  16|    7|    1000|     64|         8|25000000000000000...|\n|        4|     0|15840722063220801536|    7|    1000|     64|         8|  247511282237825024|\n+---------+------+--------------------+-----+--------+-------+----------+--------------------+\nonly showing top 20 rows\n\r\n+------------+\n|index_Result|\n+------------+\n| 128.0000000|\n+------------+\n\r\nimport org.apache.spark.sql.{Encoder, Encoders, SparkSession}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\ndefined object IndexRowsSum\r\nds: org.apache.spark.sql.Dataset[s3TRe] \u003d [dimension: string, Degree: string ... 6 more fields]\r\nindexResult: org.apache.spark.sql.TypedColumn[s3TRe,String] \u003d indexrowssum() AS `index_Result`\r\niResult: org.apache.spark.sql.Dataset[String] \u003d [index_Result: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608056678774_-111130932",
+      "id": "20201215-132438_990208194",
+      "dateCreated": "2020-12-15 13:24:38.774",
+      "dateStarted": "2020-12-17 17:43:58.260",
+      "dateFinished": "2020-12-17 17:43:59.880",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "GroupedIndexRowsSum first groups \"extendResultDS\" Dataset by rowCounter then aggrigates result column.",
+      "text": "import org.apache.spark.sql.{Encoder, Encoders, SparkSession}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\n//case class indexSum(iSum:String,finalISum:String)\n\nobject GroupedIndexRowsSum extends Aggregator[s3TRe, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  \n  def reduce(buffer: indexSum, s3TR: s3TRe): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.result)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  \n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n \n  def finish(reduction: indexSum): String \u003d reduction.iSum\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n}\n\nval ds\u003d z.get(\"extendResultDS\").asInstanceOf[Dataset[s3TRe]]\nds.schema\nds.show \n\nval indexResult \u003d IndexRowsSum.toColumn.name(\"index_Result\")\nds.groupByKey(_.rowCounter)\n  .agg(indexResult)\n  .show(truncate \u003d false) \n\nval iResult \u003d ds.select(indexResult)\niResult.show()\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-19 09:04:26.816",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+--------------------+-----+--------+-------+----------+--------------------+\n|dimension|Degree|              scalar|index|maxIndex|divisor|rowCounter|              result|\n+---------+------+--------------------+-----+--------+-------+----------+--------------------+\n|        4|     2|                   2|    7|    1000|      2|         1|             1000000|\n|        4|     1|               -3976|    7|    1000|      2|         1|            -1988000|\n|        4|     0|             1976088|    7|    1000|      2|         1|              988044|\n|        4|     2|                   2|    7|    1000|      2|         2|             1000000|\n|        4|     1|               -3982|    7|    1000|      2|         2|            -1991000|\n|        4|     0|             1982040|    7|    1000|      2|         2|              991020|\n|        4|     3|        -79560831408|    7|    1000|     32|         4|-2486275981500000...|\n|        4|     4|            59780208|    7|    1000|     32|         4|18681315000000000...|\n|        4|     5|              -23956|    7|    1000|     32|         4|-7486250000000000...|\n|        4|     6|                   4|    7|    1000|     32|         4|12500000000000000...|\n|        4|     2|      59561246225088|    7|    1000|     32|         4| 1861288944534000000|\n|        4|     1|  -23780830226174784|    7|    1000|     32|         4| -743150944567962000|\n|        4|     0| 3956207409086784768|    7|    1000|     32|         4|  123631481533962024|\n|        4|     5|              -95840|    7|    1000|     64|         8|-1497500000000000...|\n|        4|     3|       -318402894060|    7|    1000|     64|         8|-4975045219687500...|\n|        4|     4|           239200724|    7|    1000|     64|         8|37375113125000000...|\n|        4|     1|  -95202890186444800|    7|    1000|     64|         8|-1487545159163200000|\n|        4|     2|     238404338183224|    7|    1000|     64|         8|37250677841128750...|\n|        4|     6|                  16|    7|    1000|     64|         8|25000000000000000...|\n|        4|     0|15840722063220801536|    7|    1000|     64|         8|  247511282237825024|\n+---------+------+--------------------+-----+--------+-------+----------+--------------------+\nonly showing top 20 rows\n\r\n+-----+------------+\n|value|index_Result|\n+-----+------------+\n|8    |24.0000     |\n|16   |16.000000   |\n|32   |0.0000000   |\n|1    |44          |\n|4    |24.000      |\n|2    |20          |\n+-----+------------+\n\r\n+------------+\n|index_Result|\n+------------+\n| 128.0000000|\n+------------+\n\r\nimport org.apache.spark.sql.{Encoder, Encoders, SparkSession}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\ndefined object GroupedIndexRowsSum\r\nds: org.apache.spark.sql.Dataset[s3TRe] \u003d [dimension: string, Degree: string ... 6 more fields]\r\nindexResult: org.apache.spark.sql.TypedColumn[s3TRe,String] \u003d indexrowssum() AS `index_Result`\r\niResult: org.apache.spark.sql.Dataset[String] \u003d [index_Result: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608139431612_-756195963",
+      "id": "20201216-122351_2057676859",
+      "dateCreated": "2020-12-16 12:23:51.612",
+      "dateStarted": "2020-12-18 13:27:10.565",
+      "dateFinished": "2020-12-18 13:27:12.113",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1608313020696_-1962377404",
+      "id": "20201218-123700_1483650508",
+      "dateCreated": "2020-12-18 12:37:00.696",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "S12UDF,Aggrigator",
+  "id": "2FTNZM3EG",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

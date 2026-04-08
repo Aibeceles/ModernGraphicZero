@@ -1,0 +1,1 @@
+NN;flatFileRowCounterr;nMaxx;tSeqDB;bTermDB;vertexDBVertex;vertexDegreeDB;vertexScalarDB;vertexDB;targetEvaluate

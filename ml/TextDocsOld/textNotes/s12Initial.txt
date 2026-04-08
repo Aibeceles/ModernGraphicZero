@@ -1,0 +1,49 @@
+UNWIND range(toInteger(3),toInteger(3)) AS n
+        WITH toString(n) AS N, '1000' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' AND t.twoSeq=1 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='2'
+        WITH
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN "0" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN "0" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN "0" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:?} as lines
+Return lines
+
+org.neo4j.driver.exceptions.ClientException: Can't coerce `NO_VALUE` to String
+something wrong with this line:
+
+        "       scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,\n" +
+
+
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'1000',N:'4'})-[:Arguments]->(aN:ArgumentsNode)
+With max(aN.ResultDivisor) as maxDivisor
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'1000',N:'4'})-[:Arguments]->(aN:ArgumentsNode)
+RETURN cl.Divisor,cl.afe,cl.tft,aN.TDegree,aN.TScalar,aN.TDivisor,aN.ADivisor,aN.ATwoSeq,aN.ADegree,aN.AScalar,aN.ScalarProduct,aN.ResultDivisor,cl.N,cl.MaxN,maxDivisor,aN.DegreeSum 
+

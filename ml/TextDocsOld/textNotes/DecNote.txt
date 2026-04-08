@@ -1,0 +1,2158 @@
+Once again:
+
+object QuerryS3T is composed of a function s3TQuerry and a main method.
+
+The main method loops a set product of parmameters for s3TQuerry.  
+Each parameter set arguments a call to QuippyDB.  The resultSet 
+arguments a case class sequence representing each resultSet row. 
+the result field of cass class is collected and reduced then returned.  
+
+A DataFrame is created from a seperate case class sequence of each parameter set along with the
+collected and reduced result.  However, it appears tConstraint is desired yet missing from DataFrame.  
+The attempt is now to include the loop parameter representing tConstraint in df by first appending
+the case class rResult and then including tConstraint parameter in each rResult.
+
+Above written yesterday.
+
+Maybe also yesterday refactor completed. 
+So... 
+.Look at DataFrame
+.Compute again pivot table.
+.Also, though, an offline effort with ZADScripts and relieve jar of println's.
+
++----------+---+----+---+--------------------+
+|rowCounter|  n|maxN|dim|           rowResult|
++----------+---+----+---+--------------------+
+
+Is refactored dataframe.
+Before pivot, groupby n (ascending) , rowcounter(ascending)
+
++----------+---+----+---+--------------------+
+|rowCounter|  n|maxN|dim|           rowResult|
++----------+---+----+---+--------------------+
+|         1|  2|1000|  4|4.000000000000000000|
+|         1|  3|1000|  4|8.000000000000000000|
+|         2|  3|1000|  4|               0E-18|
+|         1|  4|1000|  4|14.00000000000000...|
+|         2|  4|1000|  4|2.000000000000000000|
+|         4|  4|1000|  4|               0E-18|
+|         1|  5|1000|  4|22.00000000000000...|
+|         2|  5|1000|  4|6.000000000000000000|
+|         4|  5|1000|  4|4.000000000000000000|
+|         8|  5|1000|  4|               0E-18|
+|         1|  2|1000|  8|4.000000000000000000|
+|         1|  3|1000|  8|8.000000000000000000|
+|         2|  3|1000|  8|               0E-18|
+|         1|  4|1000|  8|14.00000000000000...|
+|         2|  4|1000|  8|2.000000000000000000|
+|         4|  4|1000|  8|               0E-18|
+|         1|  5|1000|  8|22.00000000000000...|
+|         2|  5|1000|  8|6.000000000000000000|
+|         4|  5|1000|  8|4.000000000000000000|
+|         8|  5|1000|  8|               0E-18|
++----------+---+----+---+--------------------+
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+var df= z.get("s12DF").asInstanceOf[DataFrame]
+var groupDf = df.orderBy(asc("n"),asc("rowCounter")).groupBy("n","rowCounter").agg(sum("rowResult"))
+groupDf.show()
+
+This dataframe script does find the 
+error in QuippyDB.  Visual inspection 
+was used.  
+Two points moving forward.
+
+.want code to identify offending graph component.
+.need cypher delete script.  
+
+The two points combined into jar.
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+val df= z.get("s12DF").asInstanceOf[DataFrame]
+val groupDf = df.withColumn("rowResultBD",col("rowResult").cast(DecimalType(25,0)))
+                .withColumn("nBD",col("n").cast(DecimalType(25,0)))
+                .withColumn("rowCounterBD",col("rowCounter").cast(DecimalType(25,0)))
+                .withColumn("dimBD",col("dim").cast(DecimalType(25,0)))
+                .orderBy(asc("nBD"),asc("rowCounterBD"))
+                .groupBy("nBD","rowCounterBD")
+                .pivot("dimBD")
+                .agg(sum("rowResultBD"))
+val groupDfCount = groupDf.count()
+groupDf.show(groupDfCount.toInt,false)
+
++---+------------+------+------+---------------------+
+|nBD|rowCounterBD|4     |8     |16                   |
++---+------------+------+------+---------------------+
+|2  |1           |4     |4     |4                    |
+|3  |1           |8     |8     |8                    |
+|3  |2           |0     |0     |0                    |
+|4  |1           |14    |14    |14                   |
+|4  |2           |2     |2     |2                    |
+|4  |4           |0     |0     |0                    |
+|5  |1           |22    |22    |22                   |
+|5  |2           |6     |6     |6                    |
+|5  |4           |4     |4     |4                    |
+|5  |8           |0     |0     |0                    |
+|6  |1           |32    |32    |32                   |
+|6  |2           |12    |12    |12                   |
+|6  |4           |12    |12    |12                   |
+|6  |8           |8     |8     |8                    |
+|6  |16          |0     |0     |-64900000            |
+|7  |1           |44    |44    |44                   |
+
+and we now know what ancient Judaean sandals were like as they have been preserved in dry caves by the Dead Sea. 
+
+
+12/2
+
+so, maybe does not seem like windows function is good idea.  
+
+QuerryS3T - the extract and transform gateway from Quippy10 works with the ZADScripts dependency.
+. need the spark sql stuff in another dataframe.
+. need the pivot table description
+  Is group by n,rowcounter, pivot by dimensions  -  how to multiple group.
+- need print garbage out of ZADScripts.
+
+Some paragraphs 
+
+-  the convergance of vertexs within same index.
+-  the generator and the constant term...  
+   2,4,8 / 10,100,1000
+-  make zeros worksheet
+   . choose index, degree_1, index, degree_2 both = n, subtract and zero appears
+   . repeate with index'  then multiple together and two roots....
+
+And ZADScripts.dfScripts needs the S* cypher ruberic.
+
+
+And what does the actual "find the error in the graph" routine look like?
+
+The pivot dataframe,  by inspection, points to n=6,etrm=16,dimension=16 as inconsistant.
+Utterly wrong as n increases.  
+Question:  is dimension=16 highest dimension on Quippy? 
+
+And the preamble is, tighten the workbook folder up??
+So, archive notbook folder and start trashing irrelevant notes.  -done
+
+And so what of a modern neo4j interpreter for zeppelin??
+Did follow http://blog.bruggen.com/2020/09/using-apache-zeppelin-with-neo4j-to.html
+And appears to work.
+
+So, after lunch...
+confirm pivotDataFrame findings.
+
+12/3
+
+"put" the pivot dataframe and work the iteration in next paragraph.
+
+https://alvinalexander.com/scala/scala-either-left-right-example-option-some-none-null
+
+vistied apply/unapply
+Iterator has functions like forEach, map, foldLeft
+http://www.scala-lang.org/docu/files/collections-api/collections.html
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20What%20is%20the%20difference%20between%20the%20methods%20iterator%20and%20view%20-%20Stack%20Overflow.html
+
+scala> val tokensByName = dataset.groupByKey(_.name)
+
+p
+197
+
+KeyValueGroupedDataset — Typed Grouping
+KeyValueGroupedDataset is an experimental interface to calculate aggregates over groups of
+objects in a typed Dataset.
+
+agg
+cogroup
+count
+flatMapGroups
+flatMapGroupsWithState
+keys
+keyAs
+mapGroups
+mapGroupsWithState
+mapValues
+reduceGroups
+
+
+case class People(name: String, age: Int, other: String)   
+val df = Seq(
+  People("Rob", 20, "cherry"),
+  People("Rob", 55, "banana"),
+  People("Rob", 40, "apple"),
+  People("Ariel", 55, "fox"),
+  People("Vera", 43, "zebra"),
+  People("Vera", 99, "horse")
+).toDS
+
+val oldestResults = df
+ .groupByKey(_.name)
+ .mapGroups{ 
+    case (nameKey, peopleIter) => {
+        var oldestPerson = peopleIter.next  
+        while(peopleIter.hasNext) {
+            val nextPerson = peopleIter.next
+            if(nextPerson.age > oldestPerson.age) oldestPerson = nextPerson 
+        }
+        oldestPerson
+    }
+  }    
+  oldestResults.show  
+
+The following produces:
+
++-----+---+------+
+| name|age| other|
++-----+---+------+
+|Ariel| 55|   fox|
+|  Rob| 55|banana|
+| Vera| 99| horse|
++-----+---+------+
+
+
+
+file:///C:/Users/Aibes/ZeppelinDocs/rdd%20-%20Spark%20-%20Apply%20UDF%20on%20few%20columns%20of%20a%20Dataset%20and%20form%20new%20columns%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/Group%20by%20a%20dataset%20and%20run%20Custom%20function%20in%20Spark%20Scala%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/Apply%20a%20custom%20function%20to%20a%20spark%20dataframe%20group%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/How%20to%20get%20all%20columns%20after%20groupby%20on%20Dataset(Row)%20in%20spark%20sql%202.1.0%20-%20Stack%20Overflow.html
+
+
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20Spark%20How%20to%20call%20UDF%20over%20dataset%20in%20java%20-%20Stack%20Overflow.html
+
+
+Just convert the Array to a Seq:
+
+val rdd_response=sc.parallelize(array_response.toSeq)
+
+12/4
+
+can do dataframe.select("col1","col2"...) but the columnNameis generated at runtime.
+
+file:///C:/Users/Aibes/SparkDocs/Scala%20Spark%20DataFrame%20dataFrame.select%20multiple%20columns%20given%20a%20Sequence%20of%20column%20names%20-%20Stack%20Overflow.html
+
+$() is a Spark function defined in the trait Params. It simply calls getOrDefault on the Params object.
+
+Each Dataset also has an untyped view called a DataFrame, which is a Dataset of Row.
+
+// To create Dataset[Row] using SparkSession
+val people = spark.read.parquet("...")
+val department = spark.read.parquet("...")
+
+people.filter("age > 30")
+  .join(department, people("deptId") === department("id"))
+  .groupBy(department("name"), people("gender"))
+  .agg(avg(people("salary")), max(people("age")))
+
+
+Once I have got in Spark some Row class, either Dataframe or Catalyst, I want to convert it to a case class in my code. This can be done by matching
+
+someRow match {case Row(a:Long,b:String,c:Double) => myCaseClass(a,b,c)}
+
+dataframe.na.drop()
+
+case class MyClass(a: Long, b: String, c: Option[Int], d: String, e: String)
+
+dataframe.map(_.toSeq.toList match {
+  case List(a: java.math.BigDecimal, 
+    b: String, 
+    c: Int, 
+    _: String,
+    _: java.sql.Date, 
+    e: java.sql.Date,
+    _: java.sql.Timestamp, 
+    _: java.sql.Timestamp, 
+    _: java.math.BigDecimal, 
+    _: String) => MyClass(
+      a = a.longValue(), b = b, c = Option(c), d = d.toString, e = e.toString)
+}
+
+
+file:///C:/Users/Aibes/SparkDocs/sql%20-%20How%20to%20select%20the%20first%20row%20of%20each%20group%20-%20Stack%20Overflow.html
+
+
+How to select the first row of each group?
+
+case class Record(Hour: Integer, Category: String, TotalValue: Double)
+
+df.as[Record]
+  .groupBy($"hour")
+  .reduce((x, y) => if (x.TotalValue > y.TotalValue) x else y)
+  .show
+
+// +---+--------------+
+// | _1|            _2|
+// +---+--------------+
+// |[0]|[0,cat26,30.9]|
+// |[1]|[1,cat67,28.5]|
+// |[2]|[2,cat56,39.6]|
+// |[3]| [3,cat8,35.6]|
+// +---+--------------+
+
+Spark 2.0 or later:
+
+df.as[Record]
+  .groupByKey(_.Hour)
+  .reduceGroups((x, y) => if (x.TotalValue > y.TotalValue) x else y)
+
+KeyValueGroupedDataset — Typed Grouping
+
+KeyValueGroupedDataset is created using Dataset.groupByKey operator.
+val dataset: Dataset[Token] = ...
+scala> val tokensByName = dataset.groupByKey(_.name)
+tokensByName: org.apache.spark.sql.KeyValueGroupedDataset[String,Token] = org.apache.s
+park.sql.KeyValueGroupedDataset@1e3aad46
+Table 1. KeyValueGroupedDataset’s Aggregate Operators (KeyValueGroupedDataset API)
+Operator Description
+agg
+cogroup
+count
+flatMapGroups
+flatMapGroupsWithState
+keys
+keyAs
+mapGroups
+mapGroupsWithState
+mapValues
+reduceGroups
+KeyValueGroupedDataset holds keys that were used for the object.
+
+And again the opportunity to use window functions.
+
+Convert List to Spark Data Frame in Scala / Spark
+
+http://wiki.tcl.tk/17983
+
+12/6
+
+file:///C:/Users/Aibes/ZeppelinDocs/functional%20programming%20-%20difference%20between%20foldLeft%20and%20reduceLeft%20in%20Scala%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/How%20to%20walk%20through%20a%20Scala%20collection%20with%20%E2%80%98reduce%E2%80%99%20and%20%E2%80%98fold%E2%80%99%20alvinalexander.com.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/Avoid%20groupByKey%20when%20performing%20a%20group%20of%20multiple%20items%20by%20key%20-%20Apache%20Spark%20-%20Best%20Practices%20and%20Tuning.html
+
+(1779744180, (10,1), (11,1), (12,2), (13,2) ...)
+(3922774869, (10,1), (11,1), (12,3), (13,4) ...)
+
+which is (id, (age, count), (age, count) ...)
+
+The easiest way is first reduce by both fields and then use groupBy:
+
+rdd
+.map { case (id, age, count) => ((id, age), count) }.reduceByKey(_ + _)
+.map { case ((id, age), count) => (id, (age, count)) }.groupByKey()
+
+Which returns an RDD[(Long, Iterable[(Int, Int)])], for the input above it would contain these two records:
+
+(1779744180,CompactBuffer((16,3), (15,1), (14,1), (11,1), (10,1), (17,1)))
+(3922774869,CompactBuffer((11,1), (12,3), (16,4), (13,3), (15,3), (10,1), (14,5)))
+
+
+file:///C:/Users/Aibes/ScalaDocs/Working%20with%20Lists.html
+
+file:///C:/Users/Aibes/ScalaDocs/How%20to%20create%20a%20method%20that%20returns%20a%20function%20in%20Scala%20alvinalexander.com.html
+
+file:///C:/Users/Aibes/ScalaDocs/Case%20Classes%20and%20Pattern%20Matching.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/User%20Defined%20Aggregate%20Functions%20(UDAFs)%20-%20Spark%203.0.1%20Documentation.html
+
+file:///C:/Users/Aibes/SparkDocs/apache%20spark%20-%20How%20to%20convert%20Row%20of%20a%20Scala%20DataFrame%20into%20case%20class%20most%20efficiently%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/What%20are%20all%20the%20uses%20of%20an%20underscore%20in%20Scala%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/Higher-order%20Functions%20Tour%20of%20Scala%20Scala%20Documentation.html
+
+
+
+
+rdd
+.map { case (id, age, count) => ((id, age), count) }.reduceByKey(_ + _)
+.map { case ((id, age), count) => (id, (age, count)) }.groupByKey()
+
+file:///C:/Users/Aibes/ZeppelinDocs/Avoid%20groupByKey%20when%20performing%20a%20group%20of%20multiple%20items%20by%20key%20-%20Apache%20Spark%20-%20Best%20Practices%20and%20Tuning.html
+
+file:///C:/Users/Aibes/ScalaDocs/Case%20Classes%20and%20Pattern%20Matching.html
+
+file:///C:/Users/Aibes/ScalaDocs/Working%20with%20Lists.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20Spark%20Dataset%20-%20map%20option[T]%20fields%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/How%20to%20walk%20through%20a%20Scala%20collection%20with%20%E2%80%98reduce%E2%80%99%20and%20%E2%80%98fold%E2%80%99%20alvinalexander.com.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/functional%20programming%20-%20difference%20between%20foldLeft%20and%20reduceLeft%20in%20Scala%20-%20Stack%20Overflow.html
+
+
+The sum function uses linear recursion. Complete the following tail-recursive version:
+
+def sum(f: Int => Int, a: Int, b: Int): Int = {
+  def loop(x: Int, acc: Int): Int =
+    if (x > b) acc
+    else loop(x + 1, acc + f(x))
+  loop(a, res0)
+}
+sum(x => x, 1, res1) shouldBe 55
+
+
+12/7
+
+
+something like rdd.map with the case class dataframe.
+
+need to iterate and read pairs of pivot columes.  
+
+map the boolean true if same case same/different function of the two pivot columns -the pivot columns are run time generated.
+
+cannot .reduce string, string => boolean
+look again at fold.
+
+also, maybe recursive case different false. recurse true 
+
+
+maybe another column with pivot - a boolean one..
+
+match ( column pivot 1 AND column pivot 2 as true else false
+
+also do not want whole pivot iff row."different"
+
+maybe pivot is an artifact of this transform.
+the pivot column values are know as a set from dimension loop range.
+
+meaning terms += rResult ... s3TQuerry(loop params)
+
+that is only append when s3TQuerry(dimension_i,rowCounter) AND s3TQuerry(dimension_i+1,rowCounter)
+This does avoid the pivot.
+
+
+looks like the wor begins in object main. 
+refactor based on a.
+a is the outer product loop vs a as inner product loop.
+
+with a as inner product loop variable,
+terms+= a 
+terms+= a+1 iff s3tQuerry(...,a+1) 
+
+want a case class of the two results.
+pattern match the two values for equality result true  => append terms
+                                                 false => ;
+maybe as def resultsAreEqual(x:BigDecimal,y:BigDecimal) Boolean = 
+
+but also a dataframe of parameters then udf is QuerryS3T.s3TQuerry
+
+case class rResult(n:String, maxN:String,dim:String,rowResult:BigDecimal,rowresult1:bigdecimal) 
+
+range(0..n,0..1).map( x,y +> rResult(...,QuerryS3T.s3TQuerry(...),QuerryS3T.s3TQuerry(...')).toDF()   // ' denotes nextDim.
+
+
+
+ran object s3T in eclipse and:
+Description	Resource	Path	Location	Type
+Build path specifies execution environment J2SE-1.5. There are no JREs installed in the workspace that are strictly compatible with this environment. 	quippy1		Build path	JRE System Library Problem
+
+use case with pattern guard, 
+
+And now say QuerryS3T.scala returns the highest n in MaxN,dimension 
+where Quippy is consistant. 
+
+
+Case classes are Scala's way to allow pattern matching on objects without requiring a large amount of boilerplate
+
+    abstract class Expr
+    case class Var(name: String) extends Expr
+    case class Number(num: Double) extends Expr
+    case class UnOp(operator: String, arg: Expr) extends Expr
+    case class BinOp(operator: String, 
+        left: Expr, right: Expr) extends Expr
+
+Listing 15.1 -
+
+    scala> def simplifyAdd(e: Expr) = e match {
+             case BinOp("+", x, y) if x == y =>
+               BinOp("*", x, Number(2))
+             case _ => e
+           }
+    s
+
+    def tupleDemo(expr: Any) =
+      expr match {
+        case (a, b, c)  =>  println("matched "+ a + b + c)
+        case _ =>
+      }
+
+  scala> tupleDemo(("a ", 3, "-tuple"))
+  matched a 3-tuple
+
+<R> RDD<R> 	map(scala.Function1<Row,R> f, scala.reflect.ClassTag<R> evidence$4)
+Returns a new RDD by applying a function to all rows of this DataFrame.
+<R> RDD<R> 	mapPartitions(scala.Function1<scala.collection.Iterator<Row>,scala.collection.Iterator<R>> f, scala.reflect.ClassTag<R> evidence$6)
+Returns a new RDD by applying a function to each partition of this DataFrame.
+
+
+scala> val data = sc.parallelize(List(10,20,30))
+scala> val mapfunc = data.map(x => x+10) 
+
+scala> mapfunc.collect  
+
+https://www.artima.com/pins1ed/for-expressions-revisited.html
+
+ scala> List.range(1, 5) flatMap (
+           i => List.range(1, i) map (j => (i, j))
+         )
+
+
+Did refactor s3t dataframe.  It is created maybe spark idiomaticlly.
+Importantly, the two dimension rows exist for boolean fold.  
+
+
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20How%20can%20I%20loop%20through%20a%20Spark%20data%20frame%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20Iterate%20each%20row%20in%20a%20dataframe,%20store%20it%20in%20val%20and%20pass%20as%20parameter%20to%20Spark%20SQL%20query%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/SparkDocs/SparkSession%E2%80%89%E2%80%94%E2%80%89The%20Entry%20Point%20to%20Spark%20SQL%20%C2%B7%20The%20Internals%20of%20Spark%20SQL.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/Create%20a%20Spark%20RDD%20using%20Parallelize%20%E2%80%94%20SparkByExamples.html
+
+file:///C:/Users/Aibes/SparkDocs/DataFrame.html
+
+file:///C:/Users/Aibes/SparkDocs/apache%20spark%20-%20How%20to%20create%20a%20dataframe%20from%20a%20list%20of%20Scala%20custom%20objects%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/SparkDocs/apache%20spark%20-%20How%20to%20create%20a%20dataframe%20from%20a%20list%20of%20Scala%20custom%20objects%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ScalaDocs/Working%20with%20Lists.html
+
+file:///C:/Users/Aibes/ScalaDocs/Case%20Classes%20and%20Pattern%20Matching.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/How%20to%20walk%20through%20a%20Scala%20collection%20with%20%E2%80%98reduce%E2%80%99%20and%20%E2%80%98fold%E2%80%99%20alvinalexander.com.html
+
+
+12/8
+
+case class testRange(m:Int,n:Int)
+
+val df = spark.createDataFrame({List.range(1, 5) flatMap (
+           i => List.range(1, 3) map (j => testRange(i, j))
+         ) toSeq})
+df.show
+
+
+https://getpocket.com/explore/item/fruits-and-vegetables-are-trying-to-kill-you?utm_source=pocket-newtab
+
+https://forge.medium.com/how-to-beat-procrastination-like-a-stoic-philosopher-d9e1ddd31306?utm_source=pocket-newtab
+
+https://getpocket.com/explore/item/the-world-s-most-efficient-languages?utm_source=pocket-newtab
+
+QuippyDataFrame and SparkTest worksheet each have 
+a dataframe populated vis the QuerryS3T object.
+
+Quippy pivots MaxN,N,tConstraint for dimension columns as it can take a range of dimensions.
+SparkTest otherwise the same only querries two consecutive dimensions and no pivot is performed.
+
+Today, a traversal of the SparkTest dataframe.
+Two facts are relevant:
+Each row's congruence of consecutive dimension and
+The compleation of n in MaxN sequence.
+
+Perception over knowledge and seems to be
+the congruence is tested  after the DataFrame gets collected through iteration.
+Otherwise, before the Dataframe is defined, how can the flatMap,map
+iteration of parameters be broken?
+
+The entire MaxN sequence iff...  
+
+  val structureData = Seq(
+    Row("James","","Smith","36636","NewYork",3100),
+    Row("Michael","Rose","","40288","California",4300),
+    Row("Robert","","Williams","42114","Florida",1400),
+    Row("Maria","Anne","Jones","39192","Florida",5500),
+    Row("Jen","Mary","Brown","34561","NewYork",3000)
+  )
+
+  val structureSchema = new StructType()
+    .add("firstname",StringType)
+    .add("middlename",StringType)
+    .add("lastname",StringType)
+    .add("id",StringType)
+    .add("location",StringType)
+    .add("salary",IntegerType)
+
+  val df2 = spark.createDataFrame(
+    spark.sparkContext.parallelize(structureData),structureSchema)
+  df2.printSchema()
+  df2.show(false)
+
+  import spark.implicits._
+  val df3 = df2.map(row=>{
+    val util = new Util()
+    val fullName = row.getString(0) +row.getString(1) +row.getString(2)
+    (fullName, row.getString(3),row.getInt(5))
+  })
+  val df3Map =  df3.toDF("fullName","id","salary")
+
+  df3Map.printSchema()
+  df3Map.show(false)
+
+and the uses of  import spark.implicits._   is????
+
+https://sparkbyexamples.com/apache-spark-rdd/spark-reducebykey-usage-with-examples/
+
+The plan:
+
+   After audurious research, and continuing with the map paradyne,
+   will "map" the dataframe.   Wrong: The important precondition is
+   the rResult case class refactor.  Wrong: Need consistant:Boolean field.
+   
+   Note: The DataFrame mapping is implemented as scriptlet - not an object.
+   Remember: The DataFrame is immutable. 
+   So want transform dataframe of key set (MaxN,N,RowCounter) where not
+   consistant.
+
+ val myDataset = sqlContext
+     .read
+     .format("org.apache.spark.sql.cassandra")
+     .options(Map("table" -> "mytable", "keyspace" -> "mykeyspace"))
+     .load()
+
+myDataset.show()
+
+println(s"Ping and the count is: ${myDataset.count}")
+myDataset.foreach(t => println("Weee"))
+println("Pong")
+
+
+//  is map a foreach or collect type?
+The foreach operation doesn't run on your local machine.. it runs on the remote machine where your spark executors are running. Thus the println is not executed on your local machine but on the remote executor.
+
+to have it printed on your local machine you should collect on the dataframe and have all the data of the dataframe on your driver (which runs on your local machine) and execute a foreach on that local collection as shown below.
+
+myDataset.collect.foreach(println)
+
+Note: be careful on using collect on a RDD or a Dataframe. collect downloads all the data from the distributed collection to the local memory which could lead to java.lang.OutOfMemoryError Exceptions.
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+val df= z.get("s12DF").asInstanceOf[DataFrame]
+val groupDf = df.withColumn("rowResultBD",col("rowResult").cast(DecimalType(25,0)))
+                .withColumn("nBD",col("n").cast(DecimalType(25,0)))
+                .withColumn("rowCounterBD",col("rowCounter").cast(DecimalType(25,0)))
+                .withColumn("dimBD",col("dim").cast(DecimalType(25,0)))
+                .orderBy(asc("nBD"),asc("rowCounterBD"))
+                .groupBy("nBD","rowCounterBD")
+                .pivot("dimBD")
+                .agg(sum("rowResultBD"))
+val groupDfCount = groupDf.count()
+groupDf.show(groupDfCount.toInt,false)
+z.put("pivotDF",groupDf)
+
+col("rowResult") assembled as bigDecimal needs special encoder for use in spark context.
+the choices are DecimalType and String.
+
+<console>:35: error: value getDecimalType is not a member of org.apache.spark.sql.Row
+
+any type spark
+
+org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 134.0 failed 1 times, most recent failure: Lost task 0.0 in stage 134.0 (TID 2580, localhost, executor driver): java.lang.ClassCastException: java.math.BigDecimal cannot be cast to scala.math.BigDecimal
+
+12/9
+
+I have a dataframe with 500 million rows. 
+I would like to iterate through each row and modify the column names/drop 
+few columns and also update the column values based on few conditions. 
+I am using the below approach with collect.
+
+Use a map operation instead of a collect/foreach, and convert back to RDD. That will allow the calculations to be distributed around the cluster, instead of forcing it all into one node. You can do this by modifying your custom method to take and return a Row, which can then be converted back to a DataFrame.
+
+val oldSchema = originalDf.schema
+val newSchema = //TODO: put new schema based on what you want to do
+val newRdd = originalDf.map(row => myCustomMethod(row))
+val newDf = sqlContext.createDataFrame(newRdd,newSchema)
+
+Dropping rows can then be handled through the .drop method on the new DataFrame.
+This may run into problems if your custom method is not serializable - or rather contains objects that are not serializable - in which case switch to a mapPartitions method, so that you can force each node to create a copy of the relevant objects first.
+pattern matching dataframe rows.
+
+and once again, consistant case class use case for appending sequence of rows 
+lacking agreement between rResult and rResult1.
+val df1 = df.map{ case rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal,rowResult1:BigDecimal) =>
+                    rResult(rowCounter,n,maxN,dim,rowResult,rowResult1)
+}
+
+<console>:135: error: constructor cannot be instantiated to expected type;
+ found   : rResult
+ required: org.apache.spark.sql.Row
+       val df1 = df.map{ case rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal,rowResult1:BigDecimal) =>
+warning: there was one feature warning; re-run with -feature for details
+defined object QuerryS3T
+
+Pattern Matching on Row
+Row can be used in pattern matching (since Row Object comes with unapplySeq).
+scala> Row.unapplySeq(Row(1, "hello"))
+res5: Some[Seq[Any]] = Some(WrappedArray(1, hello))
+
+Row(1, "hello") match { case Row(key: Int, value: String) =>
+  key -> value
+}
+
+Looks like SparkTest worksheet has requesit utility.
+It does identify QuippyGraph inconsistancy.
+
+It is time to plan remediation errors.
+Also some markdown in SparkTest for usage clarification.
+
+And the question:
+
+How to reconcile S3E results with Spark result?
+Spark points to MaxN,N,rowCounter,dim coordiante.
+S3 to a whole evaluate.
+
+
++----------+---+----+---+------------------------+------------------------+
+|rowCounter|n  |maxN|dim|rowResult               |rowResult1              |
++----------+---+----+---+------------------------+------------------------+
+|8192      |16 |1000|4  |8192.000000000000000000 |8192.000000500000000000 |
+|8192      |17 |1000|4  |24576.000000000000000000|24575.999999500000000000|
+|16384     |17 |1000|4  |16384.000000000000000000|16383.999999500000000000|
+|32768     |17 |1000|4  |0E-18                   |0.000002500000000000    |
+|16384     |18 |1000|4  |49152.000000000000000000|49152.000000500000000000|
+|32768     |18 |1000|4  |32768.000000000000000000|32767.999994400000000000|
+|65536     |18 |1000|4  |0E-18                   |-0.000002800000000000   |
+|32768     |19 |1000|4  |98304.000000000000000000|98303.999995100000000000|
+|65536     |19 |1000|4  |65536.000000000000000000|65536.000002400000000000|
+|131072    |19 |1000|4  |0E-18                   |-0.000003000000000000   |
++----------+---+----+---+------------------------+------------------------+
+
+The PM:
+
+The s3T case class is candidate DataFrame schema.
+Is to be comared with TheS3's interpretation of a Quippy10 resultSet.
+
+Reuse objectQuerryS3t in worksheet MaxN,N detail
+Want the s3T case class wrapped into a dataframe.
+ 
+Note:
+
+s3TQuerry returns BigDecimal.
+
+val df = spark.createDataFrame({List.range(16, 17) flatMap (
+           n => List.range(0, n-1) map (b => rResult(BigDecimal(2).pow(b).toString(),n.toString(),nMax,BigDecimal(2).pow(a).toString(),QuerryS3T.s3TQuerry(n.toString,n.toString,nMax,BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(b).toInt) )     )
+         ) toSeq})
+
+a bit more refactoring to d,maxn,n-dataframe s3t.
+
+s3t needs to return the row sequence.
+main appendes and then finalally casts to dataframe.
+
+for each eTrm in (MaxN,N),  s3TQuerry is called.
+
+two roads:  terms is object method or terms is main method and parameter in 
+            s3TQuerry call.  
+
+12/10
+
+QuippyDF note needs object QuerryS3T repurposed/refactored.
+QuippyDF did identify anamalous results.
+It will verify MaxN,N,rowCounter values,computation.  
+
+From yesterday:
+Main class does not instanciate datafram from the range map.
+Rather, s3TQuerry should return case class.
+That is, the range map is to s3TQuerry call.  
+ 
+"val" terms is is an object wide field. - var or val?
+
+s3TQuerry does not need to return BigDecimal, instead an approprate case class to be returned.
+ 
+note:  s3TQuerry does concatinate the resultSet of case classes.
+       
+So question is  :  can a sequence of case classes be concatinated to a sequence of case classes?
+Another question:  The compound List range is not needed here.  The first of two range arguments 
+                   is static. 
+
+So list.range flatmap list.range of bigdecimal to seq
+Maybe flatmap list range of arraybuffer 
+
+warning: there was one feature warning; re-run with -feature for details
+defined object QuerryS3T
+
+PM:
+
+    Zeppelin maybe does not see all Quippy is offering.  
+    Know an error begins but where????
+    D,MaxN,N-DataFrame note is curiosity object.
+
+file:///C:/Users/Aibes/ZeppelinDocs/Annoying%20things%20in%20Scala%202%20that%E2%80%99ll%20be%20(mostly)%20gone%20in%20Scala%203%20SoftwareMill%20Tech%20Blog%20SoftwareMill%20Tech%20Blog.html
+file:///C:/Users/Aibes/ZeppelinDocs/apache%20spark%20-%20large%20number%20of%20big%20decimal%20type%20is%20null%20when%20query%20it%20-%20Stack%20Overflow.html
+looks like already a DecimalType issue with data frame....
+maybe case class s3t cannot have BigDecimal types as fields.
+
+so, take a look at pivot table udf's.....  
+    have to string to bigdecimal to add groups....
+
+_*  is what meaning??
+
+extract of nightshade for women, which gave their eyes a hypnotic effect
+
+it meant for something .... searchin for that something !!     
+
+In order to do that, Spark generates Java code on the fly and compiles it with Janino
+https://www.sciencedaily.com/releases/2020/03/200311161853.htm
+
+strict Dataset usage (no Dataframes). 
+
+
+As for the question, there are two approaches. You can collect all the values for each group as lists and then process it with the custom function
+(with an UDF) or you can create a UDAF. This question describes it quite well (although there is no answer): stackoverflow.com/questions/49294294/… – Shaido Sep 4 '19 at 6:53
+
+
+file:///C:/Users/Aibes/SparkDocs/PivotUDFs/Apply%20a%20custom%20function%20to%20a%20spark%20dataframe%20group%20-%20Stack%20Overflow.html
+file:///C:/Users/Aibes/SparkDocs/PivotUDFs/User%20Defined%20Aggregate%20Functions%20(UDAFs)%20-%20Spark%203.0.1%20Documentation.html
+file:///C:/Users/Aibes/SparkDocs/PivotUDFs/Group%20by%20a%20dataset%20and%20run%20Custom%20function%20in%20Spark%20Scala%20-%20Stack%20Overflow.html
+file:///C:/Users/Aibes/SparkDocs/PivotUDFs/Spark%20DataFrame%20transform%20using%20a%20User%20Defined%20Function%20(UDF).html
+https://spark.apache.org/docs/latest/sql-ref-functions-udf-aggregate.html
+file:///C:/Users/Aibes/SparkDocs/PivotUDFs/User%20Defined%20Aggregate%20Functions%20(UDAFs)%20-%20Spark%203.0.1%20Documentation.html#
+
+12/11
+
+TheDMaxNNPivot note:
+
+Has object QuerryS3T paragraph writing resultSet rows to DataFrame=df.
+Techincally, row "result" cannot be DecimalType and in fact must be computed as native BigDecimal and recorded as String.
+This requirement implicats UDF/Window functionality.
+However the lauidible effort of develobing above mention utility can be put off because of resultSet structure.
+As if generated by the api, local aggrigates can be defined with individual resultsets for record in dataframe. 
+
+TheDMaxNNPivot note QuerryS3T object paragraph has it's main method defining MaxN,N,Dimension and 
+is iterating rowCounter. Each argumented resultSet populates case class s3T.  The population includes the computed "row" result.
+The array of s3T then arguments a function for returning the resultset value. 
+
+Do not want monolitic s3TQuerry.
+QuerryS3T is in a state of chaotic ambition and needs refinement.
+Maybe there are two paralell dataframes wanting attention.
+First is the ResultSet DataFrame and second the Result DataFrame.
+Each have view requirements - The ordering cannot be by String type.
+
+case class s3T(dimension:String,Degree:Int,scalar:String,index:String,maxIndex:BigDecimal,divisor:BigDecimal,rowCounter:String,result:String)
+s3TQuerry function returns an ArrayBuffer of s3T's.  They are resultset populated with result calculated from resultset terms.  
+
+case class rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal)
+Main method arguments most fields with result derrived from the arraybuffer returnd from s3t.
+
+The lunchtime high:
+Here is a candidate refactor: s3TQuerry returns a tupple.  The arraybuffer and its result....
+
+
+Tuple2[ArrayBuffer[s3T], java.lang.String]
+Maybe want mainTerms a list of Tupples.
+
+Yep, looks like the real problem:
+
+Do not BigDecimals in E notation.....
+That was also a prior problem....
+What was the remedy????
+
+And before the 2 or so stroll, can verify scalars....
+Which means, QuerryS12Object worksheet is tasked to...
+Compare scalars!!!!
+
+
+Did the ar.bigDecimal.toPlainString, an improvement.
+Need QuerryS12Object tasked:
+
+populate n=7,rowcounter=64 d=16 
+want sd3TQuerry to return 
+[ArrayBuffer[s3T(_)]]
+and then  Tupple2[ArrayBuffer[s3T(_),BigInteger]
+
+s3TQuerry should udf result
+It should not perform the resultSeqBD calculation
+return type should remain arraybuffer.
+
+12/13
+
+The udfA  - aggrigate result by rowcounter
+    udf   - calculate result
+
+udf than udfa
+
+the resultCalculation:
+
+
+file:///C:/Users/Aibes/ZeppelinDocs/Type-Level%20Programming%20in%20Scala,%20Part%205b%20Project%20Euler%20problem%C2%A04%20Apocalisp.html
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20Cast%20Any%20of%20String%20to%20Int%20-%20Stack%20Overflow.html
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20Cast%20Option[Any]%20to%20int%20-%20Stack%20Overflow.html
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20Why%20is%20my%20data%20type%20Any%20when%20it%20started%20as%20Int%20-%20Stack%20Overflow.html
+file:///C:/Users/Aibes/ZeppelinDocs/User%20Defined%20Functions%20(UDF)%20and%20User%20Defined%20Aggregate%20Functions%20(UDAF)%20-%20SnappyData%E2%84%A2%201.2.0.html
+
+12/14
+
+s3TQuerry did once do three tasks.
+.the DFScripts.s3T method call - for populating an ArrayBuffer of case class.
+.extend result a user defined function - first up for 12/15
+.reduce result across the result set (a unit of groupby) - a user defined
+ aggrigate function.
+
+The related tasks extend resut and reduce result should 
+argument the DataFrame.  As so, they need to be written as
+User Defined Functions within object QuerryS3T.   
+
+First off, s3T does not need result field.  It will be transformed 
+into Dataframe with result field.
+ 
+12/15
+
+Will not embelish s3TQuerry with udf's.  
+Instead two more objects in worksheet.
+First one is object ResultUDF
+
+for each row in dataframe, udf it   -  string to BigDecimals and compute.
+
+someRow match {case Row(a:Long,b:String,c:Double) => myCaseClass(a,b,c)}
+
+map(row => myCaseClass(row.getLong(0), row.getString(1), row.getDouble(2))
+
+12/16
+
+object ResultUDF, written yesterday, converts the z context s12DF to a Dataset.
+extendResult, the UDF, builds through ds.map the transformed Dataset ds.
+
+it remains to .put this transformed datafram into a z variable context -done
+
+S12UDF,UDFA gets another paragraph for the forthcomming aggResultUDFA object.
+
+aggResultUDFA object needs a new case class.
+
+
+case class s3TRe(dimension:String,Degree:String,scalar:String,index:String,
+                 maxIndex:String,divisor:String,rowCounter:String,result:String)
+has the result field for reduction.
+
+https://spark.apache.org/docs/2.4.0/sql-getting-started.html#type-safe-user-defined-aggregate-functions
+it's (the above) blueprint suggests 
+
+And remember just aggregate.
+So
+
+https://spark.apache.org/docs/2.4.0/sql-getting-started.html#type-safe-user-defined-aggregate-functions
+this blueprint still interesting... though do not see how average (the division) is
+occuring.
+
+and a need for groupby key ...
+
+
+12/17
+
+Sorted ZepDocs
+
+S12UDF,UDFA agg paragraph features Databricks documentation example.
+do not know what def merge is for
+
+Do need the UDFA then groupbykey.UDFA 
+So first UDFA.
+
+PM:  
+
+    Implement object MyAverage using case class s3TRe.
+    First up: define the case class indexSum  
+
+Have:
+
+case class s3TQu(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String)
+case class s3TRe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String,result:String)
+case class rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal)
+case class indexSum(iSum:String,finalISum:String)
+
+
+object IndexRowsSum  did reduce the 1000,7 group correctly.
+
+12/18
+
+file:///C:/Users/Aibes/ZeppelinDocs/Group%20spark%20type-safe%20aggregations%20by%20multiple%20keys%20-%20Stack%20Overflow.html
+
+need groupbykey in S12UDF,UDFA  object IndexRowsSum
+seems to be the goto resource needed to wrap up the week.
+- done.
+
+S12UDF,Aggrigator - The transforms of the ResultSets of grouped DFScripts.s3T querries.
+...  The above statement is a paragraph header, along with other paragraph headers written
+     up in mark down in respective paragraphs.
+
+The recap:
+
+    Quippy10 is a graph keyed by MaxN,N,D.  There is one MaxN on graph with a range of N and
+range of D. ZADScripts iterativly populates Quippy by parameterizing ZADScripts with elements 
+of the product of N,D.  The ZADScripts  
+
+     The purpose of Zeppelin note S12UDF,Aggrigator is to prototype the objects needed to prove
+out the Quippy10 graph. 
+
+   S12UDF,Aggrigator populates a DataFrame from querring Quippy10 with DFScripts.s3T ResultSets.
+The DataFrame is converted to DataSet for application of a UDF written to extend a 
+result value.  A subsequent transform of the Dataset does entirely aggrigate result or first
+group the Dataset by rowCounter and then aggrigate individual groups.
+
+12/19
+
+The prototyped objects need to be set to task.
+
+Want pairwise d,n...
+
+QuippyDataFrame.pivotDF is the structure (DataFrame) of interest.  Unfortunate though,
+rowResultBD is not the desired UDF/Aggrigator function.    
+
+S12UDF,Aggrigator has the Aggrigator/UDF perfouming result calculation.  
+
+ 
+So,  ready to build a new note - it needs a title  -  QuippyGraphCheck 
+
+The three spark.sql object prototypes:
+
+QuippyDataFrame    - loops with one MaxN, a range of D and a range of n
+                     all the d's in one pivot,  the aggrigation is not spark sql (is scala). - pivot yes.
+QuippyDF           - loops with one MaxN, pairwise s3TQuerry calls (note s3TQuerry returns a BigDecimal).
+                     The aggrigation is not spark sql.  - pivot yes.
+S12UDF,Aggrigator  - MaxN with one n and one d argument s3TQuerry.  The querry returns an ArrayBuffer of the s3TQu
+                     case classed defining each row of ResultSet.  Spark native UDF's and an Aggrigator extend
+                     result and group subtotals. - no pivot.  
+GraphCheck         - A clone of S12UDF,Aggrigator, The note sheet to be modified.
+
+So, do not care to aunomate the graph proof.  
+Do care to use it for finding errorunous first occurance of annalomous MaxN,N,D entry.
+
+Suppose want the QuippyDataFrams style pivot...
+
+It points to n=6 rowCounter =16 as anonomalous.
+
+12/22
+
+
+The yesterday take on things:
+Did a compare of the s3's return for 1000,6,32,16
+                 and graphcheck's    1000,6,32,16.  
+
+
+DFScripts s3T is parameterized with rowCounter.  
+GraphCheck is not over chalenged with this constraint.
+Proceed and constrain.
+
+big observation:  with maxDivisor instead of divisor.  the division can go in the finish method of aggrigator.
+
+The morning was refactoring scala.BigDecimal with yea old java.math.bigDecimal.  very real precision issues.  
+maybe were resolved.
+
+so,  return to the big loop.... it does require the compound pivot key.
+                                and where is the compound pivot key documentation... it was mearly days ago.
+The compound groupbykeys are written into pivotdf and works.
+
+12/23
+
+
+return to the big loop:
+Taking the loop from QuippyDF and installing into graphcheck note.
+
+
+<console>:58: error: overloaded method value createDataFrame with alternatives:
+  [A <: Product](data: scala.collection.Seq[A])(implicit evidence$3: reflect.runtime.universe.TypeTag[A])org.apache.spark.sql.DataFrame <and>
+  [A <: Product](rdd: org.apache.spark.rdd.RDD[A])(implicit evidence$2: reflect.runtime.universe.TypeTag[A])org.apache.spark.sql.DataFrame
+ cannot be applied to (scala.collection.immutable.Seq[scala.collection.mutable.ArrayBuffer[s3TQu]])
+       val df = spark.createDataFrame({List.range(2, 20) flatMap (
+
+List(ArrayBuffer(s3TQu(8,0,1996008,2,1000,2,1), s3TQu(8,1,-3996,2,1000,2,1), s3TQu(8,2,2,2,1000,2,1)), 
+ArrayBuffer(s3TQu(8,2,2,3,1000,2,1), s3TQu(8,1,-3992,3,1000,2,1), s3TQu(8,0,1992016,3,1000,2,1)),
+ ArrayBuffer(s3TQu(8,2,2,3,1000,2,2), s3TQu(8,1,-3998,3,1000,2,2), s3TQu(8,0,1998000,3,1000,2,2)), 
+ArrayBuffer(s3TQu(8,0,1988028,4,1000,2,1), s3TQu(8,2,2,4,1000,2,1), s3TQu(8,1,-3988,4,1000,2,1)), 
+ArrayBuffer(s3TQu(8,0,1994004,4,1000,2,2), s3TQu(8,1,-3994,4,1000,2,2), s3TQu(8,2,2,4,1000,2,2)), 
+ArrayBuffer(s3TQu(8,3,-446044793604862464,4,1000,256,4), s3TQu(8,7,-63944,4,1000,256,4), s3TQu(8,6,223608240,4,1000,256,4),
+ s3TQu(8,4,558043596801216,4,1000,256,4), s3TQu(8,8,8,4,1000,256,4), s3TQu(8,5,-446825439360,4,1000,256,4), 
+s3TQu(8,1,-63609436804859394559488,4,1000,256,4), s
+
+List(s3TQu(8,1,-3980,6,1000,2,1), s3TQu(8,0,1980064,6,1000,2,1), s3TQu(8,2,2,6,1000,2,1), 
+s3TQu(8,2,2,6,1000,2,2), s3TQu(8,1,-3986,6,1000,2,2), s3TQu(8,0,1986024,6,1000,2,2),
+ s3TQu(8,1,-63386871536618129912832,6,1000,256,4), s3TQu(8,7,-63912,6,1000,256,4),
+ s3TQu(8,2,222159183064938120960,6,1000,256,4), s3TQu(8,4,556927191524160,6,1000,256,4),
+ s3TQu(8,5,-446154878304,6,1000,256,4), s3TQu(8,6,223384480,6,1000,256,4), s3TQu(8,3,-444929583056632704,6,1000,256,4),
+ s3TQu(8,0,7912478308152712952835072,6,1000,256,4), s3TQu(8,8,8,6,1000,256,4), s3TQu(8,7,-511328,6,1000,1024,8),
+ s3TQu(8,3,-3560550603065271024,6,1000,1024,8), s3TQu(8,1,-507317157585189157732352,6,1000,1024,8),
+ s3TQu(8,6,1787299536,6,1000,1024,8), s3TQu(8,5,-3569909204296,6,1000,1024,8), s3TQu(8,2,1777940923117845114880,6,1000,1024,8),
+ s3TQu(8,4,4456532981506328,6,1000,1024,8), 
+ s3TQu(8,8,64,6,1000,1024,8), 
+
+Have the requisite DataSet in GraphCheckDecimalKey. It remains to include a range of d in Dataset and to pivot.
+
+Do know which dimension is in error.  
+Need precise deletes defined.
+
+https://getpocket.com/explore/item/once-you-try-spanish-fried-eggs-you-ll-never-cook-them-any-other-way?utm_source=pocket-newtab
+https://getpocket.com/explore/item/what-would-happen-if-everyone-truly-believed-everything-is-one?utm_source=pocket-newtab
+
+
+12/24
+
+1000,16,32 is the anamality coordinate.
+
+meaning...  1000,*,16 did complete execution.
+
+And the graph componenents composing this irregularity are...
+And are the zeppelin deletes adaquit...
+
+And the instructions for ZADScriptsK are where...
+
+
+
+implicits
+algebraic types
+pattern matching
+
+neo4.conf has build streams topics
+
+case class Person(name: String,	age: Int)
+val	getPerson:	ResultSetIO[Person] =		
+ for {
+ name <- get[String](1)
+ age <- get[Int](2)
+ } yield Person(name, age) 
+
+p189
+
+RelationalGroupedDataset — Untyped Rowbased Grouping
+RelationalGroupedDataset is an interface to calculate aggregates over groups of rows in a
+DataFrame.
+Note
+KeyValueGroupedDataset is used for typed aggregates over groups of custom
+Scala objects (not Rows).
+RelationalGroupedDataset is a result of executing the following grouping operators:
+groupBy
+rollup
+cube
+pivot
+
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 50
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+java -jar ZADScripts.jar 2 30 1000 2   done
+                                   8  done
+                                  16  done
+                                  32  up to n=13
+java -jar ZADScripts.jar 2 30 1000 64   n=13          
+
+
+
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 30
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+java -jar ZADScripts.jar 2 7 1000 2
+
+
+12/25
+
+(by using _* which is the syntax of Scala varargs).
+
+BigDecimal(0). If you're instantiating that a lot you might want to cache it as a named value (
+
+https://forge.medium.com/how-to-beat-procrastination-like-a-stoic-philosopher-d9e1ddd31306?utm_source=pocket-newtab
+
+
+12/26
+
+case classes ...   and an implicit field is added for each constructor parameter.
+
+
+12/28
+
+The gererator lab.
+
+Purpose the single valued generator for 
+exibiting the base n modulo constant.
+
+Have MaxN=1000 can retrieve each n polynonmial for observation of constant.
+Want MaxN=2,4,8,16,... and reduce mod 2 for constant observation.
+
+Need:  DFScripts styly method returning ResultSet for populating DataSet.
+Note:  Cypher scripts are writtin.
+
+ResultSet gets a map function into the respective base.  
+AS: Have resultSet dataframe transforming into new dataframe.
+
+To do question:
+   Need whole p in dataset or just constant???
+
+ An implicit conversion on RDDs of tuples exists
+
+kDS: org.apache.spark.sql.Dataset[((Int, Int), String)] = [key: struct<_1: int, _2: int>, index_Result: string]
+
+
+12/29 
+
+ 
+GraphCheckDecimalKey does use s3t script.
+First is implement s3a:  
+
+The DFScripts.s3T method signature: 
+
+public ResultSet s3A(String rangeLow, String rangeHigh, String nMax, String dimension1, String dimension2, String dimension3, int tConstraint) 
+
+The s3A script wants:
+
+rangeLow,rangeHigh
+nMax
+dimension1,dimension2,dimension3
+tConstraint   --  not used in s3A
+
+
+The new DFScripts.s3A signature:
+
+public ResultSet s3A(String rangeLow, String rangeHigh, String nMax, String dimension1) 
+
+
+String rangeLow, 
+String rangeHigh, 
+String nMax, 
+String dimension1
+
+//  2^a is dimension, n is usual range, b is rowCounter
+
+s3A does not need rowCounter parameter
+    nor a range of n.
+
+Meaning:
+
+Object s3a.main needs only these parameters: 
+single n,the maxN, and one dimension.
+
+s3a return:   "RETURN aDegree,aScalar,pTD,iM,iN"
+
+Error setting properties for interpreter 'spark.spark': Unable to delete file: C:\Users\Aibes\zeppelin-0.8.2-bin-all\local-repo\spark\ZADScripts.jar
+
+
+Me thinkith quippy10 needs a consistancy looksee...
+
+Did Start the GraphicZero note.
+
+Need to flesh out the resultSet.. results.
+as in extend note to include more paragraphs from graphcheckdecimalkey note.
+
+
+12/30
+
+An unexpected result occured within GraphicZero.
+Need another paragraph or two from GraphCheckDecimalKey.
+They will help sleuth this otherwise anamality.
+
+case class s3AQu(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String)
+Is the GraphicZero resultSet object.  It does not have the GraphCheckDecimalKey s3TQu rowCounter field.
+
+Maybe there is no anamality...  
+It appears that MaxN=1000 has only two digits available in zero degree term for expressing 2^n
+
+The test is ofcourse load nmax=10000.
+
+Need:  DFScripts styly method returning ResultSet for populating DataSet.
+Note:  Cypher scripts are writtin.
+
+Need delete paragraphs in DeleteNodes note.
+
+These are the ZADScripts.ScriptsAutomation methods and their associated streams.sink topics:
+
+public void s12Dc(String degreeConst, String rangeLow,String rangeHigh,String index,String dimensionRead1,String dimensionRead2,
+                  String writeDimension, int tConstraint) throws JsonProcessingException  {
+
+        MATCH (v:VertexNode {Degree:?})<-[vI:VertexIndexedBy {twoSeq:?}]-(i:IndexedBy {N:N,MaxN:nMax,Dimension:?})-[]->(e:Evaluate)
+        WITH i.N as iN, i.MaxN as iM,e,v,vI,i                        \n" +
+        OPTIONAL MATCH (vv:VertexNode)<-[vII:VertexIndexedBy]-(ii:IndexedByArgument)-[]->(ee:Evaluate {Value:toString(vI.twoSeq)})      
+                        where ii.MaxN=iM  AND ii.Dimension=?
+
+        These dimension arguments are same valued.
+
+        streams.sink.topic.cypher.s12=Create (aN:ArgumentsNode { TDegree:event.TTDegree, TScalar:event.TTScalar, TDivisor:event.vDivisor, ADivisor:event.vvDivisor,ATwoSeq:event.vvTwoSeq,ADegree:event.AADegree,AScalar:event.AAScalar,DegreeSum:event.degreeSum,ScalarProduct:event.scalarProduct,ResultDivisor:event.resultDivisor }) \
+        Merge (cl:CollectedProductArgNode {Dimension:event.writeDimension,MaxN:event.iM,N:event.iN,Divisor:event.pD,afe:event.p2Eval,tft:toInteger(event.vTwoSeq)}) \
+        Merge (cl) - [:Arguments] -> (aN)
+
+
+
+public void s3TEc(String rangeLow, String rangeHigh, String nMax, String dimension1, String dimension2, String dimension3, 
+                  int tConstraint) throws JsonProcessingException  {
+
+        MATCH (cl:CollectedProductArgNode {Dimension:?,MaxN:iM,N:iN,tft:?})-[:Arguments]->(aN:ArgumentsNode )
+        WITH max(aN.ResultDivisor) AS maxDivisor,iN,iM
+        MATCH (cl:CollectedProductArgNode {Dimension:?,MaxN:iM,N:iN,tft:?})-[:Arguments]->(aN:ArgumentsNode )
+
+        The write dimension is read dimension + 1.
+
+	streams.sink.topic.cypher.s3t=CREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)} ) \
+	MERGE (i:IndexedBy {N:event.iN,RowCounter:event.eTrm,MaxN:event.iM,Dimension:event.dimension} ) \
+	MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) \
+	MERGE (i) -[:IndexedByEvaluate]->(e) \
+	MERGE (i)-[eee:VertexIndexedBy {twoSeq:event.eTrm, divisor:event.pTD}]->(v)
+
+
+
+public void s3ADc(String rangeLow, String rangeHigh, String nMax, String dimension1, String dimension2, String dimension3,
+                  int tConstraint, String dConstraint) throws JsonProcessingException  {
+
+        MATCH (v:VertexNode {Degree:?})<-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:?})
+        WITH iN, iM, max(vI.divisor) as maxDivisor
+        MATCH (v:VertexNode {Degree:?})<-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:?})
+
+        The read dimension and write dimension are the same.
+
+	streams.sink.topic.cypher.s3a=CREATE (v:VertexNode {Scalar:event.tScalar,Degree:toString(event.tDegree)}) \
+	MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(event.iN)))}) \
+	MERGE (i:IndexedByArgument {N:event.iN,MaxN:event.iM,Dimension:event.dimension} ) \
+	MERGE (i) -[:IndexedByEvaluate]->(e) \
+	MERGE (i)-[eee:VertexIndexedBy {twoSeq:“99”, divisor:event.pTD}]->(v)
+
+
+So, GraphDelets worksheet is fleshed out...
+And again the graph error to be fixed is...
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 50
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+java -jar ZADScripts.jar 2 30 1000 2   done
+                                   8  done
+                                   16  done
+                                   32  up to n=13
+java -jar ZADScripts.jar 2 30 1000 64   n=13          
+
+DFScripts.s3t reads collectedproductArgNodes 
+
+TheS3's s3e reads indexedby nodes..  it detects error in Dimension=128.
+
+The delete took 49 minutes.
+
+
+TheS3's s3E says Dimension=64 is all good.
+Now, run GraphChjeckDecimalKey for a=5 and a=6.  //  a value computes d=2^a or s^a+1???
+
+ran the delete scripts starting at s12 dimension = 64.  
+And.... GraphCheck note does not see Dimension=32 nodes
+But.... TheS3's do....
+
+
+12/31
+
+The problem:
+  Do not believe GraphcZero's null return of D expected on
+QuippyDB.  S3's does return D.  GraphCheckDecimalKey 
+
+Can consense Quippy state with QuippyDataFrame and GraphCheckDecimalKey
+for( a <- 2 to 6;n <- 2 to 10;b <- 0 to (n-2))
+s3T2 2 1000 64 64 64 1
+java.lang.UnsupportedOperationException: empty.reduceLeft
+
+QuippyDataFrame    ---  actually a good consistancy checker - maybe needs fixen
+for( a <- 2 to 5;n <- 2 to 10
+says Quippy is broken at D=16.
+
+|5  |8           |0  |0  |0                |0   |
+|6  |1           |32 |32 |32               |32  |
+|6  |2           |12 |12 |12               |12  |
+|6  |4           |12 |12 |12               |12  |
+|6  |8           |8  |8  |8                |8   |
+|6  |16          |0  |0  |-64900000        |null|
+|7  |1           |44 |44 |44               |44  |
+|7  |2           |20 |20 |20               |20  |
+|7  |4           |24 |24 |24               |24  |
+|7  |8           |24 |24 |24               |24  |
+|7  |16          |16 |16 |110500000        |null|
+|7  |32          |0  |0  |-1109000000      |null|
+
+
+GraphCheckDecimalKey says:
+for(a <- 4 to 4; n <- 2 to 10;b <- 0 to (n-2))
+|[5,8]   |0.0000000                   |
+|[6,1]   |32                          |
+|[6,2]   |12                          |
+|[6,4]   |12.00000                    |
+|[6,8]   |8.0000000                   |
+|[6,16]  |0.0000000000000             |
+|[7,1]   |44                          |
+|[7,2]   |20                          |
+|[7,4]   |24.00000                    |
+|[7,8]   |24.0000000                  |
+|[7,16]  |16.0000000000000            |
+|[7,32]  |0.0000000000000000          |
+
+and...
+for(a <- 5 to 5; n <- 2 to 10;b <- 0 to (n-2)) {
+
+|[5,8]   |0.0000000000                                            |
+|[6,1]   |32                                                      |
+|[6,2]   |12                                                      |
+|[6,4]   |12.0000000                                              |
+|[6,8]   |8.0000000000                                            |
+|[6,16]  |0.0000000000000000000000                                |
+|[7,1]   |44                                                      |
+|[7,2]   |20                                                      |
+|[7,4]   |24.0000000                                              |
+|[7,8]   |24.0000000000                                           |
+|[7,16]  |16.0000000000000000000000                               |
+|[7,32]  |0.0000000000000000000000000000 
+
+Conclusion
+GraphCheckDecimalKey says s3T resultsets are consistant and 
+exixt through D=32.
+QuippyDataframe -  ambitious as it gets  - the pivot functionality,
+                   seems to have an error.
+
+On to GraphicZero.
+
+QuerryS3A.s3AQuerry(n.toString,n.toString,nMax,BigDecimal(2).pow(a+1).toString())
+public ResultSet s3A(String rangeLow, String rangeHigh, String nMax, String dimension1)
+
+And does correctly.. 
+
+for(a <- 5 to 5; n <- 5 to 5) 
++---------+------+------------------------------------+-----+--------+-------+-------------------------------------------+
+|dimension|Degree|scalar                              |index|maxIndex|divisor|result                                     |
++---------+------+------------------------------------+-----+--------+-------+-------------------------------------------+
+|64       |6     |10035734381600050.000               |5    |1000    |2048   |4900260928515649414062500000000.0000000000 |
+|64       |2     |2141078217184108951466577920.000    |5    |1000    |2048   |1045448348234428198958290000000.000        |
+|64       |0     |47475076255985933192913856577536.000|5    |1000    |2048   |23181189578118131441852469032.000          |
+|64       |4     |10013687748320429285296.000         |5    |1000    |2048   |4889495970859584611960937500000.0000000    |
+|64       |1     |-475272621759979570874659776512.000 |5    |1000    |2048   |-232066709843740024841142469000.000        |
+|64       |5     |-12029644680896235838.000           |5    |1000    |2048   |-5873849941843865155273437500000.0000000000|
+|64       |8     |2155251088.000                      |5    |1000    |2048   |1052368695312500000000000000000.0000000    |
+|64       |9     |-479472.000                         |5    |1000    |2048   |-234117187500000000000000000000.0000000    |
+|64       |10    |48.000                              |5    |1000    |2048   |23437500000000000000000000000.0000000      |
+|64       |3     |-5715820516480358761080832.000      |5    |1000    |2048   |-2790927986562675176309000000000.000       |
+|64       |7     |-5741016692224.000                  |5    |1000    |2048   |-2803230806750000000000000000000.000       |
++---------+------+------------------------------------+-----+--------+-------+-------------------------------------------+
+
+Did fix the notes error...
+
+The fourth parameter in DFScripts.s3T is dimension1.
+dimension2 is in signature but not used.  dimension3
+is part of the return.
+
+terms += QuerryS3T.s3TQuerry(n.toString,n.toString,nMax,BigDecimal(2).pow(a+1).toString(),
+                      BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(a).toString(),BigDecimal(2).pow(b).toInt) 
+
+And the conclusion is:
+  QuippyDataFrame does not have expected utility.  Love the pivot but something is broken-- Probably the scala.bigDecimal.
+  Both GraphCheckDecimalKey and GraphicZero are performant and comfirm QuippyDB consistancy.
+  However did not confirm range of n.
+
+Post conclusion the effort supporting GraphicZero:
+ 
+ Because Quippy needs some powers of two representing indexs  
+ TwoPolynomialGenerator and  ZADScripts have some work.
+ 
+The .bat for MaxN=1000:
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 50
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+java -jar ZADScripts.jar 2 30 1000 2   done
+                                   8  done
+                                   16  done
+                                   32  up to n=13
+java -jar ZADScripts.jar 2 30 1000 64   n=13      
+
+MaxN=4 - do not believe it will display 100=4 in constant.
+MaxN=8,16,32,64.
+ 
+Neo is warning of incompatable APOC for Q10
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 8 2 8
+
+whow whow whow.   Neo4j is complaining about apoc,streams...
+but it happend all good 2 months ago....
+
+Interface Microsoft 6to4 Adapter
+
+2020-12-31 16:09:00.150+0000 INFO [o.n.s.AbstractNeoWebServer$ServerComponentsLifecycleAdapter] Web server started.
+
+java -jar TwoPolynomialGenerator.jar test.csv 8 2 9 done
+java -jar TwoPolynomialGenerator.jar test.csv 16 2 17 done
+java -jar TwoPolynomialGenerator.jar test.csv 32 2 33 done
+java -jar TwoPolynomialGenerator.jar test.csv 64 2 65 done
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+java -jar ZADScripts.jar 2 8 8 2  done                    202,014 
+java -jar ZADScripts.jar 2 8 8 8  maybe done                  765
+java -jar ZADScripts.jar 2 8 8 16                         203,173  765
+
+
+
+The ring test is on twopoly04...ods on thumb drive...
+Ready and waiting for GraphicZero.
+
+zadscripts eats cpu cycles 
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+it was all in the windows command process.
+it is not exiting gracefully.... it is clogging its heap.
+but seems to complete task.
+but the process remains clogged.     -- a big issue.
+
+
+
+
+
+  
+
+
+MATCH (n:IndexedBy {MaxN:"16"}) RETURN n
+│{"Dimension":"2","RowCounter":"-1","N":"2","MaxN":"16"} │
+├────────────────────────────────────────────────────────┤
+│{"Dimension":"2","RowCounter":"0","N":"2","MaxN":"16"}  │
+
+
+
+
+a GraphicZero theorm....
+
+with the 2,4,8,... MaxN's and the zero degree term....
+                   the digits are even hense mod 2 = 0 up to 
+                   well you know....
+
+foney
+
+
+
+
+
+
+
+https://fivethirtyeight.com/features/the-40-weirdest-and-best-charts-we-made-in-2020/?utm_source=pocket-newtab
+
+Peter Jackson’s gore-soaked early film, “Dead Alive.”
+
+
+“Rosencrantz and Guildenstern Are Dead” and “Vincent and Theo.”
+
+
+svelt.dev language 
+mike bostock 
+
+
+
+
+ResultSet gets a map function into the respective base.  
+AS: Have resultSet dataframe transforming into new dataframe.
+
+To do question:
+   Need whole p in dataset or just constant???
+
+ An implicit conversion on RDDs of tuples exists
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+https://www.youtube.com/watch?v=OlKIpEVHjhc&fbclid=IwAR0e-hhrNxHDpxId3ujQBtSK6ogYJa5zBwz2ZONvTe45qTicALVksjswzd0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+auxiliary constructor
+companion object class constructor
+error: double definition:
+constructor myClass: (strings: List[String])myClass at line 12 and
+constructor myClass: (ints: List[Int])myClass at line 17
+have same type after erasure: 
+
+
+If the OP wants a more overt factory-like notation, rename apply to make, e.g., then use FooBar.make("zzzz")
+
+class Foo private (arg:Either[String, Int]){ 
+   ...
+}
+
+object Foo {
+   def apply(arg:String) = new Foo(Left(arg))
+   def apply(arg:Int) = new Foo(Right(arg))  
+}
+
+val a = Foo(42)
+val b = Foo("answer")
+
+Of course you must be careful if you want to inherit from your class (e.g. this isn't possible in the example above)
+
+http://www.scala-lang.org/node/1198#comment-3430
+
+
+
+
+
+https://docs.scala-lang.org/overviews/scala-book/constructors-default-values.html
+https://getpocket.com/explore/item/mathematicians-explore-mirror-link-between-two-geometric-worlds?utm_source=pocket-newtab
+
+case class Friends(name: String, friends: String)
+org.apache.spark.sql.catalyst.encoders.OuterScopes.addOuterScope(this)
+
+again though, facts on limits of the bigdecimal... the maximum scala/precisison...
+
+Missing values
+
+Realdata is usually not that perfect, missing values and other data qualityproblems can emerge. To demonstrate missing values handling we create asimilar but smaller Dataset where the friends column contains missing values.
+
+Two changes needed:
+•use Option[Type] when defining the type of the column in the case class
+•use Some(value) for defined values and None for missing values when creating the sequence
+
+import scala.reflect.runtime.universe.TypeTag
+def createTuple2[Type_x: TypeTag, Type_y: TypeTag] = udf[(Type_x, Type_y), Type_x, Type_y]((x: Type_x, y: Type_y) => (x, y))
+
+
+
+Looks like some usable syntax: 
+sw_ds.groupByKey(x=>(x.species, x.jedi, x.haircolor)).agg(mean($"weight").as[Double], count($"species").as[Long])
+
+lets see example with aggrigator in expression.
+
+ val appName = this.getClass.getSimpleName.replace("$", "")
+
+
+GeometricMean extends UserDefinedAggregateFunction
+object MyAverage extends Aggregator[Employee, Average, Double]
+
+Aggregator is relevent to DataSets as UserDefinedAggregateFunctions seems
+relevent to DataFrams.
+
+ private val numeric = implicitly[Numeric[N]]
+
+file:///C:/Users/Aibes/ZeppelinDocs/What%20are%20all%20the%20uses%20of%20an%20underscore%20in%20Scala%20-%20Stack%20Overflow.html
+http://www.slideshare.net/normation/scala-dreaded
+http://www.slideshare.net/normation/scala-dreaded
+
+Shadowed Implicit Value Members
+https://go.skimresources.com/?id=74968X1525083&isjs=1&jv=14.4.0-stackpath&sref=file%3A%2F%2F%2FC%3A%2FUsers%2FAibes%2FZeppelinDocs%2FExperiment%2520Changes%2520Understanding%2520Of%2520Black%2520Holes%2520Black%2520Hole%2520News.html&url=https%3A%2F%2Fwww.popularmechanics.com%2Fscience%2Fmath%2Fa30152083%2Fsolve-quadratic-equations%2F&xguid=&xs=1&xtz=300&xuuid=b91fb11ee5e2f7beed448c8ca1f5bd8a&cci=8b096cf4efd0239d0ae5d5415d6cbd53
+file:///C:/Users/Aibes/ZeppelinDocs/Computer%20Scientists%20Achieve%20the%20%E2%80%98Crown%20Jewel%E2%80%99%20of%20Cryptography%20WIRED.html
+
+https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it?rq=1&rq=1
+cross-site scripting attacks.
+Buffer overflow attacks
+prototype pollution attacks, 
+
+notation please-
+
+ StructType(StructField("value", DoubleType) :: Nil)
+
+file:///C:/Users/Aibes/ZeppelinDocs/spark%20dataframe%20untyped%20custom%20user%20defined%20aggregate%20functions%20-%20tutorial%2017%20-%20Big%20Data.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/A%20Gentle%20Intro%20to%20UDAFs%20In%20Apache%20Spark%20%E2%80%94%20Jowanza%20Joseph.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/UserDefinedAggregateFunction%E2%80%89%E2%80%94%E2%80%89Contract%20for%20User-Defined%20Untyped%20Aggregate%20Functions%20(UDAFs)%20%C2%B7%20The%20Internals%20of%20Spark%20SQL.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/dataframe%20-%20Spark%20custom%20aggregation%20collect_list+UDF%20vs%20UDAF%20-%20Stack%20Overflow.html
+
+
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20How%20to%20define%20a%20custom%20aggregation%20function%20to%20sum%20a%20column%20of%20Vectors%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/java%20-%20How%20to%20write%20a%20user-defined%20aggregate%20function%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20How%20to%20define%20and%20use%20a%20User-Defined%20Aggregate%20Function%20in%20Spark%20SQL%20-%20Stack%20Overflow.html
+
+file:///C:/Users/Aibes/ZeppelinDocs/User-defined%20aggregate%20functions%20-%20Scala%20%E2%80%94%20Databricks%20Documentation.html
+
+//println(index+" "+indexPower+" "+scalar+" "+degree+" "+result + "    "+"\n")
+//print(result + "    ")
+
+concatinate list of lists.
+
+do that wiki that you do... The surname wiki...  
+
+suffused space with a kind of cosmic antigravity,
+https://stackoverflow.com/questions/12218641/scala-what-is-a-typetag-and-how-do-i-use-it/12232195#12232195
+file:///C:/Users/Aibes/ZeppelinDocs/Introduction%20to%20Datasets%20%E2%80%94%20Databricks%20Documentation.html
+https://physics.stackexchange.com/questions/599195/can-light-reach-far-away-galaxies-in-an-expanding-universe
+https://astronomy.stackexchange.com/questions/40277/do-the-axes-of-rotation-of-most-stars-in-the-milky-way-align-reasonably-closely
+https://docs.scala-lang.org/tour/extractor-objects.html
+Scala’s pattern matching statement is most useful for matching on algebraic types expressed via case classes. Scala also allows the definition of patterns independently of case classes, using unapply methods in extractor objects.
+https://docs.scala-lang.org/overviews/scala-book/match-expressions.html
+
+12/13
+
+scala> :javap Foo
+
+
+http://www.manning.com/bjarnason/
+
+trait Functor[F[_]] {
+
+higher kind
+
+The abstract override annotation says that this implementation relies on other implementations in the trait hierarchy. The trait now has access to super
+
+ In a java based world, the decorator pattern is normally implemented by a wrapper object that will do some logic than delegate to the wrapped object. In scala the same thing can be done at the trait level and normally is (types defining behavior).
+
+scala mixin
+
+selftype 
+
+Here we define a trait that depends on properties (self: Properties =>) and adds a method apply to it. 
+
+file:///C:/Users/Aibes/ScalaDocs/Type%20Parameterization.html
+
+leading ::: trailing.reverse
+
+using the :: operator,
+
+private val
+
+asymptotic behavior
+
+    class Queue[T](
+      private val leading: List[T], 
+      private val trailing: List[T] 
+    ) {
+      private def mirror = 
+        if (leading.isEmpty)
+          new Queue(trailing.reverse, Nil)
+        else
+          this
+  
+      def head = mirror.leading.head
+  
+      def tail = { 
+        val q = mirror 
+        new Queue(q.leading.tail, q.trailing) 
+      }
+  
+      def append(x: T) = 
+        new Queue(leading, x :: trailing)
+    }
+
+
+
+class parameters" that constitute the "primary constructor".
+
+https://www.theatlantic.com/science/archive/2018/08/dark-energy-string-theory/567221/
+
+https://getpocket.com/explore/item/when-squirrels-were-one-of-america-s-most-popular-pets?utm_source=pocket-newtab
+
+import spark.implicits._
+
+http://www.artima.com/scalazine/articles/stackable_trait_pattern.html
+
+file:///C:/Users/Aibes/ScalaDocs/scala%20-%20Why%20does%20the%20compiler%20complain%20when%20using%20the%20abstract%20modifier%20in%20a%20trait%20in%20two%20cases%20-%20Stack%20Overflow.html
+
+https://mattermodeling.stackexchange.com/questions/3919/how-does-the-recent-chinese-quantum-supremacy-claim-compare-with-googles
+
+file:///C:/Users/Aibes/ZeppelinDocs/Useful%20Developer%20Tools%20Apache%20Spark.html
+
+https://www.scala-lang.org/files/archive/spec/2.13/05-classes-and-objects.html#class-linearization
+
+there is a powerful abstraction for this concept called a kleisli arrow, 
+
+file:///C:/Users/Aibes/ScalaDocs/Disambiguating%20'this'%20in%20Scala,%20or%20what%20does%20'self%20=)'%20mean%20%C2%B7%20e.near%20Tech%20Blog.html
+
+It is predominately used for Dependency Injection, such as in the Cake Pattern. There exists a great article covering many different forms of dependency injection in Scala, including the Cake Pattern. If you Google "Cake Pattern and Scala", you'll get many 
+
+@Rodney No, it shouldn't. In fact, using this with self types is something I look down upon, since it shadows for no good reason the original this.
+
+Liskov principle 
+
+
+@FrancisToth I think you are right on the money. This effectively makes SpellChecker only
+ applicable in a subtree of a hierarchy with a root of RandomAccessSeq[char]. What's 
+worse, when you actually use the syntax SomeType extends SpellChecker, there is no explicit 
+indication that SpellChecker relies on this specialization of its self type. Even if SomeType 
+is in the right hierarchy to be allowed to use SpellChecker, this might still be extremely 
+mysterious to people who are new to specializing their own class by mixing in SpellChecker.
+
+https://getpocket.com/explore/item/the-witness?utm_source=pocket-newtab
+
+https://getpocket.com/explore/item/mathematicians-explore-mirror-link-between-two-geometric-worlds?utm_source=pocket-newtab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+siamo fatti cosi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+case class rResult(rowCounter:String,n:String, maxN:String,dim:String,rowResult:BigDecimal)
+
+//object rResult {
+//  def apply(rowResult:String) = BigDecimal(rowResult)
+//}
+
+why again is this companion object necessary??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+val df= z.get("s12DF").asInstanceOf[DataFrame]
+val groupDf = df.withColumn("rowResultBD",col("rowResult").cast(DecimalType(25,0)))
+                .withColumn("nBD",col("n").cast(DecimalType(25,0)))
+                .withColumn("rowCounterBD",col("rowCounter").cast(DecimalType(25,0)))
+                .withColumn("dimBD",col("dim").cast(DecimalType(25,0)))
+                .orderBy(asc("nBD"),asc("rowCounterBD"))
+                .groupBy("nBD","rowCounterBD","rowResult")
+                .pivot("dimBD")
+                .agg(sum("rowResultBD"))
+val groupDfCount = groupDf.count()
+groupDf.show(groupDfCount.toInt,false)
+
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+var df= z.get("s12DF").asInstanceOf[DataFrame]
+df.show()
+val pivotDF = df.withColumn("rowResultBD",col("rowResult").cast(DecimalType(25,25))).groupBy("dim").pivot("n").sum("rowResultBD")
+pivotDF.show()
+
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+var df= z.get("s12DF").asInstanceOf[DataFrame]
+var groupDf = df.orderBy(asc("n"),asc("rowCounter")).groupBy("n","rowCounter","rowResult").sum("rowResult")
+groupDf.show()
+
+
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+var df= z.get("s12DF").asInstanceOf[DataFrame]
+var groupDf = df.withColumn("rowResultBD",col("rowResult").cast(DecimalType(25,0))).orderBy(asc("n"),asc("rowCounter")).groupBy("n","rowCounter","rowResult").agg(sum("rowResultBD"))
+groupDf.show()
+
+
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='5' AND i.MaxN='6' AND i.Dimension="4"
+WITH i,e,p,i.N as iN, i.MaxN as iM
+
+2019 zeroanddifferences.java
+
+2020 roundup
+
+Jan:  scripts refactored for exact.math/common divisor...
+      :server functionality
+      cartesian product error
+Feb:  Graph refactor - relations qualified (Argument/Target)
+      Write next dimension scriptlets
+      Dimension scripts not generic - s1,2,3 for each d.
+      Iterativly modernized-into the S* rejeim .target nodes/argument 
+      nodes. seperate dimension note pages.
+      Delete scripts
+      load .csv functionality
+      "The search for wholesome division in on."
+Mar   fixed quartets refactored
+      candidate S* scripts  target/argument/evaluate scripts.
+      migrate from MaxN=10 to MaxN=20
+      CS questions: scala pyton zeppelin kafka beam neo4j/spark
+      neo4j export .csv hard look at neo.conf for apoc functions
+      export csv probably for ooCalc.  // good number of scripts/attempts
+      max divisor introduced inot scripts
+      The grand experiment:  Arithmetic permutations - with respect to indices of the form a*10^n.
+      Do run Neo4j as Administrator.
+      the seven scripts of joy.
+      And aws 
+      And zepl.
+      And newtons differences  - the just as cool math - the "transform P into one with interesting roots - the I,II roots.
+      the side show - a root here p * a root there p'  =  p result with root here and there. 
+Apr   ZADScripts named as S* into java for automation.
+      Assemble the archtype D*note.
+      written that twopolynomial.jar should be in Zeppelin environment
+      And again, what are java modules.  What is great about jdk13
+      Maybe Mcaffee does not trust zeppelin (it mirrors cpu consumption) because it is not running as administrator but doe
+      problem with peroidic commit inside java.... batching prepared
+      statemenst...  harbanger of kafa to come
+      netbeans eats ram...  the nevy is small.
+      The lab of all labs:Can return 0 by evaluating eTerm=(2^n)/(2^3).
+      So:
+         Want two indices on ZADdb.
+         Want to multiply together returned eterm constraind (MaxN,n)(MaxN',n').
+         And the roots are?   -  This is alternative to ZAD.jar and compare and contrast.
+       java -jar ZADScripts.jar 2 19 20 64  - Zadscripts is populating quippy
+       java -jar ZADScripts.jar 2 19 20 512 - biggest run
+May    java -jar ZADAuxillary.jar 1 32 Root experiment (multiply)
+Jun    SparkSummit
+       Kafaka summit
+       https://stackoverflow.com/questions/62472010/neo4j-cypher-script-implementing-polynomial-division
+       started linkedin
+       tried zeppelin 0.9 preview  jdk8 vs 13 on envy
+Jul    Important Notes:
+       D2             - Origonal Scripts
+       D4             - Only use of of origonal MATCH pattern.
+       D128           - The goto note of first quater 2020 
+                        S1,S2,S3* (T,A,E).
+       RefactorS3     - Cleaned up S3* scripts.  These are the scripts the .jar uses.
+                        Pieces are available for examining ZADDB from a variety of perspectives.
+                        As in, can look at RowCounter p's from S3T, the whole p from S3A, and 
+                        verify an MaxN,N evaluation.
+       RowTelemetry   - Attempts to quantify COUNT 's in S* query returns.
+       XPlusYtotheZ   - The p whenever want to use index' instead of index.
+       ZeroExperiment - Experiments with multiply p for exibiting multiple roots.
+       Division       - Divide selected p's.
+       looking at 3,9,27 generator.
+       kafaka a slighly more robust -jar, one that listens for prepared statements, counts them,
+       then commits them.  better to stay out of the silo and use kafka.
+       a look at aws
+       deep look at spark scala
+Aug    kafak summit
+       Neo4j                   -  program in program files.
+                                  data at C:\Users\ChiefQuippy\.Neo4jDesktop\neo4jDatabases\database-c41a3534-7e82-4421-819a-dd170f561899   
+                                  starts with desktop shortcut
+                               - another neo4j is on aws
+       zeppelin                -  C:\Windows.old\Users\Aibes\Zeppelin\zeppelin-0.8.1-bin-all\zeppelin-0.8.1-bin-all\bin>zeppelin.cmd              - 
+                               - starts with a .bat in Aibes directory.
+                                 has needs scala library, spark library, java home set in agreement with spark/scala
+       jars.                   - are in javaprojects.   
+                                 have twopolynomial.jar and zadscripts.jar
+                                 also verify spark context can identify them 
+       to include:
+       kafak/zookeeper         - was downloaded, started, and testtopiced.
+                                 C:\Windows.old\kafka_2.12-2.5.0     
+       ZADScriptsK   - the kafka producer effort starts
+       TwoPolynomialGeneratorK
+Sept   lots of kafka goodies on SeptNote.tst
+       neo4j streams - the kafka sink  
+       started with Butch
+       wsl looksi
+       Neo4j 4.0 upgrade and the slotted/runtime parameter.
+       Quippy is born.  MaxN 1000 standard.
+       kafak -How do we guarantee all messages are processed?
+       deeper look at resultset map
+       polling in scriptsAutomation.  -  ZADScriptsK is a deep work
+       the resultset plan for spark/scala
+Oct    %dep z.load("C:\Users\Aibes\JavaProjects\ZADScriptsK\ZADScripts\dist\ZADScripts.jar")
+       is done throug interpreter settings - jar is in Zeppelin
+       pivot goal in zeppelin is set.
+       scala spark eratta
+       The eclipse scala worksheet - first scala object written
+       Neo4j/Zeppelin jackson version conflict  - introducing maven
+       Graphic Zero named.
+       edition 0   the prequil  -  last year -  Can make zero at arbitrary index.
+                   scripts and jars added.
+                   make bigger p's                         --  use the jar
+                   dataframes and the tablue               --  use the jar
+                   use dataframes to explore
+                   newtons traversal.            
+                   the table traversal
+                   the kafka sink in neo4j.conf         
+       working on the pivot   
+       its simple 
+       a zero and a one
+       now 2 
+       a zeroa and a zero and a one
+       ...
+       now with out actually doing anything at all think of a number 10.
+       The whole is bigger than its parts....
+Nov    More maven - started shading things, install jars into .m2 ...
+       The dataframe ingredients QuerryS3t.main
+       Spark pivot forver forward.
+       The uber jar
+       Deeper into Scala
+       QuippysDataFrame note
+Dec    Lots of stackoverflow
+       the dataframe/pivot works  
+       anomolus graph data detection routine working.
+
+
+
+GRAPHIC ZERO 
+
+edition 0   the prequil  -  last year -  Can make zero at arbitrary index.
+            scripts and jars added.
+            make bigger p's                         --  use the jar
+            dataframes and the tablue               --  use the jar
+            use dataframes to explore
+            newtons traversal.            
+            the table traversal
+            the kafka sink in neo4j.conf
+
+
+
+
+
+reddit 
+user name dievos
+password ChiefQuippy531
+
+
+http://www.openculture.com/2020/07/orson-welles-narrates-animations-of-platos-cave-and-kafkas-before-the-law.html?fbclid=IwAR21r_B9t352RNUy38oWyqEsdieRHd8e13aB_z7WLFlRkVpmbD3vtX9Lafw
+https://docs.scala-lang.org/overviews/scala-book/companion-objects.html
+https://math.stackexchange.com/questions/1535205/one-to-one-correspondence-between-set-of-positive-rational-numbers-and-set-of-po/3115365#3115365
+
+https://medium.com/better-programming/object-oriented-programming-the-trillion-dollar-disaster-92a4b666c7c7
+https://mathoverflow.net/questions/374102/why-do-we-associate-a-graph-to-a-ring
+
+https://www.facebook.com/friends/?profile_id=100014902263689
+
+Suffusion theme by Sayontan Sinh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://getpocket.com/explore/item/a-new-theory-explains-how-consciousness-evolved?utm_source=pocket-newtab
+https://getpocket.com/explore/item/the-four-desires-driving-all-human-behavior-bertrand-russell-s-magnificent-nobel-prize-acceptance?utm_source=pocket-newtab
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      
+
+
+
+
+
+
+  
+
+ 

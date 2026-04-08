@@ -1,0 +1,72 @@
+{
+  "paragraphs": [
+    {
+      "text": "val rdd \u003d sc.parallelize(1 to 5)\nrdd.sum()",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-04 13:42:16.490",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "rdd: org.apache.spark.rdd.RDD[Int] \u003d ParallelCollectionRDD[0] at parallelize at \u003cconsole\u003e:25\r\nres1: Double \u003d 15.0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567618895566_-98233120",
+      "id": "20190904-134135_968880474",
+      "dateCreated": "2019-09-04 13:41:35.567",
+      "dateStarted": "2019-09-04 13:42:16.586",
+      "dateFinished": "2019-09-04 13:43:11.030",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1567618936496_-1766457941",
+      "id": "20190904-134216_1050771979",
+      "dateCreated": "2019-09-04 13:42:16.496",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/NoteTest18",
+  "id": "2EKA2TX2K",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "sh:shared_process": [],
+    "jdbc:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

@@ -1,0 +1,2689 @@
+7/1
+
+MATCH (n:Configure) RETURN n LIMIT 25
+
+╒════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"n"                                                                                                                         │
+╞════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"setProductRange":2,"setProductRAngeIncrement":2,"maxSetProductRange":8,"dimension":8,"maxFigPScalar":1,"integerRange":200}│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Will it iterate?  In testing now.  Currently working correctly.... memory flush is correct.  
+
+
+The last of the build big graph refactor:
+
+
+public ResultSet muQuerry()
+
+psInsert = conn.prepareStatement("CYPHER runtime=interpreted\n" +
+MATCH (e:MuNumber)\n" +
+"RETURN e.nBinary,e.n,e.d LIMIT 1");
+
+These nodes needed on respective build graph.
+
+In the mean time though....
+
+The LDTPM.run method needs muQuerry implemented.
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:8, setProductRange:2, integerRange:200, setProductRAngeIncrement:2,maxSetProductRange:8})
+
+
+   if (fIDI==-1) {  noBufferRun((ArrayList)muListBoolean()); } else {
+   valueList=muQuerry();
+   System.out.println( "nBinary.toList" + arrayStringToIntegerArrayList((String)valueList.get(0)).toString());
+   while (!valueList.isEmpty() && fIDI<1 ) 
+    {       
+       nBList=arrayStringToIntegerArrayList((String)valueList.get(0));
+       System.out.println("nBlist: " + nBList.toString());
+       Collections.reverse(nBList);
+       System.out.println("LoopsDriverTwoP nBList reverse:  " + nBList.toString());
+       System.out.println(validMu((ArrayList)nBList));
+       if (fIDI<1) { if (validMu((ArrayList)nBList)) noBufferRun((ArrayList)muListBoolean((ArrayList)nBList));   }
+       fIDI++;
+       Collections.reverse(nBList);     //  Restore to origonal nBList for delete match.
+       gT1.muDelete(nBList.toString());
+       valueList.clear();
+       valueList=muQuerry();
+   }   //  end while loop      
+   }   // end else
+
+Need to remove the fidi condition and run the intitial noBufferRen followd by the while loop iterating the 
+skip pattern.
+
+
+Maybe the iteration is not correct.....  possibly not the geometric lattice.
+
+Need think simply throttle size of mubuffer.
+
+could be as wNum goes to 0, need greater range of pArray.
+
+
+7/2
+
+New LDTPM.run feature:
+
+while (setProductRange<=maxSetProductRange)
+
+[2, 2, 2, 2, 2, 2, 2, 2, 0]
+[4, 4, 4, 4, 4, 4, 4, 4, 3]
+[6, 6, 6, 6, 6, 6, 6, 6, 5]
+[8, 8, 8, 8, 8, 8, 8, 8, 7]
+
+does only reset parray with same value for all indices.
+
+Note though a possible opportunity to take advantage of a muSet with 
+first size[] semantic.
+
+The constraint on the above set of sets is:
+
+For the pairwise sets i and j, each member of j is greater then
+the corrosponding member of i.  
+
+So,  will need a cypher Querry.
+
+possibly can take advantage of fact if index 0 is max value than 
+no other index is greater than max value. 
+
+And,  also maybe want a field recorded as max representing the index 0 value.  
+
+runFIDI needs method that reads nBinary
+
+((String)((muNumDen)dbbVector.get(0)).getBString())
+
+
+
+Real reason to give fidi it's own jar"
+reall messy.
+
+
+    public void run(){
+     long threadId = Thread.currentThread().getId();
+      System.out.println("                                                                          GaussTable1"+"threadId: "+threadId);
+      startConn();
+      System.out.println("                                                                                         It is inside GaussCorrolation? ");
+      try {
+      Thread.sleep(90000);
+      System.out.println("                                     Slept? ");
+      } catch (InterruptedException ex) {
+        Logger.getLogger(GaussTable1.class.getName()).log(Level.SEVERE, null, ex);
+      }
+//       if (mangee!=null ) {
+        //runLoopsDriver();          
+//       } else  if (lMangee!=null || tMangee!= null) {  try {
+         //  runLoopsDriverr();
+//           runLoopsDriver();
+//          } catch (IOException ex) {
+//              Logger.getLogger(GaussTable1.class.getName()).log(Level.SEVERE, null, ex);
+//          }
+//       }    
+       
+//       else {
+//         if (fMangee!=null  )  runFID(); else {runFIDi();}
+//       }
+
+       try {
+         //  runLoopsDriverr();
+           runLoopsDriver();
+          } catch (IOException ex) {
+              Logger.getLogger(GaussTable1.class.getName()).log(Level.SEVERE, null, ex);
+          }
+
+       System.out.println("gaussTable1 ended");
+       endConn();      //  maybe endconn is throwing excejptions  
+       configSemaphore.release();
+    } 
+
+6^6= 46658
+
+8^8 =  16,777,215 /  455,658 = 360 partitions to consume....
+
+
+PM:
+
+Without doing more...  with configNode... for now...
+
+Proceed with equippining graph with validMuSet masks.
+
+
+get a mu node. 
+convert nBinary to a java list.
+reverse the list.
+test for valid size.
+
+Pre condition:  sufficiently many muNumbers exist on graph.
+
+The purpose of this script is to populate the relevant skip pattern.
+
+MATCH (n:MuNumber) 
+WITH n.nBinary as nB, size(n.nBinary) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+WITH n, listNB, toInteger(listNB[0]) + size(listNB) -1 AS muSize WHERE muSize > 6
+DELETE n
+RETURN listNB,listNB[0],size(listNB),muSize Limit 250
+
+The proper way to implement this graph is by taking advantage of multitennance....
+Otherwise:
+With a new graph  
+Sufficiently populate with muNumbers  
+Use above to filter only proper muSize
+
+The experiment is applied to TestGraph070221
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+Something like... if there are 100,000 graphBuffer objects then block until 1000 objects.
+
+VS.
+
+Use another muNumber set.  These are interpreted as pArray values.  
+is Iterate until...
+Kind of ease and cool.  Instead of each worker getting the same set size,
+a iterate until value is parameterized for each worker in constructor.   
+
+And being ready of the weekend graph as....
+
+Another refactor LDTPM.run() method.
+
+do run with all false skip pattern.  
+
+7/5
+
+The thread sleep to clear buffer from memory overload, that I thought was included friday, is not noted anywhere.
+
+goCCypher does have two thread.sleeps for trivial miliseconds...
+
+The point being, if muBuffer is getting too large then memory error.  Do not want to pause the dbThread.
+Do though pause the the semaphore thread....   It seems best to pause in the loopListener.propertyChange method.
+
+not yet done....
+
+The big almighty graph is...  
+with another last .run refactor.  
+
+Maybe rename this run method runny().
+And try again with a better run...
+
+
+
+public void run() {
+   List valueList;
+   List nBList;
+   int workerCount=0;
+   int fIDI=-1;
+   configureQuery();
+   System.out.println("SetProductRange: " + setProductRange + "maxSetProductRange: " + maxSetProductRange);
+
+
+   while (setProductRange<=maxSetProductRange)   
+   {   
+       try { 
+           GaussTable1 gTable1 = new GaussTable1(tl1Semaphore,dbVector11,configSemaphore);
+           gTable1.start();
+       } catch (IOException ex) {
+           Logger.getLogger(LoopsDriverTwoPManager.class.getName()).log(Level.SEVERE, null, ex);
+       }
+   if (fIDI==-1) {  noBufferRun((ArrayList)muListBoolean()); } else 
+
+{
+   valueList=muQuerry();
+   System.out.println( "nBinary.toList" + arrayStringToIntegerArrayList((String)valueList.get(0)).toString());
+   while (!valueList.isEmpty() && fIDI<1 ) 
+    {       
+       nBList=arrayStringToIntegerArrayList((String)valueList.get(0));
+       System.out.println("nBlist: " + nBList.toString());
+       Collections.reverse(nBList);
+       System.out.println("LoopsDriverTwoP nBList reverse:  " + nBList.toString());
+       System.out.println(validMu((ArrayList)nBList));
+       if (fIDI<1) { if (validMu((ArrayList)nBList)) noBufferRun((ArrayList)muListBoolean((ArrayList)nBList));}
+       fIDI++;
+       Collections.reverse(nBList);     //  Restore to origonal nBList for delete match.
+       gT1.muDelete(nBList.toString());
+       valueList.clear();
+       valueList=muQuerry();
+   }   //  end while loop      
+   }   // end else
+   try {
+       executorService1.shutdown();
+       while (workerCount>0)   {
+       final Future<String> future = service.take();
+       System.out.println("service.take "+future.get());
+       System.out.println("isTerminated() ThreadMXBean:    "+Arrays.toString(bean.getAllThreadIds()));
+       System.out.println();System.out.println();System.out.println();
+       workerCount--;
+       }   
+   } catch (ExecutionException | InterruptedException ex) {
+   ex.printStackTrace();
+   } 
+   System.out.println("LoopsDriverTwoPManager Exit ");
+   pArrayResetValue=setProductRange+1;
+   lbSetProductRange=pArrayResetValue;
+   setProductRange=setProductRange+setProductRangeIncrement;
+   try {
+       configSemaphore.acquire();
+   } catch (InterruptedException ex) {
+       Logger.getLogger(LoopsDriverTwoPManager.class.getName()).log(Level.SEVERE, null, ex);
+   }
+  }  //  Endo of setProductRange While
+} //  End of run
+
+
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange:5, integerRange:200, setProductRAngeIncrement:5,maxSetProductRange:5})
+
+7/6
+
+configSemaphore commented out both in LDTPR and GT1.
+
+ResultListID can be set to zero.   - It should be in ConfigNode.
+
+Looks like yesterday refactor is a hanging...  Maybe got it right with fixing the monitor object reference.
+
+A first attempt at the big run:
+
+   pArrayResetValue=setProductRange+1;
+   lbSetProductRange=pArrayResetValue;
+   setProductRange=setProductRange+setProductRangeIncrement;
+
+To chunck the iteration....  
+The wait() notify() refactor deprecates above attempt.  
+
+private void configureQuery(), called at beginning of .run() is the one off.
+
+setProductRange:5, setProductRAngeIncrement:5,maxSetProductRange:5
+should all be the same value and = dimension.
+
+
+ private void appendMuBuffer(boolean noBufferRun) {
+
+   if (muList.size() > 25000) 
+   {
+       System.out.println("Large mu sleep......");
+       try {
+
+           synchronized (muList) {
+           muList.wait();           //Thread.sleep(100000);
+           }
+       } catch (InterruptedException ex) {
+           Logger.getLogger(LoopListener.class.getName()).log(Level.SEVERE, null, ex);
+       }
+   }
+
+
+private void runLoopsDriver() throws IOException {
+ //          while ((mangee.isAlive()) || (dbbVector.size()>0)) {       
+             int x=0;
+//             while ( (tMangee.isAlive())   || (dbbVector.size()>0)) {
+             while ((dbbVector.size()>0)) {
+             if (dbbVector.size()<5000) synchronized (dbbVector) {{dbbVector.notify();}}
+
+Note: Do want FIDI in it's owne jar.
+
+New Graph Lab (Make the dimension:6 graph):
+
+And the procedure for initializing the graph before ZAD is run...
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+.Create the Config node.
+ CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6})
+
+.Populate the muNumber Nodes.
+
+Run FIDI
+
+From browser the script:
+
+MATCH (n:MuNumber) 
+WITH n.nBinary as nB, size(n.nBinary) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+WITH listNB, toInteger(listNB[0]) + size(listNB) -1 AS muSize WHERE muSize > 6,n
+DELETE n
+RETURN listNB,listNB[0],size(listNB),muSize Limit 250
+
+
+Will it exit gracefully?????
+
+
+Started at 10:40 AM...
+
+
+Last note: put the skip pattern on the graph with relatedBy
+
+
+GaussBean1:   LoopLists.GaussBean1@67078f7e [-41760, 8832, 2254, -1245, 265, -27, 1] [5, 6, 0, 1, 1, 2, 0] [0.0, 720.0, -1440.0]pArrayIndexValue: 6evaluateValue: null
+
+
+7/7
+
+GaussBean1 needs skip pattern  
+
+GaussBean1 is equipped with getMuMaskList() as String field.
+
+LoopListener appendMuBuffer does construct GaussBean1 with muMaskList.
+
+And the usecase for starting from a non-zero pArray.....
+
+
+MATCH (n:CreatedBy)
+WITH min(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID}) <- [] - (d:Dnode)
+RETURN m,d
+
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+MATCH (m:CreatedBy {resultId:88700}) <- [] - (d:Dnode)
+RETURN m,d
+
+╒══════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"m"                                                                                               │
+╞══════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"wNum":0,"pArray":"[5, 6, 0, 1, 1, 2, 0]","translateIndex":0,"resultId":88613,"pArrayIndexValue":│
+│0}                                                                                                │
+├──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"wNum":1,"pArray":"[5, 6, 0, 1, 1, 2, 0]","translateIndex":0,"resultId":88613,"pArrayIndexValue":│
+│0}                                                                                                │
+├──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"wNum":2,"pArray":"[5, 6, 0, 1, 1, 2, 0]","translateIndex":0,"resultId":88613,"pArrayIndexValue":│
+│0}                                                                                                │
+├──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"wNum":3,"pArray":"[5, 6, 0, 1, 1, 2, 0]","translateIndex":0,"resultId":88613,"pArrayIndexValue":│
+│0}                                                                                                │
+├──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"wNum":4,"pArray":"[5, 6, 0, 1, 1, 2, 0]","translateIndex":0,"resultId":88613,"pArrayIndexValue":│
+│0}                                                                                                │
+├──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"wNum":5,"pArray":"[5, 6, 0, 1, 1, 2, 0]","translateIndex":0,"resultId":88613,"pArrayIndexValue":│
+│0}                                                                                                │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+╒═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"m"                                                                                                                            │
+╞═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"skipList":"[false, false, false, false, false, false]","pArray":"[2, 4, 0, 5, 3, 4, 0]","resultId":137264,"pArrayIndexValue":│
+│0,"wNum":0,"translateIndex":0}                                                                                                 │
+├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[false, false, false, false, false, false]","pArray":"[2, 4, 0, 5, 3, 4, 0]","resultId":137264,"pArrayIndexValue":│
+│0,"wNum":1,"translateIndex":0}                                                                                                 │
+├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[false, false, false, false, false, false]","pArray":"[2, 4, 0, 5, 3, 4, 0]","resultId":137264,"pArrayIndexValue":│
+│0,"wNum":2,"translateIndex":0}                                                                                                 │
+├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[false, false, false, false, false, false]","pArray":"[2, 4, 0, 5, 3, 4, 0]","resultId":137264,"pArrayIndexValue":│
+│0,"wNum":3,"translateIndex":0}                                                                                                 │
+├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[false, false, false, false, false, false]","pArray":"[2, 4, 0, 5, 3, 4, 0]","resultId":137264,"pArrayIndexValue":│
+│0,"wNum":4,"translateIndex":0}                                                                                                 │
+├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[false, false, false, false, false, false]","pArray":"[2, 4, 0, 5, 3, 4, 0]","resultId":137264,"pArrayIndexValue":│
+│0,"wNum":5,"translateIndex":0}                                                                                                 │
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+.noBufferRun pArray constructor:
+
+pArray = new PolynomialArray(dimension,TRUE,pArrayResetValue);  
+
+though pArraryResetValue is the constant 0.
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:8, setProductRange:2, integerRange:200, setProductRAngeIncrement:2,maxSetProductRange:8})
+
+╒════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"n"                                                                                                                         │
+╞════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"setProductRange":6,"setProductRAngeIncrement":6,"maxSetProductRange":6,"dimension":6,"maxFigPScalar":1,"integerRange":200}│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6},pArray:"[0, 0, 0, 0, 0, 0, 0]")
+
+public LoopListener(ResultListBean allrListB,int dimension,ResultListBean rListB, LoopList gbList, List muList, Semaphore muSem, ExecutorService exec, int rListIndex, PolynomialArray pArray, ModuloList moduloList,List deltaList,List ancestorlist,PolynomialArray figPArray,PArrayResetFlag pArrayResetFlag,ResultListBean cashedrListB,PolynomialArray cashedPArray,PolynomialArray cashedFigPArray,ResultListID resultListId,boolean noBufferRun,int integerRange,String muMaskList ) {
+
+new LoopListener(allrListB,dimension,rListB,gbList,muList,muSem,Executors.newFixedThreadPool(rListB.size()),rListB.size(),pArray,moduloList,deltaList,ancestorlist,figPArray,pArrayResetFlag,cashedrListB,cashedPArray,cashedFigPArray,resultListId,noBufferRun,integerRange,muMaskList.toString())); 
+
+//   System.out.println("LoopsDriverTwoPManager Exit ");
+//   pArrayResetValue=setProductRange+1;
+//   lbSetProductRange=pArrayResetValue;
+//   setProductRange=setProductRange+setProductRangeIncrement;
+
+
+
+PM:
+
+The big wait is on to see if skip pattern works correctly....
+
+
+ZAD to do list:
+
+.Speed up ingestion.  
+.jar it.
+.use muNumbers to iterate ranges better (skip pattern is other muNumber use case).
+ note must have agreement with loopSemaphore parameters.
+
+DifferencesDataExplore...
+Will not understand with dimension=6.
+
+Must build up to large graph comprehension.
+Meaning need the dimension=2 graph worked,
+Then the         dimension=3 graph worked,
+then the         dimension=4 graph worked...
+
+and verify agreement with combinatorics equations.
+
+
+Need a paragraph for below:
+
+_n C_r	= 	number of combinations
+n	= 	total number of objects in the set
+r	= 	number of choosing objects from the set
+
+= n! / r!(n-r)!...
+
+
+
+so with: 
+
+╒════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"n"                                                                                                                         │
+╞════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"setProductRange":6,"setProductRAngeIncrement":6,"maxSetProductRange":6,"dimension":6,"maxFigPScalar":1,"integerRange":200}│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+7/8
+
+mergeVmResult(vmResult,fPArray,loopList.getNumerator(),loopList.getDenominator(),loopList.getTotalZero(),loopList.getmuList());
+
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,n:?,d:?,totalZero:?,muList:?}) ");
+
+createWnumRcounter(wNum,rCounter,pArray,0,0,muMaskList);
+
+psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?,skipList:?} )");
+
+createKnownByRelation(vmResult,wNum,rCounter,0,0);
+
+psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+
+createEvaluates(loopList,vmResult);   //  don't need this right now....
+
+
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,n:?,d:?,totalZero:?,muList:?}) ");
+psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?,skipList:?} )");
+psInsert = conn.prepareStatement("MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+
+
+
+mergeVmResultt(vmResult,loopList.getNumerator(),loopList.getDenominator(),loopList.getTotalZero(),loopList.getmuList());
+
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,n:?,d:?,totalZero:?,muList:?}) ");
+
+createWnumRcounter(wNum,rCounter,pArray,0,0,muMaskList);
+
+psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?,skipList:?} )");
+
+createKnownByRelation(vmResult,wNum,rCounter,0,0);
+
+psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+
+createZMap(vmResult,rCounter,wNum);
+
+psInsert = conn.prepareStatement("match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+
+
+
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,n:?,d:?,totalZero:?,muList:?}) ");
+psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?,skipList:?} )");
+psInsert = conn.prepareStatement("MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+psInsert = conn.prepareStatement("match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6},pArray:"[5, 6, 0, 1, 1, 2, 0]")
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6},pArray:"[2, 4, 0, 5, 3, 4, 0]")
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6,pArray:"[2, 4, 0, 5, 3, 4, 0]"})
+
+
+https://www.datarobot.com/blog/how-mlops-helps-you-dodge-the-wrecking-ball-of-underspecification/
+
+http://blog.bruggen.com/2021/06/network-analysis-of-shakespeares-plays.html?mkt_tok=NzEwLVJSQy0zMzUAAAF9zyipCXk1_c1ea0B2I9ggxBeqxivvJKroqDrR63aiR5dEWn__AmB6K77USB1rEDHgzK39os5sTmJO_H2ZZD-x4HuuzZxu3yPnkcbOMt4PlPpV
+
+
+You will implement the entire machine learning lifecycle, from data preparation, model building, model deployment, model management, and output consumption. You will also be responsible for investigating customer 
+datasets, identifying data quality issues and creating reports to surface problems and opportunities to solve the Federal government's toughest problems.
+
+
+╒════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"m"                                                                                                                                                         │
+╞════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"skipList":"[true, true, false, false, false, false]","pArray":"[0, 0, 5, 6, 6, 10, 0]","resultId":346947,"pArrayIndexValue":0,"wNum":0,"translateIndex":0}│
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[true, true, false, false, false, false]","pArray":"[0, 0, 5, 6, 6, 10, 0]","resultId":346947,"pArrayIndexValue":0,"wNum":1,"translateIndex":0}│
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[true, true, false, false, false, false]","pArray":"[0, 0, 5, 6, 6, 10, 0]","resultId":346947,"pArrayIndexValue":0,"wNum":2,"translateIndex":0}│
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[true, true, false, false, false, false]","pArray":"[0, 0, 5, 6, 6, 10, 0]","resultId":346947,"pArrayIndexValue":0,"wNum":3,"translateIndex":0}│
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[true, true, false, false, false, false]","pArray":"[0, 0, 5, 6, 6, 10, 0]","resultId":346947,"pArrayIndexValue":0,"wNum":4,"translateIndex":0}│
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[true, true, false, false, false, false]","pArray":"[0, 0, 5, 6, 6, 10, 0]","resultId":346947,"pArrayIndexValue":0,"wNum":5,"translateIndex":0}│
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"skipList":"[true, true, false, false, false, false]","pArray":"[0, 0, 5, 6, 6, 10, 0]","resultId":346947,"pArrayIndexValue":0,"wNum":6,"translateIndex":0}│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+7/9
+
+
+note database memory heap size 1g
+
+Database TestGraph070221 has authentication disabled and is not secure to use.
+
+Do you want to change authentication settings?
+
+
+
+
+
+From yesterday:
+
+Started refactoring gaussTable1 graph update methods.
+And
+Ran  
+
+MATCH (n:CreatedBy)
+WITH min(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID}) <- [] - (d:Dnode)
+RETURN m,d
+
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+MATCH (m:CreatedBy {resultId:88700}) <- [] - (d:Dnode)
+RETURN m,d
+
+CALL dbms.security.changePassword('MyNewPassWord')
+
+MATCH (n:MuNumber) 
+WITH n.nBinary as nB, size(n.nBinary) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+WITH n,listNB, toInteger(listNB[0]) + size(listNB) -1 AS muSize WHERE muSize > 6
+DELETE n
+RETURN listNB,listNB[0],size(listNB),muSize Limit 250
+
+The proper way to implement this graph is by taking advantage of multitennance....
+Otherwise:
+With a new graph  
+Sufficiently populate with muNumbers  
+Use above to filter only proper muSize
+
+The experiment is applied to TestGraph070221
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6},pArray:"[0, 0, 0, 0, 0, 0, 0]")
+
+an important fix...
+for the skip pattern make sure a zero at zero does not exist....  need to rewrite the seed without the zero at skip worker_i.
+therfore without fixing intitial... the skip patten is not properly working....
+
+Need to see the data one more time....
+
+
+7/10
+
+public void run() {
+   startbuffer(); 
+   List valueList;
+   List nBList;
+   int workerCount=0;
+ //  configureQuery();     //  pArray, a string on configureNode now used for constructing pArrary
+   configureQuery1();     // CofigeNode querry with pArray string.
+   System.out.println("SetProductRange: " + setProductRange + "maxSetProductRange: " + maxSetProductRange);
+  // noBufferRun((ArrayList)muListBoolean());  commented out inorder to append graph.
+   valueList=muQuerry();
+   System.out.println( "nBinary.toList" + arrayStringToIntegerArrayList((String)valueList.get(0)).toString());
+   while (!valueList.isEmpty()) 
+  
+
+GaussBean1:   LoopLists.GaussBean1@18e6d4a5 [0, -240684, 74524, -11985, 1075, -51, 1] [0, 4, 6, 6, 6, 6, 0] [0.0, 720.0]pArrayIndexValue: 4evaluateValue: null
+while looppey  9443
+GaussBean1:   LoopLists.GaussBean1@32ea3737 [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 1.0000000035568468, -51.00000007714964, 1075.0000006627104, -11985.000002846335, 74524.00000639053, -244284.0000070185, 2.885237336079496E-6]pArrayIndexValue: 5evaluateValue: null
+while looppey  9442
+GaussBean1:   LoopLists.GaussBean1@3decb8d6 [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 6.000000000663476, -240.00000001045555, 3810.0000000615983, -30000.00000016822, 117144.00000020879, -180720.00000009255]pArrayIndexValue: 5evaluateValue: null
+while looppey  9441
+GaussBean1:   LoopLists.GaussBean1@796c2f87 [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 29.999999999923148, -899.9999999991123, 10049.999999996624, -49499.99999999485, 90719.99999999742]pArrayIndexValue: 5evaluateValue: null
+while looppey  9440
+GaussBean1:   LoopLists.GaussBean1@57818ff3 [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 119.99999999999818, -2520.0, 17520.0, -40320.0]pArrayIndexValue: 5evaluateValue: null
+while looppey  9439
+GaussBean1:   LoopLists.GaussBean1@343159bb [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 360.0, -4680.0, 15120.0]pArrayIndexValue: 5evaluateValue: null
+while looppey  9438
+GaussBean1:   LoopLists.GaussBean1@6c436de3 [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 720.0, -4320.0]pArrayIndexValue: 5evaluateValue: null
+while looppey  9437
+GaussBean1:   LoopLists.GaussBean1@74cb77fb [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 720.0]pArrayIndexValue: 5evaluateValue: null
+while looppey  9436
+GaussBean1:   LoopLists.GaussBean1@2f6e9086 [0, -120, 274, -225, 85, -15, 1] [0, 0, 0, 0, 0, 0, 1] [0.0, 0.9999999999984687, -14.99999999996041, 84.99999999961062, -224.9999999981374, 273.9999999954597, -119.99999999470629, -2.2646418073523824E-9]pArrayIndexValue: 0evaluateValue: null
+Jul 10, 2021 1:43:29 PM MainClass.GaussTable1 createWnumRcounter
+SEVERE: null
+java.sql.SQLException: org.neo4j.driver.exceptions.ClientException: Cannot merge node using null property value for skipList
+	at org.neo4j.jdbc.bolt.BoltNeo4jUtils.executeInTx(BoltNeo4jUtils.java:65)
+	at org.neo4j.jdbc.bolt.BoltNeo4jPreparedStatement.executeInternal(BoltNeo4jPreparedStatement.java:96)
+	at org.neo4j.jdbc.bolt.BoltNeo4jPreparedStatement.executeUpdate(BoltNeo4jPreparedStatement.java:71)
+	at sun.reflect.GeneratedMethodAccessor6.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+
+7/11
+
+Plenty of errors as:
+Database TestGraph070221 has authentication disabled and is not secure to use.
+Do you want to change authentication settings?
+Getting a fresh download/update.
+
+
+ZerosAndDifferences.run() Does:
+
+.implement .configureQuerry1()
+.loops through muNumbers for skipList.
+
+Problem is:
+
+.dodgey graphDB (graph result is usually broken).
+.am getting null property values for skipList.
+
+ZADScripts is unresponsive in MuGraph note.
+
+
+7/12
+
+Installed biggraph2 from data drive.
+And am building it out.
+
+
+remember reset resultlistid with current value between take runs.
+
+
+7/13
+
+
+GaussBean1:   LoopLists.GaussBean1@666efa3c [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 720.0, -4320.0]pArrayIndexValue: 5evaluateValue: null
+while looppey  9416
+GaussBean1:   LoopLists.GaussBean1@69b6ec3f [0, -244284, 74524, -11985, 1075, -51, 1] [0, 5, 6, 6, 6, 6, 0] [0.0, 720.0]pArrayIndexValue: 5evaluateValue: null
+while looppey  9415
+GaussBean1:   LoopLists.GaussBean1@34233855 [0, -120, 274, -225, 85, -15, 1] [0, 0, 0, 0, 0, 0, 1] [0.0, 0.9999999999984687, -14.99999999996041, 84.99999999961062, -224.9999999981374, 273.9999999954597, -119.99999999470629, -2.2646418073523824E-9]pArrayIndexValue: 0evaluateValue: null
+Jul 13, 2021 11:33:59 AM MainClass.GaussTable1 createWnumRcounter
+SEVERE: null
+java.sql.SQLException: org.neo4j.driver.exceptions.ClientException: Cannot merge node using null property value for skipList
+	at org.neo4j.jdbc.bolt.BoltNeo4jUtils.executeInTx(BoltNeo4jUtils.java:65)
+	at org.neo4j.jdbc.bolt.BoltNeo4jPreparedStatement.executeInternal(BoltNeo4jPreparedStatement.java:96)
+	at org.neo4j.jdbc.bolt.BoltNeo4jPreparedStatement.executeUpdate(BoltNeo4jPreparedStatement.java:71)
+	at sun.reflect.GeneratedMethodAccessor5.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.neo4j.jdbc.utils.Neo4jInvocationHandler.invoke(Neo4jInvocationHandler.java:54)
+	at com.sun.proxy.$Proxy7.executeUpdate(Unknown Source)
+	at MainClass.GaussTable1.createWnumRcounter(GaussTable1.java:842)
+	at MainClass.GaussTable1.goCCypher(GaussTable1.java:969)
+	at MainClass.GaussTable1.runLoopsDriver(GaussTable1.java:244)
+	at MainClass.GaussTable1.run(GaussTable1.java:337)
+Caused by: org.neo4j.driver.exceptions.ClientException: Cannot merge node using null property value for skipList
+	at org.neo4j.driver.internal.util.Futures.blockingGet(Futures.java:143)
+
+looks like got graph....
+remember the unique ResultId criterija.
+ 
+7/14
+
+MATCH (n:CreatedBy)
+WITH min(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID}) <- [] - (d:Dnode)
+RETURN m,d
+
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+MATCH (n:MuNumber) 
+WITH n.nBinary as nB, size(n.nBinary) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+WITH n,listNB, toInteger(listNB[0]) + size(listNB) -1 AS muSize WHERE muSize > 6
+DELETE n
+RETURN listNB,listNB[0],size(listNB),muSize Limit 250
+
+The experiment is applied to TestGraph070221
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange:5, integerRange:200, setProductRAngeIncrement:5,maxSetProductRange:5,pArray:"[0, 0, 0, 0, 0, 0, 0]"})
+
+MATCH (d)-[]->(c:CreatedBy {pArray:"[3, 0, 0, 0, 0]"}) return d,c
+
+
+[0, -6, 11, -6, 1] [0, 0, 0, 0, 0]
+
+
+
+Remember to keep reslutCounter consistant!!!!!!!!
+
+Remember graphdb config 2G
+
+
+7/15
+
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode {wNum:?})
+RETURN n.d as denominator, n.n as numerator, n.wNum as wNum, n.determined as determined
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode {wNum:2})
+RETURN n.d as denominator, n.n as numerator, n.wNum as wNum, n.determined as determined
+
+Why yes...
+DifferencesDataExplore had wNum hand cyphered onto Dnode.
+
+Need to write the CreatedBy -[]-> Dnode patten into the DfScripts methods. 
+
+CYPHER runtime=interpreted
+MATCH (m:CreatedBy {wNum:3}) <- [] - (d:Dnode)
+RETURN n.d as denominator, n.n as numerator, n.wNum as wNum, n.determined as determined
+
+
+
+Have dimension-wNum is determined criterija.
+
+
+
+
+From May:
+
+MATCH (d:Dnode), (k:CreatedBy)
+
+MERGE  (d)-[ee:CreatedBye]->(k)
+
+The meaning is determined=1 is determined determined=0 is under determined.
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:0})
+WITH  CASE WHEN k.wNum=0 THEN CASE WHEN d.totalZero=5 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:1})
+WITH  CASE WHEN k.wNum=1 THEN CASE WHEN d.totalZero=4 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+ 
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:2})
+WITH  CASE WHEN k.wNum=2 THEN CASE WHEN d.totalZero=3 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin 
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:3})
+WITH  CASE WHEN k.wNum=3 THEN CASE WHEN d.totalZero=2 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:4})
+WITH  CASE WHEN k.wNum=4 THEN CASE WHEN d.totalZero=1 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:5})
+WITH  CASE WHEN k.wNum=5 THEN CASE WHEN d.totalZero=0 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+Need wNum on dNode
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:0})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:1})
+SET d.wNum=k.wNum
+RETURN d.wNum
+ 
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:2})
+SET d.wNum=k.wNum
+RETURN d.wNum 
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:3})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:4})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:5})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode {wNum:3} )
+RETURN d
+
+
+And the current cofused dfScrips imply:
+
+Only have to fix the dfScripts cypher pattern.
+Determined/underdetermined can be scala defined....
+But....  Defined/Underdefined is a prediction field.  
+
+So....
+
+.Fix the pattern in dfScripts
+.Include determined underdetermined in goCCypher methods.
+
+
+
+MATCH (n:CreatedBy)
+WITH min(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID}) <- [] - (d:Dnode)
+RETURN m,d
+
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+MATCH (n:MuNumber) 
+WITH n.nBinary as nB, size(n.nBinary) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+WITH n,listNB, toInteger(listNB[0]) + size(listNB) -1 AS muSize WHERE muSize > 6
+DELETE n
+RETURN listNB,listNB[0],size(listNB),muSize Limit 250
+
+The experiment is applied to TestGraph070221
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:2, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6,pArray:"[0, 0, 0, 0, 0, 0, 0, 0]"})
+
+MATCH (d)-[]->(c:CreatedBy {pArray:"[3, 0, 0, 0, 0]"}) return d,c
+
+7/16
+
+https://soundcloud.com/ksenia_kamikaza
+
+
+Maybe D6Test1 is not accurately reporting "determined".
+
+
+MATCH (n:Dnode {totalZero:6}) return distinct n
+MATCH (n:Dnode {totalZero:6}) return n
+
+MATCH (n:Dnode {muList:"[1, 1, 1, 1, 1]"}) - [] -> (c:CreatedBy) RETURN n,c 
+
+MATCH (n:Dnode) RETURN  count(n)
+
+
+https://soundcloud.com/ksenia_kamikaza
+
+
+7/17
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:5})
+RETURN n.d as denominator, n.n as numerator, n.wNum as wNum, n.determined as determined
+
+
+CYPHER runtime=interpreted
+MATCH (n:MuNumber )
+RETURN toString(n.Value) as value,toString(n.size) as size,toString(n.d) as d,toString(n.n) as n,n.nBinary as nBinary
+
+
+7/18-19
+
+muNumbers graph and....  Fidi seems to need some buffer work...
+
+DifferencesDataExploreD6C2
+
+DifferencesDataExploreD6C2
+
+https://stackoverflow.com/questions/21138751/spark-java-lang-outofmemoryerror-java-heap-space
+
+https://math.stackexchange.com/questions/1837178/unary-relation-in-a-logical-sentence
+
+https://web.stanford.edu/class/cs520/2020/notes/What_Are_Some_Inference_Algorithms.html
+
+The graph algorithms are applicable to any graph-structured data, and support operations
+ such as finding minimum paths between nodes in a graph, identifying salient nodes in a graph, etc.
+ The ontology-based algorithms operate on the structure of the graph but take its semantics into account,
+ for example, traversing specific paths, or concluding new connections based on background domain knowledge
+
+Ontology-based inference distinguishes a knowledge graph system from a general graph-based system.
+
+D6Test2LeadTerm1 (in active databases) containes 1^6,2^6 
+
+
+DiffDataExploreD6C1 needs a narration:
+Thinkith many redundancies because.....
+
+("CYPHER runtime=interpreted\n" +
+                                         "MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?}) \n" +
+                                         "RETURN toString(n.d) as denominator, toString(n.n) as numerator, toString(c.wNum) as wNum, toString(n.determined) as determined");
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:6})
+WITH DISTINCT n,toString(c.wNum) as wNum
+RETURN toString(n.d) as denominator, toString(n.n) as numerator, wNum, toString(n.determined) as determined
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?})
+WITH DISTINCT n,toString(c.wNum) as wNum
+RETURN toString(n.d) as denominator, toString(n.n) as numerator, wNum, toString(n.determined) as determined
+
+
+
+7/20
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:6})
+RETURN n,c
+
+DiffDataExploreD6C1 
+
+D6Test2LeadTerm1 is the graph differencing maxC=1 and maxC=2
+each differenced maxC can be distingushed by the range its CreatedBy.resultId. 
+
+DiffDataExploreD6C1 features two tables:
+
+.wnum,Total Determined, Count wNum
+.d, Total numerator, Distinct n
+
+Granular things to concider:
+
+the distinct c's:
+
+   .express same n,d's?
+   .as the same root set? - a determined, underdetermined set?
+   .In particular,  with  what to say about parray:[1,1,1,1,1,1]. 
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:6})
+RETURN n,c
+
+7/21
+
+from 6/15
+
+Want ZAD graph summary. 
+
+Is root power set complete?          - n,d analysis.  use the combinations formula and compare result with dataframe summary (with d count(n)).
+
+Is mu root set complete?             - :CreatedBy.pArray can be related to :Dnode.vmResult that is determined/under determined. 
+                                     - Use the appropriate set of muNumbers (Dimension).  Which are/are not in a (HigestScalar,Dimension)
+                                       Conjecture is the HS =1,2 completes up to quadratics.  1,2,3 completes the cubits.  1,2,3,4 completes the quartets...
+ 
+What percentage of the power set is determined/under determined?    - 
+Can determined p's both be expressed with highest term =1 and 2?    - believe no.
+
+Does the skip pattern reveal more root sets???
+
+D6Test2C1,2 
+
+Has 
+
+MATCH (n:CreatedBy)
+WITH min(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID}) <- [] - (d:Dnode)
+RETURN m,d
+
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+shill
+
+
+
+
+from 5/14
+
+4 fundamental graph problems  graph classification and regression, node classification, edge classification.
+
+structure can help only if labels/values of linked nodes are correlated.
+homophily
+hetrophily.
+
+
+from 6/24
+
+descripting
+predictive
+inferential
+
+Ant žemės krašto
+
+7/22
+
+ResultListID(0)       - highest degree scalar = 1
+ResultListID(300000)  - highest degree scalar = 2
+
+Say something like determined from former cannot be determined from latter.
+
+Waht to say of respective skip patterns....  The total set is 64.
+
+Retrieve the skip patterns from graph...   - expensive query.
+
+Repopulate muNodes.
+ReTransform into skipLists.
+
+MATCH (n:MuNumber) 
+WITH n.nBinary as nB, size(n.nBinary) as nBSize,n
+WITH substring(nB,1,nBSize-2) as sBsubstring,n
+WITH split(sBsubstring,', ') AS listNB,n
+WITH n,listNB, toInteger(listNB[0]) + size(listNB) -1 AS muSize WHERE muSize > 6
+DELETE n
+RETURN listNB,listNB[0],size(listNB),muSize Limit 250
+
+valueList=muQuerry();      //  muQuerry, taken from GaussTable1 will return the nBinary's on all 
+                           //  mu nodes 
+
+List valueList;
+List nBList;
+valueList=muQuerry();
+nBList=arrayStringToIntegerArrayList((String)valueList.get(0));  Collections.reverse(nBList);   //  is in arrayStringToIntegerArrayList.
+(ArrayList)muListBoolean((ArrayList)nBList)
+
+muQuerry() will return a resultSet of of string.
+Each string arguments a call to arrayStringToIntegerArrayList and will return a list.
+
+
+Because an ArrayBuffer is not an ArrayList. sjrd suggests using javas built in conversion,
+but you could also just use a for loop to copy the data from the arraylist to a new ArrayBuffer before passing it.
+
+import scala.collection.JavaConversions._
+
+def toDoubleArray(list: ArrayList[Double]): Array[Double] = list.toArray
+
+7/23
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:4})
+WITH DISTINCT n,toString(c.wNum) AS wNum
+RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, c.skipList AS skipPattern
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?})
+WITH DISTINCT n,toString(c.wNum) AS wNum,c.skipList AS skipPattern
+RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, skipPattern
+
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:4})
+WITH DISTINCT n,toString(c.wNum) AS wNum,c.skipList AS skipPattern
+RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, skipPattern
+
+
++------------------------------------------+----------------+----------+
+|skipPattern                               |Total Determined|Count wNum|
++------------------------------------------+----------------+----------+
+|[false, true, true, false, true, false]   |92              |620       |
+|[true, true, true, true, true, false]     |74              |86        |
+|[false, true, false, true, false, false]  |204             |3310      |
+|[true, false, false, false, true, false]  |126             |4844      |
+|[true, false, true, false, false, false]  |324             |4946      |
+|[false, true, true, true, true, false]    |86              |124       |
+|[true, true, false, true, false, false]   |202             |1220      |
+|[false, true, false, true, true, false]   |86              |540       |
+|[false, false, false, true, true, false]  |86              |2580      |
+|[false, false, true, true, false, false]  |198             |2612      |
+|[false, false, false, true, false, false] |210             |16726     |
+|[true, false, true, true, false, false]   |198             |810       |
+|[true, false, true, true, true, false]    |86              |150       |
+|[false, false, false, false, true, false] |142             |17322     |
+|[true, true, false, true, true, false]    |86              |218       |
+|[false, true, true, false, false, false]  |316             |3380      |
+|[true, false, false, false, false, false] |596             |26914     |
+|[true, true, true, false, true, false]    |92              |298       |
+|[true, false, false, true, false, false]  |206             |4742      |
+|[true, false, true, false, true, false]   |92              |894       |
+|[true, false, false, true, true, false]   |86              |770       |
+|[true, true, false, false, true, false]   |114             |1252      |
+|[false, false, true, true, true, false]   |86              |416       |
+|[false, false, true, false, true, false]  |92              |2988      |
+|[false, true, false, false, false, false] |472             |18996     |
+|[false, false, false, false, false, false]|758             |97034     |
+|[false, false, true, false, false, false] |330             |17116     |
+|[true, true, true, false, false, false]   |294             |1566      |
+|[false, true, true, true, false, false]   |198             |604       |
+|[true, true, true, true, false, false]    |180             |358       |
+|[false, true, false, false, true, false]  |116             |3396      |
+|[true, true, false, false, false, false]  |450             |6806      |
++------------------------------------------+----------------+----------+
+
+
+
++------------------------------------------+----------------+----------------+
+|skipPattern                               |Total Determined|Count determined|
++------------------------------------------+----------------+----------------+
+|[false, true, true, false, true, false]   |92              |620             |
+|[true, true, true, true, true, false]     |74              |86              |
+|[false, true, false, true, false, false]  |204             |3310            |
+|[true, false, false, false, true, false]  |126             |4844            |
+|[true, false, true, false, false, false]  |324             |4946            |
+|[false, true, true, true, true, false]    |86              |124             |
+|[true, true, false, true, false, false]   |202             |1220            |
+|[false, true, false, true, true, false]   |86              |540             |
+|[false, false, false, true, true, false]  |86              |2580            |
+|[false, false, true, true, false, false]  |198             |2612            |
+|[false, false, false, true, false, false] |210             |16726           |
+|[true, false, true, true, false, false]   |198             |810             |
+|[true, false, true, true, true, false]    |86              |150             |
+|[false, false, false, false, true, false] |142             |17322           |
+|[true, true, false, true, true, false]    |86              |218             |
+|[false, true, true, false, false, false]  |316             |3380            |
+|[true, false, false, false, false, false] |596             |26914           |
+|[true, true, true, false, true, false]    |92              |298             |
+|[true, false, false, true, false, false]  |206             |4742            |
+|[true, false, true, false, true, false]   |92              |894             |
+|[true, false, false, true, true, false]   |86              |770             |
+|[true, true, false, false, true, false]   |114             |1252            |
+|[false, false, true, true, true, false]   |86              |416             |
+|[false, false, true, false, true, false]  |92              |2988            |
+|[false, true, false, false, false, false] |472             |18996           |
+|[false, false, false, false, false, false]|758             |97034           |
+|[false, false, true, false, false, false] |330             |17116           |
+|[true, true, true, false, false, false]   |294             |1566            |
+|[false, true, true, true, false, false]   |198             |604             |
+|[true, true, true, true, false, false]    |180             |358             |
+|[false, true, false, false, true, false]  |116             |3396            |
+|[true, true, false, false, false, false]  |450             |6806            |
++------------------------------------------+----------------+----------------+
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:4})
+WITH DISTINCT n,toString(c.wNum) AS wNum,c.skipList AS skipPattern
+RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, skipPattern
+
+CYPHER runtime=interpreted
+MATCH (c:CreatedBy {wNum:4})
+WITH DISTINCT c.skipList AS skipPattern
+RETURN skipPattern
+
+RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, skipPattern
+
+Observation: 32 Distinct skiplists are reported.  Maybe should be 64.   - as in do need to observe itration.
+
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:6})
+return distinct  n
+
+
+MATCH (n:MuNumber)
+WITH n, DISTINCT n.nBinary
+RETURN n
+
+private  ResultListID resultListId=new ResultListID(300000);
+"resultId":197364}
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy )  Where c.resultId<300000 AND c.wNum>3 
+return distinct  n
+
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy )  Where  c.wNum>3 
+return distinct  n
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?})
+WITH DISTINCT n,toString(c.wNum) AS wNum,c.skipList AS skipPattern 
+RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, skipPattern
+
+The above script does not distinguish between nodes differenced from highest term=1 or highest term=2
+A script using a path argument would be able to. 
+
+The below two scripts, can be joind with a constant variable in case class distinguishing the typel 
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy )  Where c.resultId<300000 AND c.wNum>3 
+return distinct  n
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy )  Where c.resultId>300000 AND c.wNum>3 
+return distinct  n
+
+Do want list of determined at wNum with known progeny (the high constant differenced).  
+Do want list of expected determined at wNum (the MuNumbers list).
+
+Do want n,d reconciled.
+
+Need a paragraph for below:
+
+_n C_r	= 	number of combinations
+n	= 	total number of objects in the set
+r	= 	number of choosing objects from the set
+
+= n! / r!(n-r)!...
+
+7/26
+
+https://stackoverflow.com/questions/46796032/what-is-difference-between-null-nil-and-nothing.
+https://www.youtube.com/watch?v=kz7DfbOuvOM
+https://www.youtube.com/watch?v=PYR9worLEGo&list=PLyQeeNuuRLBU1kPBCZMeHQhsWGsWQOG6H
+
+
+
+Want ZAD graph summary. 
+
+Is root power set complete?   - n,d analysis.  use the combinations formula and compare result with dataframe summary (with d count(n)).
+
+Is mu root set complete?      - :CreatedBy.pArray can be related to :Dnode.vmResult that is determined/under determined. 
+                              - Use the appropriate set of muNumbers (Dimension).  Which are/are not in a (HigestScalar,Dimension)
+                                Conjecture is the HS =1,2 completes up to quadratics.  1,2,3 completes the cubits.  1,2,3,4 completes the quartets...
+ 
+What percentage of the power set is determined/under determined?    - 
+Can determined p's both be expressed with highest term =1 and 2?    - believe no.
+
+Does the skip pattern reveal more root sets???
+
+https://www.geeksforgeeks.org/program-calculate-value-ncr/
+
+The backround:
+
+D6Test2LeadTerm1,2 populates a dataframe of case class dNFieldsWSkip(denominator:Int,numerator:Int, wNum:Int,determined:Int,skipPattern:String)
+The dataframe can be sumerized with a (d,distint n) table. 
+
+And now...implement nCr:
+
+each d is represented by 0..d n's.  
+as (d,n) has actual number on D6T2LT12 and expected given by nCr.               - This table is the PM DiffDataExplore embellishment.             - 
+
+Note (d,n)  Looks... 
+
+
+
+GraphicZero-The Quadratics paragraph 9. GroupedScalarRowsSum Aggrigator (for scalars)   -  is the how to reference for grouped aggrigators
+
+
+Do want (d,n) the groupByKey aggrigator
+
+maybe want the nCr table,  then join.
+
+
+Looks like join by with a single field.  
+want to join by a key.
+
+
+df1.join(df2, (df1("col1") === df2("col2")) && (df1("col3") === df2("col4")))
+
+Leaddetails.join(
+    Utm_Master, 
+    Leaddetails("LeadSource") <=> Utm_Master("LeadSource")
+        && Leaddetails("Utm_Source") <=> Utm_Master("Utm_Source")
+        && Leaddetails("Utm_Medium") <=> Utm_Master("Utm_Medium")
+        && Leaddetails("Utm_Campaign") <=> Utm_Master("Utm_Campaign"),
+    "left"
+)
+
+
+
+DifferencesDataExploreD6C1
+
+
+Totally jives set is not complete after 6.... expecially 1/d is known not to exist.
+
++---+----------+
+|d  |Distinct n|
++---+----------+
+|0  |1         |
+|1  |1         |
+|2  |2         |
+|3  |3         |
+|4  |4         |
+|5  |4         |
+|6  |6         |
+|7  |5         |
+|8  |7         |
+|9  |7         |
+|10 |8         |
+|11 |8         |
+|12 |10        |
+|13 |10        |
+|14 |10        |
+|15 |11        |
+|16 |13        |
+|17 |11        |
+
+
+
+
+
+GroupedScalarRowsSum.main(Array("index7MaxN8","KvDS"))             - key value aggrigator used 
+
+
++------+-------------+
+|key   |scalar_Result|
++------+-------------+
+|[1,0] |24           |
+|[2,2] |1            |
+|[1,2] |2            |
+|[16,2]|1            |
+|[4,0] |20           |
+|[16,0]|42           |
+|[1,1] |-8           |
+|[8,1] |-11          |
+|[2,1] |-7           |
+|[32,1]|-15          |
+|[8,2] |1            |
+|[32,0]|56           |
+|[16,1]|-13          |
+|[2,0] |12           |
+|[8,0] |30           |
+|[4,2] |1            |
+|[4,1] |-9           |
+|[32,2]|1            |
++------+-------------+
+
+FilterIndex.main(Array("rUdfMaxN8","7","index7MaxN8"))                - Index=7 filterd from all indixes.
+
+
++---------+------+------+-----+--------+-------+------+---------+
+|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|
++---------+------+------+-----+--------+-------+------+---------+
+|2        |0     |16    |7    |8       |2      |8     |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-1    |7    |8       |2      |-4.0  |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |0     |2     |7    |8       |2      |1     |1        |
+|2        |0     |6     |7    |8       |2      |3     |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-3    |7    |8       |2      |-12.0 |1        |
+|2        |1     |-3    |7    |8       |2      |-24.0 |2        |
+|2        |1     |-4    |7    |8       |2      |-32   |2        |
+|2        |0     |12    |7    |8       |2      |12    |2        |
+|2        |2     |1     |7    |8       |2      |64.0  |2        |
+|2        |0     |20    |7    |8       |2      |40    |4        |
+|2        |1     |-4    |7    |8       |2      |-64   |4        |
+|2        |2     |1     |7    |8       |2      |128.0 |4        |
+|2        |1     |-5    |7    |8       |2      |-80.0 |4        |
+|2        |2     |1     |7    |8       |2      |256.0 |8        |
+|2        |1     |-5    |7    |8       |2      |-160.0|8        |
+|2        |0     |30    |7    |8       |2      |120   |8        |
+|2        |1     |-6    |7    |8       |2      |-192  |8        |
+|2        |2     |1     |7    |8       |2      |512.0 |16       |
+|2        |1     |-7    |7    |8       |2      |-448.0|16       |
+|2        |1     |-6    |7    |8       |2      |-384  |16       |
+|2        |0     |42    |7    |8       |2      |336   |16       |
+|2        |1     |-7    |7    |8       |2      |-896.0|32       |
+|2        |1     |-8    |7    |8       |2      |-1024 |32       |
+|2        |2     |1     |7    |8       |2      |1024.0|32       |
+|2        |0     |56    |7    |8       |2      |896   |32       |
++---------+------+------+-----+--------+-------+------+---------+
+
+
+ResultUDF.main(Array("s12MaxN8","rUdfMaxN8"))                           -  All indices for MaxN8 are returned.
+
+
++---------+------+------+-----+--------+-------+------+---------+
+|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|
++---------+------+------+-----+--------+-------+------+---------+
+|2        |0     |6     |2    |8       |2      |3     |1        |
+|2        |0     |42    |2    |8       |2      |21    |1        |
+|2        |1     |-7    |2    |8       |2      |-28.0 |1        |
+|2        |2     |1     |2    |8       |2      |32.0  |1        |
+|2        |1     |-6    |2    |8       |2      |-24   |1        |
+|2        |0     |56    |2    |8       |2      |28    |1        |
+|2        |2     |1     |2    |8       |2      |32.0  |1        |
+|2        |1     |-8    |2    |8       |2      |-32   |1        |
+|2        |1     |-7    |2    |8       |2      |-28.0 |1        |
+|2        |0     |8     |3    |8       |2      |4     |1        |
+|2        |1     |-5    |3    |8       |2      |-20.0 |1        |
+|2        |2     |1     |3    |8       |2      |32.0  |1        |
+|2        |0     |30    |3    |8       |2      |15    |1        |
+|2        |1     |-6    |3    |8       |2      |-24   |1        |
+|2        |1     |-7    |3    |8       |2      |-28.0 |1        |
+|2        |2     |1     |3    |8       |2      |32.0  |1        |
+|2        |0     |42    |3    |8       |2      |21    |1        |
+|2        |1     |-6    |3    |8       |2      |-24   |1        |
+|2        |1     |-7    |3    |8       |2      |-56.0 |2        |
+|2        |2     |1     |3    |8       |2      |64.0  |2        |
+|2        |0     |56    |3    |8       |2      |56    |2        |
+|2        |1     |-8    |3    |8       |2      |-64   |2        |
+|2        |0     |10    |4    |8       |2      |5     |1        |
+|2        |1     |-5    |4    |8       |2      |-20.0 |1        |
+|2        |0     |20    |4    |8       |2      |10    |1        |
+|2        |2     |1     |4    |8       |2      |32.0  |1        |
+|2        |1     |-4    |4    |8       |2      |-16   |1        |
+|2        |0     |30    |4    |8       |2      |15    |1        |
+|2        |2     |1     |4    |8       |2      |32.0  |1        |
+|2        |1     |-6    |4    |8       |2      |-24   |1        |
+|2        |1     |-5    |4    |8       |2      |-20.0 |1        |
+|2        |1     |-6    |4    |8       |2      |-48   |2        |
+|2        |0     |42    |4    |8       |2      |42    |2        |
+|2        |2     |1     |4    |8       |2      |64.0  |2        |
+|2        |1     |-7    |4    |8       |2      |-56.0 |2        |
+|2        |1     |-8    |4    |8       |2      |-128  |4        |
+|2        |0     |56    |4    |8       |2      |112   |4        |
+|2        |1     |-7    |4    |8       |2      |-112.0|4        |
+|2        |2     |1     |4    |8       |2      |128.0 |4        |
+|2        |0     |12    |5    |8       |2      |6     |1        |
+|2        |0     |12    |5    |8       |2      |6     |1        |
+|2        |1     |-4    |5    |8       |2      |-16   |1        |
+|2        |2     |1     |5    |8       |2      |32.0  |1        |
+|2        |1     |-3    |5    |8       |2      |-12.0 |1        |
+|2        |2     |1     |5    |8       |2      |32.0  |1        |
+|2        |1     |-5    |5    |8       |2      |-20.0 |1        |
+|2        |0     |20    |5    |8       |2      |10    |1        |
+|2        |1     |-4    |5    |8       |2      |-16   |1        |
+|2        |0     |30    |5    |8       |2      |30    |2        |
+|2        |2     |1     |5    |8       |2      |64.0  |2        |
+|2        |1     |-6    |5    |8       |2      |-48   |2        |
+|2        |1     |-5    |5    |8       |2      |-40.0 |2        |
+|2        |0     |42    |5    |8       |2      |84    |4        |
+|2        |1     |-6    |5    |8       |2      |-96   |4        |
+|2        |1     |-7    |5    |8       |2      |-112.0|4        |
+|2        |2     |1     |5    |8       |2      |128.0 |4        |
+|2        |2     |1     |5    |8       |2      |256.0 |8        |
+|2        |1     |-7    |5    |8       |2      |-224.0|8        |
+|2        |0     |56    |5    |8       |2      |224   |8        |
+|2        |1     |-8    |5    |8       |2      |-256  |8        |
+|2        |0     |14    |6    |8       |2      |7     |1        |
+|2        |1     |-3    |6    |8       |2      |-12.0 |1        |
+|2        |2     |1     |6    |8       |2      |32.0  |1        |
+|2        |0     |6     |6    |8       |2      |3     |1        |
+|2        |1     |-2    |6    |8       |2      |-8    |1        |
+|2        |1     |-3    |6    |8       |2      |-12.0 |1        |
+|2        |0     |12    |6    |8       |2      |6     |1        |
+|2        |1     |-4    |6    |8       |2      |-16   |1        |
+|2        |2     |1     |6    |8       |2      |32.0  |1        |
+|2        |1     |-4    |6    |8       |2      |-32   |2        |
+|2        |0     |20    |6    |8       |2      |20    |2        |
+|2        |2     |1     |6    |8       |2      |64.0  |2        |
+|2        |1     |-5    |6    |8       |2      |-40.0 |2        |
+|2        |1     |-5    |6    |8       |2      |-80.0 |4        |
+|2        |0     |30    |6    |8       |2      |60    |4        |
+|2        |1     |-6    |6    |8       |2      |-96   |4        |
+|2        |2     |1     |6    |8       |2      |128.0 |4        |
+|2        |2     |1     |6    |8       |2      |256.0 |8        |
+|2        |1     |-7    |6    |8       |2      |-224.0|8        |
+|2        |1     |-6    |6    |8       |2      |-192  |8        |
+|2        |0     |42    |6    |8       |2      |168   |8        |
+|2        |2     |1     |6    |8       |2      |512.0 |16       |
+|2        |1     |-8    |6    |8       |2      |-512  |16       |
+|2        |0     |56    |6    |8       |2      |448   |16       |
+|2        |1     |-7    |6    |8       |2      |-448.0|16       |
+|2        |0     |16    |7    |8       |2      |8     |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-1    |7    |8       |2      |-4.0  |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |0     |2     |7    |8       |2      |1     |1        |
+|2        |0     |6     |7    |8       |2      |3     |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-3    |7    |8       |2      |-12.0 |1        |
+|2        |1     |-3    |7    |8       |2      |-24.0 |2        |
+|2        |1     |-4    |7    |8       |2      |-32   |2        |
+|2        |0     |12    |7    |8       |2      |12    |2        |
+|2        |2     |1     |7    |8       |2      |64.0  |2        |
+|2        |0     |20    |7    |8       |2      |40    |4        |
+|2        |1     |-4    |7    |8       |2      |-64   |4        |
+|2        |2     |1     |7    |8       |2      |128.0 |4        |
+|2        |1     |-5    |7    |8       |2      |-80.0 |4        |
+|2        |2     |1     |7    |8       |2      |256.0 |8        |
+|2        |1     |-5    |7    |8       |2      |-160.0|8        |
+|2        |0     |30    |7    |8       |2      |120   |8        |
+|2        |1     |-6    |7    |8       |2      |-192  |8        |
+|2        |2     |1     |7    |8       |2      |512.0 |16       |
+|2        |1     |-7    |7    |8       |2      |-448.0|16       |
+|2        |1     |-6    |7    |8       |2      |-384  |16       |
+|2        |0     |42    |7    |8       |2      |336   |16       |
+|2        |1     |-7    |7    |8       |2      |-896.0|32       |
+|2        |1     |-8    |7    |8       |2      |-1024 |32       |
+|2        |2     |1     |7    |8       |2      |1024.0|32       |
+|2        |0     |56    |7    |8       |2      |896   |32       |
++---------+------+------+-----+--------+-------+------+---------+
+
+
+QuerryS12QuadQuerry.main(Array("8","s12MaxN8")) 
+
+
++-----+----+---------+-------+------+------+
+|index|MaxN|rowScalar|divisor|scalar|degree|
++-----+----+---------+-------+------+------+
+|2    |8   |1        |2      |6     |0     |
+|2    |8   |1        |2      |42    |0     |
+|2    |8   |1        |2      |-7    |1     |
+|2    |8   |1        |2      |1     |2     |
+|2    |8   |1        |2      |-6    |1     |
+|2    |8   |1        |2      |56    |0     |
+|2    |8   |1        |2      |1     |2     |
+|2    |8   |1        |2      |-8    |1     |
+|2    |8   |1        |2      |-7    |1     |
+|3    |8   |1        |2      |8     |0     |
+|3    |8   |1        |2      |-5    |1     |
+|3    |8   |1        |2      |1     |2     |
+|3    |8   |1        |2      |30    |0     |
+|3    |8   |1        |2      |-6    |1     |
+|3    |8   |1        |2      |-7    |1     |
+|3    |8   |1        |2      |1     |2     |
+|3    |8   |1        |2      |42    |0     |
+|3    |8   |1        |2      |-6    |1     |
+|3    |8   |2        |2      |-7    |1     |
+|3    |8   |2        |2      |1     |2     |
+|3    |8   |2        |2      |56    |0     |
+|3    |8   |2        |2      |-8    |1     |
+|4    |8   |1        |2      |10    |0     |
+|4    |8   |1        |2      |-5    |1     |
+|4    |8   |1        |2      |20    |0     |
+|4    |8   |1        |2      |1     |2     |
+|4    |8   |1        |2      |-4    |1     |
+|4    |8   |1        |2      |30    |0     |
+|4    |8   |1        |2      |1     |2     |
+|4    |8   |1        |2      |-6    |1     |
+|4    |8   |1        |2      |-5    |1     |
+|4    |8   |2        |2      |-6    |1     |
+|4    |8   |2        |2      |42    |0     |
+|4    |8   |2        |2      |1     |2     |
+|4    |8   |2        |2      |-7    |1     |
+|4    |8   |4        |2      |-8    |1     |
+|4    |8   |4        |2      |56    |0     |
+|4    |8   |4        |2      |-7    |1     |
+|4    |8   |4        |2      |1     |2     |
+|5    |8   |1        |2      |12    |0     |
+|5    |8   |1        |2      |12    |0     |
+|5    |8   |1        |2      |-4    |1     |
+|5    |8   |1        |2      |1     |2     |
+|5    |8   |1        |2      |-3    |1     |
+|5    |8   |1        |2      |1     |2     |
+|5    |8   |1        |2      |-5    |1     |
+|5    |8   |1        |2      |20    |0     |
+|5    |8   |1        |2      |-4    |1     |
+|5    |8   |2        |2      |30    |0     |
+|5    |8   |2        |2      |1     |2     |
+|5    |8   |2        |2      |-6    |1     |
+|5    |8   |2        |2      |-5    |1     |
+|5    |8   |4        |2      |42    |0     |
+|5    |8   |4        |2      |-6    |1     |
+|5    |8   |4        |2      |-7    |1     |
+|5    |8   |4        |2      |1     |2     |
+|5    |8   |8        |2      |1     |2     |
+|5    |8   |8        |2      |-7    |1     |
+|5    |8   |8        |2      |56    |0     |
+|5    |8   |8        |2      |-8    |1     |
+|6    |8   |1        |2      |14    |0     |
+|6    |8   |1        |2      |-3    |1     |
+|6    |8   |1        |2      |1     |2     |
+|6    |8   |1        |2      |6     |0     |
+|6    |8   |1        |2      |-2    |1     |
+|6    |8   |1        |2      |-3    |1     |
+|6    |8   |1        |2      |12    |0     |
+|6    |8   |1        |2      |-4    |1     |
+|6    |8   |1        |2      |1     |2     |
+|6    |8   |2        |2      |-4    |1     |
+|6    |8   |2        |2      |20    |0     |
+|6    |8   |2        |2      |1     |2     |
+|6    |8   |2        |2      |-5    |1     |
+|6    |8   |4        |2      |-5    |1     |
+|6    |8   |4        |2      |30    |0     |
+|6    |8   |4        |2      |-6    |1     |
+|6    |8   |4        |2      |1     |2     |
+|6    |8   |8        |2      |1     |2     |
+|6    |8   |8        |2      |-7    |1     |
+|6    |8   |8        |2      |-6    |1     |
+|6    |8   |8        |2      |42    |0     |
+|6    |8   |16       |2      |1     |2     |
+|6    |8   |16       |2      |-8    |1     |
+|6    |8   |16       |2      |56    |0     |
+|6    |8   |16       |2      |-7    |1     |
+|7    |8   |1        |2      |16    |0     |
+|7    |8   |1        |2      |-2    |1     |
+|7    |8   |1        |2      |-1    |1     |
+|7    |8   |1        |2      |1     |2     |
+|7    |8   |1        |2      |2     |0     |
+|7    |8   |1        |2      |6     |0     |
+|7    |8   |1        |2      |1     |2     |
+|7    |8   |1        |2      |-2    |1     |
+|7    |8   |1        |2      |-3    |1     |
+|7    |8   |2        |2      |-3    |1     |
+|7    |8   |2        |2      |-4    |1     |
+|7    |8   |2        |2      |12    |0     |
+|7    |8   |2        |2      |1     |2     |
+|7    |8   |4        |2      |20    |0     |
+|7    |8   |4        |2      |-4    |1     |
+|7    |8   |4        |2      |1     |2     |
+|7    |8   |4        |2      |-5    |1     |
+|7    |8   |8        |2      |1     |2     |
+|7    |8   |8        |2      |-5    |1     |
+|7    |8   |8        |2      |30    |0     |
+|7    |8   |8        |2      |-6    |1     |
+|7    |8   |16       |2      |1     |2     |
+|7    |8   |16       |2      |-7    |1     |
+|7    |8   |16       |2      |-6    |1     |
+|7    |8   |16       |2      |42    |0     |
+|7    |8   |32       |2      |-7    |1     |
+|7    |8   |32       |2      |-8    |1     |
+|7    |8   |32       |2      |1     |2     |
+|7    |8   |32       |2      |56    |0     |
++-----+----+---------+-------+------+------+
+
+
+
+
+
+7/27
+
+
+https://towardsdatascience.com/udaf-and-aggregators-custom-aggregation-approaches-for-datasets-in-apache-spark-68dc4d09796d
+
+https://jaceklaskowski.gitbooks.io/mastering-spark-sql/content/spark-sql-basic-aggregation.html
+
+And so, DiffDataExploreD6C1,2  
+
+
+
+CYPHER runtime=interpreted
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:0})
+WITH DISTINCT n,toString(c.wNum) AS wNum,c.skipList AS skipPattern
+RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, skipPattern
+
+
+Started streaming 172946 records after 16 ms and completed after 41 ms, displaying first 3000 rows.
+
+
+looks like something of a cartisean join going on in the return....
+
+
+https://www.bbc.co.uk/sounds/play/live:bbc_world_service
+
+public ResultSet wNumQ(int wNum)  {
+   
+    ResultSet rs=null;
+    try
+     {  
+        s = conn.createStatement();
+        statements.add(s);
+        psInsert = conn.prepareStatement("MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?})\n" +
+                                         "WITH DISTINCT n,toString(c.wNum) as wNum\n" +
+                                         "RETURN toString(n.d) as denominator, toString(n.n) as numerator, wNum, toString(n.determined) as determined"); 
+        statements.add(psInsert);
+        psInsert.setInt(1,wNum);
+        rs = psInsert.executeQuery();
+        conn.commit();
+     }
+         catch (SQLException sqle)
+        {  printSQLException(sqle); }
+        statements.remove(0);
+    return(rs);
+}
+
+public ResultSet wNumSkipQ(int wNum)  {
+   
+    ResultSet rs=null;
+    try
+    {  
+       s = conn.createStatement();
+       statements.add(s);
+       psInsert = conn.prepareStatement("CYPHER runtime=interpreted\n" +
+                                        "MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?})\n" +
+                                        "WITH DISTINCT n,toString(c.wNum) AS wNum,c.skipList AS skipPattern\n" +
+                                        "RETURN toString(n.d) AS denominator, toString(n.n) AS numerator, wNum, toString(n.determined) AS determined, skipPattern"); 
+       statements.add(psInsert);
+       psInsert.setInt(1,wNum);
+       rs = psInsert.executeQuery();
+       conn.commit();
+     }
+     catch (SQLException sqle)
+        { printSQLException(sqle); }
+        statements.remove(0);
+    return(rs);
+}
+
+
+
+public ResultSet wNumQQ(int wNum)  {
+   
+    ResultSet rs=null;
+    try
+     {  
+        s = conn.createStatement();
+        statements.add(s);
+        psInsert = conn.prepareStatement("MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:?})\n" +
+                                         "WITH DISTINCT n\n" +
+                                         "RETURN toString(n.d) as denominator, toString(n.n) as numerator, toString(n.determined) as determined"); 
+        statements.add(psInsert);
+        psInsert.setInt(1,wNum);
+        rs = psInsert.executeQuery();
+        conn.commit();
+     }
+         catch (SQLException sqle)
+        {  printSQLException(sqle); }
+        statements.remove(0);
+    return(rs);
+}
+
+
+MATCH (n:Dnode) - [] -> (c:CreatedBy {wNum:6})
+WITH DISTINCT n
+RETURN toString(n.d) as denominator, toString(n.n) as numerator, toString(n.determined) as determined 
+
+looks like can proceed with the muNumbers join of DiffDataExploreD61,2.
+
+The note take to date is:
+
+.seems starting with an inital 1 and then 2 mearly writes in duplicate dNodes as vmResult is a multiple.  
+ seems invariant under the pArray expression....
+.do though, want pArray iterated from -n to n.... 
+.what happens when a term is entered that is not an even divisor of respective triagtriag_1.
+.have not looked at skiplist effect yet.
+
+.seems like can proceed wit using a 1,maxD=3 with extended pArray iteration range.
+
+https://www.facebook.com/friends/suggestions/?profile_id=100013692316573
+
+For anyone asking, these are the Nine Muses of Greek mythology - Clio, Euterpe, Thalia, Melpomene, Erato, Terpsicore, Ourania, Polymnia and, in the middle, Calliope
+
+
+ 
+ +-------+------+---+---+-----------+---------+------------------+
+|key    |numSum|_1 |_2 |Denominator|Numerator|Count of Numerator|
++-------+------+---+---+-----------+---------+------------------+
+|[0,0]  |0     |0  |0  |0          |0        |0                 |
+|[1,1]  |10078 |1  |1  |1          |1        |10078             |
+|[2,1]  |1808  |2  |1  |2          |1        |1808              |
+|[2,2]  |16888 |2  |2  |2          |2        |16888             |
+|[3,1]  |280   |3  |1  |3          |1        |280               |
+|[3,2]  |32    |3  |2  |3          |2        |32                |
+|[3,3]  |25848 |3  |3  |3          |3        |25848             |
+|[4,1]  |40    |4  |1  |4          |1        |40                |
+|[4,2]  |3088  |4  |2  |4          |2        |3088              |
+|[4,3]  |882   |4  |3  |4          |3        |882               |
+|[4,4]  |33728 |4  |4  |4          |4        |33728             |
+|[5,1]  |2     |5  |1  |5          |1        |2                 |
+|[5,3]  |60    |5  |3  |5          |3        |60                |
+|[5,4]  |432   |5  |4  |5          |4        |432               |
+|[5,5]  |42690 |5  |5  |5          |5        |42690             |
+|[6,1]  |2     |6  |1  |6          |1        |2                 |
+|[6,2]  |460   |6  |2  |6          |2        |460               |
+|[6,3]  |4644  |6  |3  |6          |3        |4644              |
+|[6,4]  |1200  |6  |4  |6          |4        |1200              |
+|[6,5]  |450   |6  |5  |6          |5        |450               |
+|[6,6]  |52656 |6  |6  |6          |6        |52656             |
+|[7,3]  |18    |7  |3  |7          |3        |18                |
+|[7,4]  |104   |7  |4  |7          |4        |104               |
+|[7,5]  |490   |7  |5  |7          |5        |490               |
+|[7,6]  |108   |7  |6  |7          |6        |108               |
+|[7,7]  |2072  |7  |7  |7          |7        |2072              |
+|[8,2]  |80    |8  |2  |8          |2        |80                |
+|[8,3]  |12    |8  |3  |8          |3        |12                |
+|[8,4]  |6296  |8  |4  |8          |4        |6296              |
+|[8,5]  |1480  |8  |5  |8          |5        |1480              |
+|[8,6]  |372   |8  |6  |8          |6        |372               |
+|[8,7]  |2296  |8  |7  |8          |7        |2296              |
+|[8,8]  |400   |8  |8  |8          |8        |400               |
+|[9,3]  |744   |9  |3  |9          |3        |744               |
+|[9,4]  |32    |9  |4  |9          |4        |32                |
+|[9,5]  |120   |9  |5  |9          |5        |120               |
+|[9,6]  |672   |9  |6  |9          |6        |672               |
+|[9,7]  |322   |9  |7  |9          |7        |322               |
+|[9,8]  |624   |9  |8  |9          |8        |624               |
+|[9,9]  |486   |9  |9  |9          |9        |486               |
+|[10,2] |4     |10 |2  |10         |2        |4                 |
+|[10,4] |32    |10 |4  |10         |4        |32                |
+|[10,5] |7880  |10 |5  |10         |5        |7880              |
+|[10,6] |1980  |10 |6  |10         |6        |1980              |
+|[10,7] |532   |10 |7  |10         |7        |532               |
+|[10,8] |2240  |10 |8  |10         |8        |2240              |
+|[10,9] |522   |10 |9  |10         |9        |522               |
+|[10,10]|460   |10 |10 |10         |10       |460               |
+|[11,4] |16    |11 |4  |11         |4        |16                |
+|[11,5] |70    |11 |5  |11         |5        |70                |
+|[11,6] |216   |11 |6  |11         |6        |216               |
+|[11,7] |784   |11 |7  |11         |7        |784               |
+|[11,8] |80    |11 |8  |11         |8        |80                |
+|[11,9] |486   |11 |9  |11         |9        |486               |
+|[11,10]|320   |11 |10 |11         |10       |320               |
+|[11,11]|1166  |11 |11 |11         |11       |1166              |
+|[12,2] |4     |12 |2  |12         |2        |4                 |
+|[12,3] |126   |12 |3  |12         |3        |126               |
+|[12,4] |1032  |12 |4  |12         |4        |1032              |
+|[12,5] |40    |12 |5  |12         |5        |40                |
+|[12,6] |9636  |12 |6  |12         |6        |9636              |
+|[12,7] |2310  |12 |7  |12         |7        |2310              |
+|[12,8] |768   |12 |8  |12         |8        |768               |
+|[12,9] |1692  |12 |9  |12         |9        |1692              |
+|[12,10]|700   |12 |10 |12         |10       |700               |
+|[12,11]|880   |12 |11 |12         |11       |880               |
+|[13,4] |8     |13 |4  |13         |4        |8                 |
+|[13,5] |30    |13 |5  |13         |5        |30                |
+|[13,6] |60    |13 |6  |13         |6        |60                |
+|[13,7] |126   |13 |7  |13         |7        |126               |
+|[13,8] |112   |13 |8  |13         |8        |112               |
+|[13,9] |162   |13 |9  |13         |9        |162               |
+|[13,10]|160   |13 |10 |13         |10       |160               |
+|[13,11]|66    |13 |11 |13         |11       |66                |
+|[13,12]|72    |13 |12 |13         |12       |72                |
+|[13,13]|1612  |13 |13 |13         |13       |1612              |
+|[14,5] |30    |14 |5  |14         |5        |30                |
+|[14,6] |84    |14 |6  |14         |6        |84                |
+|[14,7] |98    |14 |7  |14         |7        |98                |
+|[14,8] |352   |14 |8  |14         |8        |352               |
+|[14,9] |126   |14 |9  |14         |9        |126               |
+|[14,10]|920   |14 |10 |14         |10       |920               |
+|[14,11]|242   |14 |11 |14         |11       |242               |
+|[14,12]|456   |14 |12 |14         |12       |456               |
+|[14,13]|780   |14 |13 |14         |13       |780               |
+|[14,14]|364   |14 |14 |14         |14       |364               |
+|[15,3] |12    |15 |3  |15         |3        |12                |
+|[15,5] |1350  |15 |5  |15         |5        |1350              |
+|[15,6] |48    |15 |6  |15         |6        |48                |
+|[15,7] |84    |15 |7  |15         |7        |84                |
+|[15,8] |16    |15 |8  |15         |8        |16                |
+|[15,9] |216   |15 |9  |15         |9        |216               |
+|[15,10]|100   |15 |10 |15         |10       |100               |
+|[15,11]|198   |15 |11 |15         |11       |198               |
+|[15,13]|312   |15 |13 |15         |13       |312               |
+|[15,14]|140   |15 |14 |15         |14       |140               |
+|[15,15]|180   |15 |15 |15         |15       |180               |
+|[16,4] |176   |16 |4  |16         |4        |176               |
+|[16,5] |10    |16 |5  |16         |5        |10                |
+|[16,6] |36    |16 |6  |16         |6        |36                |
+|[16,7] |70    |16 |7  |16         |7        |70                |
+|[16,8] |48    |16 |8  |16         |8        |48                |
+|[16,9] |18    |16 |9  |16         |9        |18                |
+|[16,10]|140   |16 |10 |16         |10       |140               |
+|[16,11]|418   |16 |11 |16         |11       |418               |
+|[16,12]|48    |16 |12 |16         |12       |48                |
+|[16,13]|234   |16 |13 |16         |13       |234               |
+|[16,14]|308   |16 |14 |16         |14       |308               |
+|[16,15]|30    |16 |15 |16         |15       |30                |
+|[16,16]|96    |16 |16 |16         |16       |96                |
+|[17,5] |10    |17 |5  |17         |5        |10                |
+|[17,6] |24    |17 |6  |17         |6        |24                |
+|[17,7] |84    |17 |7  |17         |7        |84                |
+|[17,8] |128   |17 |8  |17         |8        |128               |
+|[17,9] |126   |17 |9  |17         |9        |126               |
+|[17,10]|20    |17 |10 |17         |10       |20                |
+|[17,11]|88    |17 |11 |17         |11       |88                |
+|[17,12]|48    |17 |12 |17         |12       |48                |
+|[17,13]|78    |17 |13 |17         |13       |78                |
+|[17,16]|96    |17 |16 |17         |16       |96                |
+|[17,17]|204   |17 |17 |17         |17       |204               |
+|[18,3] |6     |18 |3  |18         |3        |6                 |
+|[18,5] |10    |18 |5  |18         |5        |10                |
+|[18,6] |1692  |18 |6  |18         |6        |1692              |
+|[18,7] |70    |18 |7  |18         |7        |70                |
+|[18,8] |112   |18 |8  |18         |8        |112               |
+|[18,9] |126   |18 |9  |18         |9        |126               |
+|[18,10]|160   |18 |10 |18         |10       |160               |
+|[18,11]|66    |18 |11 |18         |11       |66                |
+|[18,12]|480   |18 |12 |18         |12       |480               |
+|[18,13]|52    |18 |13 |18         |13       |52                |
+|[18,14]|364   |18 |14 |18         |14       |364               |
+|[18,15]|300   |18 |15 |18         |15       |300               |
+|[18,16]|64    |18 |16 |18         |16       |64                |
+|[18,17]|272   |18 |17 |18         |17       |272               |
+|[18,18]|36    |18 |18 |18         |18       |36                |
+|[19,7] |56    |19 |7  |19         |7        |56                |
+|[19,9] |36    |19 |9  |19         |9        |36                |
+|[19,10]|20    |19 |10 |19         |10       |20                |
+|[19,11]|22    |19 |11 |19         |11       |22                |
+|[19,12]|24    |19 |12 |19         |12       |24                |
+|[19,13]|130   |19 |13 |19         |13       |130               |
+|[19,15]|30    |19 |15 |19         |15       |30                |
+|[19,16]|64    |19 |16 |19         |16       |64                |
+|[19,17]|374   |19 |17 |19         |17       |374               |
+|[19,18]|36    |19 |18 |19         |18       |36                |
+|[19,19]|76    |19 |19 |19         |19       |76                |
+|[20,4] |24    |20 |4  |20         |4        |24                |
+|[20,5] |210   |20 |5  |20         |5        |210               |
+|[20,7] |28    |20 |7  |20         |7        |28                |
+|[20,8] |96    |20 |8  |20         |8        |96                |
+|[20,9] |54    |20 |9  |20         |9        |54                |
+|[20,10]|140   |20 |10 |20         |10       |140               |
+|[20,12]|24    |20 |12 |20         |12       |24                |
+|[20,13]|26    |20 |13 |20         |13       |26                |
+|[20,14]|28    |20 |14 |20         |14       |28                |
+|[20,15]|90    |20 |15 |20         |15       |90                |
+|[20,16]|160   |20 |16 |20         |16       |160               |
+|[20,17]|272   |20 |17 |20         |17       |272               |
+|[20,18]|216   |20 |18 |20         |18       |216               |
+|[20,19]|38    |20 |19 |20         |19       |38                |
+|[20,20]|40    |20 |20 |20         |20       |40                |
+|[21,7] |56    |21 |7  |21         |7        |56                |
+|[21,8] |16    |21 |8  |21         |8        |16                |
+|[21,9] |72    |21 |9  |21         |9        |72                |
+|[21,11]|44    |21 |11 |21         |11       |44                |
+|[21,12]|48    |21 |12 |21         |12       |48                |
+|[21,13]|78    |21 |13 |21         |13       |78                |
+|[21,15]|150   |21 |15 |21         |15       |150               |
+|[21,16]|32    |21 |16 |21         |16       |32                |
+|[21,19]|76    |21 |19 |21         |19       |76                |
+|[21,20]|40    |21 |20 |21         |20       |40                |
+|[22,7] |70    |22 |7  |22         |7        |70                |
+|[22,10]|80    |22 |10 |22         |10       |80                |
+|[22,12]|72    |22 |12 |22         |12       |72                |
+|[22,13]|52    |22 |13 |22         |13       |52                |
+|[22,16]|352   |22 |16 |22         |16       |352               |
+|[22,18]|36    |22 |18 |22         |18       |36                |
+|[22,19]|76    |22 |19 |22         |19       |76                |
+|[22,20]|80    |22 |20 |22         |20       |80                |
+|[23,6] |12    |23 |6  |23         |6        |12                |
+|[23,8] |16    |23 |8  |23         |8        |16                |
+|[23,9] |18    |23 |9  |23         |9        |18                |
+|[23,10]|40    |23 |10 |23         |10       |40                |
+|[23,11]|88    |23 |11 |23         |11       |88                |
+|[23,16]|32    |23 |16 |23         |16       |32                |
+|[23,17]|34    |23 |17 |23         |17       |34                |
+|[23,19]|38    |23 |19 |23         |19       |38                |
+|[23,21]|84    |23 |21 |23         |21       |84                |
+|[23,22]|132   |23 |22 |23         |22       |132               |
+|[24,4] |8     |24 |4  |24         |4        |8                 |
+|[24,6] |276   |24 |6  |24         |6        |276               |
+|[24,8] |16    |24 |8  |24         |8        |16                |
+|[24,9] |18    |24 |9  |24         |9        |18                |
+|[24,10]|40    |24 |10 |24         |10       |40                |
+|[24,11]|44    |24 |11 |24         |11       |44                |
+|[24,12]|48    |24 |12 |24         |12       |48                |
+|[24,13]|26    |24 |13 |24         |13       |26                |
+|[24,14]|84    |24 |14 |24         |14       |84                |
+|[24,16]|160   |24 |16 |24         |16       |160               |
+|[24,17]|34    |24 |17 |24         |17       |34                |
+|[24,18]|396   |24 |18 |24         |18       |396               |
+|[24,19]|38    |24 |19 |24         |19       |38                |
+|[24,20]|80    |24 |20 |24         |20       |80                |
+|[24,21]|168   |24 |21 |24         |21       |168               |
+|[24,23]|46    |24 |23 |24         |23       |46                |
+|[25,5] |40    |25 |5  |25         |5        |40                |
+|[25,10]|60    |25 |10 |25         |10       |60                |
+|[25,11]|22    |25 |11 |25         |11       |22                |
+|[25,12]|24    |25 |12 |25         |12       |24                |
+|[25,13]|52    |25 |13 |25         |13       |52                |
+|[25,17]|34    |25 |17 |25         |17       |34                |
+|[25,22]|44    |25 |22 |25         |22       |44                |
+|[25,23]|92    |25 |23 |25         |23       |92                |
+|[26,8] |80    |26 |8  |26         |8        |80                |
+|[26,10]|20    |26 |10 |26         |10       |20                |
+|[26,11]|44    |26 |11 |26         |11       |44                |
+|[26,12]|24    |26 |12 |26         |12       |24                |
+|[26,13]|78    |26 |13 |26         |13       |78                |
+|[26,14]|56    |26 |14 |26         |14       |56                |
+|[26,16]|32    |26 |16 |26         |16       |32                |
+|[26,21]|42    |26 |21 |26         |21       |42                |
+|[26,25]|50    |26 |25 |26         |25       |50                |
+|[27,15]|30    |27 |15 |27         |15       |30                |
+|[27,16]|32    |27 |16 |27         |16       |32                |
+|[27,17]|102   |27 |17 |27         |17       |102               |
+|[27,19]|38    |27 |19 |27         |19       |38                |
+|[27,21]|42    |27 |21 |27         |21       |42                |
+|[27,24]|48    |27 |24 |27         |24       |48                |
+|[28,11]|22    |28 |11 |28         |11       |22                |
+|[28,13]|52    |28 |13 |28         |13       |52                |
+|[28,15]|30    |28 |15 |28         |15       |30                |
+|[28,19]|114   |28 |19 |28         |19       |114               |
+|[28,22]|132   |28 |22 |28         |22       |132               |
+|[29,7] |14    |29 |7  |29         |7        |14                |
+|[29,9] |18    |29 |9  |29         |9        |18                |
+|[29,18]|36    |29 |18 |29         |18       |36                |
+|[29,19]|38    |29 |19 |29         |19       |38                |
+|[29,25]|50    |29 |25 |29         |25       |50                |
+|[30,5] |10    |30 |5  |30         |5        |10                |
+|[30,6] |60    |30 |6  |30         |6        |60                |
+|[30,7] |14    |30 |7  |30         |7        |14                |
+|[30,9] |36    |30 |9  |30         |9        |36                |
+|[30,10]|20    |30 |10 |30         |10       |20                |
+|[30,11]|22    |30 |11 |30         |11       |22                |
+|[30,12]|24    |30 |12 |30         |12       |24                |
+|[30,14]|28    |30 |14 |30         |14       |28                |
+|[30,15]|60    |30 |15 |30         |15       |60                |
+|[30,18]|108   |30 |18 |30         |18       |108               |
+|[30,19]|38    |30 |19 |30         |19       |38                |
+|[30,20]|40    |30 |20 |30         |20       |40                |
+|[30,25]|50    |30 |25 |30         |25       |50                |
+|[31,12]|24    |31 |12 |31         |12       |24                |
+|[31,27]|54    |31 |27 |31         |27       |54                |
+|[32,14]|28    |32 |14 |32         |14       |28                |
+|[32,20]|80    |32 |20 |32         |20       |80                |
+|[32,22]|44    |32 |22 |32         |22       |44                |
+|[32,23]|138   |32 |23 |32         |23       |138               |
+|[32,24]|48    |32 |24 |32         |24       |48                |
+|[33,19]|76    |33 |19 |33         |19       |76                |
+|[33,21]|42    |33 |21 |33         |21       |42                |
+|[33,22]|44    |33 |22 |33         |22       |44                |
+|[34,8] |16    |34 |8  |34         |8        |16                |
+|[34,10]|20    |34 |10 |34         |10       |20                |
+|[34,22]|44    |34 |22 |34         |22       |44                |
+|[35,7] |14    |35 |7  |35         |7        |14                |
+|[35,13]|26    |35 |13 |35         |13       |26                |
+|[35,15]|30    |35 |15 |35         |15       |30                |
+|[35,25]|100   |35 |25 |35         |25       |100               |
+|[35,31]|62    |35 |31 |35         |31       |62                |
+|[36,6] |12    |36 |6  |36         |6        |12                |
+|[36,7] |14    |36 |7  |36         |7        |14                |
+|[36,11]|22    |36 |11 |36         |11       |22                |
+|[36,12]|24    |36 |12 |36         |12       |24                |
+|[36,15]|30    |36 |15 |36         |15       |30                |
+|[36,16]|32    |36 |16 |36         |16       |32                |
+|[36,20]|80    |36 |20 |36         |20       |80                |
+|[36,21]|84    |36 |21 |36         |21       |84                |
+|[36,24]|48    |36 |24 |36         |24       |48                |
+|[36,25]|50    |36 |25 |36         |25       |50                |
+|[36,26]|52    |36 |26 |36         |26       |52                |
+|[36,27]|54    |36 |27 |36         |27       |54                |
+|[36,31]|62    |36 |31 |36         |31       |62                |
+|[40,14]|28    |40 |14 |40         |14       |28                |
+|[40,20]|40    |40 |20 |40         |20       |40                |
+|[40,22]|44    |40 |22 |40         |22       |44                |
+|[40,25]|50    |40 |25 |40         |25       |50                |
+|[40,28]|56    |40 |28 |40         |28       |56                |
+|[41,22]|44    |41 |22 |41         |22       |44                |
+|[41,35]|70    |41 |35 |41         |35       |70                |
+|[41,37]|74    |41 |37 |41         |37       |74                |
+|[44,26]|52    |44 |26 |44         |26       |52                |
+|[45,21]|42    |45 |21 |45         |21       |42                |
+|[46,34]|68    |46 |34 |46         |34       |68                |
++-------+------+---+---+-----------+---------+------------------+
+
+
+
+while (setSizee<setSize)
+
+
+this.setSize=setSize;
+
+setsizee=this.lbSetSize=lbSetSize;
+
+this.setSize=setSize;
+//this.setSize=setSize;
+this.lbSetSize=lbSetSize;
+this.skip=skip;
+
+
+setProductRange,lbSetProductRange,(boolean)muMaskList.get(numerator)); 
+
+
+
+public LoopsDriverTwoP(List muList,Semaphore muSem,LoopsLogicLoopSemaphore loopsLogic,Semaphore muSem1,List muList1,Semaphore tl1Semaphore,List dbVector11,PolynomialArray figPArray,PolynomialArray cashedFigPArray,PolynomialArray pArray,int nMaxx,ResultListID resultListId,int setProductRange,boolean noBufferRun,int dimension,int integerRange,int lbSetProductRange, int pArrayResetValue, ArrayList muMaskList) {
+...
+...
+   this.setProductRange=setProductRange;
+   this.noBufferRun=noBufferRun;
+   this.dimension=dimension;    
+   this.integerRange=integerRange;
+   this.lbSetProductRange=lbSetProductRange;
+   this.pArrayResetValue=pArrayResetValue;
+   this.muMaskList=muMaskList;
+
+
+https://www.google.com/search?client=firefox-b-1-d&q=Geographic+Information+System
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supply Chain Analyst - job post
+ZT Systems
+Secaucus, NJ 07094
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Job details
+Job Type
+Full-time
+Full Job Description
+
+Looking to take the next step in your career?
+
+Hatch LTK is currently seeking a highly motivated Project Analyst to join our North American Infrastructure group in our Brooklyn, NY office.
+
+As a successful candidate, you will:
+
+    Researching technical, financial and operations information for use in the analysis of specific railroad and rail transit programs or issues.
+    Calculating and providing necessary analysis within the scope of assigned tasks for inclusion into reports.
+    Collecting, adjusting and correlating technical and commercial data
+    Effectively presenting data via accurate, concise, professionally prepared written reports spreadsheets or other methods as required
+
+
+You bring to the role:
+
+    A Bachelor’s degree in Engineering, Finance, Economics, Accounting, or related field
+    2-4 years of financial, cost, and economic analysis experience
+    Excellent analytical, written, and oral communication skills
+    Advanced technical research & technical writing skills
+    Critical thinking and analytical problem-solving skills
+    Proficient in Microsoft Office
+    Familiarity with technical writing
+
+
+Candidates must be detail oriented with excellent organization and planning skills, the ability to work on multiple projects simultaneously while meeting deadlines and maintaining a high level of quality, as well as the ability to work independently with minimal supervision. A high level of professionalism, including the ability to work well with both internal and external clients is a must. Some travel may be required.
+
+
+The following skills/experience are a plus:
+
+    Experience with a transportation related firm
+    Highly developed analytical skills and hands-on experience
+    Advanced Excel skills
+    Experience with scheduling software (Primavera, MS Project)
+
+
+Why join us?
+
+    Develop innovation partnerships
+    Think locally, work globally
+    Engage with people who make a difference
+
+
+What we offer you?
+
+    Flexible work environment
+    Long term career development
+
+
+Salary is commensurate with qualifications and experience.
+
+Hatch LTK is one of the nation's most respected consultants to the railroad and rail transit industries. Hatch LTK is an Equal Opportunity/Affirmative Action Employer, offering attractive professional opportunities, and competitive compensation and benefits packages. Qualified individuals are encouraged to submit a cover letter and resume online.
+Hatch LTK
+3 days ago
+If you require alternative methods of application or screening, you must approach the employer directly to request this as Indeed is not responsible for the employer's application process.
+
+
+
+
+
+
+
+Job details
+Job Type
+Full-time
+Full Job Description
+
+Job Title: Supply Chain Analyst
+
+
+Job Location: Newark, NJ
+
+
+We have an exciting opportunity for a SUPPLY CHAIN ANALYST to support Account Management through design and validation of data extraction, analysis and reporting techniques. This position will be based at our Newark, NJ location.
+
+
+Key Responsibilities:
+
+
+    Identify, understand and document current business reporting processes.
+    Conceptualize improved methodologies of data-information synthesis
+    Create, document and implement transferrable systems of optimized KPI and Metrics reporting.
+    Develop executive ready presentation templates for use by Account Management.
+    Effectively execute ancillary duties as assigned.
+
+
+Skills / Requirements:
+
+
+    1+ years' experience with international supply chain / freight forwarding required.
+    Bachelors Degree in related field preferred.
+    Experience with Power VI and Infor Nexus a plus.
+    Proficient in using Microsoft PowerPoint and Excel intermediate level (Pivot tables, V-Look ups) required.
+    Applied critical reasoning skills.
+    Ability to express and explain complex concepts effectively and efficiently (verbal and written).
+    Strong analytical and organizational skills.
+    Ability to learn quickly with a bias for action.
+    High degree of professionalism, dedication and attention to detail.
+    Must be flexible and comfortable with work in fast paced client centric environment.
+
+
+Why join DHL Global Forwarding?
+
+We are part of Deutsche Post DHL, the world’s leading logistics provider with operations in over 220 countries. Visit our career site on the web at https://www.logistics.dhl/us-en/home/careers.html
+
+Our TOP EMPLOYER prestigious certification attests to our best-in-class efforts to attract and retain talent by fostering a positive work environment and encouraging personal and professional development among employees. At DGF, we don’t build businesses. We believe in building people so they can build the business and this means every success that we have comes from our employees. Together, our employees continue shaping our environment as a great place to work and community that we are all proud of.
+
+As the world’s leading logistics’ company, DHL offers a wide range of interesting job challenges and opportunities in our different divisions around the globe. Our performance management system supports us in recognizing your potential, evaluating your performance, and continuously planning the development of your career with DHL. We will always enable you to take on responsibility and encourage your growth, personally and professionally.
+
+We are proud of our history and what we have created, a global market leader with 30,000 passionate employees. Our aspiration is to become the undisputed leader in our industry, when people think of forwarding; we want them to think DGF, because we have:
+
+
+    The largest global network with more than ~30,000 passionate employees
+    The most efficient processes and fastest response times
+    The best solutions and best customer service
+
+
+Our Vision: The Logistics Company for the World
+Our Mission: Excellence. Simply Delivered.
+Our Purpose: We connect people, improving their lives.
+Our Values: Respect & Results
+Our Goals: Employer, Provider, and Investment of Choice, Living Responsibility
+
+About DHL Global Forwarding (DGF):
+
+DHL Global Forwarding (DGF) is the world leader in air freight services and one of the leading providers of ocean freight services. Around 30,000 employees work to ensure the transport of all kinds of shipments by air or sea. DGF's logistics solutions span the entire supply chain, from the factory to the shop floor. They also include special transport-related services.
+
+Our business model is very asset-light, as it is based on the brokerage of transport services between customers and freight carriers. We consolidate shipments to achieve higher volumes, purchase cargo space at better conditions and optimize network utilization. Our global presence means we can offer a variety of routing options and meet our customers' increasing demand for multimodal shipments.
+
+We are part of Deutsche Post DHL, the world’s leading logistics provider with operations in over 220 countries. Visit our career site on the web at https://www.logistics.dhl/us-en/home/careers.html
+
+DHL Global Forwarding is an equal opportunity employer. We evaluate qualified applicants without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, disability, veteran status, and other legally protected characteristics.
+
+Work Authorization:
+DHL Global Forwarding will only employ those who are legally authorized to work in the United States. This is not a position for which visa sponsorship will be provided. Individuals who need sponsorship for work authorization, now or in the future, are not eligible for hire for this role.
+
+Equal Opportunity Employer, Disability/Vets. Click here for EEO Statements and Reasonable Accommodations.
+
+GL75308
+Newark, New Jersey, United States of America
+Category
+Administration
+Posted Date
+06/16/2021
+Professionals
+Full-time
+Permanent
+Day Time Only
+40
+Global Forwarding, Freight
+Danzas Corporation
+No travel required
+DHL
+11 days ago
+
+
+
+https://www.indeed.com/cmp/Atrium-Staffing/jobs?start=150#cmp-skip-header-desktop
+
+
+
+
+Job details
+Job Type
+Full-time
+Full Job Description
+
+Xometry is looking for an experienced data scientist to join our growing technology organization. You’ll be working as part of a small but extremely talented and impactful data science team to analyze data, build predictive models, perform statistical analyses, and develop new insights about the business. This is an excellent opportunity to hone your skills in a fast-based environment with a unique business model.
+
+What you will do:
+
+    Develop statistical and predictive models to explain consumer and supplier behavior
+    Design experiments and analyze data to test business hypotheses and develop new insights
+    Communicate statistical procedures and findings, verbally and visually, to a business audience
+    Quickly grasp nuances of data sources and definitions
+    Understand business needs and stakeholder requirements and perspectives
+    Collaborate with developers to ensure that recommendations are implemented correctly
+    Prioritize and execute multiple analyses, simultaneously supporting a variety of business functions
+
+Requirements:
+
+    Bachelor’s degree in statistics, economics, or another quantitative discipline
+    Three years of hands-on predictive modeling experience
+    Knowledge of statistics and predictive modeling (including hypothesis testing, regression, machine learning, and time series analysis)
+    Ability to write SQL queries (preferably Postgres or Snowflake)
+    Ability to perform data manipulation, predictive modeling, and visualization in an open-source language (preferably Python)
+    Portfolio of predictive analytics work
+    US citizen, green card holder, or a legal permanent resident of the United States
+
+Bonus points if you have some of the following experience:
+
+    Looker, Tableau, or other BI/reporting tools
+    MongoDB
+    AWS
+    Custom manufacturing (CNC Machining or 3D Printing)
+
+Xometry is the largest marketplace for custom manufacturing, connecting customers with optimal manufacturing solutions through proprietary AI algorithms. Xometry provides on-demand manufacturing services and industrial supply materials to a diverse customer base, ranging from startups to Fortune 100 companies. Our nationwide network of over 6,000 partner manufacturing facilities enables us to maintain consistently fast lead times while offering a broad array of capabilities, including CNC machining, 3D printing, sheet metal fabrication, injection molding, and urethane casting. Xometry's customers include BMW, Dell Technologies, General Electric, and NASA.
+
+If this job isn’t for you but you have a friend who may be a perfect fit - share this job with them!
+
+Xometry is an equal opportunity employer. All applicants will be considered for employment without attention to race, color, religion, sex, sexual orientation, gender identity, national origin, veteran or disability status.
+
+Xometry participates in E-Verify and after a job offer is accepted, will provide the federal government with your Form I-9 information to confirm that you are authorized to work in the U.S.
+
+Job Type: Full-time
+30+ days ago
+
+
+
+Analyst/Sr Analyst-Acct Supply Chain
+L'Oréal New York, NY 18 hours ago 20 applicants
+Full-time
+10,001+ employees · Cosmetics
+29 school alumni
+Actively recruiting
+Analyst/Sr Analyst-Acct Supply Chain
+L'Oréal New York, NY
+L’Oréal USA
+LUXE Supply Chain
+Analyst/Sr. Analyst – Retail Supply Chain
+
+Location: NYC - 10 Hudson Yards or NJ - South Brunswick
+
+Job Summary: The owner of data analysis is responsible for managing business critical data and will be the vital link between the supply chain and activity based data (i.e.; cost, productivity, demand, sales, inventory, etc.) This position will develop performance reporting and account dashboards. They will be tasked to find innovative ways to record, monitor and report data used to manage retail supply chain activities with the expectation to turn data into information, information into insight and insight into business decisions. The manager will work closely with various members of the supply chain and key business stakeholders. They must be self-directed and be comfortable to work and communicate with individuals of all levels. This position must provide analytical support for projects, new systems, reporting and process improvement proposals.
+
+Job Responsibilities
+
+    Gathers, interprets, and summarizes large amounts of relevant business data. Provides monthly KPI reports to retail supply chain and key stakeholders.
+    Monitors data for integrity, accuracy and timeliness and challenges accordingly.
+    Investigates issues with data in SAP or in EIW, works with IT partners to find root causes and to develop solutions. Collaborates with functional experts to learn more and find solutions.
+    Improves processes and systems to add value to the supply chain and business.
+    Represents supply chain on technical teams, has direct communication with retailer and Paris Management teams, and will gather requirements for new tool / tool upgrade requirements. Will test and validate data as needed to support initiatives.
+    Trains supply chain partners in business intelligent tools and will help to develop reports in tool as needed to support reporting and job efficiency.
+    Develops ad hoc reports as required to support retail supply chain and key business initiatives and business stakeholders.
+    Leads projects relative to retail supply chain improvements in areas of people, process or tools.
+
+Job Requirements
+
+    BS/ BA Degree
+    1-5 Years of business experience in supply chain or retail
+    Strong qualitative and business analytical skill
+    Advanced proficiency in Excel, Access / SQL database and statistical applications
+    Must be able to identify and interpret patterns, trends and assess data quality and can eliminate irrelevant data
+    Familiar with supply chain logistics, distribution planning and retail math a plus
+    Working knowledge of business intelligent tools to model desired KPI views that provide visibility to issues and opportunities.
+    Strong research and problem solving skills with ability to summarize, articulate findings, make recommendations and facilitate change.
+    Ability to use lateral thinking and prioritize; works progressively and independently and will meet deadlines.
+    Excellent verbal and written communication skills as will have direct communication with division stakeholders, the retailer and with Paris management teams – multicultural experience a plus.
+    Ability to communicate and represent L’Oreal externally.
+
+Please note: This job description does not list all duties of the job. Employees may be asked by management to perform other duties. The employer has the right to revise this job description at any time.
+
+We are an Equal Opportunity Employer and take pride in a diverse environment. We do not discriminate in recruitment, hiring, training, promotion or other employment practices for reasons of race, color, religion, gender, sexual orientation, national origin, age, marital or veteran status, medical condition or disability, or any other legally protected status.
+
+If you require a reasonable accommodation to complete an application for a recognized disability under applicable law, please email USApplicationAccommodation@support.lorealusa.com . Please note this email will only respond to specific requests for assistance completing the application as a request for accommodation for a disability. All others will not be considered.
+
+LI_USA_CORP
+Pay range unavailable
+
+Salary information is not available at the moment.
+Are you interested in salary information for this job?
+/
+Competitive intelligence about other applicants
+Applicants for this job
+
+    20Applicants 7Applicants in the past day 
+
+Remember to update your profile with the most relevant skills and experience to maximize your chances of getting this job
+Top skills
+
+You have 2 out of 10 top skills among all other applicants
+
+Microsoft Excel
+(You have this skill!)
+
+Operations Management
+(You have this skill!)
+
+Microsoft Word
+
+SQL
+
+Microsoft PowerPoint
+
+Management
+
+Logistics Management
+
+Microsoft Office
+
+Leadership
+
+    SAP Products
+
+Seniority level
+
+    11 Senior level applicants
+
+    4 Entry level applicants
+
+    1 Manager level applicant
+
+Education
+
+    44% have a Master's Degree 44% have a Bachelor's Degree 11% have a Master of Business Administration 1% have other degrees 
+
+Location
+
+    11–15 applicants
+
+    New York City Metropolitan Area
+
+    1–5 applicants
+
+    Greater Boston
+
+    1–5 applicants
+
+    Greater Delhi Area
+
+An inside look at L'Oréal and its employees
+Hiring trends over the last 2 years
+
+    79,721
+
+    Total employees
+
+    7%
+
+    Company-wide
+
+    2y growth
+    7% increase
+
+    6%
+
+    Management
+
+    2y growth
+    6% increase
+
+025,00050,00075,000100,000
+Date 	Number of employees
+July 2019 	74,505
+August 2019 	73,936
+September 2019 	74,392
+October 2019 	74,633
+November 2019 	74,840
+December 2019 	74,315
+January 2020 	75,120
+February 2020 	75,530
+March 2020 	75,566
+April 2020 	75,627
+May 2020 	75,725
+June 2020 	75,593
+July 2020 	75,812
+August 2020 	75,428
+September 2020 	75,935
+October 2020 	76,206
+November 2020 	76,449
+December 2020 	76,186
+January 2021 	77,026
+February 2021 	77,370
+March 2021 	77,851
+April 2021 	78,173
+May 2021 	78,553
+June 2021 	78,935
+July 2021 	79,721
+Median tenure ∙ 5.1 years
+L'Oréal talent sources
+
+    L'Oréal hired 29 people from Stony Brook University. See all
+
+Hires at L'Oréal came from these companies and more
+
+Hires at L'Oréal came from these schools and more
+
+
+
+Supply Chain Planner
+at Sony Music Entertainment US (View all jobs)
+New York, NY
+
+You will be working in a dynamic environment working with music labels and manufacturing vendors to maintain the inventory levels for physical music products and artist merchandize.  You will be the liaison between the sales, the distributed labels and Orchard label management team for both upcoming and previously released products.
+What you'll do:
+
+    You will gain valuable skills utilizing SAP to place purchase orders with various vendors.
+    If not known, you will learn how to build Bill of Materials to communicate to manufacturers.
+    You will monitor sales and propose inventory needs to various distributed music labels.
+    Your attention to detail will be needed while reviewing vendor invoices and authorizing payment.
+    Your input will be valued to improve operational efficiencies as you deal with the different entities to ensure the artist’s product is available to order.
+    Over time, you will learn to cultivate relationships and develop strong partnerships with the vendors that serve us.
+    Your problem-solving skills will be tested on a daily basic as you work to resolve new operational challenges put before you.
+
+ 
+Who you are:
+
+    You should have a college degree (or similar work experience) in Business, along with 4+ years managing high volume purchase orders
+    You are expected to be proficient in Excel, including V-Look ups and Pivot Tables
+    You must have strong organizational and time management skills that allow you to multi-task and meet deadlines
+    You should have excellent written and verbal communication skills
+    You should be an independent thinker and have confidence to make decisions
+
+ 
+What we give you:
+
+    You join an inclusive, collaborative and global community where you have the opportunity to fuel the creative journey
+    A modern office environment designed to foster productivity, creativity, and teamwork
+    An attractive and comprehensive benefits package including medical, dental, vision, life & disability coverage, and 401K + employer matching
+    Voluntary benefits like company-paid identity theft protection and resources for pets, mental health and meditation resources, industry-leading fertility coverage, fully paid leave for childbirth or bonding, fully paid leave for caregivers, programs for loved ones with developmental disabilities and neurodiversity, subsidized back-up child and elder care, and reimbursement for adoption, surrogacy, tuition and student loans
+    We invest in your professional growth & development
+
+Time off for a winter recess
+
+Sony Music is committed to providing equal employment opportunity for all persons regardless of age, disability, national origin, race, color, religion, sex, sexual orientation, gender, gender identity or expression, pregnancy, veteran or military status, marital and civil partnership/union status, alienage or citizenship status, creed, genetic information or any other status protected by applicable federal, state, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

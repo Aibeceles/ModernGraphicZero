@@ -1,0 +1,16 @@
+
+Neo4j
+
+Config file
+pluggins folder
+
+jars:
+
+Notebooks:
+
+
+
+
+
+
+

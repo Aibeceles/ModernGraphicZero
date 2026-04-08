@@ -1,0 +1,2496 @@
+x2    //  sb2.release();              //  is there really a sb2 release in initial? 
+
+//     loopsLogic.rentrentReset();
+
+
+did reload zad from thumb key.  Suppose more to slueth.
+
+un commenting in loopSemaphoer inital does perform the iteration.
+Although the last value of first iterator is off by 1.   yep definatly snipped a few off the run. 
+and a suspicion on duplicates....  confirm with neo4j or sleuth.
+
+So, screw around with the workbook some more or back to the gaussstable.    
+And still trying to remember why the scripts were turned off.
+
+and running ZAD pre supposes munumbers are present.
+
+so, make the monster???
+
+Make it build a quadaratic,quartet,octet,hexadectet.
+
+The no buffer run graph of a single termd P,degree.   - fast zad conclusions.
+               vs
+quadartic,quartet,octet,hexadectet            -  need the cypher querry. Is though the 
+                                                 inspiration of ZAD.
+
+rcounter is part of GraphDB pattern....  
+
+the LoopsDriverTwoPManager nobufferrun uses ccypher with verticaltranslateindex....something of
+an ordering attemp in a twopolynomial run.
+
+the short signature gocccypher also uses rCounter, no verticaltranslateindex.
+
+merge vmresult 
+
+figparray is a P
+parray is an iteration coordinate.
+
+looks in general like went at it getting twopolys to graph sensibly...
+
+do want keys for this.
+
+
+if (wNum==0) {
+    mergeVmResult(vmResult,fPArray);
+            psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,constant:?,linear:?,square:?}) ");
+    //    if (rCounter!=-99) {
+    createWnumRcounter(wNum,rCounter,pArray,0,0);      // zero is dummy to satisfy cypher.
+            psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?} )");
+    createKnownByRelation(vmResult,wNum,rCounter,0,0);
+            psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+    //     }   
+    createEvaluates(loopList,vmResult);
+             psInsert = conn.prepareStatement(" MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? AND d.vmResult=? WITH d,e MERGE  (d)-[ee:Envalues]->(e)");               
+    }
+    if (wNum>0)
+    {
+    mergeVmResultt(vmResult);
+            psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?}) ");
+   //    if (rCounter!=-99) {
+   createWnumRcounter(wNum,rCounter,pArray,0,0);
+            psInsert = conn.prepareStatement("Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?} )");
+   createKnownByRelation(vmResult,wNum,rCounter,0,0);
+            psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+   //    }
+   createZMap(vmResult,rCounter,wNum);
+            psInsert = conn.prepareStatement("match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+
+
+
+}
+
+
+2/2 
+
+AM
+
+The modern interpretation of DOSPT:
+
+P is differenced. last difference p is subDifofScal(lastdiffP)      -note the new name of the function.  It envites spark computation.
+Each worker gets subDiffofScal(lastdiffP,indexOffset).
+Are interested with gbLists with appropriate sized number of roots.  And also with appropriate muValue   
+Implication is have (MaxN,D,I) and (MaxN',D',I) - I invariant.
+Then triagTriab_last will have same figP[_].   A traversal  (MaxN,D,I) - [ITraveersal] -> (MaxN',D',I)
+
+
+Implication is plan for building ZAD
+
+Argument using Evaluate=32, N=5.
+Implies  MaxN=6 is sufficient.  Note 6 is in power sieve of 3. 
+Implies  need all I<=6
+
+Problem:     
+           want 32 explained.
+           1/32,2/32.3/32,...
+           quadratics only iterate 1/2 q.
+           work the powerset of 32 may inculed unnessary mu's.
+             
+Intent:
+           
+           (MaxN,D,I)
+             (6,2,5)
+
+How to build a robust ZADDB.
+
+ZAD expects Evaluates from muCorrolation threaded.
+
+Integrate ZAD with spark functionality.
+
+Spark expects udf's and aggrigators of ZAD's.    
+Spark interacts with DFScripts ZADScripts.
+
+An executor "sizes up" (6,2,5).  - Define its initial triagTriag set.  
+Interested in last not constant triagTriag.  
+Give each worker subDiffofScal(lastdiffP,indexOffset,figparray)  - maybe dont have to give figparray, it would be a list op with result.
+They would perform the loopListener event.
+
+subDiffofScal(lastdiffP,indexOffset,figparray) return implys figparry ready for (6,4,5,nextTriagTriag).
+
+
+The whole mu thing:
+
+It has a surjection that in the ZAD sence of things becomes massivly redundant.
+Want to know most efficent enumeration of */denominator.
+The enumeration that compleats from the bottom up fastest. 
+
+mu is stated as an evaluate field. 
+Maybe the listener needs to lookup/interpert range resut as mu.
+Means mu should be a dNode field.   
+
+PM
+
+The AM discussion maintains two points:
+
+What ZAD does and possible spark interoperatibility.
+Mu reconciliation
+
+What are the components of a model?
+
+Have the seed:             (MaxN,D,I)
+                           (6,2,5)
+
+Need the mu traversals in terms of ZAD iterations.
+Need up to D=32 for necessary value 1/32 mu space.
+
+It does mean  wow... Do want to run someting like 6,32,5. Imagin giving ZAD (6,32,5) the iteration!  
+
+
+
+2/4
+
+GraphicM:
+
+An implimentation of the multi-linear:
+
+GHQuadratics are reduced by degree from sets of the sum of consecutive term quadratics.
+Can observe the row scalar associated with each sum of sequence quadratics and note:
+
+The row scalar is a power of two.
+This power of two is smaller than the power of two being defined.
+The smaller power of two has been already defined as multi-linear set of quadratics.
+The opportunity is to substitute the power of two with its quadratic definition and multiply through
+as would with the scalar.     
+
+
+Higher degrees because...  Want range of fractions of MaxN.
+Exibit the rowcounter substitution.
+Intend a square of origonal p with same evaluate of origonal p.
+
+Exibit:
+
+ The Target Node Set              -  GH said they can be written in terms of common free variable. 
+ Example of row substitution      -  The N=7 is a bit long winded.  Just show the 1,2,4,8 substitution. It should be N=5,MaxN=6.
+
+ZADDB:
+
+The Well Defined Fig:  
+
+DOSPT implemented in ZAD such that triagtriag_last has nodes completing the 2CMaxN set.
+triagtraig_last+1 completes 3CMaxN set...triagtriag_first completes MaxNCMaxNd set.
+
+
+The iteration of FractionIntegerSetIterate and populating The Well Defined Fig.
+  
+Write the nodes.
+Connect the nodes.
+
+
+def s12OQ():ArrayBuffer[s12IQu]
+
+
+s12OQ( rangeLow, rangeHigh, index, dimensionRead1, dimensionRead2, writeDimension, tConstraint, tLowerS, tIndex, tSeq)
+
+val s12RS = s3.s12OQ("7","7","8","2","2","4","2","7","16","16")
+
+        psInsert.setString(1, rangeLow);          - 7   
+        psInsert.setString(2, rangeHigh);         - 7
+        psInsert.setString(3, index);             - 8
+        psInsert.setString(4, dimensionRead1);    - 2
+        psInsert.setString(5, tConstraint);       - 2
+
+        psInsert.setString(6, tLowerS);           - 7
+        psInsert.setString(7, tIndex);            - 16
+        psInsert.setString(8, dimensionRead2);    - 2    
+        psInsert.setString(9, tSeq);              - 16
+
+        psInsert.setString(10, writeDimension);   - stub
+
+       UNWIND range(toInteger(?),toInteger(?)) AS n 
+       WITH toString(n) AS N, ? as nMax
+       MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=? AND t.twoSeq=? 
+       WITH i.N as iN, i.MaxN as iM,e,v,t,i                                                      7           8                 2             2 
+       OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) where ii.N=? AND ii.MaxN=? AND ii.Dimension=? AND tt.twoSeq=?
+                                                                                                          7          16             2                1
+
+Match two rows.  
+
+
+GraphicM's first ResultSet is case classed with a rage value.   - The intention??
+
+ResultSet is populated with two unlike rows.   - They are different MaxN's. 
+
+Meaning:  The calculation  is somewhat ambiguous.   - not any more see first note on 2/5
+
+A second multiplication implication:
+
+Multiply all the bits vs multiply by reduced scalars.
+
+And so, GraphicM take 1 appears as an excersise.  
+
+Need the walk through of S*. 
+As they are the S*'s,  Maybe the dataframe for display.
+
+
+The s3's are in DFScripts as Kafka topics.  
+
+The s12OQ effort is s12 in dataframe context not Kafka topic context.
+
+So. configure it to perform the S* on D=2 to D=4. Use MaxN=8, N=7.
+
+
+2/5
+
+GraphicM has utility.  It demonstrated p with two roots and p' with two seperate roots multiplied with the result having 4 roots.
+
+
+Have to revisit the quadratics in a paragraph.
+Have DFScripts with s12Initial.  It is useable 
+with dummy OPTIONAL MATCH.  QProgressions does 
+explain the translation so can proceed with 
+typical set.  Where is the motivation for 
+S12Initial being in DFScripts?  
+S12OQ is also there and also implemented in
+GraphicM.
+
+Looks like time for a new note.
+Its title is TheQuadratics.
+
+Have a bit of confusion with rowCounter.
+With rowCounter =2,  the multiply through by rowCounter doubles result.
+
+But all others want multiplication through.
+
+S12Initial, does however have a special handle on rowCounter=2.
+
+
+
+S12 initial is a bit busy...
+
+It does handle the rowCounter multiplication.
+RowCounter=1,2 are exceptions.
+There are no defined p's for 1,2 argument substitution
+
+There is no need to multiply by 1 for rowCounter=1
+The multiplication by 2 for rowcounter=2 is accomplished on TScalar. 
+All other rowCounters perform the rowcounter multiplication on AScalar.
+
+So, back to repurposing S12 for "The Quadratics" note.
+
+v.twoSeq is tft the rowCounter alias.
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(7),toInteger(7)) AS n
+        WITH toString(n) AS N, '8' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2' AND t.twoSeq=2 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        v.Scalar AS vScalar,
+        i.RowCounter
+ 
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+ 
+
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+
+
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='99'
+        WITH
+//        RETURN
+
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+
+        vv.Degree AS vvDegree,
+
+        vv.Scalar AS vvScalar,  
+
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN "0" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN "0" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN "0" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:?} as lines
+        RETURN lines
+
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(7),toInteger(7)) AS n
+        WITH toString(n) AS N, '8' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2'  // AND t.twoSeq=2 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS TDivisor,
+        t.twoSeq AS rowScalar,
+        v.Degree AS vDegree,
+        v.Scalar AS vScalar,
+        i.RowCounter
+Return  iN,iM,rowScalar,tDivisor,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(v.Scalar) END ) AS TTScalar,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+
+
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension='99'
+        WITH
+//        RETURN
+
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+
+        vv.Degree AS vvDegree,
+
+        vv.Scalar AS vvScalar,  
+
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN "0" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN "0" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN "0" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:?} as lines
+        RETURN lines
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(7),toInteger(7)) AS n
+        WITH toString(n) AS N, '8' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2'  // AND t.twoSeq=2 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i,                       
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS tDivisor,
+        t.twoSeq AS rowScalar,
+        v.Degree AS vDegree,
+        v.Scalar AS vScalar,
+        i.RowCounter as rowCounter
+Return  iN,iM,rowScalar,tDivisor,rowCounter,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(v.Scalar) END ) AS TTScalar,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree
+
+
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(7),toInteger(7)) AS n
+        WITH toString(n) AS N, '8' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2'  // AND t.twoSeq=2 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i,                       
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS tDivisor,
+        t.twoSeq AS rowScalar,
+        v.Degree AS vDegree,
+        v.Scalar AS vScalar,
+//        i.RowCounter as rowCounter
+Return  iN,iM,rowScalar,tDivisor,rowCounter,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(v.Scalar) END ) AS TTScalar,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree
+
+
+
+
+The candidate quadratic querry:
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(7),toInteger(7)) AS n
+        WITH toString(n) AS N, '8' as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension='2'  // AND t.twoSeq=2 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i,                       
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS tDivisor,
+        t.twoSeq AS rowScalar,
+        v.Degree AS vDegree,
+        v.Scalar AS vScalar
+//        i.RowCounter as rowCounter
+Return  iN,iM,rowScalar,tDivisor,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(v.Scalar) END ) AS TTScalar,
+        toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree
+
+
+The spark excercise for reducing by degree. Otherwise need a s3t,s3a node pattern defined.      
+Next up get it in DFScripts.
+
+
+public ResultSet s12QuadQ(String rangeLow,String rangeHigh,String index) 
+
+GQuadratics has object QuerryS12QuadQuerry.  
+It returns a dataframe containing all terms MaxN,N uses for p definition.
+
+A transform script needs writing.
+
+The dataframe needs grouping by rowScalar then reduced by degree.  
+
+Each resulting grouped,reduced p's needs factoring. 
+
+
+2/6
+
+About GraphicZero paragraph layout:
+
+Order of paragraph execution is important.  - was executed in order and then paragraphs rearrainged.
+Each named dataframe is placed into Z context.
+
+Concidered p definitions are arguments populating dataframes. 
+Each dataframe is mapped to a dataframe including free variable result.
+A simple dataset Aggrigator proves expected value.
+Filter for zero degree and Map to argument radix udfs are availible for notbook exposition.
+
+Each maping is over an argument case class into target case class.
+The filter maintains the argument case class.  
+
+And now some GQuadratics.
+
+QuerryS12QuadQuerry, dataframe of s12QQu needs a udf transform into its liniears (roots).
+  
+It should point out the rowcounter p with a root at index.  
+It sould point out how the sums cancel out roots.  
+
+Remember aggrigator on multiple rows 
+     and udf's on a single row.
+
+
+
+class org.neo4j.cypher.internal.runtime.ValuedNodeIndexCursor cannot be cast to class org.neo4j.kernel.impl.newapi.EntityIndexSeekClient (org.neo4j.cypher.internal.runtime.ValuedNodeIndexCursor and org.neo4j.kernel.impl.newapi.EntityIndexSeekClient are in unnamed module of loader 'app')
+
+2/7
+
+
+GraphicM has QuerryS12QuadQuerry, a dataframe of s12QQu a usual twoP.
+It is intended to reveal the rowCounter substitution as a transform to
+the square of the twoP.  The auxillary exibit is adding the rowCounter p's
+together demonstrating root erasure.  
+   
+
+file:///C:/Users/Aibes/SparkDocs/PivotUDFs/How%20to%20get%20all%20columns%20after%20groupby%20on%20Dataset(Row)%20in%20spark%20sql%202.1.0%20-%20Stack%20Overflow.html
+
+
+case class People(name: String, age: Int, other: String)   
+val df = Seq(
+  People("Rob", 20, "cherry"),
+  People("Rob", 55, "banana"),
+  People("Rob", 40, "apple"),
+  People("Ariel", 55, "fox"),
+  People("Vera", 43, "zebra"),
+  People("Vera", 99, "horse")
+).toDS
+
+val oldestResults = df
+ .groupByKey(_.name)
+ .mapGroups{ 
+    case (nameKey, peopleIter) => {
+        var oldestPerson = peopleIter.next  
+        while(peopleIter.hasNext) {
+            val nextPerson = peopleIter.next
+            if(nextPerson.age > oldestPerson.age) oldestPerson = nextPerson 
+        }
+        oldestPerson
+    }
+  }    
+  oldestResults.show  
+
+file:///C:/Users/Aibes/SparkDocs/PivotUDFs/Group%20by%20a%20dataset%20and%20run%20Custom%20function%20in%20Spark%20Scala%20-%20Stack%20Overflow.html
+
+
+2/8
+
+
+case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)
+
+Using the GraphicZero note page paradyne, QuerryS12QuadQuerry object wants args[DFScripts paramenter,zString];
+
+
+GQuadratis wants yea old extend result udf. 
+
+
++-----+-----+---------+-------+--------+------+
+|index|MaxN |rowScalar|divisor|scalar  |degree|
++-----+-----+---------+-------+--------+------+
+|7    |10000|1        |2      |16      |0     |
+|7    |10000|1        |2      |1       |2     |
+
+
+
+and remember as in extendResult udf,  printlns go to a worker log.
+
+
+https://databricks.gitbooks.io/databricks-spark-knowledge-base/content/best_practices/prefer_reducebykey_over_groupbykey.html
+
+I'm a bit confused. I thought groupBy is preferred over reduceByKey. But today I read some articles indicating the opposite.
+ So which one is true? – Matthias Aug 18 '16 at 10:42
+
+mapGroups - where you can implement Scala function responsible for aggregating Iterator
+
+reducebykey
+
+looking to explode keys of key,value pair.
+ 
+object GroupedIndexRowsSum extends Aggregator[s3TRe, indexSum, String]
+
+how about key is rowScalar,degree value is sum scalar.
+
+That is, native twoPolynomials on GraphDB are not reduced by .
+
+But also, looks like udf scalarResult, as in indexResult, needs definition
+
+Looks like for a MaxN,N, can reduce key,value as (rowScalar,degree,scalar). 
+
+Maybe want to pass key,val into udf and decompose key , value into case class return.
+
+Do need the case class kvCaseC rowScalar,degree,scalar5:25 PM 2/8/2021
+                                int        int   String
+
+Will have to concider where MaxN can be retrieved from.
+file:///C:/Users/Aibes/SparkDocs/MoreSpark/scala%20-%20Passing%20a%20map%20with%20struct-type%20key%20into%20a%20Spark%20UDF%20-%20Stack%20Overflow.html
+
+
+2/9
+
+
+GQuadratics begins with a usual querry object.  In this case, it is QuerryS12QuadQuerry.
+It returns a P(2,N,MaxN) set of terms groupable by rowScalar and/or degree.
+
+GQuadratics has a ResultUDF object for evaluating the term, though the note flow 
+may not want this function at present time.  
+
+Aggregator(ungrouped) and Aggregator(grouped) provide reduce function. 
+Though do not think there is a difference other than in the constructor
+where the grouped aggregator first groups the DataSet.
+
+object MapKVUDF unpacks a key value DataFrame/Dataset.
+It is needed after a reduce.  It is a one liner, can by the last action of
+GroupedAggrigator.
+
+So,  in (structure, form) thinking, The querry result returns with multiple 
+terms of same degree and speaks of need of grouped data aggrigator.  
+
+Need the pivot by row scalar.   - in another time nulls are concidered.
+
+Difference between pivot and collect...
+
+df.select - for unpacking keys and the resulting datafram...
+want it cast again as Dataset.       -  web question.
+
+And then can rootUDF.  
+
+
+Then resultUDF is appropriate.  -  not.   
+
+
+2/10
+
+And so a bit on pivot and the shuffle.
+
+The pivot from quippyDataFrame:
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+val df= z.get("s12DF").asInstanceOf[DataFrame]
+val groupDf = df.withColumn("rowResultBD",col("rowResult").cast(DecimalType(25,0)))
+                .withColumn("nBD",col("n").cast(DecimalType(25,0)))
+                .withColumn("rowCounterBD",col("rowCounter").cast(DecimalType(25,0)))
+                .withColumn("dimBD",col("dim").cast(DecimalType(25,0)))
+                .orderBy(asc("nBD"),asc("rowCounterBD"))
+                .groupBy("nBD","rowCounterBD")
+                .pivot("dimBD")
+                .agg(sum("rowResultBD"))
+val groupDfCount = groupDf.count()
+groupDf.show(groupDfCount.toInt,false)
+z.put("pivotDF",groupDf)
+
+
+The candidate GQuadratics pivot:
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+val df= z.get("KvDSUnpavked").asInstanceOf[DataFrame]
+df.show
+val groupDf = df.withColumn("rowScalar",col("_1").cast(DecimalType(25,0)))
+                .withColumn("degree",col("_2").cast(DecimalType(25,0)))
+                .withColumn("scalar",col("scalar_Result").cast(DecimalType(25,0)))
+//                .orderBy(asc("nBD"),asc("rowCounterBD"))
+                .groupBy("rowScalar")
+                .pivot("degree")
+                .agg(sum("scalar"))
+val groupDfCount = groupDf.count()
+groupDf.show(groupDfCount.toInt,false)
+z.put("pivotDF",groupDf)
+
+Note though all fields are DecimalType and want them as string.
+Maybe do not have divisor field and need it.  
+Although do know all divisors are 2.
+
+Better get the DecimalType together.   -scala bigdecimal, java bigdecimal, and spark decimaltype.
+
+Difference between decimal and decimaltype.
+
+
+pivotDf is succesfully mapped into a dataset.
+
+can proceed with writing quadraticEqUDF.
+
+do need a square root function for BigDecimal.
+
+-b +- sqr( b^2 - 4ac)  
+/
+2a 
+
+
+def sqrtOrZero(n: Int): Double = n match {
+   case x if x >= 0 => Math.sqrt(x)
+   case _ => 0   #1 
+ }
+  
+ def sqrtOrValue(n: Int): Double = n match {
+   case x if x >= 0 => Math.sqrt(x)
+   case x => x   #1 
+ }
+
++-----+------+
+|root1|root2 |
++-----+------+
+|16.0 |256.0 |
+|NaN  |-128.0|
+|8.0  |64.0  |
+|2.0  |4.0   |
+|32.0 |1024.0|
+|4.0  |16.0  |
++-----+------+
+
+
+[1,0]|    199760088|  1|  0|
+[1,2]|            2|  1|  2|
+[1,1]|       -39976|  1|  1|
+
+
+|2        |0     |16      |7    |10000   |2      |8           |1        |
+|2        |2     |1       |7    |10000   |2      |50000000.0  |1        |
+|2        |1     |-9993   |7    |10000   |2      |-49965000.0 |1        |
+|2        |0     |99870042|7    |10000   |2      |49935021    |1        |
+|2        |1     |-9994   |7    |10000   |2      |-49970000   |1        |
+|2        |0     |99890030|7    |10000   |2      |49945015    |1        |
+|2        |1     |-9994   |7    |10000   |2      |-49970000   |1        |
+|2        |2     |1       |7    |10000   |2      |50000000.0  |1        |
+|2        |1     |-9995   |7    |10000   |2      |-49975000.0 |1        |
+
+
+maybe...  so, is it true rowScalar=1 has one imaginary root, one real root???  
+for all MaxN,N,1????
+
+
+Which means,   need some logic....  no need now for the imaginary root....
+
+maybe have expected roots.  did not prove out the udf.  The divide by two may not have happened.
+
+so, lets include a commentable divide for the scalars.  
+
+
+First result (without divide):
+
++-------+----------+
+|root1  |root2     |
++-------+----------+
+|no     |real roots|
+|10000.0|9999.0    |
+|9998.0 |9997.0    |
+|9999.0 |9998.0    |
++-------+----------+
+
+Second result (with divide):
+
+
++-------+----------+
+|root1  |root2     |
++-------+----------+
+|no     |real roots|
+|10000.0|9999.0    |
+|9998.0 |9997.0    |
+|9999.0 |9998.0    |
++-------+----------+
+
+looks like same root set...
+
+
+2/11
+
+Paragraphs of GQuadratics.
+
+DataFrame/Dataset case class definitions.
+QuerryS12QuadQuerry object.
+QuerryS12QuadQuerry calls.
+ResultUDF Object
+ResultUDF object Calls.
+Aggregator (ungrouped)
+Grouped Aggrigator
+Unpack Grouped DataFrame
+MapKVDF object call.
+RowScalar,Degree pivot.
+PivotrEvaluateUDF implements Quadratic Equation.
+PivotEvaluateUDF object call.
+
+Need addition paragraph. 
+It will demonstrate root erasure. - spoiler want to work with roots.
+
+Need observation of the NMax,N set.
+It does have the rowCounter-1 p which does have roots and does
+evaluate into 2^n.  Meaning can complete 2^n with fixed MaxN.
+
+Next note will exibit:
+
+The rowcounter substitution.
+P Arithmetic Quartets and quadratics for results in 2^n.
+
+
+Need addition-al paragraph. 
+
+It will demonstrate root erasure. - spoiler want to work with roots.
+
+So,
+
+Reduce the MaxN,N set.
+
+Note variance:
+
+The size of rowCounter set.
+The rowRowCounter p sums.   - from MaxN,N to MaxN,N'
+
+Note invariance:
+
+MaxN,N and MaxN',N same sums   - spoiler the Binomial.
+The rowcounter-1 zero
+The rowCounter-2 in 2^n.
+
+
+2/12
+
+z.put("pivotDF",groupDf)  is the dataframe of interest.
+
+It:
+
+Is mapped into roots.
+Needs to be mapped into RowCounter,result.
+
+Have:
+
+QuerryS12QuadQuerry.main(Array("10000","5","s120710000")) 
+Has main class, resultset method.
+
+ResultUDF.main(Array("s120710000","rUdf0710000"))
+Has main class, udf method
+
+Looks like Aggrigator (ungrouped) proves out "rUdf0710000" 
+"result" with out writing it to z context.
+Aggrigator (ungrouped) does not have a main() method.
+
+Grouped Aggrigator also does not have main classe.
+Its constructor picks the "rUdf0710000" dataframe in constructor.
+It persistes its transform "KvDS" to dataframe.
+
+Unpack Grouped DataFrame has main method.
+Performs a one line tranform and puts "KvDSUnpavked" into z context.
+
+RowScalar,Degree pivot paragraph is unstructured script
+accepting KvDSUnpavked" and pivot it into z.put("pivotDF",groupDf)
+
+PivotrEvaluateUDF implements Quadratic Equation. is structured
+with udf regesterd method and main mathod. 
+It accepts z.put("pivotDF",groupDf) for root transform.
+Then transforms pivotDF into case class data frame.
+The dataframe is mapped with quadEqu udf but transformd
+dataframe is not persisted to z context.
+  
+
+
+Purpose of GQuadratics:
+
+Claim:
+
+MaxN arguments a range of N p's...
+
+The p's are composed of a set of quadratics Q derived from the sum of terms quadratic formula (see abridged QP).
+Each p...
+
+As each (MaxN,N) evaluate to an expected value of two, 
+Each (MaxN,N,RowCounter) evaluate to an expected/consistant/invariant
+value.  
+
+(MaxN,N,rowCounter) p's have interesting roots.
+Under addition though, roots disappear.
+Do soon though want to work with roots.     
+
+Again though,  claim:
+
+
+//  spark querry object needs the n in MaxN range qerry resultset.
+
+   N arguments a quadratic composed of an ordered set of quadratics of size N-1 with each in the set derived from the sum-of-consecutive-terms quadratic formula. 
+Each member of the set is then multiplied through by a scalar. From the first member of the quadratic set, the scalar as 2^0 to the last member as
+2^(n-1), the set is fully defined.  The resulting set of quadratics are added together and define a single quadratic.  When argumented with N this quadratic 
+resolves an expected power of two.
+
+//  spark quadQuerry object, resultudf object, Aggregator (ungrouped) ,     otherwise:   RowScalar,Degree pivot  new resultudf, new aggrigator.  
+
+   The set members of the N quadratic can be catagorized three ways:  When argumented with N the last member, with scalar 2^(n-1), always evaluates to zero and 
+does have a root at N.  The set member argumented with scalar 2^(n-2), when n>3 always evaluates to (2^(n-2))/2.  Finally, the sets not just mentiond, when added together
+and evaluated at N, solve the equation x=2^n-(2^(n-2))/2. 
+
+//  RowScalar,Degree pivot, select n-1, select n-2,  select complement. 
+
+   Noted that the last member of the N quadratic set does have a root at N, each member in the set except the first does factor into pairs of rational roots (in a future
+blog roots are everything).  Also, from the second set member to the last, each consecutive pair of quadratics share a common root. Finally, the range of values the roots
+take is from 2 to N. 
+
+// pivotEvaluateUDF. 
+
+   For a range of N from 2 to MaxN (arbitrary) each set member of n in N is argumented with binomial expansion coefficients (The binomial expansion
+will be revisited in future blog) in MaxN and translated into a quadratic that evaluates with MaxN as free variable into the same expected power of 2.
+The MaxN set is therefore a set of sets of quadratics with MaxN as free variable that expreses a range from 2^2 to 2^(MaxN-1).   
+
+// The whole querry object pivoted and ordered.  
+
+2/14
+
+The question:  What is an integer?
+
+Have sets of quadratics defined at free variable.  They add together and when argumented with free variable output a power of two.
+But for an appropriate free variable, the constant term defines the target integer.  Therefore the integer definition is a set of
+zero degree terms added together.  Does that mean 4 is 2+2... a note lab will exibit...  It depends on the radix...
+
+
+FilterIndex object properly defined.
+
+Aggrigator ungrouped needs a main method and parameters.   - done
+
+
+
+2/15
+
+sometimes, df.schema maybe will not print schema of dataframe.
+
+
+TheQuadratics is configured to run the MaxN8 set.
+
+1. QuerryS12QuadQuerry object.
+2. QuerryS12QuadQuerry calls.                                 - QuerryS12QuadQuerry.main(Array("8","s12MaxN8")) does return data frame.
+3. ResultUDF Object
+4. ResultUDF object Calls.                                    - ResultUDF.main(Array("s12MaxN8","rUdfMaxN8")) does extend result.
+5. Filter for an index.
+6. FilterIndex object calls.                                  - FilterIndex.main(Array("rUdfMaxN8","7","index7MaxN8")) does filter for index=7.
+7. IndexRowsSum Aggregator object (ungrouped) (agg result).
+8. IndexRowsSum object calls.                                 - IndexRowsSum.main(Array("index7MaxN8")) correctly aggrigates to 128.
+
+9. Grouped Aggrigator (for scalars).                         
+10. GroupedScalarRowsSum object calls.                        - GroupedScalarRowsSum.main(Array("index7MaxN8","KvDS")) 
+11. Unpack Grouped DataFrame keys.
+12. MapKVDF object call.                                      - MapKVUDF.main(Array("KvDS","KvDSUnpavked"))
+13. RowScalar,DegreePivot object.
+14. RowScalarDegreePivot object calls.                        - RowScalarDegreePivot.main(Array("KvDSUnpavked","pivotDF"))
+15. PivotrEvaluateUDF object implements Quadratic Equation.    
+16.  PivotEvaluateUDF object calls.                           - PivotEvaluateUDF.main(Array("pivotDF","Rootsmaxn8n7"))
+
+
+"index7MaxN8" is the filterd resultSet.   
+16. suggests each member except first, possibly because of the auxilary constant, does not have roots.  
+
+Show:  
+
+The set sum does not have roots. 
+9. Grouped Aggrigator (for scalars) needs to be emulated as an Ungrouped Aggrigator (for scalars).
+Will refer to GraphicZero....
+
+val kDS= ds.groupByKey(x=>(x.rowScalar.toInt,x.degree.toInt))
+   .agg(scalarResult)
+
+Looks like want a grouped aggrigator and this time do not want rowScalar in the key set.
+
+A bit of work to do:
+
+The scalars, before they are aggrigated need to be multiplyed through by rowScalar.
+Maybe this is done without introducing another object.
+
++---------+------+------+-----+--------+-------+------+---------+
+|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|
++---------+------+------+-----+--------+-------+------+---------+
+|2        |0     |16    |7    |8       |2      |8     |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-1    |7    |8       |2      |-4.0  |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |0     |2     |7    |8       |2      |1     |1        |
+|2        |0     |6     |7    |8       |2      |3     |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-3    |7    |8       |2      |-12.0 |1        |
+|2        |1     |-3    |7    |8       |2      |-24.0 |2        |
+|2        |1     |-4    |7    |8       |2      |-32   |2        |
+|2        |0     |12    |7    |8       |2      |12    |2        |
+|2        |2     |1     |7    |8       |2      |64.0  |2        |
+|2        |0     |20    |7    |8       |2      |40    |4        |
+|2        |1     |-4    |7    |8       |2      |-64   |4        |
+|2        |2     |1     |7    |8       |2      |128.0 |4        |
+|2        |1     |-5    |7    |8       |2      |-80.0 |4        |
+|2        |2     |1     |7    |8       |2      |256.0 |8        |
+|2        |1     |-5    |7    |8       |2      |-160.0|8        |
+|2        |0     |30    |7    |8       |2      |120   |8        |
+|2        |1     |-6    |7    |8       |2      |-192  |8        |
+|2        |2     |1     |7    |8       |2      |512.0 |16       |
+|2        |1     |-7    |7    |8       |2      |-448.0|16       |
+|2        |1     |-6    |7    |8       |2      |-384  |16       |
+|2        |0     |42    |7    |8       |2      |336   |16       |
+|2        |1     |-7    |7    |8       |2      |-896.0|32       |
+|2        |1     |-8    |7    |8       |2      |-1024 |32       |
+|2        |2     |1     |7    |8       |2      |1024.0|32       |
+|2        |0     |56    |7    |8       |2      |896   |32       |
++---------+------+------+-----+--------+-------+------+---------+
+
+object GroupedDegreeSum is supposed to multiply scalar with rowScalar during reduce by degree.
+
+
+
+
+val groupDf = df.withColumn("rowResultBD",col("rowResult").cast(DecimalType(25,0)))
+                .withColumn("nBD",col("n").cast(DecimalType(25,0)))
+                .withColumn("rowCounterBD",col("rowCounter").cast(DecimalType(25,0)))
+                .withColumn("dimBD",col("dim").cast(DecimalType(25,0)))
+
+
++------+----+------+
+|Result|MaxN|Degree|
++------+----+------+
+|  -834|   8|     1|
+|    64|   8|     2|
+|  2832|   8|     0|
+
+now have:
+
+case class redScal(result:String,maxN:String,degree:String)
+
+
+
+s12Re has divisor field.
+
+
+DropedKeyColumn has result in z context.
+
+ready for extendResultUDF
+
+
+spark.udf.register("qEque", quadEqu _)
+val dfff= z.get(args(0)).asInstanceOf[DataFrame]
+//dfff.show(false)
+//val ds: Dataset[pivotE] = df.as[pivotE]
+val dss =dfff.map(row => pivotE(row.getDecimal(0).toPlainString(), row.getDecimal(1).toPlainString(), row.getDecimal(2).toPlainString(), row.getDecimal(3).toPlainString()))
+dss.show(false)
+val dsss=dss.map{f => quadEqu(pivotE(f.rowScalar,f.zero,f.one,f.two)) }
+//dss.show(false)
+//val dss=ds.map{f => extendResult(s12QQu(f.index,f.MaxN,f.rowScalar,f.divisor,f.scalar,f.degree)) }
+val dsssCount=dsss.count()
+dsss.show(dsssCount.toInt,false)
+z.put(args(1),dss)
+
+
+
+grouped degree sum is not returning negative degree scalar.
+
+
++-------------+--------------+---------------+-------------+
+|rowScalar    |0E-10         |1.0000000000   |2.0000000000 |
++-------------+--------------+---------------+-------------+
+|16.0000000000|98.0000000000 |-28.0000000000 |2.0000000000 |
+|1.0000000000 |344.0000000000|-108.0000000000|12.0000000000|
+|8.0000000000 |128.0000000000|-39.0000000000 |3.0000000000 |
+|2.0000000000 |160.0000000000|-55.0000000000 |5.0000000000 |
+|32.0000000000|56.0000000000 |-15.0000000000 |1.0000000000 |
+|4.0000000000 |148.0000000000|-48.0000000000 |4.0000000000 |
++-------------+--------------+---------------+-------------+
+
+Great. Does work.  had a wrong dataframe as argument.
+
+
+2/16
+
+grouped aggrigators are potent enough these days.  GroupedDegree sum.
+does more that the first one written.
+
+ 
+ReducedResultUDF.main(Array("ReducedMaxN8N7","ReducedMaxN8N7Result"))
+
+
+
+import org.apache.spark.sql.{Encoder, Encoders, SparkSession}
+import org.apache.spark.sql.expressions.Aggregator
+import spark.implicits._
+import org.apache.spark.sql.{DataFrame,Dataset,Row}
+import scala.math.BigDecimal
+
+
+
+TheQuadratics is configured to run the MaxN8 set.
+
+1. QuerryS12QuadQuerry object.
+2. QuerryS12QuadQuerry calls.                                 - QuerryS12QuadQuerry.main(Array("8","s12MaxN8")) does return data frame.
+3. ResultUDF Object
+4. ResultUDF object Calls.                                    - ResultUDF.main(Array("s12MaxN8","rUdfMaxN8")) does extend result.
+5. Filter for an index.
+6. FilterIndex object calls.                                  - FilterIndex.main(Array("rUdfMaxN8","7","index7MaxN8")) does filter for index=7.
+7. IndexRowsSum Aggregator object (ungrouped) (agg result).
+8. IndexRowsSum object calls.                                 - IndexRowsSum.main(Array("index7MaxN8")) correctly aggrigates to 128.
+
+9.   Grouped Aggrigator (for scalars across each rowScaler).                         
+10.  GroupedScalarRowsSum object calls.                        - GroupedScalarRowsSum.main(Array("index7MaxN8","KvDS")) 
+11.  Unpack Grouped DataFrame keys.
+12.  MapKVDF object call.                                      - MapKVUDF.main(Array("KvDS","KvDSUnpavked"))
+13.  RowScalar,DegreePivot object.
+14.  RowScalarDegreePivot object calls.                        - RowScalarDegreePivot.main(Array("KvDSUnpavked","pivotDF"))
+15.  PivotrEvaluateUDF object implements Quadratic Equation.    
+16.  PivotEvaluateUDF object calls.                           - PivotEvaluateUDF.main(Array("pivotDF","Rootsmaxn8n7"))
+
+17.  GroupedDegreeSum object (aggrigate by degree across all rowScalars)
+18.  GroupedDegreeSum object calls.                            - GroupedDegreeSum.main(Array("index7MaxN8","KvDegreeDS"))
+19.  Unpack GroupedDegreeSum result DataFrame.                 - MapKVUDF.main(Array("KvDegreeDS","KvDegreeDSUnpavked"))
+20.  DropKeyColumn object (clean up key,value dataframe)
+21.  DropKeyColumn object call.                                - DropKeyColumn.main(Array("KvDegreeDSUnpavked","ReducedMaxN8N7" ))
+21.5 Pivot 21 (for narrative).
+22.  ReducedResultUDF object  (usual term calculate).
+23.  ReducedResultUDF object call.                             - ReducedResultUDF.main(Array("ReducedMaxN8N7","ReducedMaxN8N7Result"))
+24.  ReducedRowsSum object  
+25.  ReducedRowsSum object call.                               - ReducedRowsSum.main(Array("ReducedMaxN8N7Result"))
+
+
+val z2= z.get("ReducedMaxN8N7Pivot").asInstanceOf[DataFrame]
+val z2Count=z2.count()
+z2.show(z2Count.toInt,false)
+
+val z3= z.get("ReducedMaxN8N7ResultPivot").asInstanceOf[DataFrame]
+
+Again though,  claim:
+
+
+//  spark querry object needs the n in MaxN range qerry resultset.
+
+   N arguments a quadratic composed of an ordered set of quadratics of size N-1 with each in the set derived from the sum-of-consecutive-terms quadratic formula. 
+Each member of the set is then multiplied through by a scalar. From the first member of the quadratic set, the scalar as 2^0 to the last member as
+2^(n-1), the set is fully defined.  The resulting set of quadratics are added together and define a single quadratic.  When argumented with N this quadratic 
+resolves an expected power of two.
+
+//  spark quadQuerry object, resultudf object, Aggregator (ungrouped) ,     otherwise:   RowScalar,Degree pivot  new resultudf, new aggrigator.  
+
+   The set members of the N quadratic can be catagorized three ways:  When argumented with N the last member, with scalar 2^(n-1), always evaluates to zero and 
+does have a root at N.  The set member argumented with scalar 2^(n-2), when n>3 always evaluates to (2^(n-2))/2.  Finally, the sets not just mentiond, when added together
+and evaluated at N, solve the equation x=2^n-(2^(n-2))/2. 
+
+//  RowScalar,Degree pivot, select n-1, select n-2,  select complement. 
+
+   Noted that the last member of the N quadratic set does have a root at N, each member in the set except the first does factor into pairs of rational roots (in a future
+blog roots are everything).  Also, from the second set member to the last, each consecutive pair of quadratics share a common root. Finally, the range of values the roots
+take is from 2 to N. 
+
+// pivotEvaluateUDF. 
+
+   For a range of N from 2 to MaxN (arbitrary) each set member of n in N is argumented with binomial expansion coefficients (The binomial expansion
+will be revisited in future blog) in MaxN and translated into a quadratic that evaluates with MaxN as free variable into the same expected power of 2.
+The MaxN set is therefore a set of sets of quadratics with MaxN as free variable that expreses a range from 2^2 to 2^(MaxN-1).   
+
+// The whole querry object pivoted and ordered.  
+
+
+The question:  What is an integer?
+
+Have sets of quadratics defined at free variable.  They add together and when argumented with free variable output a power of two.
+But for an appropriate free variable, the constant term defines the target integer.  Therefore the integer definition is a set of
+zero degree terms added together.  Does that mean 4 is 2+2... a note lab will exibit...  It depends on the radix...
+
+
+N arguments a quadratic composed of an ordered set of quadratics.  Each set member is derived from the sum-of-terms quadratic formula 
+
+as consecutive pairs of denumerating integers argumenting linear terms and is complete when its size is N-1.       
+
+Each set member is then multiplied through by a scalar.  From the first member, the scalar as 2^0 to the last member as 2^(n-1), the set is fully defined.
+
+The resulting members are added together and resolve a single quadratic.  When argumented with N this equation computes the expected result 2^n.
+
++-----+----------+
+|root1|root2     |/
++-----+----------+
+|7.0  |6.0       |
+|no   |real roots|
+|6.0  |5.0       |
+|4.0  |3.0       |
+|8.0  |7.0       |
+|5.0  |4.0       |
++-----+----------+
+
+Want above dataframe with rowScalar.  
+Want next dataframe as pivoted degree reduced scalars with rowScalar.
+
+Maybe easy to accomplish.
+
+case class roots() refactord for more information.
+
+Maybe the no roots rowScalar to be treated as edge case with special paragraph.
+
+The binomail expansion in translating a range of N into a MaxN variable enables the rowScalar substitution pattern 
+argumenting higher degreed p's.  
+
+
+want 20. to also pivot...
+or have 20.5 to write this pivot.
+
+
+So, repurpose 13. 
+
+object RowScalarDegreePivot extends Serializable {
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.DecimalType
+
+def main(args:Array[String]) {
+
+val df= z.get(args(0)).asInstanceOf[DataFrame]
+//df.show
+val groupDf = df.withColumn("rowScalar",col("_1").cast(DecimalType(25,10)))
+                .withColumn("degree",col("_2").cast(DecimalType(25,10)))
+                .withColumn("scalar",col("scalar_Result").cast(DecimalType(25,10)))
+//                .orderBy(asc("nBD"),asc("rowCounterBD"))
+                .groupBy("rowScalar")
+                .pivot("degree")
+                .agg(sum("scalar"))
+val groupDfCount = groupDf.count()
+groupDf.show(groupDfCount.toInt,false)
+groupDf.schema
+z.put(args(1),groupDf)
+
+}
+}
+
+also want 23.5 the pivot of 23.
+
+"ReducedMaxN8N7Pivot"
+"ReducedMaxN8N7ResultPivot"
+"ReducedMaxN8N7FinalResult"
+
+TheQuadratics have a clone TheQuadratics1.
+It is for comparison purposes. 
+It is to run MaxN=16, N=7. 
+
+Some remarks:
+
+29 paragraphs explicate the quadratics. 
+
+With MaxN=8,N=7 have the expected denumeration of linears.  - was the set translated horizontally???
+Does MaxN=8,N=6 have expected denumeration of linears -  was the set translated horizontally.
+
+MaxN=16,N=7 does appear to have been translated horizontally.  
+
+So, because 8 appears as a factor and origonal workup does not have 8 as factor can assume it was
+translated. - from origonal to twopoly.jar is a mystery.   
+
+So, an important excercise is to translate 8,7 into 7,7 with (x-1) binomial.
+
+have to clean up the Rootsmaxn8n7 dataframe.   - it is zero happy.  
+                                                 rowScalar should be inorder ascending.
+
+Quite interesting.  the translation is mearly casting the the set in terms of the free variable....
+Mayby twopoly.jar does what????  It writes a lot of bits...
+The pattern, though, fails for the rowScalar=1 quadratic.  
+
+
+2/17
+
+TheQuadratics otherwise reproduce the oldest of figs, the copyofbook111122...
+It claims a definition.  The .jar mostly implements the definition.  Reconciliation
+against the fig exibits where the .jar follows the definition and where the implementation
+differes.  
+
+
+The fig introduced a method for using sets of quadratics in defining 2^n.  The .jar varied
+from method and introduced its owne implementation.  A clear definition is proposed.  
+The .jar agrees with the defininition up to a single edge case. Explain the discrepancy 
+between the definition and the .jar.
+
+Implications of the definition include alternative to the binomial. It can 
+be shown MaxN8N7 and maxN16N7 Mearly iterate the pairwise linears starting from 
+MaxN.  The size of the set is the same and the associated rowScalars are the same. 
+
+Two exibits:
+
+.The rowScalar=1 p is the definition edge case. 
+.The zero degreed terms at 10000 and 64.  
+ each upto n concidered in ZDCTH.
+
+And answer for why no N in MaxN.
+And then can move onto the rowScalar substitution.
+
+
+
+TheQuadratics is going to get a little busier.  
+The querryresult dataframe now to filter into a rowScalar=1 dataframe.  
+
+
+FilterIndex.main(Array("rUdfMaxN8","7","index7MaxN8")) 
+
+filter again for rowScalar=1.
+
++---------+------+------+-----+--------+-------+------+---------+
+|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|
++---------+------+------+-----+--------+-------+------+---------+
+|2        |0     |16    |7    |8       |2      |8     |1        |
+
+
+paragraph 26 and 27 perform the rowScalar filter.
+
+
++---------+------+------+-----+--------+-------+------+---------+
+|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|
++---------+------+------+-----+--------+-------+------+---------+
+|2        |0     |16    |7    |8       |2      |8     |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-1    |7    |8       |2      |-4.0  |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |0     |2     |7    |8       |2      |1     |1        |
+|2        |0     |6     |7    |8       |2      |3     |1        |
+|2        |2     |1     |7    |8       |2      |32.0  |1        |
+|2        |1     |-2    |7    |8       |2      |-8    |1        |
+|2        |1     |-3    |7    |8       |2      |-12.0 |1        |
++---------+------+------+-----+--------+-------+------+---------+
+
+it suggests two quadratics and a free constant defined at rowScalar=1.
+
+FilterRowScalar.main(Array("index7MaxN8","1","index7MaxN8RowScalar1"))
+
+
+2/18
+GraphicZero introduces p's of interest 
+
+   QuerryS3A.main(Array("10000","4","4","5","5","s3A1000054"))
+   QuerryS3A.main(Array("64","4","4","5","5","s3A6454"))
+   QuerryS3A.main(Array("64","4","4","2","6","s3A64Range"))
+   QuerryS3A.main(Array("10000","4","4","2","6","s3A10000Range"))
+
+GraphicZero-TheQuadratics is well roughed
+Need the higher degreed p's explained.
+
+Demonstrate it with cypher/spark. -use the legacy code.
+
+After HigherDegrees can write up the binomial.
+
+The importance of having a range of N inside a common free variable
+is can accomplish the rowScalar substitution.
+
+So, exibit 2,10000,7.   
+
+GraphicZero-TheQuadratics p14 need first column in order.
+
+GraphicZero-TheQuadratics 1. QuerryS12QuadQuerry object QuerryS12QuadQuerry.main(Array("8","s12MaxN8")) 
+
+          does  return as a filterable by n resultSet                    - Single n can be filtered.
+
+GraphicZero 2. QuerryS3A object QuerryS3A.main(Array("10000","4","4","2","6","s3A10000Range"))  - don't need to use.
+
+need title for next note.   -   GraphicZero-HigherDegreedP's
+
+object QuerryS12QuadQuerry as is returns all n in maxN.
+The MaxN=8 set is fine.  In the binomial note 8,* as 64 onto 10000.
+
+And so the target dataframe...
+
+val z1= z.get("Rootsmaxn8n7").asInstanceOf[DataFrame]                 - needs result extended
+val z1Count=z1.count()
+z1.show(z1Count.toInt,false)
+
+val z2= z.get("ReducedMaxN8N7Pivot").asInstanceOf[DataFrame]          - needs result extended
+val z2Count=z2.count()
+z2.show(z2Count.toInt,false)
+
+val z3= z.get("ReducedMaxN8N7ResultPivot").asInstanceOf[DataFrame]    - is the termwise result.
+val z3Count=z3.count()
+z3.show(z3Count.toInt,false)
+
+val z4= z.get("ReducedMaxN8N7FinalResult").asInstanceOf[DataFrame]    - is aggrigated result
+val z4Count=z4.count()
+z4.show(z4Count.toInt,false)
+
+
+note difference between target node/dataframe vs argument node/dataframe.  - complexity of transform.
+
+So take the maxn=8 set. - it is composed of n 2-7.
+each p defined at n computes 2^n and so have a set of p's defining {4,8,16,32,64,128}.
+  
+For instance, MaxN=8,n=4 is a set of p's each argumented with rowScalars 1,2,4.  1 and 2 are not defined in MaxN8 though
+4 is.  An opportunity exists to substitute 4 with MaxN8N2 (it evaluates to 4) as p/4 * MaxN8N4RowScalar4.
+
+use the cypher in dfscripts for computation.  frames for calculation/display.
+
+have:
+val z7= z.get("Rootsmaxn8n7")
+
+Want complet zN set in context.    - It makes sence individuaally.  Does not if all in one.
+
+1. QuerryS12QuadQuerry object.
+2. QuerryS12QuadQuerry calls.                                 - QuerryS12QuadQuerry.main(Array("8","s12MaxN8")) does return data frame.
+3. ResultUDF Object
+4. ResultUDF object Calls.                                    - ResultUDF.main(Array("s12MaxN8","rUdfMaxN8")) does extend result.
+5. Filter for an index.
+6. FilterIndex object calls.                                  - FilterIndex.main(Array("rUdfMaxN8","7","index7MaxN8")) does filter for index=7.
+7. IndexRowsSum Aggregator object (ungrouped) (agg result).
+8. IndexRowsSum object calls.                                 - IndexRowsSum.main(Array("index7MaxN8")) correctly aggrigates to 128.
+
+9. Grouped Aggrigator (for scalars across each rowScaler).                         
+10. GroupedScalarRowsSum object calls.                        - GroupedScalarRowsSum.main(Array("index7MaxN8","KvDS")) 
+11. Unpack Grouped DataFrame keys.
+12. MapKVDF object call.                                      - MapKVUDF.main(Array("KvDS","KvDSUnpavked"))
+13. RowScalar,DegreePivot object.
+14. RowScalarDegreePivot object calls.                        - RowScalarDegreePivot.main(Array("KvDSUnpavked","pivotDF"))
+15. PivotrEvaluateUDF object implements Quadratic Equation.    
+16.  PivotEvaluateUDF object calls.                           - PivotEvaluateUDF.main(Array("pivotDF","Rootsmaxn8n7")) 
+
+All the above needed for val z1= z.get("Rootsmaxn8n7")
+z1 needs row result extended.
+
+val z2= z.get("ReducedMaxN8N7Pivot").asInstanceOf[DataFrame]
+
+
+"index7MaxN8" needs 1.-8.
+
+17. GroupedDegreeSum object (aggrigate by degree across all rowScalars)
+18. GroupedDegreeSum object calls.                            - GroupedDegreeSum.main(Array("index7MaxN8","KvDegreeDS"))
+19. Unpack GroupedDegreeSum result DataFrame.                 - MapKVUDF.main(Array("KvDegreeDS","KvDegreeDSUnpavked"))
+20. DropKeyColumn object (clean up key,value dataframe)
+21. DropKeyColumn object call.                                - DropKeyColumn.main(Array("KvDegreeDSUnpavked","ReducedMaxN8N7" ))
+
+val z3= z.get("ReducedMaxN8N7ResultPivot")
+
+
+2/19
+
+
+"s12MaxN8" is the concidered dataframe.
+
+Take the maxn=8 set. - it is composed of n 2-7.
+each p defined at n computes 2^n and so have a set of p's defining {4,8,16,32,64,128}.
+  
+S3A ResultSetvMaxN8N*    -- have spark from the quadratics.  Can dfScriptsS3A.  -  they are persisted.
+
+
+For instance, MaxN=8,n=4 is a set of p's each argumented with rowScalars 1,2,4.  1 and 2 are not defined in MaxN8 though
+4 is.  An opportunity exists to substitute 4 with MaxN8N2 (it evaluates to 4) as p/4 * MaxN8N4RowScalar4.
+
+
+Have:
+
+ .D2MaxN8N2=4 (reduced scalars) 
+ .D2MaxN8N4=16 (each rowScalar)
+ .S12 resultSet (the product of terms)
+ .S3T resultSet  in particular (D4MaxN8N4RS4) along with RS1,2 
+ .S3A resultSet.    
+
+
+And the divisor explained.   -  This divisor is particular to D4.  -- only the quad divide by 2.  Higher p's are divided.
+
+And TheQuadratics should view the bits of p definition for a the paragraph before 0. should also view the whole first resultSet.
+
+
+So, where has zeppelin called s3a resultset.
+
+
+GraphicZero has S3AQuerry object.                             - though for strange reason tConst was in signature - there is no tConst in S3A.
+
+QuerryS3A.main(Array("64","4","4","2","6","s3A64Range"))
+
+                      MaxN,Dim as 2^dim, Dim as 2^dim,rangelow,rangehigh,Name
+
+
+And wondering again how to parametrize QeurryS3A.....
+
+
+public ResultSet s3A(String rangeLow, String rangeHigh, String nMax, String dimension1) 
+
+s3AQuerry(rLow:String,rHigh:String,nMax:String,d1:String)
+          
+
+
+QuerryS3A.main(Array("64","4","4","2","6","s3A64Range"))
+
+                     "8","2","2","2","7","s3A8Range
+
+Seems like do not start off with this querry.
+
+
+1. QuerryS12QuadQuerry object.
+2. QuerryS12QuadQuerry calls.                                 - QuerryS12QuadQuerry.main(Array("8","s12MaxN8")) does return data frame.
+3. ResultUDF Object
+4. ResultUDF object Calls.                                    - ResultUDF.main(Array("s12MaxN8","rUdfMaxN8")) does extend result.
+
+
+5. Filter for an index.
+6. FilterIndex object calls.                                  - FilterIndex.main(Array("rUdfMaxN8","7","index7MaxN8")) does filter for index=7.
+7. IndexRowsSum Aggregator object (ungrouped) (agg result).
+8. IndexRowsSum object calls.                                 - IndexRowsSum.main(Array("index7MaxN8")) correctly aggrigates to 128.
+
+9.   Grouped Aggrigator (for scalars across each rowScaler).                         
+10.  GroupedScalarRowsSum object calls.                        - GroupedScalarRowsSum.main(Array("index7MaxN8","KvDS")) 
+11.  Unpack Grouped DataFrame keys.
+12.  MapKVDF object call.                                      - MapKVUDF.main(Array("KvDS","KvDSUnpavked"))
+13.  RowScalar,DegreePivot object.
+14.  RowScalarDegreePivot object calls.                        - RowScalarDegreePivot.main(Array("KvDSUnpavked","pivotDF"))
+15.  PivotrEvaluateUDF object implements Quadratic Equation.    
+16.  PivotEvaluateUDF object calls.                           - PivotEvaluateUDF.main(Array("pivotDF","Rootsmaxn8n7"))
+
+17.  GroupedDegreeSum object (aggrigate by degree across all rowScalars)
+18.  GroupedDegreeSum object calls.                            - GroupedDegreeSum.main(Array("index7MaxN8","KvDegreeDS"))
+19.  Unpack GroupedDegreeSum result DataFrame.                 - MapKVUDF.main(Array("KvDegreeDS","KvDegreeDSUnpavked"))
+20.  DropKeyColumn object (clean up key,value dataframe)
+21.  DropKeyColumn object call.                                - DropKeyColumn.main(Array("KvDegreeDSUnpavked","ReducedMaxN8N7" ))
+21.5 Pivot 21 (for narrative).
+
+22.  ReducedResultUDF object  (usual term calculate).
+23.  ReducedResultUDF object call.                             - ReducedResultUDF.main(Array("ReducedMaxN8N7","ReducedMaxN8N7Result"))
+24.  ReducedRowsSum object  
+25.  ReducedRowsSum object call.                               - ReducedRowsSum.main(Array("ReducedMaxN8N7Result"))
+
+26. Filter by RowScalar.
+27. FilterRowScalar object call.                               - FilterRowScalar.main(Array("index7MaxN8","1","index7MaxN8RowScalar1"))
+
+Guess is have to run upt to 21.5   - maybe don't work the FilterIndex result index7MaxN8.
+
+
+val z2= z.get("ReducedMaxN8N7Pivot").asInstanceOf[DataFrame]
+val z2Count=z2.count()
+z2.show(z2Count.toInt,false)
+
+val z3= z.get("ReducedMaxN8N7ResultPivot").asInstanceOf[DataFrame]
+
+cannot use 9. on because of grouping.
+
+Maybe big difference in GZTQ and GZHDPS is:
+ do not filter 5,6
+ from 9 onward... Grouping is different.
+
+
+Very good to keep the roots in the view df.
+
+
+1. and 2.   continue with  "s12MaxN8"
+3. and 4.   continue with  "rUdfMaxN8"     - or not is not much part of further transforms.
+
+5. and 6.   do not   with  "index7MaxN8"
+7. and 8.   do not 
+
+9.          continue with "s12MaxN8" maybe shoud be "rUdfMaxN8"
+
++-----+----+---------+-------+------+------+
+|index|MaxN|rowScalar|divisor|scalar|degree|
++-----+----+---------+-------+------+------+
+|2    |8   |1        |2      |6     |0     |
+|2    |8   |1        |2      |42    |0     |
+
+
+now run 1-10                       -   all good tripple key set.
+
+11. and 12.                        -   now have x.index,x.rowScalar,x.degree
+
+         as                            +--------+-------------+---+---+---+
+                                       |     key|scalar_Result| _1| _2| _3|
+                                       +--------+-------------+---+---+---+
+                                       |[7,16,2]|            1|  7| 16|  2|
+                                       | [7,1,1]|           -8|  7|  1|  1|
+                                       | [5,4,0]|           42|  5|  4|  0|
+
+
+13. modified for third key in keyset.
+
+14. all good
+
++---+---------+---+---+---+
+|N  |rowScalar|0  |1  |2  |
++---+---------+---+---+---+
+|2  |1        |104|-28|2  |
+|3  |1        |80 |-24|2  |
+|3  |2        |56 |-15|1  |
+|4  |1        |60 |-20|2  |
+|4  |2        |42 |-13|1  |
+|4  |4        |56 |-15|1  |
+|5  |1        |44 |-16|2  |
+
+
+15.  root all the rows object.
+
+Before
+//case class pivotE(rowScalar:DecimalType,zero:DecimalType,one:DecimalType,two:DecimalType)
+After
+//case class pivotE(N:DecimalType,rowScalar:DecimalType,zero:DecimalType,one:DecimalType,two:DecimalType)
+
+
+Before
+//case class roots(rowScalar:String,root1:String,root2:String,a:String,b:String,c:String)
+after
+//case class roots(N,rowScalar:String,root1:String,root2:String,a:String,b:String,c:String)
+
+
+case class pivotE(N:String,rowScalar:String,zero:String,one:String,two:String)
+
+case class roots(N:String,rowScalar:String,root1:String,root2:String,a:String,b:String,c:String)
+
+
+16. PivotEvaluateUDF object calls.
+
+PivotEvaluateUDF.main(Array("pivotDF","Rootsmaxn8n7"))  Rename as "RootsMaxn8Range"
+
++---+---------+-----+-----+---+---+---+
+|N  |rowScalar|root1|root2|a  |b  |c  |
++---+---------+-----+-----+---+---+---+
+|2  |1        |no   |root |2  |-28|104|
+|3  |1        |no   |root |2  |-24|80 |
+|3  |2        |8.0  |7.0  |1  |-15|56 |
+|4  |1        |no   |root |2  |-20|60 |
+|4  |2        |7.0  |6.0  |1  |-13|42 |
+|4  |4        |8.0  |7.0  |1  |-15|56 |
+|5  |1        |no   |root |2  |-16|44 |
+
+
+
+
+PM 
+
+17 need refactor for N inclusion.
+
+in GHQE as GroupedDegreeSum.main(Array("index7MaxN8","KvDegreeDS"))     
+
+"rUdfMaxN8"
+
++---------+------+------+-----+--------+-------+------+---------+
+|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|
++---------+------+------+-----+--------+-------+------+---------+
+|2        |0     |6     |2    |8       |2      |3     |1        |
+|2        |0     |42    |2    |8       |2      |21    |1        |
+|2        |1     |-7    |2    |8       |2      |-28.0 |1        |
+
+
+
+GHHDP does need to explain divisor.   - Scalars are divided out during agg(scalar_Result).
+
+
+straight forward 18. and 19.
+
+
+20. needs a column lable touchup.   - done.
+21. all good.
+
+
+21.5
+
+val groupDff = dh.withColumn("N",col("N").cast(DecimalType(25,0)))
+                .withColumn("Degree",col("Degree").cast(DecimalType(25,0)))
+                .withColumn("Scalar",col("Scalar").cast(DecimalType(25,0)))
+                .orderBy(asc("N"),asc("Degree"))
+                .groupBy("N")
+                .pivot("Degree")
+                .agg(sum("Scalar"))
+
++---+----+----+---+
+|N  |0   |1   |2  |
++---+----+----+---+
+|4  |184 |-53 |4  |
+|7  |1416|-417|32 |
+|3  |96  |-27 |2  |
+|2  |52  |-14 |1  |
+|5  |360 |-105|8  |
+|6  |712 |-209|16 |
++---+----+----+---+
+
+so, need N inorder.  - but they are string type ordering???
+
+
+
+on to 22.    
+only change:
+"ReducedMaxN8Range" 
+
+
+
++---+------+------+
+|  N|Degree|Scalar|
++---+------+------+
+|  2|     0|    52|
+|  2|     1| -14.0|
+|  2|     2|   1.0|
+|  3|     0|    96|
+|  3|     1| -27.0|
+|  3|     2|   2.0|
+|  4|     0|   184|
+|  4|     1| -53.0|
+|  4|     2|   4.0|
+
+
+in g0tq
++------+----+------+
+|Scalar|MaxN|Degree|
++------+----+------+
+|-417.0|   8|     1|
+|  32.0|   8|     2|
+|  1416|   8|     0|
++------+----+------+
+
+fix the .main map.   -  done
+
+
+22. and 23.  not all good
+
+23.5 and 23.50             -   column adjustment.
+
+
+
++----+----+-----+----+
+|MaxN|0   |1    |2   |
++----+----+-----+----+
+|8   |1416|-3336|2048|
+
+
+Need the MaxN in dataframe for correct result.  
+
+
+val dropedDf = df.withColumn("MaxN",col("_1").cast(StringType))
+                 .withColumn("N",col("_2").cast(StringType))
+                 .withColumn("Degree",col("_3").cast(StringType))
+                 .withColumn("Scalar",col("scalar_Result").cast(StringType))
+                 .orderBy(asc("N"),asc("Degree"))
+
+
+Got to 24.   Looks like it needs to be a grouped ReducedRowsSum.
+
+
+22 redScalR wants MaxN field.  - has it.
+
+run again through 22. 
+
+
+val ds= z.get(args(0)).asInstanceOf[Dataset[s12Re]]
+val scalarResult = GroupedDegreeSum.toColumn.name("scalar_Result")
+val kDS= ds.groupByKey(x=>(x.maxIndex,x.index.toInt,x.degree.toInt))
+   .agg(scalarResult)
+//   .orderBy(asc("key"))
+val kdsCount=kDS.count()
+kDS.show(kdsCount.toInt,false)
+kDS.schema
+z.put(args(1),kDS)
+
+
+case class redScalR(Scalar:String,N:String,Degree:String,result:String,MaxN:String)
+
+
+"ReducedMaxN8Range"
+
++----+---+------+------+
+|MaxN|  N|Degree|Scalar|
++----+---+------+------+
+|   8|  2|     0|    52|
+|   8|  2|     1| -14.0|
+|   8|  2|     2|   1.0|
+|   8|  3|     0|    96|
+|   8|  3|     1| -27.0|
+|   8|  3|     2|   2.0|
+|   8|  4|     0|   184|
+
+
+
+Have to look up groupBy - more than one column.  all good
+
+
+
+spark can reduce arbitrarry n.
+cypher can s12 for the terms product.
+
+
+Does spark have cartesian product function?
+
+so math is there an equivelant to the binomial translation???
+
+What order is assumend with run all the paragraphs.
+
+Thinkith spark objects shared across notebooks???   - querry the web or experiment across
+workbook.
+
+
+apply/unapply    binomial translate/ reverse the translation.
+
+
+So.... Gquadratics cloned and named TheQuadratics.
+
+
+QuerryS12Querry object: 
+
+set to pick MaxN=8
+arg["MaxN","s12MaxN8"]  done, have maxn set.
+
+file:///C:/Users/Aibes/SparkDocs/MoreSpark/sql%20-%20What%20is%20the%20difference%20between%20cube,%20rollup%20and%20groupBy%20operators%20-%20Stack%20Overflow.html
+
+
+and remember the explode function.
+
+
+Question:  does the -1 degree term erase the roots?  Is there a row obstificated with not a quadratic but a single term???
+Though for now is recored that first q has no rational roots. 
+
+ The value of the scalar is dependent on the set ordinal of its associated quadratic.  
+
+ The resulting quadratics are added together and resolve a quadratic when argumented with N
+an expected power of two.
+
+Each quadratic in the set has a scalar to multiply through the terms of the quadratic.  As the quadratics themselves are defined and have an
+ordering, so does the associated scalar.  , the quadratics and associated
+scalars are defined.    
+
+A range from 2 to N of integers is asserted....
+
+
+
+The graph technology, the build technology.
+
+
+The PM wrapup:
+
+   
+"RootsMaxn8Range"  exibits the rowScalar  a,b,c quadratic   
+
+"ReducedMaxN8RangePivot"  exibits the n quadratics.  
+
+Intend to substitute rowScalar wih n quadratic multiply through then divide out.
+
+want to join indexresult df with n quad dataframe.  
+
+ 
+And what does s12 say about this special case of divide by???
+
+ 
+
+The special case has to do with rowResult 
+
+definatly the fib sequence"  --  not.  Its yea old sum of terms sequence 1,2,3...  - it does define one though.
+
+74	74
+42	21
+60	15
+80	10
+96	6
+96	3
+64	1
+0	0
+1020	
+
+It is twopolymonal042619 pt graphdb_result worksheet.
+
+
+
+
+2/20
+
+Just why o'why the rowScalar division is not implemented when making quartets???
+
+Seems like first attemts were equality with rowCounter p and it's evaluate.
+rowcounter was substitued with the maxNN p evaluating to rowScalar.
+
+The divisor was the row evaluate.  -  from a quartets worksheet.
+
+Looks like the makings of an afternoon lab:
+
+s12 the MaxN8 for a worksheet.
+
+So,  
+
+compare/contrast s12initial s12recurring.
+
+importantly, in s12recurring the pD is multiplied through with vvdivisor and then vDivisor
+pd is alias for vTwoSeq (rowCounter).
+
+s12Initial has pd=constant=1. vvdivisor is multiplied through just with vdivisor.
+
+just why o'why the rowScalar division is not implemented when making quartets???
+
+Maybe an answer:
+
+The rowCounters can divide the rowResult. Suppose the division.
+Multiplying back by Argument restores result.
+
+Actually though...  the target scalars are simply multiplied by the argument scalars defining rowcounter.
+there is each quadratic division by 2 that gets multiplied into division by 4.
+
+2/21
+
+The making of higher p's:
+
+The quadratic substitution into quartets...      - It is natural to use prior members of MaxN set. The rowScalar 
+                                                         substitution is accurate.  -  The premember is defined to 
+                                                         evaluate appropriately. 
+Arbitrary substitution for higher p's:
+
+. The rowScalar is no longer computational after quartets.  It delimiates constituant p's and the rowResults.
+
+. Binomial translation only works if consistant algorythm is used.   - Build MaxN=N and MaxN'=N'.
+
+. Maybe want to use a root generating p across all rowcounters.     - do so want this methodology.
+  Maybe also don't need ZAD graph, can use 
+
+- All quartet scalars are still integers.   is that true?
+  The subsequent p's scalars usuall/always rational???
+
+Actually, it is time to use the rowScalar=N-2.   - The one evaluating into 2^n-2 ?  
+
+ xyz is binomial worksheet.
+
+The objective of higher P's is define evaluate in 2^n with as many roots as possible.   First fig is a tree with nodes representing members of set.
+
+one (1) is defined with a quadraticss n-2 rowRounter P not being multiplied through by rowScalar.
+
+And..  Want integer only calculations....   use division on the result - only on the result.
+
+And the first go at ZAD - too long ago - An arbitray GraphicP into and out from ZAD (NewtonsDifferences). - A set of distint mu numbers.
+
+So, now- pick a schema for beyond the quartets.
+
+Why have a quartet instead of just a quadratic?
+
+
+
+2/22
+
+Working on GZHDP:
+
+.The quartets
+
+.Continuing with ZSAScripts.
+.Other schemes
+.The Binomial.
+
+GZ supplement:  The zero degree terms in a MaxN,N set exibit. 
+
+
+GZTQ:
+
+Discription and method for defining quadratic representing 2^n:
+
+   N arguments a quadratic composed of an ordered set of quadratics.  Each set member is derived from the sum-of-terms quadratic formula 
+as consecutive pairs of denumerating integers argumenting linear terms and is complete when its size is N-1.       
+Each set member is then multiplied through by a scalar.  From the first member, the scalar as 2^0 to the last member as 2^(n-1), the set is fully defined.
+The resulting members are added together and resolve a single quadratic.  When argumented with N this equation computes the expected result 2^n.
+
+NOTE: Though a common root exists between consecutive members of (MaxN,N) set, the addition across the entire set masks all roots and resulting quadratic does
+      not have rational roots.
+
+GZHDP:
+
+Do need higher degreed p's because will be interested with root sets.  As in, sets of p's with 2 integer roots, sets of p's with 3 integer roots...                                                   
+The method below outlines generating first quartets and following, p's with the high degree in 2^n (2n).  They will maintain the ability to evaluate to an expected power of 2. 
+
+Suppose an arbitrary MaxN set of quadratics, for instance, the MaxN=8 set.  It is composed of N in {2,...,7}.
+Each p defined at N computes 2^n and so have a set of p's defining {4,8,16,32,64,128}.
+  
+//  The  MaxN=8 set of reduced p's
+
+For instance, MaxN=8,N=4 is a set of p's each individually argumented with individual rowScalars 1,2,4.  1 and 2 are not defined in MaxN8
+(there is an auxillary definition), though 4 is.  An opportunity exists to substitute 4 with MaxN8N2 (it evaluates to 4) as MaxN8N2 * MaxN8N4RowScalar4.
+
+//  The (2,8,4) target set along with (2,8,2) argument set (reduced).
+//  The S12 (2,8,4, rowCounter = 4)   
+//  The (4,2,4) Target,Argument set.
+
+The resulting Quartet, after rowScalar=4 substitution and subsequent addition across set members is:
+
+Similarly for MaxN8,N5 as...
+
+// per
+// above 
+// dataframes.
+
+Beyond the quartets the rowScalar substitution with a suitable quadratic is not entirely appropriate.
+The rowScalar has already been substituted and the scalar left the equation.  However as with 
+generating quartets, the prior method can be continued.  Though any "rowScalar" substitution 
+must include division by the rowsScalar (otherwise multiplying through by one).
+
+// per 
+// above
+// dataframes, using newly defined quartets.
+
+NOTES:
+
+The Binomial can be mentioned.   From GZTQ, can inspect the composition of both MaxN8N7 and MaxN64N7 member p's.  They 
+are the same size.  They each denumerate from respective MaxN. If MaxN8 free variable is argumented as (x+54)^2 and (x+54),
+3is the resulting quadratic identical to MaxN64N7? 
+
+//  Appropriate     
+//  DataFrames.
+
+Similarly for quartets.
+
+//  Appropriate     
+//  DataFrames.
+
+Conclusion,  some algebra to explore.  But maybe special case in a somewhat obvious sense.
+
+AFTERMATH
+
+Reveal the motive: 
+
+N=>Q
+
+NewtonsDifferences (subdiffofScalrs.ods)
+
+ZADDB is expected to graph mu (it is the fig). Though each p is only interested in quite the mu subset.
+Each ZADDB node needs a mu value field.
+With argument p all fractions of p should be known and in a minimal traversal.
+
+But to iterate the mu set,as mu corrolation does.  - not a structure as ZAD is.   
+
+
+2/23
+
+ZerosAndDifferencesNotes - The review from late Jan through early Feb.
+
+
+      .LoopsDriver parameters:
+      int dimension=6;          // will be working with dimension 2 but maybe 3
+      int integerRange=20;      // Length of loopList, pairs of roots not expected to have indices past 20                                 //  The loopListener needs to know this value for its runnable.   
+      int setProductRange=8;    // The last argument in loopSemaphore constructor.
+                                // The range of a scalar in pArray.  
+      PolynomialArray figPArray = new PolynomialArray(dimension,1);  // second argument is p scalar?
+
+Suppose the above needs set up for dimension=3.
+
+see zerosanddifferencesnotes.
+
+2/24
+
+Actually looks like the usual - it works.
+
+something of an observation/improvement.
+
+x^3-6^2+11x has a root at 0.
+
+f(x) x=1,2,3 all evaluate to 6.  
+
+x^3-6x^2+11x-6  has roots at 1,2,3.    and is the only cubic....
+
+would zad ever find this without a patch??
+The patch is need figparray/parray to include zero degree term in scheme/pattern.
+
+
+2/25
+
+loopsemaphoreinitial and loopsemaphorelast do not iterate the entire range.  
+loopsemaphore appears to iterate the range (correct).
+
+Do not know if iteration is complete.   - seems wonky.
+
+
+First is correct.  
+it is 4 in parray should not.
+
+
+goCCCypher (long signature) valueList: [[0, -30, 11, -6, 1], [3, 3, 0, 0, 0], [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, -115776, 320088, -297264, 92568], 4, [0.0, 24.0], 60023, [0, 0, 0, 0, 1], false, -2, 3,  ]
+twotabledbthread dbVectorSize1780
+      runLoopsDriverr while loop false 1780
+goCCCypher (long signature) valueList: [[0, -102, 11, -6, 1], [0, 4, 0, 0, 0], [0, -96, -192, -288, -360, -360, -216, 168, 912, 2160, 4080, 6864, 10728, 15912, 22680, 31320, 42144, 55488, 71712, 91200], 0, [0.0, 0.9999999999999964, -6.0, 11.0, -102.0, 0.0], 60020, [0, 0, 0, 0, 1], false, -2, 4,  ]
+twotabledbthread dbVectorSize1779
+      runLoopsDriverr while loop false 1779
+goCCCypher (long signature) valueList: [[0, -102, 11, -6, 1], [0, 4, 0, 0, 0], [-96, -96, -96, -72, 0, 144, 384, 744, 1248, 1920, 2784, 3864, 5184, 6768, 8640, 10824, 13344, 16224, 19488, -91200], 1, [0.0, 3.9999999999999964, -12.0, 8.0, -96.0], 60020, [0, 0, 0, 0, 1], false, -2, 4,  ]
+twotabledbthread dbVectorSize1778
+      runLoopsDriverr while loop false 1778
+goCCCypher (long signature) valueList: [[0, -102, 11, -6, 1], [0, 4, 0, 0, 0], [0, 0, 24, 72, 144, 240, 360, 504, 672, 864, 1080, 1320, 1584, 1872, 2184, 2520, 2880, 3264, -110688, 91200], 2, [0.0, 12.0, -12.0, 0.0], 60020, [0, 0, 0, 0, 1], false, -2, 4,  ]
+twotabledbthread dbVectorSize1777
+      runLoopsDriverr while loop false 1777
+goCCCypher (long signature) valueList: [[0, -102, 11, -6, 1], [0, 4, 0, 0, 0], [0, 24, 48, 72, 96, 120, 144, 168, 192, 216, 240, 264, 288, 312, 336, 360, 384, -113952, 201888, -91200], 3, [0.0, 24.0, -0.0], 60020, [0, 0, 0, 0, 1], false, -2, 4,  ]
+twotabledbthread dbVectorSize1776
+      runLoopsDriverr while loop false 1776
+goCCCypher (long signature) valueList: [[0, -102, 11, -6, 1], [0, 4, 0, 0, 
+
+
+These should not also.
+
+      runLoopsDriverr while loop false 1775
+goCCCypher (long signature) valueList: [[0, -6, 11, -6, 1], [1, 0, 0, 0, 0], [0, 0, 0, 0, 24, 120, 360, 840, 1680, 3024, 5040, 7920, 11880, 17160, 24024, 32760, 43680, 57120, 73440, 93024], 0, [0.0, 0.9999999999999998, -6.0, 11.0, -6.0, 0.0], 60024, [0, 0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize1774
+      runLoopsDriverr while loop false 1774
+goCCCypher (long signature) valueList: [[0, -6, 11, -6, 1], [1, 0, 0, 0, 0], [0, 0, 0, 24, 96, 240, 480, 840, 1344, 2016, 2880, 3960, 5280, 6864, 8736, 10920, 13440, 16320, 19584, -93024], 1, [0.0, 4.0, -12.0, 8.0, -0.0], 60024, [0, 0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize1773
+      runLoopsDriverr while loop false 1773
+goCCCypher (long signature) valueList: [[0, -6, 11, -6, 1], [1, 0, 0, 0, 0], [0, 0, 24, 72, 144, 240, 360, 504, 672, 864, 1080, 1320, 1584, 1872, 2184, 2520, 2880, 3264, -112608, 93024], 2, [0.0, 12.0, -12.0, 0.0], 60024, [0, 0, 0, 0, 1], false, -2, 0,  ]
+twotabledbthread dbVectorSize1772
+   
+
+
+So, maybe for now some redundancy thrown in.  
+Do not, though, want the redundancy.
+
+
+And onto the matter of import.
+
+Need zero degree term included in zero at index.
+Lowest term zerod is first degree term.
+
+ReComp3.ods (subdiffofScalars.ods) does not have a factorial scalar of triagtriag column
+for zero degree term.  It is, though, the same as the first degree term, 1. 
+
+
+
+ModuloList is an ArrayList.
+ModuloList.setDimension iterates from 0..less than dimension
+a factorial starting from 1 populates arraylist.
+Account for zero degree 
+probably wants ModuloList prepended with a one.
+
+   
+LoopList gbList = new LoopList(dimension,rListB,dimension,integerRange,1,xPowers,figPArray, moduloList);
+
+public LoopList(int mDimension, ResultListBean rListB,int dimension,int integerRange,int workNum, MatrixA aMatrix,
+                PolynomialArray pArray,ModuloList moduloList) 
+
+
+have worker zero through dimension.  as in current dimension is 4.
+
+
+FigPArray and pArray.
+FigParry's zero element is not concidered. 
+pArrays last element is not concidered.
+
+Reconcile:
+
+Incrementing parray[0] should effect figparray[0]
+as a transform of zero degree term.  It is transforming the
+first degree term.  
+
+LoopsLogicLoopSemaphore is the action uncouppled from the Semaphore object.
+Its method sf2Aquire calls the looplist setGBList method.
+
+Looplist.setGBlist fire's a property change event
+handeled in looplistener's propertyChange method.
+
+
+gbList00 is f(figParray)   -  not differenced.
+it is on rlstb.
+
+
+so, maybe....
+prepend/append, whichever,  mubuffer with another one factorial. 
+repeate gblist00 for generateBinaryStart.
+
+
+    public LoopList(int mDimension, ResultListBean rListB,int dimension,int integerRange,int workNum, MatrixA aMatrix, PolynomialArray pArray,ModuloList moduloList) {
+        propertySupport = new PropertyChangeSupport(this);
+        this.rListB=rListB;
+        this.dimension=dimension;
+        this.integerRange=integerRange;
+        this.workNum=workNum;
+
+//        System.out.println("LoopListconstructor pre new MartixA, mDimension "+ mDimension);
+        this.aMatrix= new MatrixA(mDimension,mDimension+1,aMatrix);
+//        System.out.println("LoopListconstructor post new MartixA");
+        this.moduloList=moduloList;
+        initializePArrayLoopList(pArray);
+     }
+
+
+LoopList gbList00 = new LoopList(dimension+1,rListB,dimension,integerRange,0,xPowers,figPArray, moduloList);  //function value list,  all subsequent are differneces of it  
+
+LoopList gbList = new LoopList(dimension,rListB,dimension,integerRange,1,xPowers,figPArray, moduloList);
+
+LoopList gbList1 = new LoopList(dimension-(numerator-1),rListB,dimension,integerRange,numerator,xPowers,figPArray, moduloList);
+
+LoopList gbList2 = new LoopList(1,rListB,dimension,integerRange,dimension,deltaList,ancestorlist,cashedrListB,xPowers);
+
+    public LoopList(int mDimension, ResultListBean rListB,int dimension,int integerRange,int workNum,List deltaList,List ancestorlist,List cashedrListB, MatrixA aMatrix) {
+        propertySupport = new PropertyChangeSupport(this);
+        this.rListB=rListB;
+        this.dimension=dimension;
+        this.integerRange=integerRange;
+        this.workNum=workNum;
+        this.deltaList=deltaList;
+        this.ancestorlist=ancestorlist;
+        this.cashedrListB=cashedrListB;
+ //       System.out.println("LoopListconstructor pre new MartixA, mDimension "+ mDimension);
+        this.aMatrix= new MatrixA(mDimension,mDimension+1,aMatrix);
+        initializeList();
+      //  firstdeltaTermInit();
+    }
+
+
+so, maybe....
+prepend/append, whichever,  mubuffer with another one factorial. 
+repeate gblist00 for generateBinaryStart.
+
+looplistener updates figPArray.
+
+maybe loopList performs the subtraction????     --  looplistener either evaluates figparray over a range workNum==0 or performs the subtraction.
+
+looplistener:
+
+   private synchronized void updateRlistB() {
+
+rListB.add(new LoopList(dimension+1,rListB,dimension,LoopsDriverTwoPManager.integerRange,0,xPowers,figPArray,moduloList
+
+rListB.add(new LoopList(dimension-(numerator-1),rListB,dimension,LoopsDriverTwoPManager.integerRange,numerator,xPowers,figPArray,moduloList));
+
+
+In looplist:
+
+    private void initializePArrayLoopList(PolynomialArray pArray) {
+        if (workNum==0) {
+
+          loadPArray(pArray);   writes out figparray as values 
+
+      } else {
+
+       subsequentWorkerListInit();   
+       
+      }
+
+
+
+The attempt is:
+
+gbList to be worker zero.                    //  loopsdrivertwop modified.
+
+the loop workers to start at 1.              //  loopsdrivertwop modified.
+
+prepend modulolist with another one....      // modulolist modified.
+
+looplistener.propertyChange:
+
+for loop includes worker zero.
+
+seventh parameter in looplist constructor is rListIndex. as 1 it throws index error.
+
+private synchronized void pArrayIncrement(PropertyChangeEvent evt)  {    
+
+     if (!pArrayResetFlag.getPArrayReset()) {pArray.incrementP(rListIndex - 2);}   
+// origonal rListIndex -2  modified to rListIndex-1.
+
+public void propertyChange(PropertyChangeEvent evt) {
+//      gc();
+//      System.out.println("LoopListener.propertyChange figPArray,cashedFigPArray: "+figPArray.toString()+" "+cashedFigPArray.toString());
+       rModulo = (BigDecimal) moduloList.get(((muNumDen)evt.getNewValue()).getWorkNum());  
+       int wNum=((muNumDen) evt.getNewValue()).getWorkNum();                                                                     // wNum is now a loop from high to low.
+       if (pArrayResetFlag.getPArrayReset()) {                                                                              // loose this condition in recursive.
+         pArray.incrementP(rListIndex - 2);      //  changed to rListIndex-1
+
+2/26
+
+PArrayResetListener.propertyChange:
+
+      for (int pIndex=0; pIndex<=indexS ; pIndex++) {
+
+
+parrayresetlistener.     public void propertyChange(PropertyChangeEvent evt) {
+      rListIndex=((muNumDen)evt.getNewValue()).getWorkNum()+2;
+
+      LoopsSemaphoreInterface loopsLogic1= new LoopsLogicLoopSemaphore(gbList1,numerator-1,integerRange,pArray);LoopsConditionInterface loopsCondition1 = new LoopsLogicLoopCondition();
+
+     LoopsSemaphoreInterface loopsLogic2= new LoopsLogicLoopSemaphore(gbList2,dimension-1,integerRange,pArray);LoopsConditionInterface loopsCondition2 = new LoopsLogicLoopCondition();
+
+LoopListener:
+
+Refactor wrapup:
+
+Did succesfully include gb00 - worker zero in the parray increment rejeim (zero degree term is zeroed by index).
+Remaining is some redundancy during the reset.  --  seems not crittical now but perportionally to new results maybe cumbersomne.
+
+After lunch:
+Back to graphdb....
+Need a dedicated graph for ZerosAndDifferences.  
+Need to write to the graph....
+Need to concider a kafka topic...
+
+Perform ZerosAndDifferences backup...
+
+from zadscripts:
+
+conn = DriverManager.getConnection(protocol, "neo4j", "ChiefQuippy");
+
+Have an important bit for the graph:
+. need looplist muNumber translation.             - Convienently a GaussTable1 method.  Otherwise GaussBean refactor... a listener... include in the script somewhere.
+. need the translation on the graph as a field. 
+
+So, convienently, a translation method in GaussTable1.
+
+
+goCCCypher (long signature) valueList: [
+
+[0, 10, 23, -10, 1], 
+[0, 2, 3, 1, 2], 
+[0, -24, -24, 0, 48, 120, 216, 336, 480, 648, 840, 1056, 1296, 1560, 1848, 2160, 2496, 2856, -86160, 70224], 
+2, 
+[0.0, 12.0, -36.0, 0.0], 
+61461, 
+[0, 0, 0, 0, 1], 
+false, 
+-2, 
+2,  
+
+
+
+
+]
+
+
+PM:
+
+Looks like want to run fractionintegerdriveriterate.
+
+Looks wired for denominator = 9
+
+
+GaussTable1.jave will be directed to runFIDi.
+
+Though, the mergeEvaluate is temporarally commented out.
+
+public synchronized void goFidCypher(String mU, String numerator, String denominator,String nBinary,int nBinarySize,int centerIndex,int verticalTranslateIndex)  {
+
+   mergeEvaluate( mU, numerator,denominator,nBinary,nBinarySize,centerIndex,verticalTranslateIndex);
+   
+}
+
+
+2/28
+
+file:///C:/Users/Aibes/ZeppelinDocs/GraphSAGE.html
+
+Graph embeddings are a powerful tool to abstract the complex structures of graphs and reduce their dimensionality.
+
+Neo4j for Graph Data Science version 1.4 i
+
+predictive analysis
+
+node2Vec is a well-known graph embedding algorithm which uses neural networks
+FastRP is a graph embedding up to 75,000 times faster than node2Vec
+GraphSAGE is an embedding algorithm and process for inductive representation learning on graphs 
+
+e.g., node classification, clustering, link prediction
+
+
+most embedding frameworks are inherently transductive and can only generate embeddings for a single fixed graph
+
+To run GraphSAGE, it needs to train on an example graph or set of graphs. After training, GraphSAGE can be used to
+generate node embeddings for previously unseen nodes or entirely new input graphs, as long as these graphs have the
+same attribute schema as the training data. 
+
+https://github.com/williamleif/GraphSAGE
+
+
+need a differentiable loss function
+
+the sigmoid function as usual
+
+The goal of GraphSAGE is to learn a representation for every node based on some combination of its neighbouring nodes
+
+However, too many neighbourhoods may dilute down the node representation for node v but too few (less than 2) might
+be similar to not using GNNs and just going with an MLP instead — food for thought
+
+
+http://snap.stanford.edu/graphsage/   -   	
+
+The algorithm is defined for UNDIRECTED graphs
+
+file:///C:/Users/Aibes/ZeppelinDocs/6.7.2.%C2%A0GraphSAGE%20-%206.7.%C2%A0Node%20embeddings.html
+
+graph Laplacian matrix 
+
+
+C:\Users\Aibes\Downloads\Top Trends of Graph Machine Learning in 2020 _ by Sergei Ivanov _ Towards Data Science.html
+type dependency hypergraph
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+amazon rekognition
+
+use aws ml services to analyze your videos to create new insights, automate work, and increase content value 
+with AWS media intelligence.
+
+client server runtime process uses gpu???
+
+ml goal optimize a metric - prediction accuracy
+
+trad software goal meet a functional specification 
+
+OTHER SUBSTITUTIONS
+
+Goodfellow et al. [2016]’s
+William L. Hamilton. (2020). Graph Representation Learning
+
+adjacency matrix
+matrix factorization
+
+  Multiplex  graphs  are  bestunderstood via examples.  For instance, in a multiplex transportation network,each node might represent a city and each layer might represent a different modeof transportation (e.g., air travel or train travel). 
+ Intra-layer edges would thenrepresent cities that are connected by different modes of transportation,
+ whileinter-layer edges represent the possibility of switching modes of transportationwithin a particular city.
+
+stan-dard machine learning classifier (e.g., logistic regression). 
+
+design kernel methods over graphs
+
+computational number theory
+
+
+buth update.
+
+
+%spark
+
+val df1 = spark.createDataFrame(Seq((1, "andy", 20, "USA"), (2, "jeff", 23, "China"), (3, "james", 18, "USA"))).toDF("id", "name", "age", "country")
+
+// filter accept a Column 
+val df2 = df1.filter($"age" >= 20)
+df2.show()
+
+// To be noticed, you need to use "===" for equal instead of "=="
+val df3 = df1.filter($"age" >= 20 && $"country" === "China")
+df3.show()
+
+df1: org.apache.spark.sql.DataFrame = [id: int, name: string ... 2 more fields]
+df2: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [id: int, name: string ... 2 more fields]
++---+----+---+-------+
+| id|name|age|country|
++---+----+---+-------+
+|  1|andy| 20|    USA|
+|  2|jeff| 23|  China|
++---+----+---+-------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+alexia,  google is tring a conversion.
+
+
+
+
+
+
+
+
+
+have to be able to permute the linears arithmetically.

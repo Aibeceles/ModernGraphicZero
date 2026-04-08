@@ -1,0 +1,70 @@
+# ===== Credentials & Secrets =====
+db.properties
+*.properties.local
+.env
+.env.local
+
+# ===== Virtual Environments =====
+.venv/
+venv/
+env/
+ENV/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ===== Jupyter Notebook =====
+.ipynb_checkpoints/
+
+# ===== Python Testing =====
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ===== Python Model Files =====
+*.pt
+*.pth
+*.onnx
+
+# ===== Java Build Artifacts =====
+build/
+dist/
+*.class
+*.jar
+*.war
+*.ear
+
+# ===== Java / NetBeans =====
+nbproject/private/
+
+# ===== IDE / Editor =====
+.vscode/
+.idea/
+.metals/
+.classpath
+.project
+*.swp
+*.swo
+*~
+
+# ===== Derby Databases =====
+muTableDB/
+twoTableDB/
+derby.log
+
+# ===== Data Files =====
+*.csv
+*.parquet
+data/
+
+# ===== Logs =====
+*.log
+logs/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db

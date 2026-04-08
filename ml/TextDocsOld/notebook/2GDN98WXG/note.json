@@ -1,0 +1,233 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\n\ncase class combinations(setSize:String,numberChosen:String,result:String)",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-11 11:28:31.821",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class combinations\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1628691170485_1259945270",
+      "id": "20210811-101250_623467582",
+      "dateCreated": "2021-08-11 10:12:50.485",
+      "dateStarted": "2021-08-11 11:28:31.930",
+      "dateFinished": "2021-08-11 11:28:42.770",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\nimport scala.collection.mutable.ArrayBuffer\nimport org.apache.spark.sql.{DataFrame,Dataset}\n\n//https://alvinalexander.com/scala/scala-factorial-recursion-example-recursive-programming/\n\nobject Combinations {\n\n    def factorial(n: Int): Int \u003d n match {\n        case 0 \u003d\u003e 1\n        case _ \u003d\u003e n * factorial(n-1)\n    }\n\n    def main(args: Array[String]) {\n \n        val terms \u003d new ArrayBuffer[combinations]()\n        val numElements \u003d BigInt(args(0)).intValue()  \n        val numElementsFact \u003d factorial(numElements)\n        for(a \u003c- 0 to numElements) {   \n        terms +\u003d  combinations(numElements.toString,a.toString,(numElementsFact/(factorial(numElements-a)*factorial(a))).toString)\n        }\n        println(factorial(5))\n\n        val df \u003d spark.createDataFrame(terms)\n        val dfCount \u003d df.count()\n        df.show(dfCount.toInt,false)\n        z.put(args(1),df)\n\n    }\n}\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-11 11:54:02.786",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import scala.collection.mutable.ArrayBuffer\r\nimport org.apache.spark.sql.{DataFrame, Dataset}\r\ndefined object Combinations\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1628688411154_1481384783",
+      "id": "20210811-092651_2138083609",
+      "dateCreated": "2021-08-11 09:26:51.154",
+      "dateStarted": "2021-08-11 11:54:02.798",
+      "dateFinished": "2021-08-11 11:54:03.123",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\nCombinations.main(Array(\"5\",\"combinations5\")) ",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-11 11:54:24.818",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "120\r\n+-------+------------+------+\n|setSize|numberChosen|result|\n+-------+------------+------+\n|5      |0           |1     |\n|5      |1           |5     |\n|5      |2           |10    |\n|5      |3           |10    |\n|5      |4           |5     |\n|5      |5           |1     |\n+-------+------------+------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1628691508713_1603778495",
+      "id": "20210811-101828_1199051861",
+      "dateCreated": "2021-08-11 10:18:28.714",
+      "dateStarted": "2021-08-11 11:54:24.832",
+      "dateFinished": "2021-08-11 11:54:25.073",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nNeed a paragraph for below:\n\n_n C_r\t\u003d \tnumber of combinations\nn\t\u003d \ttotal number of objects in the set\nr\t\u003d \tnumber of choosing objects from the set\n\n\u003d n! / r!(n-r)!...\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-11 09:28:14.228",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1628688419174_-1053990604",
+      "id": "20210811-092659_990001739",
+      "dateCreated": "2021-08-11 09:26:59.174",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\n\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-08-11 09:41:52.868",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1628688418914_-857556769",
+      "id": "20210811-092658_1303606398",
+      "dateCreated": "2021-08-11 09:26:58.914",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1628688418584_-561736765",
+      "id": "20210811-092658_1059343414",
+      "dateCreated": "2021-08-11 09:26:58.584",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1628688418080_1572348627",
+      "id": "20210811-092658_709616265",
+      "dateCreated": "2021-08-11 09:26:58.080",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1628688416819_1640408595",
+      "id": "20210811-092656_835912727",
+      "dateCreated": "2021-08-11 09:26:56.819",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "DiffCombinationsRec",
+  "id": "2GDN98WXG",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

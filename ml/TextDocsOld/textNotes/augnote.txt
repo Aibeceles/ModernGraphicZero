@@ -1,0 +1,1055 @@
+8/18
+
+Did install windows wsl 8/17 with purpose of hosting zeppelin 0.9.
+Not yet does it work.
+Did uninstall docker yesterday.  It likes ram, turns itself on at boot, and 
+becomes subsequently inaccessable.
+
+Today lab attempt an older zeppelin on windows.
+
+downloaded github for windows.
+
+C:\Users\Aibes\AppData\Local\GitHubDesktop\app-2.5.3\resources\app\git\cmd 
+
+
+zeppelin .8.2 in zepold folder does work with edge/internet explorer.
+         .9.0 does not.
+
+
+so proceeding with .8.2  
+next step copy in notebooks from usb drive.
+
+
+ended up unzipping zeppelin-web-...war into ...bin-all.
+cleared browser cash.
+watched the firefox browser consol for errors and...
+
+it works.
+
+Neo4j need to know:  Graph Data Science Library
+                     Neo4j Streams   is the kafka work
+                     Graph Algorithms
+
+have a working zeppelin 8.2
+and neo4j 4....
+and need them to communicate  // look at envy config.
+
+and need zadscripts.jar functionality.     do need it through kafka.
+and need twopoly.jar run for high index.
+
+but what again for zeppelin 9.0
+
+8/19
+
+kafka...-src wants to be built with gradle
+instead, for now, will use envy copy.
+
+and what is killer control center
+            killer network service
+
+nvidia container
+microsoft text input application
+
+don't know enough about neo4j 4.0 uninstalling
+and installing envy copy.
+
+8/20
+
+  old copy of zadscriptsK on thumbkey....
+  focus on neo4j.
+  it used to be called graph.db
+  the file is now called neo4j....  //can be changed means ...
+
+
+Concord Coach Lines to Center Harbor, NH.
+
+Moultonborough
+
+neo4j operations manual upgrading single instance...
+take entire contents of data folder.
+
+get rid of same content in 4.0. 
+and past 3. data 
+
+edit conf file
+
+allow upgrade.  disabe by defalt.
+uncomment.  it will change store formate
+
+configure for multi graph.
+have to follw naming convention.  simple text please  graph.db not valid db name
+defalt is neo4j.
+
+use defalt db name.
+
+
+3.5 1.8 runtime.
+hard requirement 4.0 need  java 11.
+point to java 11 in conf.           // think has config with owne jdk.
+
+will have to update conf file.
+
+
+8/21
+wowwee the windows graphing calculator 
+Localappdata directory
+
+Cygwin's X.org                - and applications that need it.
+https://redd.it/4rsmzp
+
+
+The automatic migration is not permanent, so if it is not changed in neo4j.conf, will take place each time at startup. 
+
+
+note:data folder has all graphs in it.  only want
+the graph.db folder therefore some file maintenance. 
+as in copy data directory prune it and then use it for
+upgrade.
+
+All changes in the Cypher language syntax are detailed in Cypher Manual → Removals, deprecations, additions and extensions.
+
+:use system
+CREATE DATABASE importeddb
+
+neo4j-admin backup
+
+unsupported sub-graph.  cannot upgrade too old.
+
+so.  read csv and start afresh.
+
+moved current zadscriptsk into Aibes.netbeansprojects folder.
+
+intend to start kafka, run zadscriptsk.jar and inspect 
+kafka log for functionality.
+
+but yet the kafka bat files?  need to learn how one maybe powershell                                    - do want to know more about this.
+session can start a zookeeper cmd process and a kafaka cmd process.
+
+cannot test kafka without neo4j populated.
+
+need to load csv...
+maybe even need to start zeppelin first.
+but eh with defalt database=neo4j... maybe zeppelin scripts don't need some modern cypher appended???
+
+
+so now, write a zeppelin start .bat.
+
+
+ INFO [2020-08-21 14:43:30,679] ({main} VfsLog.java[info]:138) - Using "C:\Users\Aibes\AppData\Local\Temp\vfs_cache" as temporary files store.
+ INFO [2020-08-21 14:43:30,726] ({main} GitNotebookRepo.java[<init>]:64) - Opening a git repo at '/Users/Aibes/zeppelin-0.8.2-bin-all/notebook'
+ERROR [2020-08-21 14:43:32,146] ({main} FS.java[readPipe]:552) - Caught exception in FS.readPipe()
+java.io.IOException: Cannot run program "git" (in directory "\usr\bin"): CreateProcess error=2, The system cannot find the file specified
+        at java.lang.ProcessBuilder.start(ProcessBuilder.java:1048)
+
+8/23
+
+file:///C:/Users/ChiefQuippy/Downloads/Apache%20Zeppelin%200.8.0%20Documentation%20%20Shell%20interpreter%20for%20Apache%20Zeppelin.htm
+
+Shell interpreter uses   https://commons.apache.org/proper/commons-exec
+
+zeppelin.shell.interpolation to true
+
+file:///C:/Users/ChiefQuippy/Downloads/ShellInterpreter%20Java%20Source%20Code.htm
+
+need to create an SSH tunnel and use a SOCKS 5 Proxy
+
+The SQL method allows you to run a DML as well as a DDL statement
+
+
+file:///C:/Users/ChiefQuippy/Downloads/Spark%20Zeppelin%20and%20JDBC%20-%20Learning%20Journal.htm
+
+file:///C:/Users/ChiefQuippy/Downloads/A%20Scala%20JDBC%20connection%20and%20SQL%20SELECT%20example%20%20%20alvinalexander.com.htm
+The jdbc scala jar.  import into zeppelin.
+
+and remember += is overloaded for lists.
+
+
+file:///C:/Users/ChiefQuippy/Downloads/scala-jdbc.htm
+better scala jdbc
+
+
+jvm needs to know about truststore.
+
+From time to time, you may need to break the rules. In the Java platform, this is normally accomplished by using one of three primary mechanisms: reflection,
+ class loading (including associated bytecode transformation), and Unsafe.
+ reflection mostly for ?are these two objects the same?
+ Unsafe has become a stumbling block in the adoption of a modules system.
+
+8/24
+
+Have kafka/zeppelin on the legion.
+Where last left off, on the envy, kafka had file lock problems.
+That is, the lab being use zadscriptsK to produce messages for kafka.
+The success indicater being a populated kafka log.  It would proceed
+neo4j connecting and consuming these messages.
+
+So, attempting again this lab, need kafka started and aware of the s12
+topic. Following kafka startup and configuration, will run again 
+zadscriptsK.
+ 
+And importantly,  cannot migrate databse need to rebuild from .csv.
+
+the global factory no more.
+
+priceline 
+30 dollars a day....
+unlimmited mileage.
+
+priceline through waterbury/new britan, ct.
+
+laconia nh.
+
+maybe not...
+
+the 28th friday 
+or 31st monday.
+
+painting....
+tools pails rollers brushes stireres strainers (for pails and rollers) 
+tarps
+ladders
+primer - tinted or not
+paint - color 
+
+two drives two os's
+
+Concord Coach Lines to Center Harbor, NH.
+
+8/25
+
+
+bits and bytes of reflection.
+
+duck typing is not possible without reflection)
+
+have the game bar recording button on left.  where are files?
+
+tail call optimization (method chaining again)
+
+file:///C:/Users/Aibes/ZeppelinDocs/Use-cases%20for%20reflection%20-%20Stack%20Overflow.html
+
+There are lot's of times you want to dynamically instantiate and work with objects where the type isn't known until runtime.
+mocking frameworks.
+
+Building up a config object based on the command line parameters that are passed in.
+
+ INFO [2020-08-25 08:31:00,033] ({main} VfsLog.java[info]:138) - Using "C:\Users\Aibes\AppData\Local\Temp\vfs_cache" as temporary files store.
+ INFO [2020-08-25 08:31:00,086] ({main} GitNotebookRepo.java[<init>]:64) - Opening a git repo at '/Users/Aibes/zeppelin-0.8.2-bin-all/notebook'
+ERROR [2020-08-25 08:31:01,612] ({main} FS.java[readPipe]:552) - Caught exception in FS.readPipe()
+java.io.IOException: Cannot run program "git" (in directory "\usr\bin"): CreateProcess error=2, The system cannot find the file specified
+        at java.lang.ProcessBuilder.start(ProcessBuilder.java:1048)
+
+
+ERROR [2020-08-25 08:59:01,105] ({qtp1204167249-114} NotebookServer.java[persistAndExecuteSingleParagraph]:1883) - Exception from run
+java.lang.RuntimeException: org.apache.zeppelin.interpreter.InterpreterNotFoundException: Either no interpreter named neo4j or it is not binded to this note
+
+
+8/26
+
+zeppelin 8.1   -  zeppelin.cmd does nothing
+zeppelin 8.2   -  neo4j interpreter does not connect to database
+zeppelin 0.9   -  no browser browser but interpreter log4j dependency.
+
+
+
+Zeppelin: Neo4j interpreter
+
+
+From: 'an unknown organization'
+  - Neo4j Java Driver (https://github.com/neo4j/neo4j-java-driver/neo4j-java-driver) org.neo4j.driver:neo4j-java-driver:jar:1.7.1
+    License: Apache License, Version 2  (http://www.apache.org/licenses/LICENSE-2.0)
+
+From: 'Apache Software Foundation' (http://www.apache.org)
+  - Apache Log4j (http://logging.apache.org/log4j/1.2/) log4j:log4j:bundle:1.2.17
+    License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+
+http://localhost:7474/browser/
+
+#dbms.default_listen_address=0.0.0.0
+is now uncommented.
+
+C:\Users\Aibes\Zeppelin9\zeppelin-0.9.0-preview2-bin-all\zeppelin-0.9.0-preview2-bin-all\zeppelin-0.9.0-preview2-bin-all\interpreter\neo4j\org\neo4j\driver\internal\logging
+
+has the slf4j class
+
+
+  public static void main(String[] args)
+      throws TTransportException, InterruptedException, IOException {
+    String zeppelinServerHost = null;
+    int port = Constants.ZEPPELIN_INTERPRETER_DEFAUlT_PORT;
+    String portRange = ":";
+    String interpreterGroupId = null;
+    if (args.length > 0) {
+      zeppelinServerHost = args[0];
+      port = Integer.parseInt(args[1]);
+      interpreterGroupId = args[2];     // there is no interpreterGroup id  
+      if (args.length > 3) {
+        portRange = args[3];
+      }
+    }
+
+8/28
+
+how to run .cmd as administrator.
+how to use maven for dependency tree - the multiple slf4j bindings duplicity.
+                                     - the jackson binding in neo4j pluggin.
+library(googleVis)
+
+z.9.0 not quit all there.  have tutorial notes.  Not create new note.  
+
+The state today
+have 8.1 envy zeppelin migrated to y740.
+new kafka does start on windows 10.
+the jars as they are.
+neo4j 4.0 on y740.
+
+only the neo4j browser talks to neo4j.
+zeppelin has multiple issues with neo4j, probably with pluggin.
+
+need zeppelin jdbc connectivity.
+or more to the point jar communication with neo4j.
+or the point zadscript load .csv with twoPolynomial to kafka the goal.
+ 
+The jar kafka neo4j zeppelin strategy.
+
+need netbeans on y740.  // eclipse is not in scope.
+twopolynomial will write to kafka.  
+get neo4j to listen to kafka.
+
+.  Put netbeans on y740 but needs more downloading.
+so,  continue with netbeans envy.
+
+The work is twopolynomialgenerator need a twopolynomialK.
+Instead of write .csv, write to kafka.
+
+From ZADScripts,  have s12Dc query resultSet returning a map.
+Do though need the map explicitly.  But need to remember where done
+before. 
+
+In cypherArithmetic explicitly read the querry return map
+keset, get element.
+
+11:46 AM 8/28/2020
+
+Netbeans project properties speaks of adding Modulepath.
+
+zaddbtable1.runTwoPolyDriver writes out a .csv file.
+First it should write out a map.
+
+so, jar ready to write to kafka.
+need kafka started and a topic to write to.
+
+8/29
+
+how to run .cmd as administrator from .bat.
+
+can choose from settings when vantage can run..
+need to know, what is vantage?
+
+something zeppelin can do:
+
+> bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+ //Output:
+ Created topic test.   // 
+
+Below is what happened when zeppeln %sh tried to 
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic twoPoly
+
+Exception in thread "main" java.lang.NoSuchMethodError: scala.collection.mutable.Map$.apply(Lscala/collection/immutable/Seq;)Ljava/lang/Object;
+DEBUG [2020-08-29 14:11:36,363] ({Exec Stream Pumper} RemoteInterpreterManagedProcess.java[processLine]:298) -  at kafka.log.LogConfig$LogConfigDef.<init>(LogConfig.scala:190)
+DEBUG [2020-08-29 14:11:36,364] ({Exec Stream Pumper} RemoteInterpreterManagedProcess.java[processLine]:298) -  at kafka.log.LogConfig$LogConfigDef.<init>(LogConfig.scala:188)
+DEBUG [2020-08-29 14:11:36,364] ({Exec Stream Pumper} RemoteInterpreterManagedProcess.java[processLine]:298) -  at kafka.log.LogConfig$.<clinit>(LogConfig.scala:239)
+DEBUG [2020-08-29 14:11:36,364] ({Exec Stream Pumper} RemoteInterpreterManagedProcess.java[processLine]:298) -  at kafka.admin.TopicCommand$TopicCommandOptions.<init>(TopicCommand.scala:602)
+DEBUG [2020-08-29 14:11:36,364] ({Exec Stream Pumper} RemoteInterpreterManagedProcess.java[processLine]:298) -  at kafka.admin.TopicCommand$.main(TopicCommand.scala:51)
+DEBUG [2020-08-29 14:11:36,364] ({Exec Stream Pumper} RemoteInterpreterManagedProcess.java[processLine]:298) -  at kafka.admin.TopicCommand.main(TopicCommand.scala)
+
+the conventional .cmd window did it all good.
+
+so now run the twoPolyGeneratorK jar 
+
+
+twopolynomialk needs a map for kafka.
+
+something like
+
+Map rsMap = new HashMap();
+
+The keyList is named valueList.
+Want to iterate over valueList.
+Put valueList.value,
+
+some fancy syntax from map.java
+return (e = getNode(hash(key), key)) == null ? null : e.value;
+
+the keyset is valueList.
+so iterate over valuList
+element is iterator.next()
+mMap.get(element)
+
+
+TPG takes a file name (to be ignored) and NN.
+will test with NN=5
+
+JavaProjects\twopolynomialgeneratorK
+
+java -jar TwoPolynomialGenerator.jar test.csv 5 2 6
+
+
+The map is outputted seemingly correct to the console.
+
+
+time to include json and kafka functions.
+
+        jSMapString =  new ObjectMapper().writeValueAsString(mMap);
+does need the neo4j jdbc to not throw compiler error.
+
+
+8/30
+
+including OSGi, take the approach of having one classloader per module
+
+TwoPolynomialGeneratorK did run with effect on kafka topic twoPoly
+logs.  QuippysDog ought now to consume thes messages.
+
+kafka server.conf 
+
+#log.flush.interval.messages=10000
+
+The Cygwin installation directory has a similar directory layout to that found in the root file system of Unix-like systems, with familiar directories, such as /bin, /home, /etc, /usr, /var.
+
+Kafka provides an implementation of ConfigProvider called FileConfigProvider that allows variable references to be replaced with values from local files on each worker. For example, rather than having a secret in a configuration property
+
+
+file:///E:/kafkaDocs/Getting%20Started%20with%20Kafka%20Connect%20%E2%80%94%20Confluent%20Platform%205.5.1.html#connect-next-steps
+
+bin/connect-standalone worker.properties connector1.properties
+
+C:\Users\Aibes\kafka_2.13-2.5.0\config\connect-standalone    configuration for worker.properties
+C:\Users\Aibes\NeoKafkaConnect\neo4j-kafka-connect-neo4j-1.0.7\etc sink-quickstart configuration for connector1.properties
+
+bin/connect-standalone worker.properties connector1.propertiesC:\Users\Aibes\kafka_2.13-2.5.0\config\connect-standalone C:\Users\Aibes\NeoKafkaConnect\neo4j-kafka-connect-neo4j-1.0.7\etc\sink-quickstart
+connect-standalone connect-standalone.properties sink-quickstart.properties 
+
+
+time to put the config files in the same folder as connect-standalone
+
+
+
+
+export CLASSPATH=<path-to-jar-files>
+
+JSON (without Schema Registry)
+
+If you need to use JSON without Schema Registry for Connect data, you can use the JsonConverter supported with Kafka. The example below shows the JsonConverter key and value properties that are added to the configuration:
+
+key.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter=org.apache.kafka.connect.json.JsonConverter
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
+
+C:\Users\Aibes\kafka_2.13-2.5.0\bin\windows>kafka-topics.bat --list --bootstrap-server localhost:9092
+twoPoly
+
+
+C:\Users\Aibes\kafka_2.13-2.5.0\bin\windows>connect-standalone connect-standalone.properties sink-quickstart.properties
+s
+[2020-08-30 19:00:43,868] ERROR Invalid path in plugin path: UsersAibesNeoKafkaConnect
+eo4j-kafka-connect-neo4j-1.0.7. Ignoring. (org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader)
+java.nio.file.InvalidPathException: Illegal char <
+> at index 25: UsersAibesNeoKafkaConnect
+eo4j-kafka-connect-neo4j-1.0.7
+        at sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+        at sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+        at sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+        at sun.nio.fs.WindowsPath.parse(WindowsPath.java:94)
+        at sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:255)
+        at java.nio.file.Paths.get(Paths.java:84)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader.initPluginLoader(DelegatingClassLoader.java:215)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader.initLoaders(DelegatingClassLoader.java:199)
+        at org.apache.kafka.connect.runtime.isolation.Plugins.<init>(Plugins.java:60)
+        at org.apache.kafka.connect.cli.ConnectStandalone.main(ConnectStandalone.java:79)
+[2020-08-30 19:00:43,978] WARN could not create Vfs.Dir from url. ignoring the exception and continuing (org.reflections.Reflections)
+org.reflections.ReflectionsException: could not create Vfs.Dir from url, no matching UrlType was found [file:/C:/Users/Aibes/kafka_2.13-2.5.0/libs/NOTICE]
+either use fromURL(final URL url, final List<UrlType> urlTypes) or use the static setDefaultURLTypes(final List<UrlType> urlTypes) or addDefaultURLTypes(UrlType urlType) with your specialized UrlType.
+        at org.reflections.vfs.Vfs.fromURL(Vfs.java:114)
+        at org.reflections.vfs.Vfs.fromURL(Vfs.java:96)
+        at org.reflections.Reflections.scan(Reflections.java:257)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader$InternalReflections.scan(DelegatingClassLoader.java:441)
+        at org.reflections.Reflections.lambda$scan$0(Reflections.java:213)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+        at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+
+
+
+C:\Users\Aibes\kafka_2.13-2.5.0\bin\windows>connect-standalone connect-standalone.properties sink-quickstart.properties
+[2020-08-30 19:53:44,609] WARN given scan urls are empty. set urls in the configuration (org.reflections.Reflections)
+[2020-08-30 19:53:44,621] WARN given scan urls are empty. set urls in the configuration (org.reflections.Reflections)
+[2020-08-30 19:53:44,622] WARN given scan urls are empty. set urls in the configuration (org.reflections.Reflections)
+[2020-08-30 19:53:45,307] WARN could not get type for name org.jdom.output.XMLOutputter from any class loader (org.reflections.Reflections)
+org.reflections.ReflectionsException: could not get type for name org.jdom.output.XMLOutputter
+        at org.reflections.ReflectionUtils.forName(ReflectionUtils.java:312)
+        at org.reflections.Reflections.expandSuperTypes(Reflections.java:382)
+        at org.reflections.Reflections.<init>(Reflections.java:140)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader$InternalReflections.<init>(DelegatingClassLoader.java:433)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader.scanPluginPath(DelegatingClassLoader.java:325)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader.scanUrlsAndAddPlugins(DelegatingClassLoader.java:261)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader.registerPlugin(DelegatingClassLoader.java:253)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader.initPluginLoader(DelegatingClassLoader.java:222)
+        at org.apache.kafka.connect.runtime.isolation.DelegatingClassLoader.initLoaders(DelegatingClassLoader.java:199)
+        at org.apache.kafka.connect.runtime.isolation.Plugins.<init>(Plugins.java:60)
+        at org.apache.kafka.connect.cli.ConnectStandalone.main(ConnectStandalone.java:79)
+Caused by: java.lang.ClassNotFoundException: org.jdom.output.XMLOutputter
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+        at org.apache.kafka.connect.runtime.isolation.PluginClassLoader.loadClass(PluginClassLoader.java:104)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+        at org.reflections.ReflectionUtils.forName(ReflectionUtils.java:310)
+        ... 10 more
+[2020-08-30 19:53:45,312] WARN could not get type for name org.jaxen.dom.DocumentNavigator from any class loader (org.reflections.Reflections)
+org.reflections.ReflectionsException: could not get type for name org.jaxen.dom.DocumentNavigator
+        at
+
+
+9/1
+
+on the kafka connect pluggin side of things need preconditions.java as a jar and put it where....
+
+public final class Preconditions
+
+on the streams side...
+
+
+C:\Users\Aibes\.Neo4jDesktop\persist  has pluggins a json file.
+
+
+2020-09-01 19:21:37.683+0000 INFO [o.n.i.d.DiagnosticsManager]  [classpath] C:\Users\Aibes\.Neo4jDesktop\neo4jDatabases\database-3720b763-6e88-4158-a7e2-c57a797653b3\installation-4.1.0\lib\neo4j-server-4.1.0.jar
+2020-09-01 19:21:37.683+0000 INFO [o.n.i.d.DiagnosticsManager]  [classpath] C:\Users\Aibes\.Neo4jDesktop\neo4jDatabases\database-3720b763-6e88-4158-a7e2-c57a797653b3\installation-4.1.0\plugins\neo4j-streams-3.5.8.jar
+
+
+
+9/2
+
+todo.
+
+neo.conf gets streams appendum before 
+1. turn on zookeeper,kafka             //  BET THIS IS FIRST TODO.
+2. turn on neo4j
+
+the script to use is on zeppelin d2.
+
+
+and remember, the kafka connect pluggin needs
+a dependency resolved.  the google.preconditions.
+
+Or to send update events (change data capture - CDC) to the event log for later consumption
+
+https://neo4j.com/docs/labs/neo4j-streams/current/consumer/?_ga=2.6752434.1200340249.1599042655-1364778378.1599042655
+https://neo4j.com/docs/labs/neo4j-streams/current/producer/?_ga=2.114756359.1200340249.1599042655-1364778378.1599042655
+
+https://docs.confluent.io/current/installation/configuration/consumer-configs.html#cp-config-consumer
+https://docs.confluent.io/current/installation/configuration/producer-configs.html#cp-config-producer
+
+CALL dbms.listQueries() 
+
+neo4j call streams.consume
+
+
+:: (name :: String?, value :: Any?)
+
+The Kafka cluster retains all published messages—whether or not they have been consumed—for a configurable period of time. For example if the log retention is set to two days, then for the two days after a message is published it is available for consumption, after which it will be discarded to free up space.
+
+kafka-topics.sh --zookeeper localhost:2181 --alter --topic topic1 --config retention.ms=1000
+
+
+9/3
+
+There appears to still be retained the zadscripts jar created 8/30. 
+Neo4j appears to be kafka configured to read the zadscripts created log.
+
+windows subsystem for linux
+wsl and zeppelin.
+
+been downloading zip 
+not opening with github desktop.
+
+so,  kafka neo4j notebooks to read - donwloaded - have two files the conf and notebook folders.
+
+and at zepl...  
+the notebook resource.
+still though.  traditional backends.
+do have to write up usecase the business end is labor day...
+do still need connectivity.
+
+so, maybe the lab today is 
+try again twoPolynomialK
+
+java -jar TwoPolynomialGenerator.jar test.csv 5 2 6
+                                              upper lower range
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 201
+9/4
+
+AM
+
+pluggin folder does contain latest streams jar.
+Did include latest streams jar  
+
+Swapped out older streams jar for latest jar.
+And...
+Neo4j sink-ed the topic.
+
+The test
+twoPolynomialGeneratorK.jar outputs to twoPoly kafka topic.  Neo4j does consume twoPoly topic.
+validates jar to kafka to neo4j hypotheisis.
+Need robust outline of streaming scripts plan. 
+
+Do need create indexes per D2.Zep
+
+Note:  Have a .csv for MaxN=1000 but have depricated the jar to .csv to neo4j dataflow.   //  Beggs the question how well is TwoPolyNomialGenerator.java for working larger MaxN.
+
+Do need to comprehend the S* scripts in terms of Kafka.
+Optimistically, ZadScripts are rather usefull.           // The eclipse learning curve it upon. 
+                                                         // Along with it is code maintenance operations.
+                                                         // Maybe time for some more method chaining.
+
+ZadScriptsK (a neo4j query) resultSet to kafka back to neo4j.
+
+Have:
+
+ScriptsAutomation
+ .s12Initial()
+ .s12Dc()
+ .s3TEc()
+ .s3ADc()
+
+All in need of Kafka support.       
+It does appear kafka work has started.
+Does need more robust structure.  //  Kafka functionality is 
+                                  //  appended to the result set.
+                                  //  RS should be sent to a factory
+                                  //  then otherwise chained to a 
+                                  // send(record).get().
+
+9/5
+
+Prepare for TheTest9.5
+
+   Connect Zep to QuippysDog.               // fail to recieve data ensure working connection error. 
+                                            // seems like one of these update the pluggin sort of problems.
+                                            // as needed to be resolved with kafka.
+   Validate with Create index  per ZADDB. 
+   Reread streaming data integration.
+   Refine pluggin config.
+   Run twoPolynomialK from Zep.   
+
+C:\Users\Aibes\zeppelin-0.8.2-bin-all\bin
+zeppelin
+As ZeppelinStart.bat
+
+ihmo stands for...
+
+and how so to get an appropriate neo interpreter into zeppelin???
+
+Big and...  and ChiefQuippy will not start unless kafka/zookeeper started.  Because config file?
+
+
+9/8
+
+
+Packing a Java Module as a Standalone Application
+
+You can package a Java module along with all required modules (recursively) and the Java Runtime Environment into a standalone application.
+The user of such a standalone application does not need to have Java pre-installed to run the application,
+as the application comes with Java included. That is, as much of the Java platform as the application actually uses. 
+
+and the question, can two versions of neo4j be on the same machine.
+
+One radian is defined to be the measure of an angle that traces out an arc that has an arc-length equal to the radius of the circle.
+Whereas we kind of just arbitrarily decided a circle has 360 degrees. Radians are more “intrinsic” to circles.
+
+so,  
+
+neo4j 4.0 interpreter not quite available per https://www.mail-archive.com/dev@zeppelin.apache.org/msg30761.html
+
+lots of jdbc to do. with supplemental terminal scripts for telemetry.
+
+which means k-series jars need modern jdbc jar.
+note twoPK does not need jdbc; it writes directly to cypher.
+     zadscriptsK does need the jar.  it querrys neo, runs cypher transforms
+     then is expected to write to s* topic.
+
+the loose end then is will need jar to write to csv.
+to be picked up by dataframe.  
+ 
+seems like it was downloaded 8-27.  nope, got the correct jar.
+can proceed and test s* read and write to kafka.
+
+need javaDependencies folder from envy.
+
+9/9
+
+  Implement ZADScriptsK:
+  Fix broken dependencies                                      -jdependencies folder now in directory
+  Indentify and transfer relevant scripts into neo4j .conf 
+
+  Run twopolynomialk I=1000                                      1000 on up to n= 200
+  first set  up indicex on quippysdog.                           done
+
+  maybe time to run the 1000 series 
+
+
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 201
+
+did compute to quippysdog.
+
+will proceed with equipping ZADScriptsK with kafka functionality.
+
+
+ScriptsAutomation      kafka topic
+ .s12Initial()          
+ .s12Dc()
+ .s3TEc()
+ .s3ADc()
+
+note:
+
+   zadscripts will have to be tested for correct
+   resultset iteration.  the json string needs to be validated.
+
+
+s3adc needs the number of rows in the result set 
+
+or not, it seems to be used as a return parameter.. only a return parameter.
+but, s3ADc does not have a map assembled.
+it need a map for kafka.  
+That is the script needs some cosmetic work.  
+The map needs to be explicit and the return object.
+
+so, .conf has topic scripts
+    zadscripts reads quippysdog and writes to kafka.
+
+9/10
+
+  the zadscripsk narrative is:
+  clean up zadscriptsk.scriptsautomation; the resultset clause is a mess and much duplication.
+
+  zadscripts correctness...  the today lab.
+
+    private final String driver = "org.neo4j:neo4j-jdbc-driver:3.3.0";    - have a modern driver - update string to
+    private final String protocol = "jdbc:neo4j:bolt://localhost";
+
+
+script automation is bloated get rid of unused methods.  - done.
+
+The real zadscriptsk efficey question:  a single producer .send to a particular topic is guaranteed by send key field.
+zadscripts does write to three topics.  quippysdog must read topics in a certan order. 
+in this regard, what does kafka docs say about ordering. 
+
+For MaxN,N:
+
+S12  all must be consumed before proceeding onto
+S3t  and all must be consumed before proceeding onto
+S3a  and then the next N can be consumed.
+
+
+Maybe will need an auxillary method to first test quippysdog for data availability. 
+Someting of a spin lock untll dataAvailable is true.
+
+java -jar ZADScripts.jar 2 19 30 2
+java -jar ZADScripts.jar 2 19 30 8
+java -jar ZADScripts.jar 2 19 30 16
+java -jar ZADScripts.jar 2 19 30 32     // will connect fail - a bet.
+java -jar ZADScripts.jar 2 19 30 64
+java -jar ZADScripts.jar 2 19 30 128
+java -jar ZADScripts.jar 2 19 30 256
+java -jar ZADScripts.jar 2 19 30 512
+
+java -jar ZADScripts.jar 2 7 1000 2   is zadscripsk test command.
+
+
+
+ScriptsAutomation methods of interest needing scruteny of return correctness and proper kafka functionality.
+return correctness because they were fooled with during my erronus multiple commits. 
+
+
+s12Initial
+
+s12Dc
+
+s3TEc
+
+s3ADc
+
+Note the test is live - quippysdog will be listening for kafka topics.
+
+The plan is ScriptScheduler will not execute all in s*. Each but the test object will be commented out
+(as it was first done).
+
+so, comment out all but s12Initial and begin.  plenty of refactoring availible in scriptscheduler.
+
+The commenting out, rejeim, one by one so that java -jar ZADScripts.jar 2 19 1000 2 is compleated.
+
+The first testing is s12Initial.    java -jar ZADScripts.jar 2 7 1000 2
+
+Note:  need the lowdown on connection object persistance.  am creating one each time through the method.
+
+first error:  I do not think the topics are registered on kafka...
+
+[kafka-producer-network-thread | producer-1] WARN org.apache.kafka.clients.producer.internals.Sender - [Producer clientId=producer-1] Got error produce response with correlation id 641 on topic-partition S12-0, retrying (2147483620 attempts left). Error: NOT_LEADER_FOR_PARTITION
+[kafka-producer-network-thread | producer-1] WARN org.apache.kafka.clients.producer.internals.Sender - [Producer clientId=producer-1] Received invalid metadata error in produce request on partition S12-0 due to org.apache.kafka.common.errors.NotLeaderForPartitionException: This server is not the leader for that topic-partition.. Going to request metadata update now
+
+maybe zadscripts should send message to topic s12 instead of S12.
+
+
+log4j:ERROR Failed to rename [C:\Users\Aibes\kafka_2.13-2.5.0/logs/server.log] to [C:\Users\Aibes\kafka_2.13-2.5.0/logs/server.log.2020-09-10-13].
+log4j:ERROR Failed to rename [C:\Users\Aibes\kafka_2.13-2.5.0/logs/controller.log] to [C:\Users\Aibes\kafka_2.13-2.5.0/logs/controller.log.2020-09-10-13].
+
+
+and microsoft windows search indexer is busy why?
+
+
+leader_epoch=0,isr=[0],zk_version=0,replicas=[0],adding_replicas=[],removing_replicas=[],is_new=false,_tagged_fields={}}],_tagged_fields={}}],live_leaders=[{broker_id=0,host_name=LAPTOP-PABEKNK7.mshome.net,port=9092,_tagged_fields={}}],_tagged_fields={}} (kafka.server.KafkaApis)
+java.io.IOException: The requested operation cannot be performed on a file with a user-mapped section open
+        at java.io.RandomAccessFile.setLength(Native Method)
+
+
+020-09-10 16:42:56.328+0000 ERROR id:32 - 0 ms: 0 B - embedded-session		neo4j -  - CALL dbms.cluster.role($database) - {database: 'neo4j'} - runtime=null - {} - There is no procedure with the name `dbms.cluster.role` registered for this database instance. Please ensure you've spelled the procedure name correctly and that the procedure is properly deployed.
+
+RETURN lines - {1: '7', 2: '7', 3: '1000', 4: '2', 5: '2', 6: '2', 7: '4'} - runtime=pipelined - {} - Can't coerce `NO_VALUE` to String
+2020-09-10 17:52:53.010+0000 INFO  Query started: id:4350 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	<none> - neo4j - CALL dbms.components() yield name,versions WITH * WHERE name="Neo4j Kernel" RETURN versions[0] AS version - {} - runtime=null - {}
+2020-09-10 17:52:53.011+0000 INFO  id:4350 - 1 ms: 64 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	neo4j - neo4j - CALL dbms.components() yield name,versions WITH * WHERE name="Neo4j Kernel" RETURN versions[0] AS version - {} - runtime=pipelined - {}
+2020-09-10 17:52:53.016+0000 INFO  Query started: id:4351 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49236	server/127.0.0.1:7687>	<none> - neo4j - CALL db.labels() yield label return label - {} - runtime=null - {}
+2020-09-10 17:52:53.017+0000 INFO  id:4351 - 1 ms: 64 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49236	server/127.0.0.1:7687>	neo4j - neo4j - CALL db.labels() yield label return label - {} - runtime=pipelined - {}
+2020-09-10 17:52:53.019+0000 INFO  Query started: id:4352 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	<none> - neo4j - MATCH (n:`IndexedBy`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=null - {}
+2020-09-10 17:52:53.022+0000 INFO  id:4352 - 2 ms: 504 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	neo4j - neo4j - MATCH (n:`IndexedBy`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=pipelined - {}
+2020-09-10 17:52:53.024+0000 INFO  Query started: id:4353 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49236	server/127.0.0.1:7687>	<none> - neo4j - MATCH (n:`TwoSeqFactor`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=null - {}
+2020-09-10 17:52:53.026+0000 INFO  id:4353 - 1 ms: 196 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49236	server/127.0.0.1:7687>	neo4j - neo4j - MATCH (n:`TwoSeqFactor`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=pipelined - {}
+2020-09-10 17:52:53.028+0000 INFO  Query started: id:4354 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	<none> - neo4j - MATCH (n:`VertexNode`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=null - {}
+2020-09-10 17:52:53.031+0000 INFO  id:4354 - 2 ms: 412 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	neo4j - neo4j - MATCH (n:`VertexNode`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=pipelined - {}
+2020-09-10 17:52:53.033+0000 INFO  Query started: id:4355 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49236	server/127.0.0.1:7687>	<none> - neo4j - MATCH (n:`Evaluate`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=null - {}
+2020-09-10 17:52:53.034+0000 INFO  id:4355 - 1 ms: 196 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49236	server/127.0.0.1:7687>	neo4j - neo4j - MATCH (n:`Evaluate`) WITH n LIMIT 1000 UNWIND keys(n) as key RETURN collect(distinct key) as keys - {} - runtime=pipelined - {}
+2020-09-10 17:52:53.036+0000 INFO  Query started: id:4356 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	<none> - neo4j - CALL dbms.functions() YIELD name, signature
+
+
+2020-09-10 18:24:53.264+0000 ERROR id:63 - 27 ms: 0 B - embedded-session		neo4j -  - UNWIND $events AS event CREATE (aN:ArgumentsNode { TDegree:event.TTDegree, TScalar:event.TTScalar, TDivisor:event.vDivisor, ADivisor:event.vvDivisor, ATwoSeq: CASE WHEN line.vvTwoSeq IS NULL THEN "0" ELSE line.vvTwoSeq END                                                            - {events: [{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '2', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '1', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '2', TTScalar: '1', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '0', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '997002', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '0', TTScalar: '997002', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-998', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-998', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-999', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-999', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-999', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-999', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-1000', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-1000', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '2', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '1', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '2', TTScalar: '1', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '2', degreeSum: '0', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '999000', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '0', TTScalar: '999000', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-2000', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-2000', p2Eval: 99, vTwoSeq: '2', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '0', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '1998000', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '0', TTScalar: '1998000', p2Eval: 99, vTwoSeq: '2', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-1998', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-1998', p2Eval: 99, vTwoSeq: '2', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '2', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '2', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '2', TTScalar: '2', p2Eval: 99, vTwoSeq: '2', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '0', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '8', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '0', TTScalar: '8', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '2', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '1', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '2', TTScalar: '1', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-997', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-997', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-998', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-998', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '0', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '995006', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '0', TTScalar: '995006', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '2', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '1', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '2', TTScalar: '1', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-998', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-998', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '1', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '-999', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '1', TTScalar: '-999', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}{vvScalar: <null>, iM: '1000', vvDivisor: '2', iN: '3', degreeSum: '0', AADegree: <null>, vDivisor: '2', AAScalar: <null>, resultDivisor: '2', scalarProduct: '997002', writeDimension: '4', vvTwoSeq: <null>, pD: '1', TTDegree: '0', TTScalar: '997002', p2Eval: 99, vTwoSeq: '1', vvDegree: <null>}]} - runtime=null - {} - Unexpected end of input: expected whitespace, comment, '.', node labels, '[', '^', '*', '/', '%', '+', '-', "=~", IN, STARTS, ENDS, CONTAINS, IS, '=', '~', "<>", "!=", '<', '>', "<=", ">=", AND, XOR, OR, ',' or '}' (line 1, column 282 (offset: 281))
+2020-09-10 18:25:02.420+0000 INFO  Query started: id:64 - 0 ms: 0 B - bolt-session	bolt	neo4j-javascript/0.0.0-dev		client/0:0:0:0:0:0:0:1:49499	server/0:0:0:0:0:0:0:1:7687>	<none> - neo4j - 
+
+
+
+
+2020-09-10 17:52:53.040+0000 INFO  id:4356 - 3 ms: 87680 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	neo4j - neo4j - CALL dbms.functions() YIELD name, signature
+RETURN name 
+ORDER BY name ASC - {} - runtime=pipelined - {}
+2020-09-10 17:52:53.046+0000 INFO  Query started: id:4357 - 0 ms: 0 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	<none> - neo4j - UNWIND range(toInteger($1),toInteger($2)) AS n
+WITH toString(n) AS N, $3 as nMax
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=$4 AND t.twoSeq=$5 
+WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension=$6
+WITH
+'1'  AS pDivisor, 
+'2' AS pDimension,
+'2' AS vDivisor,
+tt.twoSeq AS vvTwoSeq,
+ee.Value AS eeValue,
+'2'  AS vvDivisor,
+iN,
+'4' AS iDimension,
+iM,
+t.twoSeq AS vTwoSeq,
+v.Degree AS vDegree,
+vv.Degree AS vvDegree,
+v.Scalar AS vScalar,
+vv.Scalar AS vvScalar,  
+toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+WITH
+iN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD
+CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+
+With {iN:iN,iM:iM,pD:pD,vTwoSeq:vTwoSeq,vvDegree:vvDegree,vvScalar:vvScalar,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:vvTwoSeq,p2Eval:p2Eval,
+       TTScalar:TTScalar,AAScalar:AAScalar,TTDegree:TTDegree,AADegree:AADegree,
+       degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+       scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+       resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+       writeDimension:$7} as lines
+RETURN lines - {1: '7', 2: '7', 3: '1000', 4: '2', 5: '1', 6: '2', 7: '4'} - runtime=null - {}
+2020-09-10 17:52:53.048+0000 ERROR id:4357 - 2 ms: 6788 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:49235	server/127.0.0.1:7687>	neo4j - neo4j - UNWIND range(toInteger($1),toInteger($2)) AS n
+WITH toString(n) AS N, $3 as nMax
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=$4 AND t.twoSeq=$5 
+WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension=$6
+WITH
+'1'  AS pDivisor, 
+'2' AS pDimension,
+'2' AS vDivisor,
+tt.twoSeq AS vvTwoSeq,
+ee.Value AS eeValue,
+'2'  AS vvDivisor,
+iN,
+'4' AS iDimension,
+iM,
+t.twoSeq AS vTwoSeq,
+v.Degree AS vDegree,
+vv.Degree AS vvDegree,
+v.Scalar AS vScalar,
+vv.Scalar AS vvScalar,  
+toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+WITH
+iN,iM,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  *****    vTwoSeq as pD
+CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+     toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+     toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+
+With {iN:iN,iM:iM,pD:pD,vTwoSeq:vTwoSeq,vvDegree:vvDegree,vvScalar:vvScalar,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:vvTwoSeq,p2Eval:p2Eval,
+       TTScalar:TTScalar,AAScalar:AAScalar,TTDegree:TTDegree,AADegree:AADegree,
+       degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+       scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+       resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+       writeDimension:$7} as lines
+RETURN lines - {1: '7', 2: '7', 3: '1000', 4: '2', 5: '1', 6: '2', 7: '4'} - runtime=pipelined - {} - Can't coerce `NO_VALUE` to String
+
+
+
+maybe streams.sink.topic.cypher.s12 is bugged.
+there are line. instead of event. present in the script.
+these errors are to be removed.
+
+maybe have to refactor s12.  
+make it create merge merge instead of present form (rater convoluted).
+
+note neo4j.conf is a first class citizen and need usb archive presence.
+
+[2020-09-10 18:50:59,788] INFO [Log partition=neo4j-0, dir=C:\tmp\kafka-logs] Recovering unflushed segment 0 (kafka.log.Log)
+
+streams.sink.topic.cypher.s12=CREATE (aN:ArgumentsNode { TDegree:event.TTDegree, TScalar:event.TTScalar, TDivisor:event.vDivisor, ADivisor:event.vvDivisor, ATwoSeq: CASE WHEN event.vvTwoSeq IS NULL THEN "0" ELSE event.vvTwoSeq END, ADegree: CASE WHEN event.AADegree IS NULL THEN "0" ELSE event.AADegree END,AScalar: CASE WHEN event.AAScalar IS NULL THEN "0" ELSE event.AAScalar END, DegreeSum:event.degreeSum, ScalarProduct:event.scalarProduct, ResultDivisor:event.resultDivisor }) \ 
+Merge (cl:CollectedProductArgNode {Dimension:event.writeDimension,MaxN:event.iM,N:event.iN,Divisor:event.pD,afe:event.p2Eval,tft:toInteger(event.vTwoSeq)}) \
+CREATE (cl) - [:Arguments] -> (aN) 
+
+9/11
+
+        "With {iN:iN,iM:iM,pD:pD,vTwoSeq:vTwoSeq,vvDegree:vvDegree,vvScalar:vvScalar,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN \"0\" ELSE vvTwoSeq END,p2Eval:p2Eval,\n" +
+        "       TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN \"0\" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN \"0\" ELSE AADegree END,\n" +
+        "       degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,\n" +
+        "       scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,\n" +
+        "       resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,\n" +
+        "       writeDimension:?} as lines\n" +
+
+//        "WITH line, CASE WHEN line.AAScalar IS NULL THEN \"0\" ELSE line.AAScalar END AS AAScalar,CASE WHEN line.AADegree IS NULL THEN \"0\" ELSE line.AADegree END AS AADegree,CASE WHEN line.vvTwoSeq IS NULL THEN \"0\" ELSE line.vvTwoSeq END AS vvTwoSeq \n" + 
+
+
+{"vvScalar":null,"iM":"1000","vvDivisor":"2","iN":"2","degreeSum":"0",    
+"AADegree":null,
+"vDivisor":"2",
+"AAScalar":null,
+"resultDivisor":"2","scalarProduct":"6","writeDimension":"4","vvTwoSeq":null,"pD":"1","TTDegree":"0","TTScalar":"6","p2Eval":99,"vTwoSeq":"1",
+"vvDegree":null}
+
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 201
+
+
+quippysdog does need a config.heap adjusted.
+
+  
+
+
+
+9/12
+
+something zeppelin can do:
+
+> bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+
+From yesterday, still a way to delete IndexedBy nodes...   forever is the wrong idea.
+
+and want to run again twopolygeneratK.
+and look more closely at the s12 topic script.
+
+or can create a new database....  -  and save the cleanup to web day. 
+
+dependent types
+
+9/13
+
+the central maven repository - the one mentioned at the top of POM?  there are many and otherwise either consider the local maven repostory or the central 
+maven repository.
+
+
+mvn install command is simply locating the jar file in a maven directory?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+white cedar shingles.
+
+
+above first floor.
+
+
+
+

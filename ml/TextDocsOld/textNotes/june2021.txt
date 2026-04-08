@@ -1,0 +1,1960 @@
+
+
+6/1
+
+https://towardsdatascience.com/neural-network-embeddings-explained-4d028e6f0526
+
+"embedding"  
+
+In the context of neural networks, embeddings are low-dimensional, learned continuous vector
+representations of discrete variables.
+
+one hot encoding:
+
+dimension of transformed variabe becomes unmanageable.
+
+The second problem is equally limiting: one-hot encoding does not place similar entities closer to
+one another in vector space. If we measure similarity between vectors using the cosine distance,
+then after one-hot encoding, the similarity is 0 for every comparison between entities.
+
+cosine distance
+
+have embedding -  feed it into downstream ml task.
+
+https://stellargraph.readthedocs.io/en/stable/demos/node-classification/graphsage-node-classification.html
+
+https://colab.research.google.com/github/stellargraph/stellargraph/blob/v1.2.0/demos/link-prediction/graphsage-link-prediction.ipynb#scrollTo=fqF18KbyAzCX
+
+https://colab.research.google.com/github/stellargraph/stellargraph/blob/v1.2.0/demos/link-prediction/homogeneous-comparison-link-prediction.ipynb#scrollTo=Bbm6PiMK-3GN
+
+file:///C:/Users/Aibes/Downloads/Probability%20for%20Statistics%20and%20Machine%20Learning_%20Fundamentals%20and%20Advanced%20Topics%20(%20PDFDrive%20).pdf
+
+6/2
+
+
+Node classification is based on logistic regression.
+
+L2 norm is used as a penalty  - to ensure that the model is not overfitting the data.
+
+
+https://machinelearningmastery.com/vector-norms-machine-learning/
+
+The L1 norm that is calculated as the sum of the absolute values of the vector.
+The L2 norm that is calculated as the square root of the sum of the squared vector values.
+
+
+https://neo4j.com/developer/graph-data-science/node-classification/
+
+does describe aggrigating properties from the predicate match into the relatum.
+did the same with getting wNum into Dnode.
+
+https://www.dlsi.ua.es/~mlf/nnafmc/papers/alquezar95algebraic.pdf
+
+6/3
+
+feature engineering
+
+
+
+
+basian information criterija.
+
+kernal trick support vector machine.
+
+goal make a prediction about the world given incomplete data
+
+labels   prediction target
+
+features known information to learn from
+
+training outpt  model weights/parameters
+
+serving online feature
+
+assuption  training and serving distribution is the same -consistency
+
+predict likelyness of surviving the titanic....  use these features....
+
+
+batch predictions streaming predictions.
+
+https://www.youtube.com/watch?v=zQEiwJqqeeA  databricks feature store.
+
+types of features
+
+transformation   - category encoding
+context features - weekday
+feature augmentation  - weather   
+
+feed ml model   -  prediction    
+
+outcome   item p purchase/user.
+
+to build a model, to predict crypto mining, for our team...
+
+which model to run/use for production.
+
+when to use f1 vs f2..
+
+shap plot
+
+For further discussion, we have to define two important measures: 
+Precision: the number of TP samples divided by all P samples (true and false), and 
+Recall: the number of TP divided by (TP+FN).
+
+
+
+Hence, the harmonic mean of the precision and the recall, also known as the F1 score, was proposed.
+
+
+
+feature store
+
+ofline feature online feature
+
+
+k nearest neighbors classifier.
+
+as in the iris dataset  4 coulumns petal/septal length/width - which are important.
+
+
+
+
+
+Principal Components Analysis (PCA) is a well-known unsupervised dimensionality
+reduction technique that constructs relevant features/variables through linear
+(linear PCA) or non-linear (kernel PCA) combinations of the original variables
+(features). In this post, we will only focus on the famous and widely used linear
+PCA method.
+
+
+https://medium.com/geekculture/first-steps-before-applying-reinforcement-learning-for-trading-579a5b0299a1
+
+Ronald David Wood (born 1 June 1947)
+Charles Robert Watts (born 2 June 1941)
+
+
+Elizabeth Ann Senkus -added by.
+
+pauza
+
+Wife of John Priespilis
+Mother of Edward J. Pries
+Sister of Antanina Samolis; Theophile Navickiene; Jonas Pauza; Vincas Pauza; Benjaminas Pauza and 2 others
+
+
+https://www.geni.com/family-tree/index/6000000006977586470
+
+https://www.geni.com/family-tree/index/4090853074550023719
+
+6/4
+
+T. Scott Clendaniel
+
+big data -  back in the day.
+
+data science vs ai..
+
+identify problem
+
+business sponser  objective success criteria project plan timeline target variable definition reporting specs sighn off
+data preperation data inventory data quality review remove duplicates missing value review finalize eda file sign off
+data exploration  table statistics summary  univariate decision trees identify interation terms calculate scaling options historgram plots coliniarity testing sign off
+transform and select   class imbalance adjustment binarization quadratic plots dimension reduction transform testing norm sigmoid conversion sign off
+predictive modeling  gmm clustering cart/cs distributed evolutionary algorithms support vector machines convolutional neural networks lstm gradient boosting trees encoding sign off
+validate models  area under curve log loss avarage prediction f1 score recall vs prediction sign off
+deploy models  tbo sign off
+evaluate monitor results scoring times population stability report performance sign off
+
+Building training sets      2      *
+cleaning and organizing data 60    *
+collecting data sets 19            *
+mining data for patterns 9
+refining algorithms 4
+other 5
+
+all about feature engineering....\
+
+
+data better than clever algorithms.
+
+more variables than records???
+
+typical classification problem:
+
+the case when absolutly need to select a particular algorithm.  nothing else will do.
+
+otherwise lots of suitible modles if feature engineering done correctly.
+
+feature engineering done correctly - 
+
+
+break it down into a couple of objectives -  and how it applies to feature eengineering 
+
+objective 1 
+
+find the signal..  find the noise..
+but model may adapt to noise.
+
+objective 2   -  the big six - which is important.  -the statiticians bar fight.
+
+handle outliers
+missing values
+input scaling
+dimension reduction   the appropriate dimension for final analysis
+smothing 
+nulls 0's not a numbers...
+
+objective 3  simplification is important
+
+get an understanding of how you want to use your model first.
+work backward from those constraints to create modeling strategy.
+]
+Tip 1 craft over process.
+    2 try to simplify relationships to either binary flags or straight lines.
+    3 automate continuous variable transformations for testing.
+    4 consider ensembling individual engineered features -  each feature can be its own mini model.
+      what transformation can we apply to an individual variable as if it was a model of that variable.
+       heck -  80% of the variables will be thrown out.
+    5 use target mean encoding for categorical inputs  a technique not an algorithm
+    6 replace traditional binning with decision trees.
+      bin a continuous variable vs tree  
+    7 leverage random forests in two ways: feature importanse, indifidual trees as engineered 
+      features.
+    8 consider binning 0 values separately in monetary values.
+       - zero as a flag, not a continuous variable.
+    9 desision trees for "pultting it all together".
+
+
+
+What is the reason production failure rate is high.  data science team is seperate 
+from implementation team.  they wander off  for six months... lose relevance.
+
+if you want to build models with ease...  use decision trees.
+
+
+supervised vs unsupervised- same/different????
+can use unsupervised learning to learn about the dataset before feature engineering.
+
+ run an ensemble of varible  -  is this not just dimension reduction?
+ no-  consider each feature as a model.  just knocking variables out maybe.
+      take variables with high corrolation and throw out the rest.
+
+
+data leakage--  
+
+is time series data different-  smoothing important.  data preperation for data mining  pdf is fantastic.
+
+"ive bin down that histogram"  
+
+sparse high dimensional comma seperated features.  support vector machine.
+
+if you have to run unsupervised algo on data set and does not produce clusters...
+is it correct need to do feature engineering to improve results...
+probably means don't have enough dispersed data.
+
+from 7 - does the node become a binary classifier?  can create a catigorical variable.
+
+more about the tree transforming a continuous variable into a catigorical variable.
+
+control the depth of the tree.  assigne minimum number for in node.
+
+a,b,c,d,e furthest most left is a,...  then catigorical...
+
+identify stake holders before start....
+
+take network and somehow imbed in lower dimension embedding space.
+so that similar nodes get mapped closer together.  --  learn this mapping function.
+the position in the mapping somehow reflects the position in the graph.
+
+somehow the similarity,  what ever that realy means
+say just a dot product so cosine similarity.  not fancy
+
+encoding node is fancy.
+
+
+so  
+
+   encoder- mak a node to low dimensional vector
+
+   similarity function defines how relationships in the input network map to 
+   relationships int the embedding space.
+
+
+   similarity of nodes in network  approx dot product between node embeddings.
+                                          (angle between to vectors)  -could be euclidiean
+
+   seems need to define learn the similarity function.
+
+shallow encoders  lec 09: 10/23
+
+embedding matriz -  rows each representing the embedding vector for a specific node.  one
+  column per node.
+
+one layer embedding...   coordinates of nodes   such dot product of encoding = similarity of network
+
+number of parameters = number of nodes...
+no sharing of parameters between nodes 
+every node has its own unique embedding.
+thus inherently transductive    cannot generate embeddings for nodes that are not seen during training.
+thus every network must have its own embedding computed.
+ 
+do not incoporate node features.   but want to leverage features.
+
+spectral clustering,  finding eigen vectors..  of the graph laplacian.  embedding very specific 
+to finding clusters.
+the objective function is finding clusters.
+
+if the task is clustering the embedding should obey clustering,  if the task is link prediciton
+the embedding should obey link prediction.
+
+from shallow    embedding lookups   
+
+to deep encoding
+ 
+multiple layers of non-linear transformations of graph structure.
+note all deep encoders can be combined with node similarity functions defined in the last lecture.
+
+
+so graph    graph convolutions           regularization eg dropout    graph convolutions
+               nodes           activation function                      nodes            output: node embeddings 
+                           
+output node embeddings   als can embed larger network structures,,, subgraphs... graphs...
+
+the above is challenging..
+
+but to date can process fixed size grid graphs   (images).
+
+for text and speech -- line graph
+
+but networks....  
+  no fixed node ordering or reference point   not clear what is top left, top right...
+  often dynaic,, multimodal features.
+
+Idea convolutional network - have two d image and slide the operator.
+   
+goal is generalize convolutions beyond simple lattices...   levarage node features/attributes (text, image)
+
+so with complex graph...  how to describe  the "sliding function"  over portions of the graph?
+
+
+so have yea old adjacency matrix along with a feature matrix  yes no feater 1, yes no feature 2  
+feature matrix is a row matrix.
+
+so take whole row and add it to   so it is fixed size, just add it to network.
+but is a terrible idea.
+
+so n nodes n rows to train on.  and plenty of parameters, more that data points to train on....
+will not work on 6 nodes graph.
+
+wher to add additional node.
+and ording change thus imputs change  and more confusion.  point is graphs are invariant to node ordering.
+
+
+So:
+
+1 baiscs of deep learning for graphs
+2 graph convolutional networks
+3 graph attention netwroks (gat)
+4 practical tips and demos
+
+
+
+local network neighborhoods:
+
+describe aggregation strategies
+
+define computation graphs
+
+stacking multiple layers:  
+
+describe the model parameters, training
+
+how to fit the model
+
+simple example for unsuperviesd and supervised training.
+
+assume graph g
+
+v is vertex set
+a adjacency matrix
+x in r (mx|v|)  matrix of node features
+
+capture neighborhood structure along with node information instead of simply the node itself.
+
+key idal generate node embeddings based on local netwrok neighborhoods.   -  simple see slide.
+not depth concept-  a few hops is sufficient for capturing graph... because don't want to aggrigate over
+entire network.
+
+note the neural network is responsible for capturing information from network.
+and also order invariant....
+
+so every node has it's owne neural network architecture.
+
+so fixed arbitrary depth neural network   layer zero embedding of nodu u is imput feature x_u.
+layer k embedding gets information from nodes that are k hops away.
+
+
+...
+...
+
+average neighbor messages and apply a neural network...
+
+z_v the embedding of not    and have hop h information for v at node k.
+
+the embedding formula is on the slide....  and it is trying to learn two trainable weight matrices..
+
+so need to define the loss function...
+
+learn how to combin node neighbors properties with particular node's properties...
+
+and run stochastic gradient descent to train weight parameters.
+
+
+
+6/7  - continue from friday.
+
+
+one weight parameter per layer... 3 layers 3 weight parameters....
+
+note:  the embedding formula from video.
+
+the unsupervised loss function...
+
+Supervised...  directly train for supervised task mode classificaion/link prediction
+try to write out entire loss function 
+
+cross entropy loss, basicly node classification loss
+
+1. define a neighborhood aggregation function
+2. define a loss function on the embeddings
+
+can train the model on subset of graphs..
+
+
+are assuming parameter sharing
+so can generate embeddings on nodes not trained on.
+
+need to get back to the weighs equation w and b at about 39:00 or so.
+
+works because total number of parameters is independent of graph size (sub liniar something or other)
+
+so new node... create the computation graph
+so graph to big to train on....
+
+node2vec and deepwalk...  cannot generalize across graph.
+
+recap   generate node embeddings by aggregating neighborhood information....
+
+next describe graphsage graph neural network architecture.
+
+next describe graphsaage graph neural network architecture...
+
+"the more decadent you want embedding to be"  as in how many hops...
+
+
+gcn paper 2 years old.
+
+
+
+key idea  - generate node embeddings based on local network neighborhoods.
+            nodes aggregate messages from their neighbors using neural networks
+
+Graph Convolutional Neural Networks:
+     basic variant:  Average neighborhood information and stack nueural networks
+
+GraphSAGE
+    generalized neighborhood aggregation.
+
+
+
+
+so,  mentiond how to encode graph/graph subset
+
+now how to decode graph/graph subset..
+
+Problem of graph generation
+
+given a lage greal graph   generate a synthetic graph
+
+what is a good model?
+how can we fit the model and generate the graph using it?
+
+Important because:
+Generatoin - gives insight into the graph formation process
+anomaly detectiono - abnormal behavior, evolution
+predicitions  - predicting future from the past
+simulations ofnovel graph structures
+graph completion may graps are partially observed
+what if??? scenarios.
+
+
+quick summary of Graph RNN
+
+   Generate a graph by generatng a two level sequences
+luse RNN to generate the sequences.
+
+Next makeing GraphRNN tractable, proper evaluation.   
+
+sequences of sequences....   Node level RNN    
+                             Edge level RNN
+
+GNN:  state of the art at node classification
+                          graph classification
+                          link prediction.
+
+
+the uniform input node feature for graph simmilarty....  GCN and GraphSage will fail
+
+gnn are not robust to nose in graph data...
+
+1 node feature perturbation.
+2. edge addition/deletion.
+
+rethinking the mechanism of how gnn s capture graph structure.
+
+
+neighbor aggregation is essentially a function over multi-set (set with repeating elements)
+
+
+
+recall:  GCN uses mean pooling
+          mean pooling + linear ReLU.
+
+        it will fail to distinguish proprotionally equivalent multi-sets...
+
+
+GraphSage and
+the MLP - multiLinear perceptron 
+          + Max pooling.
+
+          it will fail to distinguish multiset with same distinct elements.
+
+
+
+       phi ( sum  f(x)  )   f a non linear function
+
+  can model phi and f using multi layer perceptron     a universal approximator.
+
+
+The Graph isomorphism network (GIN)
+
+instead of using mean or max pooling can use sum pooling  
+
+
+gnn vulnarity of noise....
+
+
+A hat... normalized adjacency matrix.
+
+
+
+6/8
+
+
+Part of the craft.  Along with columns of zeros starting at triag_0.
+Want to test for p with yea old p has roots at x,y,z,...
+
+
+  
+6/9
+
+junior parker
+
+data science vs ai..
+
+Data Science is a comprehensive process that involves pre-processing, analysis, visualization and prediction. On the other hand, 
+AI is the implementation of a predictive model to forecast
+future events. Data Science comprises of various statistical techniques whereas AI makes use of computer algorithms.
+
+
+identify problem
+
+business sponser:  objective success criteria project plan timeline target variable definition reporting specs sighn off
+data preperation: data inventory data quality review reove duplicates missing value review finalize eda file sign off
+data exploration:  table statistics summary  univariate decisioin trees identify interation terms calculate scaling options historgram plots coliniarity testing sign off
+transform and select:   class imbalance adjustment binarization quadratic plots dimension reduction transform testing norm sigmoid conversion sign off
+                        https://towardsdatascience.com/practical-tips-for-class-imbalance-in-binary-classification-6ee29bcdb8a7 
+                        training set and validation set have similar ratio of classes.
+predictive modeling:  gmm clustering cart/cs distributed evolutionary algorithms support vector machines convolutional neural networks lstm gradient boosting trees encoding sign off
+validate models:  area under curve log loss avarage prediction f1 score recall vs prediction sign off
+deploy models:  tbo sign off
+evaluate monitor: results scoring times population stability report performance sign off
+
+Building training sets      2      *
+cleaning and organizing data 60    *
+collecting data sets 19            *
+mining data for patterns 9
+refining algorithms 4
+other 5
+
+Tip 1 craft over process.
+    2 try to simplify relationships to either binary flags or straight lines.
+    3 automate continuous variable transformations for testing.
+    4 consider ensembling individual engineered features -  each feature can be its own mini model.
+      what transformation can we apply to an individual variable as if it was a model of that variable.
+       heck -  80% of the variables will be thrown out.
+    5 use target mean encoding for categorical inputs  a technique not an algorithm
+    6 replace traditional binning with decision trees.
+      bin a continuous variable vs tree  
+    7 leverage random forests in two ways: feature importanse, indifidual trees as engineered 
+      features.
+    8 consider binning 0 values separately in monetary values.
+       - zero as a flag, not a continuous variable.
+    9 desision trees for "pultting it all together".
+
+
+
+And remember stohastic char recog.   A distribution of Basian P's.
+
+https://towardsdatascience.com/target-encoding-and-bayesian-target-encoding-5c6a6c58ae8c  - does mention the SCR distribution.
+
+The AM:
+
+encode the catagories:
+this approach often leads to overfitting
+it is possible to develop regularization techniques and achieve good generalization for this approach. 
+
+encoding techniques, for example, one-hot encoding and ordinal encoding
+Ordinal encoding is not able to extract useful information from the categorical variable. One-hot 
+encoding generates too many features for high cardinality categorical variables and also tends to produce poor results.
+
+
+https://www.analyticsvidhya.com/blog/2018/04/fundamentals-deep-learning-regularization-techniques/
+
+What is Regularization?
+How does Regularization help in reducing Overfitting?
+Different Regularization techniques in Deep Learning
+
+    L2 and L1 regularization
+    Dropout
+    Data augmentation
+    Early stopping
+
+Regularization is a technique which makes slight modifications to the learning algorithm such that
+the model generalizes better. This in turn improves the model’s performance on the unseen data (test) as well.
+(underfitting/overfitting/just right)
+
+in machine learning, you will have a fair idea that regularization penalizes the coefficients.
+In deep learning, it actually penalizes the weight matrices of the nodes.
+
+L2 & L1 regularization
+L1 and L2 are the most common types of regularization. These update the general cost function by adding
+another term known as the regularization term.
+Cost function = Loss (say, binary cross entropy) + Regularization term
+
+Here, lambda is the regularization parameter. It is the hyperparameter whose value is optimized for better results.
+
+Dropout
+At every iteration, it randomly selects some nodes and removes them along with all of their incoming and 
+outgoing connections as shown below.
+It can also be thought of as an ensemble technique in machine learning. 
+
+This probability of choosing how many nodes should be dropped is the hyperparameter of the dropout function. 
+
+Data Argumentation
+The simplest way to reduce overfitting is to increase the size of the training data. In machine learning, 
+we were not able to increase the size of training data as the labeled data was too costly.
+
+Early stopping
+Early stopping is a kind of cross-validation strategy where we keep one part of the training set as the 
+validation set. When we see that the performance on the validation set is getting worse, we immediately 
+stop the training on the model. This is known as early stopping.
+
+Patience denotes the number of epochs...  - A hyperparameter.
+
+Note though -  ZAD does not increment highest degree term (HDT).  Maybe importand inclusion in lattice.
+
+Have S0423210 graph.
+
+Business Sponsor:  The question is Node defined/UnderDefined?
+
+Data preperation:
+
+ZAD writes to graphDB.  Algorithm explained in YouTube.
+The graph is a geometric lattice with each node representing a p in differences P_stock.
+The p at node_v is characterized by root set and determined/underdetermined binary classifier and
+a mu number.  The mu number though is constrained to highest degree of P_stock. -verify this.
+
+Data exploration:
+
+The lattice path from root (a constant term) to leaf has max length HDT P_stock.
+Each node node_l, l in lattice path. is a p in degree l.  
+
+Does the collection of nodes_l:
+
+. Complete the power set for p of degree l?
+. At least complete the mu set (weak) for p of degree l?
+
+Does the collection of nodes in lattice
+
+. Complete the power set for p of degree l?
+. At least complete the mu set (weak) for p of degree l?
+
+Note: 
+There is a strong and week definition of complete mu set.
+Weak: mu(n,d) for all n in d is represented at least once.
+Strong: every mu in iteration of d set is represented.
+
+The pm lab:
+
+Get data to answer above.
+Looks like GraphicZero approach: dedicated workbook with DFScripts methods.
+
+ML basics for graph generation
+graphrnn
+applications and open questions
+
+Current Project View:
+
+Looks like 5/12 last worked with MLGraph.
+
+ZerosAndDifferences set to run fractionintegerdriverIterate.
+Big effort:
+. Need to close up ZAD into a jar.
+. pArray needs a parcing.
+  For appending to ZADGraph.
+  Maybe for data exploration.
+
+
+Neo4j Project2 folder:
+Stock042321Graph is Active and is the differenced 1x^5.
+FractionIntegerDriverIterate is a collection of mu numbers.
+MLGraph1 are TwoPolynomials.
+
+The new workbook series - Differences.
+
+NoteBook1 DifferencesDataExploration
+
+RECALL: 
+ZADScrips is the package equiped with classes and methods responsible 
+for generating and querring twoPolynomials and their higher degreed analoges.
+A new package differenceScripts is for classes and methods querring DifferenceGraph.
+
+
+differenceScripts gets a class diffScripts with querry methods firstly to
+facilitate the Data Exploration tasks.
+
+
+From May:
+
+MATCH (d:Dnode), (k:CreatedBy)
+
+MERGE  (d)-[ee:CreatedBye]->(k)
+
+The meaning is determined=1 is determined determined=0 is under determined.
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:0})
+WITH  CASE WHEN k.wNum=0 THEN CASE WHEN d.totalZero=5 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:1})
+WITH  CASE WHEN k.wNum=1 THEN CASE WHEN d.totalZero=4 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+ 
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:2})
+WITH  CASE WHEN k.wNum=2 THEN CASE WHEN d.totalZero=3 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin 
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:3})
+WITH  CASE WHEN k.wNum=3 THEN CASE WHEN d.totalZero=2 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:4})
+WITH  CASE WHEN k.wNum=4 THEN CASE WHEN d.totalZero=1 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:5})
+WITH  CASE WHEN k.wNum=5 THEN CASE WHEN d.totalZero=0 THEN 1 ELSE 0 END ELSE 2 END as determin,d,k
+SET d.determined=determin
+RETURN d.totalZero,k.wNum,determin
+
+Need wNum on dNode
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:0})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:1})
+SET d.wNum=k.wNum
+RETURN d.wNum
+ 
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:2})
+SET d.wNum=k.wNum
+RETURN d.wNum 
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:3})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:4})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:5})
+SET d.wNum=k.wNum
+RETURN d.wNum
+
+MATCH (d:Dnode {wNum:3} )
+RETURN d
+
+Today's scriplts:
+
+Note about DiffDFScripts:  class constructor opens connection.  Need to call .closeConn explicitly.
+  about ScriptAutomation:  all methods end with gc.            
+
+wNum is Integer type.
+vMResult is unique.
+
+Note: MATCH (d:Dnode)-[ee:CreatedBye]->(k:CreatedBy {wNum:3})  
+CAN take advantage of k having index on wNum.  --  maybe make sure this index is used.
+
+MATCH (n:Dnode {wNum:1}) RETURN n.d as denominator, n.n as numerator, n.wNum as wNum  
+
+call apoc.meta.data();   //  real cool.
+
+MATCH (n:Dnode {wNum:1}) RETURN n.d as denominator, n.n as numerator, n.wNum as wNum
+
+C:\Users\Aibes\JavaProjects\ZADScriptsK\ZADScripts\dist\ZADScripts.jar 
+
+The action can't be completed because the file is open in Java(TM) Platform SE binary.
+
+
+6/10
+
+ZADScripts contains
+package differenceScripts and contains
+public class DiffDFScripts with method
+public ResultSet wNumQ(int wNum) returning
+a result set for graphDB querry 
+"MATCH (n:Dnode {wNum:?}) RETURN n.d as denominator, n.n as numerator, n.wNum as wNum".
+
+The new series of notebooks Differences has it's first note
+DifferencesDataExplore.
+
+counter+=1 // Increments counter—Scala has no ++
+
+You saw the to method of the RichIntclass in Chapter 1. The call 1 to n returns aRange of the numbers from 1 to n (inclusive).
+
+does scala have an iterator?
+
+5.8Nested Classes L1In Scala, you can nest just about anything inside anything. You can define func-tions  inside  other  functions,  
+and  classes  inside  other  classes.  Here  is  a  simpleexample of the latter
+
+6/11
+
+and the nature of object QwNumQuery {...}'s args[] is...
+
+will proceed with two arg.  They are wNum and df name.
+
+have the dataframe.
+
+time for some aggrigation and pivoting....
+
+Each wNum needs count of rows
+                count of determined
+                count of underdetermined
+                set of numerators,denominators)
+
+graphicZero 7,8 aggrigate ungrouped
+
+the quadratics             
+
+9. GroupedScalarRowsSum Aggrigator (for scalars)
+
+need a dataframe group by denominator
+aggrigate numerators, remove duplicates
+
+do not need a custome aggrigater for group wnum agg determined undetermined.
+
+6/14 
+
+
+case class dNFields(denominator:Int,numerator:Int, wNum:Int,determined:Int)
+
+So the simple tabel wNum,count determined, count total.
+
+Have: 
+QwNumQuery.main(Array("5","wNumQuery0105"))  // note can drop the first arg[] and make robust query...
+
+Need to appended column with "1": rowArg for agg.  
+
+df1: pivot on wNum and sum determined.    
+df2: pivot on wNum and count rows.
+df3 unpivot and join.
+
+and maybe easier...
+df group by wNum sum determined, count rows.
+
+directional derivative:  with each partial derivative multiply through by corrosponding component
+                         of unit vector.
+
+gradient vector:  with each partial derrivative        
+
+directional derivative is dot product of gradient vector and unit vector.
+
+positive definate matricies form a cone.
+
+hilbert space is a vector space with inner product,
+innerproducts allow measurs of angles and distances.
+
+riemann manifolds:  can measure a curve length.
+
+https://www.youtube.com/watch?v=MtZV82LCNHc
+
+MATCH (d:Dnode {wNum:3} )
+RETURN d
+
+MATCH (d:Dnode {d:13} )
+RETURN d
+
+So, build a bigger graphDB.....
+
+and how to avoid disjoint subgraphs with different HD_Stock....  
+
+https://soundcloud.com/platz-fur-tanz/sets/intelligent-beats-show
+
+weiszfeld 
+
+kernal algos
+Rotation Averaging and Optimization on Manifolds
+
+6/15
+
+Want ZAD graph summary. 
+
+Is root power set complete?
+Is mu root set complete?
+What percentage of the power set is determined/under determined?
+
+Does the skip pattern reveal more root sets???
+
+LoopsDriverTwoPManager has int fIDI
+
+if -1 then noBufferRun with muListBoolean(all false) 
+if 0 then muQuerry  and if not empty noBufferRun with muListBoolen(skip list)
+
+Note: LoopsDriverTwoPManager does one muQuerry take and falls through.
+
+
+The ZAD jar accepts args[] composed of a TwoPolyNomial coordinate N,MaxN,D or null.
+
+https://stackoverflow.com/questions/67493235/neo4j-streams-fabric-integration-not-working-log-reports-the-use-graph-clau
+
+
+From 4/8:
+Latest narrative:
+
+LoopsMain instanciates two threads.  
+
+FractionIntegerDriverIterate is a thread defining
+sets representing mu numbers.  A FIDI mu set is characterized
+by the mu denominater.  Iterating across all numerators, for a range of
+denominators, compleates a FIDI run.  It is to note though,  when paired
+with LDTPM,  The interest is in the binary representation of mu, and not 
+the fraction itself.      
+
+LoopsDriverTwoPManager, the second thread, implements a Newton's difference 
+algorithm described in the video link.  Each iteration in a LDTPM defines a set
+of related P's each with determined/under determined sets of roots and the corrosponding
+mu number defined by the roots.  Each set of P's along with relevant root sets and mu number
+(in this case the mu fraction is significant) are written to the graph DB.     
+
+The simple iteration of LoopsDriverTwoPManager is not a complete description of the 
+difference space. It is not necessary to define a zero at a particular triag_i or for that matter
+a set of triag's.  FIDI's binary mu sets (a power set of permutations) provide masks LDTPM applys
+to thread iterations.  The P sets generated with masked iterations contribute the P space without
+changing the specified parameters of Newton's difference algorithm.
+
+Issues with FIDI and LDTPM integration:
+
+Out of memory crash.  
+The proposed remediation is uncouple the simultanious iterations.
+FIDI is to write to mlGraph a simple list of nodes representing its
+iteration output over a range of denominators.
+LDTPN can querry for nextMask pattern.
+
+Other issues:
+
+FIDI seeds the iteration with a simple monomial. It is paramiterized with
+"setProductRange" the furthest zero index to transform p.  PArray, the
+setProductRange record during iteration, is initialized to zero.    
+It needs to be able to append a prior iteration.  For a append setProductRange
+iteration, pArray must be predefined, not as a zeroed array, but with the 
+last complete setProductRange variable.  
+
+The Gauss reduction result of the difference p at triag_i is imprecise.  
+More to the point is implement the algebraic definition as P(x)-P(x-1).
+
+Of graphic interest is interConnected triag_i p's wholy defined.
+
+The sets are written to a buffer
+shared with LoopsDriverTwoPManager.  
+
+Runtime
+parameters numeratorHigh,denominator are hard coded.  FIDI writes
+to a buffer shared with LoopsDriverTwoPManager, also a thread.
+
+
+https://machinelearningmastery.com/types-of-learning-in-machine-learning/?fbclid=IwAR0hn9w5TgxJdFkTEFF_yY8pU8iKeexTAI3YvcIAD_YiHP0enTeNsuf1WbA
+
+
+6/16
+
+The goal is mlGraph for the ml library.
+
+Have DifferencesDataExplore note presenting determined/underdetermined and mu's available for ZAD seeded with p_stock = 1x^5. 
+
+Do know from vertical translate experiment a single p__stock argument will not map to a complete power set.
+Suspect though odd and even high degree term argument...
+
+FractionIntegerSet package has another task to perform.
+Or rather,  the data it generated for the Project2.FractionIntegerDriverIterate graph can be mined.
+Need psQuery returning power set for query argument.
+
+The typical project2.fractionintegerdriveriterate.muNode: 
+{"Value":"6","d":"4","size":2,"n":"2","nBinary":"[2, 2]"}  It needs another field.
+The size field represents the number of elements in nBinary.  Need a "size" field
+representing the binary word length nBinary encodes.  ZAD has a java method performing
+this task.  
+
+The outline:
+
+Write psQuery.
+Validate it with combinnations formula in psQuerryNote.
+
+Answer question "Does ZAD complete power set?"
+                "Does ZAD complete relevant mu Set?"
+Need a handfull of mlGraphs.  
+Seed with 1x^2,2x^2
+          1x^3,2x^3
+          1x^4,2x^4
+          1x^5,2x^5.
+
+
+
+
+GraphicFirstML.json           - Cypher scripts implementing Neo4j ML algorithms. 
+GraphicScrips.json            - Primary cypher scrips used for manipulating integer representing polynomials.
+GraphicZero.json              - Spark Scala notebook exibiting algebraic properties of generated polynomials.     
+GraphiZeroTheQuadratics.json  - Spark Scala notebook exibitiing properties of generated quadratics.
+KafkaStreamsTopics.json       - neo4j .conf scrips integrating kafka and neo4j
+
+ZADScripts.jar            - Generate arbitrary degreed polynomial starting with generated quadratics (uses Kafka).
+ZeroAndDifferences.jar    - Implement Newton's difference algorithm along with jdbc methods for populating graphDB.
+
+
+6:08  - 6:37
+
+https://www.youtube.com/watch?v=bjG4zJyK8AY
+
+6/18 download from ftp sight
+JFXApp 
+kmeans noaa data.
+the scala ml regression library.
+sinusoidal fit.
+
+
+
+    ob
+        21 applicants
+        Entry level
+    Company
+        201-500 employees
+        Logistics & Supply Chain
+    Connections
+        Stony Brook University
+        2 alumni
+
+Transfix, named to Forbes’ “Next Billion-Dollar Startups” list, is the leading transportation solutions provider whose digital brokerage marketplace and logistics software offerings are helping transform the $800 billion trucking industry. Since its founding in 2013, Transfix has been driven by a mission to deliver simple, smart, and sustainable solutions for shippers and carriers, powered by people and technology.
+
+By combining deep industry expertise and a best in class carrier network with cutting-edge technology, Transfix is reimagining the world of transportation. Fortune 500 companies such as Staples, Unilever, Target and Wayfair rely on Transfix to handle their most important FTL freight needs. With instant pricing, algorithmic matching, superior service, and unmatched intelligence, Transfix is optimizing the supply chain from start to finish. Come leave a positive impact on the environment as we help reduce the carbon footprint caused by the 65 billion wasted miles on the road.
+
+The problems we solve everyday are real and require creativity, grit, and determination. Recognized as one of Built In’s Best Places to Work 2021, Transfix is building a culture that challenges norms while fostering experimentation and personal growth. We’re hiring team members who are passionate and are energized by the vision to simplify and transform one of the largest and most complex industries through technology, data and a strong commitment to customers.
+
+We’re looking for an Associate to join our scaling Price & Growth Strategy Team. In this role, you’ll act as a key stakeholder on our top enterprise shipper accounts (Fortune 500 companies) and partner closely with cross functional teams and executives to help drive the future growth of Transfix. Your primary focus will be on owning the end-to-end account growth lifecycle through managing RFPs, driving customer engagement, and finding solutions to improve our margins. This is a great opportunity for someone looking to advance their career in business strategy at a fast-growing company.
+
+If you’re excited about transforming an industry, being part of an innovative culture, and making a positive impact on the environment, send us your resume.
+
+What You'll Do
+
+    Manage all pricing and drive growth strategy for your book of business, comprised of top enterprise shipper accounts
+    Partner closely with sales and account management to build both mid and long-term growth strategies by aligning customer goals with the solutions Transfix offers
+    Analyze our available carrier capacity to search for growth opportunities that align with our shippers freight networks
+    Continually look for new opportunities for growth through the execution of RFPs, Mini bids, and new lane opportunities
+    Lead and participate in client-facing meetings such as QBRs, pricing proposals, and strategic growth meetings
+    Perform data analysis to identify trends, draw key insights, and inform strategy & solutions through the use of Looker and Excel/Google Sheets
+    Collaborate with Data Science and Business Intelligence teams to gather more advanced insights into key customer and industry data
+    Partner with Product and Engineering to provide suggestions on improvements to our software and platforms
+
+Qualifications
+
+And Skills
+
+    2-4 in years in an Associate, Consultant, or Analyst role at either an investment banking/ consulting firm or a supply chain/logistics company
+    Bachelor's degree with a Finance, Business, Supply Chain, or STEM Major
+    Experience in customer acquisition and/or account growth strategies requiring cross functional partnership and alignment
+    Excellent written and verbal communication skills with ability to synthesize data into strategic business recommendations and tactics to both internal and external stakeholders
+    Advanced experience utilizing Excel and/or Google Sheets including the use of pivot tables and other advanced formulas
+    Experience with data visualization tools (Looker preferred)
+    Experience using Salesforce
+
+To all recruitment agencies: Transfix does not accept unsolicited agency resumes and will not be held responsible for any fees related to unsolicited resumes.
+Seniority Level
+
+Entry level
+Industry
+
+    Information Technology & Services Computer Software Internet 
+
+Employment Type
+
+Full-time
+Job Functions
+
+    Business Development Sales 
+
+Pay range unavailable
+
+Salary information is not available at the moment.
+Are you interested in salary information for this job? 
+
+
+https://www.youtube.com/watch?v=GuFV0_K1z-w
+https://www.youtube.com/watch?v=T8HpI4QkaoI
+
+
+6/21
+
+https://www.youtube.com/watch?v=o6FfdP2uYh4
+https://www.kdnuggets.com/2019/11/machine-learning-what-why-how-weighting.html
+
+because at the minimum the gradient is zero.
+
+gradiennt descent / newton startes with defining the sigmoind in terms of baysian conditional p's.
+
+a function of w and find the minimum....   the loss of w.
+
+
+that is, plot w vs loss of w 
+
+alpha has to be so small the taylor approximation holds...
+
+every dimension should have its owne learning rate.
+
+
+
+indeed keyworkds   data visualization, machine learning, databases.
+
+
+openhire.silkroad.com
+
+
+DifferencesDataExplore note queries Stock042321Graph.
+
+Do want queries written against FractionIntegerDriverIterate Graph.
+And will read all nodes into dataframe.  
+ 
+Note 
+
+public ArrayList<Integer> arrayStringToIntegerArrayList(String arrayString){
+    String removedBrackets = arrayString.substring(1, arrayString.length() - 1);
+    String[] individualNumbers = removedBrackets.split(",");
+    ArrayList<Integer> integerArrayList = new ArrayList<>();
+    for(String numberString : individualNumbers){
+        integerArrayList.add(Integer.parseInt(numberString.trim()));
+    }
+    return integerArrayList;
+}
+
+
+
+private Boolean validMu(ArrayList theList, int dimension) {
+    int size=0;
+    size=size+(int)theList.get(theList.size()-1)-1+theList.size();
+    if(size<dimension)
+    { return(true);}
+    else 
+    { return(false);}   
+}
+
+
+valueList=muQuerry();
+ 
+nBList=arrayStringToIntegerArrayList((String)valueList.get(0));
+
+Collections.reverse(nBList);
+
+{ if (validMu((ArrayList)nBList))
+
+
+And need another utility class in zadscripts with the two methods above...
+Is called NBinaryUtility.
+It contains the two methods arrayStringToIntegerArrayList(String arrayString)
+and                         validMu(ArrayList the list, int dimension).
+
+one more refactor...
+validMu should return size; not the boolean if size< dimension.
+
+
+6/22
+
+DifferencesDataExplore has case class muFields.
+Need case class muFieldsELength defined using  as udf.
+
+The argument in particular, String nBinary, a parameter for the
+java class arrayStringToIntegerArrayList is transformed into 
+java.util.ArrayList.  The returnd ArrayList is a parameter to 
+sizeMu and transformed into a java int.  
+
+
+so:
+
+   sizeMu(arrayStringToIntegerArrayList(mQuery.nBinary))
+
+
+https://www.youtube.com/watch?v=s53knJ0Sp1E
+
+
+DifferencesDataExplore note 
+
+Has Querries for the Differences graph
+             and the FID graph.
+
+
+pArray is bounded by 5 and 6... note maybe need some consistancy.
+                                     maybe can prune.
+
+Seems like want to argue pArray boundry = 5.
+
+And want to prove out the power set, the rational set.
+
+So,  FilterLength.main with length set to each 1,2,3,4,5.
+
+Each FilteredLenghtDF, one for each constant set in object FilterLength,
+
+schlitz...  Dnode needs refactor... And also ZAD.
+
+     Have TotalZero,N,D but not the NBinary list.....  Do need for proof.
+
+ 
+
+6/23
+
+Method setNumDen in LoopList is printing MuList.
+
+
+6/24
+
+
+descripting
+predictive
+inferential
+
+
+GaussBean1 needs Looplist.muList field
+Can be retrieved with Looplist.getmuList.
+
+LoopListener.appendMuBuffer needs to include muList on new GaussBean1 constructor.
+
+
+private void runLoopsDriver() muList extracted from GaussBean1 in the goCCyypher parameter list.  
+goCCypher needs muList on signature
+mergeVmResult need muList and needs including in querry.
+
+
+6/25
+
+MuList:   []
+resultListID 47008
+LoopListener.pArrayIncrement pre pArray .to string [1, 0, 0, 0, 0, 0] wNum: 0  rListIndex: 1
+                                                              PolynomialArray.incrementP   pArray:   [1, 0, 0, 0, 0, 0]
+                                                              PolynomiaArray.increment index:   0
+MuList:   [10]
+MuList:   []
+MuList:   []
+MuList:   []
+MuList:   []
+MuList:   []
+MuList:   []
+MuList:   []
+MuList:   []
+MuList:   [1]
+MuList:   []
+MuList:   []
+MuList:   [5]
+MuList:   []
+MuList:   [1, 1]
+MuList:   [1]
+MuList:   []
+MuList:   []
+MuList:   [1, 1, 1, 1]
+MuList:   [1, 1, 1]
+MuList:   [1, 1]
+MuList:   [1]
+MuList:   []
+MuList:   []
+MuList:   [1, 1, 1, 1]
+MuList:   [1, 1, 1]
+MuList:   [1, 1]
+MuList:   [1]
+MuList:   []
+MuList:   []
+resultListID 47009
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+
+ZAD notes:
+
+
+plvManager       - yea old twoPs.   This functionality is in a stand alone jar.
+zaddbTable1
+
+FractionIntegerDriverIterate  - yea old mu generator.  Demonstratible utility
+GaussTable1                   - in notebook.  Needs it's owne jar.
+
+
+
+
+LoopsDriverTwoPManager  -  Heart of ZAD.  This functionality does need jar 
+GaussTable1             -  packageing.  Many issues. 
+
+
+These two signatures look obsolete:
+
+//      LoopsDriverTwoPManager lDriver= new LoopsDriverTwoPManager(muList,muSem,loopsLogic,tl1Semaphore,dbVector11,figI,tl1Semaphore,dbVector11,true);  
+//       LoopsDriverTwoPManager lDriver= new LoopsDriverTwoPManager(muList,muSem,loopsLogic,t11Semaphore,dbVector11,figI,t11Semaphore,dbVector11,false); 
+
+Most current signature:
+
+LoopsDriverTwoPManager lDriver= new LoopsDriverTwoPManager(muList,muSem,loopsLogic,t11Semaphore,dbVector11,t11Semaphore,dbVector11,false);
+
+
+LDTPM has many hard coded run time parameters.
+
+fIDI<int>:
+
+-1:     noBufferRun((ArrayList)muListBoolean());                      -  Blank List for no skip in semaphore patter.
+
+0:   
+    Loop for evey node in skip graph.  Such node containe a lengthed mu number.  The graph containes a lengthed power set.
+    noBufferRun((ArrayList)muListBoolean((ArrayList)nBList));     -  List argumented with skip worker num booleans.
+
+
+Notes:
+
+ The list on the argument graph can be better defined.  A not valid list can be returnd and subsequently discarded. and not used.
+ The run method iterates once.  irrespective of nobufferrun boolean is true or false.  Must manually run ZAD untill 
+ auxillary graph empty.  
+
+
+noBufferRun(ArrayList theList):
+
+All these variables are hard coded: 
+
+dimension,maxFigPScalar
+,resultListId,setProductRange,dimension,integerRange,lbSetProductRange,pArrayResetValue,
+
+Note:  can args[] them all or set up project graph and querry values.
+
+   figPArray = new PolynomialArray(dimension,maxFigPScalar,true);
+   cashedFigPArray = new PolynomialArray(dimension,maxFigPScalar,true);
+   pArray = new PolynomialArray(dimension,TRUE);
+
+Note:  Need append to graph functionality.
+       Maybe, look up last resultID on graph can get latest graphed pArray that way.  
+       But otherwise...  how does cashedFigPArray work?????   -  loopListener is all things cashedFigPArray.  Though maybe no need to touch it.  
+
+
+gbList1.addPropertyChangeListener(new LoopListener(allrListB,dimension,rListB,gbList1,muList,muSem,Executors.newFixedThreadPool(rListB.size()),rListB.size(),pArray,moduloList,deltaList,ancestorlist,figPArray,pArrayResetFlag,cashedrListB,cashedPArray,
+cashedFigPArray
+,resultListId,noBufferRun));
+
+
+Callable worker = (Callable) new LoopsDriverTwoP(muList,muSem,loopsLogic,muSem1,muList1,tl1Semaphore,dbVector11,(PolynomialArray)figPArray.clone(),(PolynomialArray)cashedFigPArray.clone(),(PolynomialArray)pArray.clone(),nMaxx.intValue(),resultListId,setProductRange,TRUE,dimension,integerRange,lbSetProductRange,pArrayResetValue,theList);
+
+
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"m"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"wNum":0,"pArray":"[5, 6, 6, 6, 6, 0]","translateIndex":0,"resultId":│
+│63812,"pArrayIndexValue":0}                                           │
+├──────────────────────────────────────────────────────────────────────┤
+│{"wNum":1,"pArray":"[5, 6, 6, 6, 6, 0]","translateIndex":0,"resultId":│
+│63812,"pArrayIndexValue":0}                                           │
+├──────────────────────────────────────────────────────────────────────┤
+│{"wNum":2,"pArray":"[5, 6, 6, 6, 6, 0]","translateIndex":0,"resultId":│
+│63812,"pArrayIndexValue":0}                                           │
+├──────────────────────────────────────────────────────────────────────┤
+│{"wNum":3,"pArray":"[5, 6, 6, 6, 6, 0]","translateIndex":0,"resultId":│
+│63812,"pArrayIndexValue":0}                                           │
+├──────────────────────────────────────────────────────────────────────┤
+│{"wNum":4,"pArray":"[5, 6, 6, 6, 6, 0]","translateIndex":0,"resultId":│
+│63812,"pArrayIndexValue":0}                                           │
+├──────────────────────────────────────────────────────────────────────┤
+│{"wNum":5,"pArray":"[5, 6, 6, 6, 6, 0]","translateIndex":0,"resultId":│
+│63812,"pArrayIndexValue":0}                                           │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (n:CreatedBy)
+WITH min(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID}) <- [] - (d:Dnode)
+RETURN m,d
+
+
+╒══════════════════════════════════════════════════════════════════════╤══════════════════════════════════════════════════════════════════════╕
+│"m"                                                                   │"d"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╪══════════════════════════════════════════════════════════════════════╡
+│{"wNum":0,"pArray":"[0, 0, 0, 0, 0, 0]","translateIndex":0,"resultId":│{"vmResult":"[0.0, 14.999999999999893, -84.99999999999883, 224.9999999│
+│47001,"pArrayIndexValue":0}                                           │999955, -273.9999999999932, 119.99999999999659]","muList":"[]","d":0,"│
+│                                                                      │totalZero":1,"n":0}                                                   │ don't know this vmResult
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤ should be 1^5
+│{"wNum":1,"pArray":"[0, 0, 0, 0, 0, 0]","translateIndex":0,"resultId":│{"vmResult":"[0.0, 5.000000000000012, 9.999999999999854, 10.0000000000│
+│47001,"pArrayIndexValue":0}                                           │00558, 4.999999999999147, 1.0000000000004263]","muList":"[]","d":0,"to│
+│                                                                      │talZero":0,"n":0}                                                     │This vmResult is correct.
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│{"wNum":2,"pArray":"[0, 0, 0, 0, 0, 0]","translateIndex":0,"resultId":│{"vmResult":"[0.0, 20.0, 60.0, 70.0, 30.0]","muList":"[]","d":0,"total│
+│47001,"pArrayIndexValue":0}                                           │Zero":1,"n":0}                                                        │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│{"wNum":3,"pArray":"[0, 0, 0, 0, 0, 0]","translateIndex":0,"resultId":│{"vmResult":"[0.0, 60.0, 180.0, 150.0]","muList":"[]","d":0,"totalZero│
+│47001,"pArrayIndexValue":0}                                           │":0,"n":0}                                                            │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│{"wNum":4,"pArray":"[0, 0, 0, 0, 0, 0]","translateIndex":0,"resultId":│{"vmResult":"[0.0, 120.0, 240.0]","muList":"[]","d":0,"totalZero":1,"n│
+│47001,"pArrayIndexValue":0}                                           │":0}                                                                  │
+├──────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────┤
+│{"wNum":5,"pArray":"[0, 0, 0, 0, 0, 0]","translateIndex":0,"resultId":│{"vmResult":"[0.0, 120.0]","muList":"[]","d":0,"totalZero":0,"n":0}   │
+│47001,"pArrayIndexValue":0}                                           │                                                                      │
+└──────────────────────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────────────┘
+
+
+6/27
+
+with m,d as above, the first d is suspect.
+
+fixed initial differences....  a small carelessness 
+
+And once and for all.... which LoopsDriverTwop fields should be non-null (they are all defined in
+                                                                          constructor?)? 
+6/28
+
+Ensemble the skip pattern and below.
+
+A means to the end:
+
+The field variable   int setProductRange=4;
+
+And:
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+And the graph has a :configure node.
+
+int maxFigPScalar=1;   //  maxFigPScalar and dimension define the initial P for differencing.  
+int dimension=5;       //   the degree of polynomial
+int setProductRange=4; //  Geometric component of generated space.  EG:  dimension=4, setProductRange=4 implies node space of 4^4.   //  more so, algoritym transforms p into p' with root at s in spR differenced p_i. 
+integerRange=200;      //  sampled values of differenced p for determining mu, rootset.
+pArrayResetValue,      // PArrayResetListener uses this value in propertyChange event  as pArray.set(pIndex,pArrayResetValue);
+
+Three more variables need definition.
+
+int setProductRangeIncrement  // Is expected to be a multiple of setProductRange.  It chunks ZAD into memory manageable iterations.  // note overhead of configurating workers, initializing 
+int maxSetProductRange        //  setProductRangeIncrement until maxSetProductRange.
+int fIDI=-1;                  //  or 0...  for the skip pattern....
+
+From LoopsDriverTwoPManager
+
+Callable worker = (Callable) new LoopsDriverTwoP(
+muList,
+muSem,
+loopsLogic,
+muSem1,
+muList1,
+tl1Semaphore,
+dbVector11,
+(PolynomialArray)figPArray.clone(),
+(PolynomialArray)cashedFigPArray.clone(),
+(PolynomialArray)pArray.clone(),nMaxx.intValue(),
+resultListId,
+setProductRange,
+TRUE,
+dimension,
+integerRange,
+lbSetProductRange,    // Loop semaphores use this variable.  Think so that it can remain zero... maybe need observe for ok.
+pArrayResetValue,     // PArrayResetListener uses this value in propertyChange event  as pArray.set(pIndex,pArrayResetValue);
+theList               
+ 
+The graph :configure node fields:
+
+int maxFigPScalar=1;   //  maxFigPScalar and dimension define the initial P for differencing.  
+int dimension=5;       //   the degree of polynomial
+int setProductRange=4; //  Geometric component of generated space.  EG:  dimension=4, setProductRange=4 implies node space of 4^4.   //  more so, algoritym transforms p into p' with root at s in spR differenced p_i. 
+integerRange=200;      //  sampled values of differenced p for determining mu, rootset.
+pArrayResetValue,      // PArrayResetListener uses this value in propertyChange event  as pArray.set(pIndex,pArrayResetValue);
+
+Three more variables need definition.
+
+int setProductRangeIncrement  // Is expected to be a multiple of setProductRange.  It chunks ZAD into memory manageable iterations.  // note overhead of configurating workers, initializing 
+int maxSetProductRange        //  setProductRangeIncrement until maxSetProductRange.
+int fIDI=-1;                  //  or 0...  for the skip pattern....
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange=2, integerRange:200, setProductRAngeIncrement:2,maxSetProductRange:4})
+
+pArrayResetValue from iteration to iteration is a function of (setProductRangeIncrement,setProductRange,iteration number)
+
+MATCH (n:CreatedBy)
+WITH min(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID}) <- [] - (d:Dnode)
+RETURN m,d
+
+MATCH (n:CreatedBy)
+WITH max(n.resultId) AS targetResultID
+MATCH (m:CreatedBy {resultId:targetResultID})
+RETURN m
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange:2, integerRange:200, setProductRAngeIncrement:2,maxSetProductRange:4})
+
+6/29
+
+╒════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"n"                                                                                                                         │
+╞════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"setProductRange":2,"setProductRAngeIncrement":2,"maxSetProductRange":4,"dimension":5,"maxFigPScalar":1,"integerRange":200}│
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+configureQuery written in LoopsDriverTwoPManager and GaussTable1.
+
+And now for the run refactor.
+
+private void configureQuery()
+
+"setProductRange":2,
+"setProductRAngeIncrement":2,
+"maxSetProductRange":4,
+"dimension":5,
+"maxFigPScalar":1,
+"integerRange":200
+
+need to block until muList buffer is empty.
+
+
+pArrayResetValue,      // PArrayResetListener uses this value in propertyChange event  as pArray.set(pIndex,pArrayResetValue);
+
+
+├────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"wNum":5,"pArray":"[4, 5, 5, 5, 5, 0]","translateIndex":0,"resultId":54781,"pArrayIndexValue":0│
+│                                                                                               │
+└────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+The pArray iteration problem as exibited above.  the attempt is to skrew with 
+setSize in LoopSemaphoreInital and LoopSemaphore.  maybe do not set it to setSize+1 in one or both....
+will try with not +1 in loopSemaphore first.
+
+public LoopSemaphore( Semaphore s1, Semaphore s2,Semaphore s3, Semaphore s4,EndProduct endCproduct,LoopsSemaphoreInterface loopsLogic,LoopsConditionInterface loopsCondition,int setSize,int lbSetSize, boolean skip) {
+
+sf1=s1;
+sb1=s2;
+sf2=s3;
+sb2=s4;
+this.endProduct=endCproduct;
+this.loopsLogic=loopsLogic;
+this.loopsCondition=loopsCondition;
+this.setSize=setSize+1;
+this.lbSetSize=lbSetSize;
+this.skip=skip;
+}
+
+The last dog:
+
+while ( (tMangee.isAlive())   || (dbbVector.size()>0)) {
+
+https://www.youtube.com/watch?v=_lZvMTgEU00
+
+
+6/30
+
+origonally:
+
+LoopsDriverTwoPManager lDriver= new LoopsDriverTwoPManager(muList,muSem,loopsLogic,t11Semaphore,dbVector11,t11Semaphore,dbVector11,false,configSemaphore);
+GaussTable1 gTable1 = new GaussTable1(t11Semaphore,dbVector11,lDriver,configSemaphore); 
+lDriver.start();
+gTable1.start();
+
+Yesterday, both loopsDriverTwoPManager and GaussTable1 recieved the configSemaphore.   
+LoopsDriverTwoPManager run method has the config loop blooked until.
+GaussTable1 releases permit before run fall through (The buffer size/memory usage management feature).
+
+But...   
+
+GaussTable1.runLoopsDriver's while loop has condition LoopsDriverTwoPManager.isAlive()....
+
+So....
+
+private void runLoopsDriver() throws IOException {
+ //          while ((mangee.isAlive()) || (dbbVector.size()>0)) {       
+             int x=0;
+             while ( (tMangee.isAlive())   || (dbbVector.size()>0)) {
+
+will not use tMangee.isAlive().....
+
+//  Important .....  will still want to fix....
+
+
+How about a simple shared boolean boolean  --- nope worry about it later....
+
+therfore... the assumption is plenty in buffer to work with at all times....
+
+
+The semaphore while loop is from setSizee=lbSetSize  <  setSize
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange=2, integerRange:200, setProductRAngeIncrement:2,maxSetProductRange:6})
+
+
+ resultCounter: 47332
+                47387
+
+
+
+LoopListener can throttle the execution.
+It can query suze muBuffer.  
+If greater than say 50,000 the thread.sleep 10 min.s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Knowledge Graphs and Graph Analytics for Robust, Responsive Supply Chains
+
+Your webinar is starting soon!
+
+semantics
+
+synonym rings
+taxonomy
+thesaurus
+ontology 
+
+entity resulution and analysis
+
+classification and tagging
+
+artifical intelligence.   knowledge graph completion r
+
+
+similar or duplicate.
+
+
+
+
+
+
+
+
+remidy but never again
+
+https://www.youtube.com/watch?v=4kJ4basxfwM
+
+
+         
+
+
+
+can it be said a dataframe is lazy typing?
+
+
+
+
+
+https://www.sciencedirect.com/science/article/pii/S1877050919318575
+
+6/5
+
+
+https://www.facebook.com/instantgames/play/843754115785933/?context_source_id=4107823849257027&context_type=GENERIC&payload=&source=fb_feed_tournament_unit
+
+
+
+6/6
+
+
+k-nearest neighbors algorithm (k-NN) is used for classification or regression.
+
+https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm
+
+normalize for variations of scale.
+weigh according to distance.
+
+
+https://www.youtube.com/watch?v=09mb78oiPkA
+
+observations of regularity       --  computer can do.....
+
+nearest neighbors  --  pattern recognition
+
+mechanism ---  feator detection   outputs vectors of values for
+               a comparator.   feature vector compared to a library of featurvector
+               the object is recognition.
+
+
+make measurements...  total area x coordiante    hole area y coordinate.  
+say wall plates--  four taps two taps no taps four sized/two sizes.
+                      
+constructing perpindecular bisectors between each set of points.  they 
+are decision boundaries.
+
+
+if something is similar in some respects it is likely similar in other respects.
+
+cells   --  total area by neucleus area.
+
+a collection of articles  find articals relevant to question.  -information retrevial
+
+how about forget euclidean distance try 
+angle between vectors  --  cosine of angles between vectors.
+
+maybe all about corrolation with cause.
+
+neural nets   --  attempts to mimic biology
+
+boosting   --  gift of theoy
+
+constraint  --  human like.......
+
+one shot
+
+explination 
+
+https://www.youtube.com/watch?v=uXt8qF2Zzfo
+
+https://www.geni.com/family-tree/index/6000000009621586184
+
+Thank you for managing this Ancestry tree. I believe John and Magdelina Priespilis are my
+Great Grand parents and Edward is my father's uncle. Edward had a brother John, my grandfather.
+John, his son John and Edward, and my Dad John, lived on Keap St in Brooklyn, NY. I would like to
+append this tree with Edward's brother John's linage. Is this possible? It seems a separate tree can
+be made by myself but would appreciate a whole tree. Have an idea how to expand this tree?
+
+
+
+The Role of Machine Learning in Supply Chain Planning. This eBook defines machine learning in greater details, explores its use as part of an overall supply chain planning strategy, and further recommends where and how to get started.
+
+
+ Michael Page
+Pricing Logistics Coordinator
+Company Name Michael Page Company Location New York, NY
+
+Posted Date Posted 3 weeks ago Number of views 21 views
+Applied 8 seconds ago
+See application
+
+    Job
+        5 applicants
+        Entry level
+    Company
+        5,001-10,000 employees
+        Staffing & Recruiting
+    Connections
+        Stony Brook University
+        4 alumni
+
+Pricing Logistics Coordinator
+Our client is looking for both entry level and experienced professionals to join
+Pricing, Sales Support and Import Export positions
+
+About Our Client
+
+This Transportation Logistics Company has numerous vacancies in their Sales Support Department, Import & Export and Pricing Departments. They are seeking entry level and experienced professionals that are experts in Excel, with great analytical skills and communication skills.
+
+Job Description
+
+MPI does not discriminate on the basis of race, color, religion, sex, sexual orientation, gender identity or expression, national origin, age, disability, veteran status, marital status, or based on an individual's status in any group or class protected by applicable federal, state or local law. MPI encourages applications from minorities, women, the disabled, protected veterans and all other qualified applicants.
+
+Description
+
+    Maintain daily communication with the carriers regarding contract term maintenance, rate negotiation, space protection and equipment disputes.
+    Update the database with any new and/or updated rates.
+    Collaborate with the sales team to process incoming RFQ's.
+    Assist the resolution of billing, chassis, and equipment disputes that may arise from the Operations department or overseas offices.
+    Analyze industry trends and negotiates contract terms with the carriers.
+    Using Microsoft Office regularly (Excel)
+
+
+The Successful Applicant
+
+    Bachelor's Degree
+    1 year of experience in a related field/position
+    Experience dealing with high volume of data entry
+    Heavy Excel experience
+
+
+What's On Offer
+
+    401K plan with 3%
+    Health, Dental Vision
+    Life Insurance
+    Vacation
+    Bonus opportunities
+
+
+Contact: Danielle Kozelian
+Quote job ref: 1526718
+Seniority Level
+
+Entry level
+Industry
+
+    Transportation/Trucking/Railroad Logistics & Supply Chain 
+
+Employment Type
+
+Full-time
+Job Functions
+
+    Management Manufacturing 
+
+Pay range unavailable 
+
+
+Full Job Description
+
+Data Analyst – Streaming Product
+
+New York, NY (Remote start due to COVID – must be in Tri-State area)
+
+$38-42/hr Negotiable
+
+Long Term Contract
+
+We are seeking an individual to work with a Fortune 50 Broadcast Media & Entertainment leader located in New York City. As the Data Analyst, you will be responsible for the successful delivery of product analytics to stakeholders to meet business objectives. In this role, you will also be responsible for collecting data, monitoring & analyzing consumer behavior on newly implemented streaming product features.
+
+Minimum Qualifications:
+
+    Bachelor’s degree or equivalent in Computer Science, Statistics, Mathematics, or related field
+    Minimum 3 years’ experience of relevant data analyst experience with proven record of leading consumer facing products
+    3 years minimum experience with SQL
+    Knowledge of data visualization tools such as Tableau, DOMO, or Excel
+    2 years’ experience in a role demonstrating strong technical, quantitative, and analytical skills as it is related to product
+    Ability to communicate clearly and effectively with business stakeholders and technology teams
+
+Responsibilities:
+
+    Utilize SQL to prepare data for data visualizations
+    Create dashboards in Tableau for advanced leadership visualization
+    Translate product improvements into metrics and present these findings to leadership via Tableau or Excel
+    Assess product improvements across the platform while monitoring consumer behavior to lead business decisions
+    Communicate & work closely with other analytics professionals, product managers, delivery technology teams, and business stakeholders daily
+    Support planning and roadmap activities to deliver key results based on established goals
+
+What’s in it for you?
+
+    Working for a well-known, globally leading Media Streaming organization
+    Exposure to high-level business professionals in a variety of departments and geographic locations
+    Opportunity to work and grow your career in fast-paced environment
+
+Job Types: Full-time, Contract
+
+Pay: $38.00 - $42.00 per hour
+
+Benefits:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

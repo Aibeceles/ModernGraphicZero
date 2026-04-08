@@ -1,0 +1,4835 @@
+﻿[
+  {
+    "path": {
+      "start": {
+        "identity": 1407389,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 0.0]",
+          "pArray": "[0, 78, 17, 0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 0,
+          "rootList": "[0]",
+          "z": 1,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407389"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407389,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 0.0]",
+              "pArray": "[0, 78, 17, 0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 0,
+              "rootList": "[0]",
+              "z": 1,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407389"
+          },
+          "relationship": {
+            "identity": 1155174403933567389,
+            "start": 1407389,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933567389",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407389",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407390,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 10062.0]",
+          "pArray": "[1, 78, 17, 0]",
+          "muList": "[1]",
+          "d": 1,
+          "wNum": 0,
+          "rootList": "[1]",
+          "z": 1,
+          "n": 1
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407390"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407390,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 10062.0]",
+              "pArray": "[1, 78, 17, 0]",
+              "muList": "[1]",
+              "d": 1,
+              "wNum": 0,
+              "rootList": "[1]",
+              "z": 1,
+              "n": 1
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407390"
+          },
+          "relationship": {
+            "identity": 1152922604119882142,
+            "start": 1407390,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882142",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407390",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407391,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 104490.0]",
+          "pArray": "[10, 78, 17, 0]",
+          "muList": "[10]",
+          "d": 10,
+          "wNum": 0,
+          "rootList": "[10]",
+          "z": 1,
+          "n": 10
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407391"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407391,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 104490.0]",
+              "pArray": "[10, 78, 17, 0]",
+              "muList": "[10]",
+              "d": 10,
+              "wNum": 0,
+              "rootList": "[10]",
+              "z": 1,
+              "n": 10
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407391"
+          },
+          "relationship": {
+            "identity": 1152922604119882143,
+            "start": 1407391,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882143",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407391",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407392,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 115302.0]",
+          "pArray": "[11, 78, 17, 0]",
+          "muList": "[11]",
+          "d": 11,
+          "wNum": 0,
+          "rootList": "[11]",
+          "z": 1,
+          "n": 11
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407392"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407392,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 115302.0]",
+              "pArray": "[11, 78, 17, 0]",
+              "muList": "[11]",
+              "d": 11,
+              "wNum": 0,
+              "rootList": "[11]",
+              "z": 1,
+              "n": 11
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407392"
+          },
+          "relationship": {
+            "identity": 1152922604119882144,
+            "start": 1407392,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882144",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407392",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407393,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 126156.0]",
+          "pArray": "[12, 78, 17, 0]",
+          "muList": "[12]",
+          "d": 12,
+          "wNum": 0,
+          "rootList": "[12]",
+          "z": 1,
+          "n": 12
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407393"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407393,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 126156.0]",
+              "pArray": "[12, 78, 17, 0]",
+              "muList": "[12]",
+              "d": 12,
+              "wNum": 0,
+              "rootList": "[12]",
+              "z": 1,
+              "n": 12
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407393"
+          },
+          "relationship": {
+            "identity": 1152922604119882145,
+            "start": 1407393,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882145",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407393",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407394,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 137046.0]",
+          "pArray": "[13, 78, 17, 0]",
+          "muList": "[13]",
+          "d": 13,
+          "wNum": 0,
+          "rootList": "[13]",
+          "z": 1,
+          "n": 13
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407394"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407394,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 137046.0]",
+              "pArray": "[13, 78, 17, 0]",
+              "muList": "[13]",
+              "d": 13,
+              "wNum": 0,
+              "rootList": "[13]",
+              "z": 1,
+              "n": 13
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407394"
+          },
+          "relationship": {
+            "identity": 1152922604119882146,
+            "start": 1407394,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882146",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407394",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407395,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 147966.0]",
+          "pArray": "[14, 78, 17, 0]",
+          "muList": "[14]",
+          "d": 14,
+          "wNum": 0,
+          "rootList": "[14]",
+          "z": 1,
+          "n": 14
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407395"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407395,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 147966.0]",
+              "pArray": "[14, 78, 17, 0]",
+              "muList": "[14]",
+              "d": 14,
+              "wNum": 0,
+              "rootList": "[14]",
+              "z": 1,
+              "n": 14
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407395"
+          },
+          "relationship": {
+            "identity": 1152922604119882147,
+            "start": 1407395,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882147",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407395",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407396,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 158910.0]",
+          "pArray": "[15, 78, 17, 0]",
+          "muList": "[15]",
+          "d": 15,
+          "wNum": 0,
+          "rootList": "[15]",
+          "z": 1,
+          "n": 15
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407396"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407396,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 158910.0]",
+              "pArray": "[15, 78, 17, 0]",
+              "muList": "[15]",
+              "d": 15,
+              "wNum": 0,
+              "rootList": "[15]",
+              "z": 1,
+              "n": 15
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407396"
+          },
+          "relationship": {
+            "identity": 1152922604119882148,
+            "start": 1407396,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882148",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407396",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407397,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 169872.0]",
+          "pArray": "[16, 78, 17, 0]",
+          "muList": "[16]",
+          "d": 16,
+          "wNum": 0,
+          "rootList": "[16]",
+          "z": 1,
+          "n": 16
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407397"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407397,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 169872.0]",
+              "pArray": "[16, 78, 17, 0]",
+              "muList": "[16]",
+              "d": 16,
+              "wNum": 0,
+              "rootList": "[16]",
+              "z": 1,
+              "n": 16
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407397"
+          },
+          "relationship": {
+            "identity": 1152922604119882149,
+            "start": 1407397,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882149",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407397",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407398,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 180846.0]",
+          "pArray": "[17, 78, 17, 0]",
+          "muList": "[17]",
+          "d": 17,
+          "wNum": 0,
+          "rootList": "[17]",
+          "z": 1,
+          "n": 17
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407398"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407398,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 180846.0]",
+              "pArray": "[17, 78, 17, 0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 0,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407398"
+          },
+          "relationship": {
+            "identity": 1152922604119882150,
+            "start": 1407398,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882150",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407398",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407399,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 191826.0]",
+          "pArray": "[18, 78, 17, 0]",
+          "muList": "[18]",
+          "d": 18,
+          "wNum": 0,
+          "rootList": "[18]",
+          "z": 1,
+          "n": 18
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407399"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407399,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 191826.0]",
+              "pArray": "[18, 78, 17, 0]",
+              "muList": "[18]",
+              "d": 18,
+              "wNum": 0,
+              "rootList": "[18]",
+              "z": 1,
+              "n": 18
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407399"
+          },
+          "relationship": {
+            "identity": 1152922604119882151,
+            "start": 1407399,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882151",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407399",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407400,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 20226.0]",
+          "pArray": "[2, 78, 17, 0]",
+          "muList": "[2]",
+          "d": 2,
+          "wNum": 0,
+          "rootList": "[2]",
+          "z": 1,
+          "n": 2
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407400"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407400,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 20226.0]",
+              "pArray": "[2, 78, 17, 0]",
+              "muList": "[2]",
+              "d": 2,
+              "wNum": 0,
+              "rootList": "[2]",
+              "z": 1,
+              "n": 2
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407400"
+          },
+          "relationship": {
+            "identity": 1152922604119882152,
+            "start": 1407400,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882152",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407400",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407401,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 202806.0]",
+          "pArray": "[19, 78, 17, 0]",
+          "muList": "[19]",
+          "d": 19,
+          "wNum": 0,
+          "rootList": "[19]",
+          "z": 1,
+          "n": 19
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407401"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407401,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 202806.0]",
+              "pArray": "[19, 78, 17, 0]",
+              "muList": "[19]",
+              "d": 19,
+              "wNum": 0,
+              "rootList": "[19]",
+              "z": 1,
+              "n": 19
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407401"
+          },
+          "relationship": {
+            "identity": 1152922604119882153,
+            "start": 1407401,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882153",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407401",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407402,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 213780.0]",
+          "pArray": "[20, 78, 17, 0]",
+          "muList": "[20]",
+          "d": 20,
+          "wNum": 0,
+          "rootList": "[20]",
+          "z": 1,
+          "n": 20
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407402"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407402,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 213780.0]",
+              "pArray": "[20, 78, 17, 0]",
+              "muList": "[20]",
+              "d": 20,
+              "wNum": 0,
+              "rootList": "[20]",
+              "z": 1,
+              "n": 20
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407402"
+          },
+          "relationship": {
+            "identity": 1152922604119882154,
+            "start": 1407402,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882154",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407402",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407403,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 224742.0]",
+          "pArray": "[21, 78, 17, 0]",
+          "muList": "[21]",
+          "d": 21,
+          "wNum": 0,
+          "rootList": "[21]",
+          "z": 1,
+          "n": 21
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407403"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407403,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 224742.0]",
+              "pArray": "[21, 78, 17, 0]",
+              "muList": "[21]",
+              "d": 21,
+              "wNum": 0,
+              "rootList": "[21]",
+              "z": 1,
+              "n": 21
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407403"
+          },
+          "relationship": {
+            "identity": 1152922604119882155,
+            "start": 1407403,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882155",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407403",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407404,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 235686.0]",
+          "pArray": "[22, 78, 17, 0]",
+          "muList": "[22]",
+          "d": 22,
+          "wNum": 0,
+          "rootList": "[22]",
+          "z": 1,
+          "n": 22
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407404"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407404,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 235686.0]",
+              "pArray": "[22, 78, 17, 0]",
+              "muList": "[22]",
+              "d": 22,
+              "wNum": 0,
+              "rootList": "[22]",
+              "z": 1,
+              "n": 22
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407404"
+          },
+          "relationship": {
+            "identity": 1152922604119882156,
+            "start": 1407404,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882156",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407404",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407405,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 246606.0]",
+          "pArray": "[23, 78, 17, 0]",
+          "muList": "[23]",
+          "d": 23,
+          "wNum": 0,
+          "rootList": "[23]",
+          "z": 1,
+          "n": 23
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407405"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407405,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 246606.0]",
+              "pArray": "[23, 78, 17, 0]",
+              "muList": "[23]",
+              "d": 23,
+              "wNum": 0,
+              "rootList": "[23]",
+              "z": 1,
+              "n": 23
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407405"
+          },
+          "relationship": {
+            "identity": 1152922604119882157,
+            "start": 1407405,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882157",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407405",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407406,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 257496.0]",
+          "pArray": "[24, 78, 17, 0]",
+          "muList": "[24]",
+          "d": 24,
+          "wNum": 0,
+          "rootList": "[24]",
+          "z": 1,
+          "n": 24
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407406"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407406,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 257496.0]",
+              "pArray": "[24, 78, 17, 0]",
+              "muList": "[24]",
+              "d": 24,
+              "wNum": 0,
+              "rootList": "[24]",
+              "z": 1,
+              "n": 24
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407406"
+          },
+          "relationship": {
+            "identity": 1152922604119882158,
+            "start": 1407406,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882158",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407406",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407407,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 268350.0]",
+          "pArray": "[25, 78, 17, 0]",
+          "muList": "[25]",
+          "d": 25,
+          "wNum": 0,
+          "rootList": "[25]",
+          "z": 1,
+          "n": 25
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407407"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407407,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 268350.0]",
+              "pArray": "[25, 78, 17, 0]",
+              "muList": "[25]",
+              "d": 25,
+              "wNum": 0,
+              "rootList": "[25]",
+              "z": 1,
+              "n": 25
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407407"
+          },
+          "relationship": {
+            "identity": 1152922604119882159,
+            "start": 1407407,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882159",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407407",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407408,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 279162.0]",
+          "pArray": "[26, 78, 17, 0]",
+          "muList": "[26]",
+          "d": 26,
+          "wNum": 0,
+          "rootList": "[26]",
+          "z": 1,
+          "n": 26
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407408"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407408,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 279162.0]",
+              "pArray": "[26, 78, 17, 0]",
+              "muList": "[26]",
+              "d": 26,
+              "wNum": 0,
+              "rootList": "[26]",
+              "z": 1,
+              "n": 26
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407408"
+          },
+          "relationship": {
+            "identity": 1152922604119882160,
+            "start": 1407408,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882160",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407408",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407409,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 289926.0]",
+          "pArray": "[27, 78, 17, 0]",
+          "muList": "[27, 117]",
+          "d": 144,
+          "wNum": 0,
+          "rootList": "[-91, 27, 118]",
+          "z": 3,
+          "n": 117
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407409"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407409,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 289926.0]",
+              "pArray": "[27, 78, 17, 0]",
+              "muList": "[27, 117]",
+              "d": 144,
+              "wNum": 0,
+              "rootList": "[-91, 27, 118]",
+              "z": 3,
+              "n": 117
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407409"
+          },
+          "relationship": {
+            "identity": 1152922604119882161,
+            "start": 1407409,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882161",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407409",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407410,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 300636.0]",
+          "pArray": "[28, 78, 17, 0]",
+          "muList": "[28]",
+          "d": 28,
+          "wNum": 0,
+          "rootList": "[28]",
+          "z": 1,
+          "n": 28
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407410"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407410,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 300636.0]",
+              "pArray": "[28, 78, 17, 0]",
+              "muList": "[28]",
+              "d": 28,
+              "wNum": 0,
+              "rootList": "[28]",
+              "z": 1,
+              "n": 28
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407410"
+          },
+          "relationship": {
+            "identity": 1152922604119882162,
+            "start": 1407410,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882162",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407410",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407411,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 30486.0]",
+          "pArray": "[3, 78, 17, 0]",
+          "muList": "[3]",
+          "d": 3,
+          "wNum": 0,
+          "rootList": "[3]",
+          "z": 1,
+          "n": 3
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407411"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407411,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 30486.0]",
+              "pArray": "[3, 78, 17, 0]",
+              "muList": "[3]",
+              "d": 3,
+              "wNum": 0,
+              "rootList": "[3]",
+              "z": 1,
+              "n": 3
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407411"
+          },
+          "relationship": {
+            "identity": 1152922604119882163,
+            "start": 1407411,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882163",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407411",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407412,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 311286.0]",
+          "pArray": "[29, 78, 17, 0]",
+          "muList": "[29]",
+          "d": 29,
+          "wNum": 0,
+          "rootList": "[29]",
+          "z": 1,
+          "n": 29
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407412"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407412,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 311286.0]",
+              "pArray": "[29, 78, 17, 0]",
+              "muList": "[29]",
+              "d": 29,
+              "wNum": 0,
+              "rootList": "[29]",
+              "z": 1,
+              "n": 29
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407412"
+          },
+          "relationship": {
+            "identity": 1152922604119882164,
+            "start": 1407412,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882164",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407412",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407413,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 321870.0]",
+          "pArray": "[30, 78, 17, 0]",
+          "muList": "[30]",
+          "d": 30,
+          "wNum": 0,
+          "rootList": "[30]",
+          "z": 1,
+          "n": 30
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407413"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407413,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 321870.0]",
+              "pArray": "[30, 78, 17, 0]",
+              "muList": "[30]",
+              "d": 30,
+              "wNum": 0,
+              "rootList": "[30]",
+              "z": 1,
+              "n": 30
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407413"
+          },
+          "relationship": {
+            "identity": 1152922604119882165,
+            "start": 1407413,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882165",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407413",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407414,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 332382.0]",
+          "pArray": "[31, 78, 17, 0]",
+          "muList": "[31]",
+          "d": 31,
+          "wNum": 0,
+          "rootList": "[31]",
+          "z": 1,
+          "n": 31
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407414"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407414,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 332382.0]",
+              "pArray": "[31, 78, 17, 0]",
+              "muList": "[31]",
+              "d": 31,
+              "wNum": 0,
+              "rootList": "[31]",
+              "z": 1,
+              "n": 31
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407414"
+          },
+          "relationship": {
+            "identity": 1152922604119882166,
+            "start": 1407414,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882166",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407414",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  },
+  {
+    "path": {
+      "start": {
+        "identity": 1407415,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 1.0, -54.0, -10009.0, 342816.0]",
+          "pArray": "[32, 78, 17, 0]",
+          "muList": "[32]",
+          "d": 32,
+          "wNum": 0,
+          "rootList": "[32]",
+          "z": 1,
+          "n": 32
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407415"
+      },
+      "end": {
+        "identity": 1553569,
+        "labels": [
+          "Dnode"
+        ],
+        "properties": {
+          "vmResult": "[0.0, 6.0]",
+          "muList": "[]",
+          "d": 0,
+          "wNum": 3,
+          "rootList": "[]",
+          "z": 0,
+          "n": 0
+        },
+        "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+      },
+      "segments": [
+        {
+          "start": {
+            "identity": 1407415,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 1.0, -54.0, -10009.0, 342816.0]",
+              "pArray": "[32, 78, 17, 0]",
+              "muList": "[32]",
+              "d": 32,
+              "wNum": 0,
+              "rootList": "[32]",
+              "z": 1,
+              "n": 32
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407415"
+          },
+          "relationship": {
+            "identity": 1152922604119882167,
+            "start": 1407415,
+            "end": 1545814,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1152922604119882167",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1407415",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "end": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          }
+        },
+        {
+          "start": {
+            "identity": 1545814,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 3.0, -105.0, -10062.0]",
+              "muList": "[78]",
+              "d": 78,
+              "wNum": 1,
+              "rootList": "[-43, 78]",
+              "z": 2,
+              "n": 78
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814"
+          },
+          "relationship": {
+            "identity": 1159678003561076310,
+            "start": 1545814,
+            "end": 1553466,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1159678003561076310",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1545814",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "end": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          }
+        },
+        {
+          "start": {
+            "identity": 1553466,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0, -102.0]",
+              "muList": "[17]",
+              "d": 17,
+              "wNum": 2,
+              "rootList": "[17]",
+              "z": 1,
+              "n": 17
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466"
+          },
+          "relationship": {
+            "identity": 1155174403933713466,
+            "start": 1553466,
+            "end": 1553569,
+            "type": "zMap",
+            "properties": {
+
+            },
+            "elementId": "5:8405c826-485e-41b1-8d42-7fe0d7cef323:1155174403933713466",
+            "startNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553466",
+            "endNodeElementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          },
+          "end": {
+            "identity": 1553569,
+            "labels": [
+              "Dnode"
+            ],
+            "properties": {
+              "vmResult": "[0.0, 6.0]",
+              "muList": "[]",
+              "d": 0,
+              "wNum": 3,
+              "rootList": "[]",
+              "z": 0,
+              "n": 0
+            },
+            "elementId": "4:8405c826-485e-41b1-8d42-7fe0d7cef323:1553569"
+          }
+        }
+      ],
+      "length": 3.0
+    }
+  }
+]

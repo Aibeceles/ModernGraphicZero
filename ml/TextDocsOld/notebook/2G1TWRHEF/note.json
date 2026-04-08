@@ -1,0 +1,1399 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\nSo take the maxn\u003d8 set. - it is composed of n 2-7.\neach p defined at n computes 2^n and so have a set of p\u0027s defining {4,8,16,32,64,128}.\n  \nFor instance, MaxN\u003d8,n\u003d4 is a set of p\u0027s each argumented with rowScalars 1,2,4.  1 and 2 are not defined in MaxN8 though\n4 is.  An opportunity exists to substitute 4 with MaxN8N2 (it evaluates to 4) as p/4 * MaxN8N4RowScalar4.\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-22 10:04:17.327",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eSo take the maxn\u003d8 set. - it is composed of n 2-7.\u003cbr/\u003eeach p defined at n computes 2^n and so have a set of p\u0026rsquo;s defining {4,8,16,32,64,128}.\u003c/p\u003e\n\u003cp\u003eFor instance, MaxN\u003d8,n\u003d4 is a set of p\u0026rsquo;s each argumented with rowScalars 1,2,4. 1 and 2 are not defined in MaxN8 though\u003cbr/\u003e4 is. An opportunity exists to substitute 4 with MaxN8N2 (it evaluates to 4) as p/4 * MaxN8N4RowScalar4.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786503_1176390995",
+      "id": "20210205-095645_230161375",
+      "dateCreated": "2021-02-18 11:13:06.503",
+      "dateStarted": "2021-02-19 08:56:43.129",
+      "dateFinished": "2021-02-19 08:56:43.129",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n..",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 08:56:15.034",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003e..\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786507_-1985274099",
+      "id": "20210215-083633_79653721",
+      "dateCreated": "2021-02-18 11:13:06.507",
+      "dateStarted": "2021-02-19 08:56:15.035",
+      "dateFinished": "2021-02-19 08:56:15.040",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.sql.{DataFrame,Dataset}\n\nval z1\u003d z.get(\"RootsMaxn8Range\").asInstanceOf[DataFrame]\nval z1Count\u003dz1.count()\nz1.show(z1Count.toInt,false)\n\nval z2\u003d z.get(\"ReducedMaxN8RangePivot\").asInstanceOf[DataFrame]\nval z2Count\u003dz2.count()\nz2.show(z2Count.toInt,false)\n\nval z3\u003d z.get(\"ReducedMaxN8RangeResultPivot\").asInstanceOf[DataFrame]\nval z3Count\u003dz3.count()\nz3.show(z3Count.toInt,false)\n\nval z4\u003d z.get(\"ReducedMaxN8RangeFinalResult\").asInstanceOf[DataFrame]\nval z4Count\u003dz4.count()\nz4.show(z4Count.toInt,false)\n\n\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 15:07:41.512",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+---------+-----+-----+---+---+---+\n|N  |rowScalar|root1|root2|a  |b  |c  |\n+---+---------+-----+-----+---+---+---+\n|2  |1        |no   |root |2  |-28|104|\n|3  |1        |no   |root |2  |-24|80 |\n|3  |2        |8.0  |7.0  |1  |-15|56 |\n|4  |1        |no   |root |2  |-20|60 |\n|4  |2        |7.0  |6.0  |1  |-13|42 |\n|4  |4        |8.0  |7.0  |1  |-15|56 |\n|5  |1        |no   |root |2  |-16|44 |\n|5  |2        |6.0  |5.0  |1  |-11|30 |\n|5  |4        |7.0  |6.0  |1  |-13|42 |\n|5  |8        |8.0  |7.0  |1  |-15|56 |\n|6  |1        |no   |root |2  |-12|32 |\n|6  |2        |5.0  |4.0  |1  |-9 |20 |\n|6  |4        |6.0  |5.0  |1  |-11|30 |\n|6  |8        |7.0  |6.0  |1  |-13|42 |\n|6  |16       |8.0  |7.0  |1  |-15|56 |\n|7  |1        |no   |root |2  |-8 |24 |\n|7  |2        |4.0  |3.0  |1  |-7 |12 |\n|7  |4        |5.0  |4.0  |1  |-9 |20 |\n|7  |8        |6.0  |5.0  |1  |-11|30 |\n|7  |16       |7.0  |6.0  |1  |-13|42 |\n|7  |32       |8.0  |7.0  |1  |-15|56 |\n+---+---------+-----+-----+---+---+---+\n\r\n+---+----+----+---+\n|N  |0   |1   |2  |\n+---+----+----+---+\n|4  |184 |-53 |4  |\n|7  |1416|-417|32 |\n|3  |96  |-27 |2  |\n|2  |52  |-14 |1  |\n|5  |360 |-105|8  |\n|6  |712 |-209|16 |\n+---+----+----+---+\n\r\n+----+---+----+-----+----+\n|MaxN|N  |0   |1    |2   |\n+----+---+----+-----+----+\n|8   |2  |52  |-112 |64  |\n|8   |5  |360 |-840 |512 |\n|8   |4  |184 |-424 |256 |\n|8   |6  |712 |-1672|1024|\n|8   |3  |96  |-216 |128 |\n|8   |7  |1416|-3336|2048|\n+----+---+----+-----+----+\n\r\n+-----+------------+\n|key  |index_Result|\n+-----+------------+\n|[8,2]|4.0         |\n|[8,5]|32.0        |\n|[8,7]|128.0       |\n|[8,3]|8.0         |\n|[8,6]|64.0        |\n|[8,4]|16.0        |\n+-----+------------+\n\r\nimport org.apache.spark.sql.{DataFrame, Dataset}\r\nz1: org.apache.spark.sql.DataFrame \u003d [N: string, rowScalar: string ... 5 more fields]\r\nz1Count: Long \u003d 21\r\nz2: org.apache.spark.sql.DataFrame \u003d [N: decimal(25,0), 0: decimal(35,0) ... 2 more fields]\r\nz2Count: Long \u003d 6\r\nz3: org.apache.spark.sql.DataFrame \u003d [MaxN: decimal(25,0), N: decimal(25,0) ... 3 more fields]\r\nz3Count: Long \u003d 6\r\nz4: org.apache.spark.sql.DataFrame \u003d [key: struct\u003c_1: string, _2: string\u003e, index_Result: string]\r\nz4Count: Long \u003d 6\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786508_1916127486",
+      "id": "20210216-131532_1196741514",
+      "dateCreated": "2021-02-18 11:13:06.508",
+      "dateStarted": "2021-02-19 15:07:41.537",
+      "dateFinished": "2021-02-19 15:08:01.392",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n..",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 08:55:36.853",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003e..\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786509_-1881553363",
+      "id": "20210217-093023_1423487281",
+      "dateCreated": "2021-02-18 11:13:06.509",
+      "dateStarted": "2021-02-19 08:55:36.853",
+      "dateFinished": "2021-02-19 08:55:36.859",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val z5\u003d z.get(\"index7MaxN8RowScalar1\").asInstanceOf[DataFrame]\nval z5Count\u003dz5.count()\nz5.show(z5Count.toInt,false)",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 11:13:06.510",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+------+-----+--------+-------+------+---------+\n|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|\n+---------+------+------+-----+--------+-------+------+---------+\n|2        |0     |16    |7    |8       |2      |8     |1        |\n|2        |1     |-2    |7    |8       |2      |-8    |1        |\n|2        |1     |-1    |7    |8       |2      |-4.0  |1        |\n|2        |2     |1     |7    |8       |2      |32.0  |1        |\n|2        |0     |2     |7    |8       |2      |1     |1        |\n|2        |0     |6     |7    |8       |2      |3     |1        |\n|2        |2     |1     |7    |8       |2      |32.0  |1        |\n|2        |1     |-2    |7    |8       |2      |-8    |1        |\n|2        |1     |-3    |7    |8       |2      |-12.0 |1        |\n+---------+------+------+-----+--------+-------+------+---------+\n\r\nz5: org.apache.spark.sql.DataFrame \u003d [dimension: string, degree: string ... 6 more fields]\r\nz5Count: Long \u003d 9\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786509_-1646282234",
+      "id": "20210217-093025_1326033355",
+      "dateCreated": "2021-02-18 11:13:06.509",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "0. DataFrame/Dataset case class definitions.",
+      "text": "case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\ncase class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\ncase class indexSum(iSum:String,finalISum:String)\ncase class kvCaseC(rowScalar:String,degree:String,scalar:String)\ncase class pivotE(N:String,rowScalar:String,zero:String,one:String,two:String)\n//case class roots(root1:String,root2:String)\ncase class roots(N:String,rowScalar:String,root1:String,root2:String,a:String,b:String,c:String)\ncase class redScal(Scalar:String,MaxN:String,N:String,Degree:String)\ncase class redScalR(Scalar:String,N:String,Degree:String,result:String,MaxN:String)",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:48:21.958",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class s12QQu\r\ndefined class s12Re\r\ndefined class indexSum\r\ndefined class kvCaseC\r\ndefined class pivotE\r\ndefined class roots\r\ndefined class redScal\r\ndefined class redScalR\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786510_-984192932",
+      "id": "20210205-095831_599296418",
+      "dateCreated": "2021-02-18 11:13:06.510",
+      "dateStarted": "2021-02-19 14:48:22.114",
+      "dateFinished": "2021-02-19 14:48:31.866",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "1. QuerryS12QuadQuerry object.",
+      "text": "\nobject QuerryS12QuadQuerry {\n  \nimport zadscripts.DFScripts\nimport scala.collection.mutable.ArrayBuffer\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nval s3 \u003d new DFScripts \n\ndef s12QuadQuerry(rLow:String,rHigh:String,nMax:String): ArrayBuffer[s12QQu] \u003d {\n\nval terms \u003d new ArrayBuffer[s12QQu]()\n//val s3 \u003d new DFScripts  \nval s12QQRS \u003d s3.s12QuadQ(rLow,rHigh,nMax)\n\nwhile (s12QQRS.next()) {\nterms +\u003d s12QQu(s12QQRS.getString(1),s12QQRS.getString(2),s12QQRS.getString(3),s12QQRS.getString(4),s12QQRS.getString(5),s12QQRS.getString(6))\n}\nterms\n}\n\ndef main(args:Array[String]) {\n\nval terms \u003d new ArrayBuffer[ArrayBuffer[s12QQu]]()\nval nMax \u003d args(0)                                 \n//for(a \u003c- 1 to 1; n \u003c- 7 to 7;b \u003c- 0 to (n-2)) {\nfor(a \u003c- 1 to 1; n \u003c- 2 to BigInt(args(0)).intValue()-1) {   //;b \u003c- 0 to 0\n     terms +\u003d s12QuadQuerry(n.toString,n.toString,nMax)\n}\n\nval mainTermss\u003dterms.flatMap(_.toList)\n\nval df \u003d spark.createDataFrame(mainTermss)\nval dfCount \u003d df.count()\ndf.show(dfCount.toInt,false)\nz.put(args(1),df)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:48:36.682",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\nwarning: Class org.apache.kafka.clients.producer.Producer not found - continuing with a stub.\ndefined object QuerryS12QuadQuerry\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786511_-238075358",
+      "id": "20210205-095833_718253940",
+      "dateCreated": "2021-02-18 11:13:06.511",
+      "dateStarted": "2021-02-19 14:48:36.753",
+      "dateFinished": "2021-02-19 14:48:37.710",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "2. QuerryS12QuadQuerry calls.",
+      "text": "QuerryS12QuadQuerry.main(Array(\"8\",\"s12MaxN8\")) \n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:48:41.558",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loaded the appropriate driver and rev.\r\njdbc:neo4j:bolt://localhost\r\n+-----+----+---------+-------+------+------+\n|index|MaxN|rowScalar|divisor|scalar|degree|\n+-----+----+---------+-------+------+------+\n|2    |8   |1        |2      |6     |0     |\n|2    |8   |1        |2      |42    |0     |\n|2    |8   |1        |2      |-7    |1     |\n|2    |8   |1        |2      |1     |2     |\n|2    |8   |1        |2      |-6    |1     |\n|2    |8   |1        |2      |56    |0     |\n|2    |8   |1        |2      |1     |2     |\n|2    |8   |1        |2      |-8    |1     |\n|2    |8   |1        |2      |-7    |1     |\n|3    |8   |1        |2      |8     |0     |\n|3    |8   |1        |2      |-5    |1     |\n|3    |8   |1        |2      |1     |2     |\n|3    |8   |1        |2      |30    |0     |\n|3    |8   |1        |2      |-6    |1     |\n|3    |8   |1        |2      |-7    |1     |\n|3    |8   |1        |2      |1     |2     |\n|3    |8   |1        |2      |42    |0     |\n|3    |8   |1        |2      |-6    |1     |\n|3    |8   |2        |2      |-7    |1     |\n|3    |8   |2        |2      |1     |2     |\n|3    |8   |2        |2      |56    |0     |\n|3    |8   |2        |2      |-8    |1     |\n|4    |8   |1        |2      |10    |0     |\n|4    |8   |1        |2      |-5    |1     |\n|4    |8   |1        |2      |20    |0     |\n|4    |8   |1        |2      |1     |2     |\n|4    |8   |1        |2      |-4    |1     |\n|4    |8   |1        |2      |30    |0     |\n|4    |8   |1        |2      |1     |2     |\n|4    |8   |1        |2      |-6    |1     |\n|4    |8   |1        |2      |-5    |1     |\n|4    |8   |2        |2      |-6    |1     |\n|4    |8   |2        |2      |42    |0     |\n|4    |8   |2        |2      |1     |2     |\n|4    |8   |2        |2      |-7    |1     |\n|4    |8   |4        |2      |-8    |1     |\n|4    |8   |4        |2      |56    |0     |\n|4    |8   |4        |2      |-7    |1     |\n|4    |8   |4        |2      |1     |2     |\n|5    |8   |1        |2      |12    |0     |\n|5    |8   |1        |2      |12    |0     |\n|5    |8   |1        |2      |-4    |1     |\n|5    |8   |1        |2      |1     |2     |\n|5    |8   |1        |2      |-3    |1     |\n|5    |8   |1        |2      |1     |2     |\n|5    |8   |1        |2      |-5    |1     |\n|5    |8   |1        |2      |20    |0     |\n|5    |8   |1        |2      |-4    |1     |\n|5    |8   |2        |2      |30    |0     |\n|5    |8   |2        |2      |1     |2     |\n|5    |8   |2        |2      |-6    |1     |\n|5    |8   |2        |2      |-5    |1     |\n|5    |8   |4        |2      |42    |0     |\n|5    |8   |4        |2      |-6    |1     |\n|5    |8   |4        |2      |-7    |1     |\n|5    |8   |4        |2      |1     |2     |\n|5    |8   |8        |2      |1     |2     |\n|5    |8   |8        |2      |-7    |1     |\n|5    |8   |8        |2      |56    |0     |\n|5    |8   |8        |2      |-8    |1     |\n|6    |8   |1        |2      |14    |0     |\n|6    |8   |1        |2      |-3    |1     |\n|6    |8   |1        |2      |1     |2     |\n|6    |8   |1        |2      |6     |0     |\n|6    |8   |1        |2      |-2    |1     |\n|6    |8   |1        |2      |-3    |1     |\n|6    |8   |1        |2      |12    |0     |\n|6    |8   |1        |2      |-4    |1     |\n|6    |8   |1        |2      |1     |2     |\n|6    |8   |2        |2      |-4    |1     |\n|6    |8   |2        |2      |20    |0     |\n|6    |8   |2        |2      |1     |2     |\n|6    |8   |2        |2      |-5    |1     |\n|6    |8   |4        |2      |-5    |1     |\n|6    |8   |4        |2      |30    |0     |\n|6    |8   |4        |2      |-6    |1     |\n|6    |8   |4        |2      |1     |2     |\n|6    |8   |8        |2      |1     |2     |\n|6    |8   |8        |2      |-7    |1     |\n|6    |8   |8        |2      |-6    |1     |\n|6    |8   |8        |2      |42    |0     |\n|6    |8   |16       |2      |1     |2     |\n|6    |8   |16       |2      |-8    |1     |\n|6    |8   |16       |2      |56    |0     |\n|6    |8   |16       |2      |-7    |1     |\n|7    |8   |1        |2      |16    |0     |\n|7    |8   |1        |2      |-2    |1     |\n|7    |8   |1        |2      |-1    |1     |\n|7    |8   |1        |2      |1     |2     |\n|7    |8   |1        |2      |2     |0     |\n|7    |8   |1        |2      |6     |0     |\n|7    |8   |1        |2      |1     |2     |\n|7    |8   |1        |2      |-2    |1     |\n|7    |8   |1        |2      |-3    |1     |\n|7    |8   |2        |2      |-3    |1     |\n|7    |8   |2        |2      |-4    |1     |\n|7    |8   |2        |2      |12    |0     |\n|7    |8   |2        |2      |1     |2     |\n|7    |8   |4        |2      |20    |0     |\n|7    |8   |4        |2      |-4    |1     |\n|7    |8   |4        |2      |1     |2     |\n|7    |8   |4        |2      |-5    |1     |\n|7    |8   |8        |2      |1     |2     |\n|7    |8   |8        |2      |-5    |1     |\n|7    |8   |8        |2      |30    |0     |\n|7    |8   |8        |2      |-6    |1     |\n|7    |8   |16       |2      |1     |2     |\n|7    |8   |16       |2      |-7    |1     |\n|7    |8   |16       |2      |-6    |1     |\n|7    |8   |16       |2      |42    |0     |\n|7    |8   |32       |2      |-7    |1     |\n|7    |8   |32       |2      |-8    |1     |\n|7    |8   |32       |2      |1     |2     |\n|7    |8   |32       |2      |56    |0     |\n+-----+----+---------+-------+------+------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786512_-1927849729",
+      "id": "20210205-095835_1356583003",
+      "dateCreated": "2021-02-18 11:13:06.512",
+      "dateStarted": "2021-02-19 14:48:41.620",
+      "dateFinished": "2021-02-19 14:48:45.109",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "3. ResultUDF Object",
+      "text": "object ResultUDF extends Serializable {\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\ndef extendResult(qQuerry:s12QQu): s12Re \u003d {      // need to include the rowCounter multiplication\n  val scalar \u003d new BigDecimal(qQuerry.scalar)\n  val rowScalar \u003d new BigDecimal(qQuerry.rowScalar)\n  val degree \u003d qQuerry.degree.toInt\n  val divisor \u003d new BigDecimal(qQuerry.divisor)\n  val index \u003d new BigDecimal(qQuerry.MaxN)\n  val indexPower \u003d index.pow(degree)\n  val scalarDiv \u003d scalar.divide(divisor)\n  val result \u003d indexPower.multiply(scalarDiv)\n  val result1 \u003d result.multiply(new BigDecimal(qQuerry.rowScalar))\n  val s\u003d  s12Re(\"2\",qQuerry.degree,qQuerry.scalar,qQuerry.index,qQuerry.MaxN,qQuerry.divisor,result1.toPlainString,qQuerry.rowScalar)\n  s\n}\n\ndef main(args:Array[String]) {\n    \n//import org.apache.spark.sql.DataFrame\nval df\u003d z.get(args(0)).asInstanceOf[DataFrame]\nspark.udf.register(\"eResult\", extendResult _)\n\nval ds: Dataset[s12QQu] \u003d df.as[s12QQu]\n//val dss\u003dds.map{f \u003d\u003e extendResult(s3AQu(f.dimension,f.Degree,f.scalar,f.index,f.maxIndex,f.divisor)) }\n\nval dss\u003dds.map{f \u003d\u003e extendResult(s12QQu(f.index,f.MaxN,f.rowScalar,f.divisor,f.scalar,f.degree)) }\nval dssCount\u003ddss.count()\ndss.show(dssCount.toInt,false)\nz.put(args(1),dss)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:48:49.405",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ResultUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786512_1107513851",
+      "id": "20210205-151133_1314831867",
+      "dateCreated": "2021-02-18 11:13:06.512",
+      "dateStarted": "2021-02-19 14:48:49.460",
+      "dateFinished": "2021-02-19 14:48:50.096",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "4. ResultUDF object Calls.",
+      "text": "ResultUDF.main(Array(\"s12MaxN8\",\"rUdfMaxN8\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:48:53.711",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+------+------+-----+--------+-------+------+---------+\n|dimension|degree|scalar|index|maxIndex|divisor|result|rowScalar|\n+---------+------+------+-----+--------+-------+------+---------+\n|2        |0     |6     |2    |8       |2      |3     |1        |\n|2        |0     |42    |2    |8       |2      |21    |1        |\n|2        |1     |-7    |2    |8       |2      |-28.0 |1        |\n|2        |2     |1     |2    |8       |2      |32.0  |1        |\n|2        |1     |-6    |2    |8       |2      |-24   |1        |\n|2        |0     |56    |2    |8       |2      |28    |1        |\n|2        |2     |1     |2    |8       |2      |32.0  |1        |\n|2        |1     |-8    |2    |8       |2      |-32   |1        |\n|2        |1     |-7    |2    |8       |2      |-28.0 |1        |\n|2        |0     |8     |3    |8       |2      |4     |1        |\n|2        |1     |-5    |3    |8       |2      |-20.0 |1        |\n|2        |2     |1     |3    |8       |2      |32.0  |1        |\n|2        |0     |30    |3    |8       |2      |15    |1        |\n|2        |1     |-6    |3    |8       |2      |-24   |1        |\n|2        |1     |-7    |3    |8       |2      |-28.0 |1        |\n|2        |2     |1     |3    |8       |2      |32.0  |1        |\n|2        |0     |42    |3    |8       |2      |21    |1        |\n|2        |1     |-6    |3    |8       |2      |-24   |1        |\n|2        |1     |-7    |3    |8       |2      |-56.0 |2        |\n|2        |2     |1     |3    |8       |2      |64.0  |2        |\n|2        |0     |56    |3    |8       |2      |56    |2        |\n|2        |1     |-8    |3    |8       |2      |-64   |2        |\n|2        |0     |10    |4    |8       |2      |5     |1        |\n|2        |1     |-5    |4    |8       |2      |-20.0 |1        |\n|2        |0     |20    |4    |8       |2      |10    |1        |\n|2        |2     |1     |4    |8       |2      |32.0  |1        |\n|2        |1     |-4    |4    |8       |2      |-16   |1        |\n|2        |0     |30    |4    |8       |2      |15    |1        |\n|2        |2     |1     |4    |8       |2      |32.0  |1        |\n|2        |1     |-6    |4    |8       |2      |-24   |1        |\n|2        |1     |-5    |4    |8       |2      |-20.0 |1        |\n|2        |1     |-6    |4    |8       |2      |-48   |2        |\n|2        |0     |42    |4    |8       |2      |42    |2        |\n|2        |2     |1     |4    |8       |2      |64.0  |2        |\n|2        |1     |-7    |4    |8       |2      |-56.0 |2        |\n|2        |1     |-8    |4    |8       |2      |-128  |4        |\n|2        |0     |56    |4    |8       |2      |112   |4        |\n|2        |1     |-7    |4    |8       |2      |-112.0|4        |\n|2        |2     |1     |4    |8       |2      |128.0 |4        |\n|2        |0     |12    |5    |8       |2      |6     |1        |\n|2        |0     |12    |5    |8       |2      |6     |1        |\n|2        |1     |-4    |5    |8       |2      |-16   |1        |\n|2        |2     |1     |5    |8       |2      |32.0  |1        |\n|2        |1     |-3    |5    |8       |2      |-12.0 |1        |\n|2        |2     |1     |5    |8       |2      |32.0  |1        |\n|2        |1     |-5    |5    |8       |2      |-20.0 |1        |\n|2        |0     |20    |5    |8       |2      |10    |1        |\n|2        |1     |-4    |5    |8       |2      |-16   |1        |\n|2        |0     |30    |5    |8       |2      |30    |2        |\n|2        |2     |1     |5    |8       |2      |64.0  |2        |\n|2        |1     |-6    |5    |8       |2      |-48   |2        |\n|2        |1     |-5    |5    |8       |2      |-40.0 |2        |\n|2        |0     |42    |5    |8       |2      |84    |4        |\n|2        |1     |-6    |5    |8       |2      |-96   |4        |\n|2        |1     |-7    |5    |8       |2      |-112.0|4        |\n|2        |2     |1     |5    |8       |2      |128.0 |4        |\n|2        |2     |1     |5    |8       |2      |256.0 |8        |\n|2        |1     |-7    |5    |8       |2      |-224.0|8        |\n|2        |0     |56    |5    |8       |2      |224   |8        |\n|2        |1     |-8    |5    |8       |2      |-256  |8        |\n|2        |0     |14    |6    |8       |2      |7     |1        |\n|2        |1     |-3    |6    |8       |2      |-12.0 |1        |\n|2        |2     |1     |6    |8       |2      |32.0  |1        |\n|2        |0     |6     |6    |8       |2      |3     |1        |\n|2        |1     |-2    |6    |8       |2      |-8    |1        |\n|2        |1     |-3    |6    |8       |2      |-12.0 |1        |\n|2        |0     |12    |6    |8       |2      |6     |1        |\n|2        |1     |-4    |6    |8       |2      |-16   |1        |\n|2        |2     |1     |6    |8       |2      |32.0  |1        |\n|2        |1     |-4    |6    |8       |2      |-32   |2        |\n|2        |0     |20    |6    |8       |2      |20    |2        |\n|2        |2     |1     |6    |8       |2      |64.0  |2        |\n|2        |1     |-5    |6    |8       |2      |-40.0 |2        |\n|2        |1     |-5    |6    |8       |2      |-80.0 |4        |\n|2        |0     |30    |6    |8       |2      |60    |4        |\n|2        |1     |-6    |6    |8       |2      |-96   |4        |\n|2        |2     |1     |6    |8       |2      |128.0 |4        |\n|2        |2     |1     |6    |8       |2      |256.0 |8        |\n|2        |1     |-7    |6    |8       |2      |-224.0|8        |\n|2        |1     |-6    |6    |8       |2      |-192  |8        |\n|2        |0     |42    |6    |8       |2      |168   |8        |\n|2        |2     |1     |6    |8       |2      |512.0 |16       |\n|2        |1     |-8    |6    |8       |2      |-512  |16       |\n|2        |0     |56    |6    |8       |2      |448   |16       |\n|2        |1     |-7    |6    |8       |2      |-448.0|16       |\n|2        |0     |16    |7    |8       |2      |8     |1        |\n|2        |1     |-2    |7    |8       |2      |-8    |1        |\n|2        |1     |-1    |7    |8       |2      |-4.0  |1        |\n|2        |2     |1     |7    |8       |2      |32.0  |1        |\n|2        |0     |2     |7    |8       |2      |1     |1        |\n|2        |0     |6     |7    |8       |2      |3     |1        |\n|2        |2     |1     |7    |8       |2      |32.0  |1        |\n|2        |1     |-2    |7    |8       |2      |-8    |1        |\n|2        |1     |-3    |7    |8       |2      |-12.0 |1        |\n|2        |1     |-3    |7    |8       |2      |-24.0 |2        |\n|2        |1     |-4    |7    |8       |2      |-32   |2        |\n|2        |0     |12    |7    |8       |2      |12    |2        |\n|2        |2     |1     |7    |8       |2      |64.0  |2        |\n|2        |0     |20    |7    |8       |2      |40    |4        |\n|2        |1     |-4    |7    |8       |2      |-64   |4        |\n|2        |2     |1     |7    |8       |2      |128.0 |4        |\n|2        |1     |-5    |7    |8       |2      |-80.0 |4        |\n|2        |2     |1     |7    |8       |2      |256.0 |8        |\n|2        |1     |-5    |7    |8       |2      |-160.0|8        |\n|2        |0     |30    |7    |8       |2      |120   |8        |\n|2        |1     |-6    |7    |8       |2      |-192  |8        |\n|2        |2     |1     |7    |8       |2      |512.0 |16       |\n|2        |1     |-7    |7    |8       |2      |-448.0|16       |\n|2        |1     |-6    |7    |8       |2      |-384  |16       |\n|2        |0     |42    |7    |8       |2      |336   |16       |\n|2        |1     |-7    |7    |8       |2      |-896.0|32       |\n|2        |1     |-8    |7    |8       |2      |-1024 |32       |\n|2        |2     |1     |7    |8       |2      |1024.0|32       |\n|2        |0     |56    |7    |8       |2      |896   |32       |\n+---------+------+------+-----+--------+-------+------+---------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786513_1232940357",
+      "id": "20210208-090733_2060077126",
+      "dateCreated": "2021-02-18 11:13:06.513",
+      "dateStarted": "2021-02-19 14:48:53.755",
+      "dateFinished": "2021-02-19 14:48:54.772",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "9. GroupedScalarRowsSum  Aggrigator (for scalars)",
+      "text": "//case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\n//case class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\n//case class indexSum(iSum:String,finalISum:String)\n\n\nimport org.apache.spark.sql.{Encoder, Encoders}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport scala.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nobject GroupedScalarRowsSum extends Aggregator[s12Re, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  def reduce(buffer: indexSum, s3TR: s12Re): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.scalar)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n  def finish(reduction: indexSum): String \u003d reduction.iSum\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n//}\n\n\ndef main(args:Array[String]) {\n\nval ds\u003d z.get(args(0)).asInstanceOf[Dataset[s12Re]]\n                                                                                                 // val extendResultDSCoun\u003dds.count()\nval scalarResult \u003d GroupedScalarRowsSum.toColumn.name(\"scalar_Result\")\nval kDS\u003d ds.groupByKey(x\u003d\u003e(x.index,x.rowScalar.toInt,x.degree.toInt))\n   .agg(scalarResult)\n//   .orderBy(asc(\"key\"))\nval kdsCount\u003dkDS.count()\nkDS.show(kdsCount.toInt,false)\nkDS.schema                                                                                      //  val iResult \u003d ds.select(indexResult)\nz.put(args(1),kDS)\n\n}\n\n}                                                                                                //  iResult.show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:48:57.912",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.{Encoder, Encoders}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport scala.math.BigDecimal\r\nimport org.apache.spark.sql.types.DecimalType\r\ndefined object GroupedScalarRowsSum\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786516_-454309615",
+      "id": "20210208-101257_987068514",
+      "dateCreated": "2021-02-18 11:13:06.516",
+      "dateStarted": "2021-02-19 14:48:57.957",
+      "dateFinished": "2021-02-19 14:48:58.798",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "10. GroupedScalarRowsSum object calls.",
+      "text": "GroupedScalarRowsSum.main(Array(\"rUdfMaxN8\",\"KvDS\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:03.493",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+-------------+\n|key     |scalar_Result|\n+--------+-------------+\n|[7,16,2]|1            |\n|[7,1,1] |-8           |\n|[5,4,0] |42           |\n|[5,2,2] |1            |\n|[6,4,2] |1            |\n|[5,1,1] |-16          |\n|[6,1,2] |2            |\n|[6,8,1] |-13          |\n|[6,1,0] |32           |\n|[5,1,2] |2            |\n|[3,1,1] |-24          |\n|[4,2,2] |1            |\n|[7,32,0]|56           |\n|[7,2,0] |12           |\n|[7,4,0] |20           |\n|[7,2,2] |1            |\n|[6,16,2]|1            |\n|[7,32,2]|1            |\n|[7,1,0] |24           |\n|[4,2,0] |42           |\n|[5,8,1] |-15          |\n|[7,4,1] |-9           |\n|[5,8,2] |1            |\n|[4,1,0] |60           |\n|[4,2,1] |-13          |\n|[6,16,0]|56           |\n|[6,16,1]|-15          |\n|[4,4,1] |-15          |\n|[2,1,0] |104          |\n|[6,2,1] |-9           |\n|[3,1,0] |80           |\n|[5,1,0] |44           |\n|[6,2,2] |1            |\n|[5,4,1] |-13          |\n|[7,8,0] |30           |\n|[7,1,2] |2            |\n|[4,4,0] |56           |\n|[7,8,1] |-11          |\n|[5,2,0] |30           |\n|[6,2,0] |20           |\n|[7,16,1]|-13          |\n|[2,1,1] |-28          |\n|[7,4,2] |1            |\n|[4,1,1] |-20          |\n|[3,1,2] |2            |\n|[3,2,1] |-15          |\n|[3,2,2] |1            |\n|[4,1,2] |2            |\n|[7,16,0]|42           |\n|[6,4,0] |30           |\n|[7,8,2] |1            |\n|[6,8,0] |42           |\n|[7,2,1] |-7           |\n|[5,8,0] |56           |\n|[4,4,2] |1            |\n|[5,2,1] |-11          |\n|[7,32,1]|-15          |\n|[6,8,2] |1            |\n|[5,4,2] |1            |\n|[2,1,2] |2            |\n|[3,2,0] |56           |\n|[6,4,1] |-11          |\n|[6,1,1] |-12          |\n+--------+-------------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786517_1214852580",
+      "id": "20210214-114539_1462019505",
+      "dateCreated": "2021-02-18 11:13:06.517",
+      "dateStarted": "2021-02-19 14:49:03.539",
+      "dateFinished": "2021-02-19 14:49:07.771",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 11:13:06.519",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786518_-476546104",
+      "id": "20210214-114537_1384017451",
+      "dateCreated": "2021-02-18 11:13:06.518",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "11. Unpack Grouped DataFrame keys.",
+      "text": "object MapKVUDF extends Serializable {\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset,Row}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\ndef main(args:Array[String]) {\n\nval df\u003d z.get(args(0)).asInstanceOf[DataFrame]\n//df.schema                                                           \n//df.show()\n\nval kDS \u003d df.select($\"*\", $\"key.*\")\nkDS.show\nz.put(args(1),kDS)\n\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:12.357",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object MapKVUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786519_79980398",
+      "id": "20210208-101257_847792707",
+      "dateCreated": "2021-02-18 11:13:06.519",
+      "dateStarted": "2021-02-19 14:49:12.394",
+      "dateFinished": "2021-02-19 14:49:12.645",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "12.  MapKVDF object call.",
+      "text": "MapKVUDF.main(Array(\"KvDS\",\"KvDSUnpavked\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:16.610",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+-------------+---+---+---+\n|     key|scalar_Result| _1| _2| _3|\n+--------+-------------+---+---+---+\n|[7,16,2]|            1|  7| 16|  2|\n| [7,1,1]|           -8|  7|  1|  1|\n| [5,4,0]|           42|  5|  4|  0|\n| [5,2,2]|            1|  5|  2|  2|\n| [6,4,2]|            1|  6|  4|  2|\n| [5,1,1]|          -16|  5|  1|  1|\n| [6,1,2]|            2|  6|  1|  2|\n| [6,8,1]|          -13|  6|  8|  1|\n| [6,1,0]|           32|  6|  1|  0|\n| [5,1,2]|            2|  5|  1|  2|\n| [3,1,1]|          -24|  3|  1|  1|\n| [4,2,2]|            1|  4|  2|  2|\n|[7,32,0]|           56|  7| 32|  0|\n| [7,2,0]|           12|  7|  2|  0|\n| [7,4,0]|           20|  7|  4|  0|\n| [7,2,2]|            1|  7|  2|  2|\n|[6,16,2]|            1|  6| 16|  2|\n|[7,32,2]|            1|  7| 32|  2|\n| [7,1,0]|           24|  7|  1|  0|\n| [4,2,0]|           42|  4|  2|  0|\n+--------+-------------+---+---+---+\nonly showing top 20 rows\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786520_53937093",
+      "id": "20210208-101257_2013165688",
+      "dateCreated": "2021-02-18 11:13:06.520",
+      "dateStarted": "2021-02-19 14:49:16.650",
+      "dateFinished": "2021-02-19 14:49:17.408",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "13. RowScalar,DegreePivot object.",
+      "text": "object RowScalarDegreePivot extends Serializable {\n\nimport org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.types.DecimalType\n\ndef main(args:Array[String]) {\n\nval df\u003d z.get(args(0)).asInstanceOf[DataFrame]\n//df.show\nval groupDf \u003d df.withColumn(\"N\",col(\"_1\").cast(DecimalType(25,0)))\n                .withColumn(\"rowScalar\",col(\"_2\").cast(DecimalType(25,0)))\n                .withColumn(\"degree\",col(\"_3\").cast(DecimalType(25,0)))\n                .withColumn(\"scalar\",col(\"scalar_Result\").cast(DecimalType(25,0)))\n                .orderBy(asc(\"N\"),asc(\"rowScalar\"))\n                .groupBy(\"N\",\"rowScalar\")\n                .pivot(\"degree\")\n                .agg(sum(\"scalar\"))\nval groupDfCount \u003d groupDf.count()\ngroupDf.show(groupDfCount.toInt,false)\ngroupDf.schema\nz.put(args(1),groupDf)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:21.337",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object RowScalarDegreePivot\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786520_-1931133835",
+      "id": "20210205-151134_1378140479",
+      "dateCreated": "2021-02-18 11:13:06.520",
+      "dateStarted": "2021-02-19 14:49:21.371",
+      "dateFinished": "2021-02-19 14:49:21.590",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "14. RowScalarDegreePivot object calls.",
+      "text": "RowScalarDegreePivot.main(Array(\"KvDSUnpavked\",\"pivotDF\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:25.606",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+---------+---+---+---+\n|N  |rowScalar|0  |1  |2  |\n+---+---------+---+---+---+\n|2  |1        |104|-28|2  |\n|3  |1        |80 |-24|2  |\n|3  |2        |56 |-15|1  |\n|4  |1        |60 |-20|2  |\n|4  |2        |42 |-13|1  |\n|4  |4        |56 |-15|1  |\n|5  |1        |44 |-16|2  |\n|5  |2        |30 |-11|1  |\n|5  |4        |42 |-13|1  |\n|5  |8        |56 |-15|1  |\n|6  |1        |32 |-12|2  |\n|6  |2        |20 |-9 |1  |\n|6  |4        |30 |-11|1  |\n|6  |8        |42 |-13|1  |\n|6  |16       |56 |-15|1  |\n|7  |1        |24 |-8 |2  |\n|7  |2        |12 |-7 |1  |\n|7  |4        |20 |-9 |1  |\n|7  |8        |30 |-11|1  |\n|7  |16       |42 |-13|1  |\n|7  |32       |56 |-15|1  |\n+---+---------+---+---+---+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786521_593243788",
+      "id": "20210215-091148_1643252369",
+      "dateCreated": "2021-02-18 11:13:06.521",
+      "dateStarted": "2021-02-19 14:49:25.642",
+      "dateFinished": "2021-02-19 14:49:34.434",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "15. PivotrEvaluateUDF object implements Quadratic Equation.",
+      "text": "object PivotEvaluateUDF extends Serializable {\n\n//case class s12QQu(index:String,MaxN:String,rowScalar:String,divisor:String,scalar:String,degree:String)\n//case class s12Re(dimension:String,degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String,rowScalar:String)\n//case class indexSum(iSum:String,finalISum:String)\n//case class s3ARe(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,result:String)\n//case class pivotE(rowScalar:DecimalType,zero:DecimalType,one:DecimalType,two:DecimalType)\n//case class roots(rowScalar:String,root1:String,root2:String,a:String,b:String,c:String)\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\nimport org.apache.spark.sql.{Encoder, Encoders}\n\ndef quadEqu(rowP:pivotE): roots \u003d {      //           need to include the rowCounter multiplication  and remember all are BigDecimal.\n\n  val four \u003d new BigDecimal(4)\n  val zero \u003d new BigDecimal(0)\n  val two \u003d new BigDecimal(2)\n  val rowScalar \u003d new BigDecimal(rowP.rowScalar)\n  val a \u003d new BigDecimal(rowP.two)\n  val aMM \u003d rowScalar.multiply(a)\n  val aM \u003d aMM.divide(two)\n  \n  val twoA \u003d aM.multiply(two)\n  val b \u003d new BigDecimal(rowP.one)\n  val bMM \u003d rowScalar.multiply(b)\n  val bM \u003d bMM.divide(two)\n  \n  val negB \u003d zero.subtract(bM)\n  val negBdTwoA \u003d negB.divide(twoA)\n  val bSqr \u003d bM.pow(2)\n  val c \u003d new BigDecimal(rowP.zero)\n  val cMM \u003d rowScalar.multiply(c)\n  val cM \u003d cMM.divide(two)\n  \n  val ac\u003d aM.multiply(cM)\n  val fac \u003d ac.multiply(four)\n  val disc \u003d bSqr.subtract(fac)\n  val discD \u003d disc.doubleValue()    \n  if (discD\u003e0) {\n    val discSqr \u003d Math.sqrt(discD)\n    val discSqrBD \u003d new BigDecimal(discSqr)\n    val discSqrdTwoA \u003d discSqrBD.divide(twoA)\n    val rootOne \u003d negBdTwoA.add(discSqrdTwoA)\n    val rootTwo \u003d negBdTwoA.subtract(discSqrdTwoA)\n    val s \u003d roots(rowP.N,rowP.rowScalar,rootOne.toPlainString(),rootTwo.toPlainString(),rowP.two,rowP.one,rowP.zero)\n    s\n    } else \n    {\n    val s \u003d roots(rowP.N,rowP.rowScalar,\"no \",\"root \",rowP.two,rowP.one,rowP.zero)\n    s\n    }\n }\n\ndef main(args:Array[String]) {\n//val df\u003d z.get(args(0)).asInstanceOf[DataFrame]\nspark.udf.register(\"qEque\", quadEqu _)\nval dfff\u003d z.get(args(0)).asInstanceOf[DataFrame]\n//dfff.show(false)\n//val ds: Dataset[pivotE] \u003d df.as[pivotE]\nval dss \u003ddfff.map(row \u003d\u003e pivotE(row.getDecimal(0).toPlainString(), row.getDecimal(1).toPlainString(), row.getDecimal(2).toPlainString(), row.getDecimal(3).toPlainString(),row.getDecimal(4).toPlainString()))\n//dss.show(false)\nval dsss\u003ddss.map{f \u003d\u003e quadEqu(pivotE(f.N,f.rowScalar,f.zero,f.one,f.two)) }\n//dss.show(false)\n//val dss\u003dds.map{f \u003d\u003e extendResult(s12QQu(f.index,f.MaxN,f.rowScalar,f.divisor,f.scalar,f.degree)) }\nval dsssCount\u003ddsss.count()\ndsss.show(dsssCount.toInt,false)\nz.put(args(1),dsss)\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:37.690",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object PivotEvaluateUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786522_1498922576",
+      "id": "20210205-151137_1233487395",
+      "dateCreated": "2021-02-18 11:13:06.522",
+      "dateStarted": "2021-02-19 14:49:37.727",
+      "dateFinished": "2021-02-19 14:49:38.091",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "16.  PivotEvaluateUDF object calls.",
+      "text": "PivotEvaluateUDF.main(Array(\"pivotDF\",\"RootsMaxn8Range\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:42.830",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+---------+-----+-----+---+---+---+\n|N  |rowScalar|root1|root2|a  |b  |c  |\n+---+---------+-----+-----+---+---+---+\n|2  |1        |no   |root |2  |-28|104|\n|3  |1        |no   |root |2  |-24|80 |\n|3  |2        |8.0  |7.0  |1  |-15|56 |\n|4  |1        |no   |root |2  |-20|60 |\n|4  |2        |7.0  |6.0  |1  |-13|42 |\n|4  |4        |8.0  |7.0  |1  |-15|56 |\n|5  |1        |no   |root |2  |-16|44 |\n|5  |2        |6.0  |5.0  |1  |-11|30 |\n|5  |4        |7.0  |6.0  |1  |-13|42 |\n|5  |8        |8.0  |7.0  |1  |-15|56 |\n|6  |1        |no   |root |2  |-12|32 |\n|6  |2        |5.0  |4.0  |1  |-9 |20 |\n|6  |4        |6.0  |5.0  |1  |-11|30 |\n|6  |8        |7.0  |6.0  |1  |-13|42 |\n|6  |16       |8.0  |7.0  |1  |-15|56 |\n|7  |1        |no   |root |2  |-8 |24 |\n|7  |2        |4.0  |3.0  |1  |-7 |12 |\n|7  |4        |5.0  |4.0  |1  |-9 |20 |\n|7  |8        |6.0  |5.0  |1  |-11|30 |\n|7  |16       |7.0  |6.0  |1  |-13|42 |\n|7  |32       |8.0  |7.0  |1  |-15|56 |\n+---+---------+-----+-----+---+---+---+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786523_-1524457449",
+      "id": "20210210-100208_1152583877",
+      "dateCreated": "2021-02-18 11:13:06.523",
+      "dateStarted": "2021-02-19 14:49:42.867",
+      "dateFinished": "2021-02-19 14:49:46.881",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 11:13:06.524",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786523_246525227",
+      "id": "20210210-100207_1984510727",
+      "dateCreated": "2021-02-18 11:13:06.523",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 11:13:06.524",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786524_1283503543",
+      "id": "20210210-100207_2100624723",
+      "dateCreated": "2021-02-18 11:13:06.524",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "17.  GroupedDegreeSum object (aggrigate by degree across all rowScalars)",
+      "text": "import org.apache.spark.sql.{Encoder, Encoders}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.Dataset\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\n\nobject GroupedDegreeSum extends Aggregator[s12Re, indexSum, String] {\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n\n  def reduce(buffer: indexSum, s3TR: s12Re): indexSum \u003d {\n    val iSum \u003d new BigDecimal(buffer.iSum)\n    val divisor \u003d new BigDecimal(s3TR.divisor)\n    val scalar \u003d new BigDecimal(s3TR.scalar)\n    val rowScalar \u003d new BigDecimal(s3TR.rowScalar)\n    val sRScalar \u003d scalar.multiply(rowScalar)\n    val dsRScalar \u003d sRScalar.divide(divisor)                               \n    val red1 \u003d iSum.add(dsRScalar)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.toPlainString,red2)\n  }\n\n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val b1isum \u003d new BigDecimal(b1.iSum)\n    val b2isum \u003d new BigDecimal(b2.iSum)\n    val mer1\u003d b1isum.add(b2isum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.toPlainString,mer2)\n  }\n\n  def finish(reduction: indexSum): String \u003d reduction.iSum\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n\ndef main(args:Array[String]) {\n\nval ds\u003d z.get(args(0)).asInstanceOf[Dataset[s12Re]]\nval scalarResult \u003d GroupedDegreeSum.toColumn.name(\"scalar_Result\")\nval kDS\u003d ds.groupByKey(x\u003d\u003e(x.maxIndex,x.index.toInt,x.degree.toInt))\n   .agg(scalarResult)\n//   .orderBy(asc(\"key\"))\nval kdsCount\u003dkDS.count()\nkDS.show(kdsCount.toInt,false)\nkDS.schema\nz.put(args(1),kDS)\n\n}\n} ",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:52.655",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.{Encoder, Encoders}\r\nimport org.apache.spark.sql.expressions.Aggregator\r\nimport spark.implicits._\r\nimport org.apache.spark.sql.Dataset\r\nimport java.math.BigDecimal\r\nimport org.apache.spark.sql.types.DecimalType\r\ndefined object GroupedDegreeSum\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786525_-302021956",
+      "id": "20210210-100205_452575257",
+      "dateCreated": "2021-02-18 11:13:06.525",
+      "dateStarted": "2021-02-19 14:49:52.693",
+      "dateFinished": "2021-02-19 14:49:53.421",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "18. GroupedDegreeSum object calls.",
+      "text": "GroupedDegreeSum.main(Array(\"rUdfMaxN8\",\"KvDegreeDS\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:49:58.569",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+-------------+\n|key    |scalar_Result|\n+-------+-------------+\n|[8,6,1]|-209.0       |\n|[8,5,0]|360          |\n|[8,4,0]|184          |\n|[8,6,0]|712          |\n|[8,3,1]|-27.0        |\n|[8,5,1]|-105.0       |\n|[8,3,2]|2.0          |\n|[8,7,0]|1416         |\n|[8,2,2]|1.0          |\n|[8,5,2]|8.0          |\n|[8,2,1]|-14.0        |\n|[8,4,2]|4.0          |\n|[8,3,0]|96           |\n|[8,4,1]|-53.0        |\n|[8,7,1]|-417.0       |\n|[8,7,2]|32.0         |\n|[8,2,0]|52           |\n|[8,6,2]|16.0         |\n+-------+-------------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786525_-1801507874",
+      "id": "20210210-100203_762656065",
+      "dateCreated": "2021-02-18 11:13:06.525",
+      "dateStarted": "2021-02-19 14:49:58.601",
+      "dateFinished": "2021-02-19 14:50:00.460",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "19.  Unpack GroupedDegreeSum result DataFrame.",
+      "text": "MapKVUDF.main(Array(\"KvDegreeDS\",\"KvDegreeDSUnpavked\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:50:03.013",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+-------------+---+---+---+\n|    key|scalar_Result| _1| _2| _3|\n+-------+-------------+---+---+---+\n|[8,6,1]|       -209.0|  8|  6|  1|\n|[8,5,0]|          360|  8|  5|  0|\n|[8,4,0]|          184|  8|  4|  0|\n|[8,6,0]|          712|  8|  6|  0|\n|[8,3,1]|        -27.0|  8|  3|  1|\n|[8,5,1]|       -105.0|  8|  5|  1|\n|[8,3,2]|          2.0|  8|  3|  2|\n|[8,7,0]|         1416|  8|  7|  0|\n|[8,2,2]|          1.0|  8|  2|  2|\n|[8,5,2]|          8.0|  8|  5|  2|\n|[8,2,1]|        -14.0|  8|  2|  1|\n|[8,4,2]|          4.0|  8|  4|  2|\n|[8,3,0]|           96|  8|  3|  0|\n|[8,4,1]|        -53.0|  8|  4|  1|\n|[8,7,1]|       -417.0|  8|  7|  1|\n|[8,7,2]|         32.0|  8|  7|  2|\n|[8,2,0]|           52|  8|  2|  0|\n|[8,6,2]|         16.0|  8|  6|  2|\n+-------+-------------+---+---+---+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786526_-978997048",
+      "id": "20210215-112011_1934203994",
+      "dateCreated": "2021-02-18 11:13:06.526",
+      "dateStarted": "2021-02-19 14:50:03.059",
+      "dateFinished": "2021-02-19 14:50:03.708",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "20. DropKeyColumn object (clean up key,value dataframe)",
+      "text": "object DropKeyColumn extends Serializable {\n\nimport org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.types.StringType\n\ndef main(args:Array[String]) {\n\nval df\u003d z.get(args(0)).asInstanceOf[DataFrame]\nval dropedDf \u003d df.withColumn(\"MaxN\",col(\"_1\").cast(StringType))\n                 .withColumn(\"N\",col(\"_2\").cast(StringType))\n                 .withColumn(\"Degree\",col(\"_3\").cast(StringType))\n                 .withColumn(\"Scalar\",col(\"scalar_Result\").cast(StringType))\n                 .orderBy(asc(\"N\"),asc(\"Degree\"))\n                 .drop(\"key\")\n                 .drop(\"_1\")\n                 .drop(\"_2\")\n                 .drop(\"_3\")\n                 .drop(\"scalar_result\")\ndropedDf.show                \nz.put(args(1),dropedDf)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:50:10.412",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object DropKeyColumn\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786527_-890809065",
+      "id": "20210215-112511_868748672",
+      "dateCreated": "2021-02-18 11:13:06.527",
+      "dateStarted": "2021-02-19 14:50:10.442",
+      "dateFinished": "2021-02-19 14:50:10.645",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "21. DropKeyColumn object call. ",
+      "text": "DropKeyColumn.main(Array(\"KvDegreeDSUnpavked\",\"ReducedMaxN8Range\" ))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:50:16.244",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+---+------+------+\n|MaxN|  N|Degree|Scalar|\n+----+---+------+------+\n|   8|  2|     0|    52|\n|   8|  2|     1| -14.0|\n|   8|  2|     2|   1.0|\n|   8|  3|     0|    96|\n|   8|  3|     1| -27.0|\n|   8|  3|     2|   2.0|\n|   8|  4|     0|   184|\n|   8|  4|     1| -53.0|\n|   8|  4|     2|   4.0|\n|   8|  5|     0|   360|\n|   8|  5|     1|-105.0|\n|   8|  5|     2|   8.0|\n|   8|  6|     0|   712|\n|   8|  6|     1|-209.0|\n|   8|  6|     2|  16.0|\n|   8|  7|     0|  1416|\n|   8|  7|     1|-417.0|\n|   8|  7|     2|  32.0|\n+----+---+------+------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786527_-1221036047",
+      "id": "20210215-112513_978311552",
+      "dateCreated": "2021-02-18 11:13:06.527",
+      "dateStarted": "2021-02-19 14:50:16.276",
+      "dateFinished": "2021-02-19 14:50:17.014",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "21.5 Pivot 21 (for narrative).",
+      "text": "object AggrigatedScalarDegreePivot extends Serializable {\n\nimport org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.types.DecimalType\n\ndef main(args:Array[String]) {\n\nval dh\u003d z.get(args(0)).asInstanceOf[DataFrame]\n// dh.show\nval groupDff \u003d dh.withColumn(\"N\",col(\"N\").cast(DecimalType(25,0)))\n                .withColumn(\"Degree\",col(\"Degree\").cast(DecimalType(25,0)))\n                .withColumn(\"Scalar\",col(\"Scalar\").cast(DecimalType(25,0)))\n                .orderBy(asc(\"N\"),asc(\"Degree\"))\n                .groupBy(\"N\")\n                .pivot(\"Degree\")\n                .agg(sum(\"Scalar\"))\nval groupDfCount \u003d groupDff.count()\ngroupDff.show(groupDfCount.toInt,false)\ngroupDff.schema\nz.put(args(1),groupDff)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:50:19.799",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object AggrigatedScalarDegreePivot\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786528_1088928089",
+      "id": "20210216-134613_190280383",
+      "dateCreated": "2021-02-18 11:13:06.528",
+      "dateStarted": "2021-02-19 14:50:19.826",
+      "dateFinished": "2021-02-19 14:50:20.017",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "21.50 AggrigatedScalarDegreePivot call.",
+      "text": "AggrigatedScalarDegreePivot.main(Array(\"ReducedMaxN8Range\",\"ReducedMaxN8RangePivot\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:50:25.071",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+----+----+---+\n|N  |0   |1   |2  |\n+---+----+----+---+\n|4  |184 |-53 |4  |\n|7  |1416|-417|32 |\n|3  |96  |-27 |2  |\n|2  |52  |-14 |1  |\n|5  |360 |-105|8  |\n|6  |712 |-209|16 |\n+---+----+----+---+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786528_-127486500",
+      "id": "20210216-134808_1295528548",
+      "dateCreated": "2021-02-18 11:13:06.528",
+      "dateStarted": "2021-02-19 14:50:25.100",
+      "dateFinished": "2021-02-19 14:50:34.128",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "22. ReducedResultUDF object  (usual term calculate).",
+      "text": "object ReducedResultUDF extends Serializable {\n\n//case class redScal(Scalar:String,MaxN:String,N:String,Degree:String)\n//case class redScalR(Scalar:String,N:String,Degree:String,result:String,MaxN:String)\n\nimport zadscripts.DFScripts\nimport org.apache.spark.sql.{DataFrame,Dataset}\nimport scala.collection.mutable.ArrayBuffer\nimport java.math.BigDecimal\nimport org.apache.spark.sql.types.DecimalType\nimport spark.implicits._\n\ndef extendResult(qQuerry:redScal): redScalR \u003d {      // need to include the rowCounter multiplication\n  val scalar \u003d new BigDecimal(qQuerry.Scalar)\n  val degre \u003d qQuerry.Degree.toInt\n  val degree \u003d degre.toInt\n  val index \u003d new BigDecimal(qQuerry.MaxN)\n  val indexPower \u003d index.pow(degree)\n  val result \u003d indexPower.multiply(scalar)\n  val s\u003d  redScalR(scalar.toPlainString,qQuerry.N,qQuerry.Degree,result.toPlainString,qQuerry.MaxN)\n  s\n}\n\ndef main(args:Array[String]) {\n    \nimport org.apache.spark.sql.DataFrame\nval dp\u003d z.get(args(0)).asInstanceOf[DataFrame]\nspark.udf.register(\"eResult\", extendResult _)\n\nval dpp \u003ddp.map(row \u003d\u003e redScal(row.getString(3), row.getString(0), row.getString(1),row.getString(2)))\n\n\nval dppp\u003ddpp.map{f \u003d\u003e extendResult(redScal(f.Scalar,f.MaxN,f.N,f.Degree)) }\n\ndppp.show(false)\n\n\nz.put(args(1),dppp)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:50:41.476",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ReducedResultUDF\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786529_-517799601",
+      "id": "20210215-112515_804285651",
+      "dateCreated": "2021-02-18 11:13:06.529",
+      "dateStarted": "2021-02-19 14:50:41.504",
+      "dateFinished": "2021-02-19 14:50:41.881",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "23. ReducedResultUDF object call.",
+      "text": "ReducedResultUDF.main(Array(\"ReducedMaxN8Range\",\"ReducedMaxN8RangeResult\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:50:49.667",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------+---+------+-------+----+\n|Scalar|N  |Degree|result |MaxN|\n+------+---+------+-------+----+\n|52    |2  |0     |52     |8   |\n|-14.0 |2  |1     |-112.0 |8   |\n|1.0   |2  |2     |64.0   |8   |\n|96    |3  |0     |96     |8   |\n|-27.0 |3  |1     |-216.0 |8   |\n|2.0   |3  |2     |128.0  |8   |\n|184   |4  |0     |184    |8   |\n|-53.0 |4  |1     |-424.0 |8   |\n|4.0   |4  |2     |256.0  |8   |\n|360   |5  |0     |360    |8   |\n|-105.0|5  |1     |-840.0 |8   |\n|8.0   |5  |2     |512.0  |8   |\n|712   |6  |0     |712    |8   |\n|-209.0|6  |1     |-1672.0|8   |\n|16.0  |6  |2     |1024.0 |8   |\n|1416  |7  |0     |1416   |8   |\n|-417.0|7  |1     |-3336.0|8   |\n|32.0  |7  |2     |2048.0 |8   |\n+------+---+------+-------+----+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786529_32282817",
+      "id": "20210215-135322_352475835",
+      "dateCreated": "2021-02-18 11:13:06.529",
+      "dateStarted": "2021-02-19 14:50:49.710",
+      "dateFinished": "2021-02-19 14:50:51.221",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "23.5 ReducedResultUDFPivot object",
+      "text": "object ReducedResultUDFPivot extends Serializable {\n\nimport org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.types.DecimalType\n\ndef main(args:Array[String]) {\n\nval dhh\u003d z.get(args(0)).asInstanceOf[DataFrame]\n// dh.show\nval groupDfff \u003d dhh.withColumn(\"MaxN\",col(\"MaxN\").cast(DecimalType(25,0)))\n                   .withColumn(\"N\",col(\"N\").cast(DecimalType(25,0)))\n                   .withColumn(\"Degree\",col(\"Degree\").cast(DecimalType(25,0)))\n                   .withColumn(\"Result\",col(\"result\").cast(DecimalType(25,0)))\n//                  .orderBy(asc(\"nBD\"),asc(\"rowCounterBD\"))\n                   .groupBy(\"MaxN\",\"N\")\n                   .pivot(\"Degree\")\n                   .agg(sum(\"Result\"))\nval groupDfCount \u003d groupDfff.count()\ngroupDfff.show(groupDfCount.toInt,false)\ngroupDfff.schema\nz.put(args(1),groupDfff)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:53:04.400",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ReducedResultUDFPivot\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786530_913978695",
+      "id": "20210216-141059_433921101",
+      "dateCreated": "2021-02-18 11:13:06.530",
+      "dateStarted": "2021-02-19 14:53:04.428",
+      "dateFinished": "2021-02-19 14:53:04.615",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "ReducedResultUDFPivot object calls.",
+      "text": "ReducedResultUDFPivot.main(Array(\"ReducedMaxN8RangeResult\",\"ReducedMaxN8RangeResultPivot\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 14:53:07.743",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+---+----+-----+----+\n|MaxN|N  |0   |1    |2   |\n+----+---+----+-----+----+\n|8   |2  |52  |-112 |64  |\n|8   |5  |360 |-840 |512 |\n|8   |4  |184 |-424 |256 |\n|8   |6  |712 |-1672|1024|\n|8   |3  |96  |-216 |128 |\n|8   |7  |1416|-3336|2048|\n+----+---+----+-----+----+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786531_634484074",
+      "id": "20210216-141102_919254787",
+      "dateCreated": "2021-02-18 11:13:06.531",
+      "dateStarted": "2021-02-19 14:53:07.774",
+      "dateFinished": "2021-02-19 14:53:17.606",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "24. ReducedRowsSum object .",
+      "text": "object ReducedRowsSum extends Aggregator[redScalR, indexSum, String] {\n\nimport org.apache.spark.sql.{Encoder, Encoders, SparkSession}\nimport org.apache.spark.sql.expressions.Aggregator\nimport spark.implicits._\nimport org.apache.spark.sql.{DataFrame,Dataset,Row}\nimport scala.math.BigDecimal\n\n  def zero: indexSum \u003d indexSum(\"0\", \"0\")\n  def reduce(buffer: indexSum, s3TR: redScalR): indexSum \u003d {\n    val red1\u003d BigDecimal(buffer.iSum)+BigDecimal(s3TR.result)\n    val red2\u003dbuffer.finalISum  \n    indexSum(red1.bigDecimal.toPlainString,red2)\n  }\n  \n  def merge(b1: indexSum, b2: indexSum): indexSum \u003d {\n    val mer1\u003dBigDecimal(b1.iSum)+BigDecimal(b2.iSum)\n    val mer2\u003db1.finalISum\n    indexSum(mer1.bigDecimal.toPlainString,mer2)\n  }\n \n  def finish(reduction: indexSum): String \u003d reduction.iSum\n  def bufferEncoder: Encoder[indexSum] \u003d Encoders.product\n  def outputEncoder: Encoder[String] \u003d Encoders.STRING\n\ndef main(args:Array[String]) {\n\nval de\u003d z.get(args(0)).asInstanceOf[DataFrame]\nval dee: Dataset[redScalR] \u003d de.as[redScalR]\n\n\nval indexResult \u003d ReducedRowsSum.toColumn.name(\"index_Result\")\nval iR24\u003ddee.groupByKey(x\u003d\u003e(x.MaxN,x.N))\n            .agg(indexResult)\nval iR24Count\u003diR24.count()\niR24.show(iR24Count.toInt,false)\n\n//val iResult \u003d dee.select(indexResult)\n//iResult.show(false)\nz.put(args(1),iR24)\n\n}\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 15:01:55.387",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined object ReducedRowsSum\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786531_-906828751",
+      "id": "20210215-140120_1232249831",
+      "dateCreated": "2021-02-18 11:13:06.531",
+      "dateStarted": "2021-02-19 15:01:55.415",
+      "dateFinished": "2021-02-19 15:01:55.770",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "25. ReducedRowsSum object call.",
+      "text": "ReducedRowsSum.main(Array(\"ReducedMaxN8RangeResult\",\"ReducedMaxN8RangeFinalResult\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 15:05:32.846",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+------------+\n|key  |index_Result|\n+-----+------------+\n|[8,2]|4.0         |\n|[8,5]|32.0        |\n|[8,7]|128.0       |\n|[8,3]|8.0         |\n|[8,6]|64.0        |\n|[8,4]|16.0        |\n+-----+------------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786532_2133839321",
+      "id": "20210216-090412_1810163370",
+      "dateCreated": "2021-02-18 11:13:06.532",
+      "dateStarted": "2021-02-19 15:05:32.880",
+      "dateFinished": "2021-02-19 15:05:37.650",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 11:13:06.534",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786534_1841486792",
+      "id": "20210217-100118_908050987",
+      "dateCreated": "2021-02-18 11:13:06.534",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2021-02-18 11:13:06.535",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613664786534_2120059116",
+      "id": "20210217-100116_1911433831",
+      "dateCreated": "2021-02-18 11:13:06.534",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphicZero-HigherDegreedP\u0027s",
+  "id": "2G1TWRHEF",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

@@ -1,0 +1,218 @@
+The show so far:
+
+
+IntegerPolys
+
+The polynomic sequence        why there are no real roots...  why are they square free...
+ZDCTH
+Convergance                   2014ods.ods has some calculator graphics exibiting 1 real root.
+                              GraphicSupplement NinMaxNQuad note has generalized sequence, limit proof. 
+Sturms Theorm
+Arc Length
+
+ZAD 
+N to Q
+The Power Set
+
+ML
+Rational Number lines                   
+Primes                                 important
+Determined/Underdetermined
+
+Odds and ends
+Diophantine newtons differences.
+
+As n to q
+use polynomials for n    - and ZDCTH,convergance, arc lengths.
+use roots for q          
+use polynomic sequences because
+make the map.            - newton
+use the map,             - rational numberlines, primes, determined/underdetermined.
+
+
+So, differentiate a quartet get the cubic.   
+Roots of cubits are easy.....
+scraped a solver into cubicSolver.java.  
+says one inflection point....
+
+
+GraphicSupplementNinMaxN   -- some function analysis.
+Have:
+     . the rows and columnes of n in Nmax.
+     . each sequence of a,b,c
+     . the derivitave of the a,b,c sequences.
+     . -b/2a
+
+
+And first {A_n}
+
+
+
+
+If the sequence does not converge to zero then the series diverges.
+If it does than the series may or may not.
+Have the -b/2A sequence. It converges.  f(Vertex) does not,  -  what sort of polynomials guarantee
+appropriate divergence?  Sturm insites of one real root.
+DifferenceDF does template the twoPs requiring v converges.  It is 
+not gereralized to higher degreed ps...  The twoPolynomials do but would
+be constructed differently than templet p's.
+
+New function:
+Need the P division worked into
+calculating the Sturm number.
+A scala exercise.
+Along with p differentiation,
+Two scala excersises.
+
+
+
+
+https://ltfai.org/lithuanian-folk-art/papercut-art-karpiniai/?fbclid=IwAR2dx8tjRn2549cXwlyAPJ9Xt016Y9irnGgeJRxR_6hEl17dMsi0SZ3OYMI
+
+
+
+wrong (see jpeg:)
+-13 + -14/ 2*1+1  27/3
+
+
+       +-----+----+----+---+----------+-----+----+----+-----+----+----+
+         |index|zero|one |two|indexGroup|zeroL|oneL|twoL|zeroD|oneD|twoD|
+   n     +-----+----+----+---+----------+-----+----+----+-----+----+----+
+ a_1     |2    |52  |-14 |1  |2         |     |    |    |     |    |    |
+ a_2     |3    |96  |-27 |2  |2         |52   |-14 |1   |44   |-13 |1   | 2^1 -1 =  1 
+ a_3     |4    |184 |-53 |4  |2         |96   |-27 |2   |88   |-26 |2   | 2^2 -1 =  3
+ a_4     |5    |360 |-105|8  |2         |184  |-53 |4   |176  |-52 |4   | 2^3 -1 =  7 
+ a_5     |6    |712 |-209|16 |2         |360  |-105|8   |352  |-104|8   | 2^4 -1 = 15
+ a_6     |7    |1416|-417|32 |2         |712  |-209|16  |704  |-208|16  | 2^5 -1 = 31 
+         +-----+----+----+---+----------+-----+----+----+-----+----+----+
+
+
+
+https://meta.stackexchange.com/questions/76902/how-can-i-write-a-math-formula-in-a-post
+https://www.mathcha.io/editor
+
+https://meta.mathoverflow.net/questions/3763/how-does-one-type-mathematical-formulas-on-this-site
+
+
+https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
+
+https://en.wikipedia.org/wiki/Sturm%27s_theorem
+
+
+
+Seems the quadratics exist as spark dataframes....
+Not like other d's also available as cyper scripts...
+
+
+So the outline is....
+
+An experiment is:
+
+plot  6,8,2    GraphicSuppleent NinMaxNQuadratics.
+      6,8,4    GraphicZero
+      6,8,8    ...
+      6,8,16   ...
+
+
+And are preparing data for Sturm hypothesis.
+
+11/30
+
+Got a grip on Sturm Hypothesis
+And...'
+
+Believe it will help answer question "what kind of P's are these?"
+
+Maybe p have no real roots.
+
+d/dx p has one real root.
+
+
+And want Neo4j to help.
+
+Can use a new note: GraphicSturm.
+It is to query an arbitrary P.       -GraphicZero objects.
+      differentiate P.               -new function.
+                                     -note are looking for zeros of derrivative.
+                                     -meaning dP/dx is p_0 of sturm sequence and will need differentiation.
+      use division scripts and complete Sturm sequence.
+      evaluate global number of roots.   - count the sign changes of each p's leading term 
+      evaluate expected interval.        - and count the result's sign changes.
+
+New function:
+Need the P division worked into
+calculating the Sturm number.
+A scala exercise.
+Along with p differentiation,
+Two scala excersises     
+
+
+
+
+
+
+
+
+
+how to::::
+https://docs.mathjax.org/en/latest/web/configuration.html
+
+
+https://math.stackexchange.com/questions/2376537/find-the-limit-of-the-bounded-decreasing-sequence
+note: above says use the recurrance not initial value form.  
+
+
+%md 
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax TeX Test Page</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+</head>
+<body>
+When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+</body>
+</html>
+
+
+%md 
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax TeX Test Page</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+</head>
+<body>
+When $$(a \ne 0\)$$, there are two solutions to $$(ax^2 + bx + c = 0)$$ and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+</body>
+</html>
+
+
+  $$ P(x) = Ax^2+Bx+C$$
+  $$ \frac{dP}{dx}= 2Ax+B $$
+  $$ \frac{-B}{2A}=Min  $$
+
+
+reduce the fractiom by n
+
+1st,2nd,3rd binomial formula.
+
+https://www.youtube.com/watch?v=0wefqjpQyKM
+does mention 2^x-1 geometric series.
+
+
+
+
+
+
+
+
+

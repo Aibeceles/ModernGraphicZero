@@ -1,0 +1,39 @@
+The tax.
+
+The one liner:
+
+did transaction a 
+and transaction b
+
+known because tran a at bottom of tax_1
+              tran b at bottom of tax_2
+
+
+
+
+c has list/set of interactions.    
+interactios least similar at l4
+interactions most similar at l1
+
+
+the technical hurdel:
+
+"unwind the graph"
+
+
+
+9785253001
+
+
+
+Thomas Pries is inviting you to a scheduled Zoom meeting.
+
+Topic: Thomas Pries' Zoom Meeting
+Time: Sep 5, 2022 04:00 PM Eastern Time (US and Canada)
+
+Join Zoom Meeting
+https://us04web.zoom.us/j/74966452458?pwd=2cgBPMekSb6smePrg1SBPcT1w2kaZS.1
+
+Meeting ID: 749 6645 2458
+Passcode: 35NJ4q
+

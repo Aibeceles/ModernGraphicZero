@@ -1,0 +1,3306 @@
+
+Things that differencess.ods tells:
+
+Need a function name for the comparason of psi sub j and psi sub j+1.
+
+The purpose of psiComparason is imply values of psi sub j+1 from
+psi sub j.
+
+Have congruences modulo i! which compose triangletriangle i.
+the congruences are ordered such that indexes x and x+1 have a minimum...
+
+A big revelation within differencess.ods is the equivalence sequence
+derived from psi i, triagtriag j, index k.
+
+It looks like the last big effort was working an example of the 
+equivelance sequence with parameterized modulos.
+
+It also looks like want to work from triag triag max down to 
+triag triag zero, the evaluate of P(k).
+
+For odd dimensions of P, can predict a zero in triag traig max-1 at 
+psi sub zero, k and implies triag triag max, max-1 are known.
+
+
+Things described in FIDFormulas.odt:
+
+FIDFormulas celebrates the triagtriag equation, an expression of iterated
+differences.  TriagTriag is a linear Diophantine Equation ax+by=c.
+It happens that x=-y and is derrived from the factorial at nMax-i.
+c can be written in terms of the factorial at nMax-(i+1).
+
+
+ax! + bx! = c(x+1)!
+
+so, the Diophantine equation is usually written as ax+by = c and
+are interested if the greatest common devisor of a and b devides c.
+differencess.ods expresses a and b as both x!.  It is known that
+c is a multiple of (x+1)! thus is divided by x!.  therfore the
+two consecutive terms are soluble.
+
+
+
+
+
+
+The aug 10 lab:
+
+synthysise the diophantine equation and its solution from 
+differences.ods.  the jive exists but need a multiple of the solution 
+to replicate a triagtrig table.  Need the pattern of the scalar 
+inorder to accuratly duplicate a triagtrig table from nmax down to o.
+
+first step recreate from nmax.  look for multiple pattern.
+the diophantine from nmax, as well as all triagtriag sub i,is too
+general.  x and y the same predict x dubble y.  the common multiple
+of general solution unexciting and not clearly solutions for recreating 
+a difference table.
+
+Appropriate parameters for diophantine appear to come from .... 
+
+August 12 to do.
+
+prepare differences.ods for recording the scalar to the factorial
+modulo at triagtriag sub i.
+
+the scalar has its owne iterative difference for each triagtriag sub i.
+
+Aug 15
+
+   the scalar analysis reveals its owne triagtriag regeim.  
+for psi sub i, triagtriag sub j,k ,  exists the value scalar and its modulo  
+from k to k+1, its own differences of scalars exist with certain initial
+values.  
+
+the lab:
+differences.ods tasked to discern what polynomial represents 
+the differences of scalars; by manual brute force...
+
+Organize the difference of Scalars.
+
+SubDiffOfScalarsExamle.ods expands the first fifth degree polynomial.
+For each triagtriag in P, its factorial scalar is computed and respective
+differences tabulated.  The derrived tablue is then represented as a
+polynomial.  
+ 
+The composition of polynomials representing triagtriag's scalars defines a
+set. 
+
+ As i increases each triagtriag sub i's scalar differences polynomial
+decreases in magnitude. 
+
+Next inquery:
+
+The first scalar differences polynomial,for the 1! polynomial is P itself.
+Subsequent SDP's from the modulo representing the 2! scalar are 
+concatinated versions of the 2!SDP?
+
+
+Method for next inquery:
+
+
+Assert first P at dimension n.
+Complete SDP set.
+
+With first P, assert psi sub i and complete set.
+
+
+Why is first SDP set so composed?   /*9/18  got this answer it is composed with binomial coefficients  */
+
+Are Diophantine equations with an SDP less ambiguous?
+
+Maybe this set is derrived from the smallest p within SPD set.
+Mayby use ...
+
+there is a zero within each SDP tablue.  There is elementary arithmetic
+to determine last difference constant.
+
+
+Aug 21.
+
+Psi_i is asserted, for instance, as the first 5th dimension P.  Within each of i's triagtriag_j,
+consecutive scalars for the common moduli are identified and differenced.  The generated
+difference tables are identified for Psi coordinates (index,dimension) and are subsequently
+differenced under the triagtriag_j, common moduli rejeim.  The difference of respective scalars
+ends at the zero difference.  
+
+The first 5th dimension P is expanded into five (scalar,moduli).  
+f(0)=0 and f(1)=1. Therfore, the factorial scalar at k=0 is 1
+
+
+j=1 scalar:   want to know the scalar P. 
+Do know scalar P is represented as P' with dimension P-1=4 and same constant difference
+as p and is 120.  
+    
+
+Similarly, p' is represented as P'' with dimension p-2=3 and same constant difference of 120.
+
+Again, P'' is represented as P''' with dimension p-3=2 and same constant difference of 120.
+
+Still, P''' is represented as P'''' with dimension p-4=1 and same constant difference of 120.
+
+  this factorial scalar is known arithmetically from the constant value and it's zero index.
+
+
+Observe the known zero placement in nMax-1.  For fifth degree polynomials, is the second
+odd degree polynomial, the zero is 2 off from k=0. 
+
+So 
+
+
+
+
+
+
+
+
+Its j=5 triag triag difference
+of scalars is zero. 
+
+The j=4 scalar is constant at 5.  
+
+J=3 scalar polynomial   
+j=2scalar
+
+ 
+want to know the polynomial representing the factorial scalar of triagtriag_1
+knowing the polynomial can compute its k=1.
+
+The differences expansion exibited in SubDiffOfScalarsExample provides an answer in resolving
+a solution to the compleated row of differences.  
+
+
+Each factorial scalar expansion of the lowest triag triag has a representative P*. 
+Its k=0,k=1 values are trivially defined.
+
+
+Aug 23:
+
+   Aug 22 revealed the j=1 difference expansion of Factorial scalars at j=1.  Polynomials 
+for each of the differences were then matched to respective difference tables. Usefullness of
+the polynomials are in evaluating the k=1 index, which equals the sum of P's scalars.
+
+Next up:
+
+   aug 23 expansions weren't clean or otherwise usefull derivations of polynomials.
+The compleate expansion of scalars is possible and possibly usefull in generating the 
+compleated table rather by evaluation of Psi_i directly.
+
+Aug 25:
+
+Differences expansion of Psi_1 at P^1 is depicted in FidFig.odg.  
+Use SubDifOfScalarsExampl1.ods to tabulate all triagtriag scalar polynomials. 
+
+
+FidFig.odg scalar polynomial id evolution.
+
+have c
+     c,c
+     c,c,c
+     c,c,c,c
+still want
+     c,d
+     c,e
+     c,f
+
+     c,c,d
+     c,c,e
+
+     c,c,c,d
+
+wanted are compleated and logged on FidFig.odg.
+
+corrolate the wanted with 
+
+
+todo aug 28:
+
+
+The first scalar differences polynomial,for the 1! polynomial is P itself.
+Subsequent SDP's from the modulo representing the 2! scalar are 
+concatinated versions of the 2!SDP?
+   
+fig the above with the example.
+
+
+
+Chapter 1 sections 2 through 4 recap:
+
+The binomial expansion is applied across a row of differences.
+The coefficients are obstficated by the scalar a_k (the binomial is a factor of the
+product).
+
+Different rows applied to the expansion produce different polynomials????
+
+Note, not my enquery.
+
+So, triagtriag_i is defined by a scalar polynomial and a factorial to be evaluated
+at x.  
+
+The newton rejeim of knowing each triagTriag_i at a value of x.
+
+Fid rejeim of ....
+
+ manipulating the scalar polynomial algabraicly for distinguishing 
+psi_i from psi_i+1.
+
+note: higher manipulating triagtriag's implicitly manipulate their lower ones.
+
+To do:
+
+Fid fig psi_i,psi_i+1
+
+
+Sept 5:
+
+
+  Because f(x) is not known by name, but by a subset of difference values at the zero
+index, to define f(x), Newton.pdf first writes c(x,k) as its respective polynomial. 
+k=1 to m of them are necessary. Along with the c polynomial set are
+scalars representing the zero values of the difference expansion.  Both are 
+linearly combined and f(x) is expressed.
+
+Each c polynomial contributes to k of f(x)'s individual terms. When k=m
+the C(x,k) polynomial contributes to all of f(x)'s terms.    
+
+
+
+
+
+Sept 8:
+
+Still the enquery is the roll a c(x,k) polynomial plays in translating
+vertical to horizontal corresponding members of Psi Fig.   
+
+
+Back to the mission:
+
+   Propagate zeros at decreasing indexes from deltadelta_max downto deltadelta_1. 
+
+the deltadelta set is generated from Psi_1 from the base counting rule.
+individual deltas have their generating polynomial's coefficients incremented.
+the result is read.
+
+incrementing a generating coefficient increments the host polynomial.  
+
+
+   for each deltadelta_i, need at k=0 the difference of scalar evaluate.
+
+
+
+Sept 11:
+
+Comparison preamble
+
+   The structure of DOSPT is composed of vertical and horizontal branches rooted in
+Psi_i.  Vertical expansion of a root corrosponds to nodes each representing one its TriagTriag's polynomials. 
+Any node of DOSPT is itself a root for DOSPT' and a horizontal branch begins that node's set of TriagTriag
+representative polynomials.  DOSPT only expands the first member of a vertical set.  
+  Coordinates of nodes with this structure can be assigned for this tree from the Psi_i root.
+There are 1..degree of Psi_1 horizontal nodes and a decreasing number of vertical nodes for each
+horizontal node. Starting with the first horizontal node, which has the degree of Psi_i number of vertical
+members, the n'th subsequent nodes has degree of Psi _i-n+1  vertical nodes.  Therfore, any node is the xth horizontal node,
+i'th vertical node. Two nodes, the first located at (n,m), and the second at (n+1,m-1), thus on a tree diagonal
+are relatable.  
+  Finally, there is an initial value defined as the degree of Psi_i.     
+
+
+The Comparison of DifferenceOfScalarsPolynomialTree between Psi_i and Psi_i+1.
+
+   The first observation revals pattern in each nodes leading cooeficients.  
+
+
+sept 14: wrote out pattern to date visible in FidFigures.
+
+tonight:   for each a_k in NP, the composition zeros lead to what for psi_1 in D.
+
+
+sept 15:
+
+   it is easy to generate index values of zero in dosp.  the root's triag triag is not complemented with 
+binomial coefficients...
+
+
+The million dollar question:
+
+   What DOSPT is easy to generate at D, and have P defined.  
+That is, arithmetic of scalars Populate DOSPT an define P.
+
+
+
+Write the function that sets the newton index at J-1 to zero.  
+When D odd,    (j-1)!   and need 
+
+
+Sept 18:
+
+Manipulate P whenever D is odd.
+
+
+
+Zeros exist at known indices.  Manipulate psi_1 to psi_i in terms of these prexisting zeros.
+That is, perform the multiples calculation across triag triag and record in p.
+   /*  The known indices are predicated on Factorial Scalar P's.  Thus not easly manipulative */
+Note:  Does not seem feasible without DOSPT update..
+
+Next lab:
+
+Purpose is to know how to update DOSPT for an arbitrary h increment.
+
+Need a bunch of fid figures.  
+But mabey use the chapter methods for populating DOSPT
+But what p goes .....
+
+maybe program for fast DOSPT node population.
+
+A routine prototype:
+ 
+Set next zero in       /* Read First difference of scalars for h increment  */
+
+Update DOSPT 
+
+
+
+make fid figures or program for fid figures.
+
+
+Fig Conclusion:
+
+The main horizontal of a fig is P
+
+
+The main vertical, composed of factored horizontal, of a fig is change P to P'.
+
+Populate zeros of triagtriag_J (the latter set)
+
+    put a zero in j=5 
+
+      .  changes each subsequent main vertical fig.triagtriag_j<5
+      .  may imply zeros in Psi
+
+
+fractionintegerset has capeablility to gauss any n nessary triagtriag_j,k.
+as in, populate a fig.
+
+
+
+9/28
+
+  Current state of fid is stubby with murkey model pattern.
+don't worry about parray reset during worker j flowthrough.
+Find where to gauss and with what.  All the stubs exist.
+
+But first,  What,Why Gauss a gbList?                          se 10/11.
+But seconds, there are many things to gauss in a fig.
+
+Back for a moment at Fig Conclusion:
+
+Recall that newton P is derrived from the main horizontal. 
+It is just as easy to generate from the main vertical. 
+Either way can traverse from the vertical to the horizontal or horizontal to vertical.  But just gauss anything resolved and
+hashtable the result.
+
+so, have initilized in rlistb each gblist.  
+of course, differences.ods tells that each gblist should be gaussed.
+
+fid advises with a permit a particular index; each update from fig to fig is a subset of rlistb. 
+
+i want the gauss of each gblist/modulo.  
+only need j=1 to dimension of this result for gauss to work.
+
+ 
+
+here is a routine::
+
+with next zero permit:
+
+1.
+
+1. with each j>0 on rlistb, make new rListb with j=j_0 on new rlistb.
+2. any new rlistb is each treated as step 1
+
+
+
+why factor a difference?  each triagtriag is now a different sequence with its
+owne differences representation.  Its polynomial evaluates at each index to the 
+coefficient to add to parray.  
+
+
+so, for instance the psi worksheet draws out the differences represented by the parray cooeficients.
+each of differences are factord by respective moduli.  the factord results are differenced and a polynomial
+for the factord results is defined.  
+
+so, the purpose of each difference, factored or not is to provide gauss cooeficients, for naming 
+polynomials to put on fig.  
+
+so again, fis has looplist constructed with among other important lists rlistb. 
+rlistb is the wrapper for a differences expansion of parray values.
+
+
+it seems appropriate to gauss rlistb inside loopList.initializeList.
+
+need to overload (just overwrite triagtriagzero with next differences sub zero)
+
+firstWorkerListInit().  empty arguments imply psi_1 at constructed dimension
+firstWorkerListInit(list) is a factored difference of terms sub i.   
+
+
+can also factor within initializeList and gauss the result.
+
+and of course remember the usage of a factord gblist is to evaulate at the index according to semaphore
+pattern and get a zero in mapped gblist.
+
+
+much to prepare for with gauss.  
+currently it is instanciated in a fixed 4X5 matrix.  need a new matrix for each submission to gauss.
+
+
+10/2 
+
+muCorrolationThreaded:  
+
+or the wonky story of sumoftriangley formula.
+
+
+GaussCorrolation:
+
+triag_zero loops up to trTriag and for each tr,Triag the tripple of integers arguments a callable worker of   
+twoTableDBThread_1 is submitted.
+
+Each of the workers starts a connection to "muTableDB".
+
+GaussTable
+
+MuCorrolationThreaded
+
+exibits a story in roots of quadratic.
+Is a side show for the problem at hand.
+
+         Intend to harvest the GaussMain.java class.
+
+         and use it in fractionintegerset for defining each triagtriag_j in psi_i.
+
+and have been looking at the dimension of A[][] a matrix of dubble, which
+is also of fixed dimansion in mucorrolationthreaded.  
+
+
+10/3  
+
+bittes and pieces of gaussMain:
+
+gauss bean takes a fixed dimension of A[][] for update into roots db.
+
+gaussMain also wants an overloaded version. 
+
+
+So, once psi is declared, hence its dimension, can instanciate A[][].
+
+should A[][] be disposable?  as in a container in glassfish.
+
+
+So, looplist is instanciated, then it is initialized,  each successful initialization should be
+gaussed.  
+
+
+looplist must be engineered....  it has values, it has reference P's....
+
+each looplist, added to rlistb in looplist constructor, needs a list field for it's representative 
+DOSP.
+
+10/4
+
+  Each LoopList has new state the gauss matrix.
+
+  gbList, a LoopList needs to be gaussed both at LoopList constructor and
+when looplistener .propertyChange fires.
+
+ 
+10/10
+
+What was gaussed in muCorrolationThreaded?
+
+Answer: a set of pairs (index,muNumber).  index is the expected x in P(x) for mu to result.
+        The index populates a row of A[][] as a power sequence of appropriate length.
+
+So last week, what to be gaussed in fractionintegeset?
+same answer, the index is j, for use in the ith difference with mu equals triagTriag_j,k.
+
+The wrapper of Array A[][] is an object to build in FIS.
+
+
+The intention of FractionIntegerSet is to resolve a method of setting dimensions and incrementing coefficients
+so that a P^n is defined with zeros at indices representing mu numbers. 
+
+FIS is inspired by the differences.ods workbook; worksheets of polynomials and their iterated differences, 
+differences of iterated differences and factord iterated differences are computated. Its utility is to observe
+the effect of a change in a pArray coefficient; conversly, what change of a gblist_i according to FDOSP implies 
+for a pArray coefficient.
+   The FIS object emulating computations in the differences workbook is Looplist.  Looplist is a member of an ordered
+LoopList set.  It is a composition of values representing the difference of terms iteration.
+
+Is Looplist obsolete? 
+
+Want Figs.
+   
+  The values LoopList is initialized with need to be Gaussed.  
+  The factored values LoopList is initialized with need to be Gaussed.
+
+
+10/11
+
+Task FIS for producing output of what stripe?
+
+  In review the LoopList collection is initialized with unfactored values representing a Psi_0 Polynomial.
+The collection is updated when the semaphore pattern signals a propertyChange update.  The update function is set
+next zero in triagTriag_wrkeri and propigate result.  
+  
+  Two problems at hand are implementing the update function, and recording state.  
+
+The reason looplist values need to be gaussed is to implement the update function:
+
+. For an index at j, gauss result sub i,j is evaluated.
+. The result is added to appropriate index in pArray. 
+. The relevant subset of LoopList collection is updated.
+
+
+After update function is implemented data is mined....
+
+
+So,
+
+1.  For each LoopList on rListB, treat as its owne triagTriag_0 and iterate LoopList differences collection.
+
+Note:  This process is within the semaphore pattern. 1. is drawn out .
+       And, tonight is implement, or at least prototype this "recursion".   
+
+2.  For each generated rListB, Gauss each LoopList.
+
+Note:  LoopList needs more fields. A dimension field, known from triagTriag.  and its matrix A[][].
+    
+each looplist, added to rlistb in looplist constructor, needs a list field for it's representative 
+DOSP.  
+
+IS DOSP on a hash table?  It is concurrently generated, with no order in definition. 
+
+
+
+
+so first make a MatrixA class.
+
+need power series of indicies on a hash table instead of matrixA always computing them. 
+
+
+10/13:
+
+working on MatrixA class
+
+need the powers of the indices being gaussed.  
+
+need these powers initialized at startup then transcribed in setMatrix method. 
+
+setMatrix is to be run once on startup.  
+
+should xPowers matrix be final?
+
+
+The constant matrix is xPowers.  Initialized once in Loops driver.
+
+Each loopList gets new matrix(A), and this constructor takex a reference to xPowers.
+
+
+10/16
+
+xPowers is first instanciated with the constructor for generating the powers of x template
+matrix.
+
+
+10/17
+
+MatrixA is stubbed and roughed.
+
+It has a dimension field 
+a stock coefficient matrix. 
+and the gauss matrix A.
+
+
+Actions on MatrixA 
+
+LoopsDriver first initializes a MatrixA so a coefficients matrix can be passed to th
+loopList MatrixA   /* !!! static, final, abstract.... this matrix must be sluethed */
+
+Each LoopList is constructed with a MatrixA. 
+
+Any LoopList change of state triggers MatrixA functionality.
+
+
+
+LoopList state change at initialization.
+
+The LoopList .propertyChange support triggers MatrixA functionality. 
+
+ 
+looks like a lot of "happens before" kind of coding.
+MatrixA must be squared away constructed before looplist gets a copy.  As in, cannot
+construct MatrixA inside parameter list.
+
+
+printMatrix d,j 1 1 42
+
+loopList needs a reference to matrix a which is instanciated in looplist constructor.
+
+
+each A[][] is initialized with each looplist initial values.
+ 
+need a[][] in the .propertyChange event bean.     maybe
+
+10/18
+
+  gaussMain.gauss is now overloaded.  gaussBean wants a semaphore. And a new composition
+being A is arbitrary dimension.
+
+can ignore gausBean untill all is running, there is some DB configuration to accomplish.
+
+have three gaussMain.gauss method calls.
+the origional
+one with a semaphore
+and just A[][].
+
+
+
+overloaded gauss methods imply print gbList is shut off.
+
+
+
+back to what the .propertyChange event implies
+with regards to the gauss rejeim.
+
+have each initialized loopList.  They represent the newton differences.
+Themselves can be gaussed.
+
+1. Factor (LoopList)gbList.
+2. Gauss and Record 1.
+
+3. Difference each 1.
+4. If non-zero difference Gauss and record 3.
+
+Note: There are also the unfactord difference of scalars iteration.
+
+
+Note: These iterated differences....
+
+     .  Are on already on gbList. 
+     .  Make a new list for each of these subsequent differences.
+     
+     . resolve the listener,runnable, loopList generation.
+
+
+
+Some terms for the data dictionary:
+
+PolynomialArray pArray = new PolynomialArray(dimension);
+Coefficient array with getters and setters
+
+
+ResultListBean rListB =new ResultListBean();
+Each loopList is on rListB collection; with getters and setters.
+
+
+Each LoopList contains the three below:
+
+
+List ancestorlist = new ArrayList();
+
+
+
+List deltaList=new ArrayList();
+
+It looks like deltaList is set during initialization of a looplist.
+It looks like deltaList is unimplemented at this time.
+It looks like deltaList is part of that other analysis documented in
+   writing and workbooks,  that stuff with p predating newtons fig.
+
+
+
+List cashedrListB = new ArrayList();
+
+
+Time to document LoopList initialization (with an eye for fig):
+
+
+firstWorker init
+
+
+
+The conclusion of deltaList:  
+
+   not nessary in the gauss fig regeim.
+
+
+For the gauss fig regeim:
+
+It looks like LoopList needs a constructor which performs a different 
+gblist initialization.  
+
+
+
+It looks like time to work the loopListener .propertyChange event.
+
+
+preamble:
+  nothing yet has been gaussed.
+  a worker.num fired the event.
+  a collection of looplists need to be generated and gaussed.
+
+
+need to trigger the initialized rListB gauss regeim.
+
+does happens before apply with the gauss rejeim?   remember, I ran ito 
+this yesterday with the new A[][] matrix.
+
+This means that no writing to rListB until read.
+
+10/19 read some concurrency synchronization.
+      (both manuals)
+
+10/20
+
+
+10/23
+
+
+Looks like a loopsDriver like structure is needed in LoopListener/LoopListener runnable.
+The overloaded loopList constructer is called in this regared.  The prior is the driver
+initializing pArray at Psi_0,D.  
+
+What does loopsDriver do that is'nt needed in the listener/runnable (initialization goes in the special 
+constructor)?
+
+   .  the loop semaphore stuff.
+   .  the loop listener stuff.
+   .  semaphore start/end instances.
+   .  the delta list stuff
+   .  modulo list  
+
+
+Maybe also, two different constructors for loops driver?   
+
+It is primarily an executor driver. 
+
+Or overLoad the runnable.
+
+it seems a new version of loops driver.
+
+no upgrade to existing.
+
+
+
+
+Introducing the clone function in netbeans (right click class).
+
+Want the other kind of thread.   The one instanciated as thread with a runnable interface in
+the constructor.
+
+
+loopsDriverRunnable implements runnable.
+
+Thread t = new Thread(loopsDriverRunnable); t.start( );
+
+So, want the loopListener to instanciate rListB's for each gblist on rListB_0. 
+
+instead of loopList constructing with Psi_0, it constructs an rListB_i with rListB_i-1,0 as its 
+initial.  
+
+So, tasks:
+
+the implementation of loopListener
+
+    each gbList_i is from dimension D and thus rlistB for this i is D-i long before constant and then zero lists.
+
+
+the next version of LoopList constructor
+
+
+write to fig.
+
+
+there are instances of xpowers1, xpowers2 that are not passed to gblist.  xpowers is passed.  Correction 
+check.
+
+but before the looplist refactor, need this xpowers resolved.  
+the current program execution is....  xpowers is fine.  gblist constructs its owne A[][] quite compentently.
+
+it should be.....
+
+
+Anobjectisimmutableif: x Itsstatecannotbemodifiedafterconstruction; x Allitsfieldsarefinal;[12]and x Itisproperlyconstructed(thethisreferencedoesnotescapeduringconstruction).
+
+Itisproperlyconstructed(thethisreferencedoesnotescapeduringconstruction).
+Initializinganobjectreferencefromastaticinitializer;
+that is, is MatrixA[][] conformal?
+
+Topublishanobjectsafely,boththereferencetotheobjectandtheobject'sstatemustbemadevisibletoother 
+threadsatthesametime.Aproperlyconstructedobjectcanbesafelypublishedby: 
+x Initializinganobjectreferencefromastaticinitializer; x Storingareferencetoitintoavolatilefieldor
+AtomicReference; x Storingareferencetoitintoafinalfieldofaproperlyconstructedobj
+ect;or x Storingareferencetoitintoafieldthatisproperlyguardedbyalock
+
+ callback
+
+
+want difference between static final A[][] 
+                        static volital A[][]
+
+
+with the subsequent LoopList.A= LoopList.initA();
+
+
+
+10/25:
+
+10/28
+
+
+the big delima:
+
+the propertyChange() iterates over a subset of rListB.
+
+but
+
+each gbList in rListB subset needs factoring and therfore needs to be iterated.
+
+so, propertyChange() iterates over both rListB and gbList.
+
+Also, propertyChange() needs to increment pArray.
+
+
+10/29
+
+   first things first, verify proper modulo is represented in listener.
+
+   write the loopListener method for factoring the gbList. 
+   
+
+FractionIntegerSet is tasked 
+
+.  Iterate Psi_i,D.
+
+.  For each Psi_i,D Compute/Complete DOSPT,FDOSPT.   
+
+The nexus of these functionalities is the .propertyChange method fired
+upon advise of a Psi_i,D index increment.
+
+These compositions are as follows.
+
+the Psi_i,D increment as pArray.
+
+  .  a consistent rList representation of pArray after increment.
+
+the DOSPT anamation.  
+ 
+  .  iterate over rListB representation of current pArray.
+
+so, .propertyChange is a script with functions out as methods.
+
+method for 
+
+.  iterating relevant rListB
+
+So:  finally an itenerary, 
+
+First thing to do with .propertyChange event is Complete current DOSP.
+
+a bit on whats currently going on in .property change:
+
+loopListener is attached to each looplist
+loopList is attached to the loopSemaphore
+
+looplist and loopSemaphore know 
+
+
+9/31:  
+
+
+  the listener hands off gbList to
+
+     1. factor it.
+     2. gauss it.
+
+
+the rListB, LoopList, LoopListener factory method.
+
+need draw out each LoopList iteration.
+
+thus need a loopsDriver Class managing calls from loopListenerRunnable.
+
+so, what does loopsDriver do that the runnable doesn't need done.
+
+
+for each gblist on loopsDriver.rListB
+
+have a listener iterating over the subset of rlistB affected by the .propertyChange
+
+for each gbList on rlistb: 
+
+the listenerRunnable instanciates 
+an rListBRunnable with LoopListRunnable_0 = factored gbList. 
+
+the runnable is responsible for compleating rlistb by instanciating loopListRunnables
+for each 1-5 =4
+
+then the listener 
+for each 2-5 = 3 
+
+then the listener 
+for each 3-5 = 2
+
+...
+
+11/1
+ 
+
+not much to say.
+
+
+
+
+
+11/2:
+
+  
+LoopList                              LoopListRunnable
+
+LL_0 is a power series                LLR_0 is a gbList
+
+
+The loopListener .propertChange 
+
+dosn't iterate much in its loop.           
+only offers gbList to loopListRunnable.
+
+RLISTB has an extra copy of constant list as last gbList.  As of 11:15 don't care to sleuth it.
+
+And so, revisit what is the DOSPT rejeim.
+
+maybe in all this confusion, loopList, loopListRunnable are a type that implements the FIS interface
+so that the executer can submit either to the runnable.
+
+Note only the first one is a loopList, but then ostanbly need looplist runnable for a different 
+constructor but onstabily need to only need to .add the first as a copy of origonal, but 
+then a reference lives....
+
+definatly need a new looplist constructor.  
+
+no below
+this constructor populates the looplist fields, then 
+
+
+11/3  
+
+but contructor mearly includes a gblist to copy onto LoopList.
+
+don't care to notice the psi i,i+1 list stuff.
+
+
+   LoopListRunnable dosn't copy gbLIst.  It has psi i,i+i relation lists shut off. 
+
+LoopListenerRunnable references LoopListRunnable.
+
+noticed, possibly the polymorph or overload constor duality....
+
+integer range should be a static member.
+
+write this down:   the constructor dosn't have a return type.  Therfore, must be same name as class
+or, error.  
+
+
+factorGBList assumes gbList is instanciated.  but currently only have reference to
+currentRListB.gbList
+
+
+loopListener gives LoopListenerRunnable a gbList.
+
+the gblist is factored term by term, results term by term are stored on a transferList.
+
+the transfer list is an argument for the traditioinal LoopList constructor.
+
+
+the listenerRunnable instanciates an iteration of loopLists. 
+Each of these need dimension field calculated.
+
+the dimension runs from high for low worknum to low for high worknum.
+=maxDimension-(workNum+1).
+
+10AM loopLists constructed in droves. Console too choppy for verification.
+
+gauss.main inclusion,    
+gauss.main buffer inclusion.  
+
+the theory of how to system out println:
+
+the unfortunate consequence of trying to printlin in a very choppy consoul screen.
+
+11/5
+
+answer  all console printing to a printing class which is schronized. 
+obviously a throttle on the concurancy.  
+and there is a lot to say of parcing and coding.
+run time policy:
+
+looplistener runnable need a reference to rlistBallLooplists.  
+rlistb can periododicly prinnt.
+
+or looplist has a static looplist which is added to itself.
+
+don't add all looplists.  add rlistb's.
+
+
+11/6
+
+pArray:   [3904, 780, 155, 30, 5, 1]
+pArray increment:   0
+
+LoopListener.propertyChange workNum: 0 modulo: 1 rListIndex: 2
+pArray:   [3904, 780, 155, 30, 5, 1]
+pArray increment:   0
+LoopListener.pArrayIncrement pArray .to string [3905, 780, 155, 30, 5, 1] rListIndex: 2
+moduloList: [1, 2, 6, 24, 120]
+
+LoopListener.propertyChange loop workNum: 0  n: 1
+LoopListener.propertyChange loop runModulo,wModulo,moduloFactor: 1 1 1
+LoopListener.propertyChnge loop   gbList: [15, 65, 175, 369, -625]
+LoopListener.propertyChnge loop   rListB: [[1, 16, 81, 256, 625], [15, 65, 175, 369, -625], [50, 110, 194, -994, 625], [60, 84, -1188, 1619, -625], [24, -1272, 2807, -2244, 625], [24, -1272, 2807, -2244, 625]]
+
+
+LoopListenerRunnable constuctor:  
+
+ModuloList:[1, 2, 6]
+LoopListenerRunnable.run(), modulo, wNum:  1 0
+LoopList.initializeList workNum==0
+ModuloList:[1, 2, 6]
+LoopListenerRunnable.run(), modulo, wNum:  1 0
+LoopList.initializeList workNum==0
+
+
+
+LoopSemaphore setSizee<setSize threadId: 19 4 5
+LoopSemaphore sf2.acquire()2 19
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 2 
+
+LoopSemaphore !endProduct threadId: 18
+LoopSemaphoreInitial sf2.acquire()118
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+LoopSemaphoreInitial sb2.release()1 setSizee<setSize1 5
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+BUILD STOPPED (total time: 19 seconds)
+
+
+
+post loopsLogic.sf2Aquire18 setSizee 2setSize 5
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218 setSizee 3setSize 5
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+setGBList fallthrough
+post loopsLogic.sf2Aquire18 setSizee 3setSize 5
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218 setSizee 4setSize 5
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+setGBList fallthrough
+post loopsLogic.sf2Aquire18 setSizee 4setSize 5
+pre sf1.release
+post sf1.release
+pre sb1.aquire
+BUILD STOPPED (total time: 19 seconds)
+ 
+
+post loopsLogic.sf2Aquire18 setSizee 2setSize 5
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218 setSizee 3setSize 5
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+setGBList fallthrough
+post loopsLogic.sf2Aquire18 setSizee 3setSize 5
+LoopSemaphoreInitial setSizee<setSize threadId: 18
+LoopSemaphoreInitial sf2.acquire()218 setSizee 4setSize 5
+
+LoopList.setGBList (muNumDen)value.getWorkNum: 0 
+
+setGBList fallthrough
+post loopsLogic.sf2Aquire18 setSizee 4setSize 5
+loopsemaphoreinitial pre sf1.release
+loopsemaphoreinitial post sf1.release
+loopsemaphoreinitial pre sb1.aquire
+BUILD STOPPED (total time: 16 seconds)
+
+Map LoopSemaphoreInitial.sb1 to LoopSemphore...  
+
+loopsemaphoreinitial constructor assignes sb1 to the s2 parameter, the second on list.
+
+loopssemaphore constructor assignes s4 to sb2 the expected same semaphore as sb1 in 
+loopssemaphoreinitial. 
+
+
+
+map LoopSemaphoreInitial 
+
+  constructor assignes sf1 to s1, the first parameter on list.
+
+sf2 is the matching semaphore in LoopSemaphore.
+
+
+
+
+LoopsDriver 
+
+
+me thinkith simply FIS not exiting gracefully.
+
+whoopee.
+
+
+
+allong the way I screwed with dimension of modulolist; it had an index out of bound.
+
+
+and verified the origonal run error was modulo list.  FIS does not currently exit
+gracefully.  
+
+onto pArray reset.
+
+onto matrixA verification.
+onto gauss.main(looplist.matrixA)
+
+make all the called worker threads, except the last, dameon.  
+the lastt worker exets, the rest dissapear.  So to speak.  in this case, better to poll 
+the checksum. 
+
+
+gbList, a LoopList, has a propertyChangeListener added after instanciation
+LoopsLogic has a gbList reference.
+
+loopsLogic has a method with a gbList method call with signature to firethe propertychange
+evoking the propertyChange method in listener.
+
+
+me thinkith, pArray needs a bit of synchronization.
+and so, methods in PolynomialArray now have synchronied prefized.
+and, it behoves LoopsLogicLoopSemaphore to argument pArray reset. references are in listener.
+
+About the reset trigger.  pArray has a workerNum signal "I iterated".
+For instance, LoopSemaphoreInitial: "I iterated".  Subsequently, loopsLogic.rentrentReset() 
+trigger fired implies  pArray[0] needs resetting to zero.  But not reenterent in the sence
+of locks.  
+
+
+
+The iteneray for this action is:
+perform index reset.
+restore gbList to its zero value.
+
+
+
+
+"gblist00" is not used yet there is a deltaTerm and ancestorList0 instanciated for it.  
+they appear to be null.
+
+
+But first a bit on LoopList.  Possibly writing for the javaDoc.  Certainly for 
+FIS documentation.  
+
+There are two LoopList constructors.  
+
+One used for loopLists assigned to callable workers.
+The other used insided the .sf2AquireMethod of loopLogic (loopListener looplists).
+
+
+And now, the loopList narrative:  
+
+
+The loopList is assigned a workNum  [1..n] in constructor.  
+             knows LoopsDriver dimension and integerange (needs to be large enough for clear data).
+
+The loopList data stores are 
+
+rListB     (in terms of looplistener looplists, an rListB exists for each listener event)
+allrListB
+
+ancestorlist      is a collection of each workNum's ancestorList.
+deltaList         is a collection of each workNum's deltaTerm lists. /* used for Diophantine predictions 
+cashedrListb
+
+all are instanciated through no argument constructors.
+
+The loopList has a representative matrixA[][].
+                 a "thisList" ArrayList.
+
+The firstWorkerListInit method:
+
+Iterates the integerRange from zero each powered from 1 to  
+ 
+x       bigDecimalRange     listPower       listPower1     Difference
+
+0             1                  1^4           1^5            (1^5)-(1^4)
+1             2
+2             3
+3             4
+4             5
+5             6
+
+listPower added to .this and thisList 
+
+listPower1 added to appropriate ancestorList // first ancestor is a at get(1)
+                                             // subsequent worker seems to properly get(0)
+
+
+in subsequentWorkerListInit the line
+
+     ((List)deltaList.get(workNum)).add(difference);   dosn't seem to do much.
+                                                       thus deltaList dosn't seem to do much.
+
+
+
+
+
+netbeans prompt:  this field can be declaired final.
+
+
+
+11/7
+
+something like set a pArrayReset flag in Loopslogic for gblist
+the next worker can poll for action. 
+
+
+The above mentioned narrative:
+
+
+  For pArray reset questions
+  .ods observations suffice.  
+
+
+The big ol' conclusion:
+   during the reset, each worker up to resetworkNum is redrawn (subsequent worker constructor
+   method), at next increment.
+
+So, move the reset property support.
+somehow resolve a signal that a reset is occuring. 
+
+
+LoopsLogicLoopssemaphore.rentrentReset  sets pArray.Last to value >1 representing which
+LoopSemaphore iterated integeRange.
+
+PolynomialArray.incrementP 
+
+   polls pArray.Last 
+
+
+Remember, listener has listenerRunnable commented off. 
+
+
+Also back to "just how is gbList(workNum) incremented?
+Along with where to reset parray, gblists, given a reset value is placed in pArray.(last).
+
+
+So, review SubDiffOfScalarsExample:
+
+Two P^n's are relatable 
+
+Also, for these purposes, know the entire composition of former p^n, and want to 
+express latter p^n.
+
+Also, know which workNum contain the same gbList, constant or otherwse.
+
+another confusion:   the base condition when the differences taken are from identical values, or
+                     the base condition when the differences taken result in a constant value
+                     across gbList. 
+
+So again, when looking for the latter p^n's constant difference workNum, and know the former,
+is trivial arithmetic. Therfore know each of P^n's two highest workNums. 
+
+It seems the attemt is at writing one equation with two unknowns with 4 knowns. 
+
+D96-E96=I119-I120
+       =(D119-E119)-(D120-E120)
+
+
+2-2=(0-e119)-(2-e120)
+
+Well then, this afternoon a little more work in SubDiffofScalarsExample.ods.
+Included will be a bit of a Diaphontine worksheet, more than a scratch sheet, less than
+java.   
+
+/*the above in java is mandatory demonstration. 
+
+
+And the merryment of FractionIntegerSet function and then purpose:
+
+FIS iterates a Psi sequence.  
+For each Psi:
+    DOSPT is generated.
+    List of LoopLists representing triag (formally known as triagtriag).
+
+The Psi sequence is iterated with respect to pArray increments.  
+Each Psi_i in sequence has triag (formally known as triagtraig) drawn out and 
+represented as an rListB composed of gbLists. Otherwise as an orderd collection of LoopLists
+residing on a common ArrayList. 
+
+Have the theory that this information can gleen expected roots from Psi_i.
+
+     It says DOSPT has equations, the factored DOSP equations , that solve for an arbitrary
+     traig at an arbitrary index a zero value.  These zero values propigated zeros, or not, 
+     to indices of Psi_i.   
+
+
+A status narrative of FIS:
+
+  For an initial valued pArray, its triag is drawn out and subsequent FIS structure
+will initialize all nessary DOSPT looplists.  This generated collection is represented on
+an arrayList.  Note though much improvement in the code is opportunity. /* many static qualifires
+  An advice for nextPsi expresses its coefficients but not its triag representation.
+SubDiffOfScalarsExample demonstrates a relation of interest within each Psi's triag
+composition.  An Algorythm is the de jour.           /*the diophantine equation
+   
+
+   
+11/8
+
+   mcAfee blocked 62k bad connections.
+
+Looked at a review of Diaphontine equation.  For example, from SubDiffOfScalarsExample.ods,
+D96-E96=I119-I120
+       =(D119-E119)-(D120-E120)
+    2-2=(0-e119)-(2-e120)   
+
+The right hand side has its traig factor, a lower then triag and thus factor, than the right 
+hand side, a higher triag with a highr factor and thus proves a solution to D equation.
+iff this factor is gcd.
+
+ohh what a wonderfull proof that would be.
+
+This, above, along with DOSPT, was a last August review.  
+It seems that DOSPT is more interesting in inducting an expression for 
+Psi_i+1.
+
+
+DOSPT would be twice usefull.
+The left hand branch solves for indices of zeros for arbitrary  triags.
+The P expressions in nodes have a pattern from Psi_ito Psi_i+!.
+
+The meaning of this is can return to fis coding.
+
+
+Looks like the experiment is hard draw gbList0.  
+
+11/9
+
+   The production of DOSPT:
+
+Set semaphore patern to iterate first Fig.    //*  commented out semaphore.release in LoopSemaphoreInitial.
+
+Verify each input to each listenerRunnable.
+verify size of the rListBRunnable.
+Verify proper composition of each looplist in each listenerRunnable. 
+
+
+gauss.main each loopList.first.rListBRunnable.
+hashtable or DB.
+
+
+big note from yesterday.  Getting the Diophantine equivelant expression starts with the 
+constant subtraction beiong zero.
+
+FIS only iterates out to constant triag_i.  where in the FractionIntegerSet can i get one
+more dimension out of TriagTriag?  just generate one more worker.....
+
+But for FIS Fig1, don't think any listenerExecutables would be generated.  
+
+So, revisit with Diaphontanine.  
+
+also need large enough integer range for consistant loopLists.
+
+my idea of a "checkSum"  is solution to gracefull exit.  poll for an expected sum of pArray
+values instead of a flag from LoopSemaphoreLast.   //* checksum also workst for pArray Reset.
+
+definatly make dimension static in any class that wants it,
+               xPowers matrix static in any class that wants it.
+               moduloList static  
+
+but against the paradyne make it once and reference it....
+
+so, conslusion to date:  corrected an extra .callable with duplicate final dimension.
+                         looplists, workNum check out.  workNum=1 is first difference.
+                          each looplist on rListB is properly computed.
+
+On to Matrix a verification.  
+Maybe read up on static xPowers.
+
+on to Gauss.main.
+
+
+11/10
+
+
+
+
+11/11
+
+
+
+11/12
+
+The idea that loopListenerRunnable is responsible  for generating fig1.
+and 
+                                                       incrementing pArray and redrawing rlistb.
+
+
+me thinkith it is time to seperate redrawing rlistb because of pArray increment
+from iterating fig.
+
+
+looplistener is set to point where rlistb needs to be redrawn.
+
+iterate fig needs whole rlstb. 
+
+
+11/13
+
+   also think a listener for fig.  
+   draw fig with a safe copy of rListB and is asyncronys.
+
+But for now will proceed with procedual implementation.
+
+so...
+
+The outline of fig (DOSPT) generation:
+
+For each loopList_i on rListB, a new rListB' with rList_0= loopList_i.
+
+Each rListB' needs to be drawn (differenced)) out to compleation:
+   
+For each loopList_i on rListB, the size of rListB' (how many subsequent loopLists to construct) is a 
+function of it's index on rListB.
+
+The outline of a pArray .propertyChange event:
+
+As this inception of FIS it exploratory,  pArray is incremented, P(x) is evaluaed in usual way.
+Implement pArray increment, then make methods similar to the constructor for P(x) at integer range.
+And methods similar to constructor .subsequentLooplist, for differencing out the P(x) expression on 
+rListB_0.
+
+at the point in LoopListener where proper modulo for LoopListenerRunnable is set.
+currently the event modulo is sent.     It looks like rModulo is to be sent to listenerRunnable.  
+   
+upto within the listener, looplists are supposed to be contructed.  but aparently, not yet.  
+
+time to sleuth looplist creation in looplistener runnable:
+
+loopListenerRunnable is constructed with references to its owne rListB,  
+dimension, wNum, the gbList it is to factor then difference, and pArray /* not interested in right now
+
+the narative is something like, 
+
+create a new LoopList.
+copy the constructor referenced gbList to it.
+factor the indices of the new loopList.
+difference out this new loopList.
+
+
+I suppose the answer to the cumdrum is overload the new constructor with a third constructor signature.
+particularly, this new constructor should not call initializeList.  it should call a new method
+"initializeDosptList"  this method calls copyGBList, factorGbList, which are now properly methods of LoopList.  
+                                         //  copyGBList, factorGbList are still in listener runnable.
+11/14
+
+have rListB composed of gblist.
+
+for each gbList on rlistB:
+transferGBList                    // a clone of selected gbList
+factorTransferedGBList            
+difference out factoredTransferedGBList
+
+
+11/15
+
+    got some output from listenerRunnable.  but transfer list is only taking one gbList, and not
+spanning rListB.  So, span rListB as arguments for each loopList_0 on rListB'.
+
+java technology implementation update:   variable shadowing:  not properly prongramed, the correcton includes
+shadow variables, as in, called for gblist, but really want someting on rListB, so call that someting, locally,
+rListB.
+   method signature wants an ArrayList,  is passed a LoopList, which extends ArrayList.
+
+thisList in looplist can be final!!! says netbeans.
+
+note:  loopListRunnable only factors the passed GbList.  it recieves this factor in the constructor.
+       this is contrary to some work just accomplised.  
+
+
+note allRlistB may not be in good order.  that is one reason why looplist has state.
+
+
+
+11/16 
+
+   loopListenerRunnable.factorgbList has a try/catch arithmetic exception included.  it is catching 
+bigdecimal divide by negative values.  FIS seems to exit as expected.  need to include division by negative
+big decimals. 
+
+but, morning lab is a success anyway as the error is identified.  
+
+note:  this error would otherwise exit/hang FIS in an indeterminate state. 
+
+need to do list:
+
+verify matrices of loopLists constructed.   This would be a utility printing class.
+
+implement the pArray increment.   Involves a new constructor for loopList as this version of FIS manually
+draws out pArray within .firstLooplist.
+
+store these loopLists on hashTable, mySQL.
+
+get mySQL up and running on hp.fx
+
+remember from my dreams last night:  it happens before code execution.  that is happens before in the contex
+that a looplist is constructed before, then say a sys.out.println. Does java vm whenever construct loopList
+as its state is different from calling object.
+
+11/17
+
+term.divide exception: Non-terminating decimal expansion; no exact representable decimal result.
+all good with this above.
+
+
+Amatrix is in the spotlight.  
+
+still want dimension, content verified.  but, its time for GaussMain.
+
+Amatrix is sent to GaussMain.  Expect GaussMain to run asynchronisly, executor managed submission.
+
+
+
+So, now the question where is the executor for gauss main?
+it reads from a buffer, one not unlike AllrListB.
+
+And, GaussMain output is into a database buffer.   
+
+
+And now, a controller thread narrative:
+
+Within the .main class, a buffer and semaphore with 1 permit.
+Both are constructor assigned fields in model class.
+
+at convienence, instanciate a GaussMain() class.
+the formentioned buffer and semaphore references are passed to .gauss method.
+.gauss method appends method with it's output.
+
+Can .gauss in its owne thread.  But implication is one gauss at a time. or have a gaussExecutor managed in the 
+thread.
+otherwise.  The loopListener manages an executor.  It is tasked with constructing  looplists, which contain 
+the gauss.main arguement.     
+
+
+And now that GaussMain.gauss is a feature of loopListenerRunnable it is discovered, a hanging execution.
+The suspicion is on the dimension of aMatrix, and am proceeding with an inventory of methods where dimension
+is explicitly referenced. 
+
+or, pick apart an instance of gaussMain.gauss.  
+
+
+11/20
+
+How about start with the latest narrative of the FIS utility.
+
+
+FIS asserts an arbitrary polynomial Psi.
+A sequence representation of Psi is generated and then
+differences are iterated out to a constant value. 
+
+FIS is intended to name each iterated difference sequence.
+Values are sampled, a VanderMode matrix is constructed and GaussMain
+outputs the representative polynomial.  
+
+The representative polynomials of the differences of Psi are not
+the only interesting P's.  Any of Psi's differences sequences can be factored.
+Each of the factord differences are seeds for Psi', another polynomal to be differenced.
+
+The collection of these named difference Polynomials constitute a fig.  
+
+So, The gaussMain VanderMode matrix must be 
+constructed with proper dimension and arguments for this dimension.
+  
+  
+Assuring proper dimension of each sequences' VanderMode, the sequence and 
+VanderMode both exist on the same "LoopList, is the subject of where the
+argument LoopList is constructed.  A LoopList is constructed either within
+LoopsDriver or spauned from a loopListener within the LoopListenerRunnable.
+
+The loopList constructor argument "dimension" is used in the definition of 
+Psi_0, and in the construction of a new MatrixA.  It is an unused looplist
+field in the construction of a BigDecimal "bigDecimalDimension".
+
+So these two uses of dimension are different but tightly coupled.  
+So, leave dimension unto itself.
+Introduced the constructor parameter matrixDimension and accord it's utility.  
+
+
+The LoopsDriver loopList P's ought to have d=D-i, the i'th difference. 
+
+Preparing MatrixA.A for gauss (in the proper dimension).
+1. initialize A[][] with one more row.
+2. in .setMatrix, read another element for copy.
+3. xPowers needs another dimension.
+
+It looks like need a terrific narrative of MatrixA.
+Need its composition,  its various dimensions,  its method collection, 
+
+
+LoopsDriver asserts dimension, the index of Psi_0.
+
+xPowers, the static VanderMonde matrix (to be refactored as a static member of LoopList) is constructed.
+It is a square matrix with each row a power sequence of the row index.  It is defined to dimension+1.
+
+
+11/21
+
+Back to yea ol' narrative:
+
+
+Dimension is asserted.
+
+The static member of MatrixA, the vandermonde matrix is constructed with dimension+1.
+
+The Psi_0 looplist is constructed followed by each iterated difference. 
+
+Note:  want these looplists with complete and correct MatrixA.
+
+
+'m using openshift hosting for java web application. My database server and web application is running on two different openshift account
+
+
+11/24
+
+
+ Most newer ransomware families employ strong encryption, meaning the victim has no hope of opening encrypted files without an encryption key
+
+that contains a downloader—usually a JavaScript downloader (JS.Downloader) or Word Macro downloader (W97M.Downloader
+
+no java directly on web page but js downloaders.
+
+zero-day vulnerability 
+
+remote desktop protocol (RDP) servers
+
+s to poor practices such as the use of default passwords and open ports
+ TCP port 7547 
+
+Use a strong encryption method when setting up Wi-Fi network access (WPA2).
+
+ Disable Telnet login and use SSH where possible
+
+wire shark
+samsung galaxy in saudi arabia.
+
+madHatter11 fbk pwd
+madHatter12
+
+
+11/28
+
+The narrative of FIS:
+
+The two "main.args[] are dimension=4 and integer range=10   // should be assigned to static members of some class
+
+the xPowers MatrixA is constructed as a square matrix with dimension x+1.
+
+first things first, get MatrixA dimensions to jive.
+so,
+Have three different constructors in MatrixA  
+public MatrixA(int i, int j)                                  A=new double[i+1][j+1];
+public MatrixA(int i)
+public MatrixA(int i, int j, MatrixA xPowers)
+
+have started the indexes should all start at zero...
+
+
+the xPowers MatrixA is constructed as a square matrix with dimension x+1.
+erata, 
+erata,
+
+The first LoopList is constructed
+
+LoopList gbList00 = new LoopList(dimension+1,rListB,dimension,integerRange,0,deltaList,ancestorlist,cashedrListB,xPowers); 
+
+Of note, the LoopList constructor constructs a new MatrixA and assignes it to a field variable.  
+
+Aside a moment, "thisList" a field of LoopList, a field list representing the contents of LoopList seems ok.
+
+so, 
+
+java console says  "Hey, MatrixA.transcribe powers, is throwing some funk around."  Lets investigate.  I bet its 
+an indexing error.  
+
+MatrixA.transcribePowers is under the microscope.
+MatrixA.transcribePowers uses this.i 
+
+
+Have the          dimension+1=5 and dimension=4 passed into LoopList constructor.
+recieved as       mDimension        dimension
+
+                                        
+        this.aMatrix= new MatrixA(mDimension,dimension+1,aMatrix);
+
+appears as an error, paramaters are to be changed as mDimension, mDimension+1.
+
+Note the other LoopList constructor need inspection.
+
+for now, back to MatrixA.transcribe powers.
+
+MatrixA makes use of the field i, which is referenced in the constructor to mDimension.
+
+With these adjustments to indices important within MatrixA,  on to where loopList values are set onto its MatrixA.
+
+The relevant method setting a gblist onto its MatrixA is called in LoopList constructor used within the listenerRunnable.
+
+The afterLunch preamble:
+
+GaussMain.gauss wants matrix presented to algorythm with the index 0 empty.
+
+So, LoopList gets a little heavier.  MatrixA already a member of LoopList now includes gMatrix, gauss matrix, and one
+ square dimension bigger.
+
+  x x x y
+  x x x y
+  x x x y   is 3X4
+
+  b x x x y
+  b x x x y
+  b x x x y is 3X5 
+
+therfore, the second index is increased by one
+     and, for instance, A[0][1] is mapped to [1][1]   A[0][2] is mapped to [1][2]
+                        A[1][1] is mapped to [2][1]   A[1][2] is mapped to [2][2]
+
+all good but gauss.main doesn't like the MatrixA.A offering.  
+
+11/30
+
+twotabledbthread declares A[4][5]
+
+  b b b b b
+  b x x x y
+  b x x x y
+  b x x x y is 4X5 
+
+but it initializes A[3][4] and tells gauss A[3][4]
+
+  x x x y
+  x x x y
+  x x x y   is 3X4
+
+  ax^3 + bx^2 + cx^1 + d = 0
+  ax^3 + bx^2 + cx^1 + d = 1
+  ax^3 + bx^2 + cx^1 + d = 8
+
+
+
+
+twotabledbthread declares A[4][5]
+
+  b b b b b
+  b x x x y
+  b x x x y
+  b x x x y is 4X5 
+
+
+0,0 0,1 0,2 0,3 0,4 0,5 0,6
+1,0 1,1 1,2 1,3 1,4 1,5 1,6
+2,0 2,1 2,2 2,3 2,4 2,5 2,6
+3,0 3,1 3,2 3,3 3,4 3,5 3,6
+4,0 4,1 4,2 4,3 4,4 4,5 4,6
+5,0 5,1 5,2 5,3 5,4 5,5 5,6
+
+
+
+
+6,0 6,1 6,2 6,3 6,4 6,5 6,6
+
+twotabledbthread, last used working implementation of gauss main,  
+presents A[][] constructed using indices starting at 1,1 and uses no array locations
+with a zero index.  
+
+
+11/29 pm looks like .gauss is getting the correct matrix.
+
+mayby because zero row is generic, want to use from index one.
+
+lets give it a go.
+
+1.0  0.0  0.0  0.0  0.0  0.0  
+0.0  1.0  0.0  0.0  0.0  1.0  
+0.0  0.0  1.0  0.0  0.0  0.0  
+0.0  0.0  0.0  1.0  0.0  -0.0  
+0.0  0.0  0.0  0.0  1.0  0.0  
+
+
+11/30
+
+
+looking for second gauss to be size 6 and size 7.
+
+ModuloList:[1, 2, 6, 24, 120]
+LoopDriver , Threadid10
+LoopListconstructor pre new MartixA, mDimension 5
+MatrixA(int i, int j, MatrixA xPowers) constructor, i: 5
+matrixA constructor, xPowers.xPowers.Length: 6
+MatrixA.transcribePowers printMatrix
+
+
+LoopList.initializeList workNum==0
+
+initial rListB: [[0, 1, 16, 81, 256, 625, 1296, 2401, 4096, 6561]]
+initial ancestorlist: [[0, 1, 32, 243, 1024, 3125, 7776, 16807, 32768, 59049]]
+initial deltalist: [[0, 0, 16, 162, 768, 2500, 6480, 14406, 28672, 52488]]
+setMatrixList  [0, 1, 16, 81, 256, 625, 1296, 2401, 4096, 6561]  
+i: 6
+
+setMatrixList  end printMatrix
+LoopList.initializeList thisList: [0, 1, 16, 81, 256, 625, 1296, 2401, 4096, 6561]
+LoopList.initializeList rListB: [[0, 1, 16, 81, 256, 625, 1296, 2401, 4096, 6561]]
+LoopList.initializeList this.aMatrix.setMatrix: 
+
+ Enter gauss A[][].size  6
+1.0  1.0  1.0  1.0  1.0  1.0  
+16.0  8.0  4.0  2.0  1.0  16.0  
+81.0  27.0  9.0  3.0  1.0  81.0  
+256.0  64.0  16.0  4.0  1.0  256.0  
+625.0  125.0  25.0  5.0  1.0  625.0  
+
+
+ Enter gauss A[0][].size  7
+A: 
+1.0  1.0  1.0  1.0  1.0  1.0  
+16.0  8.0  4.0  2.0  1.0  16.0  
+81.0  27.0  9.0  3.0  1.0  81.0  
+256.0  64.0  16.0  4.0  1.0  256.0  
+625.0  125.0  25.0  5.0  1.0  625.0  
+
+
+MatrixA(int i, int j, MatrixA xPowers) constructor, i: 4
+matrixA constructor, xPowers.xPowers.Length: 6
+MatrixA.transcribePowers printMatrix
+
+LoopList.initializeList workNum>0 1
+
+LoopList.subsequentWorkerListInit.worknum,integerRange: 1  10
+LoopList.subsequentWorkerListInit.rListB1: [[0, 1, 16, 81, 256, 625, 1296, 2401, 4096, 6561]]
+subsequent this: [1, 15, 65, 175, 369, 671, 1105, 1695, 2465, -6561]
+setMatrixList  [1, 15, 65, 175, 369, 671, 1105, 1695, 2465, -6561]  
+i: 6
+setMatrixList  printMatrix
+
+
+setMatrixList  end printMatrix
+LoopList.initializeList thisList: [1, 15, 65, 175, 369, 671, 1105, 1695, 2465, -6561]
+LoopList.initializeList rListB: [[0, 1, 16, 81, 256, 625, 1296, 2401, 4096, 6561], [1, 15, 65, 175, 369, 671, 1105, 1695, 2465, -6561]]
+LoopList.initializeList this.aMatrix.setMatrix
+
+
+ Enter gauss A[][].size  5
+8.0  4.0  2.0  1.0  65.0  
+27.0  9.0  3.0  1.0  175.0  
+64.0  16.0  4.0  1.0  369.0  
+125.0  25.0  5.0  1.0  671.0  
+
+
+ Enter gauss A[0][].size  6
+A: 
+8.0  4.0  2.0  1.0  65.0  
+27.0  9.0  3.0  1.0  175.0  
+64.0  16.0  4.0  1.0  369.0  
+125.0  25.0  5.0  1.0  671.0  
+
+
+dimension test current code:
+
+
+LoopList gbList = new LoopList(dimension+1,rListB,dimension,integerRange,1,deltaList,ancestorlist,cashedrListB,xPowers);
+
+  gMain.gauss(dimension+1,dimension+2,(double[][])gbList.getgMatrix());
+  
+subsequent code dimension decremented.
+
+
+LoopListener.propertyChange workNum: 0 modulo: 1 rListIndex: 2
+pArray:   [0, 0, 0, 0, 0, 1]
+pArray increment:   0
+LoopListener.pArrayIncrement pArray .to string [1, 0, 0, 0, 0, 1] rListIndex: 2
+LoopListener moduloList: [1, 2, 6, 24, 120]
+
+LoopListener.propertyChange loop workNum: 0  n: 1
+LoopListener.propertyChange loop runModulo,wModulo,moduloFactor: 1 1 
+LoopListener.propertyChnge loop   gbList: [1, 15, 65, 175, 369, 671, 1105, 1695, 2465, -6561]
+LoopListener.propertyChnge loop   gbList.Amatrix: 
+
+4.0  2.0  1.0  65.0  
+9.0  3.0  1.0  175.0  
+16.0  4.0  1.0  369.0 
+
+
+
+
+LoopListener.propertyChnge loop   gbList.print.Amatrix:  is screwey
+
+4.0  2.0  1.0  65.0  
+9.0  3.0  1.0  175.0  
+16.0  4.0  1.0  369.0
+
+is not the whole matrix
+
+
+
+Johann Heinrich Lambert proved (1761) that p cannot be rational, and that e^n is irrational if n is rational (unless n = 0) 
+   
+
+more reason for static assignment of dimension,integerRange is loopListenerRunnable needs to know.  
+
+  
+12/4 
+
+  final verification of current run:
+
+There is one final dimension of A[][] in the runnable to verify.
+
+
+
+LoopListener.propertyChange loop workNum: 0  n: 1
+LoopListener.propertyChange loop runModulo,wModulo,moduloFactor: 1 1 
+LoopListener.propertyChnge loop   gbList: [1, 31, 211, 781, 2101, 4651, 9031, 15961, 26281, 40951, 61051, 87781, 122461, 166531, -537824]
+LoopListener.propertyChnge loop   rListB: [[0, 1, 32, 243, 1024, 3125, 7776, 16807, 32768, 59049, 100000, 161051, 248832, 371293, 537824], [1, 31, 211, 781, 2101, 4651, 9031, 15961, 26281, 40951, 61051, 87781, 122461, 166531, -537824], [30, 180, 570, 1320, 2550, 4380, 6930, 10320, 14670, 20100, 26730, 34680, 44070, -704355, 537824], [150, 390, 750, 1230, 1830, 2550, 3390, 4350, 5430, 6630, 7950, 9390, -748425, 1242179, -537824], [240, 360, 480, 600, 720, 840, 960, 1080, 1200, 1320, 1440, -757815, 1990604, -1780003, 537824], [120, 120, 120, 120, 120, 120, 120, 120, 120, 120, -759255, 2748419, -3770607, 2317827, -537824]]
+
+LoopList.subsequentWorkerListInit.rListB1: [[1, 31, 211, 781, 2101, 4651, 9031, 15961, 26281, 40951, 61051, 87781, 122461, 166531, -537824], [30, 180, 570, 1320, 2550, 4380, 6930, 10320, 14670, -40951], 
+[30, 180, 570, 1320, 2550, 4380, 6930, 10320, 14670, -40951]]
+
+Suspision is on the third list on LoopList.subsequentWorkerListInit.rListB1 appears to be a repeat.  
+
+remedy:  do not add again gblist to rlistb1. it is added prior in constructor.  
+
+AM work finished.  on to pm.
+
+Pm work is open up the semaphore pattern to its all glory of iteration.  
+
+note:  gauss of initial differences does not go all the way to the constant evaluate,  the listener/runnable does.   maybe so what.  for now, just a note.
+
+Here it is PM lab:
+
+   preparing to allow full semaphore pattern iteration involves resolving effect on the pArray increment. 
+
+So far,  pattern can iterate.
+need to temporarally suspend gauss calculation: the loopListener.propertyChange method is mostly commented out.
+
+So, also,  need to verify permits released = permits aquired (expecially those released in LoopListInitial.
+
+But back to the task at hand, a need to formalize actions required for pArray increment.
+
+
+The current FIS has a pArrayIncrement method within each loopListener.  This implies needed modulo calculations for determining a reset.
+A fix, instead of added code is a change event to fire during each semaphore pattern flow through.   The worker num is known at this event. 
+And thus the saying is "worker i fell through and pArray is to be reset.  
+
+
+Oh wait a minute, have a usual event of pArray increment to be understood in the loopListener.
+And have the less usual event of pArray to be reset.  
+
+Both these issuses to be taken in turn.
+
+The first discussion is with pArray increment within the loopListener.
+
+loopListener submits a new loopListenerRunnable with gbList as an argument    (note gbList is the actor involved with pIncrement method).
+
+A guess that pArray increment belongs at the end of the listener or in some other location.  Hence its current location is some 
+malnevelant stub.
+
+
+So, loopsDriver constructs the rListB to be factored and gaussed.  This action trigger is .sf2Aquire.  Note some refactoring, the permit is taken, then the looplist method of same
+name is called.  
+LoopsLogicLoopSemaphore.sf2Aquire now must include a method call to increment pArray, and construct the next rListB for subsequent sf2Aquire.
+
+In the evening woh woh:
+
+The loopListener has a new method setRlistB(rlistB).  It assigns the target rListB constructed during the pArrayIncrement.  It is likewise processed in 
+the listenerRunnable. 
+
+And also, loopList needs a new constructor, one that writes its list based on pArray.
+
+
+12/5
+
+The loopListener is constructed with its initial rListB constructed in loops driver.  
+pArray increment implys a newly constructed rListB.  So, setGBList, in loopList, fires the propertyChange method, 
+and is subsequently tasked with creating a new rListB. During construction, methods in loopList must reference the correct rListB.
+Finally, the listener.setRlist method references the new rlistB.
+
+A relevant aside, firstWorkerListInit does not read pArray, it mearly assumes only dimension is relevant for loopList calculation. 
+But pArray initial construction must commesurate with first loopList, as if initialization was read from pArray.
+
+So, task is, properly construct pArray initial. 
+ 
+
+
+pArrayIncrement in loopListener also needs to know integerRange because it is currently a number.
+loopListener has dimensio hard coded.
+
+The importance of parray including the constant (x^0).  It does or it doesn't.  
+let us assume it does not!!!  as in  loadParray does not work the x^0;
+
+
+12/6
+
+allRListB seems to get big quick.  
+
+
+LoopListener.propertyChnge Exit. 
+setGBList fallthrough
+LoopSemaphore sb2.release() threadId: 19
+LoopSemaphore sb2.release()1 setSizee>setSize1 15
+LoopSemaphore setSizee<setSize threadId: 19 1 15
+rentrentReset                                                           rentrentReset
+PolynomialArray.setpArray                                PolynomialArray.setpArray
+pArrayResetListener                                      pArrayResetListener
+LoopSemaphore initial !endProduct threadId: 18
+LoopSemaphoreInitial sf2.acquire()118
+
+
+
+12/7
+
+FIS semaphore pattern iterates set product correctly.  Each incriment is recorded in pArray. But only a subset of iteration 
+is considered otherwise unnecessay gaussing would consume effort.   
+
+pArray as configured counts permits released.  It is supposed to argument MatrixA.   
+The necessary fix is the loopsLogic.rentrentReset() trigger.
+ 
+The theory is at current semaphorePattern_i fall through, zero out each element of pArray reflecting i<=current i.
+
+
+And also, the verification that no permits are leeking.  
+
+
+ENTER    LOOP   !!!!!          LoopSemaphoreInitial sf2.acquire()0 threadId: 18
+
+
+12/7 afternoon:  A bug discovered and fixed.   loopListener incremented pArray before more loopLists and after the looplists.  Only need
+pArray increment after more looplists.  problem commented out.
+
+
+
+done.  must load output to database for inspection.   
+
+
+
+
+google news, for instance "little foot" australipithicus prometheious, redirects from news.google.com to parked sites.
+
+Whenever you have an array of values to go in a column is THE indicator that the column should be in its own table so that each value can be put in a separate row.
+ The new table will have a key that is the same as the original table but with one extra field added to store the array offset.Feb 28, 2012
+
+
+MiTM attacks
+TLS Proxy IS
+
+scan device for open ports
+
+ DNS server and a CA in the local network, and MITM 
+HTTPS
+HSTS
+vpn
+
+
+
+12/8
+
+The very dear moment of many worked and unworked days and nites can now fruit.  
+
+The pArray
+Its Looplist, the iterated differences of looplist
+The mentioned above as gauss arguments and subsequent results are the database media.
+
+Database instruments includes the buffer last used in muCorrolation threaded.
+
+get some fis vm monitering attached.   
+
+all the points where integer range is declaired.  maybe not all consistant. this problem is fixed.
+
+Core java things to wonder about:
+
+why join threads?
+build looplist with appropriate static content.
+
+
+The database rejeime, from LoopsMain:
+
+newDB (need that first letter capital) class is instanciated.
+ 
+have the database buffer and its associated permit. 
+
+so:
+
+decisions use derby inbeded or network
+       or use mysql                            :totally outside of scope to use mysql,  that is the whole glassfish thing, but quite soon.
+
+  
+
+
+12/18
+
+ NCHAR, NVARCHAR and NCLOB 
+
+To use the driver with the JDBC DriverManager, use com.mysql.jdbc.Driver as the class that implements java.sql.Driver
+
+To use MySQL Connector/J with an application server such as GlassFish, Tomcat, or JBoss, read your vendor's documentation for more 
+information on how to configure third-party class libraries, as most application servers ignore the CLASSPATH environment variable.
+
+socksProxyHost
+Name or IP address of SOCKS host to connect through.
+Since version: 5.1.34
+socksProxyPort
+Port of SOCKS server.
+
+fis.newDB toggles between mysql and derby. 
+it opens a connection then closes it
+
+
+must assure the database thread is properly configured.
+
+
+
+
+
+So, proceed with the derby system.  and,  need to know... that is go go go and figure out how to get open ofice to read the derby database.
+does it need not be embedded?
+
+also need to harvest from the first run of gauss bean. how it was loaded onto the database.  
+
+
+peril in darkness.
+shall we walk down darkend path for sworn in peril.  
+Read 
+After Write (RAW) 
+hazards
+
+libraries like 
+libc
+, 
+cuDNN
+
+
+caffee, caffee2 mxnet tensorflow theano pytorch torrch
+
+why ubuntu desktop linux
+
+a psycosis in need of enrichment.
+
+
+
+
+  
+what pluggins are available for browsers these days?
+
+
+
+
+
+
+
+
+
+
+
+
+12/19:  Have the workbench running, allbit is configured to start server when computer is turned on, 
+the server shuts off if idle, ..... , wierd error if installed with manual on option.  
+can't see the table working on, but there is another way to see it.  12/20 all ok with table visibility
+Have fis able to connect to the mysql fisdb.  
+
+The need:
+
+   GaussBean, GaussTable, GaussBuffer, GaussSemaphore.  
+and an appropriate table on fisdb.
+
+
+
+Remember:
+
+  Gauss takes a max sized list, and outputs a max sized vector.
+  Each list has the Psi_i,triag_j name.
+
+with various executors gaussing, need gauss buffer . addto synchronized.
+
+
+LoopsDriver is constructed with list mulist, semaphore muSem.
+
+gaussTable is constructed with list dbVector, semaphore t1Sema and reference to GaussCorrolation mang
+
+(both are references to same object)
+
+the listeners need references to muSem, and muBuffer.   // they thave the references.
+
+
+and also,,, an appropriate identifier for each gauss bean.  //  what?  approprite configured gauss bean.
+So, have pArray, workNum, gauss matrix before, and gauss matrix result.  
+
+
+so, first things first, with the above, put it all on a gaussBean.
+
+pArray, is bigDecimal, can be converted to string of fixed length. 
+
+The pre gauss matrix is float, that can be or is native as bigDecimal, that can be converted to string.
+But the vector is variable length.
+
+The gauss result is float type, that can be converted to bigDecimal, that can be converted to string.
+But the vector is variable length.  
+
+
+12/20
+ 
+allrlistb is necessary???  lots of memory for the object.
+
+
+So, have pArray, workNum, gauss matrix before, and gauss matrix result.  
+All for the gauss bean.
+
+
+gaussMain only takes the vandermonde and it's dimension as arguments.  It does not return an object.
+It is constructed with references to the db buffer.  
+
+So,  "gaussBean"  is constructed with as much as possible before gMain.gauss.  Is passed into gMain.gauss.
+gMain.gauss finishes the bean and buffers it.  
+
+Again, so:
+
+   pArray.to string, worknum is int, loopList.to string,  and construct result.toString.  
+
+
+pm:
+
+   gaussMain needs a method transcribeResult.
+gauss output of vandermonde is to be set on gaussbean1, the mysql database bean.
+
+some issues if not all of them are, setmatrix, of matrixA fame, uses this.i  but variable not available.
+use the variable passed into gaussMain.
+
+gaussBean has a list vmResult that is to be populated with the vandermonde result.
+first, however, an arrayList method variable is to be declaired in transcribeResult.  
+then the .toString is assigned onto gaussbean.
+
+gaussbean1 is built.
+where to put it on the buffer, and release a permit.
+
+once again the listeners have muList,muSem.
+
+some java theory:  gaussMain has a zero argument constructor, it does not have a reference to muList,muSem.
+
+but it gets passed to its mainMethod a new bean that ought to get populated then referenced on the database
+buffer.  
+
+so,  finishing off the database buffer thing, gaussMain should be constructed with references to db buffer objects.
+
+the work around is pass the objects to gaussMain.     
+
+remember this is theory.....
+
+is allrlistb a deprecated structure.   it appears to just grow without merit.  that is... not in use....
+
+
+
+12/21  
+
+gauss table is reporting data as expected.  
+
+now for sql table to be created at newdb().  So far it appears to be three string columns per row.  //happend in the workbench.
+
+so once appropriate mysql table is created in newDB for fisdb, gaussTable can be reconfigured for updating
+to this table.
+
+12/26:
+
+   getting the object onto the sql table, but need it parced to use it....
+
+gausstable1.startconn correctly references mysql db.
+gaussbean1 has the updated getters and setters, and configured constructor.
+
+
+got data onto mysql.... but.... cannot use parray as primary key.
+
+me thinkith, looplist is unique. So, time to change the primary key to looplist.  done.
+
+
+12/27
+
+get much more savy with mysql, sql, mysql workbench.  select and click delete much not quite usefull.
+
+but will attempt a full table population with current fis profile.  
+
+got a problem with pArray reset listener.  product dosn't properly increment after second degree reset.
+
+
+
+pArray:   [15, 1, 0, 0, 1]
+LoopSemaphore setSizee<setSize threadId: 14 2 15
+rentrentReset                                                           rentrentReset
+pArrayResetListener                                      pArrayResetListener
+LoopListener.propertyChange workNum: 0 modulo: 1
+LoopSemaphore initial !endProduct threadId: 13
+LoopSemaphoreInitial sf2.acquire()113
+pArray:   [0, 2, 0, 0, 1]
+LoopSemaphoreInitial sb2.release()1 setSizee<setSize1 15
+
+pArray:   [15, 3, 0, 0, 1]
+LoopSemaphore setSizee<setSize threadId: 14 4 15
+rentrentReset                                                           rentrentReset
+pArrayResetListener                                      pArrayResetListener
+LoopListener.propertyChange workNum: 0 modulo: 1
+
+LoopSemaphore initial !endProduct threadId: 13
+LoopSemaphoreInitial sf2.acquire()113
+pArray:   [0, 4, 0, 0, 1]
+
+pArray:   [15, 15, 0, 0, 1]
+LoopSemaphore sb2.release() threadId: 15
+LoopSemaphore sb2.release()1 setSizee>setSize1 15
+LoopSemaphore setSizee<setSize threadId: 15 1 15
+rentrentReset                                                           rentrentReset
+pArrayResetListener                                      pArrayResetListener
+LoopListener.propertyChange workNum: 2 modulo: 2
+
+LoopSemaphore !endProduct threadId: 14
+LoopSemaphore sf2.acquire()1 threadId: 14
+pArray:   [0, 0, 0, 0, 1]
+LoopSemaphore sb2.release() threadId: 14
+LoopSemaphore sb2.release()1 setSizee>setSize1 15
+LoopSemaphore setSizee<setSize threadId: 14 1 15
+rentrentReset            
+
+SET sql_safe_updates=1
+
+
+
+
+1/1:
+
+ probabilistic polynomial time (PPT) 
+
+ the inverse of any polynomial
+
+k-bit composite integers
+
+easy to invert the product of two even integers.
+
+remember:  fis needs to be verified for discrite ranges of dimension, that is
+the condition interface maybe more robust.
+
+InnoDB and MyISAM
+
+
+1/2
+
+monopoly pieces to be updated.
+
+Last year closeout involved attaching profiler to FIS.  gc() hardcoded.  Still though, FIS accumulates many, many objects.
+
+So,  have some FIS data.  Allegedly it is a slew of Gauss containing pArrays up to dimension d.  
+For arbitrary Psi_i on gausstable want to populate FigNewton.  Is data complete?
+
+Data inspection observation....
+worker #2 is still missing.     
+
+13.2.2 DELETE Syntax
+
+Data verifcation update!
+new column for gausstable specifies which rListB it came from. 
+
+Maybe best current practice is use newDB() class to delete gausstable and then make a new one.
+delete refman p 1981
+
+ALTER TABLE `fisdb`.`gaussiterationtable` 
+ADD COLUMN 
+`resultlistid` VARCHAR(200) NULL AFTER `vmresult`,
+ADD COLUMN `deleteflag` VARCHAR(45) NULL DEFAULT 'd' AFTER `resultlistid`;
+
+
+
+mysql preferences:  safe deletes disabled.
+
+nothing special if fis sqlerata.  maintenace querries are in workbench.  no current use of newdb() class.
+
+onto getting rlistb onto gaussbean1.
+
+did some work on gaussbean1.  wrote getters and setters for the new bean field resultlistid.  The field first written as
+a string.  Me thinkith should be an integer.  
+
+This id is non trivial each listener needs a reference to "counter" class.  The class needs synchronization.
+
+Could be a static class with one variable and never instanciated?????
+ResultListID is instanciated wherever needed but has the common static variable counter.
+need local int= for resultlist Id in driver.run.  only one .getnextcounter is necessary.
+
+
+looplistener has an rlistb declared each propertychange.  but maby suspect gargabe().
+sql says duplicate entries abound in fis output.
+
+
+well:   need a complete fis narrative of what should iterate, what is iterating.  
+        so far, with new fields, apparently missing data.
+
+
+
+1/3: 
+
+  
+  ResultListID is rlistb counter class.  All instances (one for every variable and one for loops driver) reference its lone static field, a counter.
+  The counter is supposed to corrolate related looplists but latest run reveals it is nearly a unique row id.  It is also not continuous.  
+
+Looks like just sticking the counter in the listenerRunnable is error.
+
+
+An observation or two.
+.pArrayIncrement creates many new rListB,looplists that are suspect of being processed but not released.
+also
+the rlistb counter is uncouppled from this instanciation.  
+within looplistener, integerange is hard valued.
+loopListener has a hard valued dimension variable.
+
+
+Looks like time for the loopListener narrative:
+
+LoopSemaphore aquires a permint for some  logic (process and increment pArray).
+Its listener's .propertyChange is fired.
+
+pArray is or isn't saftly published for the listenerRunnable.   
+as in pArray need lots of synchronization.
+
+
+well, pArray increment is suspect. 
+
+LoopListenerRunnable.run  loop resultListCounter: 232340
+LoopListenerRunnable.run  loop resultListCounter: 232340
+LoopListenerRunnable.run  loop resultListCounter: 232341
+LoopListenerRunnable.run  loop resultListCounter: 232341
+LoopListenerRunnable.run  loop resultListCounter: 232342
+
+
+LoopListenerRunnable.run  loop resultListCounter: 232365
+LoopListenerRunnable.run  loop resultListCounter: 232364
+LoopListenerRunnable.run  loop resultListCounter: 232365
+LoopListenerRunnable.run  loop resultListCounter: 232366
+LoopListenerRunnable.run  loop resultListCounter: 232366
+LoopListenerRunnable.run  loop resultListCounter: 232367
+
+LoopListenerRunnable.run  loop resultListCounter: 232338
+LoopListenerRunnable.run  loop resultListCounter: 232337
+LoopListenerRunnable.run  loop resultListCounter: 232338
+LoopListenerRunnable.run  loop resultListCounter: 232339
+LoopListenerRunnable.run  loop resultListCounter: 232340
+LoopListenerRunnable.run  loop resultListCounter: 232339
+
+
+data is snafu.  must tear down fis.
+
+.discrete iteration
+.why is pArray seemingly, maybe actually misrepresented on gausstable
+.why is rlistbCounter mearly iterating?
+
+1/4
+
+The meaning of setsize:
+
+. In LoopSemaphore setsize determines the range of a set product member.  It is constructed with the integerRange variable defined in loopsDriver.
+
+. LoopList uses integerRange within its named context of the array size of results.
+
+. LoopsLogic is constructed with integerRange but is apparantly unused.
+
+Therfore:
+
+LoopsDriver needs a new variable setProductRange.  It's use is for controlling LoopsSemaphore iteration.
+
+
+Implemented new variable setProductRange.  Ran FIS for value=2.  Same insensible chop.
+
+Next: confirm semaphore pattern is working.  
+step one: comment out gtable thread, reentrant reset (pArrayReset)
+
+It is known pArray reset is improperly configured/implemented.
+
+fisdat6 datapilot result speaks of problematic fis run:
+counts of both parray,workernum appear erronus.
+
+and why oh why does rlistbcounter not work?
+and why oh wy does it seem to work if it is passed into the runnable, but not when incremented within the runnable?  well, for one, there are different runnables for the same rlistb defined in the listener.
+
+and onto:  need the runnable for the initial condition defined in the driver for the initial pArray.
+
+
+
+The .propertyChange method of LoopListener, when fired, does:
+
+submit a number n<N of runnables, equal to the dimension.   
+
+
+The Runnable.run method, takes the nth loopList on rlistB.
+It then factors it and gausses it.
+and iterated differences out and gausses each difference of the factord looplist.
+
+1/5:
+
+   maybe do away with passing 'm' variable.  maybe the .size of matrix a is better.  
+   fixed the 'm' variable using explisit .length.   now confirm resultlistid.
+
+fig newton is represented on gausstable.  
+except for bottom of first vertical, a value '1'.
+
+well, duplicates exist because of the 1 factorial.
+
+i came up through the south side...
+i grew up on the south side and by god i swear ill never do it again.
+
+the looplistener constructor is riddled i mean riddled.  necessary fields?  all of them?
+
+so, looplistener has a reference to the pArray. It has a method for incrementing pArray.
+    the listener's .propertyChange event object contains a reference to pArray  (seems redundant).
+
+    the listener needs to submit runnables with a pArray preIncrement clone(). 
+
+
+a new suspision is cast upon the increment function (as opposed to the iteration function) within the semaphore contex.
+
+the .parrayincrement method instanciates a new resultlistbean. 
+                            increments the appropriate pArray index
+                            assigns the old rlistb reference to the new rlistb
+
+                            then draws out new looplists. 
+
+and assums the new looplists are on the correct rlistb.
+
+
+1/8
+
+  looplistener is constructed with the all necessary looplists on rlistb (a looplist constructor locates the looplist on rlistb).
+
+maybe load transferlooplist dosn't put the reference on rlistb. 
+
+
+debugging notes:
+service submit in loops driver are commented out.
+
+
+sf2.acquire() commented out in loopsemaphoreinitial
+
+
+
+LoopsDriver constructs the initial gblist and subsequent difference gblists.
+
+each of these gblists have a listener attached and each listener is constructed with a reference to its gblist.
+
+the runnable gets a reference to the gblist but gets its work list from rListb, a list of lists which grows when a looplist is contructed.
+
+
+a permit is aquired and 
+
+maybe:  just like parray rlistB needs to be cloned,  it changes before the runnable does its dirty dirty work...  hehehe the old synchronized/asynchronized switcha roo.  
+
+
+so wrote a clone rlistB line in the listener.propertyChange and passed the clone to the executor.
+and it worked.  
+
+AM all done.
+
+PM.  A good look at pArray reset and its listener.  
+
+
+the code base says:  the parrayresetlistener.propertychange event sets to zero all indices 
+
+0 0 0 1 
+ 
+1 0 0 1 
+
+2 0 0 1  worker_i fall through .....
+
+         and then 
+
+0 0 0 1        ?????    don't want this processed   the rlistb is not synchronized....   but if i knew which worker tripped the listener.....     I could do it all here, as a more robust pArray increment.
+
+         and then
+
+0 1 0 1 
+
+need to know how rlist index is valued.
+
+meaning, pArrayReset mearly zeros out indices of parry, without regard to the contents of rListB.
+
+Ifff pArrayResetListener also nulls rListB, will it fall through the propertyChange, increment parry and redraw the appropriate rlistb?
+but then a hole in data, the most important parts are missing.... 
+
+0 1 0 1  
+
+it looks like,  a listener will increment pArray, 
+
+
+dont forget leon redbone.
+
+so, the listener processes rListB, then increments pArray.
+
+But.  during fallthrough the increment of pArray is not redrawn on rListB. and pArray is subsequently incremented again.
+
+so, the 
+
+
+1/9
+
+   initial loopSemaphore state schemes:   with pDimension=i and say i=4,  and productRange =2, how about setting up the inital state 2 2 2 0, and loop semaphore start issuing a permit to worker 3...
+
+too contrived,  simply looking for the equations, thinkih,  increment pArray at beginning of listener, and take it from there.....
+
+
+a bit on yesterday's recap:  
+                                    Worker_i's semaphore pattern iterated, and the event triggers a .propertyChange event.
+                                    The code is located after next worker's semaphore pattern performs an increment.  
+
+
+0 0 0 1 
+1 0 0 1 
+2 0 0 1  worker zero iterated
+2 1 0 1  worker one incremented
+         rentrentReset.
+0 1 0 1
+
+erronus,   2 1 0 1 will be duplicated.
+
+0 0 0 1 
+1 0 0 1
+2 0 0 1
+          rentrentReset.
+0 1 0 1
+1 1 0 1
+2 1 0 1
+
+rentretReset was moved in each of the semaphore patters.  It's logic occurs before the next worker's increment permit is released.
+
+ 
+lets peek at LoopsDriver happenings: 
+
+A PolynomialArray is constructed with dimension argument
+loopLists and their listeners are constructed.
+the semaphore patterns are instanciated.  
+
+LoopSemaphoreStart is submitted to the executor and the action begins. 
+
+
+The AM Lab:
+
+   pArray to be initialized with zeros for coefficients.
+   the looplists instanciated within loops driver seem irrelevant but not to worry.
+
+listeners don't need that new flag in pArrayResetListener but will leave it unimplemented.
+listeners will have their pArrayIncrement method call moved to the beginning of .propertyChange.
+
+
+The PM Lab:
+
+  the higher LoopSemaphore "i incremented" releases sb2 permit.
+  but the lower semaphore dosn't "i itera
+
+
+
+LoopListener.propertyChnge Exit. 
+LoopSemaphore initial post loopsLogic.sf2Aquire13 setSizee 1setSize 2
+loopsemaphoreinitial pre sf1.release (it iterated)
+loopsemaphoreinitial post sf1.release
+loopsemaphoreinitial pre sb1.aquire
+LoopSemaphore sf2.acquire()1 threadId: 14
+LoopListener.propertyChange workNum: 1 modulo: 1 rListIndex: 3
+
+
+There is a bug in the semaphore iterator.  It is apparent whenever the looplistener is attached for pArray increment and subsequent runnable logic.
+
+1000
+2000
+
+2100   0100
+3100   1100
+
+4100    
+
+4200
+
+5200
+5210
+6210
+6310
+7310
+8310
+8410
+
+very interesting bug, indeed.   if the semaphorePattern iterated it should tell the next worker so.  
+the current semaphore pattern code simply releases "i incremented" permit.  it should be conditional on setsizee<setSize.
+acually, it was missing a release or two.
+
+
+bug looks fixed.    maybe currupted pattern from months ago.  
+
+
+this version of fis looks complete.  
+
+
+
+
+
+
+
+
+                                    the iteration event is recored                                       
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+im im im a  a a listtle litttle im a little im a litiie bitttch  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+  
+
+
+
+ 
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+   
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wow before, on the xp couldnt use oracle db, had to use derby, now can download mysql again!!!
+
+anti malware service execuable
+
+
+
+
+
+the dancing barefoot show on pkn
+
+someone and 
+seal tusk low ridden
+
+my sql root password Aibeceles1
+
+Aibes diena1 
+my
+windows service name MySQL57
+
+
+wmi provider host quite a few cycles and percentages of cpu.
+
+
+mysql server configured not to start at startup
+
+
+mysql-connector-java 5 1 23-bin.jar
+
+mysql router 
+
+mysql57
+
+
+
+
+
+war slippin into darkness.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sept 21:
+
+You can insert a cross-reference as a hyperlink in your document using the Navigator. You can even
+ cross-reference items from other OpenOffice documents. If you click the hyperlink
+ when the document is opened in OpenOffice, you are taken to the cross-referenced item.
+1. Open the document(s) containing the items you want to cross-reference.
+2. On the Standard bar, click the Navigator icon.
+3. Click the arrow next to the Drag Mode icon, and ensure that Insert as Hyperlink is selected.
+4. In the list at the bottom of the Navigator, select the document containing the item that you want to cross-reference.
+5. In the Navigator list, click the plus sign next to the item that you want to insert as a hyperlink.
+6. Drag the item to where you want to insert the hyperlink in the document.
+The name of the item is inserted in the document as an underlined hyperlink.
+
+
+
+Inserting Cross-References 
+Cross-references allow you to jump to specific text passages and objects in a single document. A cross-reference consists of a target and a reference that are inserted as fields in the document.
+Objects with captions and bookmarks can be used as targets.
+Cross-Referencing Text
+Before you can insert a cross-reference, you must first specify the targets in your text.
+To Insert a Target
+1. Select the text that you want to use as a target for the cross-reference.
+2. Choose Insert - Cross-reference.
+3. In the Type list, select “Set Reference”.
+4. Type a name for the target in the Name box. The selected text is displayed in the Value box.
+5. Click Insert. The name of the target is added to the Selection list.
+Leave the dialog open and proceed to the next section.
+To Create a Cross-Reference to a Target
+1. Position the cursor in the text where you want to insert a cross-reference.
+2. Choose Insert - Cross-reference to open the dialog, if it is not open already.
+3. In the Type list, select "Insert Reference".
+4. In the Selection list, select the target that you want to cross-reference.
+5. In the Insert reference to list, select the format for the cross-reference. The format specifies the 
+type of information that is displayed as the cross-reference. For example, "Reference" inserts the 
+target text, and "Page" inserts the page number where the target is located. For footnotes the footnote number is inserted.
+6. Click Insert.
+7. Click Close when finished.
+Cross-Referencing an Object
+You can cross-reference most objects in your document, such as graphics, drawing objects, OLE objects, and tables, so long as they have a caption. To add a caption to an object, select the object, and then choose Insert - Caption.
+1. Click in the document where you want to insert the cross-reference.
+2. Choose Insert - Cross-reference.
+3. In the Type list, select the caption category of the object.
+4. In the Selection list, select the caption number of the object that you want to cross-reference.
+5. In the Insert reference to list, select the format of the cross-reference. The format specifies the type of information that is displayed as the cross-reference. For example, "Reference" inserts the caption category and caption text of the object.
+6. Click Insert.
+7. Click Close when finished.
+Updating Cross-References
+To manually update the cross-references in a document, press F9.
+
+Choose View - Fields to switch between viewing the reference names and the reference contents.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Yes, 
+
+   The Girl from Ipanema was cliched.  And Madonna was on the playlist.  There were however 20 or so 
+country classics.  But no Hank Williams or a fine pilsner to to make the reception all the best.  
+
+   A great bit of 
+
+
+
+
+
+
+Yes,
+
+  Strauss' Thus Spoke Zoraster is watered down.  And Bolero is not opened with a hand sounded snare. 
+ There are however, 20 or so operatic classical masterpieces.  But no Carmen or Norma, or a good jug of Don Juan's from
+ Mineola's Little Portugal Wine Shop to make the music all the best. 
+  I'll labor though,  through my own aches and pains this holiday with spirit!  That is Kirsch Wiskey. 
+ Given for a house painting job well done, from 
+ethnic German neighbors originally  from Woodhaven.
+
+Tom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+lab:
+
+ experiment with congruences for derriving values of triag trag max-2.
+
+differences.ods does not consistantly compute differences of the
+root polynomial with the differences of scalars.  The subtraction of the 
+scalar differences are low index minus high index, but the root differences
+are calculated high index minus low.
+
+
+
+running wild dogs on Atolls named after ladies beach wear.
+
+
+learn more at mathworks.com
+
+
+

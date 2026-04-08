@@ -1,0 +1,847 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\n Output of ZeroAndDifferences.jar for 1x^3 (see video for algorithm explanation https://www.youtube.com/watch?v\u003dH4dBkofVA4A) is represented by graph.jpg (last paragraph).  Each node has a property representing the differenced polynomial.  This polynomial has another property representing the number of rational roots the differenced polynomial has. The location on the graph, which depth level, indicates the number of rational roots necessary for the polynomial to be determined.  For example the graph root is a node with a constant and thus no expected rational roots.  The first level is a linear expecting 1 rational root. The second a quadratic with two expected roots...  The classification model takes the node\u0027s polynomial number of roots and its level as parameters and predicts if it is determined or not.  Note though the prediction model does not yet accept a GraphSage embedding as feature properties. \n",
+      "user": "anonymous",
+      "dateUpdated": "2021-09-03 10:31:02.055",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": true,
+          "language": "markdown",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eOutput of ZeroAndDifferences.jar for 1x^3 (see video for algorithm explanation \u003ca href\u003d\"https://www.youtube.com/watch?v\u003dH4dBkofVA4A\"\u003ehttps://www.youtube.com/watch?v\u003dH4dBkofVA4A\u003c/a\u003e) is represented by graph.jpg (last paragraph). Each node has a property representing the differenced polynomial. This polynomial has another property representing the number of rational roots the differenced polynomial has. The location on the graph, which depth level, indicates the number of rational roots necessary for the polynomial to be determined. For example the graph root is a node with a constant and thus no expected rational roots. The first level is a linear expecting 1 rational root. The second a quadratic with two expected roots\u0026hellip; The classification model takes the node\u0026rsquo;s polynomial number of roots and its level as parameters and predicts if it is determined or not. Note though the prediction model does not yet accept a GraphSage embedding as feature properties.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630677152622_1979536751",
+      "id": "20210903-095232_561294694",
+      "dateCreated": "2021-09-03 09:52:32.622",
+      "dateStarted": "2021-09-03 10:31:02.055",
+      "dateFinished": "2021-09-03 10:31:02.065",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Drop in memory graph.",
+      "text": "CALL gds.graph.drop(\u0027myGraph\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "2021-10-12 10:14:33.930",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "graphName": "string",
+                      "database": "string",
+                      "memoryUsage": "string",
+                      "sizeInBytes": "string",
+                      "nodeProjection.Dnode.properties.zero.property": "string",
+                      "nodeProjection.Dnode.properties.zero.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.determined.property": "string",
+                      "nodeProjection.Dnode.properties.determined.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.totalZero.property": "string",
+                      "nodeProjection.Dnode.properties.totalZero.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.one.property": "string",
+                      "nodeProjection.Dnode.properties.one.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.wNum.property": "string",
+                      "nodeProjection.Dnode.properties.wNum.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.two.property": "string",
+                      "nodeProjection.Dnode.properties.two.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.three.property": "string",
+                      "nodeProjection.Dnode.properties.three.defaultValue": "string",
+                      "nodeProjection.Dnode.label": "string",
+                      "relationshipProjection.zMap.orientation": "string",
+                      "relationshipProjection.zMap.aggregation": "string",
+                      "relationshipProjection.zMap.type": "string",
+                      "nodeQuery": "string",
+                      "relationshipQuery": "string",
+                      "nodeCount": "string",
+                      "relationshipCount": "string",
+                      "nodeFilter": "string",
+                      "relationshipFilter": "string",
+                      "density": "string",
+                      "creationTime": "string",
+                      "modificationTime": "string",
+                      "schema.nodes.Dnode.zero": "string",
+                      "schema.nodes.Dnode.totalZero": "string",
+                      "schema.nodes.Dnode.determined": "string",
+                      "schema.nodes.Dnode.one": "string",
+                      "schema.nodes.Dnode.wNum": "string",
+                      "schema.nodes.Dnode.two": "string",
+                      "schema.nodes.Dnode.three": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "graphName\tdatabase\tmemoryUsage\tsizeInBytes\tnodeProjection.Dnode.properties.zero.property\tnodeProjection.Dnode.properties.zero.defaultValue\tnodeProjection.Dnode.properties.determined.property\tnodeProjection.Dnode.properties.determined.defaultValue\tnodeProjection.Dnode.properties.totalZero.property\tnodeProjection.Dnode.properties.totalZero.defaultValue\tnodeProjection.Dnode.properties.one.property\tnodeProjection.Dnode.properties.one.defaultValue\tnodeProjection.Dnode.properties.wNum.property\tnodeProjection.Dnode.properties.wNum.defaultValue\tnodeProjection.Dnode.properties.two.property\tnodeProjection.Dnode.properties.two.defaultValue\tnodeProjection.Dnode.properties.three.property\tnodeProjection.Dnode.properties.three.defaultValue\tnodeProjection.Dnode.label\trelationshipProjection.zMap.orientation\trelationshipProjection.zMap.aggregation\trelationshipProjection.zMap.type\tnodeQuery\trelationshipQuery\tnodeCount\trelationshipCount\tnodeFilter\trelationshipFilter\tdensity\tcreationTime\tmodificationTime\tschema.nodes.Dnode.zero\tschema.nodes.Dnode.totalZero\tschema.nodes.Dnode.determined\tschema.nodes.Dnode.one\tschema.nodes.Dnode.wNum\tschema.nodes.Dnode.two\tschema.nodes.Dnode.three\n\"myGraph\"\t\"neo4j\"\t\"\"\t-1\tzero\t\tdetermined\t\ttotalZero\t\tone\t\twNum\t\ttwo\t\tthree\t\tDnode\tUNDIRECTED\tDEFAULT\tzMap\tNULL\tNULL\t56\t110\tNULL\tNULL\t0.03571428571428571\t2021-09-01T13:30:40.412871500-04:00[America/New_York]\t2021-09-01T13:30:40.417881100-04:00[America/New_York]\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630433429973_-163004932",
+      "id": "20210831-141029_1660915492",
+      "dateCreated": "2021-08-31 14:10:29.973",
+      "dateStarted": "2021-09-01 14:56:01.459",
+      "dateFinished": "2021-09-01 14:56:03.531",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Drop GraphSage embedding model of in memory graph. ",
+      "text": "Call gds.beta.model.drop(\u0027myGraphh\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "2021-10-12 10:14:37.626",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "modelInfo.modelName": "string",
+                      "modelInfo.modelType": "string",
+                      "modelInfo.metrics.didConverge": "string",
+                      "modelInfo.metrics.ranEpochs": "string",
+                      "modelInfo.metrics.epochLosses": "string",
+                      "trainConfig.maxIterations": "string",
+                      "trainConfig.negativeSampleWeight": "string",
+                      "trainConfig.searchDepth": "string",
+                      "trainConfig.projectedFeatureDimension": "string",
+                      "trainConfig.aggregator": "string",
+                      "trainConfig.activationFunction": "string",
+                      "trainConfig.relationshipWeightProperty": "string",
+                      "trainConfig.learningRate": "string",
+                      "trainConfig.concurrency": "string",
+                      "trainConfig.modelName": "string",
+                      "trainConfig.embeddingDimension": "string",
+                      "trainConfig.nodeLabels": "string",
+                      "trainConfig.sudo": "string",
+                      "trainConfig.sampleSizes": "string",
+                      "trainConfig.relationshipTypes": "string",
+                      "trainConfig.batchSize": "string",
+                      "trainConfig.featureProperties": "string",
+                      "trainConfig.epochs": "string",
+                      "trainConfig.tolerance": "string",
+                      "trainConfig.username": "string",
+                      "graphSchema.nodes.Dnode.zero": "string",
+                      "graphSchema.nodes.Dnode.two": "string",
+                      "graphSchema.nodes.Dnode.three": "string",
+                      "graphSchema.nodes.Dnode.determined": "string",
+                      "graphSchema.nodes.Dnode.one": "string",
+                      "loaded": "string",
+                      "stored": "string",
+                      "creationTime": "string",
+                      "shared": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Failed to invoke procedure `gds.beta.model.drop`: Caused by: java.util.NoSuchElementException: Model with name `myGraphh` does not exist."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630433440299_279555246",
+      "id": "20210831-141040_108597209",
+      "dateCreated": "2021-08-31 14:10:40.299",
+      "dateStarted": "2021-09-01 14:56:06.611",
+      "dateFinished": "2021-09-01 14:56:06.641",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Drop node classification model.",
+      "text": "Call gds.beta.model.drop(\u0027determined-model\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "2021-09-02 16:04:44.760",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "modelInfo.modelName": "string",
+                      "modelInfo.modelType": "string",
+                      "modelInfo.metrics.F1_WEIGHTED.test": "string",
+                      "modelInfo.metrics.F1_WEIGHTED.outerTrain": "string",
+                      "modelInfo.metrics.F1_WEIGHTED.validation": "string",
+                      "modelInfo.metrics.F1_WEIGHTED.train": "string",
+                      "modelInfo.bestParameters.maxEpochs": "string",
+                      "modelInfo.bestParameters.minEpochs": "string",
+                      "modelInfo.bestParameters.penalty": "string",
+                      "modelInfo.bestParameters.patience": "string",
+                      "modelInfo.bestParameters.batchSize": "string",
+                      "modelInfo.bestParameters.sharedUpdater": "string",
+                      "modelInfo.bestParameters.tolerance": "string",
+                      "modelInfo.bestParameters.concurrency": "string",
+                      "modelInfo.classes": "string",
+                      "trainConfig.holdoutFraction": "string",
+                      "trainConfig.params": "string",
+                      "trainConfig.targetProperty": "string",
+                      "trainConfig.concurrency": "string",
+                      "trainConfig.randomSeed": "string",
+                      "trainConfig.modelName": "string",
+                      "trainConfig.validationFolds": "string",
+                      "trainConfig.metrics": "string",
+                      "trainConfig.nodeLabels": "string",
+                      "trainConfig.sudo": "string",
+                      "trainConfig.relationshipTypes": "string",
+                      "trainConfig.featureProperties": "string",
+                      "trainConfig.username": "string",
+                      "graphSchema.nodes.Dnode.zero": "string",
+                      "graphSchema.nodes.Dnode.totalZero": "string",
+                      "graphSchema.nodes.Dnode.determined": "string",
+                      "graphSchema.nodes.Dnode.one": "string",
+                      "graphSchema.nodes.Dnode.wNum": "string",
+                      "graphSchema.nodes.Dnode.two": "string",
+                      "graphSchema.nodes.Dnode.three": "string",
+                      "loaded": "string",
+                      "stored": "string",
+                      "creationTime": "string",
+                      "shared": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "modelInfo.modelName\tmodelInfo.modelType\tmodelInfo.metrics.F1_WEIGHTED.test\tmodelInfo.metrics.F1_WEIGHTED.outerTrain\tmodelInfo.metrics.F1_WEIGHTED.validation\tmodelInfo.metrics.F1_WEIGHTED.train\tmodelInfo.bestParameters.maxEpochs\tmodelInfo.bestParameters.minEpochs\tmodelInfo.bestParameters.penalty\tmodelInfo.bestParameters.patience\tmodelInfo.bestParameters.batchSize\tmodelInfo.bestParameters.sharedUpdater\tmodelInfo.bestParameters.tolerance\tmodelInfo.bestParameters.concurrency\tmodelInfo.classes\ttrainConfig.holdoutFraction\ttrainConfig.params\ttrainConfig.targetProperty\ttrainConfig.concurrency\ttrainConfig.randomSeed\ttrainConfig.modelName\ttrainConfig.validationFolds\ttrainConfig.metrics\ttrainConfig.nodeLabels\ttrainConfig.sudo\ttrainConfig.relationshipTypes\ttrainConfig.featureProperties\ttrainConfig.username\tgraphSchema.nodes.Dnode.zero\tgraphSchema.nodes.Dnode.totalZero\tgraphSchema.nodes.Dnode.determined\tgraphSchema.nodes.Dnode.one\tgraphSchema.nodes.Dnode.wNum\tgraphSchema.nodes.Dnode.two\tgraphSchema.nodes.Dnode.three\tloaded\tstored\tcreationTime\tshared\ndetermined-model\tnodeLogisticRegression\t0.4047619016137567\t0.47222221920524693\t[{\"avg\":0.09189189051351351,\"min\":0.0,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":0.0625,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.6071428480357144},{\"avg\":0.09189189051351351,\"min\":0.0,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":0.5,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.6071428480357144},{\"avg\":0.09189189051351351,\"min\":0.0,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":1.0,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.6071428480357144},{\"avg\":0.09189189051351351,\"min\":0.0,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":4.0,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.6071428480357144}]\t[{\"avg\":0.4722140017315884,\"min\":0.4683673439278425,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":0.0625,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.47887323640150753},{\"avg\":0.4722140017315884,\"min\":0.4683673439278425,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":0.5,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.47887323640150753},{\"avg\":0.4722140017315884,\"min\":0.4683673439278425,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":1.0,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.47887323640150753},{\"avg\":0.4722140017315884,\"min\":0.4683673439278425,\"params\":{\"maxEpochs\":100,\"minEpochs\":1,\"penalty\":4.0,\"patience\":1,\"batchSize\":100,\"sharedUpdater\":false,\"tolerance\":0.001,\"concurrency\":4},\"max\":0.47887323640150753}]\t100\t1\t0.0625\t1\t100\tfalse\t0.001\t4\t[0,1]\t0.2\t[{\"penalty\":0.0625},{\"penalty\":0.5},{\"penalty\":1.0},{\"penalty\":4.0}]\tdetermined\t4\t49\tdetermined-model\t185\t[\"F1_WEIGHTED\"]\t[\"Dnode\"]\tfalse\t[\"*\"]\t[\"wNum\",\"totalZero\"]\t\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tInteger (DefaultValue(-9223372036854775808), PERSISTENT)\tTRUE\tFALSE\t2021-09-01T13:33:48.692241-04:00[America/New_York]\tFALSE\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630433855402_1651841508",
+      "id": "20210831-141735_119088123",
+      "dateCreated": "2021-08-31 14:17:35.402",
+      "dateStarted": "2021-09-01 14:56:11.752",
+      "dateFinished": "2021-09-01 14:56:11.811",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create in memory graph for gds algorithms.",
+      "text": "call gds.graph.create(\n    \u0027myGraph\u0027,\n    {\n        Dnode: {\n        label: \u0027Dnode\u0027,\n        properties: [\u0027determined\u0027,\u0027zero\u0027,\u0027one\u0027,\u0027two\u0027,\u0027three\u0027,\u0027wNum\u0027,\u0027totalZero\u0027]\n    }\n    },{\n        zMap: {\n        type: \u0027zMap\u0027,\n        orientation: \u0027UNDIRECTED\u0027    \n        }\n    }\n    )",
+      "user": "anonymous",
+      "dateUpdated": "2022-03-10 14:23:13.518",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "nodeProjection.Dnode.properties.zero.property": "string",
+                      "nodeProjection.Dnode.properties.zero.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.determined.property": "string",
+                      "nodeProjection.Dnode.properties.determined.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.totalZero.property": "string",
+                      "nodeProjection.Dnode.properties.totalZero.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.one.property": "string",
+                      "nodeProjection.Dnode.properties.one.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.wNum.property": "string",
+                      "nodeProjection.Dnode.properties.wNum.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.two.property": "string",
+                      "nodeProjection.Dnode.properties.two.defaultValue": "string",
+                      "nodeProjection.Dnode.properties.three.property": "string",
+                      "nodeProjection.Dnode.properties.three.defaultValue": "string",
+                      "nodeProjection.Dnode.label": "string",
+                      "relationshipProjection.zMap.orientation": "string",
+                      "relationshipProjection.zMap.aggregation": "string",
+                      "relationshipProjection.zMap.type": "string",
+                      "graphName": "string",
+                      "nodeCount": "string",
+                      "relationshipCount": "string",
+                      "createMillis": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nodeProjection.Dnode.properties.zero.property\tnodeProjection.Dnode.properties.zero.defaultValue\tnodeProjection.Dnode.properties.determined.property\tnodeProjection.Dnode.properties.determined.defaultValue\tnodeProjection.Dnode.properties.totalZero.property\tnodeProjection.Dnode.properties.totalZero.defaultValue\tnodeProjection.Dnode.properties.one.property\tnodeProjection.Dnode.properties.one.defaultValue\tnodeProjection.Dnode.properties.wNum.property\tnodeProjection.Dnode.properties.wNum.defaultValue\tnodeProjection.Dnode.properties.two.property\tnodeProjection.Dnode.properties.two.defaultValue\tnodeProjection.Dnode.properties.three.property\tnodeProjection.Dnode.properties.three.defaultValue\tnodeProjection.Dnode.label\trelationshipProjection.zMap.orientation\trelationshipProjection.zMap.aggregation\trelationshipProjection.zMap.type\tgraphName\tnodeCount\trelationshipCount\tcreateMillis\nzero\t\tdetermined\t\ttotalZero\t\tone\t\twNum\t\ttwo\t\tthree\t\tDnode\tUNDIRECTED\tDEFAULT\tzMap\t\"myGraph\"\t384\t766\t96\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630417610748_-2100276541",
+      "id": "20210831-094650_90433739",
+      "dateCreated": "2021-08-31 09:46:50.748",
+      "dateStarted": "2022-03-10 14:23:13.568",
+      "dateFinished": "2022-03-10 14:23:16.415",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "GraphSage training model (embedding not currently useful for label prediction).",
+      "text": "CALL gds.beta.graphSage.train(\n  \u0027myGraph\u0027,\n  {\n     modelName: \u0027myGraphh\u0027,\n     epochs:75\n    , aggregator: \u0027pool\u0027\n //   , aggregator: \u0027mean\u0027\n    , activationFunction: \u0027relu\u0027\n    , featureProperties: [\u0027determined\u0027,\u0027zero\u0027,\u0027one\u0027,\u0027two\u0027,\u0027three\u0027,\u0027four\u0027]\n    , projectedFeatureDimension: 5\n    , sampleSizes: [25, 10]\n    , searchDepth: 5\n    , learningRate:.05\n  }\n)",
+      "user": "anonymous",
+      "dateUpdated": "2022-03-11 08:32:32.381",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "graphName": "string",
+                      "modelInfo.name": "string",
+                      "modelInfo.metrics.didConverge": "string",
+                      "modelInfo.metrics.ranEpochs": "string",
+                      "modelInfo.metrics.epochLosses": "string",
+                      "modelInfo.type": "string",
+                      "configuration.maxIterations": "string",
+                      "configuration.negativeSampleWeight": "string",
+                      "configuration.searchDepth": "string",
+                      "configuration.projectedFeatureDimension": "string",
+                      "configuration.aggregator": "string",
+                      "configuration.activationFunction": "string",
+                      "configuration.relationshipWeightProperty": "string",
+                      "configuration.learningRate": "string",
+                      "configuration.concurrency": "string",
+                      "configuration.modelName": "string",
+                      "configuration.embeddingDimension": "string",
+                      "configuration.nodeLabels": "string",
+                      "configuration.sudo": "string",
+                      "configuration.sampleSizes": "string",
+                      "configuration.relationshipTypes": "string",
+                      "configuration.batchSize": "string",
+                      "configuration.featureProperties": "string",
+                      "configuration.epochs": "string",
+                      "configuration.tolerance": "string",
+                      "configuration.username": "string",
+                      "trainMillis": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "graphName\tmodelInfo.name\tmodelInfo.metrics.didConverge\tmodelInfo.metrics.ranEpochs\tmodelInfo.metrics.epochLosses\tmodelInfo.type\tconfiguration.maxIterations\tconfiguration.negativeSampleWeight\tconfiguration.searchDepth\tconfiguration.projectedFeatureDimension\tconfiguration.aggregator\tconfiguration.activationFunction\tconfiguration.relationshipWeightProperty\tconfiguration.learningRate\tconfiguration.concurrency\tconfiguration.modelName\tconfiguration.embeddingDimension\tconfiguration.nodeLabels\tconfiguration.sudo\tconfiguration.sampleSizes\tconfiguration.relationshipTypes\tconfiguration.batchSize\tconfiguration.featureProperties\tconfiguration.epochs\tconfiguration.tolerance\tconfiguration.username\ttrainMillis\n\"myGraph\"\tmyGraphh\ttrue\t2\t[9551.97084154766,10205.998388870317,10206.067924962408]\tgraphSage\t10\t20\t5\t5\tPOOL\tRELU\t\t0.05\t4\tmyGraphh\t64\t[\"*\"]\tfalse\t[25,10]\t[\"*\"]\t100\t[\"determined\",\"zero\",\"one\",\"two\",\"three\"]\t75\t1.0E-4\t\t573\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630417610538_-1344512201",
+      "id": "20210831-094650_1156079110",
+      "dateCreated": "2021-08-31 09:46:50.538",
+      "dateStarted": "2022-03-10 14:23:23.758",
+      "dateFinished": "2022-03-10 14:23:24.398",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "GraphSage embedding view.",
+      "text": "CALL gds.beta.graphSage.stream(\n  \u0027myGraph\u0027,\n  {\n    modelName: \u0027myGraphh\u0027\n  }\n)",
+      "user": "anonymous",
+      "dateUpdated": "2021-09-02 14:24:24.521",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Failed to invoke procedure `gds.beta.graphSage.stream`: Caused by: java.util.NoSuchElementException: Model with name `myGraphh` does not exist."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630433203061_-104284619",
+      "id": "20210831-140643_935735529",
+      "dateCreated": "2021-08-31 14:06:43.061",
+      "dateStarted": "2021-09-02 14:21:46.834",
+      "dateFinished": "2021-09-02 14:21:51.106",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create model for GraphSage embeddings.",
+      "text": "CALL gds.beta.graphSage.mutate(\n  \u0027myGraph\u0027,\n  {\n    mutateProperty: \u0027embeddings\u0027,\n    modelName: \u0027myGraphh\u0027\n  }\n)",
+      "user": "anonymous",
+      "dateUpdated": "2021-09-02 16:03:18.783",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "nodePropertiesWritten": "string",
+                      "mutateMillis": "string",
+                      "nodeCount": "string",
+                      "createMillis": "string",
+                      "computeMillis": "string",
+                      "configuration.modelName": "string",
+                      "configuration.nodeLabels": "string",
+                      "configuration.sudo": "string",
+                      "configuration.relationshipTypes": "string",
+                      "configuration.batchSize": "string",
+                      "configuration.mutateProperty": "string",
+                      "configuration.username": "string",
+                      "configuration.concurrency": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "tableHide": false,
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nodePropertiesWritten\tmutateMillis\tnodeCount\tcreateMillis\tcomputeMillis\tconfiguration.modelName\tconfiguration.nodeLabels\tconfiguration.sudo\tconfiguration.relationshipTypes\tconfiguration.batchSize\tconfiguration.mutateProperty\tconfiguration.username\tconfiguration.concurrency\n56\t0\t56\t0\t1\tmyGraphh\t[\"*\"]\tfalse\t[\"*\"]\t100\tembeddings\t\t4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630417610278_-550937958",
+      "id": "20210831-094650_518990510",
+      "dateCreated": "2021-08-31 09:46:50.278",
+      "dateStarted": "2021-09-01 13:22:00.038",
+      "dateFinished": "2021-09-01 13:22:00.043",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Select feater properties (GraphSage embeddings or projected graph node featers) and train model.",
+      "text": "CALL gds.alpha.ml.nodeClassification.train(\u0027myGraph\u0027, {\n  nodeLabels: [\u0027Dnode\u0027],\n  modelName: \u0027determined-model\u0027,\n//  featureProperties: [\u0027embeddings\u0027],                                        //  not working. maybe also a wNum0,wNum1 one hot.\n  featureProperties: [\u0027zero\u0027,\u0027one\u0027,\u0027two\u0027,\u0027three\u0027,\u0027four\u0027,\u0027wNum\u0027,\u0027totalZero\u0027],         //  works well\n//  featureProperties: [\u0027wNum\u0027,\u0027totalZero\u0027],                                  //  not at all convincing...\n  targetProperty: \u0027determined\u0027,\n  randomSeed: 49,\n  holdoutFraction: 0.2,\n  validationFolds: 185,\n  metrics: [ \u0027F1_WEIGHTED\u0027 ],\n  params: [\n    {penalty: 0.0625},\n    {penalty: 0.5},\n    {penalty: 1.0},\n    {penalty: 4.0}\n  ]\n}) YIELD modelInfo\nRETURN\n  {penalty: modelInfo.bestParameters.penalty} AS winningModel,\n  modelInfo.metrics.F1_WEIGHTED.outerTrain AS trainGraphScore,\n  modelInfo.metrics.F1_WEIGHTED.test AS testGraphScore",
+      "user": "anonymous",
+      "dateUpdated": "2022-03-11 08:32:57.964",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "winningModel.penalty": "string",
+                      "trainGraphScore": "string",
+                      "testGraphScore": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "winningModel.penalty\ttrainGraphScore\ttestGraphScore\n0.0625\t0.8294890824704041\t0.7922926634589315\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630417609968_-1707266555",
+      "id": "20210831-094649_278670275",
+      "dateCreated": "2021-08-31 09:46:49.968",
+      "dateStarted": "2022-03-10 14:23:49.818",
+      "dateFinished": "2022-03-10 14:24:15.938",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Write 0 predicted un-determined 1 predicted determined in Dnode predictedDetermined property.",
+      "text": "CALL gds.alpha.ml.nodeClassification.predict.write(\u0027myGraph\u0027, {\n  nodeLabels: [\u0027Dnode\u0027],\n  modelName: \u0027determined-model\u0027,\n  writeProperty: \u0027predictedDetermined\u0027,\n  predictedProbabilityProperty: \u0027predictedProbabilities\u0027\n}) YIELD nodePropertiesWritten",
+      "user": "anonymous",
+      "dateUpdated": "2021-09-03 09:45:32.934",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1630676477145_-364987431",
+      "id": "20210903-094117_1861585033",
+      "dateCreated": "2021-09-03 09:41:17.145",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1630676474990_-1534754525",
+      "id": "20210903-094114_36122457",
+      "dateCreated": "2021-09-03 09:41:14.990",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Blue nodes are correctly predicted as determind (number of  rational roots \u003d degree of polynomial).  Green nodes are correctly predicted as under determined (number of ratonal roots \u003c degree of polynomial).   Red node was incorrectly predicted as determined.",
+      "text": "%md\n\n\u003cIMG SRC\u003d\"graph.jpg\"\u003e\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-28 08:49:37.115",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": true,
+          "language": "markdown",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": false,
+        "tableHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cIMG SRC\u003d\"graph.jpg\"\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1630600733608_-1136497815",
+      "id": "20210902-123853_1002651989",
+      "dateCreated": "2021-09-02 12:38:53.608",
+      "dateStarted": "2021-09-02 13:57:08.629",
+      "dateFinished": "2021-09-02 13:57:08.634",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-09-02 12:38:50.038",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1630600730038_-1248919859",
+      "id": "20210902-123850_1009288473",
+      "dateCreated": "2021-09-02 12:38:50.038",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1630596682949_-1673804293",
+      "id": "20210902-113122_1496656045",
+      "dateCreated": "2021-09-02 11:31:22.949",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphicLablePrediction",
+  "id": "2GHECARXJ",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}

@@ -1,0 +1,456 @@
+The purpose of TwoPolynomial notes:
+.explain the algorythm.
+.reconsile the fig with the table.
+.motivate the binaomial.
+
+plvRunThread mage = new plvRunThread(this.range.intValue(),this.lower.intValue(),this.NN.intValue(),NN,tlSem,t2Sem,cosetSem,dbbVector,dbb1Vector,dbbCSTVector,tl1Sem,dbbVector11);
+
+
+    plvRunThread( int range,    int jLower, int jUpper, BigDecimal nNN, Semaphore tlSemaphore,Semaphore t2Semaphore, Semaphore cosetSemaphore,vertexVector dbVector,vertexVector db1Vector,vertexVector db2Vector, Semaphore tl1Semaphore,vertexVector dbVector11){
+       this.range=range;
+       jLowe=jLower;
+       jUppp=jUpper;    // to just look at one equivelance class  jLowe=jUpper 
+       NN=nNN;
+
+In the land of refactoring these need to be capitolaized.
+
+
+
+Auxilary classes:
+abcBean
+nMaxNBean
+pArgument
+twoSeq
+rowBean
+
+Algorythm classes:
+plvManager
+plvRunThread
+rowBuilder
+
+Data classes:
+vertex
+vertexVector
+
+Output class:
+zaddbTable11
+
+
+A motivation is what exactly is happening.  
+Then can know how just the constant term can be produced.
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(?),toInteger(?)) AS n
+        WITH toString(n) AS N, ? as nMax
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=? AND t.twoSeq=? 
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension=?
+        WITH
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN \"0\" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN \"0\" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN \"0\" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:?} as lines
+        RETURN lines
+
+
+TwoPolyNomial042619 graphdb tab speaks of t.twoSeq as the RowCounter match constraint. 
+
+With i.MaxN,i.N,t.twoSeq there are I.N-1 sets indexed by t.twoSeq.
+2^(N-2) is the target t.twoSeq.
+
+example:  I.MaxN=7,I.N=6, then t.twoSeq =2^4 =16 - correct.
+
+        sPara.setlowRange(args[0]);
+        sPara.sethighRange(args[1]);
+        sPara.setindex(args[2]);
+        sPara.setreadDimension1(args[3]);
+        sPara.setreadDimension2(args[3]);
+        BigDecimal wDimension = new BigDecimal(args[3]);
+        wDimension=wDimension.multiply(two);
+        sPara.setwriteDimension(wDimension.toString());
+        BigDecimal wDimension1 = new BigDecimal (wDimension.toString());
+        wDimension1=wDimension1.multiply(two);
+        sPara.setnextWriteDimension(wDimension1.toString());
+
+
+
+
+Have ScriptScheduler.scheduler loops through range
+each range value arguments constraintloop.
+constraintloop arguments t.twoSeq=?
+
+Note: it appears the d=2 pattern does not enjoy argumentNode comprehension.
+
+java -jar ZADScripts.jar 2 8 8 2      - highest N is 7
+java -jar ZADScripts.jar 2 13 16 2    - highest N is 15
+
+GraphicM will call  
+            sAuto.s12Initial(rLowerS.toString(), rLowerS.toString(), sPara.getindex(), sPara.getreadDimension1(), sPara.getreadDimension2(),sPara.getwriteDimension(),scriptC.toString());
+public ResultSet s12OQ(String rangeLow,String rangeHigh,String index,String dimensionRead1,String dimensionRead2, String writeDimension, String tConstraint) 
+                             this below is write dimension
+as s12OQ("7","7","8","2","2","8","16")    -  the usual s12 signature,  need to argument the second match (though pattern not yet refactored).
+                                             the second match needs its owne range, MaxN, and t.twoSeq.
+
+
+sAuto.s12Initial(rLowerS.toString(), rLowerS.toString(), sPara.getindex(), sPara.getreadDimension1(), sPara.getreadDimension2(),sPara.getwriteDimension(),scriptC.toString(), tLowerS,tIndex,tSeq);
+                                    tLowerS,tIndex,tSeq
+s12OQ("7","7","8","2","2","8","16","7","16","16")
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(?),toInteger(?)) AS n
+        WITH toString(n) AS N, ? as nMax
+
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=? AND t.twoSeq=? 
+
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+
+        MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) where ii.N=N AND ii.MaxN=nMax AND ii.Dimension=? AND tt.twoSeq=?
+
+        WITH
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN \"0\" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN \"0\" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN \"0\" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:?} as lines
+        RETURN lines
+
+Need to verify correct write dimension.  Maybe the write dimension shoud be "4".   Yes it shoud be 4. 
+
+s12OQ("7","7","8","2","2","4","16","7","16","16")
+
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger("7"),toInteger("7")) AS n
+        WITH toString(n) AS N, "8" as nMax
+
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension="2" AND t.twoSeq="16" 
+
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) where ii.N=7 AND ii.MaxN="16" AND ii.Dimension="2" AND tt.twoSeq="16"
+
+        WITH
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN "0" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN "0" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN "0" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:"4"} as lines
+        RETURN lines
+
+s12OQ("7","7","8","2","2","4","16","7","16","16")
+
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger("7"),toInteger("7")) AS n
+        WITH toString(n) AS N, "8" as nMax
+
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension="2" AND t.twoSeq="16" 
+
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) where ii.N="7" AND ii.MaxN="16" AND ii.Dimension="2" AND tt.twoSeq="16"
+
+        WITH
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,       //  N,iM    *****    vTwoSeq as pD
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN "0" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN "0" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN "0" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:"4"} as lines
+        RETURN lines
+
+
+Maybe all good:
+                      
+╒══════════════════════════════════════════════════════════════════════╕
+│"lines"                                                               │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"2","AADegree":"0","vDi│
+│visor":"2","AAScalar":"3360","resultDivisor":"4","scalarProduct":"3360│
+│","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"2","TTScal│
+│ar":"1","p2Eval":128,"vTwoSeq":"16"}                                  │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"3","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-224","resultDivisor":"4","scalarProduct":"-224│
+│","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"2","TTScal│
+│ar":"1","p2Eval":128,"vTwoSeq":"16"}                                  │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"4","AADegree":"2","vDi│
+│visor":"2","AAScalar":"16","resultDivisor":"4","scalarProduct":"16","w│
+│riteDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"2","TTScalar":│
+│"1","p2Eval":128,"vTwoSeq":"16"}                                      │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"3","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-240","resultDivisor":"4","scalarProduct":"-240│
+│","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"2","TTScal│
+│ar":"1","p2Eval":128,"vTwoSeq":"16"}                                  │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"1","AADegree":"0","vDi│
+│visor":"2","AAScalar":"3360","resultDivisor":"4","scalarProduct":"-235│
+│20","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTSc│
+│alar":"-7","p2Eval":128,"vTwoSeq":"16"}                               │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"2","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-224","resultDivisor":"4","scalarProduct":"1568│
+│","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTScal│
+│ar":"-7","p2Eval":128,"vTwoSeq":"16"}                                 │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"3","AADegree":"2","vDi│
+│visor":"2","AAScalar":"16","resultDivisor":"4","scalarProduct":"-112",│
+│"writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTScalar│
+│":"-7","p2Eval":128,"vTwoSeq":"16"}                                   │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"2","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-240","resultDivisor":"4","scalarProduct":"1680│
+│","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTScal│
+│ar":"-7","p2Eval":128,"vTwoSeq":"16"}                                 │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"1","AADegree":"0","vDi│
+│visor":"2","AAScalar":"3360","resultDivisor":"4","scalarProduct":"-201│
+│60","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTSc│
+│alar":"-6","p2Eval":128,"vTwoSeq":"16"}                               │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"2","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-224","resultDivisor":"4","scalarProduct":"1344│
+│","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTScal│
+│ar":"-6","p2Eval":128,"vTwoSeq":"16"}                                 │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"3","AADegree":"2","vDi│
+│visor":"2","AAScalar":"16","resultDivisor":"4","scalarProduct":"-96","│
+│writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTScalar"│
+│:"-6","p2Eval":128,"vTwoSeq":"16"}                                    │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"2","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-240","resultDivisor":"4","scalarProduct":"1440│
+│","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"1","TTScal│
+│ar":"-6","p2Eval":128,"vTwoSeq":"16"}                                 │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"0","AADegree":"0","vDi│
+│visor":"2","AAScalar":"3360","resultDivisor":"4","scalarProduct":"1411│
+│20","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"0","TTSc│
+│alar":"42","p2Eval":128,"vTwoSeq":"16"}                               │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"1","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-224","resultDivisor":"4","scalarProduct":"-940│
+│8","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"0","TTSca│
+│lar":"42","p2Eval":128,"vTwoSeq":"16"}                                │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"2","AADegree":"2","vDi│
+│visor":"2","AAScalar":"16","resultDivisor":"4","scalarProduct":"672","│
+│writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"0","TTScalar"│
+│:"42","p2Eval":128,"vTwoSeq":"16"}                                    │
+├──────────────────────────────────────────────────────────────────────┤
+│{"iM":"8","vvDivisor":"2","iN":"7","degreeSum":"1","AADegree":"1","vDi│
+│visor":"2","AAScalar":"-240","resultDivisor":"4","scalarProduct":"-100│
+│80","writeDimension":"4","vvTwoSeq":"16","pD":"1","TTDegree":"0","TTSc│
+│alar":"42","p2Eval":128,"vTwoSeq":"16"}                               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+CYPHER runtime=interpreted 
+        UNWIND range(toInteger(?),toInteger(?)) AS n
+        WITH toString(n) AS N, ? as nMax
+
+        MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension=? AND t.twoSeq=? 
+
+        WITH i.N as iN, i.MaxN as iM,e,v,t,i                       
+
+        OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) where ii.N=? AND ii.MaxN=? AND ii.Dimension=? AND tt.twoSeq=?
+
+        WITH
+        '1'  AS pDivisor, 
+        '2' AS pDimension,
+        '2' AS vDivisor,
+        tt.twoSeq AS vvTwoSeq,
+        ee.Value AS eeValue,
+        '2'  AS vvDivisor,
+         i,      //iN,
+        '4' AS iDimension,
+               // iM,
+        t.twoSeq AS vTwoSeq,
+        v.Degree AS vDegree,
+        vv.Degree AS vvDegree,
+        v.Scalar AS vScalar,
+        vv.Scalar AS vvScalar,  
+        toString( CASE WHEN toString(i.RowCounter)='2' THEN apoc.number.exact.mul(toString(v.Scalar),'2') ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+        WITH
+        i,pDivisor as pD,vTwoSeq,vvDegree,vvScalar,vDivisor,vvDivisor,vvTwoSeq,    
+        CASE WHEN vvScalar IS null THEN 99 ELSE  toInteger(eeValue) END as p2Eval,
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.mul(toString(vScalar),'2') ELSE toString(TTScalarRowCounter) END ) AS TTScalar,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.mul(toString(vvScalar),'2') ELSE apoc.number.exact.mul(toString(vvScalar),vvTwoSeq) END) AS AAScalar,     
+             toString( CASE WHEN toString(vDegree)='-1' THEN apoc.number.exact.add(vDegree,'1') ELSE apoc.number.exact.add(vDegree,'0') END ) AS TTDegree,
+             toString( CASE WHEN toString(vvDegree)='-1' THEN apoc.number.exact.add(vvDegree,'1') ELSE apoc.number.exact.add(vvDegree,'0')  END) AS AADegree
+        
+        With {iN:i.N,iM:i.MaxN,pD:pD,vTwoSeq:vTwoSeq,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:CASE WHEN vvTwoSeq IS NULL THEN "0" ELSE vvTwoSeq END,p2Eval:p2Eval,
+               TTScalar:TTScalar,AAScalar:CASE WHEN AAScalar IS NULL THEN "0" ELSE AAScalar END,TTDegree:TTDegree,AADegree:CASE WHEN AADegree IS NULL THEN "0" ELSE AADegree END,
+               degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,
+               scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,
+               resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,
+               writeDimension:?} as lines
+        RETURN lines
+
+
+
+
+rangeLow, range high   target
+nMax                   target
+readdimension          target
+twoSeq(rowcounter)     target
+N                      argument
+maxN                   argument
+readdimension          arguemnt
+twoSeq(rowcounter)     arguemnt
+write dimensioin       return  
+
+s12OQ("7","7","8","2","2","4","16","7","16","16")
+
+ublic ResultSet s12OQ(String rangeLow,String rangeHigh,String index,String dimensionRead1,String dimensionRead2, String writeDimension, String tConstraint) 
+                             this below is write dimension
+as s12OQ("7","7","8","2","2","8","16")    -  the usual s12 signature,  need to argument the second match (though pattern not yet refactored).
+                                             the second match needs its owne range, MaxN, and t.twoSeq.
+
+
+sAuto.s12Initial(rLowerS.toString(), rLowerS.toString(), sPara.getindex(), sPara.getreadDimension1(), sPara.getreadDimension2(),sPara.getwriteDimension(),scriptC.toString(), tLowerS,tIndex,tSeq);
+                                    tLowerS,tIndex,tSeq
+
+
+public ResultSet s12OQ(String rangeLow,String rangeHigh,String index,String dimensionRead1,String dimensionRead2, String writeDimension, String tConstraint, String tLowerS,String tIndex,String tSeq)  {
+s12OQ("7","7","8","2","2","4","16","7","16","16")
+
+
+
+
+public ResultSet s12OQ(rangeLow,rangeHigh,index, dimensionRead1,dimensionRead2,writeDimension, tConstraint,tLowerS,tIndex,tSeq)  {
+
+        psInsert.setString(1, rangeLow);
+        psInsert.setString(2, rangeHigh);
+        psInsert.setString(3, index);
+        psInsert.setString(4, dimensionRead1);
+        psInsert.setString(5, tConstraint);
+        psInsert.setString(6, tLowerS);
+        psInsert.setString(7, tIndex);
+        psInsert.setString(8, dimensionRead2);        
+        psInsert.setString(9, tSeq);
+        psInsert.setString(10, writeDimension);
+
+val s12RS = s3.s12OQ("7","7","8","2","2","4","16","7","16","16")
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+
+
+
+
+
+

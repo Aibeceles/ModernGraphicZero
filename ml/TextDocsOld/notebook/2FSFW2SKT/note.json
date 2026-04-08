@@ -1,0 +1,151 @@
+{
+  "paragraphs": [
+    {
+      "text": "CYPHER runtime\u003dinterpreted \nUNWIND range(6,6) AS n\nWITH toString(n) AS iN, \"1000\" as iM\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u002732\u0027,RowCounter:2})-[]-\u003e(e:Evaluate)\nWITH iN, iM, max(vI.divisor) as maxDivisor\nMATCH (v:VertexNode)\u003c-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:\u002732\u0027,RowCounter:2})-[]-\u003e(e:Evaluate)\nWITH {DS:COLLECT({ResultScalar:v.Scalar, ResultDegree:v.Degree, ResultDivisor:vI.divisor}), Divisor:vI.twoSeq} AS resultProduct,iN,iM,maxDivisor\n\nWITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor\nUNWIND RANGE(0,SIZE(rPC)-1) as iI\nWITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor\nUNWIND rPCDS as rPCDSU\nWITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,Divisor:rpD1} as resultMap,iN,iM,maxDivisor\nWITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(resultMapC)-1) as iII\nWITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor\nUNWIND RANGE(0,SIZE(rSL)-1) as iIII\nUNWIND rSL[iIII] as rSLI\n\n//RETURN rSLI.RScalar,rDivisor,rDRM,iN,iM,maxDivisor\nWITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor\n\n//return cts,rDRM,iN,iM,rpD2,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor\nWITH COLLECT(acc) as accc,rDRM,iN,iM,maxDivisor\nWITH REDUCE(sum\u003d\u00270\u0027, x in accc | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,maxDivisor\nWITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN \nWITH COLLECT(pTerms) as pTermss,iM,iN\nUNWIND RANGE(0,SIZE(pTermss)-1) as pT\nWITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD\nUNWIND dSList as dSListU\n\nWITH REDUCE(sum\u003d\u00271\u0027, x in RANGE(1,toInteger(dSListU.Degree)) | apoc.number.exact.mul(sum,toString(iM))) as acc,iN,iM,dSListU,pTD\n//RETURN acc,iN,iM,dSListU,pTD\n\nWith apoc.number.exact.mul(dSListU.Scalar,acc) as scalarDegreeProduct,iN,iM,pTD\n//Return scalarDegreeProduct,iN,iM,pTD\nWITH {SDP:COLLECT(scalarDegreeProduct),DivideBy:toString(pTD)} as termsMap,iN,iM\nWITH COLLECT(termsMap) AS termsMapC,iN,iM\n//return termsMapC,iN,iM\nUNWIND RANGE(0,SIZE(termsMapC)-1) AS pTT\nWITH REDUCE(sum\u003d\u00270\u0027, x IN termsMapC[pTT].SDP | apoc.number.exact.add(sum,toString(x))) AS acc,toString(termsMapC[pTT].DivideBy) AS dB,iM,iN\n//RETURN acc,dB,iM,iN\nWITH apoc.number.exact.div(acc,dB) AS pResult,acc,dB,iM,iN\n//return pResult,acc,dB,iM,iN\nWITH COLLECT(pResult) AS evaluates,iN,iM\nWITH REDUCE (sum\u003d\u00270\u0027, n IN evaluates| apoc.number.exact.add(sum,n)) AS acc \nRETURN acc as Value",
+      "user": "anonymous",
+      "dateUpdated": "2020-12-22 12:34:11.676",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "scalarDegreeProduct",
+                        "visible": true,
+                        "width": 226.0,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "iN",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "iM",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "pTD",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1.0,
+                      "paginationPageSize": 250.0
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Value": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "tableHide": false,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Value\n\"12\"\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1608649725547_42363745",
+      "id": "20201222-100845_1639622183",
+      "dateCreated": "2020-12-22 10:08:45.547",
+      "dateStarted": "2020-12-22 12:34:11.592",
+      "dateFinished": "2020-12-22 12:34:11.607",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1608649802407_-1413925007",
+      "id": "20201222-101002_1371401261",
+      "dateCreated": "2020-12-22 10:10:02.407",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "s3e/graphcheck",
+  "id": "2FSFW2SKT",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

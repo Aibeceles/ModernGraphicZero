@@ -1,0 +1,1028 @@
+GraphicZero-TheVertexConverges
+
+  val result = indexPower.multiply(scalarDiv)
+  val result1 = result.multiply(new BigDecimal(qQuerry.rowScalar))
+ .agg(sum("scalar"))
+
++------+---+---+---+
+|NIndex|0  |1  |2  |
++------+---+---+---+
+|2     |104|-28|2  |
+|3     |136|-39|3  |
+|4     |158|-48|4  |
+|5     |172|-55|5  |
+|6     |180|-60|6  |
+|7     |184|-63|7  |
++------+---+---+---+
+
+8	2	104	-28	2	 						
+8	3	136	-39	3	 	-11			32		
+8	4	158	-48	4	 	-9	2		22	-10	
+8	5	172	-55	5	 	-7	2		14	-8	2
+8	6	180	-60	6	 	-5	2		8	-6	2
+8	7	184	-63	7	 	-3	2		4	-4	2
+
+
+GraphicSuppelmentNinMaxN
+
+ResultUDF 
+  val scalarDiv = scalar.divide(divisor)
+  val result1 = scalarDiv.multiply(new BigDecimal(qQuerry.rowScalar))
+ .agg(sum("Result"))
+
++------+----+----+---+
+|NIndex|0   |1   |2  |
++------+----+----+---+
+|2     |52  |-14 |1  |
+|3     |96  |-27 |2  |
+|4     |184 |-53 |4  |
+|5     |360 |-105|8  |
+|6     |712 |-209|16 |
+|7     |1416|-417|32 |
++------+----+----+---+
+
+44				
+88	44			
+176	88	44		
+352	176	88		
+704	352	176
+
+-13		
+-26	-13	
+-52	-26	-13
+-104	-52	-26
+-208	-104	-52
+
+1		
+2	1	
+4	2	1
+8	4	2
+16	8	4
+
+The two ResultUDF's return different df[s12Re].  
+The NIndex,degree pivot,based on these different dfs,
+present different aspects of the scalar.
+Without multiplying by rowIndex, the sequence
+of each degree's terms exibits a quadratic's finite differences.
+With multiplying through by rowIndex, differences are not finite. 
+
+GraphicZero-TheQuadratics does also have the pairwise factors composing p
+before rowScalar.  The rowIndex multiplied factors, not yet in
+GraphicSuppelmentN in MaxN, predictably are not pairwise....
+
+The interest in these aspects is with the question of vertex 
+convergance. Each degree's term must be described as a sequence
+and not as discrete quadratics. 
+The latter aspect has each of the degreed terms described as an initial
+value with a multiple of another value added to it.
+What to make of the finite difference?
+
+Need a differentialble function in terms of x, the free variable
+and n the sequence index. The quadratic definition of the terms sequence 
+to be computed as a supplement.  
+
+GraphicSupplementNinMaxNQuadratics provides the latter aspect of NinMaxN
+sequences of p's. Need to define a function that takes a column of terms. 
+and returns the initial and multiple constant. 
+
++------+----+----+---+
+|NIndex|0   |1   |2  |
++------+----+----+---+
+|2     |52  |-14 |1  |
+|3     |96  |-27 |2  |
+|4     |184 |-53 |4  |
+|5     |360 |-105|8  |
+|6     |712 |-209|16 |
+|7     |1416|-417|32 |
++------+----+----+---+
+
+"pivotDF"  is the dataframe of interest (parent).  
+Can collect 0, 1, 2 each as list....
+Can name three distinct data frames.  
+Can iterate over this dataframe.  
+
+Robust as for each degree need inductive proof.
+ 
+scala> val dataset = spark.range(5dataset: org.apache.spark.sql.Dataset[Long] = [id: bigint]
+
+// Variant 1: filter operator accepts a Scala function
+dataset.filter(n => n % 2 == 0).count
+
+// Variant 2: filter operator accepts a Column-based SQL expression
+dataset.filter('value % 2 === 0).count
+
+can test the x_0 +n(triagx_0,1). 
+if size of the filter=origonal size, its a go. 
+
+Looks like yea old ResultUDF is the go to design pattern.  
+
+11/2
+
+QuerryS12QuadQuerry appends resultset rows as case classes to an arraybuffer.
+This arraybuffer is subsequently appended to a host array buffer.
+The host arraybuffer is flatmapped to a list and typed as a dataframe. 
+Is this process idomatic scala????
+
+Should be something like val newArrayList= resultCaseClass.concate...
+
+Today work:
+
++------+----+----+---+
+|NIndex|0   |1   |2  |
++------+----+----+---+
+|2     |52  |-14 |1  |
+|3     |96  |-27 |2  |
+|4     |184 |-53 |4  |
+|5     |360 |-105|8  |
+|6     |712 |-209|16 |
+|7     |1416|-417|32 |
++------+----+----+---+
+
+RowScalarDegreePivot.main(Array("KvDSUnpavked","pivotDF"))
+populates the pivotDF.  Each of the 0,1,2 columns need 
+functional attention.  
+
+ROW frames are based on physical offsets from the position of the current input row, which means that CURRENT ROW,
+<value> PRECEDING, or <value> FOLLOWING 
+
+window function...
+Partition by  -  if no partition,  all data must  e colllected on single machine. 
+Order by
+Frame specification.  
+Want current row + next row and compute difference.
+Then
+want current row and next row, compute boolean =true if nextrow is 2x first row.
+
+11/3
+
+Apply Window function on pivotDF. 
+
+
+Partition specification
+Ordering Specification
+Frame Specification
+
++------+----+----+---+
+|NIndex|0   |1   |2  |  div2
++------+----+----+---+
+|2     |52  |-14 |1  |   1
+|3     |96  |-27 |2  |   
+|4     |184 |-53 |4  |
+|5     |360 |-105|8  |
+|6     |712 |-209|16 |
+|7     |1416|-417|32 |
++------+----+----+---+
+
+The first window function needed is difference.
+
+
+object RowScalarDegreePivotS extends Serializable {
+
+import org.apache.spark.sql.DataFrame
+//import org.apache.spark.sql.types.DecimalType
+import org.apache.spark.sql.types._
+
+
+def extendDivResult(qQuerry:s12QQu): s12Re = {      // need to include the rowCounter multiplication
+  val scalar = new BigDecimal(qQuerry.scalar)
+  val rowScalar = new BigDecimal(qQuerry.rowScalar)
+  val degree = qQuerry.degree.toInt
+  val divisor = new BigDecimal(qQuerry.divisor)
+  val index = new BigDecimal(qQuerry.MaxN)
+  val indexPower = index.pow(degree)
+  val scalarDiv = scalar.divide(divisor)
+  val result = indexPower.multiply(scalarDiv)
+  val result1 = result.multiply(new BigDecimal(qQuerry.rowScalar))
+  val s=  s12Re("2",qQuerry.degree,qQuerry.scalar,qQuerry.index,qQuerry.MaxN,qQuerry.divisor,result1.toPlainString,qQuerry.rowScalar)
+  s
+}
+
+
+
+
+def main(args:Array[String]) {
+
+val df= z.get(args(0)).asInstanceOf[DataFrame]
+//df.show
+val groupDf = df.withColumn("NIndex",col("_1").cast(StringType))
+                .withColumn("degree",col("_2").cast(StringType))
+                .withColumn("Result",col("The_Result").cast(DecimalType(25,0)))
+                .orderBy(asc("NIndex"))
+//                .orderBy(asc("nBD"),asc("rowCounterBD"))
+                .groupBy("NIndex")
+                .pivot("degree")
+                .agg(sum("Result").cast(StringType))
+val groupDfCount = groupDf.count()
+groupDf.show(groupDfCount.toInt,false)
+
+
+
+spark.udf.register("eDivResult", extendDivResult _)
+
+//df.map(t => println(t))
+
+df.printSchema
+//val ds: Dataset[nDegree] = df.as[nDegree]
+
+//val dsCount=ds.count()
+//ds.show(dsCount.toInt,false)
+
+//val dss=ds.map{f => extendResult(s12QQu(f.index,f.MaxN,f.rowScalar,f.divisor,f.scalar,f.degree)) }
+//val dssCount=dss.count()
+//dss.sho
+
+
+
+11/4
+
+org.apache.spark.sql.AnalysisException: cannot resolve '`_1`' given input columns: [NIndex, 0, 1, 2];;
+'Project [cast('_1 as decimal(25,0)) AS NIndex#1085, 0#703, 1#704, 2#705]
+
+The above error spurriously appeared in GraphicZeroTheQuadratics...  Maybe, it seems, context is being
+shared between note contexts... Maybe way to much context being shared between notes....  The quadratics
+paragraph 16 just exibited some spurrus results.  
+
+strange ideas aside, wrong object being called...
+
+
+
++-----+----+----+---+
+|index|zero|one |two|
++-----+----+----+---+
+|4    |184 |-53 |4  |
+|7    |1416|-417|32 |
+|3    |96  |-27 |2  |
+|2    |52  |-14 |1  |
+|5    |360 |-105|8  |
+|6    |712 |-209|16 |
++-----+----+----+---+
+
+NIndexResultUDF is a user defined function.  It will be used as part of an alternative solution to
+                                             one provided by using a window function.
+
+It is tasked with performing integer division (no remainder) on index and extending result.
+
+
++-----+----+----+---+------+
+|index|zero|one |two|result|
++-----+----+----+---+------+
+|4    |184 |-53 |4  |2     |
+|7    |1416|-417|32 |3     |
+|3    |96  |-27 |2  |1     |
+|2    |52  |-14 |1  |1     |
+|5    |360 |-105|8  |2     |
+|6    |712 |-209|16 |3     |
++-----+----+----+---+------+
+
+result seems correct.
+
+
++------+----+----+---+
+|NIndex|0   |1   |2  |
++------+----+----+---+
+|2     |52  |-14 |1  |
+|3     |96  |-27 |2  |
+|4     |184 |-53 |4  |
+|5     |360 |-105|8  |
+|6     |712 |-209|16 |
+|7     |1416|-417|32 |
++------+----+----+---+
+
+44				
+88	44			
+176	88	44		
+352	176	88		
+704	352	176
+
+-13		
+-26	-13	
+-52	-26	-13
+-104	-52	-26
+-208	-104	-52
+
+1		
+2	1	
+4	2	1
+8	4	2
+16	8	4
+
+
+p 213
+
+
+could window function first, then window function last. 
+
+
+
++-----+----+----+---+----------+
+|index|zero|one |two|indexGroup|
++-----+----+----+---+----------+
+|4    |184 |-53 |4  |2         |
+|7    |1416|-417|32 |3         |
+|3    |96  |-27 |2  |1         |
+|2    |52  |-14 |1  |1         |
+|5    |360 |-105|8  |2         |
+|6    |712 |-209|16 |3         |
++-----+----+----+---+----------+
+
+
+first(e: Column): Column
+first(e: Column, ignoreNulls: Boolean): Column
+first(columnName: String): Column
+first(columnName: String, ignoreNulls: Boolean
+
+object WindowFunction extends Serializable {
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.StringType
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.expressions.Window
+
+def main(args:Array[String]) {
+
+val df= z.get(args(0)).asInstanceOf[DataFrame]
+//val windowSpec = Window.partitionBy("indexGroup").orderBy("zero")
+val windowSpec = Window.partitionBy("indexGroup")
+//df.withColumn("row_number",row_number.over(windowSpec))
+  df.withColumn("zero_first",max("zero").over(windowSpec))
+  .withColumn("zero_last",min("zero").over(windowSpec))
+//  .withColumn("avg",avg('zero)over(windowSpec))
+  .show()
+
+
+11/5
+
+object WindowFunction extends Serializable {
+
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.types.StringType
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.expressions.Window
+
+def main(args:Array[String]) {
+
+val df= z.get(args(0)).asInstanceOf[DataFrame]
+val windowSpec = Window.partitionBy("indexGroup")
+  df.withColumn("zero_first",max("zero").over(windowSpec))
+  .withColumn("zero_last",min("zero").over(windowSpec))
+  .withColumn("one_first",max("one").over(windowSpec))
+  .withColumn("one_last",min("one").over(windowSpec))
+  .withColumn("two_first",max("two").over(windowSpec))
+  .withColumn("two_last",min("two").over(windowSpec))
+  .show()
+  z.put(args(1),df)
+}
+}
+
+
+11/8
+
+
+case class nDegreeGroup(index:String,zero:String,one:String,two:String,indexGroup:String)
+
+case class termLag(index:String,zero:String,one:String,two:String,indexGroup:String,zeroL:String,oneL:String,twoL:String)
+case class termLagDiff(index:String,zero:String,one:String,two:String,indexGroup:String,zeroL:String,oneL:String,twoL:String,zeroD:String,oneD:String,twoD:String)
+
+nDegreeGroup is the dataframe including indexGroup column.
+
+
+
++-----+----+----+---+----------+--------+-------+-------+
+|index|zero|one |two|indexGroup|zero_lag|one_lag|two_lag|
++-----+----+----+---+----------+--------+-------+-------+
+|2    |52  |-14 |1  |2         |null    |null   |null   |
+|3    |96  |-27 |2  |2         |52      |-14    |1      |
+|4    |184 |-53 |4  |2         |96      |-27    |2      |
+|5    |360 |-105|8  |2         |184     |-53    |4      |
+|6    |712 |-209|16 |2         |360     |-105   |8      |
+|7    |1416|-417|32 |2         |712     |-209   |16     |
++-----+----+----+---+----------+--------+-------+-------+
+
++-----+----+----+---+----------+-----+----+----+-----+----+----+
+|index|zero|one |two|indexGroup|zeroL|oneL|twoL|zeroD|oneD|twoD|N
++-----+----+----+---+----------+-----+----+----+-----+----+----+
+|2    |2   |2   |2  |2         |2    |2   |2   |2    |2   |2   |
+|3    |96  |-27 |2  |2         |52   |-14 |1   |44   |-13 |1   |
+|4    |184 |-53 |4  |2         |96   |-27 |2   |88   |-26 |2   |
+|5    |360 |-105|8  |2         |184  |-53 |4   |176  |-52 |4   |
+|6    |712 |-209|16 |2         |360  |-105|8   |352  |-104|8   |
+|7    |1416|-417|32 |2         |712  |-209|16  |704  |-208|16  |
++-----+----+----+---+----------+-----+----+----+-----+----+----+
+
+
+
+
+
+
++-----+----+----+---+----------+--------+-------+-------+
+|index|zero|one |two|indexGroup|zero_lag|one_lag|two_lag|
++-----+----+----+---+----------+--------+-------+-------+
+|2    |52  |-14 |1  |2         |null    |null   |null   |
+|3    |96  |-27 |2  |2         |52      |-14    |1      |
+|4    |184 |-53 |4  |2         |96      |-27    |2      |
+|5    |360 |-105|8  |2         |184     |-53    |4      |
+|6    |712 |-209|16 |2         |360     |-105   |8      |
+|7    |1416|-417|32 |2         |712     |-209   |16     |
++-----+----+----+---+----------+--------+-------+-------+
+
+
+"DifferencedDF"
+
+                      b    a
+         +-----+----+----+---+----------+-----+----+----+-----+----+----+
+         |index|zero|one |two|indexGroup|zeroL|oneL|twoL|zeroD|oneD|twoD|
+   n     +-----+----+----+---+----------+-----+----+----+-----+----+----+
+ a_1     |2    |52  |-14 |1  |2         |     |    |    |     |    |    |
+ a_2     |3    |96  |-27 |2  |2         |52   |-14 |1   |44   |-13 |1   | 2^1 -1 =  1 
+ a_3     |4    |184 |-53 |4  |2         |96   |-27 |2   |88   |-26 |2   | 2^2 -1 =  3
+ a_4     |5    |360 |-105|8  |2         |184  |-53 |4   |176  |-52 |4   | 2^3 -1 =  7 
+ a_5     |6    |712 |-209|16 |2         |360  |-105|8   |352  |-104|8   | 2^4 -1 = 15
+ a_6     |7    |1416|-417|32 |2         |712  |-209|16  |704  |-208|16  | 2^5 -1 = 31 
+         +-----+----+----+---+----------+-----+----+----+-----+----+----+
+
+  
+ (b_n} =  ((2^(n-1))-1*(triag_b)+{b_1})
+         ------------------------------          //    b_n/a_n   the vertex of the quadratics
+ (a_n} = 2((2^(n-1))-1*(triag_a)+{a_1})
+
+
+=44(1)+44(2)+44(4)+44(8)+44(16)
+==44(1+2+4+8+16)
+
+   sum n  0 to 4 2^n      = 2^5-1= 31(44)+52=1416  
+
+So,
+
+Back to the sequence of vertices.
+
+Write the sequence representing the first degreeed term. 
+
+s_1 = -14
+s_2 = s_1 + (2^(1-1)-1)*(triag=-13)
+s_3 = s_1 + (2^(2-1)-1)*(triag=-13)
+      ....
+s_i = s_1 + (2^(i-1)-1)*(triag=-13)
+
+
+f(x) = 32x^2 - 417x + 1416
+df/dx = 64(x) - 417 
+
+   0  = 64(x) - 417
+
+   417/64 = x 
+
+"DifferencedDF"
+
+         +-----+----+----+---+----------+-----+----+----+-----+----+----+
+         |index|zero|one |two|indexGroup|zeroL|oneL|twoL|zeroD|oneD|twoD|
+         +-----+----+----+---+----------+-----+----+----+-----+----+----+
+ a_1     |2    |52  |-14 |1  |2         |2    |2   |2   |2    |2   |2   |
+ a_2     |3    |96  |-27 |2  |2         |52   |-14 |1   |44   |-13 |1   |  0
+ a_3     |4    |184 |-53 |4  |2         |96   |-27 |2   |88   |-26 |2   |  1
+ a_4     |5    |360 |-105|8  |2         |184  |-53 |4   |176  |-52 |4   |  2
+ a_5     |6    |712 |-209|16 |2         |360  |-105|8   |352  |-104|8   |  3
+ a_6     |7    |1416|-417|32 |2         |712  |-209|16  |704  |-208|16  |  4
+         +-----+----+----+---+----------+-----+----+----+-----+----+----+
+
+{a_1} = c 
+{a_2} = {a_1} + (2^(2-1))(triag_0)
+   
+{a_n+1} = {a_n} + (2^(n-1))(triag_0)
+
+
+{a_6}={a_5}+ (2^(6-2))*triag_0
+
+
+
+
+11/9
+
+The above from yesterday is written in terms of s_1. 
+Maybe write it in s_n+1  = f(s_n) with s_1=c.
+
+Have the n in MaxN sequences of quadratics.  and a sequence definition of each of the scalars.
+The sequence definitions for each of the scalars require initial values and initial changes of values.
+Need sequence definitions of each initial value and change of value as MaxN changes from n to n+1.
+
+
+11/10
+
+The "point" re-revealed:  The minimim of (n=2,MaxN)'s quadratic is an integer. 
+
+
+minimum value at 	difference between min 
+9	value at (x)
+ 	 
+8.75	                0.125     note: .125*8=1
+
+For the appendix:  the difference between mins result suggests
+a method for defiing the the 1/7th, 1/8th ...  division result.
+
+11/11
+
+  
+The P's:
+
+The Quadratics.
+
+Modern/Legacy Definition
+ZDCT Hypothesis
+Radix SubGroup
+Vertex Convergance
+
+The polynomic sequence
+Quartets and Higher
+Uniform convergance.
+
+N to Q
+Newton Differencing 
+
+GraphSage Technology.
+
+https://math.stackexchange.com/questions/679951/the-difference-between-pointwise-convergence-and-uniform-convergence-of-function
+
+https://math.stackexchange.com/questions/3891932/prove-that-the-recursively-defined-sequence-is-cauchy?rq=1
+
+https://people.maths.ox.ac.uk/flynn/genus2/AnI0506/analysisI-wk6.pdf
+
+http://sporadic.stanford.edu/math171/cauchy.pdf
+
+http://www-groups.mcs.st-andrews.ac.uk/~john/analysis/Lectures/L10.html
+
+http://www-groups.mcs.st-andrews.ac.uk/~john/MISS.pdf  the integeral and the factorial
+
+
+11/12
+
+And what is the kafka snafu??? from 10/27????
+
+neo4j 4.3.1
+
+neo4j-streams 4.1.0
+
+chdir kafka_2.13-2.5.0
+chdir bin
+chdir windows
+kafka-server-start.bat ../../config/server.properties
+
+
+
+
+aspects and perspectives.
+
+spark irrata:
+
+https://stackoverflow.com/questions/51689460/select-specific-columns-from-spark-dataframe
+http://allaboutscala.com/tutorials/chapter-8-beginner-tutorial-using-scala-collection-functions/scala-zipwithindex-example/
+
+https://en.wikipedia.org/wiki/Abstract_factory_pattern
+
+
+// get distinct days from data (this assumes there are not too many of them):
+val days: Array[String] = df.select("Day")
+    .distinct()
+    .collect()
+    .map(_.getAs[String]("Day"))
+
+// add column for each day with the Sale value if days match:
+val withDayColumns = days.foldLeft(df) { 
+    case (data, day) => data.selectExpr("*", s"IF(Day = '$day', Sales, 0) AS $day")
+}
+
+https://bdtechtalks.com/2021/11/01/reinforcement-learning-hanabi/?fbclid=IwAR0q45SD5Pj16W2ROdZ2t0u_zfc_PKoAClKdkDPHwxD0ECuF9Nt7G-3n914
+
+ecosystem like when microservice was introduced
+
+Non-blocking IO? That's Project Loom.
+
+streams API in JDK 8
+
+curl -X POST http://localhost:9092/connectors \
+  -H 'Content-Type:application/json' \
+  -H 'Accept:application/json' \
+  -d @contrib.sink.avro.neo4j.json
+
+
+
+
+11/16
+
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+
+java -jar ZADScripts.jar 2 8 8 2                                                       
+java -jar ZADScripts.jar 2 8 8 8       
+java -jar ZADScripts.jar 2 8 8 16            
+java -jar ZADScripts.jar 2 8 8 32      
+
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+
+Both use kafka....  Need kafka...
+
+C:\Users\Aibes\NeoKafkaConnect\neo4j-kafka-connect-neo4j-2.0.0
+
+
+kafka-topics –list –bootstrap-server localhost:9092
+
+connect-standalone connect-standalone.properties
+
+C:\Users\Aibes\kafka_2.13-2.5.0\bin\windows>connect-standalone connect-standalone.properties connect-console-sink.properties
+
+2021-11-17 14:27:01.017+0000 INFO  id:25352 - 0 ms: 64 B - bolt-session	bolt	neo4j-java/dev		client/127.0.0.1:64930	server/127.0.0.1:7687>	neo4j - neo4j - CYPHER runtime=interpreted 
+UNWIND range(toInteger($1),toInteger($2)) AS n
+WITH toString(n) AS iN, $3 as iM
+MATCH (cl:CollectedProductArgNode {Dimension:$4,MaxN:iM,N:iN,tft:$5}) -[:Arguments]->(aN:ArgumentsNode {ScalarProduct:$6})
+WITH {tft:toString(cl.tft)} a
+
+
+looks like try to start modern kafka....  
+but it is the neo4j connect dependency ....
+
+looks like D4Determined is target ml graph.
+
+
+new white paper graph embeddings sxtract insight from your connected data learn how to get started.
+
+querries because know the exact pattern. 
+algorithms because the kind of pattern.
+
+embeddings because you know something is important in graph blut...
+
+
+
+
+
+
+These java commands populate the typical TwoPolynomials 
+to the arbitrary degreed p as argumented. 
+
+CREATE INDEX ON :IndexedBy(N,MaxN)
+CREATE INDEX ON :Evaluate(Value)
+CREATE INDEX ON :TwoSeqFactor(twoSeq)
+CREATE INDEX ON :CollectedProductArgNode(MaxN,N)
+CREATE INDEX ON :IndexedByArgument(N,MaxN)
+
+java -jar TwoPolynomialGenerator.jar test.csv 8 2 9       67         
+java -jar TwoPolynomialGenerator.jar test.csv 16 2 17     2939        
+java -jar TwoPolynomialGenerator.jar test.csv 32 2 33     25216             
+java -jar TwoPolynomialGenerator.jar test.csv 64 2 65     47492            
+
+java -jar TwoPolynomialGenerator.jar test.csv 10 2 11                     
+java -jar TwoPolynomialGenerator.jar test.csv 100 2 101           
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 101           
+java -jar TwoPolynomialGenerator.jar test.csv 10000 2 101  72126   
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+
+java -jar ZADScripts.jar 2 8 8 2       818               //  not gracefull exit...                                                
+java -jar ZADScripts.jar 2 8 8 8       20016              //  maybe something to do with upper bound.
+java -jar ZADScripts.jar 2 8 8 16      20628                    //       
+java -jar ZADScripts.jar 2 8 8 32      21556                      //
+
+java -jar ZADScripts.jar 2 13 16 2     26896           
+java -jar ZADScripts.jar 2 13 16 8     28936       
+java -jar ZADScripts.jar 2 13 16 16    33010                          
+java -jar ZADScripts.jar 2 13 16 32    43228
+
+java -jar ZADScripts.jar 2 13 32 2     45858            
+java -jar ZADScripts.jar 2 13 32 8     50608             
+java -jar ZADScripts.jar 2 13 32 16    54682                    
+java -jar ZADScripts.jar 2 13 32 32    64889     
+
+java -jar ZADScripts.jar 2 13 64 2     70230                 
+java -jar ZADScripts.jar 2 13 64 8     72280             
+java -jar ZADScripts.jar 2 13 64 16    76540                   
+java -jar ZADScripts.jar 2 13 64 32     
+
+java -jar ZADScripts.jar 2 13 128 8
+
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 10000 2 17  105009
+
+java -jar ZADScripts.jar 2 10 10000 2     
+java -jar ZADScripts.jar 2 10 10000 8      
+java -jar ZADScripts.jar 2 10 10000 16                           
+java -jar ZADScripts.jar 2 10 10000 32     
+
+
+
+
+
+CREATE INDEX ON :IndexedBy(N,MaxN)
+CREATE INDEX ON :Evaluate(Value)
+CREATE INDEX ON :TwoSeqFactor(twoSeq)
+CREATE INDEX ON :CollectedProductArgNode(MaxN,N)
+CREATE INDEX ON :IndexedByArgument(N,MaxN)
+
+java -jar TwoPolynomialGenerator.jar test.csv 8 2 9         67               
+java -jar TwoPolynomialGenerator.jar test.csv 16 2 17       240       
+java -jar TwoPolynomialGenerator.jar test.csv 32 2 33       476                
+java -jar TwoPolynomialGenerator.jar test.csv 64 2 65       3082             
+
+java -jar TwoPolynomialGenerator.jar test.csv 10 2 11       3134                   
+java -jar TwoPolynomialGenerator.jar test.csv 100 2 101     8361       
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 101    13607          
+java -jar TwoPolynomialGenerator.jar test.csv 10000 2 101   18853    
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+
+java -jar ZADScripts.jar 2 7 8 2        19001                                                
+java -jar ZADScripts.jar 2 7 8 8        19852
+java -jar ZADScripts.jar 2 7 8 16       20241      
+java -jar ZADScripts.jar 2 7 8 32       21552
+
+java -jar ZADScripts.jar 2 7 8 64
+java -jar ZADScripts.jar 2 7 8 128
+java -jar ZADScripts.jar 2 7 8 256
+java -jar ZADScripts.jar 2 7 8 512     247806
+java -jar ZADScripts.jar 2 7 8 1024
+java -jar ZADScripts.jar 2 7 8 2048   
+
+java -jar ZADScripts.jar 2 13 16 2      26892             
+java -jar ZADScripts.jar 2 13 16 8      28466      
+java -jar ZADScripts.jar 2 13 16 16     33192                           
+java -jar ZADScripts.jar 2 13 16 32     43224  
+
+java -jar ZADScripts.jar 2 13 32 2      48564                
+java -jar ZADScripts.jar 2 13 32 8      50598         
+java -jar ZADScripts.jar 2 13 32 16     54864                    
+java -jar ZADScripts.jar 2 13 32 32     64881    
+
+java -jar ZADScripts.jar 2 13 64 2      70236                    
+java -jar ZADScripts.jar 2 13 64 8      72020           
+java -jar ZADScripts.jar 2 13 64 16     76300                  
+java -jar ZADScripts.jar 2 13 64 32     86568
+
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 10000 2 17  105009
+
+java -jar ZADScripts.jar 2 10 10000 2     88916
+java -jar ZADScripts.jar 2 10 10000 8     89978   
+java -jar ZADScripts.jar 2 10 10000 16    91964                      
+java -jar ZADScripts.jar 2 10 10000 32    96002
+java -jar ZADScripts.jar 2 10 10000 64    104558
+java -jar ZADScripts.jar 2 10 10000 128   122762
+java -jar ZADScripts.jar 2 10 10000 256   160734
+java -jar ZADScripts.jar 2 10 10000 512
+
+
+As:  CALL apoc.export.csv.all("IntegerPolys.csv", {})
+in "FreshGraph" folder on thumbkey.
+
+not neo4j "dump" savy....
+
+
+
+
+New DBMS IntegerPolys
+Copy plugins,conf.
+
+streamng etl in the cloud - confluent.
+https://www.youtube.com/watch?v=Mw_Jnn_Y5iA
+
+behavior driven development.\
+
+org.scalatest.funsuite.AnyFunSuite.
+
+extends AnyWordSpec
+        AnyFreeSpec
+        AnyFunSuite
+        RefSpec     // based on reflection
+
+procedual/ oop - not monadic 
+
+monad is a design pattern.
+in scala..
+
+declutter the code.   - all the nulls  
+declutter nested if.
+
+java styled scala
+
+no actual trait Monad[A]
+7:47 PM 11/20/2021m
+
+Suppose the Monad contains some type A,,
+
+Sealed trait
+
+new None
+
+... in Scala, using the Option monad
+                        VBalidation monad
+                        List monad
+Also though State,undo monads (scalaz).  Promise monad. - future  
+Transaction monad...  the rollback.
+
+
+    conflation of concerns --  coping with failure.
+or rather seperaton of concerns: the Option monad encapsulates.
+
+
+
+the policy of propigate failure
+
+
+scalaz library -handy.
+
+for comprehension    -- are a monadic construct.
+
+closure..
+
+
+
+
+
+a boxed int.
+
+
+
+
+
+
+
+         
+scala test not to confuse with scala check.
+
+
+
+
+
+https://github.com/neo4j-contrib/neo4j-streams/issues/288
+
+https://docs.confluent.io/3.1.1/connect/userguide.html
+
+https://docs.confluent.io/home/connect/monitoring.html
+
+https://supergloo.com/kafka-connect/running-kafka-connect-standalone-vs-distributed-mode-examples/
+
+https://docs.confluent.io/platform/current/connect/references/allconfigs.html
+
+https://howtodoinjava.com/kafka/getting-started-windows-10/
+
+https://howtodoinjava.com/kafka/getting-started-windows-10/
+
+
+
+
+
+
+
+
+
+The windows and deck are done.
+The question to submit.  
+
+insulate
+yard
+
+The no go
+WM opportunity. 
+
+Should do logistic.
+
+
+sun 11/7 more pattern matching.
+
+stateents - side effects and expressions scala , the modern if.
+
+pattern matching
+
+https://en.wikipedia.org/wiki/Referential_transparency
+
+https://www.youtube.com/watch?v=4QIgEMvUfIE&t=745s
+
+type alias
+
+three language features - 
+
+Function Composition  can do it yourself...
+Currying
+Partial Application
+
+pass by name.
+
+
+what type is it?  "a function from integer to integer"
+
+keywords compose, andThen  
+
+Difference between currying and composing...
+
+partial application makes use of currying.
+
+think of a class as a group of curried functions.
+
+implicits -  type check a parameter list.
+
+   change one type to another.
+
+computer science mocking  
+
+di framework
+
+higher kinded types.
+
+type variable
+
+compile time implicits vs runtime reflection 
+function compostion instead of layers.
+
+value classes
+
+reified generics
+
+
+@specialized
+anyVal
+Opaue Types
+Type classes   who wants this?
+effect system  who wants this?
+implicitive functors....
+
+scala _ better than future.
+
+do fp on the jvm use scala.
+
+
+midules higher kinded types gadt's lambdas type classes expressions.
+
+problems you can not solve without fp.
+
+meaningful language pull requests.
+
+
+option type Option[int] = some(2)
+
+
+transferable concept is a type class.
+
+
+
+never a solution to a problem that anyone had - scalapeno
+
+scala style guide....
+
+
+Seq - a trait describing a linear collection.  well defined ordering indexing.
+create oa Seq using the apply method of the companion object.
+
+:: the apply method of the case class "::" - equivelant to cons in the linked list.
+
+https://en.wikipedia.org/wiki/1_%2B_2_%2B_4_%2B_8_%2B_%E2%8B%AF
+
+
+the hash set.
+
+https://en.wikipedia.org/wiki/Critical_point_(mathematics)
+
+
+https://en.wikipedia.org/wiki/Rational_root_theorem
+
+
+Ant žemės krašto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

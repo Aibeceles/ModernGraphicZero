@@ -1,0 +1,44 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\nThe question:  What is an integer?\n\nHave sets of quadratics defined at free variable.  They add together and when argumented with free variable output a power of two.\nBut for an appropriate free variable, the constant term defines the target integer.  Therefore the integer definition is a set of\nzero degree terms added together.  Does that mean 4 is 2+2... a note lab will exibit...  It depends on the radix...\n\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-02-19 07:37:34.282",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1613738211000_1844376821",
+      "id": "20210219-073651_545571032",
+      "dateCreated": "2021-02-19 07:36:51.000",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphicZero-TheInteger",
+  "id": "2FX53W7NC",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

@@ -1,0 +1,121 @@
+
+
+
+CREATE (p:ProductArgsNode {Divisor:vI.twoSeq,Dimension:"8"}) 
+FOREACH(snoreMe IN CASE  WHEN vv.Degree IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:vI.twoSeq,Divisor:vI.divisor}] - (p) )                                                      
+FOREACH(snoreMe IN CASE  WHEN vv.Degree IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:vI.twoSeq,Divisor:vI.divisor}] - (p)    
+CREATE (p) - [:ProductRelationA {T:vII.twoSeq, Eval:ee.Value,Divisor:vII.divisor}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"8",MaxN:iM,RowCounter:vI.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+
+
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N=N AND i.MaxN=nMax AND i.Dimension="8"  
+WITH i,e,p,N as iN, nMax as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+
+WITH i,e,p,v,p1,iN,iM,toString( CASE WHEN toString(i.RowCounter)="2" THEN toString(v.Scalar) ELSE toString(v.Scalar) END ) AS TTScalarRowCounter
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+
+
+WITH iN,iM,e,v,vv,t,tt,ee // index carring and data carring nodes
+CREATE (p:ProductArgsNode {Divisor:"1",Dimension:"2"})         
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p1:ProductRelationT {T:t.twoSeq,Divisor:"2"}] - (p) )
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p1:ProductRelationT {T:t.twoSeq,Divisor:"2"}] - (p)   
+CREATE (p) - [p2:ProductRelationA {T:tt.twoSeq, Eval:ee.Value,Divisor:"2"}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"4",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+
+
+
+UNWIND range(2,14) AS n
+WITH toString(n) AS N, "15" as nMax
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N=N AND i.MaxN=nMax AND i.Dimension="4"  
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UNWIND range(2,19) AS n
+WITH toString(n) AS N, "20" as nMax
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N=N AND i.MaxN=nMax AND i.Dimension="2" 
+WITH i.N as iN, i.MaxN as iM,e,v,t                        
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN=iM  AND ii.Dimension="2"
+
+WITH iN,iM,e,v,vv,t,tt,ee // index carring and data carring nodes
+
+
+
+
+CREATE (p:ProductArgsNode {Divisor:"1",Dimension:"2"})         
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p1:ProductRelationT {T:t.twoSeq,Divisor:"2"}] - (p) )
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [p1:ProductRelationT {T:t.twoSeq,Divisor:"2"}] - (p)   
+CREATE (p) - [p2:ProductRelationA {T:tt.twoSeq, Eval:ee.Value,Divisor:"2"}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"4",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

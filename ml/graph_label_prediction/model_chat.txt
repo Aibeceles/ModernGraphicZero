@@ -1,0 +1,2007 @@
+# Train DepthAwareGAT model
+print("=" * 70)
+print("Training DepthAwareGAT (Spectral PE + Depth Attention + Class Weights)")
+print("=" * 70)
+
+gat_model, gat_metrics = trainer.train(
+    model_name='depth_aware_gat',
+    weight_decay=0.0625,
+    max_epochs=200,
+    patience=20,
+    verbose=True
+)
+
+print(f"\nDepthAwareGAT Results:")
+print(f"  Test Macro F1: {gat_metrics['test_macro_f1']:.4f} (treats classes equally)")
+print(f"  Test Balanced Acc: {gat_metrics['test_balanced_acc']:.4f}")
+print(f"  Test MAE: {gat_metrics['test_mae']:.4f} roots")
+print(f"  (Weighted F1: {gat_metrics['test_f1']:.4f} - for comparison only)")
+
+Nice — this is a solid “report card” printout for an imbalanced multi-class setup (macro F1 + balanced acc) plus an error metric tied to your domain (“roots” MAE).
+
+A few practical notes / upgrades that usually matter a lot for this exact pattern:
+
+What these metrics are really telling you
+
+Macro F1: best single number for “treat every class equally,” especially if you’ve got rare root-count classes. If macro F1 is low while weighted F1 is high, you’re mostly doing well on frequent classes and missing minority ones.
+
+Balanced accuracy: class-balanced recall average. If balanced acc is decent but macro F1 is worse, you’re recalling minority classes but precision is sloppy (lots of false positives across minority labels).
+
+MAE (roots): this implies your classes are ordinal (0,1,2,3… roots). If that’s true, plain cross-entropy ignores the “distance” between classes. MAE is often where you see the benefit of ordinal-aware losses.
+
+One red flag: weight_decay=0.0625
+
+That’s very strong regularization for most GNNs (especially attention-based). It can be great if you’re overfitting hard, but it can also suppress learning and hurt macro F1.
+
+What I’d try quickly:
+
+Compare against 1e-4, 5e-4, 1e-3, 5e-3, 1e-2, and keep 0.0625 as a “strong reg” baseline.
+
+If you’re using AdamW, weight decay behavior is cleaner; if Adam (L2), it interacts differently.
+
+If “root count” is ordinal, you can usually win by changing the objective
+
+If labels are 0..K and errors like predicting 4 instead of 0 are worse than 1 instead of 0:
+
+Option A: Ordinal regression (CORAL / cumulative link)
+
+Model predicts thresholds instead of K-way softmax. This often improves MAE and sometimes macro F1.
+
+Option B: Cost-sensitive cross entropy
+
+Use a cost matrix based on distance:
+
+penalty ∝ |ŷ − y| or |ŷ − y|²
+This pushes the model to be “less wrong” even if it misses exact class.
+
+Option C: Multi-task: classification + regression head
+
+Head1: class logits (macro F1)
+
+Head2: scalar roots prediction (MAE)
+
+Total loss = CE + λ * SmoothL1(reg)
+This often stabilizes training and boosts MAE without wrecking macro F1.
+
+Class weights: good, but check what kind
+
+If your class weights are extreme (tiny classes get huge weights), macro F1 can improve but training can get noisy.
+
+Common improvements:
+
+Effective number of samples weighting (so it doesn’t explode for ultra-rare classes)
+
+Focal loss (great when minority classes are hard, not just rare)
+
+Training hygiene that helps GATs a lot
+
+Even without changing architecture:
+
+Gradient clipping (e.g., 1.0) — attention models spike gradients.
+
+LR schedule (cosine or ReduceLROnPlateau on macro F1).
+
+Early stopping target: if you care about minority classes, stop on val macro F1, not loss.
+
+Multiple seeds: report mean±std; GAT variance can be big.
+
+What I’d add to your printout immediately
+
+These help you diagnose why macro F1 is what it is:
+
+Confusion matrix (normalized by true class)
+
+Per-class precision/recall/F1
+
+Top-2 accuracy (if near-miss classes are acceptable)
+
+MAE conditioned on class (do you systematically under/over predict roots?)
+
+Minimal instrumentation snippet (drop-in idea)
+
+If your trainer.train() can return more info, aim for:
+
+best epoch
+
+val macro F1 at best epoch
+
+per-class F1
+
+confusion matrix
+
+Even if you can’t, do it right after test eval.
+
+If you paste the resulting numbers you get (macro F1 / balanced acc / MAE / weighted F1) plus the class counts per root value, I can tell you which knob is likely the biggest win: weight decay, ordinal loss, focal/effective weights, or a regression auxiliary head.
+
+======================================================================
+Training DepthAwareGAT (Spectral PE + Depth Attention + Class Weights)
+======================================================================
+Epoch 000 | Loss: 1.7257 | Train Macro F1: 0.0667 | Test Macro F1: 0.0667
+Epoch 010 | Loss: 1.3800 | Train Macro F1: 0.1359 | Test Macro F1: 0.1379
+Epoch 020 | Loss: 1.3405 | Train Macro F1: 0.1872 | Test Macro F1: 0.1891
+Epoch 030 | Loss: 1.3362 | Train Macro F1: 0.3608 | Test Macro F1: 0.3642
+Early stopping at epoch 31
+
+DepthAwareGAT Results:
+  Test Macro F1: 0.3616 (treats classes equally)
+  Test Balanced Acc: 0.5877
+  Test MAE: 0.9391 roots
+  (Weighted F1: 0.2353 - for comparison only)
+
+Those numbers are very informative — and there’s one big methodological red flag plus one “this is why your Weighted F1 is weird” explanation.
+
+1) Big red flag: you’re early-stopping on Test Macro F1 (data leakage)
+
+Your log literally prints Test Macro F1 every 10 epochs and then says “Early stopping at epoch 31”.
+
+If “test” really is the held-out test set, that’s leakage: you’re using the test set to select the model (via early stopping). That will inflate your reported test performance and make comparisons unreliable.
+
+What you want:
+
+Train metrics each epoch
+
+Val metrics each epoch (used for early stopping / model selection)
+
+Test metrics computed once at the very end using the best checkpoint
+
+If you already meant “val” but named it “test”, rename it so you don’t accidentally fool yourself later.
+
+2) Macro F1 (0.3616) > Weighted F1 (0.2353) is not normal — and it screams “class weighting is overcorrecting”
+
+With heavy imbalance, you usually see:
+
+Weighted F1 > Macro F1 (because majority classes dominate weighted)
+
+You have the opposite:
+
+Macro F1 0.36 (treats every class equally)
+
+Weighted F1 0.235 (penalized heavily on frequent classes)
+
+That typically happens when class weights push the model to prioritize minority classes so hard that it sacrifices performance on the common classes.
+
+Your Balanced Acc 0.5877 supports that story:
+
+balanced acc is average recall across classes — pretty decent
+
+macro F1 is lower than balanced acc ⇒ you’re getting recall, but precision is messy (false positives), often because the model is “trying too hard” to predict minority classes.
+
+3) MAE 0.939 roots: you’re often within ~1 root — that’s actually decent for an ordinal target
+
+If root-count is ordinal (0,1,2,3,…), MAE ~0.94 means you’re frequently off by about one class. That’s consistent with:
+
+good-ish class-balanced recall
+
+but not enough exact-class precision to make macro/weighted F1 great
+
+What I’d do next (highest ROI)
+A) Fix the split + early stopping protocol
+
+Add a validation split (or do K-fold if data is small)
+
+Early stop on val macro F1 (or val balanced acc)
+
+Report test metrics only once at end
+
+B) Tame the class weights
+
+Try these in order:
+
+No class weights (baseline)
+
+sqrt inverse frequency weights instead of full inverse
+
+effective number of samples weights (prevents extreme weights)
+
+focal loss (gamma 1–2) if minority classes are truly “hard”, not just rare
+
+Your current result pattern strongly suggests the weights are too aggressive.
+
+C) Because roots are ordinal: add an ordinal-friendly objective
+
+Two easy wins:
+
+Aux regression head: CE + λ * SmoothL1(root_value)
+
+Distance-aware loss: penalize mistakes by |ŷ − y|
+
+These usually improve MAE and often help F1 because “near misses” become less chaotic.
+
+D) Print the diagnostics that will immediately explain the score pattern
+
+Per-class precision/recall/F1
+
+Confusion matrix (normalized by true class)
+
+For ordinal sanity: average signed error (are you over- or under-predicting roots?)
+
+One more eyebrow-raiser: weight_decay=0.0625
+
+That’s very large for GAT-ish models. It can work, but it’s uncommon.
+Once you fix the val/test protocol, sweep:
+
+1e-4, 5e-4, 1e-3, 5e-3, 1e-2, 5e-2, 6.25e-2
+
+If you paste:
+
+class counts per root value, and
+
+per-class F1 (or confusion matrix),
+
+I can tell you immediately whether your main issue is over-weighting, threshold/argmax instability, or a couple classes collapsing into neighbors (which would point straight to ordinal loss / regression head).
+
+Detailed Classification Report (DepthAwareGAT):
+============================================================
+              precision    recall  f1-score   support
+
+     0 roots       0.50      1.00      0.67       151
+      1 root       0.00      0.00      0.00       273
+     2 roots       0.00      0.00      0.00       203
+     3 roots       0.55      0.94      0.69        81
+     4 roots       0.29      1.00      0.45        47
+
+    accuracy                           0.36       755
+   macro avg       0.27      0.59      0.36       755
+weighted avg       0.18      0.36      0.24       755
+
+This report is extremely revealing. You’re not dealing with “slightly noisy predictions” — you have hard mode collapse combined with ordinal misalignment.
+
+Let me be very explicit about what is happening and why your aggregate metrics look the way they do.
+
+1️⃣ What the model is actually doing (plain English)
+The model predicts only 3 classes
+
+0 roots
+
+3 roots
+
+4 roots
+
+It never predicts:
+
+1 root
+
+2 roots
+
+That’s why:
+
+precision = recall = F1 = 0.00 for classes 1 and 2
+
+macro F1 is dragged down hard
+
+weighted F1 collapses (because 1 & 2 are frequent)
+
+Yet…
+
+Balanced accuracy ≈ 0.59
+
+Because:
+
+Recall(0) ≈ 1.00
+
+Recall(3) ≈ 0.94
+
+Recall(4) ≈ 1.00
+
+Recall(1) = Recall(2) = 0.00
+
+Average recall ≈ (1 + 0 + 0 + 0.94 + 1) / 5 ≈ 0.59
+
+This matches perfectly.
+
+2️⃣ Why this collapse happens (root cause)
+A) Ordinal classes + softmax = “skipping the middle”
+
+Your labels are ordered:
+
+0 < 1 < 2 < 3 < 4
+
+
+Softmax + cross-entropy treats them as categorical, not ordinal.
+So predicting 3 instead of 1 is just as “wrong” as predicting 2 instead of 1.
+
+Result:
+
+The model learns decision islands at the extremes where the signal is clean
+and completely abandons ambiguous middle classes.
+
+This is very common in ordinal graph problems.
+
+B) Class weighting made it worse, not better
+
+Class weights are pushing the model to “care” about rare classes (3 & 4),
+but because 1 and 2 overlap heavily in feature space, the model chooses:
+
+“I’ll fire confidently on 0 / 3 / 4, and never touch 1 / 2.”
+
+That maximizes weighted loss reduction without ever learning a stable boundary for 1 or 2.
+
+C) Your MAE confirms this story
+
+MAE ≈ 0.94 roots means:
+
+most mistakes are ±1
+
+but those ±1 mistakes destroy F1 for classes 1 and 2
+
+Example:
+
+true = 1 → predicted = 0 or 3
+
+true = 2 → predicted = 3 or 0
+
+MAE says “close enough”
+F1 says “catastrophic”
+
+3️⃣ Why your metrics disagree (and which to trust)
+Metric	What it says	Verdict
+Macro F1 = 0.36	Minority classes exist	⚠️ misleading
+Weighted F1 = 0.24	Frequent classes are broken	✅ accurate
+Balanced Acc = 0.59	Recalls at extremes are good	⚠️ incomplete
+MAE = 0.94	Ordinal distance mostly small	✅ meaningful
+
+Truth:
+You have a regression-like solution being evaluated as classification.
+
+4️⃣ The fix is NOT “tuning” — it’s changing the formulation
+✅ Option 1 (BEST): Ordinal regression (CORAL / cumulative link)
+
+Instead of predicting 5 classes, predict:
+
+P(root ≥ 1)
+P(root ≥ 2)
+P(root ≥ 3)
+P(root ≥ 4)
+
+
+Advantages:
+
+Middle classes cannot disappear
+
+MAE almost always improves
+
+Macro F1 usually improves indirectly
+
+This is the correct formulation for your data.
+
+✅ Option 2: Dual-head (classification + regression)
+
+Add a second head:
+
+Head A: softmax classification
+
+Head B: scalar root regression
+
+Loss:
+
+L = CE + λ * SmoothL1(reg_root, true_root)
+
+
+This forces:
+
+class logits to respect ordering
+
+middle classes to stay alive
+
+Very effective with minimal code change.
+
+✅ Option 3: Distance-aware loss (cheap & effective)
+
+Penalize mistakes by distance:
+
+loss ∝ CE * (1 + |ŷ − y|)
+
+
+Even this simple trick often resurrects classes 1 and 2.
+
+5️⃣ Immediate debugging experiment (do this first)
+
+Before rewriting the model, do this exact test:
+
+🔬 Collapse test
+
+Print prediction counts:
+
+np.bincount(y_pred)
+
+
+Then disable class weights entirely and retrain.
+
+If suddenly:
+
+classes 1 and 2 appear
+
+macro F1 drops slightly
+
+weighted F1 rises
+
+→ class weights are the primary collapse trigger.
+
+6️⃣ What NOT to do
+
+🚫 More epochs
+🚫 Lower LR only
+🚫 More attention heads
+🚫 Bigger GAT
+
+None of those fix structural ordinal collapse.
+
+7️⃣ Recommended next step (in order)
+
+Remove class weights → confirm collapse cause
+
+Add ordinal signal (CORAL or regression head)
+
+Re-evaluate using MAE + macro F1 together
+
+Only then tune weight decay / architecture
+
+If you want, paste:
+
+your current loss function
+
+how class weights are computed
+
+whether roots are truly ordered integers
+
+I can sketch the exact loss + head modification that will fix classes 1 and 2 in one iteration.
+
+"""
+Model architectures for Root Count Prediction.
+
+This module provides classifier architectures for predicting the number
+of rational roots (totalZero) for polynomial nodes:
+- MLPClassifier: Multi-layer perceptron baseline (no graph structure)
+- GCNClassifier: Graph Convolutional Network
+- GraphSAGEClassifier: GraphSAGE with max aggregation
+- DepthAwareGAT: Graph Attention Network with depth-aware edge features (IMPROVED)
+
+All models follow the same interface for easy swapping during experiments.
+Input: wNum + spectral PE, Output: root count class (0-4)
+"""
+
+from typing import Optional
+
+import torch
+import torch.nn.functional as F
+from torch import nn
+from torch_geometric.nn import GCNConv, SAGEConv, GATConv
+
+from .config import (
+    NUM_FEATURES,
+    NUM_CLASSES,
+    HIDDEN_DIM,
+    DROPOUT_RATE,
+    NUM_ATTENTION_HEADS,
+)
+
+
+class MLPClassifier(nn.Module):
+    """
+    Multi-layer perceptron classifier (baseline) for root count prediction.
+    
+    This model ignores graph structure and predicts root count based solely
+    on node features (wNum). Useful as a baseline to assess if graph structure
+    provides additional predictive power.
+    
+    Architecture:
+        Input (1) -> Linear -> ReLU -> Dropout -> 
+        Linear -> ReLU -> Dropout -> Linear (5) -> LogSoftmax
+    
+    Args:
+        num_features: Number of input features per node (default: 1 for wNum)
+        hidden_dim: Hidden layer dimension
+        num_classes: Number of output classes (default: 5 for root counts 0-4)
+        dropout: Dropout probability
+        
+    Example:
+        >>> model = MLPClassifier()
+        >>> out = model(data.x, data.edge_index)
+        >>> pred = out.argmax(dim=1)  # Predicted root count
+    """
+    
+    def __init__(
+        self,
+        num_features: int = NUM_FEATURES,
+        hidden_dim: int = HIDDEN_DIM,
+        num_classes: int = NUM_CLASSES,
+        dropout: float = DROPOUT_RATE,
+    ):
+        super().__init__()
+        self.dropout = dropout
+        
+        self.fc1 = nn.Linear(num_features, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc3 = nn.Linear(hidden_dim, num_classes)
+    
+    def forward(
+        self, 
+        x: torch.Tensor, 
+        edge_index: Optional[torch.Tensor] = None
+    ) -> torch.Tensor:
+        """
+        Forward pass.
+        
+        Args:
+            x: Node feature matrix [num_nodes, num_features]
+            edge_index: Edge connectivity (ignored for MLP)
+            
+        Returns:
+            Log-softmax class probabilities [num_nodes, num_classes]
+        """
+        x = F.relu(self.fc1(x))
+        x = F.dropout(x, p=self.dropout, training=self.training)
+        
+        x = F.relu(self.fc2(x))
+        x = F.dropout(x, p=self.dropout, training=self.training)
+        
+        x = self.fc3(x)
+        return F.log_softmax(x, dim=1)
+    
+    def reset_parameters(self):
+        """Reset all learnable parameters."""
+        self.fc1.reset_parameters()
+        self.fc2.reset_parameters()
+        self.fc3.reset_parameters()
+
+
+class GCNClassifier(nn.Module):
+    """
+    Graph Convolutional Network classifier for root count prediction.
+    
+    Uses two GCN layers to aggregate neighborhood information via zMap edges,
+    followed by a linear classification head to predict root count.
+    
+    Architecture:
+        Input (1) -> GCNConv -> ReLU -> Dropout ->
+        GCNConv -> ReLU -> Dropout -> Linear (5) -> LogSoftmax
+    
+    Args:
+        num_features: Number of input features per node (default: 1 for wNum)
+        hidden_dim: Hidden layer dimension
+        num_classes: Number of output classes (default: 5 for root counts 0-4)
+        dropout: Dropout probability
+        
+    Example:
+        >>> model = GCNClassifier()
+        >>> out = model(data.x, data.edge_index)
+        >>> pred = out.argmax(dim=1)  # Predicted root count
+    """
+    
+    def __init__(
+        self,
+        num_features: int = NUM_FEATURES,
+        hidden_dim: int = HIDDEN_DIM,
+        num_classes: int = NUM_CLASSES,
+        dropout: float = DROPOUT_RATE,
+    ):
+        super().__init__()
+        self.dropout = dropout
+        
+        self.conv1 = GCNConv(num_features, hidden_dim)
+        self.conv2 = GCNConv(hidden_dim, hidden_dim)
+        self.classifier = nn.Linear(hidden_dim, num_classes)
+    
+    def forward(
+        self, 
+        x: torch.Tensor, 
+        edge_index: torch.Tensor
+    ) -> torch.Tensor:
+        """
+        Forward pass.
+        
+        Args:
+            x: Node feature matrix [num_nodes, num_features]
+            edge_index: Edge connectivity [2, num_edges]
+            
+        Returns:
+            Log-softmax class probabilities [num_nodes, num_classes]
+        """
+        # First GCN layer
+        x = self.conv1(x, edge_index)
+        x = F.relu(x)
+        x = F.dropout(x, p=self.dropout, training=self.training)
+        
+        # Second GCN layer
+        x = self.conv2(x, edge_index)
+        x = F.relu(x)
+        x = F.dropout(x, p=self.dropout, training=self.training)
+        
+        # Classification head
+        x = self.classifier(x)
+        return F.log_softmax(x, dim=1)
+    
+    def reset_parameters(self):
+        """Reset all learnable parameters."""
+        self.conv1.reset_parameters()
+        self.conv2.reset_parameters()
+        self.classifier.reset_parameters()
+
+
+class GraphSAGEClassifier(nn.Module):
+    """
+    GraphSAGE classifier with max aggregation for root count prediction.
+    
+    Uses max aggregation for neighborhood aggregation via zMap edges
+    to predict the number of rational roots.
+    
+    Architecture:
+        Input (1) -> SAGEConv(max) -> ReLU -> Dropout ->
+        SAGEConv(max) -> ReLU -> Dropout -> Linear (5) -> LogSoftmax
+    
+    Args:
+        num_features: Number of input features per node (default: 1 for wNum)
+        hidden_dim: Hidden layer dimension
+        num_classes: Number of output classes (default: 5 for root counts 0-4)
+        dropout: Dropout probability
+        aggr: Aggregation method ('max', 'mean', 'add')
+        
+    Example:
+        >>> model = GraphSAGEClassifier()
+        >>> out = model(data.x, data.edge_index)
+        >>> pred = out.argmax(dim=1)  # Predicted root count
+    """
+    
+    def __init__(
+        self,
+        num_features: int = NUM_FEATURES,
+        hidden_dim: int = HIDDEN_DIM,
+        num_classes: int = NUM_CLASSES,
+        dropout: float = DROPOUT_RATE,
+        aggr: str = 'max',
+    ):
+        super().__init__()
+        self.dropout = dropout
+        
+        # SAGEConv with max aggregation (matches Neo4j 'pool' aggregator)
+        self.conv1 = SAGEConv(num_features, hidden_dim, aggr=aggr)
+        self.conv2 = SAGEConv(hidden_dim, hidden_dim, aggr=aggr)
+        self.classifier = nn.Linear(hidden_dim, num_classes)
+    
+    def forward(
+        self, 
+        x: torch.Tensor, 
+        edge_index: torch.Tensor
+    ) -> torch.Tensor:
+        """
+        Forward pass.
+        
+        Args:
+            x: Node feature matrix [num_nodes, num_features]
+            edge_index: Edge connectivity [2, num_edges]
+            
+        Returns:
+            Log-softmax class probabilities [num_nodes, num_classes]
+        """
+        # First SAGE layer
+        x = self.conv1(x, edge_index)
+        x = F.relu(x)
+        x = F.dropout(x, p=self.dropout, training=self.training)
+        
+        # Second SAGE layer
+        x = self.conv2(x, edge_index)
+        x = F.relu(x)
+        x = F.dropout(x, p=self.dropout, training=self.training)
+        
+        # Classification head
+        x = self.classifier(x)
+        return F.log_softmax(x, dim=1)
+    
+    def reset_parameters(self):
+        """Reset all learnable parameters."""
+        self.conv1.reset_parameters()
+        self.conv2.reset_parameters()
+        self.classifier.reset_parameters()
+
+
+class DepthAwareGAT(nn.Module):
+    """
+    Depth-Aware Graph Attention Network for root count prediction.
+    
+    This model addresses the key limitation of standard GNNs on polynomial
+    difference trees: it uses the wNum (depth) difference between connected
+    nodes as edge features for attention computation.
+    
+    Key improvements over standard GAT:
+    1. Edge features based on depth difference (wNum_src - wNum_tgt)
+    2. Attention weights now consider direction (parent→child vs child→parent)
+    3. Combined with spectral positional encodings for global structure
+    
+    Architecture:
+        Input (1 + spectral_pe_dim) -> 
+        GATConv(edge_dim) -> ELU -> Dropout ->
+        GATConv(edge_dim) -> ELU -> Dropout ->
+        GATConv(edge_dim) -> LogSoftmax
+    
+    Args:
+        num_features: Number of input features (base + spectral PE)
+        hidden_dim: Hidden layer dimension
+        num_classes: Number of output classes (default: 5)
+        dropout: Dropout probability
+        heads: Number of attention heads
+    """
+    
+    def __init__(
+        self,
+        num_features: int = NUM_FEATURES,
+        hidden_dim: int = HIDDEN_DIM,
+        num_classes: int = NUM_CLASSES,
+        dropout: float = DROPOUT_RATE,
+        heads: int = NUM_ATTENTION_HEADS,
+    ):
+        super().__init__()
+        self.dropout = dropout
+        self.heads = heads
+        
+        # Edge feature encoder: wNum difference -> edge embedding
+        # Input: 1 (depth difference), Output: heads (one per attention head)
+        self.edge_encoder = nn.Sequential(
+            nn.Linear(1, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, heads),
+        )
+        
+        # Three GATConv layers with edge features
+        self.conv1 = GATConv(
+            num_features, hidden_dim,
+            heads=heads,
+            edge_dim=heads,
+            concat=True,
+            dropout=dropout,
+        )
+        self.conv2 = GATConv(
+            hidden_dim * heads, hidden_dim,
+            heads=heads,
+            edge_dim=heads,
+            concat=True,
+            dropout=dropout,
+        )
+        self.conv3 = GATConv(
+            hidden_dim * heads, num_classes,
+            heads=1,
+            edge_dim=heads,
+            concat=False,
+            dropout=dropout,
+        )
+    
+    def forward(
+        self,
+        x: torch.Tensor,
+        edge_index: torch.Tensor,
+        wNum: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor:
+        """
+        Forward pass with depth-aware attention.
+        
+        Args:
+            x: Node feature matrix [num_nodes, num_features]
+            edge_index: Edge connectivity [2, num_edges]
+            wNum: Node depth values [num_nodes] (optional, inferred from x if None)
+            
+        Returns:
+            Log-softmax class probabilities [num_nodes, num_classes]
+        """
+        # Get wNum (depth) for each node
+        # If not provided, assume it's the first column of x (before spectral PE)
+        if wNum is None:
+            wNum = x[:, 0]
+        
+        # Compute depth-aware edge features
+        src, tgt = edge_index
+        depth_diff = (wNum[src] - wNum[tgt]).unsqueeze(-1)  # [num_edges, 1]
+        
+        # Encode depth difference into attention-compatible edge features
+        edge_attr = self.edge_encoder(depth_diff)  # [num_edges, heads]
+        
+        # Three-layer GAT with depth-aware attention
+        h = self.conv1(x, edge_index, edge_attr=edge_attr)
+        h = F.elu(h)
+        h = F.dropout(h, p=self.dropout, training=self.training)
+        
+        h = self.conv2(h, edge_index, edge_attr=edge_attr)
+        h = F.elu(h)
+        h = F.dropout(h, p=self.dropout, training=self.training)
+        
+        h = self.conv3(h, edge_index, edge_attr=edge_attr)
+        
+        return F.log_softmax(h, dim=1)
+    
+    def reset_parameters(self):
+        """Reset all learnable parameters."""
+        for layer in self.edge_encoder:
+            if hasattr(layer, 'reset_parameters'):
+                layer.reset_parameters()
+        self.conv1.reset_parameters()
+        self.conv2.reset_parameters()
+        self.conv3.reset_parameters()
+
+
+def get_model(model_name: str, **kwargs) -> nn.Module:
+    """
+    Factory function to create models by name.
+    
+    Args:
+        model_name: One of 'mlp', 'gcn', 'graphsage', 'depth_aware_gat'
+        **kwargs: Additional arguments passed to model constructor
+        
+    Returns:
+        Initialized model instance
+        
+    Raises:
+        ValueError: If model_name is not recognized
+        
+    Example:
+        >>> model = get_model('depth_aware_gat', hidden_dim=128)
+    """
+    models = {
+        'mlp': MLPClassifier,
+        'gcn': GCNClassifier,
+        'graphsage': GraphSAGEClassifier,
+        'depth_aware_gat': DepthAwareGAT,
+    }
+    
+    if model_name.lower() not in models:
+        raise ValueError(
+            f"Unknown model: {model_name}. "
+            f"Available models: {list(models.keys())}"
+        )
+    
+    return models[model_name.lower()](**kwargs)
+
+Thought for 13s
+
+Yep — the architecture is fine conceptually, but there are two “gotchas” in this exact code path that can absolutely produce the “never predicts 1 or 2” collapse you’re seeing:
+
+Your model returns log_softmax, which is only correct if your trainer uses nn.NLLLoss.
+If your trainer uses nn.CrossEntropyLoss (very common), then you’re effectively applying softmax twice (CE applies log_softmax internally). That can seriously distort gradients and amplify collapse.
+
+Your edge feature is a raw signed depth difference, likely unnormalized, and then projected into heads dimensions. On trees with big depth ranges, the edge encoder can saturate (especially with ReLU), making attention behave like a brittle gate: “extremes only”.
+
+Below are surgical changes that usually fix your exact failure mode.
+
+1) Fix the loss/logits contract (critical)
+If your trainer uses CrossEntropyLoss
+
+Return raw logits (no log_softmax).
+
+Change all models to return logits:
+
+# replace:
+return F.log_softmax(x, dim=1)
+
+# with:
+return x
+
+
+Then in training:
+
+loss_fn = torch.nn.CrossEntropyLoss(weight=class_weights)
+loss = loss_fn(logits[train_mask], y[train_mask])
+
+If your trainer uses NLLLoss
+
+Then keep log_softmax, but make sure trainer is:
+
+loss_fn = torch.nn.NLLLoss(weight=class_weights)
+loss = loss_fn(log_probs[train_mask], y[train_mask])
+
+
+Do this check first. Your classification report pattern (missing middle classes) is totally consistent with a bad logits/loss mismatch.
+
+2) Make depth edge features learnable but stable
+
+Right now you feed signed raw diff only:
+
+depth_diff = (wNum[src] - wNum[tgt]).unsqueeze(-1)
+
+
+Upgrade to a 3-feature edge vector:
+
+signed diff (normalized)
+
+absolute diff
+
+direction bit (parent→child vs child→parent proxy)
+
+diff = (wNum[src] - wNum[tgt])
+# normalize to keep it in a sane range
+diff = diff / (diff.abs().max().clamp(min=1.0))
+edge_feat = torch.stack([diff, diff.abs(), (diff > 0).float()], dim=-1)  # [E, 3]
+
+
+Then update encoder input dim 3:
+
+self.edge_encoder = nn.Sequential(
+    nn.Linear(3, hidden_dim),
+    nn.ReLU(),
+    nn.Linear(hidden_dim, heads),
+)
+
+
+This usually makes attention “smooth” enough that classes 1 and 2 stop disappearing.
+
+3) Add a tiny “anti-collapse” bias: label smoothing (cheap win)
+
+Even if you keep pure classification, label smoothing often resurrects dead classes:
+
+loss_fn = torch.nn.CrossEntropyLoss(weight=class_weights, label_smoothing=0.05)
+
+
+Try 0.05 or 0.1.
+
+4) Best fix for your domain: dual-head (classification + ordinal regression)
+
+Your target is ordinal (0..4 roots). Add a regression head that predicts a scalar root count; train with CE + SmoothL1.
+
+Model changes (DepthAwareGAT only)
+
+Add after conv2:
+
+self.classifier = nn.Linear(hidden_dim * heads, num_classes)
+self.regressor  = nn.Linear(hidden_dim * heads, 1)
+
+
+Forward:
+
+h = self.conv1(...)
+h = F.elu(h); h = F.dropout(h, ...)
+
+h = self.conv2(...)
+h = F.elu(h); h = F.dropout(h, ...)
+
+logits = self.classifier(h)          # [N, 5]
+roots_hat = self.regressor(h).squeeze(-1)  # [N]
+return logits, roots_hat
+
+
+Training:
+
+ce = F.cross_entropy(logits[mask], y[mask], weight=class_weights, label_smoothing=0.05)
+reg = F.smooth_l1_loss(roots_hat[mask], y[mask].float())
+loss = ce + 0.3 * reg   # lambda=0.1..0.5 usually
+
+
+This one change tends to:
+
+improve MAE
+
+reduce “skipping the middle”
+
+improve weighted F1 (because 1 & 2 come back)
+
+5) Quick diagnostic to run immediately
+
+After training, print prediction counts:
+
+pred = logits.argmax(dim=1)
+print(torch.bincount(pred, minlength=5))
+
+
+If you see zeros for classes 1 and 2:
+
+fix logits/loss mismatch first
+
+then reduce class-weight aggressiveness or add smoothing/ordinal head
+
+6) One more thing: your class weights are likely too extreme
+
+Given supports: [151, 273, 203, 81, 47], raw inverse frequency weights will heavily upweight class 4 and 3. That can push the model into predicting only extremes.
+
+Try sqrt inverse:
+
+counts = torch.tensor([151, 273, 203, 81, 47], dtype=torch.float)
+w = (counts.sum() / counts).sqrt()
+w = w / w.mean()
+
+
+Use w in CE.
+
+If you tell me what loss you’re using right now (CrossEntropyLoss vs NLLLoss) and how you compute class weights, I’ll point to the exact minimal set of edits you should make first (but honestly: remove log_softmax unless you’re 100% on NLLLoss).
+"""
+Training infrastructure for Root Count Prediction.
+
+This module provides training functionality including:
+- Training loop with early stopping
+- Cross-validation for model selection
+- Grid search over hyperparameters
+- Evaluation metrics (F1 weighted, macro F1, MAE)
+- Class-weighted loss for handling imbalanced data (IMPROVED)
+"""
+
+from typing import Dict, List, Optional, Tuple, Type
+
+import numpy as np
+import torch
+import torch.nn.functional as F
+from sklearn.metrics import f1_score, classification_report, balanced_accuracy_score
+from sklearn.model_selection import train_test_split, KFold
+from torch import nn
+from torch.optim import Adam
+from torch_geometric.data import Data
+
+from .config import (
+    HOLDOUT_FRACTION,
+    VALIDATION_FOLDS,
+    RANDOM_SEED,
+    PENALTIES,
+    MAX_EPOCHS,
+    MIN_EPOCHS,
+    PATIENCE,
+    LEARNING_RATE,
+    CLASS_NAMES,
+    NUM_CLASSES,
+    compute_class_weights,
+)
+from .models import get_model, DepthAwareGAT
+
+
+class NodeClassificationTrainer:
+    """
+    Trainer for root count prediction (multi-class node classification).
+    
+    Handles training loop, evaluation, early stopping, and hyperparameter tuning.
+    Predicts the number of rational roots (totalZero) for polynomial nodes.
+    
+    IMPROVED: Now supports class-weighted loss for handling imbalanced data.
+    
+    Example:
+        >>> trainer = NodeClassificationTrainer(data, use_class_weights=True)
+        >>> model, metrics = trainer.train('depth_aware_gat', weight_decay=0.0625)
+        >>> print(f"Test Macro F1: {metrics['test_macro_f1']:.4f}")
+    """
+    
+    def __init__(
+        self,
+        data: Data,
+        holdout_fraction: float = HOLDOUT_FRACTION,
+        random_seed: int = RANDOM_SEED,
+        device: Optional[str] = None,
+        use_class_weights: bool = True,
+    ):
+        """
+        Initialize the trainer.
+        
+        Args:
+            data: PyG Data object with node features, labels, and edges
+            holdout_fraction: Fraction of data for test set
+            random_seed: Random seed for reproducibility
+            device: Device to use ('cuda', 'cpu', or None for auto-detect)
+            use_class_weights: Whether to use inverse frequency class weights
+        """
+        self.data = data
+        self.holdout_fraction = holdout_fraction
+        self.random_seed = random_seed
+        self.use_class_weights = use_class_weights
+        
+        # Set device
+        if device is None:
+            self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        else:
+            self.device = device
+        
+        # Move data to device
+        self.data = self.data.to(self.device)
+        
+        # Create train/test split
+        self._create_masks()
+        
+        # Compute class weights from training data
+        if use_class_weights:
+            train_labels = self.data.y[self.train_mask]
+            self.class_weights = compute_class_weights(train_labels, NUM_CLASSES)
+            self.class_weights = self.class_weights.to(self.device)
+            print(f"Class weights (inverse frequency):")
+            for i, (name, weight) in enumerate(zip(CLASS_NAMES, self.class_weights)):
+                print(f"  {name}: {weight:.3f}")
+        else:
+            self.class_weights = None
+    
+    def _create_masks(self):
+        """Create train and test masks for the data."""
+        num_nodes = self.data.num_nodes
+        indices = np.arange(num_nodes)
+        labels = self.data.y.cpu().numpy()
+        
+        # Try stratified split, fall back to random if classes too rare
+        try:
+            train_idx, test_idx = train_test_split(
+                indices,
+                test_size=self.holdout_fraction,
+                random_state=self.random_seed,
+                stratify=labels,
+            )
+        except ValueError:
+            # Some classes may be too rare for stratified split
+            print("Warning: Some root count classes too rare for stratified split, using random split")
+            train_idx, test_idx = train_test_split(
+                indices,
+                test_size=self.holdout_fraction,
+                random_state=self.random_seed,
+            )
+        
+        # Create boolean masks
+        self.train_mask = torch.zeros(num_nodes, dtype=torch.bool, device=self.device)
+        self.test_mask = torch.zeros(num_nodes, dtype=torch.bool, device=self.device)
+        self.train_mask[train_idx] = True
+        self.test_mask[test_idx] = True
+        
+        # Store indices for CV
+        self.train_indices = train_idx
+        self.test_indices = test_idx
+    
+    def train(
+        self,
+        model_name: str = 'depth_aware_gat',
+        weight_decay: float = 0.0625,
+        learning_rate: float = LEARNING_RATE,
+        max_epochs: int = MAX_EPOCHS,
+        patience: int = PATIENCE,
+        verbose: bool = True,
+        **model_kwargs,
+    ) -> Tuple[nn.Module, Dict]:
+        """
+        Train a model with given hyperparameters.
+        
+        Args:
+            model_name: Model architecture ('mlp', 'gcn', 'graphsage', 'depth_aware_gat')
+            weight_decay: L2 regularization strength (penalty in Neo4j terms)
+            learning_rate: Learning rate for Adam optimizer
+            max_epochs: Maximum number of training epochs
+            patience: Early stopping patience
+            verbose: Whether to print training progress
+            **model_kwargs: Additional arguments for model constructor
+            
+        Returns:
+            Tuple of (trained model, metrics dictionary)
+        """
+        # Create model
+        model = get_model(model_name, **model_kwargs)
+        model = model.to(self.device)
+        
+        # Check if model is depth-aware (needs wNum)
+        self.is_depth_aware = isinstance(model, DepthAwareGAT)
+        
+        # Get wNum for depth-aware models
+        wNum = getattr(self.data, 'wNum', None)
+        if wNum is not None:
+            wNum = wNum.to(self.device)
+        
+        # Optimizer with L2 regularization
+        optimizer = Adam(
+            model.parameters(),
+            lr=learning_rate,
+            weight_decay=weight_decay,
+        )
+        
+        best_macro_f1 = 0  # Use macro F1 for early stopping (better for imbalanced data)
+        patience_counter = 0
+        best_model_state = None
+        
+        for epoch in range(max_epochs):
+            # Training step
+            model.train()
+            optimizer.zero_grad()
+            
+            # Forward pass (with wNum for depth-aware models)
+            if self.is_depth_aware and wNum is not None:
+                out = model(self.data.x, self.data.edge_index, wNum)
+            else:
+                out = model(self.data.x, self.data.edge_index)
+            
+            # Compute loss with class weights if enabled
+            if self.class_weights is not None:
+                loss = F.nll_loss(
+                    out[self.train_mask], 
+                    self.data.y[self.train_mask],
+                    weight=self.class_weights
+                )
+            else:
+                loss = F.nll_loss(out[self.train_mask], self.data.y[self.train_mask])
+            
+            loss.backward()
+            optimizer.step()
+            
+            # Evaluation - use macro F1 for early stopping
+            metrics = self._evaluate_full(model, wNum)
+            train_macro_f1 = metrics['train_macro_f1']
+            test_macro_f1 = metrics['test_macro_f1']
+            
+            if verbose and epoch % 10 == 0:
+                print(f"Epoch {epoch:03d} | Loss: {loss:.4f} | "
+                      f"Train Macro F1: {train_macro_f1:.4f} | Test Macro F1: {test_macro_f1:.4f}")
+            
+            # Early stopping based on macro F1 (treats all classes equally)
+            if epoch >= MIN_EPOCHS:
+                if train_macro_f1 > best_macro_f1:
+                    best_macro_f1 = train_macro_f1
+                    patience_counter = 0
+                    best_model_state = model.state_dict().copy()
+                else:
+                    patience_counter += 1
+                    if patience_counter >= patience:
+                        if verbose:
+                            print(f"Early stopping at epoch {epoch}")
+                        break
+        
+        # Load best model state
+        if best_model_state is not None:
+            model.load_state_dict(best_model_state)
+        
+        # Final evaluation
+        final_metrics = self._evaluate_full(model, wNum)
+        train_mae, test_mae = self._compute_mae(model, wNum)
+        
+        metrics = {
+            'train_f1': final_metrics['train_weighted_f1'],
+            'test_f1': final_metrics['test_weighted_f1'],
+            'train_macro_f1': final_metrics['train_macro_f1'],
+            'test_macro_f1': final_metrics['test_macro_f1'],
+            'train_balanced_acc': final_metrics['train_balanced_acc'],
+            'test_balanced_acc': final_metrics['test_balanced_acc'],
+            'train_mae': train_mae,
+            'test_mae': test_mae,
+            'epochs_trained': epoch + 1,
+            'model_name': model_name,
+            'weight_decay': weight_decay,
+        }
+        
+        return model, metrics
+    
+    def _forward(self, model: nn.Module, wNum: Optional[torch.Tensor] = None) -> torch.Tensor:
+        """Forward pass handling both standard and depth-aware models."""
+        if self.is_depth_aware and wNum is not None:
+            return model(self.data.x, self.data.edge_index, wNum)
+        else:
+            return model(self.data.x, self.data.edge_index)
+    
+    def _evaluate(self, model: nn.Module, wNum: Optional[torch.Tensor] = None) -> Tuple[float, float]:
+        """
+        Evaluate model on train and test sets (weighted F1 for backward compatibility).
+        
+        Args:
+            model: Model to evaluate
+            wNum: Node depth values (for depth-aware models)
+            
+        Returns:
+            Tuple of (train_f1, test_f1)
+        """
+        model.eval()
+        with torch.no_grad():
+            out = self._forward(model, wNum)
+            pred = out.argmax(dim=1)
+            
+            y_true_train = self.data.y[self.train_mask].cpu().numpy()
+            y_pred_train = pred[self.train_mask].cpu().numpy()
+            
+            y_true_test = self.data.y[self.test_mask].cpu().numpy()
+            y_pred_test = pred[self.test_mask].cpu().numpy()
+            
+            train_f1 = f1_score(y_true_train, y_pred_train, average='weighted', zero_division=0)
+            test_f1 = f1_score(y_true_test, y_pred_test, average='weighted', zero_division=0)
+        
+        return train_f1, test_f1
+    
+    def _evaluate_full(self, model: nn.Module, wNum: Optional[torch.Tensor] = None) -> Dict:
+        """
+        Full evaluation with multiple metrics for imbalanced data.
+        
+        Args:
+            model: Model to evaluate
+            wNum: Node depth values (for depth-aware models)
+            
+        Returns:
+            Dictionary with weighted F1, macro F1, balanced accuracy
+        """
+        model.eval()
+        with torch.no_grad():
+            out = self._forward(model, wNum)
+            pred = out.argmax(dim=1)
+            
+            y_true_train = self.data.y[self.train_mask].cpu().numpy()
+            y_pred_train = pred[self.train_mask].cpu().numpy()
+            
+            y_true_test = self.data.y[self.test_mask].cpu().numpy()
+            y_pred_test = pred[self.test_mask].cpu().numpy()
+            
+            # Weighted F1 (traditional metric)
+            train_weighted_f1 = f1_score(y_true_train, y_pred_train, average='weighted', zero_division=0)
+            test_weighted_f1 = f1_score(y_true_test, y_pred_test, average='weighted', zero_division=0)
+            
+            # Macro F1 (treats all classes equally - better for imbalanced data)
+            train_macro_f1 = f1_score(y_true_train, y_pred_train, average='macro', zero_division=0)
+            test_macro_f1 = f1_score(y_true_test, y_pred_test, average='macro', zero_division=0)
+            
+            # Balanced accuracy (average of per-class recall)
+            train_balanced_acc = balanced_accuracy_score(y_true_train, y_pred_train)
+            test_balanced_acc = balanced_accuracy_score(y_true_test, y_pred_test)
+        
+        return {
+            'train_weighted_f1': train_weighted_f1,
+            'test_weighted_f1': test_weighted_f1,
+            'train_macro_f1': train_macro_f1,
+            'test_macro_f1': test_macro_f1,
+            'train_balanced_acc': train_balanced_acc,
+            'test_balanced_acc': test_balanced_acc,
+        }
+    
+    def _compute_mae(self, model: nn.Module, wNum: Optional[torch.Tensor] = None) -> Tuple[float, float]:
+        """
+        Compute Mean Absolute Error for root count prediction.
+        
+        Since we're predicting counts, MAE gives interpretable error in terms
+        of "how many roots off" the prediction is on average.
+        
+        Args:
+            model: Model to evaluate
+            wNum: Node depth values (for depth-aware models)
+            
+        Returns:
+            Tuple of (train_mae, test_mae)
+        """
+        model.eval()
+        with torch.no_grad():
+            out = self._forward(model, wNum)
+            pred = out.argmax(dim=1)
+            
+            y_true_train = self.data.y[self.train_mask].cpu().numpy()
+            y_pred_train = pred[self.train_mask].cpu().numpy()
+            
+            y_true_test = self.data.y[self.test_mask].cpu().numpy()
+            y_pred_test = pred[self.test_mask].cpu().numpy()
+            
+            train_mae = np.mean(np.abs(y_true_train - y_pred_train))
+            test_mae = np.mean(np.abs(y_true_test - y_pred_test))
+        
+        return train_mae, test_mae
+    
+    def cross_validate(
+        self,
+        model_name: str = 'depth_aware_gat',
+        weight_decay: float = 0.0625,
+        n_folds: int = VALIDATION_FOLDS,
+        **kwargs,
+    ) -> Dict:
+        """
+        Perform k-fold cross-validation on the training set.
+        
+        Uses macro F1 for evaluation (better for imbalanced data).
+        
+        Args:
+            model_name: Model architecture to use
+            weight_decay: L2 regularization strength
+            n_folds: Number of CV folds
+            **kwargs: Additional arguments for training
+            
+        Returns:
+            Dictionary with CV results
+        """
+        kfold = KFold(n_splits=n_folds, shuffle=True, random_state=self.random_seed)
+        fold_macro_f1_scores = []
+        fold_weighted_f1_scores = []
+        
+        # Use fewer epochs for CV to speed up grid search
+        cv_epochs = kwargs.get('max_epochs', 50)
+        verbose = kwargs.get('verbose', False)
+        
+        # Get wNum for depth-aware models
+        wNum = getattr(self.data, 'wNum', None)
+        if wNum is not None:
+            wNum = wNum.to(self.device)
+        
+        for fold, (train_cv_idx, val_cv_idx) in enumerate(kfold.split(self.train_indices)):
+            if verbose:
+                print(f"    Fold {fold + 1}/{n_folds}...", end='', flush=True)
+            
+            # Create CV masks
+            train_cv_mask = torch.zeros(
+                self.data.num_nodes, dtype=torch.bool, device=self.device
+            )
+            val_cv_mask = torch.zeros(
+                self.data.num_nodes, dtype=torch.bool, device=self.device
+            )
+            
+            train_cv_mask[self.train_indices[train_cv_idx]] = True
+            val_cv_mask[self.train_indices[val_cv_idx]] = True
+            
+            # Train model on this fold
+            model = get_model(model_name)
+            model = model.to(self.device)
+            is_depth_aware = isinstance(model, DepthAwareGAT)
+            
+            optimizer = Adam(
+                model.parameters(),
+                lr=kwargs.get('learning_rate', LEARNING_RATE),
+                weight_decay=weight_decay,
+            )
+            
+            for epoch in range(cv_epochs):
+                model.train()
+                optimizer.zero_grad()
+                
+                # Forward pass
+                if is_depth_aware and wNum is not None:
+                    out = model(self.data.x, self.data.edge_index, wNum)
+                else:
+                    out = model(self.data.x, self.data.edge_index)
+                
+                # Loss with class weights
+                if self.class_weights is not None:
+                    loss = F.nll_loss(out[train_cv_mask], self.data.y[train_cv_mask],
+                                      weight=self.class_weights)
+                else:
+                    loss = F.nll_loss(out[train_cv_mask], self.data.y[train_cv_mask])
+                
+                loss.backward()
+                optimizer.step()
+            
+            # Evaluate on validation fold
+            model.eval()
+            with torch.no_grad():
+                if is_depth_aware and wNum is not None:
+                    out = model(self.data.x, self.data.edge_index, wNum)
+                else:
+                    out = model(self.data.x, self.data.edge_index)
+                pred = out.argmax(dim=1)
+                
+                y_true = self.data.y[val_cv_mask].cpu().numpy()
+                y_pred = pred[val_cv_mask].cpu().numpy()
+                
+                # Use macro F1 as primary metric for imbalanced data
+                val_macro_f1 = f1_score(y_true, y_pred, average='macro', zero_division=0)
+                val_weighted_f1 = f1_score(y_true, y_pred, average='weighted', zero_division=0)
+                
+                fold_macro_f1_scores.append(val_macro_f1)
+                fold_weighted_f1_scores.append(val_weighted_f1)
+                
+            if verbose:
+                print(f" Macro F1={val_macro_f1:.4f}")
+        
+        return {
+            'mean_f1': np.mean(fold_macro_f1_scores),  # Use macro F1 as primary
+            'std_f1': np.std(fold_macro_f1_scores),
+            'mean_weighted_f1': np.mean(fold_weighted_f1_scores),
+            'fold_scores': fold_macro_f1_scores,
+            'weight_decay': weight_decay,
+        }
+    
+    def grid_search(
+        self,
+        model_name: str = 'depth_aware_gat',
+        penalties: List[float] = PENALTIES,
+        n_folds: int = VALIDATION_FOLDS,
+        verbose: bool = True,
+        **kwargs,
+    ) -> Dict:
+        """
+        Perform grid search over penalty values using cross-validation.
+        
+        Args:
+            model_name: Model architecture to use
+            penalties: List of weight_decay values to try
+            n_folds: Number of CV folds
+            verbose: Whether to print progress
+            **kwargs: Additional arguments for training
+            
+        Returns:
+            Dictionary with best parameters and all results
+        """
+        results = []
+        best_penalty = None
+        best_f1 = 0
+        
+        for penalty in penalties:
+            if verbose:
+                print(f"Testing penalty={penalty}...")
+            
+            # Pass verbose to cross_validate for fold-level feedback
+            cv_result = self.cross_validate(
+                model_name=model_name,
+                weight_decay=penalty,
+                n_folds=n_folds,
+                verbose=verbose,
+                **kwargs,
+            )
+            results.append(cv_result)
+            
+            if verbose:
+                print(f"  Mean F1: {cv_result['mean_f1']:.4f} ± {cv_result['std_f1']:.4f}")
+            
+            if cv_result['mean_f1'] > best_f1:
+                best_f1 = cv_result['mean_f1']
+                best_penalty = penalty
+        
+        if verbose:
+            print(f"\nBest penalty: {best_penalty} with F1: {best_f1:.4f}")
+        
+        return {
+            'best_penalty': best_penalty,
+            'best_f1': best_f1,
+            'all_results': results,
+        }
+    
+    def get_detailed_report(
+        self,
+        model: nn.Module,
+        class_names: Optional[List[str]] = None,
+    ) -> str:
+        """
+        Generate a detailed classification report for root count prediction.
+        
+        Args:
+            model: Trained model
+            class_names: Names for the classes (defaults to CLASS_NAMES from config)
+            
+        Returns:
+            Classification report string
+        """
+        if class_names is None:
+            class_names = CLASS_NAMES
+        
+        # Get wNum for depth-aware models
+        wNum = getattr(self.data, 'wNum', None)
+        if wNum is not None:
+            wNum = wNum.to(self.device)
+        
+        is_depth_aware = isinstance(model, DepthAwareGAT)
+            
+        model.eval()
+        with torch.no_grad():
+            if is_depth_aware and wNum is not None:
+                out = model(self.data.x, self.data.edge_index, wNum)
+            else:
+                out = model(self.data.x, self.data.edge_index)
+            pred = out.argmax(dim=1)
+            
+            y_true = self.data.y[self.test_mask].cpu().numpy()
+            y_pred = pred[self.test_mask].cpu().numpy()
+        
+        # Get unique labels present in test set
+        labels_present = sorted(set(y_true) | set(y_pred))
+        names_present = [class_names[i] if i < len(class_names) else f'{i} roots' 
+                         for i in labels_present]
+        
+        return classification_report(
+            y_true, y_pred, 
+            labels=labels_present,
+            target_names=names_present,
+            zero_division=0
+        )
+
+
+def train_and_evaluate(
+    data: Data,
+    model_name: str = 'depth_aware_gat',
+    run_grid_search: bool = True,
+    use_class_weights: bool = True,
+    verbose: bool = True,
+) -> Tuple[nn.Module, Dict]:
+    """
+    Convenience function for full root count prediction training pipeline.
+    
+    IMPROVED: Uses class weights and reports macro F1 for imbalanced data.
+    
+    Args:
+        data: PyG Data object
+        model_name: Model architecture to use
+        run_grid_search: Whether to run grid search for best penalty
+        use_class_weights: Whether to use inverse frequency class weights
+        verbose: Whether to print progress
+        
+    Returns:
+        Tuple of (trained model, metrics dictionary)
+        
+    Example:
+        >>> model, metrics = train_and_evaluate(data, model_name='depth_aware_gat')
+        >>> print(f"Test Macro F1: {metrics['test_macro_f1']:.4f}")
+    """
+    trainer = NodeClassificationTrainer(data, use_class_weights=use_class_weights)
+    
+    if run_grid_search:
+        # Find best hyperparameters
+        grid_result = trainer.grid_search(model_name=model_name, verbose=verbose)
+        best_penalty = grid_result['best_penalty']
+    else:
+        best_penalty = 0.0625  # Default
+    
+    # Train final model
+    if verbose:
+        print(f"\nTraining final model with penalty={best_penalty}")
+    
+    model, metrics = trainer.train(
+        model_name=model_name,
+        weight_decay=best_penalty,
+        verbose=verbose,
+    )
+    
+    if verbose:
+        print(f"\nFinal Results (Root Count Prediction - IMPROVED):")
+        print(f"  Train Macro F1: {metrics['train_macro_f1']:.4f} (treats classes equally)")
+        print(f"  Test Macro F1: {metrics['test_macro_f1']:.4f}")
+        print(f"  Train Balanced Acc: {metrics['train_balanced_acc']:.4f}")
+        print(f"  Test Balanced Acc: {metrics['test_balanced_acc']:.4f}")
+        print(f"  Train MAE: {metrics['train_mae']:.4f} roots")
+        print(f"  Test MAE: {metrics['test_mae']:.4f} roots")
+        print(f"\n  (For comparison - weighted metrics that hide class imbalance:)")
+        print(f"  Train Weighted F1: {metrics['train_f1']:.4f}")
+        print(f"  Test Weighted F1: {metrics['test_f1']:.4f}")
+        print(f"\nDetailed Report:")
+        print(trainer.get_detailed_report(model))
+    
+    return model, metrics
+
+Got it — now we can point to the exact issues in your trainer that are causing the behavior you’re seeing, and the minimal code edits to fix them.
+
+1) You are leaking test data + stopping on the wrong signal
+
+In train() you call:
+
+metrics = self._evaluate_full(model, wNum)
+train_macro_f1 = metrics['train_macro_f1']
+test_macro_f1 = metrics['test_macro_f1']
+...
+if train_macro_f1 > best_macro_f1:
+    best_model_state = ...
+
+
+Two problems:
+
+A) You’re evaluating on test every epoch
+
+Even if you don’t early-stop on it, you’re still “peeking” constantly. That makes iterative development misleading.
+
+B) You early-stop on train_macro_f1
+
+This is not early stopping. Train F1 will usually keep improving even when generalization worsens. It also encourages collapse-y solutions that fit train quirks.
+
+✅ Fix: create a val mask from the training set, early-stop on val_macro_f1, and only compute test metrics once at the end.
+
+Minimal change inside _create_masks():
+
+train_idx, test_idx = train_test_split(...)
+
+train_idx, val_idx = train_test_split(
+    train_idx,
+    test_size=0.15,
+    random_state=self.random_seed,
+    stratify=labels[train_idx],
+)
+self.val_mask = torch.zeros(num_nodes, dtype=torch.bool, device=self.device)
+self.val_mask[val_idx] = True
+
+
+Then update _evaluate_full() to report train/val/test, and early stop on val_macro_f1.
+
+This alone will make your training logs stop lying to you.
+
+2) Your loss/logits contract is actually OK (you’re using NLLLoss)
+
+You return F.log_softmax(...) in models and you train with:
+
+loss = F.nll_loss(out[train_mask], y[train_mask], weight=class_weights)
+
+
+✅ That’s consistent. So we can rule out the CE-vs-log_softmax mismatch.
+
+3) The real reason classes 1 and 2 disappear: global class weights + no val + argmax training
+
+You compute self.class_weights once from the full training set and reuse them everywhere, including CV folds.
+
+In cross-validation you do:
+
+loss = F.nll_loss(out[train_cv_mask], y[train_cv_mask], weight=self.class_weights)
+
+
+That’s subtly wrong: the fold’s label distribution differs, and using global weights can over/under push certain classes.
+
+✅ Fix: recompute weights per fold:
+
+if self.use_class_weights:
+    fold_w = compute_class_weights(self.data.y[train_cv_mask], NUM_CLASSES).to(self.device)
+else:
+    fold_w = None
+...
+loss = F.nll_loss(out[train_cv_mask], y[train_cv_mask], weight=fold_w)
+
+And for your main training loop:
+
+Your current weighting seems to be encouraging “predict extremes (0/3/4), ignore middle (1/2).”
+
+Two quick knobs:
+
+A) Use tempered weights (sqrt inverse)
+
+Wherever compute_class_weights() is, change it to something like:
+
+w = (N / count) → too strong
+
+better: w = sqrt(N / count) or “effective number of samples”
+
+This is the most common cause of the “middle classes never predicted” outcome.
+
+B) Add label smoothing (if you move to CrossEntropy later) or use focal loss with moderation
+
+With NLLLoss you can’t label-smooth directly, but you can switch to raw logits + CrossEntropyLoss(label_smoothing=0.05).
+
+4) Your “depth-aware” edge feature isn’t passed into CV model init kwargs
+
+In cross_validate() you do:
+
+model = get_model(model_name)
+
+
+…but you ignore **kwargs (hidden_dim, heads, etc.). So grid search / CV isn’t actually validating the same architecture you might train later.
+
+✅ Fix:
+
+model = get_model(model_name, **kwargs)
+
+
+(And same for the final training call if you intend to tune model params.)
+
+5) Your early-stopping best model snapshot is not safe
+
+You do:
+
+best_model_state = model.state_dict().copy()
+
+
+That is a shallow copy of a dict of tensors; those tensors can still be mutated.
+
+✅ Fix:
+
+import copy
+best_model_state = copy.deepcopy(model.state_dict())
+
+
+This can absolutely change what “best epoch” you think you restored.
+
+6) One-liner that explains your report
+
+Your report:
+
+recall(0)=1.00, recall(3)=0.94, recall(4)=1.00
+
+recall(1)=recall(2)=0.00
+
+That is exactly what you get when:
+
+weights over-incentivize “confident separation” on a subset of classes
+
+no validation stopping to catch the collapse
+
+ordinal middle classes overlap and are never “worth it” under the loss landscape
+
+Minimal “fix-first” patch list (highest ROI)
+
+Add val split + early stop on val_macro_f1
+
+deepcopy best state
+
+recompute class weights per CV fold
+
+temper class weights (sqrt inverse)
+
+(optional but likely win) change DepthAwareGAT edge_feat to [diff, abs(diff), sign] and normalize
+
+If you paste your compute_class_weights() implementation, I’ll rewrite it into a drop-in “tempered/effective-number” version that usually brings classes 1 and 2 back immediately without changing the model.
+
+def compute_class_weights(labels: torch.Tensor, num_classes: int = NUM_CLASSES) -> torch.Tensor:
+    """
+    Compute inverse frequency class weights from label distribution.
+    
+    Args:
+        labels: Tensor of class labels
+        num_classes: Number of classes
+        
+    Returns:
+        Tensor of class weights [num_classes]
+    """
+    # Count samples per class
+    class_counts = torch.zeros(num_classes)
+    for c in range(num_classes):
+        class_counts[c] = (labels == c).sum().float()
+    
+    # Avoid division by zero
+    class_counts = class_counts.clamp(min=1.0)
+    
+    # Inverse frequency weighting: N / (K * N_c)
+    total_samples = labels.size(0)
+    weights = total_samples / (num_classes * class_counts)
+    
+    return weights
+
+Perfect — this function explains almost everything you’re seeing.
+
+Your current weighting is mathematically valid, but too aggressive for ordinal, overlapping classes like root counts. It is the primary reason classes 1 and 2 vanish.
+
+Let’s break it down and then I’ll give you drop-in replacements you can use immediately.
+
+1️⃣ What your current weights are actually doing
+weights = total_samples / (num_classes * class_counts)
+
+
+This is equivalent to:
+
+𝑤
+𝑐
+∝
+1
+𝑁
+𝑐
+w
+c
+	​
+
+∝
+N
+c
+	​
+
+1
+	​
+
+
+So for your approximate counts:
+
+class	count	weight (relative)
+0	151	~1.0
+1	273	~0.55
+2	203	~0.75
+3	81	~1.9
+4	47	~3.2
+Consequence
+
+Misclassifying class 4 is ~6× more expensive than misclassifying class 1
+
+The model learns:
+
+“It’s safer to guess 3 or 4 than to risk a wrong 1 or 2.”
+
+Since 1 and 2 are fuzzy middle classes, the optimizer simply abandons them.
+
+This is textbook ordinal-collapse behavior.
+
+2️⃣ Drop-in fix #1 (recommended): sqrt inverse frequency
+
+This keeps imbalance correction but removes the extreme pressure.
+
+def compute_class_weights(labels: torch.Tensor, num_classes: int) -> torch.Tensor:
+    counts = torch.zeros(num_classes, device=labels.device)
+    for c in range(num_classes):
+        counts[c] = (labels == c).sum()
+
+    counts = counts.clamp(min=1.0)
+    total = counts.sum()
+
+    # sqrt inverse frequency
+    weights = torch.sqrt(total / counts)
+    weights = weights / weights.mean()   # normalize for stability
+    return weights
+
+Why this works
+
+Preserves minority awareness
+
+Stops “extreme-only” predictions
+
+Usually restores middle classes immediately
+
+3️⃣ Drop-in fix #2 (even better): Effective number of samples (Cui et al.)
+
+This is the gold standard for imbalanced classification.
+
+def compute_class_weights(labels: torch.Tensor, num_classes: int, beta: float = 0.999) -> torch.Tensor:
+    counts = torch.zeros(num_classes, device=labels.device)
+    for c in range(num_classes):
+        counts[c] = (labels == c).sum()
+
+    counts = counts.clamp(min=1.0)
+
+    effective_num = 1.0 - torch.pow(beta, counts)
+    weights = (1.0 - beta) / effective_num
+
+    weights = weights / weights.mean()
+    return weights
+
+
+Tuning tip:
+
+β = 0.999 → mild
+
+β = 0.99 → stronger
+
+β = 0.9 → aggressive (probably too much for you)
+
+4️⃣ Sanity check you should run immediately
+
+After training, print:
+
+pred = out.argmax(dim=1)
+print(torch.bincount(pred, minlength=NUM_CLASSES))
+
+Expected result after fixing weights
+
+You should see non-zero counts for classes 1 and 2.
+
+Even if precision is low at first, recall > 0 means the model is alive again.
+
+5️⃣ One more subtle but important improvement (ordinal-aware without architecture change)
+
+Right now:
+
+loss = F.nll_loss(...)
+
+
+This treats all mistakes equally.
+
+You can make it ordinal-sensitive with a tiny trick:
+
+pred = out.argmax(dim=1)
+distance_penalty = (pred - self.data.y).abs().float()
+
+loss = F.nll_loss(...) * (1.0 + 0.2 * distance_penalty.mean())
+
+
+This nudges the optimizer away from “jumping” over middle classes.
+
+6️⃣ Priority order (do not do everything at once)
+
+Replace compute_class_weights with sqrt or effective-number
+
+Retrain without changing anything else
+
+Confirm classes 1 & 2 appear
+
+Then consider ordinal loss / dual-head
+
+7️⃣ Bottom line (important)
+
+Your model is not broken.
+Your loss geometry is.
+
+The collapse you observed is exactly what theory predicts when:
+
+ordinal labels
+
+strong inverse weighting
+
+no ordinal constraint
+
+Fixing class weights alone will likely bump:
+
+weighted F1 ↑
+
+macro F1 ↑
+
+MAE ↓
+
+and most importantly: classes 1 and 2 come back
+
+If you want, next I can:
+
+sketch a CORAL ordinal head for this model, or
+
+show how to convert your trainer to CE + label smoothing cleanly.
+
+
+
+I'll explore the codebase to understand the current model architecture and training setup before critiquing and planning the changes.
+Now I have a comprehensive understanding of the current codebase. Let me provide my critique and then create a plan for model adjustments.
+Critique of Current Approach
+Critical Issues
+Label Confusion: The current model predicts totalZero treating it uniformly across all nodes. However, when determined=0, totalZero represents only the visible root count (potentially incomplete), while for determined=1, it represents the true root count. This semantic inconsistency corrupts the learning signal.
+No Censoring Awareness: All samples are treated identically during training. The model cannot distinguish between "this polynomial has 1 root" vs "this polynomial has at least 1 root visible in our window."
+Missing Contextual Features: The model lacks window/boundary information that would explain why truncation occurs. Without knowing the scanning window bounds, the model cannot learn the truncation pattern.
+Misleading Class Imbalance: The ~53% prevalence of "1 root" is partly an artifact of the scanning window geometry, not pure algebraic properties. This window bias is not captured by current features.
+Current Architecture Gaps
+# Current: Single head predicting totalZero as if all labels are equivalentx = self.classifier(x)  # [N, 5] for classes 0-4return F.log_softmax(x, dim=1)
+This architecture cannot express:
+"I see 2 roots, and I think I saw them all" (high confidence)
+"I see 2 roots, but there may be more outside the window" (epistemic uncertainty)
+Let me now create a detailed plan for implementing the recommended modeling options:
+Refactor the root count prediction pipeline to properly handle truncated/censored observations by implementing three modeling options: visible-count-only, multi-task (count + completeness), and censored learning with inequality constraints.
+
+
+
+
+

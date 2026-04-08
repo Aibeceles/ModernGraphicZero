@@ -1,0 +1,851 @@
+﻿
+
+//  this code snippit demonstrates the overloaded "+"  feature to be used for enhancing the below cypher script. 
+//  looks like dummy parameters are needed for when ii.N involves evaluates of 2,1
+
+
+MATCH (:class1)-->(c1:class2)-->(:class3)--(:class4)-->(c2:class2)
+WITH collect(c1)+collect(c2) as nodez
+UNWIND nodez as c
+RETURN c
+
+
+
+
+
+
+
+
+
+
+I use LyX - The Document Processor, w
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" AND t.twoSeq=4
+WITH [{T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}] as targetFactors
+
+
+//  The following MATCH is constrained by ii.N's value.
+//  Want the constraint to be whenever (ee:Evaluate {Value:targetFactors.T})
+
+
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) where ii.N="2"
+WITH [{TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END}]
+      as argumentFactors,targetFactors
+
+
+
+UNWIND argumentFactors as argumentF
+UNWIND targetFactors as targetF
+
+
+WITH [{TDegree:targetF.Degree,TScalar:targetF.Scalar,ATwoSeq:argumentF.TT,ADegree:CASE WHEN argumentF.Degree=-1 Then argumentF.Degree+1 ELSE
+      argumentF.Degree END,AScalar:argumentF.Scalar}]  AS argumentProduct
+UNWIND argumentProduct as argumentProductt
+WITH [{ResultScalar:argumentProductt.TScalar*argumentProductt.AScalar,ResultDegree:argumentProductt.ADegree+argumentProductt.TDegree,
+      ResultTwoSeq:argumentProductt.ATwoSeq}] as resultProduct
+UNWIND resultProduct as rP
+WITH {RScalarList:COLLECT({RScalar:rP.ResultScalar}),RDegree:rP.ResultDegree} as ResultMap
+WITH COLLECT(ResultMap.RScalarList) AS RScalar,ResultMap
+Unwind RANGE(0,SIZE(RScalar)-1) as ii
+Unwind RScalar[ii] as ts
+With collect(ts.RScalar) as cts,ResultMap
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalRScalar,ResultMap
+With [ResultMap.RDegree,TotalRScalar] as output
+Return output
+
+╒══════════╕
+│"output"  │
+╞══════════╡
+│[2,159.0] │
+├──────────┤
+│[1,-782.0]│
+├──────────┤
+│[3,-14.5] │
+├──────────┤
+│[0,1456.0]│
+├──────────┤
+│[4,0.5]   │
+└──────────┘
+
+
+Time out, need a narrative:
+
+   
+MATCH (n:VertexNode) RETURN n LIMIT 25
+
+╒══════════════════════════════════════════════════╕
+│"n"                                               │
+╞══════════════════════════════════════════════════╡
+│{"Vertex":"0 42 0 0 0","Degree":"0","Scalar":"42"}│
+├──────────────────────────────────────────────────┤
+
+MATCH (n:IndexedBy) RETURN n LIMIT 25
+
+╒══════════════════════════════════════╕
+│"n"                                   │
+╞══════════════════════════════════════╡
+│{"RowCounter":"-1","N":"5","MaxN":"8"}│
+├──────────────────────────────────────┤
+
+MATCH (n:Evaluate) RETURN n LIMIT 25
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"size":32,"d":"32","nBinary":"[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,│
+│ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]","Value":"42│
+│94967295","centerIndex":0,"n":"1","verticalTranslateIndex":0}         │
+├──────────────────────────────────────────────────────────────────────┤
+
+MATCH (n:TwoSeqFactor) RETURN n LIMIT 25
+
+
+╒═════════════╕
+│"n"          │
+╞═════════════╡
+│{"twoSeq":1} │
+├─────────────┤
+
+
+
+
+It does not appear an accurate map projection of argument vertices are returned.
+
+
+//MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+//WITH {T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2} as targetFactors 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH {TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END}      as argumentFactors  //,targetFactors
+return argumentFactors
+
+
+╒═════════════════════════════════╕
+│"argumentFactors"                │
+╞═════════════════════════════════╡
+│{"TT":1,"Degree":1,"Scalar":-4.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":0,"Scalar":28.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":2,"Scalar":0.5} │
+├─────────────────────────────────┤
+│{"TT":1,"Degree":1,"Scalar":-3.5}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":1,"Scalar":-3.5}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":0,"Scalar":21.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":2,"Scalar":0.5} │
+├─────────────────────────────────┤
+│{"TT":1,"Degree":1,"Scalar":-3.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":-1,"Scalar":3.0}│
+└─────────────────────────────────┘
+
+But these areumentFactors are endless:
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2} as targetFactors 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH {TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END}      as argumentFactors  //,targetFactors
+return argumentFactors
+
+
+
+╒═════════════════════════════════╕
+│"argumentFactors"                │
+╞═════════════════════════════════╡
+│{"TT":1,"Degree":1,"Scalar":-4.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":0,"Scalar":28.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":2,"Scalar":0.5} │
+├─────────────────────────────────┤
+│{"TT":1,"Degree":1,"Scalar":-3.5}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":1,"Scalar":-3.5}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":0,"Scalar":21.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":2,"Scalar":0.5} │
+├─────────────────────────────────┤
+│{"TT":1,"Degree":1,"Scalar":-3.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":-1,"Scalar":3.0}│
+├─────────────────────────────────┤
+│{"TT":1,"Degree":1,"Scalar":-4.0}│
+├─────────────────────────────────┤
+...
+...
+...
+
+
+The attempt to include a rowCounter for distinctness.
+
+
+//  
+ 
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2} as targetFactors 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(targetFactors.T)}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH [ {TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} ]      as argumentFactors  ,targetFactors
+return argumentFactors
+
+
+// Targeting the whole i.n vertex list.  There are 17 in list.
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH Collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors 
+
+// Argumenting the evaluate=4 vertices.  there are 9 of them
+
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors // ,targetFactors
+
+return argumentFactors
+
+//  Looks like argumentFactors,targetFactors return correctly.
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH Collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return argumentFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"T":1,"Degree":1,"Scalar":-3.0},{"T":1,"Degree":0,"Scalar":15.0},{"T│
+│":1,"Degree":2,"Scalar":0.5},{"T":1,"Degree":1,"Scalar":-2.5},{"T":1,"│
+│Degree":1,"Scalar":-2.5},{"T":1,"Degree":0,"Scalar":10.0},{"T":1,"Degr│
+│ee":2,"Scalar":0.5},{"T":1,"Degree":1,"Scalar":-2.0},{"T":1,"Degree":-│
+│1,"Scalar":2.5},{"T":2,"Degree":1,"Scalar":-3.5},{"T":2,"Degree":0,"Sc│
+│alar":21.0},{"T":2,"Degree":2,"Scalar":0.5},{"T":2,"Degree":1,"Scalar"│
+│:-3.0},{"T":4,"Degree":1,"Scalar":-4.0},{"T":4,"Degree":0,"Scalar":28.│
+│0},{"T":4,"Degree":2,"Scalar":0.5},{"T":4,"Degree":1,"Scalar":-3.5}]  │
+└──────────────────────────────────────────────────────────────────────┘
+
+//  Need the targetFactors collected by their twoSeq value.
+
+
+
+
+//  4/17's good stuff
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:toString(t.twoSeq)} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii)   // WHERE ee.Value in targetFactors.T
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,
+              RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return argumentFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="5" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:toString(t.twoSeq)} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+
+
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii)   // WHERE ee.Value in targetFactors.T
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return argumentFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│     
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │  // argumentFactors is surripitously rows (the TT map key)    //  The evaluate key should be used instead.   
+├──────────────────────────────────────────────────────────────────────┤  // targetFactors is rows of map.  Inside the map is a collected (degree,scalar) pair associated with a twoS value.
+│[{"TT":2,"Degree":1,"Scalar":-4.0,"RowC":"2"},{"TT":2,"Degree":0,"Scal│     
+│ar":28.0,"RowC":"2"},{"TT":2,"Degree":2,"Scalar":0.5,"RowC":"2"},{"TT"│
+│:2,"Degree":1,"Scalar":-3.5,"RowC":"2"},{"TT":1,"Degree":1,"Scalar":-3│  // 
+│.5,"RowC":"1"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"1"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"1"},{"TT":1,"Degree":1,"Scalar":-3.0,"RowC":"0"},{"TT":1,"Degree"│
+│:0,"Scalar":15.0,"RowC":"0"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"0│
+│"},{"TT":1,"Degree":1,"Scalar":-2.5,"RowC":"0"},{"TT":1,"Degree":-1,"S│
+│calar":4.0,"RowC":"-1"}]                                              │
+└──────────────────────────────────────────────────────────────────────┘
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="5" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:toString(t.twoSeq)} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii)   // WHERE ee.Value in targetFactors.T
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return targetFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"DS":[{"Degree":1,"Scalar":-3.5},{"Degree":0,"Scalar":21.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.0}],"T":"4"}                 │
+├──────────────────────────────────────────────────────────────────────┤
+│{"DS":[{"Degree":1,"Scalar":-4.0},{"Degree":0,"Scalar":28.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.5}],"T":"8"}                 │
+└──────────────────────────────────────────────────────────────────────┘
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:toString(t.twoSeq)} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii)   // WHERE ee.Value in targetFactors.T
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return targetFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"DS":[{"Degree":1,"Scalar":-4.0},{"Degree":0,"Scalar":28.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.5}],"T":"4"}                 │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+//  End 4/18 good stuff
+
+
+
+
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:toString(t.twoSeq)} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii)   // WHERE ee.Value in targetFactors.T
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return argumentFactors
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:toString(t.twoSeq)} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+//MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii)   // WHERE ee.Value in targetFactors.T
+//WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return targetFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"DS":[{"Degree":1,"Scalar":-3.5},{"Degree":0,"Scalar":21.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.0}],"T":"2"}                 │
+├──────────────────────────────────────────────────────────────────────┤
+│{"DS":[{"Degree":1,"Scalar":-3.0},{"Degree":0,"Scalar":15.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-2.5},{"Degree":1,"Scalar":-2.5}│
+│,{"Degree":0,"Scalar":10.0},{"Degree":2,"Scalar":0.5},{"Degree":1,"Sca│
+│lar":-2.0},{"Degree":-1,"Scalar":2.5}],"T":"1"}                       │
+├──────────────────────────────────────────────────────────────────────┤
+│{"DS":[{"Degree":1,"Scalar":-4.0},{"Degree":0,"Scalar":28.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.5}],"T":"4"}                 │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:toString(t.twoSeq)} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:targetFactors.T}),(tt:TwoSeqFactor)<-[]-(ii)   // WHERE ee.Value in targetFactors.T
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return targetFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"DS":[{"Degree":1,"Scalar":-4.0},{"Degree":0,"Scalar":28.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.5}],"T":"4"}                 │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:t.twoSeq} as targetFactors  //,collect(distinct toString(t.twoSeq)) as tS 
+//MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+//WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return targetFactors
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"DS":[{"Degree":1,"Scalar":-3.5},{"Degree":0,"Scalar":21.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.0}],"T":2}                   │
+├──────────────────────────────────────────────────────────────────────┤
+│{"DS":[{"Degree":1,"Scalar":-4.0},{"Degree":0,"Scalar":28.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.5}],"T":4}                   │
+├──────────────────────────────────────────────────────────────────────┤
+│{"DS":[{"Degree":1,"Scalar":-3.0},{"Degree":0,"Scalar":15.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-2.5},{"Degree":1,"Scalar":-2.5}│
+│,{"Degree":0,"Scalar":10.0},{"Degree":2,"Scalar":0.5},{"Degree":1,"Sca│
+│lar":-2.0},{"Degree":-1,"Scalar":2.5}],"T":1}                         │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {DS:collect({Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),T:t.twoSeq} as targetFactors,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return targetFactors
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"DS":[{"Degree":1,"Scalar":-4.0},{"Degree":0,"Scalar":28.0},{"Degree"│
+│:2,"Scalar":0.5},{"Degree":1,"Scalar":-3.5}],"T":4}                   │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return targetFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"T":1,"Degree":1,"Scalar":-3.0},{"T":1,"Degree":0,"Scalar":15.0},{"T│
+│":1,"Degree":2,"Scalar":0.5},{"T":1,"Degree":1,"Scalar":-2.5},{"T":1,"│
+│Degree":1,"Scalar":-2.5},{"T":1,"Degree":0,"Scalar":10.0},{"T":1,"Degr│
+│ee":2,"Scalar":0.5},{"T":1,"Degree":1,"Scalar":-2.0},{"T":1,"Degree":-│
+│1,"Scalar":2.5},{"T":2,"Degree":1,"Scalar":-3.5},{"T":2,"Degree":0,"Sc│
+│alar":21.0},{"T":2,"Degree":2,"Scalar":0.5},{"T":2,"Degree":1,"Scalar"│
+│:-3.0},{"T":4,"Degree":1,"Scalar":-4.0},{"T":4,"Degree":0,"Scalar":28.│
+│0},{"T":4,"Degree":2,"Scalar":0.5},{"T":4,"Degree":1,"Scalar":-3.5}]  │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH [collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}),t.twoSeq] as targetFactors,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return targetFactors
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"targetFactors"                                                       │
+╞══════════════════════════════════════════════════════════════════════╡
+│[[{"T":4,"Degree":1,"Scalar":-4.0},{"T":4,"Degree":0,"Scalar":28.0},{"│
+│T":4,"Degree":2,"Scalar":0.5},{"T":4,"Degree":1,"Scalar":-3.5}],4]    │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return targetFactors,tS
+
+
+╒══════════════════════════════════════════════════════════════════════╤═════════════╕
+│"targetFactors"                                                       │"tS"         │
+╞══════════════════════════════════════════════════════════════════════╪═════════════╡
+│[{"T":1,"Degree":1,"Scalar":-3.0},{"T":1,"Degree":0,"Scalar":15.0},{"T│["1","2","4"]│
+│":1,"Degree":2,"Scalar":0.5},{"T":1,"Degree":1,"Scalar":-2.5},{"T":1,"│             │
+│Degree":1,"Scalar":-2.5},{"T":1,"Degree":0,"Scalar":10.0},{"T":1,"Degr│             │
+│ee":2,"Scalar":0.5},{"T":1,"Degree":1,"Scalar":-2.0},{"T":1,"Degree":-│             │
+│1,"Scalar":2.5},{"T":2,"Degree":1,"Scalar":-3.5},{"T":2,"Degree":0,"Sc│             │
+│alar":21.0},{"T":2,"Degree":2,"Scalar":0.5},{"T":2,"Degree":1,"Scalar"│             │
+│:-3.0},{"T":4,"Degree":1,"Scalar":-4.0},{"T":4,"Degree":0,"Scalar":28.│             │
+│0},{"T":4,"Degree":2,"Scalar":0.5},{"T":4,"Degree":1,"Scalar":-3.5}]  │             │
+└──────────────────────────────────────────────────────────────────────┴─────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,collect(distinct toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return argumentFactors,tS
+
+
+╒══════════════════════════════════════════════════════════════════════╤═════════════╕
+│"argumentFactors"                                                     │"tS"         │
+╞══════════════════════════════════════════════════════════════════════╪═════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│["1","2","4"]│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│             │
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│             │
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│             │
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│             │
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │             │
+└──────────────────────────────────────────────────────────────────────┴─────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,collect(toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return argumentFactors,tS
+
+╒══════════════════════════════════════════════════════════════════════╤═════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │"tS"                                                                 │
+╞══════════════════════════════════════════════════════════════════════╪═════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│["1","1","1","1","1","1","1","1","1","2","2","2","2","4","4","4","4"]│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│                                                                     │
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│                                                                     │
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│                                                                     │
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│                                                                     │
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │                                                                     │
+└──────────────────────────────────────────────────────────────────────┴─────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,collect(toString(t.twoSeq)) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate),(tt:TwoSeqFactor)<-[]-(ii) WHERE ee.Value in tS
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return argumentFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,collect(t) as tS 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,tS
+return argumentFactors
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,t 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors,t
+return argumentFactors,t
+
+
+╒══════════════════════════════════════════════════════════════════════╤════════════╕
+│"argumentFactors"                                                     │"t"         │
+╞══════════════════════════════════════════════════════════════════════╪════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│{"twoSeq":1}│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│            │
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│            │
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│            │
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│            │
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │            │
+├──────────────────────────────────────────────────────────────────────┼────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│{"twoSeq":2}│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│            │
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│            │
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│            │
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│            │
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │            │
+├──────────────────────────────────────────────────────────────────────┼────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│{"twoSeq":4}│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│            │
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│            │
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│            │
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│            │
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │            │
+└──────────────────────────────────────────────────────────────────────┴────────────┘
+
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors,t 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return argumentFactors
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH collect({T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2}) as targetFactors 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return argumentFactors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="4" 
+WITH {T:t.twoSeq,Degree:toInteger(v.Degree),Scalar:toFloat(v.Scalar)/2} as targetFactors 
+MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:"4"}),(tt:TwoSeqFactor)<-[]-(ii)
+WITH Collect({TT:tt.twoSeq,Degree:toInteger(vv.Degree),Scalar:CASE WHEN vv.Degree = "-1" THEN toFloat(vv.Scalar) ELSE toFloat(vv.Scalar)/2 END,RowC:ii.RowCounter} )      as argumentFactors  ,targetFactors
+return argumentFactors
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"argumentFactors"                                                     │
+╞══════════════════════════════════════════════════════════════════════╡
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"},{"TT":1,"Degree│
+│":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scalar":28.0,"RowC":│
+│"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT":1,"Degree":1,"S│
+│calar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3.5,"RowC":"0"},{│
+│"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"Degree":2,"Scalar│
+│":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"RowC":"0"},{"TT":1│
+│,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]                               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"},{"TT":1,"Degree│
+│":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scalar":28.0,"RowC":│
+│"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT":1,"Degree":1,"S│
+│calar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3.5,"RowC":"0"},{│
+│"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"Degree":2,"Scalar│
+│":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"RowC":"0"},{"TT":1│
+│,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]                               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+├──────────────────────────────────────────────────────────────────────┤
+│[{"TT":1,"Degree":1,"Scalar":-4.0,"RowC":"1"},{"TT":1,"Degree":0,"Scal│
+│ar":28.0,"RowC":"1"},{"TT":1,"Degree":2,"Scalar":0.5,"RowC":"1"},{"TT"│
+│:1,"Degree":1,"Scalar":-3.5,"RowC":"1"},{"TT":1,"Degree":1,"Scalar":-3│
+│.5,"RowC":"0"},{"TT":1,"Degree":0,"Scalar":21.0,"RowC":"0"},{"TT":1,"D│
+│egree":2,"Scalar":0.5,"RowC":"0"},{"TT":1,"Degree":1,"Scalar":-3.0,"Ro│
+│wC":"0"},{"TT":1,"Degree":-1,"Scalar":3.0,"RowC":"-1"}]               │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

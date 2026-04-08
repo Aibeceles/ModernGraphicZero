@@ -1,0 +1,394 @@
+{
+  "paragraphs": [
+    {
+      "text": "call gds.graph.create(\n    \u0027myGraph\u0027,\n    {\n        DNode: {\n        label: \u0027Dnode\u0027,\n        properties: [\u0027wNum\u0027,\u0027determined\u0027]\n    }\n    },{\n        zMap: {\n        type: \u0027zMap\u0027,\n        orientation: \u0027UNDIRECTED\u0027    \n        }\n    }\n    )",
+      "user": "anonymous",
+      "dateUpdated": "2021-05-12 10:46:43.955",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1616155014315_-813164995",
+      "id": "20210319-075654_842327298",
+      "dateCreated": "2021-03-19 07:56:54.315",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (d:Dnode)\nSET d.dd\u003dtofloat(d.d)\nRETURN count(d)",
+      "user": "anonymous",
+      "dateUpdated": "2021-03-19 10:55:13.894",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "count(d)": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "count(d)\n831\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1616164820728_-765512976",
+      "id": "20210319-104020_209225496",
+      "dateCreated": "2021-03-19 10:40:20.728",
+      "dateStarted": "2021-03-19 10:46:49.034",
+      "dateFinished": "2021-03-19 10:46:49.386",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.beta.graphSage.train(\u0027QGraph\u0027,{\n  modelName:\u0027QGraphModel\u0027,\n  aggregator:\u0027pool\u0027,\n  batchSize:512,\n  activationFunction:\u0027relu\u0027,\n  epochs:10,\n  sampleSizes:[25,10],\n  learningRate:0.0000001,\n  embeddingDimension:256,\n  featureProperties:dd})\nYIELD modelInfo\nRETURN modelInfo",
+      "user": "anonymous",
+      "dateUpdated": "2021-03-19 10:56:56.824",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1616164819170_-1589891364",
+      "id": "20210319-104019_1249893482",
+      "dateCreated": "2021-03-19 10:40:19.171",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "call gds.beta.model.list\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-03-19 11:01:15.301",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "modelInfo.modelName": "string",
+                      "modelInfo.modelType": "string",
+                      "trainConfig.maxIterations": "string",
+                      "trainConfig.negativeSampleWeight": "string",
+                      "trainConfig.searchDepth": "string",
+                      "trainConfig.aggregator": "string",
+                      "trainConfig.activationFunction": "string",
+                      "trainConfig.relationshipWeightProperty": "string",
+                      "trainConfig.learningRate": "string",
+                      "trainConfig.degreeAsProperty": "string",
+                      "trainConfig.concurrency": "string",
+                      "trainConfig.modelName": "string",
+                      "trainConfig.embeddingDimension": "string",
+                      "trainConfig.nodeLabels": "string",
+                      "trainConfig.sudo": "string",
+                      "trainConfig.sampleSizes": "string",
+                      "trainConfig.relationshipTypes": "string",
+                      "trainConfig.batchSize": "string",
+                      "trainConfig.featureProperties": "string",
+                      "trainConfig.epochs": "string",
+                      "trainConfig.tolerance": "string",
+                      "graphSchema.nodes.DNode.dd": "string",
+                      "loaded": "string",
+                      "stored": "string",
+                      "creationTime": "string",
+                      "shared": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "modelInfo.modelName\tmodelInfo.modelType\ttrainConfig.maxIterations\ttrainConfig.negativeSampleWeight\ttrainConfig.searchDepth\ttrainConfig.aggregator\ttrainConfig.activationFunction\ttrainConfig.relationshipWeightProperty\ttrainConfig.learningRate\ttrainConfig.degreeAsProperty\ttrainConfig.concurrency\ttrainConfig.modelName\ttrainConfig.embeddingDimension\ttrainConfig.nodeLabels\ttrainConfig.sudo\ttrainConfig.sampleSizes\ttrainConfig.relationshipTypes\ttrainConfig.batchSize\ttrainConfig.featureProperties\ttrainConfig.epochs\ttrainConfig.tolerance\tgraphSchema.nodes.DNode.dd\tloaded\tstored\tcreationTime\tshared\nQGraphModel\tgraphSage\t10\t20\t5\tPOOL\tRELU\t\t1.0E-7\tfalse\t4\tQGraphModel\t256\t[\"*\"]\tfalse\t[25,10]\t[\"*\"]\t512\t[\"dd\"]\t10\t1.0E-4\tFloat (DefaultValue(NaN), PERSISTENT)\tTRUE\tFALSE\t2021-03-19T10:58:17.600984300-04:00[America/New_York]\tFALSE\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1616164818765_680750266",
+      "id": "20210319-104018_1984583588",
+      "dateCreated": "2021-03-19 10:40:18.765",
+      "dateStarted": "2021-03-19 11:00:54.128",
+      "dateFinished": "2021-03-19 11:00:54.210",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.graph.create(\u0027test\u0027,\u0027Test\u0027,         // did not run this\n  {INTERACTS:{orientation:\u0027UNDIRECTED\u0027}},\n  {nodeProperties:[\u0027dd\u0027]}) \nYIELD graphName, nodeCount, relationshipCount\nRETURN graphName, nodeCount, relationshipCount",
+      "user": "anonymous",
+      "dateUpdated": "2021-03-19 11:23:52.710",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1616166946065_-1483410005",
+      "id": "20210319-111546_1583084277",
+      "dateCreated": "2021-03-19 11:15:46.065",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "CALL gds.beta.graphSage.stream(\u0027QGraph\u0027, {modelName:\u0027QGraphModel\u0027})\nYIELD nodeId, dd\nRETURN gds.util.asNode(nodeId).class as class, dd as features",
+      "user": "anonymous",
+      "dateUpdated": "2021-03-19 11:12:42.451",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1616166051045_-807592510",
+      "id": "20210319-110051_1934139140",
+      "dateCreated": "2021-03-19 11:00:51.046",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1616166050630_-1363457677",
+      "id": "20210319-110050_18950600",
+      "dateCreated": "2021-03-19 11:00:50.630",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1619183401767_1874988388",
+      "id": "20210423-091001_536108019",
+      "dateCreated": "2021-04-23 09:10:01.767",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Train/Test Split ",
+      "text": "MATCH (c:CreatedBy {wNum:5})\u003c-[r:CreatedBye]-(d) - [:zMap*1..2] -\u003e (dd) RETURN d,dd      //- real dicey memory wise.",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-26 11:04:43.376",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1619183405484_-452677854",
+      "id": "20210423-091005_1625278893",
+      "dateCreated": "2021-04-23 09:10:05.484",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "MATCH (c:CreatedBy {wNum:4}) WITH c.pArray as pArrayS,c\nWITH split(substring(pArrayS, 1, size(pArrayS)-2), \u0027,\u0027) as pArrayN,c\nWITH [str in pArrayN | toInteger(trim(str))] as pArrayNN,c\n//WITH CASE WHEN pArrayNN[size(pArrayNN)-2]\u003d4 THEN c End as cc\nWITH CASE WHEN pArrayNN[size(pArrayNN)-2] IN [1, 2, 3] THEN c End as cc\nWITH cc WHERE cc IS NOT null \n//return cc\nMATCH (cc:CreatedBy)\u003c-[r:CreatedBye]-(d) RETURN d\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-26 11:02:40.230",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1619183409169_1551742041",
+      "id": "20210423-091009_662967105",
+      "dateCreated": "2021-04-23 09:10:09.169",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1619183410376_-1781224987",
+      "id": "20210423-091010_337718336",
+      "dateCreated": "2021-04-23 09:10:10.376",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1619449330345_1398845375",
+      "id": "20210426-110210_1064051024",
+      "dateCreated": "2021-04-26 11:02:10.345",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1619449333249_723136647",
+      "id": "20210426-110213_1251257686",
+      "dateCreated": "2021-04-26 11:02:13.249",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "GraphSageScripts",
+  "id": "2G2TDS9PB",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

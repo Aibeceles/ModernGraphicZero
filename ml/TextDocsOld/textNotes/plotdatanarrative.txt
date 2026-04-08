@@ -1,0 +1,12 @@
+CJoinResult gets the refactor.   
+has polyEvaluate()().  It is partially defined with the 
+crossjoin of the two p's terms.  It is then argumented 
+with x,y calse class for result computation.  
+
+seems easy to use argumentDF loop inside cjoinResult.main.
+
+
+
+
+
+   

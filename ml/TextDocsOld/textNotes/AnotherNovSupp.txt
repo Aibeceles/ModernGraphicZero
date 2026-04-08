@@ -1,0 +1,98 @@
+http://mathrefresher.blogspot.com/2009/01/greatest-common-divisor-of-polynomial.html
+
+Lemma 1:
+
+Let a be a root of a polynomial P.
+Then:
+a is a multiple root of P if and only if a is also a root of P' (the first derivative of P)
+
+
+Corollary 1.1:
+
+If a polynomial has only simple roots
+Then:
+Its first derivative does not share any of those roots
+
+Lemma 2:
+
+If a polynomial P has only simple roots
+
+Then P,P' are relatively prime.
+
+https://math.stackexchange.com/questions/3499645/why-does-a-polynomial-with-real-simple-roots-change-its-sign-between-its-roots
+
+https://lara.epfl.ch/w/_media/sar10/sturms_proof.pdf
+
+Important to qualify the twoPolynomioals and their higher degreed analog are relativly prime to their
+respective derivitives.
+
+
+https://en.wikipedia.org/wiki/Descartes%27_rule_of_signs
+
+The rule states that if the nonzero terms of a single-variable polynomial with real coefficients 
+are ordered by descending variable exponent, then the number of positive roots of the polynomial 
+is either equal to the number of sign changes between consecutive (nonzero) coefficients, or is less 
+than it by an even number. A root of multiplicity k is counted as k roots. 
+
+
+https://en.wikipedia.org/wiki/Sturm%27s_theorem    can locate interval.
+
+
+https://mathsci2.appstate.edu/~cookwj/sage/algebra/Sturms_method.html
+
+
+sturm sequence calculator
+
+http://web.math.ucsb.edu/~padraic/mathcamp_2013/root_find_alg/Mathcamp_2013_Root-Finding_Algorithms_Day_2.pdf
+
+
+Root-Finding Algorithms Instructor: Padraic Bartlett
+
+1 Sturm’s Theorem
+In order to state Sturm’s theorem, we need to make some definitions.
+1.1 Definitions and Notation
+Definition. A Sturm chain is a finite sequence of polynomials p0(x),p1(x),...pm(x) of
+decreasing degree with the following properties:
+1. p0(x) is square-free: i.e. it has no factors of the form (q(x))2, for any polynomial q(x).
+2. If a is a root of p(x), then the sign of p1(a) is the same as the sign of p′(a), and in
+particular is nonzero.
+3. If a is a root of pi(x) for some i with 0 < i < m, then both pi−1(a),pi+1(a) are
+nonzero. Moreover, the sign of pi−1(a) is the opposite of the sign of pi+1(a).
+4. pm(x)’s sign is constant and nonzero for all x.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

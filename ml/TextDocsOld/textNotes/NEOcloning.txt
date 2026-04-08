@@ -1,0 +1,94 @@
+
+
+https://neo4j.com/labs/apoc/4.4/graph-updates/graph-refactoring/clone-subgraph/
+
+
+clone a node because it no longer has graph relationships.
+
+virtual relations
+
+clone paths because control modularity.  - only node links in path are cloned and graph becomes isloated.
+
+
+
+
+
+apoc.create.clonePathsToVirtual
+
+apoc.create.clonePathsToVirtual(paths :: LIST? OF PATH?) :: (path :: PATH?)
+
+
+
+apoc.create.virtualPath
+
+apoc.create.virtualPath(labelsN :: LIST? OF STRING?, n :: MAP?, relType :: STRING?, props :: MAP?, labelsM :: LIST? OF STRING?, m :: MAP?) :: (from :: NODE?, rel :: RELATIONSHIP?, to :: NODE?)
+
+
+
+
+
+    @Procedure
+    @Description("apoc.create.clonePathToVirtual")
+    public Stream<PathResult> clonePathToVirtual(@Name("path") Path path) {
+        return Stream.of(createVirtualPath(path));
+    }
+
+
+    private PathResult createVirtualPath(Path path) {
+        final Iterable<Relationship> relationships = path.relationships();
+        final Node first = path.startNode();
+        VirtualPath virtualPath = new VirtualPath(new VirtualNode(first, Iterables.asList(first.getPropertyKeys())));
+        for (Relationship rel : relationships) {
+            VirtualNode start = VirtualNode.from(rel.getStartNode());
+            VirtualNode end = VirtualNode.from(rel.getEndNode());
+            virtualPath.addRel(VirtualRelationship.from(start, end, rel));
+        }
+        return new PathResult(virtualPath);
+    }
+
+
+
+
+
+MATCH p=(u:User {name:"NAME 4"})-[*2]->(u:User {name:"NAME 19"}) 
+
+
+with apoc.create.vNode(["A"],{session:1,interactionTime:2,pages:3} as a
+return a
+
+
+
+apoc.create.virtualPath(labelsN :: LIST? OF STRING?, n :: MAP?, relType :: STRING?, props :: MAP?, labelsM :: LIST? OF STRING?, m :: MAP?) :: (from :: NODE?, rel :: RELATIONSHIP?, to :: NODE?)
+
+
+
+
+WITH apoc.create.virtualPath(["a"],{p1:1,p2:2},["r"],{r1:1},["b"],{p1:1,p2:2}) as p
+RETURN p
+
+
+
+
+RETURN apoc.create.vNode(["A"],{session:1,interactionTime:2,pages:3}) AS node
+╒═══════════════════════════════════════════╕
+│"node"                                     │
+╞═══════════════════════════════════════════╡
+│{"pages":3,"interactionTime":2,"session":1}│
+└───────────────────────────────────────────┘
+
+
+RETURN  apoc.create.virtualPath(["a"],{p1:1,p2:2},'knows',{r1:1},["b"],{p1:1,p2:2}) 
+Unknown function 'apoc.create.virtualPath' (line 1, column 9 (offset: 8))
+
+
+CREATE p=(:A)-[:r]->(:B)
+RETURN p
+apoc.create.clonePathToVirtual(path :: PATH?) 
+
+
+
+
+
+
+
+

@@ -1,0 +1,3304 @@
+﻿
+profile
+match   (d:Dnode {vmResult:"[0.0, 4.0, -12.0, 8.0, -0.0]"}),(e:Evaluate {Value:0}), p=shortestPath((d)-[*1..4]->(e))
+return p
+
+profile
+match   (d:Dnode {vmResult:"[0.0, 120.0, -0.0]"}),(e:Evaluate), p=(d)-[*1..5]->(e)
+return p
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate {n:"4"}) return d
+
+match (c:CreatedBy {resultId:20, wNum:4})
+with c
+match (d:Dnode)-[:CreatedBye]->(c)
+with d
+match p=(d)-[*5]->(:Evaluate)
+return p
+ 
+match (c:CreatedBy {resultId:123, wNum:0})
+with c
+match (d:Dnode)-[:CreatedBye]->(c)
+return d
+
+match (d:Dnode)-[:CreatedBye]->(c)
+with d
+match p=(d)-[:zMap*4..5]->(dd)
+with dd 
+match p=(dd)-[:Envalues]->()
+return nodes(p)
+
+match (c:CreatedBy {resultId:124, wNum:4})
+with c
+match (d:Dnode)-[:CreatedBye]->(c)
+with d
+match p=(d)-[:zMap*4..5]->(dd)
+with d,dd 
+match p=(dd)-[:Envalues]->(ddd)
+with d,ddd
+match pp=(d)-[*]->(ddd)
+return nodes(pp)
+
+Works:
+
+match (c:CreatedBy {resultId:124, wNum:4})
+with c
+match (d:Dnode)-[:CreatedBye]->(c)
+with d
+match p=(d)-[:zMap*4..5]->(dd)
+with d,dd 
+match p=(dd)-[:Envalues]->(ddd)
+with d,ddd
+match pp=(d)-[*]->(ddd)
+return nodes(pp)
+
+match (c:CreatedBy {resultId:124, wNum:4})
+with c
+match (d:Dnode)-[:CreatedBye]->(c)
+with d
+match p=(d)-[:zMap*4..5]->(dd)
+with dd 
+match p=(dd)-[:Envalues]->()
+return nodes(p)
+
+Workes:
+
+match (c:CreatedBy {resultId:124, wNum:4})
+with c
+match (d:Dnode)-[:CreatedBye]->(c)
+with d
+match p=(d)-[:zMap*4..5]->(dd)
+with d,dd 
+match p=(dd)-[:Envalues]->(ddd)
+with d,ddd
+match pp=(d)-[*]->(ddd:Evaluate)
+where ddd.Value in ["2","8"]
+return nodes(pp)
+//with ddd, collect(distinct d) as roots
+//with collect(roots) as root
+//return filter(x in root[0] where all (y in root[1..] where x in y)) as res
+
+
+match (c:CreatedBy) detach delete c
+CALL apoc.export.csv.query("match (e:Evaluate) return e", "evaluates0607.csv", {})
+CALL apoc.export.csv.query("match (e:Evaluate) return e.Value,e.d,e.n,e.nBinary", "evaluates0608.csv", {})
+https://neo4j.com/docs/operations-manual/current/monitoring/logging/query-logging/
+
+
+
+So, developer manual tells the return object in terms of a java object or json object.
+
+what is the return object type of a path????
+
+
+3.4.4.5. nodes()
+
+nodes() returns a list containing all the nodes in a path.
+
+Syntax: nodes(path)
+
+Returns:
+
+A list containing Node elements.
+
+Arguments:
+Name 	Description
+
+path
+	
+
+An expression that returns a path.
+
+Considerations:
+
+nodes(null) returns null.
+
+Query. 
+
+MATCH p =(a)-->(b)-->(c)
+WHERE a.name = 'Alice' AND c.name = 'Eskil'
+RETURN nodes(p)
+
+A list containing all the nodes in the path p is returned.
+Ju
+return nodes
+return relationships
+return paths
+
+as in the cypher variable used in the clause.
+
+so, cast the resultset to objects and see what happens
+with .toString.
+
+According to:
+https://neo4j.com/docs/developer-manual/current/drivers/cypher-values/
+it looks like modern zaddb connectivity exists.
+
+as in from day one when I learned about $parameter and thought it is only a 
+json thing, really it is also imlemented in the Transaction api.  In java.
+
+
+
+the counting number vs the algebraic number in terms of 
+substituting its twoPolynomial.coset representation. 
+
+
+9/20
+
+   Big confusion with node/reference labeling.  Got a created relation to ping.
+   Got two more relations to create and ping.
+   The relation pinged without querring with node lable.
+
+   .matchIndexEvaluate: [node<1510>, node<139>]
+
+
+yippee!!!! reading from the neo4jBrowser.
+So, it was said each each index defines a node.  
+But a particular node definition seems to indexed by multiple IndexNodes.  Didn't know that.
+
+IndexNode should relate to twoSeq. Not vertex.
+have to detach delete back to rollback point.
+refactor the TwoSeqFactor relation per above.
+
+MATCH (n { name: 'Andy' })-[r:KNOWS]->()
+DELETE r
+
+
+The projection     indexNode,vertex.
+                   index,twoSeq
+
+The answer:
+Write cypher like july's.  
+
+Only want vertex if it's TwoSeqFactor is positive.   
+So, need Vertex, not NodeIndex to point to TwoSeqFactor. 
+
+But when NodeIndex points to TwoSeqFactor, it becomes connected to other nodes through
+TwoSeqFactor.
+
+but now back to the problem of a vertex pointing to another n's vertex's twoSeq.
+
+9/21 
+
+    don't know the correct twoSeq.
+    So, IndexNode points to the correct vertex set.
+    But vertex points to ambiguous twoSeq (because the vertex can be in another index)
+    Therfore, Make twoSeq a property of IndexNode?
+    Yep, and keep the TwoSeqFactor becauce it demonstrates relations to other vertex's 
+    of other indexes.
+
+    A Vertex node has its TwoSeqFactor common to another VertexNode of a different 
+    IndexNode relating to the prior VertexNode. 
+
+    A single VertexNode is common to two IndexNodes. 
+
+    How about a VertexNode points to only one positive TwoSeqFactor.
+
+   Perform a twoPolynomial style arithmetic in cypher.  But a critical node is missing.
+   How else to perform the arithmetic.
+
+   squirril caught moose in beartrap
+
+
+
+   9/22
+
+    from yesterday node control log from twoPolynomial posting to zaddb, the merge 
+    does not post duplicates as expected.  So, the expected 8 VertexNodes may not all be
+    represented.  Further, VertexNodes can be shared among diferent IndexNodes of same 
+    indexNode.N.  Presumably, they may also share among indexNodes of different N.
+
+
+9/23
+
+    Delete negative TwoSeqFactor nodes from zaddb.
+    To be done with browser but should be in twoPolynomial.
+
+    So, a VertexNode exists but the relation is not be built. 
+
+    make a straite line of vertex with relations from IndexNode to TwoSeqFactor and size
+    of vertex browser spheres.  See newFig. 
+
+   u-530
+
+9/24
+
+
+  Last weekend wrapup:  
+      . Want to exclude TwoSeqFactor nodes with negative TwoSeq.
+        But a problem is can't id which nods are not part of arithmetic.
+      . Values are added implies common vertex's a multiplication vector.
+      . Vector in the sense that TwoSeqFactor is also a multiplication vector.
+      . a VertexNode common to a set of IndexNodes implies a set of relations
+        to TwoSeqFactor an is ambigous which to use.  Come to thing its not a problem.
+        need both multiplications for the arithmetic anyway.  Appears another generality
+        of the graph.
+
+Moving forward, fig09242018 suggests of cyphering up with the requisite Evaluate.Value
+nodes.  
+
+       .Want a map projection of VertexNodes.vertex, TwoSeqFactor.TwoSeq.
+        The TwoSeqFactor.TwoSeq values, as there may be many to one for a node, 
+        need to be wrapped in a list. 
+       .Want something traversable. 
+
+Looks like for the sake of excercise, the former has merit.
+Refactor the IndexNode,VertexNode relation only exists for vertex's in the sum.
+
+The pressing concern of expanding TwoPolynomial functionality to multiply out to
+higher dimensions makes for more interesting nodes on zaddb.
+
+9/26
+
+    Create nodes for any vertex with a negative twoSeq, but don't have the appropriate
+    twoSeq to create TwoSeqFactor, or relations between TwoSeqFactor,IndexNode.
+
+    And remember, back to TwoSeqFactor is pointed at from IndexNode.
+
+9/27
+
+   Intend some refactoring of .RowBuilder.  Need appropriate twoSeq's and vertex's.
+   That is, the first set of vertex with the second set's twoSeq.
+   
+   .ZaddbTable needs refactoring: back to having TwoSeqFactor being pointed from 
+   IndexNode.
+
+   Looks like rowBuilder.loaddb.decrementSeq it the target.
+   It is a method parameter and does indeed multiply thisScalar.
+
+   Might as mention something about .argument: when 1, the above mentioned 
+   multiplication occurs.
+
+   .sequenceN manages decrementSequence.  nRow.getRowCounter is the reference varaible.
+    in the case of the .comSum method call it is the decrementSequence argument.
+    in the case of .loadDBB, termsList.getTwoSequence is the decrement Sequence argument.
+
+    termsList.getTwoSequence should be a class
+    field.  it dosn't seem to be reset between
+    .sequenceN .combSum and loadDBB calls 
+
+    In .loadDBB simply condition dbBean being set.
+    The database bean is reporting the correct twoSeqDB.
+
+    Now for only the first set of vertex's (the ones
+    Not multiplied by twoSeq).
+
+    And finally, .createTwoSeqValue should be between IndexNode and TwoSeqFactor
+    
+    Ahh the ontology of decSequence.  It is a multiplication argument assured.  But
+    has two flavors.  First a negative integer for multiplying through the constant
+    term.  Second the twoSeq, row multiplier.  
+    So, first attemt to build a bean is in error.
+    Graph looks ok.
+
+    Time to start asking question, does 4 + 4 = ????  is 4^2 16????    
+    Well the formentioned becomes matter in gleened results zaddb currently provides.
+
+       A narrative of fig09272018:   Evaluate in S=[8,16] expanded through IndexNode to 
+    VertexNode,TwoSeqFactor.  Thus a transversal will output quadratic for each.
+    It is observed  in this transversal the latter member of S contains all the vertex's
+    of the former but may compose through a greater twoSeq scalar. The latter also has 
+    unique vertex's.  
+       A conjugate expression of the lesser in S is apparent.  Want to include in the 
+    compostion of the conjugate a subtraction of respective twoSeq's of all common 
+    vertexe's as well as unique vertex's in the greater of S.  The question begs:
+    with the sets of conjugates, can this process, algorythm, be repeated and repeated?
+    Cypher shall see.  
+        
+     Houston, we have the end of September lab(see above). Program with the  traversal 
+     api vs program a traditional Cypher querry. But still the question of working with
+     the algabraic integers know as TwoSeqFactor nodes and what the change in dimension
+     looks like.  
+
+     Another piece of the puzzle is a sharing of VertexNodes amongs IndexNodes of the 
+     same species.  Here also is a representative subtraction. 
+
+
+Works
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH p=(i)-[:VertexIndexedBy]->(v:VertexNode)
+WITH p,i MATCH pp=(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN nodes(pp),nodes(p)                                          //browser connects the output
+ 
+Works
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH (i)-[:VertexIndexedBy]->(v:VertexNode),(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN {twoSeq:t, vertexs:collect(v)}                            // strictly interested in table output; a twoSeq,list of vertex resultSet. 
+                                                                 // collect(v) can be aliased in the WITH clause.
+
+
+Works                                                             // result set composed of pairs of VertexNode,TwoSeqFactor  
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH (i)-[:VertexIndexedBy]->(v:VertexNode),(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN v,t
+
+Works:
+
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH (i)-[:VertexIndexedBy]->(v:VertexNode),(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN collect([v.Vertex,t.twoSeq])
+
+remember to halve each vertex result and add the N = Evaluate.Value.
+
+For each nMax n, need the graph of Evaluate.Value browser cyphered into zaddb.
+
+Need  [v.Vertex,t.twoSeq] map for two Evaluate.Value's. 
+
+Will iterate the product of the two maps.  with same v.Vertex subtract twoSeq. 
+ Copy to resultSet 
+if unique v.Vertex, copy to resultSet.
+
+Is this a job for browser cypher or java resultSet methods?
+One thing for sure, 
+The latest cypher "Works" needs some refactoring,  
+Want a seperate match for:
+                              . VertexNodes with relations from both Evaluate maps.
+                              . VertexNodes from the former of the two evaluates.
+                              . VertexNodes from the latter of the two evaluates.
+
+
+Looks a bit murkier.  
+
+MATCH p=(v:VertexNode)<-[]-(i:IndexedBy {N:"3"})-[]->(e:Evaluate) 
+MATCH pppp=(t:TwoSeqFactor)<-[]-(i)
+
+e.Value,i.N,t
+
+
+MATCH pp= (:VertexNode)<-[]-(ii:IndexedBy {N:"2"})-[]->(:Evaluate)
+MATCH ppp=(:TwoSeqFactor)<-[]-(ii:IndexedBy {N:"2"})
+
+
+return nodes(p),nodes(pp),nodes(ppp),nodes(pppp)
+
+each of these matches are a piece of the return map.
+
+match p= (v:VertexNode)<-[]-(i:IndexedBy {N:"2"})-[]->(e:Evaluate)
+With p,v,i,e
+match ppp=(t:TwoSeqFactor)<-[]-(i)
+return collect([v.Vertex,i.RowCounter,e.Value,t.twoSeq])
+
+match p= (v:VertexNode)<-[]-(i:IndexedBy {N:"2"})-[]->(e:Evaluate)
+With p,v,i,e
+match ppp=(t:TwoSeqFactor)<-[]-(i)
+With collect([v.Vertex,i.RowCounter,e.Value,t.twoSeq]) as factors
+match pp= (vv:VertexNode)<-[]-(ii:IndexedBy {N:"3"})-[]->(ee:Evaluate)
+With pp,vv,ii,ee,factors
+match ppp=(tt:TwoSeqFactor)<-[]-(ii)
+With factors + collect([vv.Vertex,ii.RowCounter,ee.Value,tt.twoSeq]) as allfactors
+return allfactors
+
+
+MATCH (i)-[]->(:Evaluate {Value:"8"})
+WITH i  MATCH (i)-[:VertexIndexedBy]->(v:VertexNode),(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN collect([v.Vertex,t.twoSeq])
+
+Something like:
+For each vertex in i,ii:  list of [IndexNodes,TwoSeq,Evaluate.Value] 
+
+MATCH p=(:VertexNode)<-[]-(i:IndexedBy {N:"3"})-[]->(:Evaluate) 
+With p,i
+match pp= (:VertexNode)<-[]-(ii:IndexedBy {N:"2"})-[]->(:Evaluate)
+With p,i,pp,ii
+match ppp=(:TwoSeqFactor)<-[]-(ii:IndexedBy {N:"2"})
+With p,i,pp,ii,ppp
+match pppp=(:TwoSeqFactor)<-[]-(i:IndexedBy {N:"3"})
+return nodes(p),nodes(pp),nodes(ppp),nodes(pppp)
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+Return {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} //as factors,v,i
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"{TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex}"                 │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"TwoSeq":[{"TwoSeq":1},{"TwoSeq":1}],"Vertex":"0 42 0 0 0"}          │
+├──────────────────────────────────────────────────────────────────────┤
+│{"TwoSeq":[{"TwoSeq":1},{"TwoSeq":1},{"TwoSeq":1},{"TwoSeq":2}],"Verte│
+│x":"1 -7 1 0 0"}                                                      │
+├──────────────────────────────────────────────────────────────────────┤
+│{"TwoSeq":[{"TwoSeq":1},{"TwoSeq":2}],"Vertex":"0 56 0 0 0"}          │
+├──────────────────────────────────────────────────────────────────────┤
+│
+
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i
+WITH collect(factors.TwoSeq) as fact,v,i.N as N
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N
+With [v.Vertex,TotalTseq,N] as output
+with collect(output) as outputlist
+return outputlist, size(outputlist)  // {outputs:outputlist}
+
+╒══════════════════════════════════════════════════════════════════════╤══════════════════╕
+│"outputlist"                                                          │"size(outputlist)"│
+╞══════════════════════════════════════════════════════════════════════╪══════════════════╡
+│[["0 56 0 0 0",1,"2"],["1 -6 1 0 0",1,"2"],["1 1 2 0 0",4,"3"],["1 -8 │14                │
+│1 0 0",2,"3"],["0 30 0 0 0",1,"3"],["1 1 2 0 0",2,"2"],["1 -7 1 0 0",3│                  │
+│,"3"],["1 -5 1 0 0",1,"3"],["0 42 0 0 0",1,"3"],["1 -6 1 0 0",2,"3"],[│                  │
+│"0 56 0 0 0",2,"3"],["1 -8 1 0 0",1,"2"],["1 -7 1 0 0",2,"2"],["0 42 0│                  │
+│ 0 0",1,"2"]]                                                         │                  │
+└──────────────────────────────────────────────────────────────────────┴──────────────────┘
+
+
+
+From the above, need, after lunch, the appropriate map projection.
+
+10/3 Browser cypher!!!
+    
+
+Quite well went the morning lab.
+
+Have the cypher for: 
+                      .Presenting the graph of two EvaluateNode s.
+                      .Collecting graph attributs necessary for the binary operator as
+                       two lists.
+                                           .
+Maybe the list goes through a refactor.  Instead of twoSeq in the list, repeat vertex
+twoSeq number of times.
+Also, maybe also some of the nodes go through a refactor.  Change relevant attributs
+from strings to arithmetic types.
+
+And the big maybe, process the lists from a jave resultSet in TwoPolynomial, regarded
+as easy, or Cypher!!!.
+But the cypher end of it is currently murkey.
+So a roundup of the suspision on procedure.  That is the list operations that
+would result in the binary operation.
+So far, know about filter, + (the overloaded concatinated functionality).
+
+How the lists argument a new zaddb graph:
+
+
+    match vertex in list one to vertex in list two. 
+    if in list 1 and in list 2, in list 1 and ~in list2, ~in list 1 and in list 2 
+    create zaddb nodes from resultSet pointing to Evaluate.Value'.
+
+MATCH p=(i:IndexedBy {N:"3"})-[]->(:Evaluate) 
+With p match pp=(i:IndexedBy {N:"2"})-[]->(:Evaluate) 
+return nodes(p),nodes(pp)
+
+The above is totally the starting point.  
+MATCH p=(:VertexNode)<-[]-(i:IndexedBy {N:"3"})-[]->(:Evaluate) 
+With p match pp= (:VertexNode)<-[]-(i:IndexedBy {N:"2"})-[]->(:Evaluate) 
+return nodes(p),nodes(pp)
+
+match p= (v:VertexNode)<-[]-(i:IndexedBy {N:"2"})-[]->(e:Evaluate)
+With p,v,i,e
+match ppp=(t:TwoSeqFactor)<-[]-(i)
+With collect([v.Vertex,i.RowCounter,e.Value,t.twoSeq]) as factors
+match pp= (vv:VertexNode)<-[]-(ii:IndexedBy {N:"3"})-[]->(ee:Evaluate)
+With pp,vv,ii,ee,factors
+match ppp=(tt:TwoSeqFactor)<-[]-(ii)
+With factors + collect([vv.Vertex,ii.RowCounter,ee.Value,tt.twoSeq]) as allfactors
+return allfactors
+
+MATCH p=(:VertexNode)<-[]-(i:IndexedBy {N:"3"})-[]->(:Evaluate) 
+With p,i
+match pp= (:VertexNode)<-[]-(ii:IndexedBy {N:"2"})-[]->(:Evaluate)
+With p,i,pp,ii
+match ppp=(:TwoSeqFactor)<-[]-(ii:IndexedBy {N:"2"})
+With p,i,pp,ii,ppp
+match pppp=(:TwoSeqFactor)<-[]-(i:IndexedBy {N:"3"})
+return nodes(p),nodes(pp),nodes(ppp),nodes(pppp)
+
+
+MATCH p=(:VertexNode)<-[]-(i:IndexedBy {N:"3"})-[]->(:Evaluate) With p match pp= (:VertexNode)<-[]-(i:IndexedBy {N:"2"})-[]->(:Evaluate)   return nodes(p),nodes(pp)
+
+
+MATCH p=(i:IndexedBy {N:"3"})-[]->(:Evaluate) With p match pp=(i:IndexedBy {N:"2"})-[]->(:Evaluate)   return nodes(p),nodes(pp)
+
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH p=(i)-[:VertexIndexedBy]->(v:VertexNode)
+WITH p,i MATCH pp=(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN nodes(pp),nodes(p)
+
+MATCH (i)-[]->(:Evaluate {Value:"8"})
+WITH i  MATCH (i)-[:VertexIndexedBy]->(v:VertexNode),(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN collect([v.Vertex,t.twoSeq])
+
+
+MATCH (i)-[]->(:Evaluate {Value:"8"})
+WITH i  MATCH (i)-[:VertexIndexedBy]->(v:VertexNode),(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN collect([v.Vertex,t.twoSeq])
+
+
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH (i)-[:VertexIndexedBy]->(v:VertexNode),(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN collect([v.Vertex,t.twoSeq])
+
+
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH p=(i)-[:VertexIndexedBy]->(v:VertexNode)
+WITH p,i MATCH pp=(i)-[:TwoFactor]->(t:TwoSeqFactor)
+RETURN nodes(pp),nodes(p)
+
+
+MATCH (i)-[]->(:Evaluate {Value:"16"})
+WITH i  MATCH p=(i)-[:VertexIndexedBy]->(v:VertexNode)
+RETURN nodes(p)
+
+MATCH p=(i:IndexedBy {N:"3"})-[]->(:Evaluate) With p match pp=(i:IndexedBy {N:"2"})-[]->(:Evaluate) With p,pp match ppp=(i:IndexedBy {N:"4"})-[]->(:Evaluate)  return nodes(p),nodes(pp),nodes(ppp)
+
+MATCH p=(i:IndexedBy {N:"3"})-[]->(:Evaluate) With p match pp=(i:IndexedBy {N:"2"})-[]->(:Evaluate)   return nodes(p),nodes(pp)
+
+
+From the RETURN, want the projection of VertexNode, TwoSeqFactor.
+
+MATCH (u:User)-[:ASKED]->(q:Question)-[:TAGGED]->(t:Tag),
+      (q)<-[:ANSWERS]-(a:Answer)<-[:PROVIDED]-(u2:User)
+
+RETURN { title: q.title, author: u.name, tags: collect(t.name),
+       answers: collect({text: a.text, author: u2.name})} as question
+
+
+MATCH (u:User)-[:ASKED]->(q:Question)-[:TAGGED]->(t:Tag),
+      (q)<-[:ANSWERS]-(a:Answer)<-[:PROVIDED]-(u2:User)
+
+RETURN q{ .title, author : u.name, tags: collect(t.name),
+       answers: collect( a {.text, author: u2.name})} as question
+
+
+10/15
+
+   Prior to this entry on the 15th, the last entry appears to be the 2nd.
+   But much has been done:  
+
+MATCH p=(:VertexNode)<-[]-(i:IndexedBy {N:"3"})-[]->(:Evaluate) 
+With p,i
+match pp= (:VertexNode)<-[]-(ii:IndexedBy {N:"2"})-[]->(:Evaluate)
+With p,i,pp,ii
+match ppp=(:TwoSeqFactor)<-[]-(ii:IndexedBy {N:"2"})
+With p,i,pp,ii,ppp
+match pppp=(:TwoSeqFactor)<-[]-(i:IndexedBy {N:"3"})
+return nodes(p),nodes(pp),nodes(ppp),nodes(pppp)
+
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="2"
+RETURN {TwoSeq:COLLECT({TwoSeq:t.twoSeq, N:i.N}),Vertex:v.Vertex} as factors
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"factors"                                                             │      //  N should be a seperate map field, not in the Collect.
+╞══════════════════════════════════════════════════════════════════════╡
+│{"TwoSeq":[{"TwoSeq":1,"N":"2"}],"Vertex":"0 42 0 0 0"}               │
+├──────────────────────────────────────────────────────────────────────┤
+│{"TwoSeq":[{"TwoSeq":1,"N":"2"},{"TwoSeq":1,"N":"2"}],"Vertex":"1 -7 1│
+│ 0 0"}                                                                │
+├──────────────────────────────────────────────────────────────────────┤
+│{"TwoSeq":[{"TwoSeq":1,"N":"2"}],"Vertex":"1 -6 1 0 0"}               │
+├──────────────────────────────────────────────────────────────────────┤
+│
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+Return {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} //as factors,v,i
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"{TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex}"                 │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"TwoSeq":[{"TwoSeq":1},{"TwoSeq":1}],"Vertex":"0 42 0 0 0"}          │
+├──────────────────────────────────────────────────────────────────────┤
+│{"TwoSeq":[{"TwoSeq":1},{"TwoSeq":1},{"TwoSeq":1},{"TwoSeq":2}],"Verte│   
+│x":"1 -7 1 0 0"}                                                      │
+├──────────────────────────────────────────────────────────────────────┤
+│{"TwoSeq":[{"TwoSeq":1},{"TwoSeq":2}],"Vertex":"0 56 0 0 0"}          │
+├──────────────────────────────────────────────────────────────────────┤
+│
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i     collect(v.Vertex) as vVertex
+WITH collect(factors.TwoSeq) as fact,v,i.N as N
+Unwind RANGE(0,SIZE(fact)-1) as ii                           
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output
+with collect(output) as outputlist,outputMap,output
+//return outputlist, size(outputlist)  //
+Return outputMap
+//Return {outputs:outputlist}
+//Return output
+
+╒═══════════════════════════════════════════╕
+│"outputMap"                                │       //  Maybe TwoSeq has the relation Vertex to TotalT,N
+╞═══════════════════════════════════════════╡
+│{"vVertex":"0 56 0 0 0","TotalT":1,"N":"2"}│       // ultumatly dont want totalT  definatly want list of Vertex so operand is xor type.
+├───────────────────────────────────────────┤       
+│{"vVertex":"1 -8 1 0 0","TotalT":1,"N":"2"}│       
+├───────────────────────────────────────────┤    // something like create the map Vertex       by matching a map pattern.
+│{"vVertex":"1 -7 1 0 0","TotalT":2,"N":"2"}│    //                             n,TotalT through Vertex.
+├───────────────────────────────────────────┤       something like for each N,vVertex     case N=evaluateA                                      
+│{"vVertex":"0 42 0 0 0","TotalT":1,"N":"2"}│                                                  N=evaluateB
+├───────────────────────────────────────────┤
+│{"vVertex":"1 -6 1 0 0","TotalT":1,"N":"2"}│    //   maybe i have to carry through some variables, as in replace return with mooore good cypher. 
+├───────────────────────────────────────────┤    // collect(factors.totalt   )
+│{"vVertex":"1 -8 1 0 0","TotalT":2,"N":"3"}│
+├───────────────────────────────────────────┤    //  unwind vVertex as vV
+│{"vVertex":"1 -7 1 0 0","TotalT":3,"N":"3"}│    //  with collect(outputMap.TotalT) as tT
+├───────────────────────────────────────────┤    //  with REDUCE(tTSum=0 ff IN tT |  tTSum+ff) as totalfTSum 
+│{"vVertex":"0 56 0 0 0","TotalT":2,"N":"3"}│    //    very  important refactor,  the vVertex  needs a reg expression inorder to flip the operator from +-
+                                                 //   or maintain the case as above.
+
+
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i
+With collect(v.Vertex) as vV,factors,v,i
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV
+with collect(output) as outputlist,outputMap,output,vV
+with DISTINCT vV as vVV, outputlist,outputMap,output
+with collect(outputMap.TotalT) as opMTT,vVV
+//Unwind RANGE(0,SIZE(output)-1) as iii
+//Unwind output[iii] as ts
+Return opMTT,vVV
+//Return outputMap
+
+
+╒═══════╤══════════════╕
+│"opMTT"│"vVV"         │
+╞═══════╪══════════════╡
+│[1,2]  │["0 56 0 0 0"]│
+├───────┼──────────────┤
+│[2,1]  │["1 -6 1 0 0"]│
+├───────┼──────────────┤
+│[1]    │["1 -5 1 0 0"]│
+├───────┼──────────────┤
+│[1]    │["0 30 0 0 0"]│
+├───────┼──────────────┤
+│[1,2]  │["1 -8 1 0 0"]│
+├───────┼──────────────┤
+│[4,2]  │["1 1 2 0 0"] │
+├───────┼──────────────┤
+│[1,1]  │["0 42 0 0 0"]│
+├───────┼──────────────┤
+│[3,2]  │["1 -7 1 0 0"]│
+└───────┴──────────────┘
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i
+With collect(v.Vertex) as vV,factors,v,i
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV  // factors.TwoSeq is a list of map.
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV    
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV
+with collect(output) as outputlist,outputMap,output,vV
+with DISTINCT vV as vVV, outputlist,outputMap,output
+with collect(outputMap.TotalT) as opMTT,vVV
+With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV
+With Collect(TotalTseqq) as result,vVV
+Return result,vVV
+
+
+
+╒════════╤══════════════╕
+│"result"│"vVV"         │
+╞════════╪══════════════╡
+│[3]     │["1 -6 1 0 0"]│
+├────────┼──────────────┤
+│[3]     │["0 56 0 0 0"]│
+├────────┼──────────────┤
+│[1]     │["1 -5 1 0 0"]│
+├────────┼──────────────┤
+│[6]     │["1 1 2 0 0"] │
+├────────┼──────────────┤
+│[3]     │["1 -8 1 0 0"]│
+├────────┼──────────────┤
+│[1]     │["0 30 0 0 0"]│
+├────────┼──────────────┤
+│[2]     │["0 42 0 0 0"]│
+├────────┼──────────────┤
+│[5]     │["1 -7 1 0 0"]│
+└────────┴──────────────┘
+
+
+
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i,e
+With Collect(i.Value) as Values,factors,v,i,e
+With collect(v.Vertex) as vV,factors,v,i,Values,e
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV,Values,e
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV,Values,e
+
+
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV
+with collect(output) as outputlist,outputMap,output,vV
+with DISTINCT vV as vVV, outputlist,outputMap,output
+with collect(outputMap.TotalT) as opMTT,vVV
+With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV
+With Collect(TotalTseqq) as result,vVV
+//Unwind RANGE(0,SIZE(output)-1) as iii
+//Unwind output[iii] as ts
+Return {Multiple:result,Vertex:vVV}
+//Return opMTT,vVV
+//Return outputMap
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i,e
+With Collect(e.Value) as Values,factors,v,i,e
+With collect(v.Vertex) as vV,factors,v,i,Values,e
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV,Values,e
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV,Values,e
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,e,Values
+With v,N,vV,e,Values, Case
+when e.Value="8" Then 0-TotalTseq End as TotalTseq
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV //,e
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV//,e
+with collect(output) as outputlist,outputMap,output,vV//,e
+with DISTINCT vV as vVV, outputlist,outputMap,output//,e
+with collect(outputMap.TotalT) as opMTT,vVV//,e
+With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV//,e
+With Collect(TotalTseqq) as result,vVV    // but e down here dosnt collapse map.
+//Unwind RANGE(0,SIZE(output)-1) as iii
+//Unwind output[iii] as ts
+Return {Multiple:result,Vertex:vVV} //,e.Value
+//Return opMTT,vVV
+//Return outputMap
+
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i,e
+With Collect(e.Value) as Values,factors,v,i,e
+With collect(v.Vertex) as vV,factors,v,i,Values,e
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV,Values,e
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV,Values,e
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,e,Values
+With v,N,vV,e,Values, Case
+when e.Value="8" Then 0-TotalTseq End as TotalTseq
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV //,e
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV//,e
+with collect(output) as outputlist,outputMap,output,vV//,e
+with DISTINCT vV as vVV, outputlist,outputMap,output//,e
+with collect(outputMap.TotalT) as opMTT,vVV//,e
+With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV//,e
+With Collect(TotalTseqq) as result,vVV    // but e down here dosnt collapse map.
+//Unwind RANGE(0,SIZE(output)-1) as iii
+//Unwind output[iii] as ts
+Return {Multiple:result,Vertex:vVV} //,e.Value
+//Return opMTT,vVV
+//Return outputMap
+
+
+
+╒═════════════════════════════════════════╕
+│"{Multiple:result,Vertex:vVV}"           │
+╞═════════════════════════════════════════╡
+│{"Multiple":[-1],"Vertex":["1 -6 1 0 0"]}│
+├─────────────────────────────────────────┤
+│{"Multiple":[-1],"Vertex":["0 56 0 0 0"]}│
+├─────────────────────────────────────────┤
+│{"Multiple":[0],"Vertex":["1 -5 1 0 0"]} │
+├─────────────────────────────────────────┤
+│{"Multiple":[-1],"Vertex":["1 -8 1 0 0"]}│
+├─────────────────────────────────────────┤
+│{"Multiple":[-2],"Vertex":["1 1 2 0 0"]} │
+├─────────────────────────────────────────┤
+│{"Multiple":[0],"Vertex":["0 30 0 0 0"]} │
+├─────────────────────────────────────────┤
+│{"Multiple":[-1],"Vertex":["0 42 0 0 0"]}│
+├─────────────────────────────────────────┤
+│{"Multiple":[-2],"Vertex":["1 -7 1 0 0"]}│
+└─────────────────────────────────────────┘
+
+╒════════════════════════════════════════╕
+│"{Multiple:result,Vertex:vVV}"          │
+╞════════════════════════════════════════╡
+│{"Multiple":[3],"Vertex":["1 -6 1 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[3],"Vertex":["0 56 0 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[1],"Vertex":["1 -5 1 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[6],"Vertex":["1 1 2 0 0"]} │
+├────────────────────────────────────────┤
+│{"Multiple":[3],"Vertex":["1 -8 1 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[1],"Vertex":["0 30 0 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[2],"Vertex":["0 42 0 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[5],"Vertex":["1 -7 1 0 0"]}│
+└────────────────────────────────────────┘
+
+╒════════════════════════════════════════╤═════════╕
+│"{Multiple:result,Vertex:vVV}"          │"e.Value"│
+╞════════════════════════════════════════╪═════════╡
+│{"Multiple":[1],"Vertex":["0 42 0 0 0"]}│"8"      │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[1],"Vertex":["0 30 0 0 0"]}│"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[2],"Vertex":["1 -6 1 0 0"]}│"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[1],"Vertex":["0 42 0 0 0"]}│"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[1],"Vertex":["1 -8 1 0 0"]}│"8"      │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[1],"Vertex":["1 -5 1 0 0"]}│"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[2],"Vertex":["1 1 2 0 0"]} │"8"      │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[1],"Vertex":["0 56 0 0 0"]}│"8"      │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[2],"Vertex":["1 -7 1 0 0"]}│"8"      │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[2],"Vertex":["1 -8 1 0 0"]}│"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[4],"Vertex":["1 1 2 0 0"]} │"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[2],"Vertex":["0 56 0 0 0"]}│"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[3],"Vertex":["1 -7 1 0 0"]}│"16"     │
+├────────────────────────────────────────┼─────────┤
+│{"Multiple":[1],"Vertex":["1 -6 1 0 0"]}│"8"      │
+└────────────────────────────────────────┴─────────┘
+
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i,e
+With Collect(e.Value) as Values,factors,v,i,e
+With collect(v.Vertex) as vV,factors,v,i,Values,e
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV,Values,e
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV,Values,e
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,e,Values
+With v,N,vV,e,Values, Case
+when e.Value="8" Then 0-TotalTseq Else TotalTseq End as TotalTseq
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV //,e no Values needed.
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV//,e
+with collect(output) as outputlist,outputMap,output,vV//,e
+with DISTINCT vV as vVV, outputlist,outputMap,output//,e
+with collect(outputMap.TotalT) as opMTT,vVV//,e
+With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV//,e
+With Collect(TotalTseqq) as result,vVV    // but e down here dosnt collapse map.
+//Unwind RANGE(0,SIZE(output)-1) as iii
+//Unwind output[iii] as ts
+Return {Multiple:result,Vertex:vVV} //,e.Value
+//Return opMTT,vVV
+//Return outputMap
+
+╒════════════════════════════════════════╕
+│"{Multiple:result,Vertex:vVV}"          │
+╞════════════════════════════════════════╡
+│{"Multiple":[1],"Vertex":["1 -6 1 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[1],"Vertex":["0 56 0 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[1],"Vertex":["1 -5 1 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[2],"Vertex":["1 1 2 0 0"]} │
+├────────────────────────────────────────┤
+│{"Multiple":[1],"Vertex":["1 -8 1 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[1],"Vertex":["0 30 0 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[0],"Vertex":["0 42 0 0 0"]}│
+├────────────────────────────────────────┤
+│{"Multiple":[1],"Vertex":["1 -7 1 0 0"]}│
+└────────────────────────────────────────┘
+
+
+
+10/17:
+
+What to carry along with New Nodes Map.
+
+Have:
+
+   Multiple(twoSeq),Vertex
+
+Need: 
+
+   Evaluate
+   
+So, carry down Values to the output map.
+Problem is, just like carring e, it unwinds the multiple,Vertex map.
+
+Maybe beyond cypher to to have knowledge of an Evaluate.
+Will next experiment with case,
+Otherwise will leave it to twoPolynomial.
+
+Below can get evaluate on New Node 
+
+But ready for a return to java.
+
+Will have a new Thread to drive the cypher arithmitic script.
+
+But first prove out the output on .ods worksheet.   did that, it works!!
+Particularly what to do with the constants, and how to represent them
+on result graph.
+Are the results seperate entities on zaddb or are they connected to the 
+twopolynomial generated map. 
+
+Not a new thread, mearly commented out methods in zaddbtable1.java.
+
+One way to get evaluate on New Node Map.
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i,e
+With Collect(e.Value) as Values,factors,v,i,e
+With "8" as Eval, Values,factors,v,i,e
+ //Case
+//when e.Value="8" Then "8" End as Eval
+
+With collect(v.Vertex) as vV,factors,v,i,Values,e,Eval
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV,Values,e,Eval
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV,Values,e,Eval
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,e,Values,Eval
+With v,N,vV,e,Values,Eval, Case
+when e.Value="8" Then 0-TotalTseq End as TotalTseq
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV,Values,Eval
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV,Eval
+with collect(output) as outputlist,outputMap,output,vV,Eval
+with DISTINCT vV as vVV, outputlist,outputMap,output,Eval
+with collect(outputMap.TotalT) as opMTT,vVV,Eval
+With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV,Eval
+With Collect(TotalTseqq) as result,vVV,Eval
+Return {Multiple:result,Vertex:vVV,Evaluate:Eval}
+
+╒════════════════════════════════════════════════════════╕
+│"{Multiple:result,Vertex:vVV,Evaluate:Eval}"            │
+╞════════════════════════════════════════════════════════╡
+│{"Multiple":[-2],"Vertex":["1 1 2 0 0"],"Evaluate":"8"} │
+├────────────────────────────────────────────────────────┤
+│{"Multiple":[-1],"Vertex":["0 56 0 0 0"],"Evaluate":"8"}│
+├────────────────────────────────────────────────────────┤
+│{"Multiple":[-2],"Vertex":["1 -7 1 0 0"],"Evaluate":"8"}│
+├────────────────────────────────────────────────────────┤
+│{"Multiple":[0],"Vertex":["0 30 0 0 0"],"Evaluate":"8"} │
+├────────────────────────────────────────────────────────┤
+│{"Multiple":[-1],"Vertex":["1 -6 1 0 0"],"Evaluate":"8"}│
+├────────────────────────────────────────────────────────┤
+│{"Multiple":[-1],"Vertex":["0 42 0 0 0"],"Evaluate":"8"}│
+├────────────────────────────────────────────────────────┤
+│{"Multiple":[0],"Vertex":["1 -5 1 0 0"],"Evaluate":"8"} │
+├────────────────────────────────────────────────────────┤
+│{"Multiple":[-1],"Vertex":["1 -8 1 0 0"],"Evaluate":"8"}│
+└────────────────────────────────────────────────────────┘
+
+
+
+The way to proceed:
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="2" or i.N="3"
+RETURN {Vertex:COLLECT({Vertex:v.Vertex, N:i.N,TwoSeq:t.twoSeq}),IndexNum:i.N} as factors
+
+══════════════════════════════════════════════════════════════════════╕
+│"factors"                                                             │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"Vertex":[{"Vertex":"1 -8 1 0 0","N":"2","TwoSeq":"1"},{"Vertex":"0 5│
+│6 0 0 0","N":"2","TwoSeq":"1"},{"Vertex":"1 1 2 0 0","N":"2","TwoSeq":│
+│"1"},{"Vertex":"1 -7 1 0 0","N":"2","TwoSeq":"1"},{"Vertex":"1 -7 1 0 │
+│0","N":"2","TwoSeq":"1"},{"Vertex":"0 42 0 0 0","N":"2","TwoSeq":"1"},│
+│{"Vertex":"1 1 2 0 0","N":"2","TwoSeq":"1"},{"Vertex":"1 -6 1 0 0","N"│
+│:"2","TwoSeq":"1"}],"IndexNum":"2"}                                   │
+├──────────────────────────────────────────────────────────────────────┤
+│{"Vertex":[{"Vertex":"1 -7 1 0 0","N":"3","TwoSeq":"1"},{"Vertex":"0 4│
+│2 0 0 0","N":"3","TwoSeq":"1"},{"Vertex":"1 1 2 0 0","N":"3","TwoSeq":│
+│"1"},{"Vertex":"1 -6 1 0 0","N":"3","TwoSeq":"1"},{"Vertex":"1 -6 1 0 │
+│0","N":"3","TwoSeq":"1"},{"Vertex":"0 30 0 0 0","N":"3","TwoSeq":"1"},│
+│{"Vertex":"1 1 2 0 0","N":"3","TwoSeq":"1"},{"Vertex":"1 -5 1 0 0","N"│
+│:"3","TwoSeq":"1"},{"Vertex":"1 -8 1 0 0","N":"3","TwoSeq":"2"},{"Vert│
+│ex":"0 56 0 0 0","N":"3","TwoSeq":"2"},{"Vertex":"1 1 2 0 0","N":"3","│
+│TwoSeq":"2"},{"Vertex":"1 -7 1 0 0","N":"3","TwoSeq":"2"}],"IndexNum":│
+│"3"}                                                                  │
+└──────────────────────────────────────────────────────────────────────┘
+
+12/20
+
+   TwoPolyRootFig is AM subject.  Embellish with text boxes.
+   Corrolate with subDiffOfScalars.ods insites.
+
+(:Evaluate)<-[:TwoPolynomial]-(:Dnode)-[:CreatedBye]->(c:CreatedBy)                                              //  Expect :CreatedBye unique. .resultid is resolved. have expected wNum=0 .pArray is irrelevant.  
+(:CreatedBy)<-[:CreatedBye]-(:Dnode)<-[:zMap]-(:Dnode)-[:CreatedBye]->(:CreatedBy)                               //  Prior CreatedBy.resultID constrains Dnode's uniqueness.
+(:CreatedBy)<-[:CreatedBye]-(:Dnode)<-[:zMap]-(root:Dnode)-[:CreatedBye]->(:CreatedBy)                           //  A second application of the pattern resolves the Dnode.vmResult=root.
+(root:Dnode)-[:zMap]->(pArrayTarget:Dnode)-[:CreatedBye]->(:CreatedBy {pArray:target,resultid:targetResultID })  //  Is a one to many map.  The many are ordered by CreatedBy.pArray. Selected pArray resolves a createdBy.resultid.                                                                                             //    
+(:CreatedBy)<-[:CreatedBye]-(:Dnode)-[:zMap]-(TargetDnode:Dnode)-[:CreatedBye]->(:CreatedBy {:resultid})          //  TargetDnode has Evaluates relation to Evaluate nodes.
+(:CreatedBy)<-[:CreatedBye]-(:Dnode)-[:Evaluates]->(setofRoots:evaluate)                                         //  final pattern reveals candadate roots.
+
+
+Former:
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+With evaluate,dNode
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,createdby
+Match (createdby1:CreatedBy)<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  
+With evaluate,dNode,createdby,dNode1,createdby1
+Match (createdby2:CreatedBy)<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1) 
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2
+
+Up until now, the pattern works because dNode has unique createdBy and also zMap's are singular
+between dNode,dNode1, and dNode2. At this point though dnode2 ->  many createdBy nodes.
+However, have not identified createdBy.resultid.  Taken that the pattern's resultid exists
+within dNode2's CreatedBye map. It need to be excluded/know before these CreatedBy's can 
+be collected.  //maybe createdby.resultId to use as a constraint.
+
+Latter:
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+With evaluate,dNode
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1) 
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2
+
+Latest:
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+With evaluate,dNode
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes
+
+This return only includes one CreatedBy node.  
+  
+And it is purpose of the cypher querry time:
+
+The brute force attemp is traverse the graph from dNode2. Exclude the nodes by result id that got to dNode2.
+Have the root and know that it supports many zMap relations to linear Dnodes. 
+linearDnodes is alias for rows of linear vmResults.  Each row, a Dnode, has related a CreatedBy node with
+the wNum 1 less than the CreatedBy wNum  (2-1)=1  related to Dnode2, the deepest member of zaddb.
+
+The next line of cypher features linearDnodes.  It can be written with or without CreatedBy node induced 
+ordering.  
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+With evaluate,dNode
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes
+Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,translateDnodes
+
+Match (linearDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+maybe want to count the number of [:Evaluates]?
+But am at the point where analytical interpretation is in order.
+
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+
+With evaluate,dNode
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+
+With evaluate,dNode,   createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+
+With evaluate,dNode,   createdby,createdbyRoot,    createdby1,dNode1  
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+
+With evaluate,dNode,   createdby,dNode1,  createdby1,createdbyRoot,      dNode2,createdby2
+
+//   need to collect the resultIds, use indexTarge.centerIndex on it.
+// 
+
+//  match (indexTarget:Evaluate) where indexTarget.d=evaluate and indexTarget.size=2            
+//  with indexTarget.centerIndex as cIndex, indexTarget.verticalTranslateIndex as vTi     
+
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes
+Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,translateDnodes
+Match (translateDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,translateDnodes,evaluates
+
+12/31
+
+Call apoc.export.csv.query("Match (e:Evaluate) return e.Value,e.d,e.Size,e.n,e.nBinary ",
+"evaluates123118.csv",{d:";"})
+
+
+Call apoc.export.csv.query("Match (e:Evaluate) return e.Value,e.d,e.Size,e.n,e.nBinary,e.centerIndex,e.verticalTranslateIndex ",
+"evaluates123118.csv",{d:";"})
+
+╒═════════════════════╤════════════════════╤════════╤═══════╤═══════════════╤════════════╤══════╤══════╤═══════════╤═════════╤══════╕
+│"file"               │"source"            │"format"│"nodes"│"relationships"│"properties"│"time"│"rows"│"batchSize"│"batches"│"done"│
+╞═════════════════════╪════════════════════╪════════╪═══════╪═══════════════╪════════════╪══════╪══════╪═══════════╪═════════╪══════╡
+│"evaluates123118.csv"│"statement: cols(7)"│"csv"   │0      │0              │4774        │211   │682   │-1         │0        │true  │
+└─────────────────────┴────────────────────┴────────┴───────┴───────────────┴────────────┴──────┴──────┴───────────┴─────────┴──────┘
+
+Casually dilligent review of "file" lends confidence to e.centerline,e.verticalTranslateIndex
+accuracy and useability.
+
+1/6 
+
+   Had to re-run zad so last twopolynomial does appear on zad.
+   
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+With evaluate,dNode
+Match (muEvaluate:Evaluate) WHERE muEvaluate.d=evaluate.Value AND muEvaluate.size=2
+WITH DISTINCT muEvaluate.centerIndex as muE,COLLECT(muEvaluate.verticalTranslateIndex) as targetVTI,dNode,evaluate
+WITH COLLECT(muE) as targetCI,targetVTI,dNode,evaluate
+
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,targetCI,targetVTI,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,targetCI,targetVTI,createdby,createdbyRoot, createdby1,dNode1  
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+//UNWIND targetCI as tarCI
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)-[CreatedBye]->(createdbyLD:CreatedBy) WHERE createdbyLD.pArrayIndexValue IN targetCI
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD,targetVTI
+Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)-[CreatedBye]->(createdbyT:CreatedBy) WHERE createdbyT.translateIndex IN targetVTI
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,translateDnodes,createdbyLD,createdbyT,targetVTI
+Match (translateDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+//return createdbyT,targetVTI
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,createdbyLD,translateDnodes,createdbyT ,evaluates
+
+The bug:
+   twoPolynomial=4 translateDenodes have the appropriate expectedIndex's.
+   twoPolynomial=8'translateDnodes have their second index at expectedIndex+!.
+All good with the bug.
+
+
+╒══════════╤═══════════╕
+│"targetCI"│"targetVTI"│
+╞══════════╪═══════════╡
+│[4]       │[0,1,2,3]  │
+├──────────┼───────────┤
+
+
+
+brewehehehe:::  ZADDB is not broken,  but it is of limmeted use for running the current cypher.
+                It can only compute 4,8 inverses because it it time to increase size of
+                loopList range??  It looks definatly like mu range is limmited.
+                So The important thing to realize about this special day is.  
+                1. zad jives.  
+                2. didn't reproduce the seeming error with centerIdex,verticalTranslateIndex being a common 
+                   key among different twoPolynomials.
+                3. There may be some sort of skipping going on with ZAD itself. Maybe sometimes
+                   all the GaussBean1's that should be on LoopsDriverTwoP buffer aren't.
+
+
+
+1/8
+     Do want all of twoPolynomial's nMaxx=8 on zaddb.  But increasing n in nMaxx may implicate 
+     these LoopsDriverTwoPManager fields:
+
+     int integerRange=20;     //  The loopListener needs to know this value for its runnable.   
+     int setProductRange=15;  //  It now does.
+
+     //  one of these days a static class with the program field for one and all to reference.
+
+
+   Make sure LoopListener agrees with integerRange.
+   It does.
+
+   It is time to start instrumenting FractionIntegerSet.
+   Meaning, are all the necessary Evaluates represented for a particular twoPolynomial=N in nMaxx?   
+
+   FractionIntegerDriverIterate's executor does not gracefully exit.  It must.
+   And, in my opinion, .size matters in regards to the general population of Evaluate nodes.
+   Seems like many many are provided by FISi.  Pruning to begin after lunch.
+
+  There seems to be a story abut picking and choosing which sizes for a particular mu to write.
+
+  For instance the temptation of simply selecting size=2 for zaddb submission.
+  This has become the afternoon lab.
+
+  Need some FractionIntegerDriverIterate theory written out.
+
+  When and where dose size matter?   
+
+
+FractionIntegerDriverIterate
+
+int numeratorLow=1;
+int numeratorHigh=64;
+
+could be as simple as numeratorLow=numeratorHigh=2   // but not so simple.
+
+
+╒═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"n"                                                                                                                  │
+╞═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"d":"4","size":3,"nBinary":"[2, 1, 1]","Value":"11","centerIndex":0,"n":"2","verticalTranslateIndex":0}             │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"d":"4","size":2,"nBinary":"[2, 2]","Value":"6","centerIndex":2,"n":"2","verticalTranslateIndex":0}                 │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"d":"8","size":7,"nBinary":"[2, 1, 1, 1, 1, 1, 1]","Value":"191","centerIndex":0,"n":"2","verticalTranslateIndex":0}│
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"d":"8","size":6,"nBinary":"[2, 2, 1, 1, 1, 1]","Value":"111","centerIndex":0,"n":"2","verticalTranslateIndex":0}   │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"d":"8","size":5,"nBinary":"[2, 2, 2, 1, 1]","Value":"59","centerIndex":0,"n":"2","verticalTranslateIndex":0}       │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"d":"8","size":4,"nBinary":"[2, 2, 2, 2]","Value":"30","centerIndex":0,"n":"2","verticalTranslateIndex":0}          │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+From the above:  NOT.
+
+
+Each fractionIntegerDriverIterate worker gets a numerator.
+Filtering at muNumDen constructor bString,bStringSize,bList: [2, 1, 1]  3 [2, 1, 1]
+seems a bit iterativly wastefull.  Also the three worker classes will need to take a
+refactoring.    // setSize is constrained.
+
+
+
+Call apoc.export.csv.query("Match (e:Evaluate) return e.Value,e.d,e.size,e.n,e.nBinary,e.centerIndex,e.verticalTranslateIndex ",
+"evaluates010819.csv",{d:";"})
+
+
+It seems that setSize needs to be set to at about denominater.
+
+
+Looks like Evaluate.value breaks with twoPolynomial=128.
+
+
+note:twoPolynomial does not rerference 4,8,16,32....
+have to hand create them.  
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+With evaluate,dNode
+Match (muEvaluate:Evaluate) WHERE muEvaluate.d=evaluate.Value AND muEvaluate.size=2
+WITH DISTINCT muEvaluate.centerIndex as muE,COLLECT(muEvaluate.verticalTranslateIndex) as targetVTI,dNode,evaluate
+WITH COLLECT(muE) as targetCI,targetVTI,dNode,evaluate
+
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,targetCI,targetVTI,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,targetCI,targetVTI,createdby,createdbyRoot, createdby1,dNode1  
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+//UNWIND targetCI as tarCI
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)-[CreatedBye]->(createdbyLD:CreatedBy) WHERE createdbyLD.pArrayIndexValue IN targetCI
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD,targetVTI
+Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)-[CreatedBye]->(createdbyT:CreatedBy) WHERE createdbyT.translateIndex IN targetVTI
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,translateDnodes,createdbyLD,createdbyT,targetVTI
+Match (translateDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+//return createdbyT,targetVTI
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,createdbyLD,translateDnodes,createdbyT ,evaluates
+
+
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 1.0, -14.0, 52.0]"
+With evaluate,dNode
+Match (muEvaluate:Evaluate) WHERE muEvaluate.d=evaluate.Value AND muEvaluate.size=2
+WITH DISTINCT muEvaluate.centerIndex as muE,COLLECT(muEvaluate.verticalTranslateIndex) as targetVTI,dNode,evaluate
+WITH COLLECT(muE) as targetCI,targetVTI,dNode,evaluate
+
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,targetCI,targetVTI,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,targetCI,targetVTI,createdby,createdbyRoot, createdby1,dNode1  
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+//UNWIND targetCI as tarCI
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)-[CreatedBye]->(createdbyLD:CreatedBy) WHERE createdbyLD.pArrayIndexValue IN targetCI
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD,targetVTI
+Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)-[CreatedBye]->(createdbyT:CreatedBy) WHERE createdbyT.translateIndex IN targetVTI
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,translateDnodes,createdbyLD,createdbyT,targetVTI
+Match (translateDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+//return createdbyT,targetVTI
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,createdbyLD,translateDnodes,createdbyT ,evaluates
+
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 8.0, -105.0, 360.0]"
+With evaluate,dNode
+//Return evaluate,dNode
+Match (muEvaluate:Evaluate) WHERE muEvaluate.d=evaluate.Value AND muEvaluate.size=2
+WITH DISTINCT muEvaluate.centerIndex as muE,COLLECT(muEvaluate.verticalTranslateIndex) as targetVTI,dNode,evaluate
+WITH COLLECT(muE) as targetCI,targetVTI,dNode,evaluate
+//return targetCI,targetVTI
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,targetCI,targetVTI,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,targetCI,targetVTI,createdby,createdbyRoot, createdby1,dNode1  
+//return evaluate,dNode,createdby,createdby1,dNode1
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+//return evaluate,dNode,createdby,createdby1,dNode1,dNode2,createdby2
+////UNWIND targetCI as tarCI
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)-[CreatedBye]->(createdbyLD:CreatedBy) WHERE createdbyLD.pArrayIndexValue IN targetCI
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD,targetVTI
+return evaluate,dNode,createdby,createdby1,dNode1,dNode2,createdby2,linearDnodes,createdbyLD
+//Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)-[CreatedBye]->(createdbyT:CreatedBy) WHERE createdbyT.translateIndex IN targetVTI
+
+//With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,translateDnodes,createdbyLD,createdbyT,targetVTI
+//Match (translateDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+//return createdbyT,targetVTI
+//Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,createdbyLD,translateDnodes,createdbyT ,evaluates
+
+
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 2.0, -27.0, 96.0]"
+With evaluate,dNode
+Match (muEvaluate:Evaluate) WHERE muEvaluate.d=evaluate.Value AND muEvaluate.size=2
+WITH DISTINCT muEvaluate.centerIndex as muE,COLLECT(muEvaluate.verticalTranslateIndex) as targetVTI,dNode,evaluate
+WITH COLLECT(muE) as targetCI,targetVTI,dNode,evaluate
+
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,targetCI,targetVTI,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,targetCI,targetVTI,createdby,createdbyRoot, createdby1,dNode1  
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+//UNWIND targetCI as tarCI
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)-[CreatedBye]->(createdbyLD:CreatedBy) WHERE createdbyLD.pArrayIndexValue IN targetCI
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD,targetVTI
+Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)-[CreatedBye]->(createdbyT:CreatedBy) WHERE createdbyT.translateIndex IN targetVTI
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,translateDnodes,createdbyLD,createdbyT,targetVTI
+Match (translateDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+//return createdbyT,targetVTI
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,createdbyLD,translateDnodes,createdbyT ,evaluates
+
+
+Call apoc.export.csv.query("Match (e:Evaluate) return e.Value,e.d,e.Size,e.n,e.nBinary,e.centerIndex,e.verticalTranslateIndex ",
+"evaluates123118.csv",{d:";"})
+
+
+
+But first maybe include zero and rerun cypher.
+
+ZADDB returned 19 tripples.
+And the tripples correspond to which mu numbers.
+
+Have some new graph structure to build because of 
+this narrative:  
+Cypher can return tripples.
+The tripples can become a list (and subsequently a string) representing a mu number.
+match the tripple list to the muNumber.
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e) as evals
+where roots>2 
+return d,evals,roots
+
+╒═════════════════════════════════════════════╤═════════════════════════════════════════════╤═══════╕
+│"d"                                          │"evals"                                      │"roots"│
+╞═════════════════════════════════════════════╪═════════════════════════════════════════════╪═══════╡
+│{"vmResult":"[0.0, 1.0, -30.0, 209.0, -0.0]",│[{"d":"5","size":3,"nBinary":"[3, 1, 1]","Val│3      │
+│"square":0,"constant":0,"linear":0}          │ue":"19","centerIndex":0,"n":"3","verticalTra│       │
+│                                             │nslateIndex":0},{"d":"4","size":3,"nBinary":"│       │
+│                                             │[2, 1, 1]","Value":"11","centerIndex":0,"n":"│       │
+│                                             │2","verticalTranslateIndex":0},{"Value":"0"}]│       │
+├─────────────────────────────────────────────┼─────────────────────────────────────────────┼───────┤
+│{"vmResult":"[0.0, 1.0, -39.0, 290.0, -0.0]",│[{"d":"7","size":4,"nBinary":"[2, 2, 2, 1]","│3      │
+│"square":0,"constant":0,"linear":0}          │Value":"29","centerIndex":0,"n":"2","vertical│       │
+│                                             │TranslateIndex":0},{"d":"5","size":2,"nBinary│       │
+│                                             │":"[3, 2]","Value":"10","centerIndex":2,"n":"│       │
+│                                             │3","verticalTranslateIndex":0},{"Value":"0"}]│       │
+├─────────────────────────────────────────────┼─────────────────────────────────────────────┼───────┤
+
+Want the map [d,[evals]]
+want [evals] a string. 
+
+match evalString to denode.nbinaray.  
+return eval'.d,eval'.n
+
+it looks easy to .toString and concatinate with comma seperation and then add brackest beginning and end.
+
+RETURN substring(reduce(s="", name in collect(location.name) | s + "," + name),1)
+
+
+split nBinary after loosing the brackets. but not the way to go.
+
+have list evals of Evaluate.value  (list of strings).
+Want String(listOfStrings) ["1","2","3"] "[1,2,3]"
+
+reduce(accumulator = initial, variable IN list | expression)
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots>2 
+with reduce(s="", value in evals | s + "," + toString(value)) as rootString,d
+return rootString,d
+//where roots>2 
+//return d,evals,roots
+
+
+╒════════════╤══════════════════════════════════════════════════════════════════════╕
+│"rootString"│"d"                                                                   │
+╞════════════╪══════════════════════════════════════════════════════════════════════╡
+│",19,11,0"  │{"vmResult":"[0.0, 1.0, -30.0, 209.0, -0.0]","square":0,"constant":0,"│
+│            │linear":0}                                                            │
+├────────────┼──────────────────────────────────────────────────────────────────────┤
+│",29,10,0"  │{"vmResult":"[0.0, 1.0, -39.0, 290.0, -0.0]","square":0,"constant":0,"│
+│            │linear":0}                                                            │
+├────────────┼──────────────────────────────────────────────────────────────────────┤
+│",29,28,0"  │{"vmResult":"[0.0, 1.0, -57.0, 812.0, -0.0]","square":0,"constant":0,"│
+│            │linear":0}                                                            │
+├────────────┼──────────────────────────────────────────────────────────────────────┤
+│",43,17,0"  │{"vmResult":"[0.0, 1.0, -60.0, 731.0, -0.0]","square":0,"constant":0,"│
+│            │linear":0}                                                            │
+├────────────┼──────────────────────────────────────────────────────────────────────┤
+
+
+
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots>2 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d
+with "["+rootString+"]" as rootStringg,d
+return rootStringg,d
+
+
+
+
+╒═════════════╤══════════════════════════════════════════════════════════════════════╕
+│"rootStringg"│"d"                                                                   │
+╞═════════════╪══════════════════════════════════════════════════════════════════════╡
+│"[19,11,0]"  │{"vmResult":"[0.0, 1.0, -30.0, 209.0, -0.0]","square":0,"constant":0,"│
+│             │linear":0}                                                            │
+├─────────────┼──────────────────────────────────────────────────────────────────────┤
+│"[29,10,0]"  │{"vmResult":"[0.0, 1.0, -39.0, 290.0, -0.0]","square":0,"constant":0,"│
+│             │linear":0}                                                            │
+├─────────────┼──────────────────────────────────────────────────────────────────────┤
+│"[29,28,0]"  │{"vmResult":"[0.0, 1.0, -57.0, 812.0, -0.0]","square":0,"constant":0,"│
+│             │linear":0}                                                            │
+├─────────────┼──────────────────────────────────────────────────────────────────────┤
+
+...
+....
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots>2 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d
+with "["+rootString+"]" as rootStringg  //,d
+
+return rootStringg
+//return rootStringg,d
+//where roots>2 
+//return d,evals,roots
+
+╒═════════════╕
+│"rootStringg"│
+╞═════════════╡
+│"[19,11,0]"  │
+├─────────────┤
+│"[29,10,0]"  │
+├─────────────┤
+│"[29,28,0]"  │
+├─────────────┤
+│"[43,17,0]"  │
+├─────────────┤
+
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots>2 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d
+with "["+rootString+"]" as rootStringg  //,d
+with collect(rootStringg) as rootStringgg
+return rootStringgg
+//return rootStringg,d
+//where roots>2 
+//return d,evals,roots
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"rootStringgg"                                                        │
+╞══════════════════════════════════════════════════════════════════════╡
+│["[19,11,0]","[29,10,0]","[29,28,0]","[43,17,0]","[17,16,0]","[20,19,0│
+│]","[32,31,0]","[8,7,0]","[14,13,0]","[23,22,0]","[19,8,0]","[11,10,0]│
+│","[5,4,0]","[35,34,0]","[29,19,0]","[38,37,0]","[43,26,0]","[26,13,0]│
+│","[26,25,0]"]                                                        │
+└──────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+Match (evaluate:Evaluate)<-[:TwoPolynomial]-(dNode:Dnode) Where dNode.vmResult="[0.0, 2.0, -27.0, 96.0]"
+With evaluate,dNode
+Match (muEvaluate:Evaluate) WHERE muEvaluate.d=evaluate.Value AND muEvaluate.size=2
+WITH DISTINCT muEvaluate.centerIndex as muE,COLLECT(muEvaluate.verticalTranslateIndex) as targetVTI,dNode,evaluate
+WITH COLLECT(muE) as targetCI,targetVTI,dNode,evaluate
+
+Match (dNode)-[:CreatedBye]->(createdby:CreatedBy)
+With evaluate,dNode,targetCI,targetVTI,createdby,createdby.resultId as createdbyRoot
+Match (createdby1:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode1:Dnode)-[:zMap]->(dNode)  //maybe createdby.resultId to use as a constraint.
+With evaluate,dNode,targetCI,targetVTI,createdby,createdbyRoot, createdby1,dNode1  
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(dNode1)
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+//UNWIND targetCI as tarCI
+
+With evaluate,dNode,targetCI,targetVTI,   createdby,dNode1,  createdby1,createdbyRoot,   dNode2,createdby2
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)-[CreatedBye]->(createdbyLD:CreatedBy) 
+WHERE createdbyLD.pArrayIndexValue IN targetCI
+
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,createdbyLD,targetVTI
+Match (linearDnodes:Dnode)-[:zMap]->(translateDnodes:Dnode)-[CreatedBye]->(createdbyT:CreatedBy)
+WHERE createdbyT.translateIndex IN targetVTI
+
+With evaluate,dNode,createdby,dNode1,createdby1,createdbyRoot,dNode2,createdby2,linearDnodes,translateDnodes,createdbyLD,createdbyT,targetVTI
+Match (translateDnodes:Dnode)-[:Envalues]->(evaluates:Evaluate) 
+//return createdbyT,targetVTI
+Return evaluate,dNode,createdby,dNode1,createdby1,dNode2,createdby2,linearDnodes,createdbyLD,translateDnodes,createdbyT ,evaluates
+
+
+0101
+
+Work with arithmetic of eval:                   //abandoned.
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots>2 
+foreach (ev in evals | ev+1)
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d
+with "["+rootString+"]" as rootStringg  //,d
+with collect(rootStringg) as rootStringgg,rootStringg
+//return rootStringgg
+return rootStringg
+//where roots>2 
+//return d,evals,roots
+
+1/17
+
+Have Zad output in pArray.size=3 and no verticalTranslate.  
+Cypher rootStringgg's tailing zero excludes mu translation
+But may be telling of pattern.
+
+Can cypher resultIDs of dNode and read pArrays.
+
+d though, may have multiple createdBy's.
+
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots>2 
+match (d)-[:CreatedBye]->(c:CreatedBy) 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d,c
+with "["+rootString+"]" as rootStringg,d
+return rootStringg,d
+//where roots>2 
+//return d,evals,roots 
+ 
+Becomes return a map rootset, list of pArrays.
+
+looking for the new pattern but suppose what again about using the twoPolynomial pattern.
+
+
+{"RootList":"[38,37,0]","PArray":"[0, 12, 24, 0]"}
+
+{"RootList":"[35,34,0]","PArray":"[0, 11, 22, 0]"}
+
+{"RootList":"[32,31,0]","PArray":"[0, 10, 20, 0]"}
+
+{"RootList":"[29,28,0]","PArray":"[0, 9, 18, 0]"}
+
+                                                     {"RootList":"[23,22,0]","PArray":"[0, 22, 14, 0]"}
+
+
+{"RootList": "[26,25,0]","PArray": "[0, 8, 16, 0]"}
+
+{"RootList":"[23,22,0]","PArray":"[0, 7, 14, 0]"}
+
+{"RootList":"[20,19,0]","PArray":"[0, 6, 12, 0]"}
+
+{"RootList":"[17,16,0]","PArray":"[0, 5, 10, 0]"}
+
+                                                     {"RootList":"[14,13,0]","PArray":"[0, 13, 8, 0]"}
+
+           
+                                                   {"RootList":"[11,10,0]","PArray":"[0, 10, 6, 0]"}
+{"RootList":"[14,13,0]","PArray":"[0, 4, 8, 0]"}
+
+{"RootList":"[11,10,0]","PArray":"[0, 3, 6, 0]"}
+
+{"RootList":"[8,7,0]","PArray":"[0, 2, 4, 0]"}
+
+{"RootList":"[5,4,0]","PArray":"[0, 1, 2, 0]"}
+                                                        {"RootList":"[5,4,0]","PArray":"[0, 4, 2, 0]"} 
+
+match (d:Dnode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots>2 
+match (d)-[:CreatedBye]->(c:CreatedBy) 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d,c
+with "["+rootString+"]" as rootStringg,c.pArray as pArray
+return {RootList:rootStringg,PArray:pArray}
+//where roots>2 
+//return d,evals,roots
+
+have some revealing pArray arithmetic.  pArray[0,x,2x,0] outputs [evaluate.value,evaluate.value+1,0]
+have a function on pArray[2] which reveals valuae of rootList[1]:
+with x=0..n, rootList[1]_x=(2*pArray[2]_x)-x.
+
+
+│{"RootList":"[43,26,0]","PArray":"[0, 10, 22, 0]"}│
+├──────────────────────────────────────────────────┤
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[43,17,0]","PArray":"[0, 7, 19, 0]"} │
+├──────────────────────────────────────────────────┤
+
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[29,19,0]","PArray":"[0, 24, 15, 0]"}│
+├──────────────────────────────────────────────────┤
+│{"RootList":"[29,19,0]","PArray":"[0, 7, 15, 0]"} │
+├──────────────────────────────────────────────────┤
+
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[23,22,0]","PArray":"[0, 22, 14, 0]"}│
+├──────────────────────────────────────────────────┤
+│{"RootList":"[23,22,0]","PArray":"[0, 7, 14, 0]"} │
+├──────────────────────────────────────────────────┤
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[29,10,0]","PArray":"[0, 21, 12, 0]"}│
+├──────────────────────────────────────────────────┤
+│{"RootList":"[29,10,0]","PArray":"[0, 4, 12, 0]"} │
+├──────────────────────────────────────────────────┤
+
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[26,13,0]","PArray":"[0, 20, 12, 0]"}│
+├──────────────────────────────────────────────────┤
+│{"RootList":"[26,13,0]","PArray":"[0, 5, 12, 0]"} │
+├──────────────────────────────────────────────────┤
+
+
+
+╞══════════════════════════════════════════════════╡
+│{"RootList":"[19,11,0]","PArray":"[0, 15, 9, 0]"} │
+├──────────────────────────────────────────────────┤
+│{"RootList":"[19,11,0]","PArray":"[0, 4, 9, 0]"}  │
+├──────────────────────────────────────────────────┤
+
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[19,8,0]","PArray":"[0, 14, 8, 0]"}  │
+├──────────────────────────────────────────────────┤
+│{"RootList":"[19,8,0]","PArray":"[0, 3, 8, 0]"}   │
+├──────────────────────────────────────────────────┤
+
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[11,10,0]","PArray":"[0, 10, 6, 0]"} │
+├──────────────────────────────────────────────────┤
+│{"RootList":"[11,10,0]","PArray":"[0, 3, 6, 0]"}  │
+├──────────────────────────────────────────────────┤
+
+
+
+
+├──────────────────────────────────────────────────┤
+│{"RootList":"[5,4,0]","PArray":"[0, 4, 2, 0]"}    │
+├──────────────────────────────────────────────────┤
+│{"RootList":"[5,4,0]","PArray":"[0, 1, 2, 0]"}    │
+├──────────────────────────────────────────────────┤
+
+
+Some reveal in the above (barely):
+
+parray[2]_1+3=pArray[2]_2 
+parray[2]_2+2=pArray[2]_3 
+parray[2]_3+1=pArray[2]_4 
+
+
+   Very exciting root pattern:
+   {"RootList":"[9,8,7,6,0]","PArray":"[0, 1, 2, 3, 4, 0]"}│
+
+   Needs an explanation:
+
+   │"{RootList:rootStringg,PArray:pArray}"                 │
+╞═══════════════════════════════════════════════════════╡
+│{"RootList":"[14,3,2,0]","PArray":"[0, 2, 0, 0, 2, 0]"}│
+├───────────────────────────────────────────────────────┤        // the two pArrays define the same vmResult.
+│{"RootList":"[14,3,2,0]","PArray":"[0, 1, 0, 0, 2, 0]"}
+   
+   
+   And really want to know why it's soo easy for zad to dimension=5, setProductRange=5
+                             but really challenging for dimension=5, setProductRange=10;  // garbage collection jams....
+
+hence the resultId, parray spiele.
+
+
+  Made pArray=-1 want to see size5 returned from cypher.
+
+
+
+because multiple zeros at wNum=i propigate zeros through rListB.
+There maybe need to write up this progression.
+
+Cypher has a target .csv.  It will populate ZADDB with ZAD output.
+
+
+
+
+if (wNum==0) {
+  
+              mergeVmResult(vmResult,fPArray);
+
+            "MERGE (d:Dnode {vmResult:?,constant:?,linear:?,square:?}) "
+
+            psInsert.setString(1, vmResult);
+            psInsert.setInt(2, (int)fPArray.get(0));
+            psInsert.setInt(3, (int)fPArray.get(1));
+            psInsert.setInt(4, (int)fPArray.get(2));
+
+            
+if (isTwoPolynomial) {createTwoPRelation(vmResult,evaluateValue);}
+
+
+
+             createWnumRcounter(wNum,rCounter,pArray,translateIndex,pArrayIndexValue);
+
+            "Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?} )"
+            psInsert.setInt(1, rCounter);
+            psInsert.setInt(2, wNum);
+            psInsert.setString(3,pArray);
+            psInsert.setInt(4, translateIndex);
+            psInsert.setInt(5, pArrayIndexValue);
+
+
+            createKnownByRelation(vmResult,wNum,rCounter,translateIndex,pArrayIndexValue);
+              
+           "MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+            psInsert.setString(1, vmResult);
+            psInsert.setInt(2, rCounter);
+            psInsert.setInt(3, wNum);
+            psInsert.setInt(4, translateIndex);
+            psInsert.setInt(5, pArrayIndexValue);
+
+            createEvaluates(loopList,vmResult);    // seperate script  have to loop through LoopList. 
+   
+           " MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? AND d.vmResult=? WITH d,e MERGE  (d)-[ee:Envalues]->(e)");
+            psInsert.setString(1, X);
+            psInsert.setString(2, vmResult);
+
+}
+if (wNum>0)
+{
+             mergeVmResultt(vmResult);
+            
+            "MERGE (d:Dnode {vmResult:?}) "
+            psInsert.setString(1, vmResult);
+
+            createWnumRcounter(wNum,rCounter,pArray,translateIndex,pArrayIndexValue);        // same signature as above.
+            createKnownByRelation(vmResult,wNum,rCounter,translateIndex,pArrayIndexValue);  // same signature as above.
+           
+            createZMap(vmResult,rCounter,wNum);
+
+
+            "match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+            psInsert.setInt(1, rCounter);
+            psInsert.setInt(2, wNum);
+            psInsert.setInt(3, rCounter);
+            psInsert.setInt(4, wNum-1);
+
+
+}
+
+
+CALL apoc.load.csv('zaddim25.csv',{sep:";"})  YIELD lineNo
+return mapvv
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"map"                                                                 │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"vmResult":"[0.0, 1.0, -0.0, 0.0, -0.0, 0.0, -0.0]","pArray":"[0, 0, │
+│0, 0, 0, 0]","figPArray":"[0, 0, 0, 0, 0, 1]","isTwoPolynomial":"true"│
+│,"pArrayIndexValue":"0","fPArray":"[0, 0, 0, 0, 0, 1]","loopList":"[0,│
+│ 1, 32, 243, 1024, 3125, 7776, 16807, 32768, 59049, 100000, 161051, 24│
+│8832, 371293, 537824, 759375, 1048576, 1419857, 1889568, 2476099]","wN│
+│um":"0","translateIndex":"0","rCounter":"1"}                          │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+CALL apoc.load.csv('zaddim25.csv',{sep:";"})  YIELD lineNo
+return lineNo
+
+╒════════╕
+│"lineNo"│
+╞════════╡
+│0       │
+├────────┤
+│1       │
+├────────┤
+│2       │
+├────────┤
+
+
+
+CALL apoc.load.csv('zaddim25.csv',{sep:";"})  YIELD list
+return list
+
+══════════════════════════════════════════════════════════════════════╕
+│"list"                                                                │
+╞══════════════════════════════════════════════════════════════════════╡
+│["[0, 0, 0, 0, 0, 1]","[0, 0, 0, 0, 0, 0]","[0, 1, 32, 243, 1024, 3125│
+│, 7776, 16807, 32768, 59049, 100000, 161051, 248832, 371293, 537824, 7│
+│59375, 1048576, 1419857, 1889568, 2476099]","0","[0.0, 1.0, -0.0, 0.0,│
+│ -0.0, 0.0, -0.0]","1","[0, 0, 0, 0, 0, 1]","true","0","0"]           │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+
+CALL apoc.load.csv('zaddim25.csv',{sep:";"})  YIELD map
+WITH map.vmResult as vmResultt
+MERGE (d:dNode {vmResult:vmResultt})
+return count(d)
+
+call apoc.periodic.iterate("MATCH (n:Nodes) return n", "DETACH DELETE n", {batchSize:10000, iterateList:true})"
+
+call apoc.periodic.commit("match (n:Nodes) limit {limit} detach delete n RETURN count(*)",{limit:10000})
+
+
+CALL apoc.load.csv('zaddim25.csv',{sep:";"})  YIELD map
+WITH map.vmResult as vmResultt
+CALL apoc.periodic.iterate("MERGE (d:dNode {vmResult:vmResultt})","RETURN d as dd",{batchSize:1000,parallel:true})
+return count(vmResultt)
+
+
+LOAD CSV WITH HEADERS FROM 'file:/ + "zaddim25.csv" AS line FIELDTERMINATOR ";" 
+WITH line
+MERGE (d:dNode {vmResult:line.vmResult})
+
+
+CALL apoc.load.csv('zaddim25.csv',{sep:";"})  YIELD map
+with map.vmResult as vmResultt
+USING PERIODIC COMMIT 3000
+MERGE (d:dNode {vmResult:vmResultt})
+return count(d)
+
+
+
+The daily cypher:
+
+
+CREATE INDEX ON :dNode(vmResult)
+
+USING PERIODIC COMMIT 50000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim25.csv" AS line FIELDTERMINATOR ";"
+MERGE (d:dNode {vmResult:line.vmResult})
+
+
+1/29
+
+
+The split in cypher012919:
+
+  createEvaluates(LoopList loopList,String vmResult) is a seperate script.
+
+ 
+
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim29.csv" AS line FIELDTERMINATOR ";"
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:line.loopList})
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+count(d)	count(dd)
+79866	79866
+
+
+
+
+resultListID 12698
+
+
+UNWIND RANGE(1961,1960,-1) AS rCNT
+WITH rCNT
+UNWIND RANGE(5,1,-1) AS wNUM
+WITH rCNT,wNUM,wNUM-1 AS wNUMM
+WITH toString(rCNT) as rCNTT,toString(wNUM) as wNUMS,toString(wNUMM) as wNUMMS,rCNT
+MATCH (c:CreatedBy {resultId:rCNTT , wNum:wNUMS}) -[:CreatedBye]->(d:dNode)
+WITH c,d,rCNTT,wNUMMS
+MATCH (cc:CreatedBy {resultId:rCNTT , wNum:wNUMMS})-[:CreatedBye]->(dd:dNode)
+WITH c,d, cc,dd   //rCNTT,wNUMS,wNUMMS
+MERGE (d)-[:zMap]->(dd)
+return count(d)
+
+count(d)
+63485
+
+
+1/30 
+   Without looplist, ZADDB appears correct after 1/29 cypher.
+   Want looplist on dnode.  But ZADDB isn't connected after load.
+
+
+
+lets look at the output again....
+
+
+CREATE INDEX ON :dNode(vmResult)
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zaddim30.csv" AS line FIELDTERMINATOR ";"
+WITH line,
+CASE WHEN line.wNum="0" THEN line.loopList ELSE " " END as loopListL
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:loopListL}) 
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+UNWIND RANGE(1961,1960,-1) AS rCNT
+WITH rCNT
+UNWIND RANGE(5,1,-1) AS wNUM
+WITH rCNT,wNUM,wNUM-1 AS wNUMM
+WITH toString(rCNT) as rCNTT,toString(wNUM) as wNUMS,toString(wNUMM) as wNUMMS,rCNT
+MATCH (c:CreatedBy {resultId:rCNTT , wNum:wNUMS}) -[:CreatedBye]->(d:dNode)
+WITH c,d,rCNTT,wNUMMS
+MATCH (cc:CreatedBy {resultId:rCNTT , wNum:wNUMMS})-[:CreatedBye]->(dd:dNode)
+WITH c,d, cc,dd   //rCNTT,wNUMS,wNUMMS
+MERGE (d)-[:zMap]->(dd)
+return count(d)
+
+UNWIND RANGE(1,60000,1) AS rCNT
+WITH toString(rCNT) as rCNTT
+MATCH (c:CreatedBy {resultId:rCNTT , wNum:"0"}) -[:CreatedBye]->(d:dNode)
+WITH d.loopList AS lL,d
+With lL,Size(lL) AS lLS,d
+WITH lL,lLS-2 AS lLss,d
+WITH substring(lL,1,lLss) AS lLs,d
+WITH split(lLs,',') AS lList,d
+UNWIND lList AS lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d
+WITH COLLECT(lListss) AS lLT,d
+UNWIND RANGE(0,20,1) AS  llRange
+WITH llRange,lLT,d
+WHERE lLT[llRange]="0"
+MATCH (e:Evaluate {Value:toString(llRange)})
+WITH d,e MERGE  (d)-[ee:Envalues]->(e)
+RETURN d
+//RETURN llRange,d
+//RETURN lListss
+
+
+MATCH (c:CreatedBy {resultId:"7" , wNum:"0"}) -[:CreatedBye]->(d:dNode)
+WITH d.loopList AS lL,d
+With lL,Size(lL) AS lLS,d
+WITH lL,lLS-2 AS lLss,d
+WITH substring(lL,1,lLss) AS lLs,d
+WITH split(lLs,',') AS lList,d
+UNWIND lList AS lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d
+WITH COLLECT(lListss) AS lLT,d
+UNWIND RANGE(0,20,1) AS  llRange
+WITH llRange,lLT,d
+WHERE lLT[llRange]="0"
+MATCH (e:Evaluate {Value:toString(llRange)})
+WITH d,e MERGE  (d)-[ee:Envalues]->(e)
+RETURN d
+//RETURN llRange,d
+//RETURN lListss
+
+1/31 
+
+
+
+   What about what Neo4j says about a null property for a node.  
+   Mayby neo4j.com says set property to null.
+
+   Apply yesterday's cypher to the whole graph.
+
+   Need dimensions less than max dimension as csv's.
+    
+
+int dimension=6; 
+int setProductRange=10;
+public static final int integerRange=20;
+
+resultCounter: 146418
+
+zAD not gracefully exiting.
+
+
+061220  resultID inital = 0            old zad061220
+                 through 26000
+
+051220        through 53000
+
+041220        resultListID 56031
+
+031220               
+
+So now onto LoopList.
+
+It is relevant to dNodes createdBy {wNum:"0"}.   
+
+
+Thinkith evaluate deserves an index at "Value".
+
+
+2/1
+
+
+Do need to observe the zad iteration sans listener.
+What is up with GaussTable1.runLoopsDriverr.
+
+Detach deleats are taking more than 10's of minuts. // ask cypher "why are my detach deletes so long".
+
+
+call apoc.periodic.iterate("MATCH (n:Foo) where n.foo='bar' return n", "DETACH DELETE n", {batchSize:1000})
+yield batches, total return batches, total
+
+
+call apoc.periodic.iterate("MATCH (c:CreatedBy) where return c", "DETACH DELETE c", {batchSize:1000})
+yield batches, total return batches, total
+
+Isn't immediate.  Build ZADDB compleatly correctly or else. 
+
+Parts to make accurate ZADDB:
+
+.FIDi needs some refactoring.
+.Do need to observe the zad iteration sans listener.
+.What is up with GaussTable1.runLoopsDriverr.
+.does the evaluate,dnode map take too long.
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "zad061220.csv" AS line FIELDTERMINATOR ";"
+WITH line,
+CASE WHEN line.wNum="0" THEN line.loopList ELSE " " END as loopListL
+Merge (d:CreatedBy {resultId:line.rCounter, wNum:line.wNum,pArray:line.pArray,translateIndex:line.translateIndex,pArrayIndexValue:line.pArrayIndexValue})
+MERGE (dd:dNode {vmResult:line.vmResult,fPArray:line.fPArray,loopList:loopListL}) 
+MERGE (d)-[:CreatedBye]->(dd)
+RETURN count(d),count(dd)
+
+╒══════════╤═══════════╕
+│"count(d)"│"count(dd)"│
+╞══════════╪═══════════╡
+│158159    │158159     │
+└──────────┴───────────┘
+
+MATCH (c:CreatedBy)
+WITH toInteger(c.resultId) AS resultIDIndex
+RETURN resultIDIndex Order BY resultIDIndex DESC LIMIT 10
+
+╒═══════════════╕
+│"resultIDIndex"│
+╞═══════════════╡
+│26368          │
+├───────────────┤
+
+UNWIND RANGE(26368,1,-1) AS rCNT //  Range max to min resultId
+WITH rCNT
+UNWIND RANGE(6,1,-1) AS wNUM     //  Range of .vmResult implies number of zMaps (one for each wNum). 
+WITH rCNT,wNUM,wNUM-1 AS wNUMM
+WITH toString(rCNT) as rCNTT,toString(wNUM) as wNUMS,toString(wNUMM) as wNUMMS,rCNT
+MATCH (c:CreatedBy {resultId:rCNTT , wNum:wNUMS}) -[:CreatedBye]->(d:dNode)
+WITH c,d,rCNTT,wNUMMS
+MATCH (cc:CreatedBy {resultId:rCNTT , wNum:wNUMMS})-[:CreatedBye]->(dd:dNode)
+WITH c,d, cc,dd   //rCNTT,wNUMS,wNUMMS
+MERGE (d)-[:zMap]->(dd)
+return count(d)
+
+╒══════════╕
+│"count(d)"│
+╞══════════╡
+│128148    │
+└──────────┘
+
+UNWIND RANGE(26368,1,-1) AS rCNT         // resultID range within .csv line
+WITH toString(rCNT) AS rCNTS
+MATCH (c:CreatedBy {resultId:rCNTS , wNum:"0"}) -[:CreatedBye]->(d:dNode)
+WITH d.loopList AS lL,d
+WITH lL,Size(lL) AS lLS,d                   //  LoopList String comprehension. 
+WITH lL,lLS-2 AS lLss,d                     //  Assign String function parameters.
+WITH substring(lL,1,lLss) AS lLs,d          //  Remove brackets from String.
+WITH split(lLs,',') AS lList,d              //  Comprehension ends with collecting comma seperated values into a list
+UNWIND lList AS lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d
+WITH COLLECT(lListss) AS lLT,d
+UNWIND RANGE(0,19,1) AS  llRange         //  Range must be sized to .integerRange.  
+WITH llRange,lLT,d
+WHERE lLT[llRange]="0"
+MATCH (e:Evaluate {Value:toString(llRange)})
+WITH d,e MERGE  (d)-[ee:Envalues]->(e)
+RETURN d
+
+match (d:dNode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots=4 
+match (d)-[:CreatedBye]->(c:CreatedBy) 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d,c
+with "["+rootString+"]" as rootStringg,c.pArray as pArray
+return {RootList:rootStringg,PArray:pArray}
+
+
+match (d:dNode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots=3
+MATCH (c:CreatedBy)-[:CreatedBye]->(d) 
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d,c
+with "["+rootString+"]" as rootStringg,c.pArray as pArray
+return {RootList:rootStringg,PArray:pArray}
+
+ZAD output to .CSV as well as 
+the load from .CSV cypher scripts are performat.
+
+Do not yet have more than just dim=5 loaded.  
+Have not ran where roots=2 for corrolating centerIndex,vertical displacemant 
+Along with some muEvaluates is the afternoon effort.
+
+match (d:dNode)-[:Envalues]->(e:Evaluate)
+with d,count(e) as roots,collect(e.Value) as evals
+where roots=2
+MATCH (c:CreatedBy)-[:CreatedBye]->(d) 
+
+with substring(reduce(s="", value in evals | s + "," + toString(value)),1) as rootString,d,c
+with "["+rootString+"]" as rootStringg,c.pArray as pArray
+
+return {RootList:rootStringg,PArray:pArray}
+
+╒══════════════════════════════════════════════════════╕
+│"{RootList:rootStringg,PArray:pArray}"                │
+╞══════════════════════════════════════════════════════╡
+│{"RootList":"[14,0]","PArray":"[0, 8, 6, 7, 4, 0]"}   │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[14,0]","PArray":"[0, 8, 6, 2, 4, 0]"}   │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 6, 3, 1, 0]"}    │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 6, 3, 1, 0]"}    │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 6, 0, 1, 0]"}    │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 6, 0, 1, 0]"}    │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 2, 9, 3, 0]"}    │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 2, 9, 3, 0]"}    │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 4, 7, 4, 0]"}    │
+├──────────────────────────────────────────────────────┤
+│{"RootList":"[0,1]","PArray":"[0, 0, 4, 7, 4, 0]"}    │
+
+
+And the querry is  PArray pruned back from the deepest wNum's
+(assign deep indices to zero).  Maybe some theory about what
+ever deep ones are the relevant low indices perform but 
+probably with different vertical translate indices.
+Which means the cypher should be higher wNum agnostic.
+
+Target low wNum Parray indices are evaluates.e.nBinary
+transcribes.
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+RETURN ptlcr
+
+╒═════════════════╕
+│"ptlcr"          │
+╞═════════════════╡
+│["1","1","1","1"]│
+├─────────────────┤
+│["1","1","2"]    │
+├─────────────────┤
+│["2","2"]        │
+├─────────────────┤
+│["1","3"]        │
+├─────────────────┤
+│["4"]            │
+└─────────────────┘
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+RETURN ptlcri
+
+
+╒═════════╕
+│"ptlcri" │
+╞═════════╡
+│[1,1,1,1]│
+├─────────┤
+│[1,1,2]  │
+├─────────┤
+│[2,2]    │
+├─────────┤
+│[1,3]    │
+├─────────┤
+│[4]      │
+└─────────┘
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+RETURN ptlcrii
+
+╒═════════╕
+│"ptlcrii"│
+╞═════════╡
+│[1,2,3,4]│
+├─────────┤
+│[1,2,4]  │
+├─────────┤
+│[2,3]    │0101
+├─────────┤
+│[1,4]    │
+├─────────┤
+│[4]      │
+└─────────┘
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+
+RETURN  pi
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+
+
+MATCH (d:dNode)-[:Envalues]->(e:Evaluate) WHERE e.Value = pi[1] and ...
+                                                                or  ...   
+                        
+So,   MATCH (ee:Evaluate) WHERE e.Value IN pi 
+      WITH ee
+      MATCH (d:dNode)-[env:Envalues]->(ee) WHERE COUNT(env)=size(pi)  
+      RETURN d,ee
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+WITH ee
+
+MATCH (d:dNode)-[env:Envalues]->(ee) 
+MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+
+
+
+
+all(variable IN list WHERE predicate)                                  where all :Envalues
+
+WHERE ALL(
+
+//RETURN  pi
+
+
+
+
+Using the ALL predicate is the correct way here. How about this query:
+
+MATCH (:User { Login:'User1' })-[:IS_GRANTED]->(acl)-[:IS_APPLICABLE]->(meta)-[:IS_APPLICABLE]->(item)
+WITH item, collect(meta) AS userMetas
+MATCH (item)<-[:IS_APPLICABLE]-(meta2)
+WITH item, userMetas, collect(meta2) AS itemMetas
+WHERE ALL (x IN itemMetas   WHERE x IN userMetas)
+RETURN item
+
+
+WHERE COUNT(env)=size(pi)  
+RETURN d,ee
+
+MATCH (a:Person { name: 'Charlie Sheen' })
+RETURN [(a)-->(b) WHERE b:Movie | b.year] AS years
+
+all(variable IN list WHERE predicate)
+
+MATCH p =(a)-[*1..3]->(b)
+WHERE a.name = 'Alice' AND b.name = 'Daniel' AND ALL (x IN nodes(p) WHERE x.age > 30)
+RETURN p
+RETURN ptlcriii
+RETURN ptlcrii
+
+2/6
+
+   Have "pi" rows of lists.  Each list is a set of .Values.
+  Cypher to return the dNodes with :Envalues relations 
+  to each and only .Values within list.
+
+WITH COLLECT(muE) as targetCI
+Match (createdby2:CreatedBy {resultId:createdbyRoot})<-[:CreatedBye]-(dNode2:Dnode)-[:zMap]->(linearDnodes:Dnode)-[CreatedBye]->(createdbyLD:CreatedBy) 
+WHERE createdbyLD.pArrayIndexValue IN targetCI
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+WITH ee,pi
+MATCH (d:dNode)-[env:Envalues]->(ee) 
+WITH d,pi
+MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+WITH ee,pi,size(pi) as pis
+MATCH (d:dNode)-[env:Envalues]->(ee) 
+WITH d,pi,pis,collect(d) as dList,collect(ee) as eList
+WHERE ALL(x IN pi where x in eList)
+//MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+return dList
+
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+WITH ee,pi,size(pi) as pis
+MATCH (d:dNode)-[env:Envalues]->(ee) 
+WITH d,pi,pis,collect(d) as dList,collect(ee) as eList
+MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+WITH collect(eee.Value) as eeVal,pi,d
+WHERE ALL(x IN pi where x in eeVal)
+return d
+
+
+MATCH (e:Evaluate {d:"4"})
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+MATCH (ee:Evaluate) WHERE ee.Value IN pi 
+WITH ee,pi,size(pi) as pis
+MATCH (d:dNode)-[env:Envalues]->(ee) 
+WITH d,pi,pis,collect(d) as dList,collect(ee) as eList
+MATCH (d)-[enva:Envalues]->(eee:Evaluate)
+WITH collect(eee.Value) as eeVal,pi,d,eee,pis,count(enva) as envac
+WHERE envac=pis            //ALL(x IN pi where x in eeVal)
+return d,collect(eee) as ece
+
+Not yet for:
+Have each low pArray for transcribe in ptl.
+Need a string concatinated as argument for 
+Match (c:CreatedBy {pArray: stringArg})  
+pArray: [0, 1, 0, 0, 0, 0]
+
+ZAD's three parameters   :
+
+        .resultID
+        .integer
+        .wkNum
+
+2/2 
+
+   ZADDB is sensitive to .integerRange.  Corrected and will reRun latest .csv.
+
+
+2/4
+
+   From 1/7:
+
+"looking for the new pattern but suppose what again about using the twoPolynomial pattern."
+
+{"RootList":"[38,37,0]","PArray":"[0, 12, 24, 0]"}
+{"RootList":"[35,34,0]","PArray":"[0, 11, 22, 0]"}
+{"RootList":"[32,31,0]","PArray":"[0, 10, 20, 0]"}
+{"RootList":"[29,28,0]","PArray":"[0, 9, 18, 0]"}
+
+Suppose with "dimensional ZADD" the hypothesis  [0,12,24,36] is interesting
+                                                [0,11,22,33]
+                                                    ...
+                                                    ...
+
+2/7
+
+   FTAlgebra ony one p^D for d many roots.
+   A certan multiplicity otherwise.
+   Remember the multiplicity from ci,verticalDisplacementIndex.
+
+MATCH (e:Evaluate {Value:"15"})         // d:4,n:1,Value:15 
+WITH e.nBinary AS pTList
+WITH pTList,Size(pTList) AS pTListS
+WITH pTList,pTListS-2 AS pTListSS 
+WITH substring(pTList,1,pTListSS) AS ptlists
+WITH split(ptlists,',') AS ptl
+WITH [ x IN RANGE(0,SIZE(ptl)-1) | lTrim(ptl[x]) ] as ptlc
+WITH reverse(ptlc) AS ptlcr 
+WITH [ x IN RANGE(0,SIZE(ptlcr)-1) | toInteger(ptlcr[x])  ] as ptlcri
+WITH [ x IN RANGE(0,SIZE(ptlcri)-1) | ptlcri[x]+x  ] as ptlcrii
+WITH [ x IN RANGE(0,SIZE(ptlcrii)-1) | toString(ptlcrii[x])  ] as pi
+WITH [Range(19,5,-1)] as piComplement,pi
+MATCH (d:dNode)-[env:Envalues]->(ee:Evaluate) Where ee.Value IN pi AND NOT ee.Value in piComplement  
+WITH distinct d,ee
+WITH {vmResult:d.vmResult,Evaluate:Collect(distinct ee.Value)} as Nds 
+RETURN Nds
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"Nds"                                                                 │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"vmResult":"[0.0, 0.99999999995462, -9.999999999241936, -685.00000000│
+│46797, 8530.000000013186, -7836.000000016787, 7.56699591876657E-9]","E│
+│valuate":["1"]}                                                       │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+
+2/9
+
+   With the multiple of scalars thing, first observed with ci,vdI,  the next lab:
+
+   With d, have unique size(EvaluateList)=d.
+      f(d-1)                             =d-1   // but these following are not.
+      f(d-2)                             =d-2
+      ...                                ...
+
+             
+   Also have what to do with the other side of Evaluate.
+
+
+
+
+match (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N="3" or i.N="2"
+WITH {TwoSeq:COLLECT({TwoSeq:t.twoSeq}),Vertex:v.Vertex} as factors,v,i,e
+With Collect(e.Value) as Values,factors,v,i,e
+With collect(v.Vertex) as vV,factors,v,i,Values,e
+WITH collect(factors.TwoSeq) as fact,v,i.N as N,vV,Values,e
+Unwind RANGE(0,SIZE(fact)-1) as ii
+Unwind fact[ii] as ts
+With collect(ts.TwoSeq) as cts,v,N,vV,Values,e
+With REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,e,Values
+With v,N,vV,e,Values,
+Case      // predicate style case as opposed to value case.
+when e.Value="4" Then 0-TotalTseq Else TotalTseq End as TotalTseq
+With [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV //,e
+With {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV//,e
+with collect(output) as outputlist,outputMap,output,vV//,e
+with DISTINCT vV as vVV, outputlist,outputMap,output//,e
+with collect(outputMap.TotalT) as opMTT,vVV//,e
+With REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,     opMTT,vVV//,e
+With Collect(TotalTseqq) as result,vVV    // but e down here dosnt collapse map.
+Return {Multiple:result,Vertex:vVV} //,e.Value
+
+
+(p−1)!≡−1 (modp) 
+
+P=5
+
+D=2
+f(x) = ax^2 + bx + c 
+
+a:0,1,2,3,4
+
+want 3C5 many of a | p devides 
+f(a)
+
+0,1,2
+0,1,3
+0,1,4
+1,2,3
+1,2,4
+2,3,4
+1,3,4
+0,3,4
+
+And how can zaddb help with this?
+
+Cypher script
+
+For each indexTripple in 3C5 
+Test every wNum=0 
+
+MATCH (c:CreatedBy)-[]->(n:dNode) 
+WHERE c.wNum="0"
+RETURN n
+
+
+
+MATCH (c:CreatedBy)-[]->(n:dNode) 
+WHERE c.wNum="0"
+WITH COLLECT(c.loopList)
+RETURN n
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"wNum":"1","pArray":"[0, 0, 6, 7, 11, 0]","translateIndex":"-2","resu│
+│ltId":"25433","pArrayIndexValue":"0"}                                 │
+├──────────────────────────────────────────────────────────────────────┤
+│{"wNum":"2","pArray":"[0, 0, 6, 7, 11, 0]","translateIndex":"-2","resu│
+│ltId":"25433","pArrayIndexValue":"0"}                                 │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"n"                                                                   │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"vmResult":"[0.0, 0.9999999999738652, -9.999999999559577, -25.0000000│
+│02719997, 490.00000000765976, -4536.000000009751, 4.39467839897597E-9]│
+│","loopList":"[0, -4080, -7440, -10440, -13440, -16680, -20160, -23520│
+│, -25920, -25920, -21360, -9240, 14400, 54600, 117600, 210960, 343680,│
+│ 526320, 771120, 1092120]","fPArray":"[0, 0, 0, 0, -55, 1]"}          │
+├──────────────────────────────────────────────────────────────────────┤
+│{"vmResult":"[0.0, 5.000000000003411, -30.00000000003979, -124.9999999│
+│9984902, 869.9999999997672, -4079.999999999884]","loopList":" ","fPArr│
+│ay":"[0, 0, 0, 0, -55, 1]"}                                           │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+(p−1)!≡−1 (modp) 
+
+P=5
+
+D=2
+f(x) = ax^2 + bx + c 
+
+a:0,1,2,3,4
+
+want 3C5 many of a | p devides 
+f(a)
+
+0,1,2
+0,1,3
+0,1,4
+1,2,3
+1,2,4
+2,3,4
+1,3,4
+0,3,4
+
+And how can zaddb help with this?
+
+Cypher script
+
+For each indexTripple in 3C5 
+Test every wNum=0 
+
+MATCH (c:CreatedBy)-[]->(n:dNode) 
+WHERE c.wNum="0"
+RETURN n
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d
+WITH lL,Size(lL) AS lLS,d                   
+WITH lL,lLS-2 AS lLss,d                    
+WITH substring(lL,1,lLss) AS lLs,d         
+WITH split(lLs,',') AS lList,d             
+UNWIND lList AS lLists
+
+RETURN lLists limit 25
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+//WITH split(lLs,',') AS lList,d             
+//UNWIND lList AS lLists
+return {resultId:c.resultId,loopList:lLS} limit 100
+//RETURN lLists limit 25
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+//WITH split(lLs,',') AS lList,d             
+//UNWIND lList AS lLists
+return {resultId:c.resultId,loopList:lLs} limit 100
+//RETURN lLists limit 25
+
+need cypher to know what d='s.
+need cypher to count how many f(a)'s in 0,1,..,p-1 are divisible by d.
+
+dNode.vmResult is degree 5.
+then for p=7 at least 5 are divisible by p.
+
+3/11
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+//WITH split(lLs,',') AS lList,d             
+//UNWIND lList AS lLists
+return {resultId:c.resultId,loopList:lLs} limit 100
+//RETURN lLists limit 25
+
+╒═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"{resultId:c.resultId,loopList:lLs}"                                                                                                                                                                     │
+╞═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"resultId":"25435","loopList":"0, 22920, 22920, 6720, -20280, -53880, -90960, -129360, -167760, -205560, -242760, -279840, -317640, -357240, -399840, -446640, -498720, -556920, -621720, -693120"}     │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"resultId":"25436","loopList":"0, 39120, 55320, 55320, 44520, 27120, 6240, -15960, -38160, -59760, -80760, -101640, -123240, -146640, -173040, -203640, -239520, -281520, -330120, -385320"}            │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"resultId":"548","loopList":"0, -8640, -16560, -24120, -31680, -39480, -47520, -55440, -62400, -66960, -66960, -59400, -40320, -4680, 53760, 142560, 270720, 448800, 689040, 1005480"}                  │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c             
+//UNWIND lList AS lLists
+return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+
+We use the fact that if a polynomial f(X) has integer coefficients,
+degree d and that there are more  dvalues of a∈{0,1,2,...,p−1} with f(a)≡0(modp) then all the coefficients of f 
+are multiples of p. (It is essential that p be prime for this to hold!)
+
+
+d=5
+p=7  
+for each looplist when wNum=0
+cypher is to count how many of the first 7 looplist vaules are divisible by 7
+if there are more than 5, then all the coefficients are multiples of p.
+
+
+
+3/12
+
+  Good old stackO question:  
+  The mu numbers are complete:
+
+  
+for each in looplist case index%p=0 increment 
+
+reduce
+
+reduce(accumulator = initial, variable IN list | expression)
+
+FOREACH (ignoreMe in CASE WHEN row.ACCOUNTRECID <> oao.acctrecid THEN [1] ELSE [] END | DELETE aor)
+FOREACH (ignoreMe in CASE WHEN row.ACCOUNTRECID <> oao.acctrecid THEN [1] ELSE [] END | DELETE aor)
+
+maybe:
+
+ prune looplist to size p.
+ iterate case var%p<>0  delete 
+ count list. 
+
+extract()
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d,c
+WITH COLLECT(lListss) AS lLT,d,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted
+return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"lLTeXtracted"                                                        │
+╞══════════════════════════════════════════════════════════════════════╡
+│[true,false,false,true,false,false,true,true,false,false,true,false,fa│
+│lse,true,true,false,false,true,false,false]                           │
+├──────────────────────────────────────────────────────────────────────┤
+│[true,true,true,true,false,false,false,true,true,true,true,false,false│
+│,false,true,true,true,true,false,false]                               │
+├──────────────────────────────────────────────────────────────────────┤
+│[true,false,false,false,false,false,false,true,false,false,false,false│
+│,false,false,true,false,false,false,false,false]                      │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d,c
+WITH COLLECT(lListss) AS lLT,d,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d
+return {BooleanLoopList:lLTeXtracted,VmResult:d.vmResult}
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+
+╒═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╕
+│"{BooleanLoopList:lLTeXtracted,VmResult:d.vmResult}"                                                                                                                                                 │
+╞═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+│{"BooleanLoopList":[true,false,false,true,false,false,true,true,false,false,true,false,false,true,true,false,false,true,false,false],"VmResult":"[0.0, 0.9999999999996982, -14.999999999998579, 25.00│
+│000000000936, 314.9999999999361, 274.00000000011534, -6.184563972068832E-11]"}                                                                                                                       │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"BooleanLoopList":[true,true,true,true,false,false,false,true,true,true,true,false,false,false,true,true,true,true,false,false],"VmResult":"[0.0, 0.9999999993998547, -54.99999998987914, 304.999999│
+│93750436, 8695.000000176078, -104706.00000022417, 1.0104849934599052E-7]"}                                                                                                                           │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│{"BooleanLoopList":[true,false,false,false,false,false,false,true,false,false,false,false,false,false,true,false,false,false,false,false],"VmResult":"[0.0, 1.0000000005738305, -65.00000000961154, 1│
+│565.000000059362, -17935.000000167172, 99234.00000021284, -9.592622518559468E-8]"}                                                                                                                   │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d,c
+WITH COLLECT(lListss) AS lLT,d,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted
+return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+[true, false, false, true, false, false, true, true, false, false, true, false, false, true, true, false, false, true, false, false]
+[true, true, true, true, false, false, false, true, true, true, true, false, false, false, true, true, true, true, false, false]
+[true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false]
+[true, true, true, true, true, false, false, true, true, true, true, true, false, false, true, true, true, true, true, false]
+[true, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, false, false, false]
+[true, true, false, false, false, false, false, true, true, false, false, false, false, false, true, true, false, false, false, false]
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d,c
+WITH COLLECT(lListss) AS lLT,d,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d
+Unwind RANGE(0,6) as ii,lLTeXtracted,d
+WITH {booleanLoopList:collect(lLTeXtracted[ii]),vmResult:d.vmResult} as latest
+return latest
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d,c
+WITH COLLECT(lListss) AS lLT,d,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d 
+Unwind RANGE(0,6) as ii
+WITH {booleanLoopList:collect(lLTeXtracted[ii]),vmResult:d.vmResult} as latest
+return latest
+//return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+//  want to extract from booleanLoopList true values then count them 
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d,c
+WITH COLLECT(lListss) AS lLT,d,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d
+
+Unwind RANGE(0,6) as ii
+WITH {booleanLoopList:collect(lLTeXtracted[ii]),vmResult:d.vmResult} as latest
+WITH {booleanLoopList:extract (n in latest.booleanLoopList | n=true),vmResult:latest.vmResult} as latestt
+return latestt
+//return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(d:dNode) 
+WITH d.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d,c                   
+WITH lL,lLS-2 AS lLss,d,c                    
+WITH substring(lL,1,lLss) AS lLs,d,c         
+WITH split(lLs,',') AS lList,d,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d,c
+WITH COLLECT(lListss) AS lLT,d,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d
+
+Unwind RANGE(0,6) as ii
+WITH {booleanLoopList:collect(lLTeXtracted[ii]),vmResult:d.vmResult} as latest
+//WITH {booleanLoopList:extract (n in latest.booleanLoopList | n ),vmResult:latest.vmResult} as latestt
+WITH {booleanLoopList:filter(n in latest.booleanLoopList where  n=true ),vmResult:latest.vmResult} as latestt
+return latestt
+//return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"latestt"                                                             │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"booleanLoopList":[true,true],"vmResult":"[0.0, 0.9999999998771879, -│
+│44.9999999978445, 384.9999999861927, 1725.0000000399596, -28226.000000│
+│051823, 2.3632310330917137E-8]"}                                      │
+├──────────────────────────────────────────────────────────────────────┤
+│{"booleanLoopList":[true,true],"vmResult":"[0.0, 0.9999999996335495, -│
+│14.999999994146492, -815.0000000349561, 10575.00000009613, -42026.0000│
+│00120206, 5.355104804050188E-8]"}                                     │
+├──────────────────────────────────────────────────────────────────────┤
+│{"booleanLoopList":[true,true,true],"vmResult":"[0.0, 1.00000000003522│
+│03, -25.00000000058617, -54.99999999638385, 2424.9999999898046, 6054.0│
+│000000129785, -5.849869921815695E-9]"}                                │
+├──────────────────────────────────────────────────────────────────────┤
+
+So, maybe wilson proof cannot be applied because leading coefficient is one.
+
+But it is said that wilson cypher is an excersise.
+
+Remember multiple vmResults because of pArray.  
+
+
+WITH {vmResult:distinct dd.vmResult,loopList:distinct dd.loopList) as d //,dd,c
+return d
+
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(dd:dNode)
+With distinct dd.vmResult as d,dd
+With distinct dd.loopList as lL,d
+//WITH dd.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d  //,c                   
+WITH lL,lLS-2 AS lLss,d    //,c                    
+WITH substring(lL,1,lLss) AS lLs,d  //,c         
+WITH split(lLs,',') AS lList,d     //,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d  //,c
+WITH COLLECT(lListss) AS lLT,d  //,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d
+
+Unwind RANGE(0,6) as ii
+WITH {booleanLoopList:collect(lLTeXtracted[ii]),vmResult:d} as latest
+//WITH {booleanLoopList:extract (n in latest.booleanLoopList | n ),vmResult:latest.vmResult} as latestt
+WITH {booleanLoopList:filter(n in latest.booleanLoopList where  n=true ),vmResult:latest.vmResult} as latestt
+return latestt
+//return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+
+╒══════════════════════════════════════════════════════════════════════╕
+│"latestt"                                                             │
+╞══════════════════════════════════════════════════════════════════════╡
+│{"booleanLoopList":[true,true],"vmResult":"[0.0, 0.9999999998771879, -│
+│44.9999999978445, 384.9999999861927, 1725.0000000399596, -28226.000000│
+│051823, 2.3632310330917137E-8]"}                                      │
+├──────────────────────────────────────────────────────────────────────┤
+│{"booleanLoopList":[true],"vmResult":"[0.0, 0.9999999996335495, -14.99│
+│9999994146492, -815.0000000349561, 10575.00000009613, -42026.000000120│
+│206, 5.355104804050188E-8]"}                                          │
+├──────────────────────────────────────────────────────────────────────┤
+│{"booleanLoopList":[true,true,true],"vmResult":"[0.0, 1.00000000003522│
+│03, -25.00000000058617, -54.99999999638385, 2424.9999999898046, 6054.0│
+│000000129785, -5.849869921815695E-9]"}                                │
+├──────────────────────────────────────────────────────────────────────┤
+│{"booleanLoopList":[true],"vmResult":"[0.0, 1.0000000002301022, -65.00│
+│000000384898, 1265.0000000237487, -10855.000000066939, 39774.000000085│
+│23, -3.8417056202968745E-8]"}                                         │
+├──────────────────────────────────────────────────────────────────────┤
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(dd:dNode)
+With distinct dd.vmResult as d,dd
+With distinct dd.loopList as lL,d
+//WITH dd.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d  //,c                   
+WITH lL,lLS-2 AS lLss,d    //,c                    
+WITH substring(lL,1,lLss) AS lLs,d  //,c         
+WITH split(lLs,',') AS lList,d     //,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d  //,c
+WITH COLLECT(lListss) AS lLT,d  //,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d
+Unwind RANGE(0,6) as ii
+WITH {booleanLoopList:collect(lLTeXtracted[ii]),vmResult:d} as latest
+with latest,latest.vmResult as lvm
+//WITH {booleanLoopList:extract (n in latest.booleanLoopList | n ),vmResult:latest.vmResult} as latestt
+//WITH {booleanLoopList:filter(n in latest.booleanLoopList where  n=true ),vmResult:latest.vmResult} as latestt
+WITH filter(n in latest.booleanLoopList where  n=true) as latestt,lvm
+//WITH {CountBooleanLoopList:count(latestt.booleanLoopList)} as latesttt
+unwind latestt as latesttt
+with count(latesttt) as cBL,lvm
+//with collect(latestt) as latesttt
+//with [llb in latesttt | count(llb)] as cBLC
+return cBL,lvm
+//return latestt
+//return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+╒═════╤══════════════════════════════════════════════════════════════════════╕
+│"cBL"│"lvm"                                                                 │
+╞═════╪══════════════════════════════════════════════════════════════════════╡
+│2    │"[0.0, 0.9999999998771879, -44.9999999978445, 384.9999999861927, 1725.│
+│     │0000000399596, -28226.000000051823, 2.3632310330917137E-8]"           │
+├─────┼──────────────────────────────────────────────────────────────────────┤
+│1    │"[0.0, 0.9999999996335495, -14.999999994146492, -815.0000000349561, 10│
+│     │575.00000009613, -42026.000000120206, 5.355104804050188E-8]"          │
+├─────┼──────────────────────────────────────────────────────────────────────┤
+│3    │"[0.0, 1.0000000000352203, -25.00000000058617, -54.99999999638385, 242│
+│     │4.9999999898046, 6054.0000000129785, -5.849869921815695E-9]"          │
+├─────┼──────────────────────────────────────────────────────────────────────┤
+
+
+MATCH (c:CreatedBy {wNum:"0"} )-[]->(dd:dNode)
+With distinct dd.vmResult as d,dd
+With distinct dd.loopList as lL,d
+//WITH dd.loopList AS lL,d,c
+WITH lL,Size(lL) AS lLS,d  //,c                   
+WITH lL,lLS-2 AS lLss,d    //,c                    
+WITH substring(lL,1,lLss) AS lLs,d  //,c         
+WITH split(lLs,',') AS lList,d     //,c
+UNWIND lList as lLists
+WITH CASE WHEN size(lLists)>1 THEN substring(lLists,1,size(lLists)) else lLists END AS lListss,d  //,c
+WITH COLLECT(lListss) AS lLT,d  //,c
+WITH extract (n IN lLT | toInteger(n)%7=0) as lLTeXtracted,d
+Unwind RANGE(0,6) as ii
+WITH {booleanLoopList:collect(lLTeXtracted[ii]),vmResult:d} as latest
+with latest,latest.vmResult as lvm
+//WITH {booleanLoopList:extract (n in latest.booleanLoopList | n ),vmResult:latest.vmResult} as latestt
+//WITH {booleanLoopList:filter(n in latest.booleanLoopList where  n=true ),vmResult:latest.vmResult} as latestt
+WITH filter(n in latest.booleanLoopList where  n=true) as latestt,lvm
+//WITH {CountBooleanLoopList:count(latestt.booleanLoopList)} as latesttt
+unwind latestt as latesttt
+with count(latesttt) as cBL,lvm
+//with collect(latestt) as latesttt
+//with [llb in latesttt | count(llb)] as cBLC
+where cBL > 3
+return cBL,lvm
+//return latestt
+//return lLTeXtracted
+//UNWIND lList AS lLists
+//return {resultId:c.resultId,vmResult:d.vmResult,loopList:lList} limit 100
+//RETURN lLists limit 25
+
+╒═════╤══════════════════════════════════════════════════════════════════════╕
+│"cBL"│"lvm"                                                                 │
+╞═════╪══════════════════════════════════════════════════════════════════════╡
+│4    │"[0.0, 0.99999999981848, -29.999999996967745, 154.99999998128865, 2670│
+│     │.0000000527434, -31356.00000006715, 3.026798367506628E-8]"            │
+├─────┼──────────────────────────────────────────────────────────────────────┤
+│5    │"[0.0, 1.000000000052622, -45.00000000084583, 805.0000000050744, -3795│
+│     │.000000013997, 6394.000000017546, -7.828930392877721E-9]"             │
+├─────┼──────────────────────────────────────────────────────────────────────┤
+│5    │"[0.0, 1.0000000000158251, -25.00000000026671, 245.0000000016471, -117│
+│     │5.0000000046402, 2754.000000005908, -2.663000486796697E-9]"           │
+├─────┼──────────────────────────────────────────────────────────────────────┤
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

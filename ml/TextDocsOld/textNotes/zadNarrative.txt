@@ -1,0 +1,155 @@
+need a graph because the workbook is not sufficient.
+need a %spark use-case.
+
+
+TwoPolynomial produces the .csv's for zaddb within JavaProjects.
+ZADDB consumes them from witin its import folder with LoadCSV.
+
+AdditionScript Has a projection of Multiples and vertex.
+
+Need each in projection evaluated
+as multiple *scalar * maxN 
+
+CREATE INDEX ON :IndexedBy(N)
+CREATE INDEX ON :Evaluate(Value)
+CREATE INDEX ON :TwoSeqFactor(twoSeq)
+
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "TwoPolynomial092319.csv" AS line FIELDTERMINATOR ";"
+WITH line
+
+MERGE (i:IndexedBy {N:line.NN,RowCounter:line.flatFileRowCounterr,MaxN:line.nMaxx} )
+MERGE (t:TwoSeqFactor {twoSeq:line.tSeqDB} )
+MERGE (v:VertexNode {Vertex:line.vertexDBVertex,Scalar:line.vertexScalarDB,Degree:line.vertexDegreeDB} )
+MERGE (e:Evaluate {Value:line.targetEvaluate})
+MERGE  (i)-[ee:TwoFactor]->(t)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[ee:VertexIndexedBy]->(v)
+RETURN line
+
+
+The arithmetic 
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) WHERE (i.N="4" OR i.N="5") AND (i.MaxN="100") AND (i.Dimension="2")
+WITH {TwoSeq:COLLECT({TwoSeq:toInteger(t.twoSeq)}),Vertex:v.Vertex} as factors,v,i,i.MaxN as iMax
+WITH COLLECT(v.Vertex) as vV,factors,v,i,iMax
+WITH COLLECT(factors.TwoSeq) as fact,v,i.N as N,vV,iMax
+UNWIND RANGE(0,SIZE(fact)-1) as ii
+UNWIND fact[ii] as ts
+WITH collect(ts.TwoSeq) as cts,v,N,vV,iMax
+WITH REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalTseq,v,N,vV,iMax
+WITH [v.Vertex,TotalTseq,N] as output,v,N,TotalTseq,vV,iMax
+WITH {vVertex:v.Vertex,TotalT:TotalTseq,N:N} as outputMap,output,vV,iMax
+WITH collect(output) as outputlist,outputMap,output,vV,iMax
+WITH DISTINCT vV as vVV, outputlist,outputMap,output,iMax
+WITH collect(outputMap.TotalT) as opMTT,vVV,iMax
+WITH REDUCE(tSum=0,ff IN opMTT | tSum +ff) As TotalTseqq,opMTT,vVV,iMax
+WITH Collect(TotalTseqq) as result,vVV,iMax
+
+UNWIND vVV as vVVV
+WITH vVVV as lL,result as d,iMax
+WITH lL,Size(lL) AS lLS,d,iMax                    
+WITH lL,lLS-2 AS lLss,d,iMax                     
+WITH SUBSTRING(lL,1,lLss) AS lLs,d,iMax          
+WITH COLLECT(split(lLs,' ')) AS lList,d,iMax              
+
+UNWIND RANGE(0,size(lList)-1) AS rC 
+WITH  lList[rC] as vtx,d,iMax
+WITH collect( toInteger((d[0]*(CASE WHEN toInteger(vtx[2])=-1 THEN toInteger(vtx[1])*2 ELSE toInteger(vtx[1]) END*(toInteger(iMax) ^ CASE WHEN toInteger(vtx[2])=-1 THEN toInteger(vtx[2])+1 ELSE toInteger(vtx[2]) END )))/2))  as rSlt
+WITH REDUCE(tSum=0,ff IN rSlt  | tSum +ff) As TotalrSlt
+RETURN TotalrSlt
+
+
+
+The next dimension:
+
+Extend graph to inculde quartet polynomials representing powers of 2.
+
+MATCH (v:VertexNode)<-[]-(i:IndexedBy)-[]->(e:Evaluate),(t:TwoSeqFactor)<-[]-(i) where i.N='4' AND i.MaxN='10' AND i.Dimension="2" //AND t.twoSeq=1
+WITH i.N as iN, i.MaxN as iM,e,v,t
+OPTIONAL MATCH (vv:VertexNode)<-[]-(ii:IndexedBy)-[]->(ee:Evaluate {Value:toString(t.twoSeq)}),(tt:TwoSeqFactor)<-[]-(ii) where ii.MaxN='10'  AND ii.Dimension="2"
+WITH iN,iM,e,v,vv,t,tt,ee
+CREATE (p:ProductArgsNode {Divisor:t.twoSeq})
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq}] - (p)                           
+ Set p.Divisor = 2 )
+FOREACH(snoreMe IN CASE  WHEN vv.Vertex IS not null  THEN [1] ELSE [] END | 
+CREATE (v) <- [:ProductRelationT {T:t.twoSeq}] - (p) 
+Set p.Divisor = 4   
+cREATE (p) - [:ProductRelationA {T:tt.twoSeq, Eval:ee.Value}] -> (vv)  )
+MERGE  (i:IndexedBy {N:iN, Dimension:"4",MaxN:iM,RowCounter:t.twoSeq})
+MERGE  (i)-[:VertexIndexedBy]->(p)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+RETURN i,p,v
+
+
+Evaluate a quartet polynomial as a prelude to adding two quartets representing two numbers. 
+
+MATCH (i:IndexedBy)-[]->(e:Evaluate),(i:IndexedBy)-[:VertexIndexedBy]->(p:ProductArgsNode) where i.N='5' AND i.MaxN='100' AND i.Dimension="4"
+WITH i,e,p,i.N as iN, i.MaxN as iM
+MATCH (v:VertexNode) <- [p1:ProductRelationT] - (p) 
+WITH i,e,p,v,p1,iN,iM
+OPTIONAL MATCH  (p) - [p2:ProductRelationA] -> (vv:VertexNode)
+WITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD
+WITH {Divisor:pD,afe:toInteger(p2.Eval),tft:toInteger(p1.T),DS: COLLECT( {  TDegree:CASE WHEN toInteger(v.Degree)=-1 THEN toInteger(v.Degree)+1 ELSE toInteger(v.Degree) END,
+                                      TScalar:CASE WHEN toInteger(v.Degree)=-1 THEN toFloat(v.Scalar)*2 ELSE toFloat(v.Scalar) END,
+                                      ATwoSeq:toInteger(p2.T),
+                                      ADegree:toInteger(vv.Degree),   
+                                      AScalar:CASE WHEN toInteger(vv.Degree)=-1 THEN toFloat(vv.Scalar)*2 ELSE toFloat(vv.Scalar) END })    }  AS argumentProduct,iN,iM,e
+
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPTdsU.AScalar IS null THEN                                         //  ProductArgsNode gets the division information.                 
+{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toInteger(aPafe)), 
+      ResultDegree:aPTdsU.TDegree,
+      ResultTwoSeq:aPTdsU.tft}),ET:aPafe,Divisor:apD}
+ELSE
+{DS:COLLECT({ResultScalar:(toFloat(aPTdsU.TScalar)*toFloat(aPTdsU.AScalar)*aPTdsU.ATwoSeq), 
+      ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,
+      ResultTwoSeq:aPTdsU.ATwoSeq}),ET:aPafe,Divisor:apD}
+END
+AS resultProduct,iN,iM
+WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,ET:eT,Divisor:rpD1} as resultMap,iN,iM
+
+WITH COLLECT(resultMap) as resultMapC,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,eTrm,rDRM,iN,iM,rpD2
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,eTrm,rDRM,iN,iM,rpD2
+
+WITH REDUCE(tSum=0,ff IN cts | tSum +ff) As TotalRScalar,eTrm,rDRM,iN,iM,rpD2
+WITH TotalRScalar/rpD2 as TotalRScalaR,eTrm,rDRM,iN,iM
+		
+WITH COLLECT(toInteger((TotalRScalaR*(toInteger(iM)^toInteger(rDRM)))))    as rSlt  
+WITH REDUCE(tSum=0,ff IN rSlt  | tSum +ff) As TotalrSlt
+RETURN TotalrSlt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

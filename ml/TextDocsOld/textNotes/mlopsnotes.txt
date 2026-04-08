@@ -1,0 +1,398 @@
+https://event.on24.com/eventRegistration/console/EventConsoleApollo.jsp?&eventid=2929165&sessionid=1&username=&partnerref=&format=fhvideo1&mobile=&flashsupportedmobiledevice=&helpcenter=&key=E77A97DCBF808FF22EB3E79ABCC07DAF&text_language_id=en&playerwidth=1000&playerheight=650&newConsole=true&nxChe=true&newTabCon=true&eventuserid=410155919&contenttype=L&mediametricsessionid=353519481&mediametricid=4095817&usercd=410155919&mode=launch
+databricks.com/blog
+
+ml goal optimize a metric - prediction accuracy
+
+trad software goal meet a functional specification 
+
+quality depends only on application code 
+
+quality depends on training data and tuing parameters.
+
+pick one software stack vs constantly evaluate and combine new libraries.
+
+raw data 
+data prep 
+training
+deployment
+
+data engineer 
+ml engineer
+application developer
+
+from developer to production
+
+its about ml flow.
+
+desirable features for an ml platform.
+
+ease of adoption
+
+integraton with data infrastructure   -  dataframe dataset--
+the data pipeline.
+collaborate functions - sharing code data features  experiments an models in
+central place.
+
+artis consulting.
+
+workspace come together and chat.  set up the workbook
+
+ml and git based projects.
+
+github gitlab bitbucket azure devops.
+
+
+turnkey ml training at scale.
+
+databricks ml on amazon.
+
+ml models as spark udf.
+
+aunomated capture of feature usage.
+
+automated capture of hyperparameter search
+can see which parameters lead to a high quality model.
+
+feature importance.
+
+register model  model sharing reuse and acl's  what are acl's??
+
+automated model lineage and governance.
+
+
+... typical devops concerns to ml.
+
+spark stream realtime model monitering.
+
+result fuill end to end governance and reproducibility.
+-all sorts of configuration...
+
+gpu 
+cpu
+tpu
+
+
+
+Candelwood15%
+
+
+ai beat go but text wrote golf.
+
+
+prisma ai.  - style vs content put the stye in another image
+generative advesiral networks 
+gan.
+
+amazon sage maker
+
+deep composer.
+
+three imput musical pieces stay true to...
+
+
+
+aws inferentia.
+
+sage maker ground truth.
+
+the silo no more.  democratic data
+
+nike ai first
+
+formula 1 aws.
+
+invista process controls.
+
+contribute to progress.
+
+software 2.0 in contrast to existing software.
+programmed them, now train them.  custimize to users and use case.
+
+write once and train.
+
+ordinary developer needs to know how ml works.  
+
+outome is confidence
+
+differential program.  
+write the function.  
+
+not just a formula but loops
+
+about the gradients.
+
+
+function optimizations based on gradient decent.  
+
+ai two fundimantal
+
+aquire knowlege - inductive reasoning .  simple facts 
+rules 
+
+deductive reasoning.  
+
+early ai
+
+humans aquire the knowledge.  
+
+
+machine learning .. does it.
+
+ml  
+
+supervised learing  -  a trainer exists showing correct answers.  
+
+
+unsupervised learing .  a clustering algorithm devids into clusters. 
+
+
+reinforcement learning.  atempting to sove complete ai.
+completely unknown environment.
+
+predict impending mechanical faliures.
+customer churn.
+
+ai services pre-traind  image processing to nlp
+new ....
+call the endpoint.
+
+industrial applications 
+aws panorama appliance  fleets of cameras add ai.
+ip camera.  monitor social distancing.
+osha compliance.
+
+amazon monitorn vibration temperature.  - remember no ml experience required.
+
+amazon lookout for equipment ...
+
+computer vision again ...
+
+and anamolity metrics.
+
+
+lookout for equipment vision metrics..
+
+
+ms developer services  
+
+sagemaker studio
+
+develop train deploy...
+
+knowledge of domain into sagemaker...
+
+
+studio japs and autopilot 
+experments...
+
+
+frameworks and infrastructure.. do it yourself...
+
+
+
+artificial general intelligence...   decades away...
+no definition of general intelligence...
+
+
+amazon polly:  brand voice feature text to speech.  
+
+kfc canada.
+
+
+amazan kendra ..
+
+deep racer events...  trains developers.
+
+open division.
+
+
+
+prepare datasets:
+
+
+
+pandas and scikit do not scale....
+beyond single instance.
+
+larger dataset...
+
+ad hoc analysis.
+sicit feater engineering  evaluate and compare models.
+
+spark exists in sagemaker..
+
+spark ml on top of spark.
+
+use deequ python libary...
+nice library...
+
+dataset metrics.
+
+
+corrolation high/low null
+
+
+transform raw features.  
+
+sentiment analysis..
+
+detect bias 
+
+feature importance.
+
+whatrt field trying to predict.
+
+injest
+athina s3 glue hive metastore compativle 
+
+glue points to data
+
+data wrangler infers types.
+
+transform 5 classes into negative nutral positive.
+
+min max scaling.
+
+triggers spark function no code.
+new field star field min max built in.
+
+bias... during modeling feature engineering look at bias
+predict star rating
+feature importance....  
+
+lp norem.
+k someting ....
+
+look for bias
+
+
+quick model part of sage maker.
+
+datawrangler what are most important features..
+
+the pipeline.
+
+sagemaker feature store.
+
+spark ml
+
+spark with sagemaker processing jobs.  - to train a model
+                                          as in train a transformer.
+
+alternating least squars  matrix factorization.
+
+datasciens on aws...
+
+ml ops 
+1.0
+2.0
+3.0
+4.0
+
+manuall build train tune and deploy
+maually buld and orchestrate
+automatically run pipelines when new data arrives or code changes determinist triggers
+automatically run pipelines when models start to decay.
+drift bias explainablilty
+
+
+mlops 2.9
+3.0
+the subject
+
+sagemaker studio..
+
+use case pretraind bert model ratings.
+
+interested in review body text of review. and star rating.
+
+some feature engineering... raw text into bert embeddings.
+
+add a classifier layer on top.
+
+
+use sagemaker pipelines..
+
+dag of steps to perform in the pipeline.
+
+processing -  split data inot train data and evaluation 
+using tenserflow...
+
+accuracy condition 
+register model create model
+
+pipline trigger is code commit.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+

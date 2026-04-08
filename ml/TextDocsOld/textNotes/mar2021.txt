@@ -1,0 +1,1738 @@
+3/1/2021
+
+int dimension=4; 
+int setProductRange=3;
+int lbSetProductRange=0;
+int pArrayResetValue=0;
+public static final int integerRange=20;
+
+
+ 
+MuNumDen:   123  2   10   [2, 2, 2, 2, 1, 1]  6
+MuNumDen:   62  2   10   [2, 2, 2, 2, 2]  5
+MuNumDen:   639  3   10   [3, 1, 1, 1, 1, 1, 1, 1]  8
+MuNumDen:   207  3   10   [3, 3, 1, 1, 1, 1]  6
+MuNumDen:   57  3   10   [3, 3, 3, 1]  4
+
+properly, GaussBean1 needs a set/get numerator/denominator.
+
+apriori though, it needs the above list representation of 
+looplist.
+
+LoopList is defined woth loadPArray (worker 0) and subsequentWorkerListInit()                                                -  remember though, loadPArray is really loadFigPArray.
+
+
+
+    public ArrayList getmuList() {
+        return (ArrayList)muList;
+    }
+
+
+note:  the muArray is being written from left to right across integerRange  -  maybe the other way around.
+                                                                               but then need to decrement iterate...
+Need a variable counting the number of sets.
+It gets incremented with each zero.  
+It is important for the cai function.
+
+
+
+Beats me what it does....  
+
+
+   private void firstWorkerListInit()  {
+    BigDecimal listPower=new BigDecimal(1);      //result
+    
+    BigDecimal zero=new BigDecimal(0);
+    BigDecimal bigDecimalRange=new BigDecimal(0); // synchronized with x
+    BigDecimal bigDecimalDimension=new BigDecimal(dimension);
+    BigDecimal one=new BigDecimal(1);
+    BigDecimal listPower1=new BigDecimal(1);
+    BigDecimal difference=new BigDecimal(1);
+    int caiIndex=1;
+    //  this.add(zero);  // place 0^dimension onto looplist
+ //  this.ancestorTerm.add(zero);
+ //   System.out.println("firstWorkerListInit() workNum: "+workNum);
+ //   System.out.println("integerRange: "+integerRange);
+    for (int x=0;  x<integerRange; x++){
+
+       listPower=bigDecimalRange.pow(dimension);
+       listPower1=bigDecimalRange.pow(dimension+1);
+   //    listPower=bigDecimalRange.multiply(bigDecimalDimension);
+       difference=listPower1.subtract(listPower);
+       ((List)deltaList.get(workNum)).add(difference);
+       this.add(listPower);thisList.add(listPower);
+//      if (listValueResult.compareTo(zero)==0) {muList.add(x+caiIndex); caiIndex++;}
+       ((List)ancestorlist.get(workNum)).add(listPower1);
+   //    this.ancestorTerm.add(listPower1);
+       bigDecimalRange=bigDecimalRange.add(one);
+    }   
+    
+//    rListB.add(this);
+//    cashedrListB.add(this);
+  //  this.ancestorlist.add(this.ancestorTerm);
+  //   System.out.println("initial rListB: "+rListB.toString());
+  //   System.out.println("initial ancestorlist: "+ancestorlist.toString());
+  //   System.out.println("initial deltalist: "+deltaList.toString());
+    }
+
+
+So,  maybe (ArrayList)muList is ready....
+
+Need it's numerator, denominator set
+
+Looks like the last to do in LoopList is defined woth loadPArray (worker 0) and subsequentWorkerListInit(). 
+
+looks like need a method in looplist.
+It needs to sum muList and assign value to denominator.
+It needs to assign largest member of muList to numerator.
+
+LoopList now has numerator,denominator fields and method setNumDen and refactord subsequentWorkerlistinit,loadPArray.
+
+Ready for cypher scripts in Gausstable1.
+
+ 
+first observation is goCCypher, there are two methods.  
+the one in runLoopsDriver maybe want the other one.
+
+run zeppelin in wsl???
+
+
+ private void mergeVmResult(String vmResult,PolynomialArray fPArray) 
+
+
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?,constant:?,linear:?,square:?}) ");
+
+
+seems like wants a twopoly...  not working that pattern though.
+
+
+
+private void createWnumRcounter(int wNum,int rCounter,String pArray,int translateIndex,int pArrayIndexValue)
+
+"Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?} )"
+
+
+looks like more of that translate lab.  
+ 
+
+
+
+private void createKnownByRelation(String vmResult,int wNum, int rCounter,int translateIndex,int pArrayIndexValue) 
+
+psInsert = conn.prepareStatement(" MATCH (d:Dnode), (k:CreatedBy) WHERE d.vmResult=? AND k.resultId=? AND k.wNum=? AND k.translateIndex=? AND k.pArrayIndexValue=? WITH d,k MERGE  (d)-[ee:CreatedBye]->(k)");
+
+
+private void createEvaluates(LoopList loopList,String vmResult)   --  for any zero in looplist.
+
+psInsert = conn.prepareStatement(" MATCH (e:Evaluate), (d:Dnode) WHERE e.Value = ? AND d.vmResult=? WITH d,e MERGE  (d)-[ee:Envalues]->(e)");
+ 
+private void mergeVmResultt(String vmResult) {
+ 
+psInsert = conn.prepareStatement("MERGE (d:Dnode {vmResult:?}) ");
+
+
+private void createZMap(String vmResult,int rCounter,int wNum)   {
+("match  (d:Dnode)-[:CreatedBye]->(c:CreatedBy {resultId:? , wNum:?}) , (dd:Dnode)-[:CreatedBye]->(cc:CreatedBy {resultId:? , wNum:?}) MERGE (d)-[:zMap]->(dd) ");
+  
+
+subsequentWorkerListInit();
+
+
+3/2
+
+public synchronized void goCCypher(String figPArray,String pArray,LoopList loopList,int wNum,String vmResult,int rCounter, PolynomialArray fPArray)  {
+
+public synchronized void goCCypher(String figPArray,String pArray,LoopList loopList,int wNum,String vmResult,int rCounter, PolynomialArray fPArray,boolean isTwoPolynomial,String evaluateValue,int translateIndex,int pArrayIndexValue) throws IOException  {
+
+Long signature only a twoPoly thing.  
+
+runLoopsDriverr() populates long signature 
+private void runLoopsDriverr() throws IOException {    
+
+private void runLoopsDriver() {
+
+goCCypher(((GaussBean1)dbbVector.get(0)).getfigPArray(),((GaussBean1)dbbVector.get(0)).getpArray(),((GaussBean1)dbbVector.get(0)).getLoopList(),((GaussBean1)dbbVector.get(0)).getLoopList().getworkNum(),
+          ((GaussBean1)dbbVector.get(0)).getLoopList().getVmResult(),((GaussBean1)dbbVector.get(0)).getresultlistid(),((GaussBean1)dbbVector.get(0)).getfPArray()); 
+
+
+Have:
+
+runLoopsDriver()    - calls goCCypher short signature.
+runLoopsDriverr()   - calls goCCypher long signature.
+
+Wich means, run() method, currently calling runLoopsDriverr(),
+can call either.  
+Probably want it to runLoopsDriver().
+
+       LoopsDriverTwoPManager lDriver= new LoopsDriverTwoPManager(muList,muSem,loopsLogic,tl1Semaphore,dbVector11,mage,tl1Semaphore,dbVector11,true);  
+       GaussTable1 gTable1 = new GaussTable1(muSem,muList,lDriver); 
+
+
+       tMangee=mang;
+
+Looks like ready to run....
+
+And though firstly,  the index scheme for nodes.
+
+
+MERGE (d:Dnode {vmResult:?,constant:?,linear:?,square:?})
+
+
+CREATE INDEX ON :Dnode(vmResult)
+
+
+"Merge (d:CreatedBy {resultId:?, wNum:?,pArray:?,translateIndex:?,pArrayIndexValue:?} )"
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+11 am 
+
+ZAD.java did populate ZerosAndDifferences.
+
+Need yesterdays mu on dNode.
+
+
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter [0, 38, -15, 1] [0, 1, 4, 1] 1 [0.0, 3.0, -27.0, 24.0] 60359
+goCCypher() [24, 0, -18, -30, -36, -36, -30, -18, 0, 24, 54, 90, 132, 180, 234, 294, 360, 432, 510, -2166]
+GaussTablle1.mergeVmResult n,d: 10 10
+
+
+
+goCCypher() figPArray,pArray,wNm,vmResult,rCounter [24, 38, -15, 1] [4, 1, 4, 1] 1 [0.0, 3.0, -27.0, 24.0] 60375
+goCCypher() [24, 0, -18, -30, -36, -36, -30, -18, 0, 24, 54, 90, 132, 180, 234, 294, 360, 432, 510, -2190]
+GaussTablle1.mergeVmResult n,d: 10 10
+
+want some shortest path between num/den.
+
+PM  maybe ZerosAndDifferences is a graph generator with utility.
+
+want 
+traversals of mu.
+
+
+3/3
+
+
+classification
+classification with missing imputs
+regression
+transcription
+machine translation
+structured output   ----  ****
+Anomaly detection
+
+
+3/4
+
+ First, the laws of probability tell us how AI
+systems should reason
+
+Second, we can use probability
+and statistics to theoretically analyze the behavior of proposed AI systems
+
+
+Probability theory
+was originally developed to analyze the frequencies of events.
+
+
+ In the case of the doctor diagnosing the patient, we use probability
+to represent a
+degree of belief
+,
+
+The former kind of probability, related directly to the rates at which
+events occur, is known as
+frequentist probability
+, while the latter, related to
+qualitative levels of certainty, is known as Bayesian probability
+
+
+within [a,b] u(x;a,b)= 1/b-a  is non negative everywhere and integrates to 1.
+
+
+The Dirac Distribution and Empirical Distribution
+
+
+Suppose we have
+two random variables,
+x
+and
+y
+, such that
+y
+=
+g
+(
+x
+), where
+g
+is an invertible, con-
+tinuous, diﬀerentiable transformation.
+
+
+One nat is the amount of
+information gained by observing an event of probability
+1
+e
+. Other texts use base-2
+71
+CHAPTER 3. PROBABILITY AND INFORMATION THEORY
+logarithms and units called
+bits
+or
+shannons
+; information measured in bits is
+just a rescaling of information measured in nats
+
+and remember subdifofscalars as "propogation".
+
+softmax function
+
+
+3/5
+
+
+dot product maps two vectors into a scalar.
+stress tensor:  directioinal unit vector
+maps it to the stress vector which is the force per unit area exerted by material on the 
+negative side of the plane orthogonal to v aganst the material on the positive side of the 
+plane.
+
+tensor fields on manifolds.
+
+Stack overflow matrix and tensor.
+Quadratic forms.
+Linear Transformations
+
+Kostrikin's Linear Algebra and Geometry.
+
+Matrix: Representation of a linear map.
+
+Tensors must follow a transformation rule.  - analagus to ...  favorit i-theorm.
+
+scalar - no index
+vector - one index
+matrix - two intex.
+...
+
+developers.google.com
+
+embeddings, ...
+
+contextual.
+
+tutorial on tensorflow.org
+
+banach fixed point theorem
+
+the node contains information about the graph near it.
+
+gaussian and diagnal noise.
+
+unit variance gaussian
+
+
+p(H) a factorial distribution  - explanatory factors.
+                               - non gaussian.
+
+principal components analysis), factor analysis
+Independent component analysis
+slow feature analysis.
+
+change ammount of time for andriod to dim screen
+
+
+diﬀerentiable model trained with gradient descent
+
+quadratic basis expansion
+
+nonparametric approach requires
+running an iterative algorithm
+
+hash encoders.
+
+connections between autoencoders and
+latent variable models have brought autoencoders to the forefront of generative
+modeling,
+
+Autoencoders
+typically minibatch gradient descent following gradients computed
+by back-propagation.  a special case of feedforward networks
+
+The learning process is described simply as minimizing a loss function
+
+smallness of the derivative of the representation
+
+nearly any generative model with latent variables
+and equipped with an inference procedure 
+
+Helmholtz machine
+
+generative stochastic networks
+
+
+the measure --  underdetermined root sets  use the correct number or rational roots for the expressive p.
+
+
+the sparcer the more accurate but want features revealed so a penalty function.
+
+
+deep encoders shallow encoders liniar encoders.
+
+ (Schölkopf
+et al., 1998; Roweis and Saul, 2000; Tenenbaum et al., 2000; Brand, 2003; Belkin
+and Niyogi, 2003; Donoho and Grimes, 2003; Weinberger and Saul, 2004; Hinton
+and Roweis, 2003; van der Maaten and Hinton, 2008)
+
+
+a set of visible
+variables
+v
+and a set of latent variables
+h
+
+ restricted
+Boltzmann machines and probabilistic PCA
+
+intractable posterior distributions
+
+
+3/6
+
+https://www.quantamagazine.org/imaginary-numbers-may-be-essential-for-describing-reality-20210303/?utm_source=pocket-newtab
+
+
+The dot product of two vectors can be rewritten in terms of norms. Speciﬁcally,xy = ||x||2||y||2cos θ, 
+
+
+3/8
+
+Traditionally, machine learning approaches relied on user-defined heuristics to extract features
+encoding structural information about a graph (e.g., degree statistics or kernel functions).
+
+relational knowledge
+
+
+machine learning on graphs is finding a way to incorporate information about the
+structure of the graph into the machine learning model
+
+
+link prediction 
+
+node classification
+
+
+
+o learn representations that encode structural
+information about the graph
+
+
+o learn a mapping that
+embeds nodes, or entire (sub)graphs, as points in a low-dimensional vector space, R
+d
+.
+
+
+distinction between representation learning approaches and previous work is how they
+treat the problem of capturing structural information about the graph.
+
+
+ data-driven approach to learn
+embeddings that encode graph structure.
+
+
+. Of course, there are other lines of closely related and relevant
+work, which we do not review in detail here—including latent space models of social networks [32], embedding
+methods for statistical relational learning [42], manifold learning algorithms [37], and geometric deep learning
+[7]—
+
+
+ the primary input to our representation learning algorithm is an undirected graph G = (V, E)
+with associated binary adjacency matrix, A.
+2 We also assume that the methods can make use of a real-valued
+matrix of node attributes X ∈ R
+m×|V| (e.g., representing text or metadata associated with nodes). The goal is to
+use the information contained in A and X to map each node, or a subgraph, to a vector z ∈ R
+d
+, where d << |V|.
+
+
+Most of the methods we review will optimize this mapping in an unsupervised manner, making use of only
+information in A and X, without knowledge of the downstream machine learning task
+
+classification
+or regression labels in order to optimize the embeddings.
+
+
+methods for node embedding, where the goal is to encode nodes as low-dimensional
+vectors that summarize their graph position and the structure of their local graph neighborhood
+
+a unified encoder-decoder framework, which explicitly structures this methodological diversity and puts the various
+methods on equal notational and conceptual footing.
+
+
+if we can learn to decode high-dimensional graph information—such as the global positions of nodes
+in the graph and the structure of local graph neighborhoods—from encoded low-dimensional embeddings,
+...downstream machine learning tasks.
+
+
+o a logistic regression classifier to predict the community that a node belongs
+to
+
+
+c matrix factorization techniques for dimensionality reduction [4] and multi-dimensional scaling
+
+many of these approaches were originally motivated as
+factorization algorithms, and we reinterpret them within the encoder-decoder framework here. 
+
+ inner-product decoder
+
+equals with a triangle above it.
+
+ modify the inner-product decoder of node2vec to use a hyperbolic,
+rather than Euclidean, distance measure.
+
+
+2. Direct encoding also fails to leverage node attributes during encoding. In many large graphs nodes have
+attribute information (e.g., user profiles on a social network) that is often highly informative with respect
+to the node’s position and role in the graph.
+
+
+Direct encoding methods are inherently transductive [28], i.e., they can only generate embeddings for
+nodes that were present during the training phase, and they cannot generate embeddings for previously
+unseen nodes unless additional rounds of optimization are performed to optimize the embeddings for
+these nodes. This is highly problematic for evolving graphs, massive graphs that cannot be fully stored in
+memory, or domains that require generalizing to new graphs after training.
+
+
+Laplacian eigenmaps objective
+
+
+These methods
+are often called convolutional because they represent a node as a function of its surrounding neighborhood, in a
+manner similar to the receptive field of a center-surround convolutional kernel in computer vision [
+
+
+theoretical connections to approximate spectral kernels on graphs
+
+
+
+Citation: William L. Hamilton. (2020). Graph Representation Learning.
+
+Goodfellow et al. [2016]’s Deep Learning Book.
+
+
+GraphSage is in Neo4j ML library.
+
+
+The graph explanation is a workbook for wensday posting 
+An Algorithm implementation of Newtons Difference polynomials generates it.
+
+Live Neo4j ml demonstration is later this week.
+
+
+Im in the middle of fast reading both Goodfellow's Deep Learning Book
+and Hamilton's Graph Representation Learning. My graph, generated 
+by propigating Nfor the web:ewtons Differences Polynomials with nodes representing
+root sets and node lables representing rationals is explained on my
+git hub by Wensday. Inference on node lables, not just links, or 
+comunities is work for GraphSage, in the Neo4j ML library.  A GraphSage 
+live demo is later this week.  I will have tried it by then with a 
+note up on my github.  Sure very interest it further reading...
+Thanks.  
+
+
+
+differencegraph.mp4.
+
+
+3/10
+
+for the web.
+file:///C:/Users/Aibes/ZeppelinDocs/Chapter%207.%20Machine%20learning%20-%20Spark%20GraphX%20in%20Action.html
+
+
+GraphSAGE is an inductive algorithm for computing node embeddings.
+Instead of training individual embeddings...
+
+
+We proposea   new   taxonomy   to   divide   the   state-of-the-art   graph   neuralnetworks  into  four
+categories,  namely  recurrent  graph  neuralnetworks,  convolutional  graph  neural  networks,  graph  
+autoen-coders, and spatial-temporal graph neural networks.
+
+
+Link prediction is a common machine learning task applied to graphs: training a model to learn, between 
+pairs of nodes in a graph, where relationships should exist.
+
+As in, there should be links between same denominator nodes.
+
+file:///C:/Users/Aibes/ZeppelinDocs/6.8.2.%C2%A0Link%20Prediction%20-%206.8.%C2%A0Machine%20Learning%20Models.html
+
+file:///C:/Users/Aibes/PDFs/ML/6.8.2.%C2%A0Link%20Prediction%20-%206.8.%C2%A0Machine%20Learning%20Models.html
+
+GraphSage can be viewed as a stochastic generalization of graph convolutions
+Representation learning on large graphs using stochastic graph convolutions. 
+
+focused on the task of inductive generalization (i.e., generating embeddings for nodes that were not present during training)
+
+Note: GraphSage is intended for use on large graphs (>100,000) nodes.
+
+ @inproceedings{hamilton2017inductive,
+     author = {Hamilton, William L. and Ying, Rex and Leskovec, Jure},
+     title = {Inductive Representation Learning on Large Graphs},
+     booktitle = {NIPS},
+     year = {2017}
+   }
+
+
+www.deeplearningbook.org
+
+underﬂow
+.
+Underﬂow occurs when numbers near zero are rounded to zero.
+
+ Overﬂow occurs
+when numbers with large magnitude are approximated as
+∞
+or
+−∞
+
+
+ The softmax function is often used to predict
+the probabilities associated with a multinoulli distribution
+
+
+Optimization
+refers to the task of either minimizing or maximizing some function
+f
+(
+x
+) b
+
+
+The function we want to minimize or maximize is called the objective func-
+tion
+, or
+criterion
+. When we are minimizing it, we may also call it the
+cost
+function
+,
+loss function
+, or
+error function
+
+
+Gradient descent.
+
+
+Beyond the Gradient: Jacobian and Hessian Matrices
+
+Equivalently, the Hessian is the Jacobian of the gradient
+
+
+Gradient descent fails to exploit the curvature information contained in the
+Hessian matrix. Here we use gradient descent to minimize a quadratic function
+
+
+Optimization algorithms that use only the gradient, such as gradient descent,
+are called
+ﬁrst-order optimization algorithms
+. Optimization algorithms that
+also use the Hessian matrix, such as Newton’s method, are called
+second-order
+optimization algorithms
+
+
+We describe how to combine various algorithm components, such as
+an optimization algorithm, a cost function, a model, and a dataset, to build a
+machine learning algorithm.
+
+
+Mitchell (1997) provides a succinct deﬁnition:
+“A computer program is said to learn from experience
+E
+with respect to some
+class of tasks
+T
+and performance measure
+P
+, if its performance at tasks in
+T
+, as
+measured by
+P
+, improves with experience
+E
+.”
+
+
+define machine learning tasks, experiences.
+
+after video,
+aftermath...  also in the iteration scip triag i and iterate from triag j.
+
+
+
+Machine learning tasks are usually described in terms of how the machine
+learning system should process an
+example
+. An example is a collection of
+features
+that have been quantitatively measured from some object or event that we want
+the machine learning system to process.
+
+
+ml regression.
+
+
+3/11
+
+defference between linear regression and ml linear regression.
+
+doing it with differences....
+
+3/15
+
+the experient is:  include kafka within ZAD and maybe... maybe...
+so, look at dfscripts for how and why....
+
+the dfscripts side...
+the .conf side...
+
+and the curve for graphSage...
+
+GraphSAGE [1] is an iterative algorithm that learns graph embeddings for every node in a certain graph
+
+Prior to GraphSAGE, most node embedding models were based on spectral decomposition/matrix factorization methods.
+
+Recall, every node can have their own feature vector which is parameterized by X
+
+
+The GraphSAGE algorithm follows a two step process. Since it is iterative,
+ there is an initialization step that sets all the initial node embedding vectors
+ to their feature vectors.
+
+Aggregate.
+
+Update.
+
+The supervised setting follows a regular cross-entropy style prediction for a
+node classification task.
+
+The unsupervised case however tries to preserve graph structure by enforcing
+ the following loss function:
+
+GraphSAGE can create complex, structural and semantic level features for any
+ downstream task!
+
+and the downstream tasks are???
+
+
+implement the GraphSAGE for simple tasks, like node classification. Stay tuned!
+
+
+efficiently generate representations on previously unseen data. 
+
+and again the modules systemm.
+
+community contributions, in particular the [neo4j-contrib](https://github.com/neo4j-contrib) space.
+
+contribute a pull request
+appropriate coding style
+
+C:\Users\Aibes\GraphDataScience\graph-data-science-master\algo\src\main\java\org\neo4j\graphalgo
+
+betweenness
+labelpropagation
+louvian
+pagerank
+results
+similarty
+triangle
+wcc
+
+The activation function to be used in the model architecture. Supported values are "sigmoid" and "relu"
+
+file:///C:/Users/Aibes/PDFs/ML/6.7.2.%C2%A0GraphSAGE%20-%206.7.%C2%A0Node%20embeddings.html
+
+The training will complete when the loss change is lower than the tolerance value,
+
+The weight of the negative samples. This is used when computing the loss function.
+
+a graph stored in the catalog
+
+Train
+
+Before we are able to generate node embeddings we need to train a model. Below is an example of how
+to do that. 
+
+Once we have trained a model (named 'graphSage') we can use it to generate and stream the embeddings. 
+
+file:///C:/Users/Aibes/PDFs/ML/6.8.2.%C2%A0Link%20Prediction%20-%206.8.%C2%A0Machine%20Learning%20Models.html
+
+Link prediction is a common machine learning task applied to graphs: training a model to learn, between
+pairs of nodes in a graph, where relationships should exist.
+
+named graphs and native projections as the norm
+
+
+file:///C:/Users/Aibes/PDFs/ML/GRL_Book.pdf
+
+ Is it an unsupervised task, where the goal is to infer
+patterns, such as clusters of points, in the data?
+
+
+Node classification  bots on a network and in graphic zero speak is a denominator.
+
+is a classic example of node classification, where the goal is to predict
+the label y_u —which could be a type, category, or attribut--
+
+ One particularly popular idea is to exploit homophily, which is the tendency for nodes
+to share attributes with their neighbors in the graph
+
+structural equivalence [Donnat et al., 2018], which is the idea that nodes with
+similar local neighborhood structures will have similar labels, 
+
+heterophily, which presumes that nodes will be preferentially connected to nodes
+with different labels.
+
+the i.i.d. assumption,
+    i.i.d. datapoint
+
+Relation prediction
+
+Can we use machine learning to
+infer the edges between nodes in a graph?
+
+above are analogues of supervised learning.
+
+The challenge of community detection is to infer latent community structures
+given only the input graph G = (V, E).
+
+on graph data involve
+classification, regression, or clustering problems over entire graphs.
+
+graph regression and classification are perhaps the most straightforward analogues of standard supervised
+learning
+
+
+We will begin with a discussion of basic graph statistics, kernel methods,
+and their use for node and graph classification tasks
+
+
+s various approaches for measuring the overlap between node
+neighborhoods, which form the basis of strong heuristics for relation prediction
+
+if there is never an instance of a relation, then will it predict one?
+
+Do mu numbers ever "cluster" on the graph?
+
+
+ And, more generally, what are useful properties and
+statistics that we can use to characterize the nodes in this graph?
+Node degree. The most obvious and straightforward node feature to examine
+is degree, which is usually denoted du for a node u ∈ V and simply counts the
+number of edges incident to a node:
+
+
+One popular and important measure of centrality is the so-called eigenvector
+centrality. 
+eu =
+1
+λ
+X
+v∈V
+A[u, v]ev ∀u ∈ V,
+
+λe = Ae. (2.3)
+In other words, the centrality measure that satisfies the recurrence in Equation 
+2.2 corresponds to an eigenvector of the adjacency matrix. A
+
+One view of eigenvector centrality is that it ranks the likelihood that a node
+is visited on a random walk of infinite length on the graph
+
+
+neo4upgrage and no graphs work,  need to rebuild...  wait q! works zerosanddifferences will not start.
+
+3/16
+
+new graph nextZad needs some conf work.
+
+streams.source.enabled=false
+streams.sink.enabled=false
+
+CALL gds.beta.graphSage.train
+
+
+CALL gds.beta.graphSage.train(
+  graphName: String,
+  configuration: Map
+) YIELD
+  graphName: String,
+  modelInfo: Map,
+  configuration: Map,
+  trainMillis: Integer
+
+
+
+no train registerd.  how else to train
+
+
+Instead of training a distinct embedding vector for each node, we train a set of aggregator functions
+that learn to aggregate feature information from a node’s local neighborhood
+
+ we design an unsupervised loss function that allows GraphSAGE to be
+trained without task-specific supervision. We also show that GraphSAGE can be trained in a fully
+supervised manner.
+
+training algorithm vs enbedding vs downstream ml tasks
+
+random walks and node2vec are training algos.
+
+3/17
+
+We then proceed to describe how the
+challenge of ﬁtting the training data diﬀers from the challenge of ﬁnding patterns
+that generalize to new data.
+
+ various algorithm components, such as
+an optimization algorithm, a cost function, a model, and a dataset, to build a
+machine learning algorithm.
+
+We thus have a deﬁnition of our task
+T
+: to predict
+y
+from
+x
+by outputting
+ˆy = w
+
+x. Next we need a deﬁnition of our performance measure, P 
+
+Suppose that we have a design matrix of
+m
+example inputs that we will not
+use for training, only for evaluating how well the model performs
+
+would be accurate at big risk, not so accurate at medium risk,  ect.,..
+
+mean squard error and large vs small euclidean distance.
+
+
+3/18
+
+The code is identical to the code found in the official GraphSAGE repository, where they used the Stochastic Gradient Descent
+
+Thebaseline f1 score
+
+GraphSAGEis a convolutional graph neural network algorithm
+
+C:\Users\Aibes\GraphDataScience\graph-data-science-master\alpha\alpha-algo\src\main\java\org\neo4j\gds\ml  has a training java class.
+
+What aggregator to be used by the layers. Supported values are "mean" and "pool"
+
+The activation function to be used in the model architecture. Supported values are "sigmoid" and "relu".
+
+gauss reduction vs gradient descent.
+
+
+pass feature through non-lineararity.
+
+hash function vs lower dimension embedding.
+
+train graphsage.
+
+q is transformation matrix.  w is nonlineararity.
+
+adapt to inductive setting   unsupervised loss, neighborhood sampling, minibatch optimization.
+
+
+three graph imbeddings in 1.3 
+
+node2vec - like word2vec
+
+https://towardsdatascience.com/using-graphsage-embeddings-for-downstream-classification-model-4492e01ae54e
+
+
+
+
+        var probabilityComputer = new ProbabilityComputer(   - java var?
+
+
+the l2 norm..
+
+graph acadamy 
+download...
+
+ * @see <a href="https://developers.google.com/protocol-buffers/docs/encoding#varints">more abount vlong</a>
+ * @see <a href="https://shipilev.net/jvm-anatomy-park/4-tlab-allocation/">more abount TLAB allocation</a>
+ */
+
+
+https://www.youtube.com/watch?v=BrK7X_XlGB8
+
+
+3/19
+
+
+https://www.youtube.com/watch?v=tc4ROCJYbm0
+
+logistic regression algorithm
+
+
+
+The Node Classification model in the Neo4j GDS library supports the following evaluation metrics:
+
+    F1_WEIGHTED
+
+    F1_MACRO
+
+    ACCURACY
+
+
+3/22
+
+The F1 score is the harmonic mean of the precision and recall.
+
+the precision is the number of true positive results divided by the number of all positive results,
+including those not identified correctly
+
+the recall is the number of true positive results divided by the number of all samples that should
+ have been identified as positive
+
+
+multilayer perceptron is a neural network.
+
+neurons are simple computational units having weighed imput signals and produce output
+signal using activation function.
+
+neuon weighs - as in the linear regression weight.
+activations function summed weighed imputs to threshold output.
+
+networks of neurons.  input- hidden - output.  one or more in each layer. 
+
+train the network
+
+data prep  - numerical please
+train with stohastic gradient descent.
+weights updated from error calculation.
+
+once trained... predict.
+
+convolutional neural networks (CNNs) are well-defined only over grid-structured
+inputs (e.g., images), while recurrent neural networks (RNNs) are well-defined
+only over sequences (e.g., text).
+
+relu
+
+n 2011 it was found to enable better training of deeper networks,[5] compared to the widely used
+ activation functions prior to 2011, e.g., the logistic sigmoid (which is inspired by probability theory;
+ see logistic regression) and its more practical[6] counterpart, the hyperbolic tangent. The rectifier is,
+ as of 2017, the most popular activation function for deep neural networks.[7]
+
+
+so, gausstable1 has scripts commented out....
+and want to measure efficiency of iteration....   
+
+so, for now, both loopsdrivertwop and loopsdrivertwopmanager must aggree:
+dimension setproductrangeand integerrange.
+
+probably the resultsets in gausstabel1 are leaky...
+
+so, adding statements but not removing them.
+
+statements.remove(0);
+
+3/23
+
+chapter 3.2 of the book "The Elements of Statistical Learning" (Friedman, Hastie and Tibshirani 2009)
+
+
+mergeVmResult(vmResult,fPArray,loopList.getNumerator(),loopList.getDenominator());
+createWnumRcounter(wNum,rCounter,pArray,0,0);
+createEvaluates(loopList,vmResult);
+
+
+mergeVmResultt(vmResult,loopList.getNumerator(),loopList.getDenominator());         //  see if leak is slower....
+                createWnumRcounter(wNum,rCounter,pArray,0,0);
+                createKnownByRelation(vmResult,wNum,rCounter,0,0);
+                createZMap(vmResult,rCounter,wNum);
+
+
+going with set the resultset to null.
+
+definatly disconnect the listener from semaphore pattern.
+and observe iteration.
+
+thinkith big redundancy...
+
+
+The finalize method runs when the JVM decides it needs to - it may or may not run when the 
+object goes out of scope. It is not the same as a C++ destructor for example. You should not need to create 
+PreparedStatements in a loop - the whole point is that they are "prepared" and can be used many times. That doesn't mean 
+it should live forever but it should 
+be reused if, in your example, you need to loop over something.
+
+
+
+3/24
+
+maybe time to 
+
+1. back up zad         -done
+2. watch zad iterate.
+   .  comment out goccypher.
+
+
+The semaphore narrative:
+
+ //   loopsLogic.rentrentReset();
+    System.out.println("loopsemaphore pre sf1.release (it iterated) " + threadId);
+
+     sf2.acquire(); 
+     loopsLogic.rentrentReset();
+     sf1.release();
+
+maybe moving the rentrentreset as above fixes the iteration.
+
+
+     public void propertyChange(PropertyChangeEvent evt) {
+//      System.out.println();
+//      System.out.println();
+      
+//      System.out.println("pArrayResetListener                                      pArrayResetListener");
+//     System.out.println("pArrayResetListener                                      pArrayResetListener    cashedrListB: "+cashedrListB.toString());
+//      System.out.println("pArrayResetListener.propertyChange"+" workNum: "+((muNumDen)evt.getNewValue()).getWorkNum()+ " modulo: "+((muNumDen)evt.getNewValue()).getModulo()); 
+      rListIndex=((muNumDen)evt.getNewValue()).getWorkNum()+2;
+ //     gc();
+
+
+did shut off garbage collection in abovd
+
+
+  private synchronized void updateRlistB() {
+      this.rListB.clear();
+//      resultListCounter=resultListId.getrListId();
+//      System.out.println("LoopListener.updateRlistB.figPArray: "+figPArray.toString());
+
+ //    System.out.println("LoopListener.updateRlistB.gbList00: "+gbList00.toString());
+     LoopList gbListTest = new LoopList(dimension+1,rListB,dimension,15,0,xPowers,figPArray,moduloList);
+
+//       LoopList gbList00 = new LoopList(dimension+1,rListB,dimension,LoopsDriverTwoPManager.integerRange,0,xPowers,figPArray,moduloList);
+//       rListB.add(gbList00);
+       rListB.add(new LoopList(dimension+1,rListB,dimension,LoopsDriverTwoPManager.integerRange,0,xPowers,figPArray,moduloList));
+ //      (double[][])((LoopList)rListB.get(0)).getgMatrix()
+       
+ //        gMain.gauss(dimension,dimension+1,muSem,(double[][])gbListTest.getgMatrix());
+      //  this following used to have dimension,dimension+1
+ //     gMain.gauss(muList,muSem,dimension+1,dimension+2,(double[][])gbList00.getgMatrix(),new GaussBean1(figPArray, pArray.toString()  ,gbList00,resultListCounter));
+gMain.gauss(muList,muSem,dimension+1,dimension+2,(double[][])((LoopList)rListB.get(0)).getgMatrix(),new GaussBean1(figPArray, pArray.toString()  ,(LoopList)rListB.get(0),resultListCounter));
+
+     for (int numerator=1; numerator<=(dimension) ; numerator++) {
+    
+//          System.out.println("LoopListener.updateRlistB.gbList01: "+gbList01.toString());
+//          System.out.println("LoopListener.updateRlistB.LoopList loop: ");
+
+//           LoopList gbList01 = new LoopList(dimension-(numerator-1),rListB,dimension,LoopsDriverTwoPManager.integerRange,numerator,xPowers,figPArray,moduloList);
+//           rListB.add(gbList01);
+
+          rListB.add(new LoopList(dimension-(numerator-1),rListB,dimension,LoopsDriverTwoPManager.integerRange,numerator,xPowers,figPArray,moduloList)); 
+
+          gMain.gauss(muList,muSem,dimension-(numerator-1),dimension-(numerator-1)+1,(double[][])((LoopList)rListB.get(numerator)).getgMatrix(),new GaussBean1(figPArray,pArray.toString(),(LoopList)rListB.get(numerator),resultListCounter));
+     }   
+//         System.out.println("LoopListener.updateRlistB  fallthrough.");
+    }
+
+
+
+updaterlistb contains gmain.gauss.     ---  see what happens to speed if modified
+
+
+   private void appendMuBuffer(boolean noBufferRun) {
+   int len=rListB.size();
+//   System.out.println("LoopListener.appendMuBuffer(noBufferRun) pArray " + pArray.toString() + " " + "figPArray: " + figPArray.toString()+ "  rListIndex: "+ rListIndex + "   (int)pArray.get(1)"+(int)pArray.get(1));  
+   
+   for (int index=0;index<len;index++) {
+ //  GaussBean1 gB1=new GaussBean1(figPArray,pArray.toString(),((LoopList)rListB.get(index)),resultListCounter,(int)pArray.get(1),(int)pArray.get(1)); 
+       synchronized(this) {   //latest thread issue  numerator should be 1 (the first element on rListB
+//        System.out.println("LoopListener.appendMuBuffer   New Gaussbean");
+        muList.add(new GaussBean1(figPArray,pArray.toString(),((LoopList)rListB.get(index)),resultListCounter,-2,(int)pArray.get(1)));
+       //  System.out.println("  new gauss bean    new gauss bean");
+       muSem.release();
+      }    
+   }   
+  
+}
+
+looplistener:
+appendmubuffer  --  maybe do not send each in set as maybe many redundancies.
+know wNum from event payload.
+
+do need the no increment parray[i].
+It does ammount to skipping over/through (no loopsLogic.sf2Aquire()) a configured semaphore...
+meaning: it only releases a forward semaphore.
+
+also meaning:  a refactor, as in new run time config, a boolean list 
+true: skip worker increment.
+false: usual iteration. 
+
+each new loopsemaphor gets constructed with it's boolean.
+logic refactored into 
+
+
+
+and configure size of kafak buffer  --  a kafka question.
+maybe permute skipping...
+
+3/25
+
+commented out gaussmain.gauss in updaterlistb. 2x   -- is uncommented.
+
+
+ZAD cyphers:
+. need correct prepared statements.
+. put them in a zeppelin.
+. kafka integrate.
+
+AM telemetry run:
+did observe referenced looplist object count decrease during runloopsdriver loop. 
+
+https://examples.javacodegeeks.com/enterprise-java/sql-enterprise-java/jdbc-best-practices-tutorial/
+
+
+next ZAD attempt:
+
+   for (int numerator=1; numerator<dimension ; numerator++) {
+
+refactord into 
+
+   dimension=dimension-1;
+   for (int numerator=1; numerator<dimension ; numerator++) {
+
+
+
+and so after one more look over... 
+believe the test is to use loopsemaphore last to simply fall through...  
+as in no iteration if it gets the semaphore permit.  start the exit routine.
+
+
+
+match (c:CreatedBy {pArray:'[1, 0, 2, 0]'}) -[]-(d:Dnode) return c,d
+
+
+3/26
+
+More done in GaussTable1.  Memory leak is stablized    -  commented out some statement.add stuff.
+did statement.remove on psInsert prepared statements.   do close the prepared statement each time.  
+
+can a prepared statement be closed before commit? SO says so.
+
+The problem is:  Need to match pattern of immediatly prior psupdate 
+
+And in other news:  
+
+A case for the CreatedBy node pattern
+Linking a set of difference p's uses the auxillary lable created by (it also contains the pArray combination).
+Otherwise need to refactor ZAD and used the prior vmresult as a match.  
+And if want parray combination a list needs to be refactored into node.
+
+The quora answer need n variable clarification.
+
+A case for appending zad.  It does iterate per run parameters with pArray initial  - a zero list. 
+How to splice together with arbitrary pArray initials.
+
+can the heterophilic graph generated by ZAD be transformed into a homophilic graph?
+
+
+Should this graph be worked in-memory and then persisted????
+
+
+3/28
+
+match (c:CreatedBy {pArray:'[1, 0, 2, 0]'}) -[]-(d:Dnode) return c,d
+
+
+
+3/29
+
+How about a dNode field determined/underdetermened boolean.
+Will have to use a greater integer range.  It is needed for root count certanty.
+Suppose gauss is depricated and the algebraic approach for defining vmResult is used.\
+Then can use factor algorithms.  - The rational root test https://www.purplemath.com/modules/rtnlroot2.htm
+But am interested in integer roots.
+Also implement the scip LoopSemaphore_i iterate.
+
+https://en.wikipedia.org/wiki/Rational_root_theorem 
+https://en.wikipedia.org/wiki/Geometrical_properties_of_polynomial_roots
+https://en.wikipedia.org/wiki/Root-finding_algorithms
+
+integerRange is the variable of enquery.
+note integerRange and dimension appear in loopsDrivertwop constructor (they are carried in from LoopsDriverTwoPManager.
+
+loopLists are constructed with an integerRange parameter.
+loopLogicLoopSemapher are constructed with an integerRange parameter.
+
+Note ZAD supports the mu enquery, a postitive integer root constrant. 
+
+Looplist.integerRange is usefull in:
+.loadPArray 
+.subsequentWorkerListInit -just a loop
+.firstWorkerListInit
+
+loopLogicLoopSemaphe.integerRange is unused.
+
+So, maybe want to reimplement LoopList and include negative integers in domain.
+
+.loadPArray: // It it method evaluating figPArray over domain.
+Say integer range = 200.   -  for ease, use even integerRange.
+Then first 100 are negative subsequent are positive.
+Then want a field totalZeros along with n,d.
+
+   
+.firstWorkerListInit uses integerRange not so computationaly.  - can simply be extended.
+.subsequentWorkerListInit also uses integerRange not so computationally - can simply be extended.
+
+
+.setNumDen()
+needs some discresionary logic:
+it iterates over muList.size with have the size negative the other half positive.
+as in if integerRange=200 0-99 is negative ....
+
+
+and really what does deltaList do???
+
+3/30
+
+maybe not correct refactor.
+
+
+   LoopList gbList = new LoopList(dimension,rListB,dimension,integerRange,0,xPowers,figPArray, moduloList);
+
+
+ private void loadPArray(PolynomialArray pArray,boolean b)  {
+    BigDecimal listValue=new BigDecimal(1);      //result
+    BigDecimal listValueResult=new BigDecimal(0);   
+    BigDecimal zero=new BigDecimal(0);
+    BigDecimal bigDecimalRange=new BigDecimal(0); // synchronized with x
+    BigDecimal bigDecimalDimension=new BigDecimal(dimension);
+    BigDecimal one=new BigDecimal(1);
+    BigDecimal listPower1=new BigDecimal(1);
+    BigDecimal result=new BigDecimal(0);
+    int caiIndex=0;
+//    BigDecimal currentPcoeff=new BigDecimal(0);
+//    System.out.println("looplist.loadPArray.dimension: " + dimension); 
+    int halfIntegerRange=integerRange/2;     // will throw error if odd integerRange
+    
+    for(int x=-halfIntegerRange;  x<(halfIntegerRange); x++){
+      listValueResult=zero;
+      BigDecimal currentK=new BigDecimal(x);                                                     // k as in Psi_i, triag,triag_j, k   
+  //    System.out.println("loadPArray: " + x); 
+      BigDecimal currentPcoeff1=new BigDecimal((int)pArray.get(0));
+      listValueResult=listValueResult.add(currentPcoeff1);
+//      for (int y=0;  y<(dimension+1); y++){          // currentPcoeff is scalar 
+      for (int y=0;  y<(dimension); y++){          // currentPcoeff is scalar
+          BigDecimal currentPcoeff=new BigDecimal((int)pArray.get(y+1));
+//          System.out.println("currentPcoeff: " + currentPcoeff.toString() +  "  "); 
+          listValue=currentK.pow(y+1);
+//          System.out.println("listValue: " + listValue.toString() +  "  ");
+          listValueResult=listValueResult.add(listValue.multiply(currentPcoeff));
+//          System.out.println("listValueResult: " + listValueResult.toString() +  "  ");
+      }
+//      System.out.println();
+//      if (listValueResult.compareTo(zero)==0) {muList.add(x+1-caiIndex); caiIndex++;}
+      if (listValueResult.compareTo(zero)==0 && x>(halfIntegerRange-1)) {muList.add(x+1-caiIndex-halfIntegerRange-1); caiIndex++;}
+      if (listValueResult.compareTo(zero)==0) {totalZero++;}
+      this.add(listValueResult);thisList.add(listValueResult);
+     //  bigDecimalRange=bigDecimalRange.add(one);
+         listValue=zero;
+    }   
+  //    rListB.add(this);
+  //System.out.println("loadPArray(PolynomialArray pArray,boolean b) ");
+   setNumDen();
+ }
+
+
+public void setMatrix(List matrixList) {
+//    System.out.println("setMatrixList  " + matrixList.toString()+ "  ");
+    for (int x=0;  x<this.i; x++){ 
+//         System.out.println("setMatrixList  " + ((BigDecimal)matrixList.get(x)).doubleValue());
+//    A[x][(this.i)]=((BigDecimal)matrixList.get(x+1)).doubleValue();                                      // do not want zero value in vandermonde
+//    gMatrix[x+1][(this.i)+1]=((BigDecimal)matrixList.get(x+1)).doubleValue();                              // also, due to wierd sercomstances using second index   
+A[x][(this.i)]=((BigDecimal)matrixList.get(100+x+1)).doubleValue(); 
+gMatrix[x+1][(this.i)+1]=((BigDecimal)matrixList.get(100+x+1)).doubleValue();    
+    }
+//System.out.println("i: " + (i+1) );    
+//System.out.println("setMatrixList  printMatrix");
+
+//this.printMatrix();
+
+//System.out.println("setMatrixList  end printMatrix");
+
+}
+
+
+3,2,4,0,0
+
+[2, 3, 2, 4, 0]
+
+
+Above refactord because of halfIntegerRange refactor enabling both mu and total zeros.
+
+Up to the scip pattern.  
+Can it be done within the pattern itself???
+
+note: this refactor will imply zMap between non-consecutive worker num's.
+
+3/31
+
+And so, the skip pattern is the last round, up to kafka integration...
+Do want the parray's 0 values calculated.
+
+note: LoopSemaphoreLast is refactord not to iterate.  It falls through as any iteration is redundant.
+
+Looks like LoopSemaphoreInitial and LoopSemaphore are constructed with a lower bound parameter.
+This parameter is zero.  Want it constructed with -1 lowerBound - maybe.  
+
+Need a meaning/definition of skip over.
+
+Note 
+.ZAD iterates from lower degree to higher degree.
+.pArray is initialized with 0 values.  
+.pArray arguments figParry trasform with desired properties: zeros as range values at domain indices.
+.The LoopListener.propertyChange is responsible for transforming figParray.
+ 
+In one sence "skipping" means changing the semaphores shared between threads.
+As, maybe has to be run several times.  Each run skips a wNum combination.
+As, what is the ruberik of skips: 
+skip 
+wNum=0
+then
+wNum=1
+then
+wNum=2
+then
+wNum=3
+...
+Then 
+skip 
+wNum=1,2
+then
+wNum=1,3
+then
+wNum=1,4
+
+Which means:
+
+Use muCorrolationThreaded with each iteration defining a skip pattern (which wNum in set to skip).
+Each loopSemaphore is constructed with a skip Boolean. 
+
+
+comment this out and test fractionintegerdriveriterate.
+
+      plvManager mage = new plvManager(tlSemaphore,t2Semaphore,cosetSemaphore,dbVector,dbVector1,dbVectorCST,tl1Semaphore,dbVector11);
+//       zaddbTable1 bmage = new zaddbTable1(tlSemaphore,dbVector,mage);
+//       mage.start();
+//       bmage.start();
+                                       //  noBufferRun is boolean at end of signature true=noBuffer
+                                      //  Looks like most current ldtpm
+        // need both instances need both started.                              
+       LoopsDriverTwoPManager lDriver= new LoopsDriverTwoPManager(muList,muSem,loopsLogic,tl1Semaphore,dbVector11,mage,tl1Semaphore,dbVector11,true);  
+       GaussTable1 gTable1 = new GaussTable1(muSem,muList,lDriver);  
+       lDriver.start();
+       gTable1.start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Monday	7:15AM–1:15PM
+
+
+
+
+
+
+
+
+
+
+
+room intenerary pswd
+
+canoe123!
+
+
+
+
+
+
+
+
+https://www.youtube.com/watch?v=H4dBkofVA4A
+
+https://www.youtube.com/watch?v=gMlf1ELvRzc
+
+
+
+
+Important also, the map of a twoPolynomial through ZADDB back to itself???
+
+cutting crew 4:30 tomorrow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+neo4j downloads page.
+
+
+the graph features must be of type float.  -  as in d must be a float.
+
+
+
+
+
+
+The graph to present on gith is....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+the cmos checksum is invalid hp startup error.
+
+aﬃne function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+threads semaphores and listeners
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

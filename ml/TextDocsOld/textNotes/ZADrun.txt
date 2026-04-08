@@ -1,0 +1,550 @@
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:3, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+CREATE (n:Configure {maxFigPScalar:3, dimension:2, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+
+ZAD run note:
+behoves to increase setsize by one to complete set.
+
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:4, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+CREATE (n:Configure {maxFigPScalar:4, dimension:3, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+CREATE (n:Configure {maxFigPScalar:12, dimension:2, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+
+12/3 D3Legacy
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:3, setProductRange:3, integerRange:200, setProductRAngeIncrement:3,maxSetProductRange:3,pArray:"[-1, -1, -1, 0]"})
+
+
+12/3 D3Legacy
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:3, setProductRange:3, integerRange:200, setProductRAngeIncrement:3,maxSetProductRange:3,pArray:"[0, 0, 0, 0]"})
+
+
+java -jar TwoPolynomialGenerator.jar test.csv 8 2 9       67         
+java -jar TwoPolynomialGenerator.jar test.csv 16 2 17     2939        
+java -jar TwoPolynomialGenerator.jar test.csv 32 2 33     25216             
+java -jar TwoPolynomialGenerator.jar test.csv 64 2 65     47492            
+
+java -jar TwoPolynomialGenerator.jar test.csv 10 2 11                     
+java -jar TwoPolynomialGenerator.jar test.csv 100 2 101           
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 101           
+java -jar TwoPolynomialGenerator.jar test.csv 10000 2 101  72126  
+
+
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6},pArray:"[0, 0, 0, 0, 0, 0, 0]")
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6},pArray:"[5, 6, 0, 1, 1, 2, 0]")
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6},pArray:"[2, 4, 0, 5, 3, 4, 0]")
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6,pArray:"[2, 4, 0, 5, 3, 4, 0]"})
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6,pArray:"[0, 0, 0, 0, 0, 0, 0]"})
+
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:12,maxSetProductRange:6,pArray:"[-6, -6, -6, -6, -6, -6, 0]"})
+
+setProductRange should be 12?????
+
+
+D6Test2LeadTer1,2 is most modern to date (7/28)
+
+Next graph 
+
+D6Test3LeadTerm1 will increment from negative vaules in initial pArray.
+
+
+int pArrayResetValue=0; -  this should be included in :Configure node.
+
+
+D6Test3LeadTerm1  did not exit gracefully but did the -6 to 0 iteration....  have the data summery in zeppelin.
+
+
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:12, integerRange:200, setProductRAngeIncrement:12,maxSetProductRange:6,pArray:"[-6, -6, -6, -6, -6, -6, 0]"})
+
+setProductRange should be 12?????
+
+int pArrayResetValue=0; -  this should be included in :Configure node.
+
+
+8/4
+
+
+D5Test-5To5
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange:10, integerRange:200, setProductRAngeIncrement:10,maxSetProductRange:5,pArray:"[-5, -5, -5, -5, -5, 0]"})
+
+int pArrayResetValue=-5;
+
+8/5
+
+D6,0To6
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:6, setProductRange:6, integerRange:200, setProductRAngeIncrement:6,maxSetProductRange:6,pArray:"[0, 0, 0, 0, 0, 0, 0]"})
+
+int pArrayResetValue=0;
+
+
+resultListID 434462
+LoopListener.pArrayIncrement pre pArray .to string [6, 6, 6, 6, 6, 6, 0] wNum: 0  rListIndex: 1
+                                                              PolynomialArray.incrementP   pArray:   [6, 6, 6, 6, 6, 6, 0]
+                                                              PolynomiaArray.increment index:   0
+rentrentReset                                                           rentrentReset
+
+
+
+8/9
+
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:5, setProductRange:5, integerRange:200, setProductRAngeIncrement:5,maxSetProductRange:5,pArray:"[0, 0, 0, 0, 0, 0]"})
+
+
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:1, dimension:4, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0, 0]"})
+
+
+
+CREATE INDEX ON :CreatedBy(resultId)
+CREATE INDEX ON :Dnode(vmResult)
+
+CREATE (n:Configure {maxFigPScalar:4, dimension:3, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0]"})
+
+╒═══════════════════════════════════════════════════════════════════════════╕
+│"n"                                                                        │
+╞═══════════════════════════════════════════════════════════════════════════╡
+│{"pArray":"[0, 0, 0, 0]","setProductRange":4,"setProductRAngeIncrement":4,"│
+│dimension":3,"maxSetProductRange":4,"maxFigPScalar":4,"integerRange":200}  │
+└───────────────────────────────────────────────────────────────────────────┘
+
+
+CREATE (n:Configure {maxFigPScalar:12, dimension:2, setProductRange:4, integerRange:200, setProductRAngeIncrement:4,maxSetProductRange:4,pArray:"[0, 0, 0, 0]"})
+
+
+
+https://antonsruberts.github.io/graph/graphsage/
+
+GraphSAGE for Classification
+
+Data SplitPermalink
+
+Since this model is inductive, to test it properly we’ll set aside 20% of the nodes
+and the model will never see them during the training process. In a way, we’ll just 
+imaging that these 20% of github users have registered just after we’ve deployed our model.
+
+
+
+
+first two tables are the single mononomial for zadfork and zad legacy.
+zad fork completes the power set but not properly....   for instance wNum=3 is used to complete take two.
+
+the second two tables are the complete monomial set on both zadlegacy and zadfork.
+
+
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|value|size|length|nBinary     |n  |d  |denominator|numerator|wNum|determined|muList      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|1    |1   |1     |[1]         |1  |1  |1          |1        |3   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |2   |1         |[1]         |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |2   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |1   |1         |[1, 1]      |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |3   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |1   |1         |[1, 1, 1]   |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |0   |1         |[1, 1, 1]   |
+|5    |2   |3     |[1, 2]      |2  |3  |3          |2        |1   |1         |[1, 2]      |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |3   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|15   |4   |4     |[1, 1, 1, 1]|1  |4  |4          |1        |0   |1         |[1, 1, 1, 1]|
+|11   |3   |4     |[1, 1, 2]   |2  |4  |4          |2        |0   |1         |[1, 1, 2]   |
+|11   |3   |4     |[1, 1, 2]   |2  |4  |4          |2        |0   |1         |[1, 1, 2]   |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |1   |1         |[2, 2]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |1   |1         |[1, 3]      |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |2   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |1   |1         |[2, 3]      |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+
+319
+
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|value|size|length|nBinary     |n  |d  |denominator|numerator|wNum|determined|muList      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|1    |1   |1     |[1]         |1  |1  |1          |1        |3   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |2   |1         |[1]         |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |2   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |1   |1         |[1, 1]      |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |3   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |1   |1         |[1, 1, 1]   |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |0   |1         |[1, 1, 1]   |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |3   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|15   |4   |4     |[1, 1, 1, 1]|1  |4  |4          |1        |0   |1         |[1, 1, 1, 1]|
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |2   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |1   |1         |[2, 2]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |2   |1         |[1, 3]      |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |3   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |2   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |2   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |1   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |2   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+
+88
+
+
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|value|size|length|nBinary     |n  |d  |denominator|numerator|wNum|determined|muList      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|1    |1   |1     |[1]         |1  |1  |1          |1        |3   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |2   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |2   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |1   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |1   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |0   |1         |[1]         |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |2   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |1   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |1   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |0   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |0   |1         |[1, 1]      |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |3   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |1   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |1   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |1   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |0   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |0   |1         |[2]         |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |1   |1         |[1, 1, 1]   |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |0   |1         |[1, 1, 1]   |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |0   |1         |[1, 1, 1]   |
+|5    |2   |3     |[1, 2]      |2  |3  |3          |2        |1   |1         |[1, 2]      |
+|5    |2   |3     |[1, 2]      |2  |3  |3          |2        |1   |1         |[1, 2]      |
+|5    |2   |3     |[1, 2]      |2  |3  |3          |2        |0   |1         |[1, 2]      |
+|5    |2   |3     |[1, 2]      |2  |3  |3          |2        |0   |1         |[1, 2]      |
+|5    |2   |3     |[1, 2]      |2  |3  |3          |2        |0   |1         |[1, 2]      |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |3   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |1   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |1   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |1   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |1   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |0   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |0   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |0   |1         |[3]         |
+|15   |4   |4     |[1, 1, 1, 1]|1  |4  |4          |1        |0   |1         |[1, 1, 1, 1]|
+|11   |3   |4     |[1, 1, 2]   |2  |4  |4          |2        |0   |1         |[1, 1, 2]   |
+|11   |3   |4     |[1, 1, 2]   |2  |4  |4          |2        |0   |1         |[1, 1, 2]   |
+|11   |3   |4     |[1, 1, 2]   |2  |4  |4          |2        |0   |1         |[1, 1, 2]   |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |1   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |1   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |0   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |0   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |0   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |0   |1         |[2, 2]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |1   |1         |[1, 3]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |1   |1         |[1, 3]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |0   |1         |[1, 3]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |0   |1         |[1, 3]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |0   |1         |[1, 3]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |0   |1         |[1, 3]      |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |2   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|13   |3   |4     |[1, 2, 2]   |2  |5  |5          |2        |0   |1         |[1, 2, 2]   |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |1   |1         |[2, 3]      |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |1   |1         |[2, 3]      |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |0   |1         |[2, 3]      |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |0   |1         |[2, 3]      |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |0   |1         |[2, 3]      |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |0   |1         |[2, 3]      |
+|10   |2   |4     |[2, 3]      |3  |5  |5          |3        |0   |1         |[2, 3]      |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+
+533
+
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|value|size|length|nBinary     |n  |d  |denominator|numerator|wNum|determined|muList      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+|1    |1   |1     |[1]         |1  |1  |1          |1        |3   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |2   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |2   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |1   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |1   |1         |[1]         |
+|1    |1   |1     |[1]         |1  |1  |1          |1        |0   |1         |[1]         |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |2   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |1   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |1   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |0   |1         |[1, 1]      |
+|3    |2   |2     |[1, 1]      |1  |2  |2          |1        |0   |1         |[1, 1]      |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |3   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |2   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |1   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |1   |1         |[2]         |
+|2    |1   |2     |[2]         |2  |2  |2          |2        |0   |1         |[2]         |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |1   |1         |[1, 1, 1]   |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |0   |1         |[1, 1, 1]   |
+|7    |3   |3     |[1, 1, 1]   |1  |3  |3          |1        |0   |1         |[1, 1, 1]   |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |3   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |2   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |1   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |1   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |1   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |0   |1         |[3]         |
+|4    |1   |3     |[3]         |3  |3  |3          |3        |0   |1         |[3]         |
+|15   |4   |4     |[1, 1, 1, 1]|1  |4  |4          |1        |0   |1         |[1, 1, 1, 1]|
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |2   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |1   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |1   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |0   |1         |[2, 2]      |
+|6    |2   |3     |[2, 2]      |2  |4  |4          |2        |0   |1         |[2, 2]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |2   |1         |[1, 3]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |1   |1         |[1, 3]      |
+|9    |2   |4     |[1, 3]      |3  |4  |4          |3        |0   |1         |[1, 3]      |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |3   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |2   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |2   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |2   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |1   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|8    |1   |4     |[4]         |4  |4  |4          |4        |0   |1         |[4]         |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |1   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|14   |3   |4     |[2, 2, 2]   |2  |6  |6          |2        |0   |1         |[2, 2, 2]   |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |2   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |1   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
+|12   |2   |4     |[3, 3]      |3  |6  |6          |3        |0   |1         |[3, 3]      |
++-----+----+------+------------+---+---+-----------+---------+----+----------+------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+THE VIEW FROM: SHERMAN
+THE VIEW FROM: SHERMAN; TIFFANY MUSEUM: BENEFIT OR REVENGE
+
+By Charlotte Libov
+
+    Nov. 15, 1987
+
+Credit...The New York Times Archives
+See the article in its original context from
+November 15, 1987, Section CN, Page 11Buy Reprints
+New York Times subscribers* enjoy full access to TimesMachine—view over 150 years of New York Times journalism, as it originally appeared.
+Subscribe
+*Does not include Crossword-only or Cooking-only subscribers.
+About the Archive
+This is a digitized version of an article from The Times’s print archive, before the start of online publication in 1996. To preserve these articles as they originally appeared, The Times does not alter, edit or update them.
+Occasionally the digitization process introduces transcription errors or other problems; we are continuing to work to improve these archived versions.
+
+WHILE residents in other Connecticut communities lock horns over such social problems as where to construct prisons, put garbage dumps and build low-income housing, here in the tiny western town of Sherman, they argue about Tiffany lamps.
+
+It is not merits of the marvelously rainbow-colored glass lamps created by Louis Comfort Tiffany that they argue about; the issue is whether to create a museum to house them.
+
+At the moment, the proposal to create the Neustadt Museum of Tiffany Art is preliminary. The formal presentation is expected to be made in January, said one of the plan's proponents, Marylou Gari. But the notion of the museum already has aroused strong feelings among Sherman residents.
+
+Much of that discussion concerns the intentions of the would-be benefactor, the late Dr. Egon Neustadt, who was an orthodontist and the town's first developer. Born in Vienna, Dr. Neustadt died in 1984, after amassing what is believed to be the largest collection of Tiffany lamps in the world, said Michael Gari, who is Mrs. Gari's husband, and, like her, one of the trustees of Dr. Neustadt's estate.
+
+Advertisement
+Continue reading the main story
+
+In his will, Dr. Neustadt left instructions for the establishment of the museum, which would be housed in his Swiss-style chalet, nestled among mountains.
+
+Mr. Gari believes Dr. Neustadt was motivated by his desire to share his love for Tiffany lamps with his town.
+
+''He had a large impact here,'' Mr. Gari said of Dr. Neustadt. ''And he wanted to share the Tffany lamps. He had a fascination with the glass. He had a love affair with it. He marveled at their beauty, and he wants to share that beauty with the rest of the world.''
+
+But Joseph Saphir, who, like Mr. Gari, lives in Candlewood Lake Estates, where the museum would be, disagrees. Of Dr. Neustadt's bequest, he said, ''this is his revenge on the town.''
+
+''He was in continual litigation with others and myself,'' Mr. Saphir said, ''and clearly the purpose of this museum is to harass the community in perpetuity.''
+Editors’ Picks
+The Uniform Cool of Charlie Watts
+Aretha Franklin and the Futility of Trying to Portray Her Onscreen
+When ‘Y Tu Mamá También’ Changed Everything
+Continue reading the main story
+
+Advertisement
+Continue reading the main story
+
+It is believed that such a museum would be the first devoted solely to Tiffany lamps, and it would doubtless bring attention to Sherman, a town that has preferred a quiet existence since 1802, when it was created from the northern part of New Fairfield, and named after Roger Sherman, who lived there.
+
+''We're at the northernmost point of Fairfield County and we're the last town to be discovered by developers,'' said Gloria Thorne, a co-publisher of the Sherman Sentinel, the local biweekly newspaper. ''We've tried to keep Sherman a secret.''
+Sign up for the New York Today Newsletter  Each morning, get the latest on New York businesses, arts, sports, dining, style and more. Get it sent to your inbox.
+
+But the secret is leaking out. A former farming community, many fields have given way to housing, and although the town remains rural, it is growing, said First Selectman Kenneth F. Grant, who holds office in the new Town Hall The new Town Hall is situated, along with the Sherman Playhouse and the town's fire department, around the corner from the town's historic center. The old center of town houses the old Town Hall, which is now headquarters for the Sherman Historical Society, the town library, the Sherman Stock and Trade, which is the town's hardware store, and little else. When Mr. Grant took office about two decades ago, Sherman's population was about 1,200, he estimated. It is now about 2,450.
+
+Created by Dr. Neustadt decades ago, Candlewood Lake Esates, a 300-acre development, is about four-fifths in Sherman and the remainder in New Milford. Dr. Neustadt, who developed the property over more than 20 years, from the 1950's through the 1970's, retained an eight-acre parcel, where he built his chalet, and where he and his wife are buried. The chalet is now rundown, but plans for the museum call for its restoration, Mr. Gari said.
+
+According to him, the trustees would take every precaution to make certain the museum blended in with the surroundings.
+
+Plans call for a single room with vault-like security to be added to the 12-room house. The museum's hours would be limited, and visits would be by appointment only. No more than about 15 lamps would be displayed at any one time, Mr. Gari said.
+
+The lamps would come from Dr. Neustadt's collection of about 200 Tiffany lamps, which are stored at the New-York Historical Society in Manhattan. Dr. Neustadt also donated 133 Tiffany lamps and leaded windows to the society before his death. In addition to collecting Tiffany lamps, Mr. Neustadt became an authority on them, and wrote ''The Lamps of Tiffany,'' which is considered the pre-eminent book on the subject, Mr. Gari said.
+
+Advertisement
+Continue reading the main story
+
+Architectural plans for the museum are still being drawn up by David K. Spector, a Sherman resident who designed the National Tennis Center in Flushing Meadows, Queens, among other projects, Mr. Gari said.
+
+But Mr. Saphir doubts the trustees could stick to their promise to restrict access to the museum and still remain true to the idea of creating a public entity.
+
+Philip Cavalier, who lives in the New Milford portion of Candlewood Lake Estates, is another opponent of the museum. ''If you put a multi-million-dollar museum in the middle of the woods, a half mile from the lake, in a town with a $30,000-a-year police force, it's like a Keystone comedy,'' Mr. Cavalier said. ''But it does create a serious problem. We believe it would make everybody on the lake a target.''
+
+Over the years, many residents of Candlewood Lake Estates, including Mr. Saphir and Mr. Cavalier, tangled with Dr. Neustadt in the courts about issues related to the development. But Mr. Saphir denies that the opposition to the museum is personally motivated.
+
+''There are some who say that,'' he said, ''but if you can show me a more inappropriate place for a museum, I'll congratulate you.''
+
+Not everyone opposes the museum. At the Sherman Stock and Trade, which is housed in a 200-year-old former general store, the owner, Ann Lindholm, likes the idea.
+
+''I think it would be lovely,'' she said. ''It would be one more charm for the town and would help in historic preservation.''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,111 @@
+can say:  Map the integers to the rationals mayby for writing rational arithmetic using integer p's.
+Can Demonstrate it as
+
+GraphicZero   -  A binomial equivelance supplament is needed.  Maybe including a proof. - see xyz note
+                 Need to document where the constant came from - the pattern of the twopoly arithmetic.
+
+GrapicM       - need more roots says mu
+                Is there a factor theorme if p does not factor, then horizontal translated p
+                does not factor.
+                Have the note GraphicM, scripts no commentary. have jan2021.text 1/19 
+
+GraphicDifferences - generate the DAG
+                   - range vs the algebra    need to know the value at the location of target root.
+                     ZAD does range and gauss.  GraphicDifferences needs the algebra.
+
+GraphicMu      - the principal of inclusion exclusion
+               - how p's can score mu with another cai function if root then l else anything then 0.
+
+The java commentary
+p's themselves - arbitrary number of zeros 
+
+And the last tough technical hurdle is ZAD.java needs to write the DAG.
+
+Jan recap:
+
+Largest ZADScripts attempt broke Quippy with kafka out of memory.
+Did a partial Quippy rebuild and wrote GZero.
+A little argument about writing the S* scripts in scala.
+And ZAD revisit.
+
+xyz
+GraphicZero
+QuippyDataFrame
+GraphCheckDecimalKey
+GraphicScripts
+Streams.Sink.Topic.Cypher
+GraphicMultiplication
+GraphScripts
+
+
+The Binomial explained:
+
+  TwoPolynomial use case
+  Move the whole P.
+  Move the sets defining P.
+  Move the set member in 2^n.
+  Move the set member=0.
+
+Roots: 
+
+  Always interesting when P's are involved.
+  There are roots in TwoPolynomial sets.
+  Arithmetic roots.
+  The mu function.
+  GraphicNewton. 
+
+The wish list.
+GraphicVertex.   - the cone/vertex progression and convergance.
+Diophantine exibit.  - interesting in NewtonsTraversal.
+Fractions of Q
+Wilson
+
+linear combinations of products of 2 linear consecutive terms and a scalar.
+
+
+Intended pattern revealed secondary patterns.
+
+The api - current notes speak of api interation
+The library we know about that.
+
+Spark interacts with DFScripts ZADScripts.
+
+API because choose things like MaxN,D,I and study i in I.
+Particular choose the above that completes its Mu efficiently.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Lisa Stansfield mit dem Titel »All Around The World (Long Version) « vom Album »Blank & Jones Present: So80s (So Eighties) 6 (Deluxe Edition)« (2011)
+Frank follows freddie farther and farther into the forest.
+Willie wishes wonka wakki waffers.
+No he owns a stray dog kennel in gary ny.
+Takes many dancing pixies to put on a show like that.

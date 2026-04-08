@@ -1,0 +1,1645 @@
+chdir JavaProjects\TwoPolynomialGeneratorK\dist
+java -jar TwoPolynomialGenerator.jar test.csv 1000 2 30
+
+chdir JavaProjects\ZADScriptsK\ZADScripts\dist
+java -jar ZADScripts.jar 2 7 1000 2
+
+
+Did decide to install spinners inside poll methods.   -  not yet implemented.
+
+To use spark jdbc is to write resultset directly into dataframe.
+To spark stream....
+
+Looks like need to know both.  Parcimony is the jdbc.
+
+The JDBC data source is also easier to use from Java or Python as it does not require the user to provide a ClassTag
+
+need to put quippys jdbc in zeppelin/spark classpath.
+
+
+You can add jar files straight under Interpreter dependencies
+
+Load Dependencies to Interpreter
+
+    Click 'Interpreter' menu in navigation bar.
+    Click 'edit' button of the interpreter which you want to load dependencies to.
+    Fill artifact and exclude field to your needs. Add the path to the respective jar file.
+    Press 'Save' to restart the interpreter with loaded libraries.
+
+Regards, George Davy
+
+Executor memory per worker instance.
+ex) 512m, 32g
+
+file:///C:/Users/Aibes/ZeppelinDocs/Apache%20Zeppelin%200.8.2%20Documentation%20Apache%20Spark%20Interpreter%20for%20Apache%20Zeppelin.html
+plenty of links above
+
+10AM
+The experiment is to spark jdbc quippy.
+    or vasilate using zadscripts.
+    ZS would need another method or two.
+    ZS does need 
+
+%dep z.load("C:\Users\Aibes\JavaProjects\ZADScriptsK\ZADScripts\dist\ZADScripts.jar")
+
+spark context.
+
+
+
+Thanks. It says that I should also set the checkpoint directory. It can be done as follows ssc.checkpoint(SparkCheckpointDir)
+
+
+10/5 
+
+local directory classpath or maven artifact.
+
+Kafka topic in Grafana
+
+Which I have taken from the spark kafka integration guide
+
+HWX buddy Timothy Spann, he pointed me at an Apache NiFi article 
+
+https://spark.apache.org/docs/2.3.0/structured-streaming-kafka-integration.html
+
+https://spark.apache.org/docs/2.3.0/structured-streaming-kafka-integration.html#deploying
+
+looks like the csv's are in bin folder.
+
+Recall The twoPolynomial pivot.  It is up for migration into Zeppelin.
+The S2T pattern is querry argument (S2TQA). 
+
+And the ruberic of information S2TQA provides
+
+rows: iM,iN,eTrm
+columns rDrm
+data: Sum TotalRScalar
+
+also evaluate TotalRScalar
+
+munging
+
+who would ever have thought cypher does pivot tables...
+
+
+10/6
+
+mcAfee pop up clean your pc to declutter well free up 2.9gb and get rid of 39671 junk files.
+
+ chemists have started employing a new set of neural networks: graph neural networks, or GNNs
+
+push to the live dash-board.
+
+why does firefox save page render so badly?
+
+file:///C:/Users/Aibes/ZeppelinDocs/Apache%20Kafka%20-%20Integration%20With%20Spark%20-%20Tutorialspoint.htm
+
+Kafka-Spark API’
+SparkConf API
+StreamingContext API
+public StreamingContext(String master, String appName, Duration batchDuration, 
+   String sparkHome, scala.collection.Seq<String> jars, 
+   scala.collection.Map<String,String> environment)
+KafkaUtils API
+public static ReceiverInputDStream<scala.Tuple2<String,String>> createStream(
+   StreamingContext ssc, String zkQuorum, String groupId,
+   scala.collection.immutable.Map<String,Object> topics, StorageLevel storageLevel)  // scala type signature
+
+
+streamingContext.start()
+
+spark-submit
+
+
+Apache Kafka 0.10 connector for Structured Streaming
+
+file:///C:/Users/Aibes/ZeppelinDocs/Real-Time%20Integration%20with%20Apache%20Kafka%20and%20Spark%20Structured%20Streaming.html
+
+
+seems like resultset to dataframe is way to go   -  until kafka-spark is understood.
+
+inside zeppelin,  zadscripts can return a resultset.
+something like iterate it into a dataframe.
+
+The PM Lab:
+
+  ZADScripts.scriptsAutomation.S3TReturn() to return resultSet.
+  Not quite.
+  Zeppelin will use a new class with static methods.  
+  Its name is DataFrameQuerries.                      
+
+  DataFrameQuerries are the S*methods with a resultSet not iterated into kafka.
+  Just new same method with resultset return type.  Maybe can keep it simple and 
+  return a row, not a map.  
+
+overridable method call in constructor.
+
+also, have the resultsetmap object constructed for each ResultSetRow.
+And easily into dataframe, dataset???
+
+as in... want not resultSet but the resultsetMap.sMap.
+some of the readings were of resultsets as lists of maps. 
+
+and what if ZADScripts was equipped with the dataframe?
+then can just z.put the dataframe returning ZADScripts.DFScripts.S3t.
+
+//  the what are dataframe transitives.
+
+and what returns a dataframe  spark.sql, spark.
+and reactive streams
+
+10/7
+
+ var df2 = sparkSession.read.jdbc
+
+windows defender smart screen
+microsoft software protection platform.
+ctf loader
+
+file:///C:/Users/Aibes/ZeppelinDocs/JDBC%20To%20Other%20Databases%20-%20Spark%203.0.1%20Documentation.html
+
+Says is preferred method than JdbcRDD.  
+But does not speak of prepared statement.
+
+file:///C:/Users/Aibes/ZeppelinDocs/Spark%20JDBC%20Using%20DataFrames%20Infoobjects.html
+
+Does speak of the JdbcRDD.
+But not a parameterized prepared statement.
+
+file:///C:/Users/Aibes/ZeppelinDocs/scala%20-%20Resultset%20to%20spark%20Dataframe%20-%20Stack%20Overflow.html
+
+Seems the way to go.
+
+Java stays as java.  
+
+DFScripts.s3T to return the resultSet.   // Note: ZADScriptsK in development so, zeppelin needs each new
+                                         // build.
+                                         // Note: DFScripts.s3T - to static or not.  if static, have non static variables to contend with.
+                                         // But not now.                                         
+                                         // Note: Overridalbe method in class constructor
+
+public  ResultSet s3T(String rangeLow, String rangeHigh, String nMax, String dimension1, String dimension2, String dimension3, int tConstraint) throws JsonProcessingException 
+
+        psInsert.setString(1,rangeLow);
+        psInsert.setString(2,rangeHigh);
+        psInsert.setString(3,nMax);
+        psInsert.setString(4,dimension1);
+        psInsert.setInt(5, tConstraint);
+        psInsert.setString(6,dimension1);
+        psInsert.setInt(7, tConstraint);
+        psInsert.setString(8,dimension3);
+
+Zeppelin question:  with above note... do need to restart interpreter for fresh ZADScripts.jar???
+
+
+file:///C:/Users/Aibes/ZeppelinDocs/Convert%20ResultSet%20to%20DataFrame%20-%20Programmer%20Sought.html
+
+importorg.apache.spark.sql.types._val schema=StructType(Array(StructField("author", StringType, false),StructField("title", StringType, false),StructField("pages", IntegerType, false)))
+vs
+val schema= "author STRING, title STRING, pages INT"
+
+val schema = "dimension STRING, degree STRING, scalar STRING, index STRING, maxindex STRING, divisor STRING, row STRING"
+
+
+bouncyCastle math
+
+interpreter spark meta-inf dependencies
+
+zeppelin not found:
+DataFrame
+ResultSet
+ArrayList
+StructType
+session
+
+
+spire algebra 
+
+10/9
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import org.apache.spark.SparkContext;
+import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructType;
+import org.apache.zeppelin.interpreter.Interpreter;
+import org.apache.zeppelin.interpreter.InterpreterContext;
+import org.apache.zeppelin.interpreter.InterpreterPropertyBuilder;
+import org.apache.zeppelin.interpreter.InterpreterResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+There is a possibility of using the Spark streaming context method called
+socketTextStream to stream data via TCP/IP, by specifying a hostname and a
+port number
+
+Spark SQL and Spark Core
+
+zeppelin sparksession
+         sparkcontext
+
+
+You can browse Scaladoc online at www.scala-lang.org/api, but it is a good
+idea to download a copy from www.scala-lang.org/downloads#api and install
+it locally.
+
+Scala has no checked exceptions.
+
+laudable goal.
+
+Once created, SparkSession allows for creating a DataFrame (based on an RDD or a Scala
+Seq ),
+
+
+You can have as many SparkSessions as you want in a single Spark application. The
+common use case is to keep relational entities separate logically in catalogs per
+SparkSession .
+In the end, you stop a SparkSession using SparkSession.stop method
+
+SparkSession API 
+
+createDataFrame
+createDataset
+emptyDataFrame
+emptyDataset
+
+
+file:///C:/Users/Aibes/PDFs/mastering-spark-sql.pdf p74
+
+
+Creating DataFrame using Case Classes in Scala
+
+scala> case class Person(name: String, age: Int)
+defined class Person
+scala> val people = Seq(Person("Jacek", 42), Person("Patryk", 19), Person("Maksym", 5)
+)
+people: Seq[Person] = List(Person(Jacek,42), Person(Patryk,19), Person(Maksym,5))
+scala> val df = spark.createDataFrame(people)
+
+
+so, want to know what a scala sequence is. 
+probably has a builder associated with it.
+
+page 88 external data sources reading 
+
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate
+val reader = spark.read
+
+
+Dataset API is a set of operators with typed and untyped transformations, and actions to
+work with a structured query (as a Dataset) as a whole
+
+// the transforms and actions.
+
+
+p189
+
+RelationalGroupedDataset — Untyped Rowbased Grouping
+RelationalGroupedDataset is an interface to calculate aggregates over groups of rows in a
+DataFrame.
+Note
+KeyValueGroupedDataset is used for typed aggregates over groups of custom
+Scala objects (not Rows).
+RelationalGroupedDataset is a result of executing the following grouping operators:
+groupBy
+rollup
+cube
+pivot
+
+
+10/12
+
+<console>:53: error: type mismatch;
+found   : java.util.ArrayList[org.apache.spark.sql.types.StructField]
+required: Seq[?]
+
+<console>:68: error: type mismatch;
+ found   : java.util.ArrayList[Object]
+ required: Seq[Any]
+         			resultList.add(Row(temp:_*))
+
+val rdd_response=sc.parallelize(array_response.toSeq)
+
+defference between a case class and StructField.
+
+rowSchemaList.add(createStructField(rsmd.getColumnName(i),rsmd.getColumnClassName(i)))
+
+seems like createStructField is some other def.
+ThE WAY IT IS P74:
+
+scala> case class Person(name: String, age: Int)
+defined class Person
+scala> val people = Seq(Person("Jacek", 42), Person("Patryk", 19), Person("Maksym", 5)
+)
+people: Seq[Person] = List(Person(Jacek,42), Person(Patryk,19), Person(Maksym,5))
+scala> val df = spark.createDataFrame(people)
+df: org.apache.spark.sql.DataFrame = [name: string, age: int]
+
+And so, the case class is...
+
+who are my dads cousins.
+
+val x: ParSeq[Int] = Seq(1,2,3).par
+
+http://www.scala-lang.org/docu/files/ScalaReference.pdf
+
+"type mismatch : found: org.apache.spark.sql.Column , required :Seq[?] 
+
+spark on eclipse.
+
+documentation for the scala standard library
+documentation for the spark library???
+
+file:///C:/Users/Aibes/ZeppelinDocs/Scala%20Standard%20Library%202.12.3%20-%20scala.Any.html
+
+
+10/14
+
+  windows defender is blocking features of zookeeper, neo4j..  allow access.
+  guess it means windows defender is up and running.
+
+     http://www.eclipse.org/downloads/index.php 
+
+If you are a Java developer, then the "Eclipse SDK" release is probably best for you.
+ If you are not a Java developer, then you should click on "View all platforms for release 3.0.1" and scroll down to the "Platform Runtime Binary" releases. 
+
+val x = Seq(Some(1), None, Some(3), None)
+
+Very exciting Alvin Alexander
+
+file:///C:/Users/Aibes/ZeppelinDocs/Scala%20Seq%20class%20methods,%20examples,%20and%20syntax%20alvinalexander.com.html
+
+Still want opinion struct type vs case clase.
+
+A Scala Case Class is like a regular class, except it is good for modeling immutable data. It also serves useful in pattern matching, 
+
+        "RETURN ? AS dimension, dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,toString(eTrm) as eTrm "); 
+//      "WITH {dimension:?,tDegree:tDegree,tScalar:tScalar,iN:iN,iM:iM,pTD:pTD,eTrm:eTrm} AS line\n" +
+//      "RETURN line");
+        statements.add(psInsert);
+        psInsert.setString(1,rangeLow);
+        psInsert.setString(2,rangeHigh);
+        psInsert.setString(3,nMax);
+        psInsert.setString(4,dimension1);
+        psInsert.setInt(5, tConstraint);
+//      psInsert.setString(6,dConstraint);
+        psInsert.setString(6,dimension1);
+        psInsert.setInt(7, tConstraint);
+//      psInsert.setString(9,dConstraint);        
+        psInsert.setString(8,dimension3);
+
+val session = SparkSession.builder.getOrCreate
+
+case class s3T(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String)
+
+val termsInit = Seq[s3t]()
+
+while (rs.next()) {
+
+val term = s3T(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7))
+
+// want a sequence of terms
+
+val terms[s3T] = Seq(term) 
+
+
+}
+want a sequence of these case classes   
+
+and to map or not map the result set
+as in is it convienent to case clase from a map????
+
+Alvin Demonstrates:
+
+case class Person(name: String)
+
+val people = Seq(
+    Person("Emily"),
+    Person("Hannah"),
+    Person("Mercedes")
+)
+
+zeppelin and the SparkSession
+
+var dataframe
+    vs 
+val dataframe
+
+the dataframe api
+
+the scala eclipse does or not include java?
+
+the eclipse scala worksheet
+
+
+10/15
+
+The eclipse scala worksheet.
+
+ZADScripts.DFScripts.s3T returns a resultSet.
+
+
+QuippyJDBC paragraph has createResultSetToDF returning a dataframe
+
+the mecanism is something toward iterate over the resultset.
+                                  rs.next() arguments a case class
+                                  the case clase is appended to a sequenceBuilder 
+ 
+                                  after rs.next iteration:
+                                                           sequencebuilder.toSequence
+                                                           case class sequence to dataframe.
+                                  
+and the yet written object setDataframe to script together 
+the above important two snippits.
+
+The what should be done is....
+Use eclipse up to creating the dataframe.
+
+Eclipse project references -  as in where does ZADScripts.jar go?
+
+https://www.physicsforums.com/threads/q-volume-of-the-largest-ellipsoid-in-space-which-contains-no-stars.994676/
+
+10/16
+
+did not yet sleuth the eclipse scala worksheet.
+windows search indexer
+lenovomodernimcontroller
+killer control center
+
+
+
+val session = SparkSession.builder.getOrCreate
+
+case class s3T(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String)
+
+val termsInit = Seq[s3t]()
+
+while (rs.next()) {
+
+val term = s3T(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7))
+
+// want a sequence of terms
+
+val terms[s3T] = Seq(term) 
+
+
+ZADScripts.DFScripts.s3T returns a resultSet.
+
+rs.next() arguments a case class
+the case clase is appended to a sequenceBuilder 
+ 
+after rs.next iteration:
+sequencebuilder.toSequence                 //  ArrayBuilder then ArrayBuilder.toSeq
+case class sequence to dataframe.
+
+the shade plugin
+maven-dependency-plugin
+Jib provides an easy-to-use plugin for Maven
+Maven's assembly plugin.
+sbt-assembly is a sbt plugin 
+
+Scala Maven Plugin
+
+same base image (like openjdk:11.0.4-jre-slim)
+
+The Scala IDE 4.1 officially supports Eclipse 4.4 (Luna) and Eclipse 4.5 (Mars).
+
+Some of these identifiers are type aliases
+
+So, maybe cast an arraybuffer to seq???     -  Does leanring scala discuss arraybuffer???
+
+Still want a scala doc.
+
+Scala has no “checked” exceptions—you
+never have to declare that a function or method might throw an exception.
+
+TraversableOnce trait, the most
+general trait in the Scala collections
+hierarchy. Other common traits that you
+may encounter in Scaladoc are Traversable
+and Iterable
+
+However, the Seq trait requires element
+access by an integer index. Think “array,
+list, or string.
+
+import scala.collection.mutable.ArrayBuffer
+val b = ArrayBuffer[Int]()
+ // Or new ArrayBuffer[Int]
+ // An empty array buffer, ready to hold integers
+b += 1
+ // ArrayBuffer(1)
+ // Add an element at the end with +=
+b += (1, 2, 3, 5)
+ // ArrayBuffer(1, 1, 2, 3, 5)
+ // Add multiple elements at the end by enclosing them in parentheses
+b ++= Array(8, 13, 21)
+ // ArrayBuffer(1, 1, 2, 3, 5, 8, 13, 21)
+ // You can append any collection with the ++= operator
+b.trimEnd(5)
+ // ArrayBuffer(1, 1, 2)
+ // Removes the last five elements
+
+class Manager {
+import scala.collection.mutable._
+ val subordinates = new ArrayBuffer[Employee]
+ ...
+}
+
+Predef object is imported
+
+file:///C:/Users/Aibes/PDFs/scala-impatient.pdf speaks of chapter 13,  but ends at 9.
+
+
+10/19
+
+Looks like scala arrayBuffer has .toSeq.  
+
+val session = SparkSession.builder.getOrCreate
+
+case class s3T(dimension:String,Degree:String,scalar:String,index:String,maxIndex:String,divisor:String,rowCounter:String)
+
+val termsInit = Seq[s3t]()
+
+while (rs.next()) {
+
+val term = s3T(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7))
+
+// want a sequence of terms
+
+val terms[s3T] = Seq(term) 
+
+
+ZADScripts.DFScripts.s3T returns a resultSet.
+
+rs.next() arguments a case class
+the case clase is appended to a sequenceBuilder 
+ 
+after rs.next iteration:
+sequencebuilder.toSequence                 //  ArrayBuilder then ArrayBuilder.toSeq
+case class sequence to dataframe.
+
+The plan:
+
+Use Scala IDE and...
+With a scala worksheet...
+Define an object                         //  have one named Hmm.
+It is to
+
+Use (ResultSet)ZADScripts.DFScripts.s3T for populating the s3T Case Class.   //s3t wants tConstraint- maybe is doing s3a mistakinly.
+
+public ResultSet s3T(String rangeLow, String rangeHigh, String nMax, String dimension1, String dimension2, String dimension3, int tConstraint)
+                                                          // note dimension 2 not used in querry
+want to look at say 2 2 1000 8 8 8 1     
+
+and so... search scala method parameters 
+
+
+Have the result set populating case classes.
+
+They need to go onto an arraybuilder.
+
+So, define an arraybuilder of type s3T
+ 
+So, Zeppelin creates the datafame.   
+And now the fun of it all.  
+
+GRAPHIC ZERO 
+
+edition 0   the prequil  -  last year -  Can make zero at arbitrary index.
+            scripts and jars added.
+            make bigger p's                         --  use the jar
+            dataframes and the tablue               --  use the jar
+            use dataframes to explore
+            newtons traversal.            
+            the table traversal
+            the kafka sink in neo4j.conf
+
+10/20
+
+Monday's Zeppelin datafram from jdbc resultSet and the pivot table. 
+
+Observe:
+
+      . scalar column maybe a defalt width.
+      . DFScripts.s3T includes tConstraint in query.
+
+Remember:
+
+      . Along with Zeppelin startup and startup (happens before), zookeeper,kafka,Quippy
+        an update to ZADScripts requires the Spark interpreter to be restarted.
+
+Along the way:
+
+      . Rapids gets some work.
+
+The Agenda:
+
+      . ZADScripts.DFScripts.s3T gets heavier - need variety of S* returned.
+      . Need the dataframe transformed into yea old pivotTable.
+
+
+The PivotTable.
+
+so, want to group by, then pivot by.
+
+as group by MaxN,n,eterm
+   pivot by degree
+   sum result column.
+
+and do need spark in eclipse.
+
+and remember result column is somewhere along the way calculated.
+
+
+Spark the syntax is df.groupBy("A", "B").pivot("C").sum("D"). 
+                          // create a sequence of values for c 
+df.groupBy("A", "B").pivot("C", Seq("small", "large")).sum("D"). 
+                                                      .agg(round(sum("ss_sales_price")/1000000,2))
+
+//  can though put numbers in millions, billions...  
+//  the whole scalar and nothing but the scalar is wiht %neo4j not yet available.
+
+df.groupBy("A", "B").pivot("C").agg(sum("D"), avg("D"))
+
+
+Although the syntax only allows pivoting on one column, you can combine columns to get the same result as pivoting multiple columns. For example:
+
+df.withColumn("p", concat($"p1", $"p2"))
+  .groupBy("a", "b")
+  .pivot("p")
+  .agg(...)
+
+
+flights
+  .groupBy($"origin", $"dest", $"carrier")
+  .pivot("hour")
+  .agg(avg($"arr_delay"))
+
+
+10/21
+
+z.put("testDF",df2) 
+and so....  
+
+QuippyJDBC ResultSet paragraph does z.show(df) as the requisite table.
+
+Now need case class refactor to include result field,
+pivital in respect to the table, to graph correctness...
+So, have the dataframe read from ResultSet.
+Need the result computation performed.
+
+More granular:
+Each ResultSet row is written to a case class aggrigated as an ArrayBuffer
+ArrayBuffer is cast to sequence and then a dataframe is created.
+Need each dataframe row needs a result calculated.
+QuippyHJDBC paragraph needs a refactor.
+need vals for getStrings scalar, degree, divisor.
+     val for bigdecimal result of above.
+
+Then the case class.
+Remember:
+
+index to the power * Scalar/divisor.
+And maybe need to hack the pivot table because of spark bigDecimal constraints.
+
+That is... compute then to string....
+
+And the etrm constraint....
+
+So, the plan is....                            - for tomorrow.
+Need to loop through DFScripts.
+Create etrm subTotal - a private variable.
+
+
+10/22
+
+The recap: 
+Hmm.sc calls DFScripts.s3T for the row  MaxN,N,eTrm.
+       it computes from the ResultSet, then the ResultSet row and result are recorded 
+       within a case class, the type member of the sequence converteded into a dataframe.
+
+The suspicion is the dataframe is breakable as the bigDecimals are beyond spark precision
+and therfore, more to be done in Scala.
+
+Thing 1 to do is sum the result   
+
+So,  Hmm.sc seems performant on a single MaxN,N row.  
+
+now to set up a range  (1 to N-1)                  //  etrm as numeric is going to run into a problem sooner than later.
+for iterating over with intent to parameteriz s3t querry at each value.
+
+
+val x = (1 to 5).map { e => (e + 1.1) * 2 }
+
+val x = (0 to 5).map { e => BigDecimal(2).Pow(e) }    --  does nice things.
+
+Also,  is time to give Hmm.sc a refactor.
+
+
+val s3RS , a resultSet, is parameter for class to write row result.
+
+maybe...   
+
+eclipse what is scala worksheet 
+
+
+Below is a one liner?
+
+val scalar = BigDecimal(s3RS.getString(3))
+val degree = s3RS.getString(2).toInt
+val divisor = BigDecimal(s3RS.getString(6))
+val index = BigDecimal(s3RS.getString(5))
+val indexPower = index.pow(degree)
+val scalarDiv = scalar/divisor
+val result =  indexPower * scalarDiv
+
+
+
+10/23
+
+Object Hmm              --  the first scala activity in Eclipse.
+
+Does one off interact with Quippy vis zadscripts.DFScripts.
+AS  --  populate case classes with entire ResultSet.
+Extracts result into seperate BigDecimal sequence.
+Reduces BigDecimalSequence.
+
+Result remains.
+
+
+So, capture this as object.
+
+Main object does the range call to DFScripts.
+Result is built into a sequence for each call in range.
+Do need another case class for main object.
+
+
+
+
+Looks like QuerryS3T wants parameters -  those to be passed onto
+s3.s3T
+
+  val s3RS = s3.s3T("3","3","1000","8","8","8",2)
+
+def printName(first: String, last: String)
+
+System.out.println("s3T" + rangeLow+" "+rangeHigh+" "+nMax+" "+dimension1+" "+dimension2+" "+dimension3+" "+tConstraint); 
+
+rLow:String,rHigh:String,nMax:String,d1:String,d2:String,d3:String,tC:Int 
+
+
+Do now need QuerryDriver to call QuerryS3T and print return 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10/25
+
+https://en.wikipedia.org/wiki/Jikes_RVM
+
+Create and run a Data Flow application to run a serverless Spark job
+
+JEP 339: Edwards-Curve Digital Signature Algorithm (EdDSA)
+The whole point is to avoid side-channel attacks    elliptic curve signature scheme 
+JEP 373: Reimplement the Legacy DatagramSocket API
+
+JEP 385: Deprecate RMI Activation for Removal
+
+The sealed class and its permitted subclasses must belong to the same module,
+
+https://blogs.oracle.com/javamagazine/pattern-matching-for-instanceof-in-java-14
+ByteBuffer AP
+
+The Java team has seen no evidence of any new applications being written to use RMI activation, and there is evidence that very few existing applications use RMI activation
+
+Then I iterate over the consumer (poll method)
+
+Guava provides us with great factory methods for Java types, such as Maps.newHashMap()
+
+why immutable maps lists, in general.
+
+Correct, and instead of writing your own threading system, use Java's Executors, which will make your life much simpler
+
+Is quartz overkill? How can you scale back the polling frequency based on the current DB load
+
+
+ The key to dealing with polling is: as soon as possible, get the direction of calls going from the point of state change to the observer. Then calls happen when they're needed. Not when they aren't. 
+
+
+10/26
+
+Functions that take other functions as parameters or that return functions as results are called higher order functions.
+
+
+10/27
+
+
+Scala IDE @ScalaIDE
+
+Hello, Scala IDE 4.7.1 RC3 is out. This time we added some enhancements to Worksheet to make it running for @ApacheSpark scripts in @scala_lang 2.11. Enjoy! http://scala-ide.org/download/milestone.html …
+  
+Jan 3, 2018
+
+Our next virtual event, Connections: Graph Architecture and Integrations will highlight the key use cases and best practices around integrating Neo4j’s graph database with a number of popular technologies, highlighting the importance of connectivity in the context of graph technology.
+
+Join us on Tuesday, November 17, 2020 from 07:30 to 11:00 PT for a full day of sessions with speakers from Sisense and Neo4j.
+
+The Scala compiler needs the same version of the Scala library, so you cannot mix a 2.9 compiler with a 2.8 standard library. You may get this problem if you generated project files from an existing SBT/maven project that's configured to work with 2.8.
+
+start up eclipse on the command line.
+
+ecipse tutorial
+
+type inference
+implicit 
+
+algebraic data type
+sealed trate
+ and case classes implement.
+
+nothing to do with performing math.
+
+1st step implicit conversions.
+solve the late extension problem 
+class c, trat t 
+how to make c extend t after the fact.
+
+trait t
+class c
+implicit def c2t(x:C):T = new T{ }
+
+second step implicit parameters 
+
+type classes for free.
+
+poor man's type classes.
+are 
+implicitly passed dictionaries.
+
+modifier for definitions.
+
+Dotty - scala 3 compiler implicit redesign.
+
+infer values, terms, types
+
+infer type and compiler produces a term.
+givin instances or givinis the implicit.
+
+execution context is an implicit 
+givin global: ExecutionContext = ForkJoinPool()
+
+monoid extends semigroup[t]
+
+infix methods
+
+implicitly is replaced with summon
+
+import wildcards are two powerfull 
+import selector is used to import givens.
+
+import by type
+say any ordering instance.
+
+shadowing is illiminated.
+
+10/28
+
+what is idiomatic for a scala result set.
+
+Have:
+
+Object QuerryS3T with method s3tQuerry.
+
+s3tQuerry
+ 
+.calls DFScripts for the row nmax,n,etrm.
+.defines a term for each row in resultset 
+.writes a sequence of case classs each populated with respective term data.
+.reduces the sequence to its evaluate.
+
+// though perceptably not quite idiomatic scala.
+
+QuerryDriver.scala
+
+needs to iterate over a range mapped into eTrm values needed for s3tQuerry.
+
+the .map function is to assign x the return of QuerryS3T
+
+QuerryS3T.s3TQuerry(rLow:String,rHigh:String,nMax:String,d1:String,d2:String,d3:String,tC:Int)
+
+val x = (0 to 2).map { e => QuerryS3T.s3TQuerry(rLow:String,rHigh:String,nMax:String,d1:String,d2:String,d3:String,BigDecimal(2).pow(e).toInt)  }
+                                                  //> Loaded the appropriate driver and rev.
+                                                  //| Oct 28, 2020 1:28:42 PM org.neo4j.driver.internal.logging.JULogger info
+                                                  //| INFO: Direct driver instance 660879561 created for server address localhost:
+                                                  //| 7687
+                                                  //| jdbc:neo4j:bolt://localhost
+                                                  //| 
+                                                  //| s3T4 4 1000 4 4 4 1
+                                                  //| 
+                                                  //| 994014    -1994000    1000000    ArrayBuffer(s3T(4,0,1988028,4,1000,2,1,9940
+                                                  //| 14), s3T(4,1,-3988,4,1000,2,1,-1994000), s3T(4,2,2,4,1000,2,1,1000000))
+                                                  //| ArrayBuffer(994014, -1994000, 1000000)
+                                                  //| Loaded the appropriate driver and rev.
+                                                  //| jdbc:neo4j:bolt://localhost
+                                                  //| 
+                                                  //| s3T4 4 1000 4 4 4 2
+                                                  //| 
+                                                  //| 997002    -1997000    1000000    ArrayBuffer(s3T(4,0,1994004,4,1000,2,2,9970
+                                                  //| 02), s3T(4,1,-3994,4,1000,2,2,-1997000), s3T(4,2,2,4,1000,2,2,1000000))
+                                                  //| ArrayBuffer(997002, -1997000, 1000000)
+                                                  //| Loaded the appropriate driver and rev.
+                                                  //| jdbc:neo4j:bolt://localhost
+                                                  //| 
+                                                  //| s3T4 4 1000 4 4 4 4
+                                                  //| 
+                                                  //| 2995503000000    -1998500000000.0    -1995505998000    498502998000    50000
+                                                  //| 0
+                                                  //| Output exceeds cutoff limit.
+
+Does not run as a worksheet.
+but does work as run  
+
+file:///C:/Users/Aibes/ZeppelinDocs/Higher-order%20Functions%20Tour%20of%20Scala%20Scala%20Documentation.html
+
+
+With the pardyne of a sequence of case classes being converted into Spark dataframes.
+
+With the task at hand of proving out quippy10.
+
+So for each dimension iterate 
+
+val salaries = Seq(20000, 70000, 40000)
+val doubleSalary = (x: Int) => x * 2
+val newSalaries = salaries.map(doubleSalary) // List(40000, 140000, 80000)
+
+val salaries = Seq(20000, 70000, 40000)
+val newSalaries = salaries.map(x => x * 2) // List(40000, 140000, 80000)
+
+val salaries = Seq(20000, 70000, 40000)
+val newSalaries = salaries.map(_ * 2)
+
+Functions that return functions
+
+and what again are annotations.
+
+http://www.ezresult.com/article/Lambda_calculus
+
+It is also not compulsory to specify type parameters when polymorphic methods are
+called or generic classes are instantiated
+
+Any method which takes a single parameter can be used as an infix operator in
+Scala. H
+
+Scala’s pattern matching statement is most useful for matching on algebraic types
+expressed via case classes.
+
+abstract class DirectedGraph extends Graph {
+...
+class NodeImpl requires Node extends NodeIntf {
+def connectWith(node: Node): Edge = {
+val edge = newEdge(this, node) // now legal
+edges = edge :: edges
+edge
+}
+}
+...
+}
+
+the keyword requires...
+
+https://mathoverflow.net/questions/374102/why-do-we-associate-a-graph-to-a-ring
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+the problem with declaing s3tQuerry as BigDecimal 
+then the last line a BigDecimal causing an eclipse error.
+
+
+
+
+
+Intelligent Beats #450 (09.09.2012.)
+
+        CYPHER runtime=interpreted 
+        UNWIND range(toInteger(2),toInteger(2)) AS n
+        WITH toString(n) AS iN, ? as iM
+        MATCH (cl:CollectedProductArgNode {Dimension:?,MaxN:iM,N:iN,tft:?})-[:Arguments]->(aN:ArgumentsNode )
+        WITH max(aN.ResultDivisor) AS maxDivisor,iN,iM
+        MATCH (cl:CollectedProductArgNode {Dimension:?,MaxN:iM,N:iN,tft:?})-[:Arguments]->(aN:ArgumentsNode )
+        //RETURN aN.ScalarProduct,aN.DegreeSum,aN.ResultDivisor,cl.tft,cl.Divisor,iN,iM
+        WITH {DS:COLLECT({ResultScalar:aN.ScalarProduct, ResultDegree:aN.DegreeSum, ResultDivisor:aN.ResultDivisor}), ET:cl.tft, Divisor:cl.Divisor} AS resultProduct,iN,iM,maxDivisor
+        WITH COLLECT(resultProduct) as rPC,resultProduct.ET as eT,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+        UNWIND RANGE(0,SIZE(rPC)-1) as iI
+        WITH rPC[iI].DS as rPCDS,eT,iN,iM,rpD1,maxDivisor
+        UNWIND rPCDS as rPCDSU
+        WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,RDivisor:rPCDSU.ResultDivisor,ET:eT,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+        WITH COLLECT(resultMap) as resultMapC,resultMap.RDivisor as rDivisor,resultMap.ET as eTrm,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+        UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+        WITH resultMapC[iII].RScalarList as rSL,rDivisor,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+        UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+        UNWIND rSL[iIII] as rSLI
+        WITH COLLECT(apoc.number.exact.mul(rSLI.RScalar,apoc.number.exact.div(maxDivisor,rDivisor))) as cts,rDRM,iN,iM,rpD2,maxDivisor,eTrm 
+        WITH REDUCE(sum='0', x in cts | apoc.number.exact.add(sum,toString(x))) as acc,rDRM,iN,iM,rpD2,maxDivisor,eTrm
+        WITH {DSList:COLLECT({Degree:rDRM,Scalar:acc}),DivideBy:maxDivisor} AS pTerms,iM,iN,eTrm 
+        WITH COLLECT(pTerms) as pTermss,iM,iN,eTrm
+        UNWIND RANGE(0,SIZE(pTermss)-1) as pT
+        WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,eTrm
+        UNWIND dSList as dSListU
+        RETURN ? AS dimension, dSListU.Degree AS tDegree,dSListU.Scalar AS tScalar,iN,iM,pTD,toString(eTrm) as eTrm ");
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+def pow(n: Int): BigDecimal
+
+Returns a BigDecimal whose value is this ** n.
+
+
+def /(that: BigDecimal): BigDecimal
+
+Division of BigDecimals 
+
+Solution: Use ‘toInt’
+
+If you need to convert a String to an Int in Scala, just use the toInt method, which is available on String objects, like this:
+
+scala> val i = "1".toInt
+i: Int = 1
+
+10/24
+
+what is the eclipse task list eg. create task.
+
+ted talk all about spaces.
+
+In Eclipse, a Perspective is a grouping of related windows and features that allows for a developer to perform a specific set of
+task
+
+add overriding notation for new overriding methods.
+
+Eclipse IDE keeps a local history of files, which may prove useful when you need to review a previous version of a file that has
+not been committed to a version control system yet.
+
+screens 
+primer
+thompsons
+2X sandpaper
+
+
+ PowerShell (PS) Scripting Basics
+
+• Top 10 Active Directory Management Tasks with PS
+
+• Top 10 File System Management Tasks with PS
+
+• Automating PS Scripts - How to Create Scheduled Tasks
+
+• And more…
+
+Create a Graph Data Pipeline with Apache Spark and Neo4j
+
+Regardless of the fact you're a Data Scientist or a Data Engineer, at 99%, you have met in some way with Apache Spark. In this session, we’ll show you the capabilities we’ve been working on
+ discovering how you can combine Spark and Neo4j for reading and ingesting data from/to Neo4j leveraging several Programming Languages (such as Scala and Python) via Notebooks; showing some simple 
+use case that will allow you building a Graph Data Pipeline from scratch. 
+
+https://github.com/conker84/spark-nodes-2k20
+
+support partitioning over neo4j by using skip/limmit.
+
+use custome querry count.
+
+partitioned reads let you get data really quickly from Neo4j, since if you're reading 1 million items out, you can do it in parallel batches (say of 250k) via different connections
+
+z.show --  the way to get tables.
+
+What is the best way to load large databases to neo4j from spark? I have a spark dataframe with millions of relationships but when I try to load it to neo4j but I keep getting deadlock exceptions.  
+
+but does not ask for cypher.
+
+best way to avoid deadlocks is to isolate where they could potentially occur, and run those operations single-threaded (1 partition)
+
+Erik you can put data into Neo4j and keep it there if you prefer - but a good use case for loading from Neo4j -> Spark is when you want to take some graph computation that you've done 
+(for example GDS, or path length calculation) and then use it for other purposes, or write it back to a different relational database
+
+by using tables for labels though, you can use parallelization to load NODES, and do the RELS (which are usually the causes of deadlocks) in a single threaded way.  You can also get parallelism with rel 
+loading if you sort them properly aso thers are saying
+
+by using tables for labels though, you can use parallelization to load NODES, and do the RELS (which are usually the causes of deadlocks) in a single threaded way.
+  You can also get parallelism with rel loading if you sort them properly aso thers are saying
+
+@Erik You can use it in oder to ingest data from Neo4j into a Data Lake or for enabling graph powered machine learning.
+
+I am curious why the graph was loaded directly into GraphX
+@Clive - no GraphX at play here.   GraphX / GraphFrames appear to be relatively unmaintained these days in the spark community
+
+@Eduardo the old connector used Graphframes, but the concern is about forward support/development of these graph approaches on spark.  Current connector does not use them, as Neo4j is
+ providing all of the graph processing in that scenario
+@Karin - performance is at least as good as LOAD CSV -- often better if you approach the task smartly.  When you do LOAD CSV, you typically load all of the complex graph pattern in a single Cypher query.
+   With the spark connector, you can decompose the data, load some operations in parallel, so typically you can do better than LOAD CSV when you design the process correctly
+
+spark is really good at tables and not very good at graphs.  Neo4j is really good at graphs.  So it makes sense to do graph processing with the graph engine, and do table processing with spark. 
+It isn't about one taking over the other, they're better together
+
+Is there any performace difference on using one or two properties as node key? We usually use two properties in combination as node key in neo4j
+
+maybe using the new neo4j connector.
+
+@Karin performance isn't the main issue with 2 properties as your key vs. 1.   The short answer is, it's better to always have only one property as your key, a single unique ID.
+  The much longer answer is here: https://medium.com/neo4j/graph-data-modeling-keys-a5a5334a1297(this is just about graph modeling in general, not specifically spark)
+
+@Ronald if there are shared nodes, then you're right.  But spark makes it easy to deduplicate by a primary key field; so if you're writing a lot of nodes, and you do this
+ there will never be shared nodes between partitions
+
+@Ronald this is what tables for labels is for, to give a systematic way of breaking down a complex graph.  All graphs, no matter how complex, are a bunch of pairwise (:Domain)-[:REL]->(:Range) patterns.   The point is to break it down into 1 table per node type, 1 table per rel type.  That's a way to keep it simple no matter how huge your graph is, and enable performant loading & parallelism along the way
+
+@Karin fundamentally what's possible is similar, you could do it in a performant way either way.  This newer connector though is more spark native, in that it supports the data source API.  It's also going to have better documentation & guidance for how to implement performant imports, as opposed to just giving you the primitives.  A pre-release of what I mean you can see here: http://5.9.211.195:8000/neo4j-spark-docs/1.0.0/architecture.html
+
+@Ronald if you're not just parallelizing 1 import, but trying to do multiple coordinated imports at the same time, that's a higher level challenge.  Can be done but needs careful planning/sequencing.  I mean for one, 1 import process could saturate your imports and the others will drag, irrespective of how you implement that, if you're not careful
+
+this is 100s of lines of code. How would an organisation implement this. The earlier slides spoke about the ease of connectivity but there is nothing in the middle. 
+
+yes, this is one headache, we are thinking about how to partition data carefully, But again, the problem is there are lot shared nodes 
+
+Don’t Use Compound Keys in Graphs
+
+In relational databases, it’s typical to define compound keys of two or more attributes, but in my view that never makes sense in a graph.
+ A usual reason why someone would use a compound key is because of a dependency between columns. For example, maybe your customer code + state code
+ together is what uniquely identifies a record. But since graphs let you have as many nodes as you want, this Cypher code:
+
+val stringData = Seq(("Maheswara"), ("Mokshith"))
+val df = sc.parallelize(stringData).toDF
+df.where((length($"value")) <= 8).show
+             vs 
+val termsSeq = terms.toSeq                      
+println(termsSeq.toString())                    
+val df = spark.createDataFrame(termsSeq)
+
+You'll be able to see products in our shop soon!
+Galileo XAI
+Galileo
+About us
+
+    About Us
+    Concept
+
+    Galileo
+    About us
+        About Us
+        Concept
+
+Galileo XAI
+Galileo
+About us
+
+    About Us
+    Concept
+
+Altro
+
+    Galileo
+    About us
+        About Us
+        Concept
+
+    Galileo
+    About us
+
+Galileo XAI
+Galileo XAIGalileo XAIGalileo XAIGalileo XAI
+
+The graph - based platform
+
+for eXplainable AI
+Galileo XAI
+Galileo XAIGalileo XAIGalileo XAIGalileo XAI
+
+The graph - based platform
+
+for eXplainable AI
+A REVOLUTIONARY APPROACH BASED ON GRAPH ANALYSIS
+Find out more
+FLEXIBLE DATA MODEL
+FLEXIBLE DATA MODEL
+FLEXIBLE DATA MODEL
+image258
+
+Data model is built on your needs.
+
+It's flexible and can be entirely adapted according to your needs and the information you want to store in.
+
+Data is stored into Neo4j, the leading graph database.
+GRAPH EXPLORATION
+FLEXIBLE DATA MODEL
+FLEXIBLE DATA MODEL
+image259
+
+An innovative way to discover new insights from your data.
+
+Seek your point of interest and see how it’s connected with other information like: people, accidents, places and so on.
+
+Discover new insights by following the links.
+CUSTOM RULES
+FLEXIBLE DATA MODEL
+FAST & SCALABLE
+image260
+
+Improve the system adding
+
+your own experience.
+
+Define your own rule and apply it to the whole dataset or let it to be triggered when new data arrives to have a real-time detection. 
+FAST & SCALABLE
+FAST & SCALABLE
+FAST & SCALABLE
+image261
+
+The best technologies for the best performances.
+
+Find frauds when new data come in.
+
+Apply a new rule to existing data so you can find, test and validate a new fraud pattern. 
+
+Ready to manage huge data volumes.
+EXPLAINABLE AI
+FAST & SCALABLE
+EXPLAINABLE AI
+image262
+
+AI easy-to-understand explanations
+
+Graph technology incorporates context and connections that make AI more broadly applicable and graphs can be used to train machine learning models leading to more accurate AI decisions.
+Galileo XAI
+
+What's the new?
+
+
+Dedicated to the business intelligence teams and decision makers who want to extract new knowledge from their dark data, Galileo XAI is a data analytics framework based on graphs that can be quickly integrated with existing solutions.
+Download our Brochure
+Galileo XAI - Brochure (pdf)
+Download
+image263
+GALILEO XAI & DEEP TENSOR
+Application Areas
+
+    Finance
+    Cybersecurity
+    Chemistry & Genomics
+    Heathcare and Human Resources
+
+Our partners
+image264
+image265
+image266
+Do you have questions?
+If you're interested in Galileo XAI and you want to know more about our solution please contact us!
+Galileo XAI
+
+Via Bruno Maderna 7, 30174 Venezia Venice, Italy
+
++39 041 5060149
+Write here!
+Name
+Email*
+Annulla
+Follow us
+
+Copyright © 2020 Galileo XAI - All Rights Reserved
+
+    Privacy policyTerms and conditions
+
+df
+  .groupBy(grouping_columns)
+  .pivot(pivot_column, [values]) 
+  .agg(aggregate_expressions)
+
+https://phys.org/news/2020-10-tomato-molecular.html
+and ll ron hubbard.
+
+file:///C:/wiki/Design_Patterns
+
+file:///C:/wiki/Design_Patterns
+
+A Scala JDBC connection and SQL SELECT example , As you've seen, you can connect to MySQL or any other database (Postgresql, SQL Server, Oracle, etc.) using the usual Java JDBC technology  11 Any better, more idiomatic way to convert SQL ResultSet to a Scala List or other collection type? Jan 19 '18 9 What is the difference between .sc and .scala file?
+
+I have a similar problem and my solution is:
+
+Iterator.from(0).takeWhile(_ => rs.next()).map(_ => rs.getString(1)).toList
+
+Hope that will help.
+
+ ivy dependencies 
+
+
+https://github.com/spark-in-action/scala-archetype-sparkinaction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"PROFESSOR LEGASOV!!! ...Please control your outbursts!!!"
+
+Reply
+Give Award
+Share
+Report
+Save
+
+
+level 6
+28 points
+·
+9 hours ago
+"Let him finish!"
+
+So,  question 1.  where in the eclipse envoronment does ZADScripts go?
+done.
+
+To import jar file in your Eclipse IDE, follow the steps given below.
+
+    Right click on your project.
+    Select Build Path.
+    Click on Configure Build Path.
+    Click on Libraries and select Add External JARs.
+    Select the jar file from the required folder.
+    Click and Apply and Ok.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

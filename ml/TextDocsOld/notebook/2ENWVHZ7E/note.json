@@ -1,0 +1,241 @@
+{
+  "paragraphs": [
+    {
+      "text": "%neo4j \nMATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),\n      (i:IndexedBy)-[:VertexIndexedBy]-\u003e(pp:ProductArgsNode)-[pR1:ProductRelationA]-\u003e(p:ProductArgsNode),\n      (ii:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode)\nWHERE i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"8\" AND i.RowCounter\u003d4\nReturn i",
+      "user": "anonymous",
+      "dateUpdated": "2019-08-27 13:21:08.830",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "network",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id": "string",
+                      "label": "string",
+                      "Dimension": "string",
+                      "RowCounter": "string",
+                      "N": "string",
+                      "MaxN": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "NETWORK",
+            "data": "{\"nodes\":[{\"id\":505555,\"data\":{\"Dimension\":\"8\",\"RowCounter\":4,\"N\":\"5\",\"MaxN\":\"6\"},\"label\":\"IndexedBy\"}],\"edges\":[],\"labels\":{\"Evaluate\":\"#53CF3F\",\"IndexedBy\":\"#8FF639\",\"TwoSeqFactor\":\"#7BD6C3\",\"VertexNode\":\"#C9E5EA\",\"CreatedBy\":\"#C70A85\",\"dNode\":\"#54E6FC\",\"ProductArgsNode\":\"#0454E0\"},\"types\":[\"IndexedByEvaluate\",\"ProductRelationT\",\"CreatedBye\",\"TwoFactor\",\"VertexIndexedBy\",\"zMap\",\"Envalues\",\"ProductRelationA\"],\"directed\":true}"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1566925878108_-2078355013",
+      "id": "20190827-131118_662949085",
+      "dateCreated": "2019-08-27 13:11:18.109",
+      "dateStarted": "2019-08-27 13:20:52.704",
+      "dateFinished": "2019-08-27 13:21:01.987",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\nMATCH (i:IndexedBy)-[]-\u003e(e:Evaluate),\n      (i:IndexedBy)-[:VertexIndexedBy]-\u003e(pp:ProductArgsNode)-[pR1:ProductRelationT|ProductRelationA]-\u003e(p:ProductArgsNode),\n      (ii:IndexedBy)-[:VertexIndexedBy]-\u003e(p:ProductArgsNode)\n\nWHERE i.N\u003d\u00275\u0027 AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"8\" AND i.RowCounter\u003d8 //  AND p.Divisor\u003d4\n//WHERE i.N\u003d${N} AND i.MaxN\u003d\u00276\u0027 AND i.Dimension\u003d\"8\" AND i.RowCounter\u003dnoteRowCounter\nWITH i,e,p,i.N as iN, i.MaxN as iM,pp,pR1.T as pR1T,pp.Divisor as ppD1,pR1.Eval as pR1E\nMATCH (v:VertexNode) \u003c- [p1:ProductRelationT] - (p) \nWITH i,e,p,v,p1,iN,iM,pp,pR1T,pp.Divisor as pD1,pR1E,p1.T as p1TT,ppD1 \nOPTIONAL MATCH  (p) - [p2:ProductRelationA ] -\u003e (vv:VertexNode)\nWITH i,e,p,v,p1,p2,vv,iN,iM,p.Divisor as pD,pp,pR1T,pR1E,ppD1, p1TT,p2.T as p2TT,p2.Eval as p2EE\nRETURN i,e,p,v,vv",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-02 08:35:54.097",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id": "string",
+                      "label": "string",
+                      "Divisor": "string",
+                      "Dimension": "string",
+                      "Vertex": "string",
+                      "Degree": "string",
+                      "Scalar": "string",
+                      "RowCounter": "string",
+                      "N": "string",
+                      "MaxN": "string",
+                      "size": "string",
+                      "d": "string",
+                      "nBinary": "string",
+                      "Value": "string",
+                      "centerIndex": "string",
+                      "n": "string",
+                      "verticalTranslateIndex": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {
+          "N": "5"
+        },
+        "forms": {
+          "N": {
+            "type": "TextBox",
+            "name": "N",
+            "defaultValue": "",
+            "hidden": false
+          }
+        }
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "NETWORK",
+            "data": "{\"nodes\":[{\"id\":504455,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504454,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":497285,\"data\":{\"Vertex\":\"0 30 0 0 0\",\"Degree\":\"0\",\"Scalar\":\"30\"},\"label\":\"VertexNode\"},{\"id\":504453,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504452,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504451,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504450,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504449,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504448,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504459,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504458,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504457,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504456,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":497312,\"data\":{\"Vertex\":\"1 -6 1 0 0\",\"Degree\":\"1\",\"Scalar\":\"-6\"},\"label\":\"VertexNode\"},{\"id\":497326,\"data\":{\"Vertex\":\"0 4 -1 0 0\",\"Degree\":\"-1\",\"Scalar\":\"4\"},\"label\":\"VertexNode\"},{\"id\":496812,\"data\":{\"Vertex\":\"1 -5 1 0 0\",\"Degree\":\"1\",\"Scalar\":\"-5\"},\"label\":\"VertexNode\"},{\"id\":504519,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504518,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504517,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504516,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504527,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504526,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504525,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504524,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504523,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504522,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504521,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504520,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":496727,\"data\":{\"Vertex\":\"1 -4 1 0 0\",\"Degree\":\"1\",\"Scalar\":\"-4\"},\"label\":\"VertexNode\"},{\"id\":505557,\"data\":{\"Dimension\":\"8\",\"RowCounter\":8,\"N\":\"5\",\"MaxN\":\"6\"},\"label\":\"IndexedBy\"},{\"id\":504528,\"data\":{\"Divisor\":2,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504415,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504414,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504413,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504412,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504411,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":496730,\"data\":{\"Vertex\":\"0 20 0 0 0\",\"Degree\":\"0\",\"Scalar\":\"20\"},\"label\":\"VertexNode\"},{\"id\":504410,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504409,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":496728,\"data\":{\"Vertex\":\"1 1 2 0 0\",\"Degree\":\"2\",\"Scalar\":\"1\"},\"label\":\"VertexNode\"},{\"id\":504408,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504423,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504422,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504421,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504420,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":497507,\"data\":{\"Vertex\":\"1 -3 1 0 0\",\"Degree\":\"1\",\"Scalar\":\"-3\"},\"label\":\"VertexNode\"},{\"id\":504419,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504418,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504417,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504416,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504431,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":8681,\"data\":{\"size\":1,\"d\":\"6\",\"nBinary\":\"[6]\",\"Value\":\"32\",\"centerIndex\":0,\"n\":\"6\",\"verticalTranslateIndex\":0},\"label\":\"Evaluate\"},{\"id\":504430,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504429,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504428,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504427,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504426,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504425,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504424,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504439,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504438,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504437,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":497524,\"data\":{\"Vertex\":\"0 12 0 0 0\",\"Degree\":\"0\",\"Scalar\":\"12\"},\"label\":\"VertexNode\"},{\"id\":504436,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504435,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504434,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504433,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504432,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504447,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504446,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504445,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504444,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504443,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504442,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504441,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"},{\"id\":504440,\"data\":{\"Divisor\":4,\"Dimension\":\"2\"},\"label\":\"ProductArgsNode\"}],\"edges\":[],\"labels\":{\"Evaluate\":\"#7E18D1\",\"IndexedBy\":\"#248277\",\"TwoSeqFactor\":\"#E369D0\",\"VertexNode\":\"#6B24F0\",\"CreatedBy\":\"#EE90CD\",\"dNode\":\"#86853D\",\"ProductArgsNode\":\"#8E111B\"},\"types\":[\"IndexedByEvaluate\",\"ProductRelationT\",\"CreatedBye\",\"TwoFactor\",\"VertexIndexedBy\",\"zMap\",\"Envalues\",\"ProductRelationA\"],\"directed\":true}"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1566925907638_-205972707",
+      "id": "20190827-131147_209744754",
+      "dateCreated": "2019-08-27 13:11:47.638",
+      "dateStarted": "2019-09-02 08:35:54.184",
+      "dateFinished": "2019-09-02 08:35:55.275",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%neo4j\n$${noteRowCounter\u003d2}\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-02 08:41:46.601",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false,
+          "language": "sh",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Invalid input \u00272\u0027: expected \u003cinit\u003e (line 1, column 1 (offset: 0))\r\n\"2\"\r\n ^"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1567380421531_319267152",
+      "id": "20190901-192701_1031153178",
+      "dateCreated": "2019-09-01 19:27:01.532",
+      "dateStarted": "2019-09-02 08:41:46.668",
+      "dateFinished": "2019-09-02 08:41:46.705",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sh\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-09-02 08:29:14.075",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1567427354072_729380981",
+      "id": "20190902-082914_235230215",
+      "dateCreated": "2019-09-02 08:29:14.072",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "~Trash/noteTest3",
+  "id": "2ENWVHZ7E",
+  "noteParams": {},
+  "noteForms": {
+    "noteRowCounter": {
+      "type": "TextBox",
+      "name": "noteRowCounter",
+      "defaultValue": "",
+      "hidden": false
+    }
+  },
+  "angularObjects": {
+    "md:shared_process": [],
+    "neo4j:shared_process": [],
+    "sh:shared_process": [],
+    "jdbc:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}

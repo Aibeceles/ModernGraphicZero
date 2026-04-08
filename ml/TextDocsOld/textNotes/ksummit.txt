@@ -1,0 +1,146 @@
+strategy
+
+certifier
+
+job task anlysis
+real world experience.
+6 months hands on experience.
+remote proctering
+
+kafka fundamentals low
+managing configurning optimizing cluster high
+secrity low
+desigining trubleshooting and integrating systems highest
+
+
+developer
+
+60 questions 90 minutes.
+
+rote information not sufficent.  practical 
+implementation
+
+application design highest
+development high
+deployment testing monitoring high
+
+
+
+scope/out scope
+
+kafka
+other likely apache scosystem
+
+community license  ksqldb confulet schema registry kafak rest proxy
+
+not components exclusivly confluent enterpries license
+
+2year certification
+
+digital badge.
+
+
+required knowledge domains
+
+fundamentals
+distributed systems scalabilietyu fault tolerance high availablity
+primary functions of producer consumer broker
+meaning immutable log
+meaning of commigtted
+topics partitions
+essential services of apache zookeeper 
+replication leaders followers
+kafka messages structure makeup metadata
+kafka controller
+exactly once semantics
+
+confluent google group.
+
+hardware
+cloud 
+raft
+java
+kafka use cases  -- microservices.
+
+evoloution of kafka   say kafka streams kafka pluggin..
+ONCE a glorified pipline.
+
+great architectures have conceptual integrity.
+
+the right abstraction opens up the inherent efficience of the hardware itself
+
+use prefetches....
+
+highe performace form first principles.
+understand the hardware, os, java.
+work with the system, not against it.  not block...
+profile and optimize like crazy.
+
+multy tenancy
+adding brokers will increase capacity  avoid silos.
+
+how to scale kafak for usecase i, j, k.
+
+zookeeper to be replaced with
+metadata quorum
+
+tiered storage.
+
+additional benefits of kafka storage layer.
+
+principles in action
+conceptual integrity
+
+love logs 
+use logs for everthing
+
+logs are the big abstraction of data systems.
+
+
+async communicaton via shared log vs point to point
+
+zookeeper and kafka are fundamently different.
+artificial limitations.
+
+and the agile future...
+
+kubernetics with cloud kafka.
+security concerns with connectors.
+
+citi director and top view of kafka.
+messages and accessing it and available.
+
+he passed around idea of usefull.
+
+zookeeper maybe not cloud native.
+
+most interesting biggest impace..
+equities trading realtime, static terms and condiditons
+data updated periodicly.  
+
+the cambrian explosion of data.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,201 @@
+   The chapter is titled "Doing it with Differences"  A good bit of Newton and Pascal is referenced.
+   Importantly as page 10 illustrates a polynomial takes an imput range and generates an output
+   range whose members are pair-wise iteratively differenced until a constant across the range is
+   generated.
+   This workbook does difference polynomials though as a demonstration of what a java library is tasked
+   to accomplish. And to note, triangle superscript i represents the ith iterated difference.    
+
+
+So,      P is defined as a set of scalars.  For a range of values defined by P, a set of iterated
+
+   differences, (Triag) is drawn out.  P is transformed by adding or subtracting a value to
+
+   individual scalars.  The transform motivation is setting a zero to an individual range value
+
+   of P at a particular difference, triag_i. 
+
+
+   
+  
+     The scalar degree determines which difference or differences are effected.
+
+   As in, a change of the zero degree term of P does not effect any difference, only the
+
+   function value itself.  The first degree term only effects the first difference (triag_1).
+1
+   The second degree term effects both the first and second difference (triag_1,triag_2).
+0
+   The third, the first three differences, ect...  Note though, want to effect the highest degree term 
+ 
+  first as it fixes the last difference (triag_last) and subsequent scalar changes will not effect
+
+   differences of scalars of higher degree.
+
+
+
+      A base P to be transformed usually consists of a single degreed term.  The degree
+
+
+   determins the the size of the set of differences.  For instance a single fourth degree 
+
+
+   term can be iterativly differenced four times and fixes the last difference to a constant.        
+
+
+   P then gets transformed with an adjustment to the third degee term, currently with a zero
+
+
+   scalar.  This adjustment effects the differences from the third difference, up to the value
+
+
+   of the function.  Similarly, want iterative adjustments to the second, first, and zero degree
+
+
+   terms.  And interest is in the zeros (roots) of  each p in the set of differences  after each
+
+
+   adjustment is made.  
+
+
+
+
+
+
+ 
+   
+ With x^4 and looking at x=0, have at Triag_3 = 36. and want p transformed into p'=x^4 + bx^3,  with at x=0
+  
+ Triag_3=0. b is the value to adjust P's third degree term, which is currently zero.
+
+ Solving for b involves using the function  - f(x) at Triag_i  / i factorial as 36/3!=36/6=-6.
+
+ Therefor p' = x^4 - 6x3 and has at f(0), Triag_3 a value 0.  Next up is an adjustment to the second
+
+ degree term.  p(0) at Triag_2 is -22.  with -22/2! = -11, add 11 to scalar 0 for x^2 and p''
+
+ is x^4 - 6x^3 + 11x^2.  Now adjust the first degree scalar currently 0 as p''(0) at Triag_1 = 6
+
+ as -6/1! = -6.  p''' = x^4 -6x^3 + 11x^2 - 6x.  P does have roots at x=0,1,2,3.  Note P_1 the p 
+
+ describing triag-1 has roots at 0,1,2 and P_2, the p desribing trig 2 has roots at 0,1. ect...    
+
+
+ 
+      Each difference (Triag_i in the set of differences is described as an individual p (for instance each
+ 
+  Triag_i can be transcribed to an appropriate vandermode and solved with gauss elimination; there are several
+   ways)
+
+   DifferencePolynomials.ods can define the triag p's.  Have a copy of p's differences terms from prior
+
+   worksheet starting with triag_1 and want to fit the differences from high degree to low.
+
+  Starting with fitting constant=24,
+
+   Have the third degree term = 4.  Likewise the sencond degree term is fitted with  -12 as the scalar.  
+
+   finally the linear term is fitted with 8.  thus 4x^3-12x^2+8 is p describing triag1 of p=x^4-6x^3+11x^2-6x.
+
+
+   As mentiond earlier 
+
+   The workbook does difference polynomials as a demonstration of what a java library is tasked
+   to accomplish.  The library actually generates and subsequently writes to neo4j for graphing 
+   sets of difference polynomials rooted with the constant term.  A feature of this graph is a lable
+   for each node interpreting the root set as a rational number (see link on projet page for details).   
+
+
+   This graph is rooted with the constant term 6.  A traditional traversal would include nodes with same 
+   denominator.  An inorder traversal could emulate rational arithmetic.  For instance, the orderd traversal
+   for denominator =8 and arithmetic of 1/8 +3/8ths would imply the fourth node of the traversal would be
+   a polynomial with roots that would encode 4/8ths.
+
+   More so, as this graph is rather managable in size, the graph generated for non-trivial parameters is
+   substatially larger.  Leveraging the neo4j Graph data science library and particullary GraphSage for lable
+   inference, structure inference...  may reveal efficiencies at scale.      
+
+
+
+
+
+
+
+   A link demonstrating how an arbitrary root set can be interpreted as a rational number is on 
+   the git hub project page 
+
+
+
+
+
+
+
+   
+ 
+
+     
+     Want a robust set of these sets.  The individual p's can be graphed by depth with i a path length.
+   The intention is a ranged graphic representation of the power set of root permutations.  
+
+
+
+
+   More to the point, need representation of a complete mu set.  
+
+
+
+
+Say mu[16].  Or for that matter an
+   arbitrary twoPoly at arbitray degree.  Can ZAD graph the set?  Note this graph is a DAG.  Its traversal
+   is a map from a twoP at degree to each in it's mu set.  A further question is is there another 
+   different DAG?  One that maps twoP as binary into p with roots?  This would take the traversal node 
+   set as an add/subtract/multiply/divide instruction at each node. 
+
+
+
+
+ It is 
+   noted that the set of p's corrosponding to the set of differences is a progression of 
+   p's from zero degree, a constant defined by the highest degree term of the target P,
+   up to the first difference, a p of degree P_maxDegree minus 1 set by the first degree term 
+   of the target P.  Whithin this set of p's are p's each with interesting roots. 
+
+
+
+
+
+
+
+file:///C:/Users/Aibes/PDFs/Chapter%201%20Sections%202%20through%204.pdf
+
+file:///C:/Users/Aibes/PDFs/rationals.pdf
+
+file:///C:/Users/Aibes/PDFs/MAT307-lecture04.pdf
+
+file:///C:/Users/Aibes/PDFs/9780387955872-c6.pdf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

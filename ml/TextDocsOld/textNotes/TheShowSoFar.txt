@@ -1,0 +1,1275 @@
+7/29
+
+AWS was checked out last week. All is as it was since last year.
+
+Downloaded eclipse.  Have not installed it yet.
+
+Started up kafka yesterday and tested a topic.
+The neo4j pluggin is not installed yet, nor am quite shure which one
+to use.
+
+
+Meaning, 
+The stack so far:
+
+Neo4j                   -  program in program files.
+                           data at C:\Users\ChiefQuippy\.Neo4jDesktop\neo4jDatabases\database-c41a3534-7e82-4421-819a-dd170f561899   
+                           starts with desktop shortcut
+
+                        - another neo4j is on aws
+
+zeppelin                -  C:\Windows.old\Users\Aibes\Zeppelin\zeppelin-0.8.1-bin-all\zeppelin-0.8.1-bin-all\bin>zeppelin.cmd              - 
+                        - starts with a .bat in Aibes directory.
+                          has needs scala library, spark library, java home set in agreement with spark/scala
+
+jars.                   - are in javaprojects.   
+                          have twopolynomial.jar and zadscripts.jar
+                          also verify spark context can identify them 
+to include:
+
+kafak/zookeeper         - was downloaded, started, and testtopiced.
+                          C:\Windows.old\kafka_2.12-2.5.0
+along with:
+
+netbeans
+yet to install eclipse.
+
+The micruail look at:
+
+     zadscripts -> kafka -> neo4j
+
+zadscripts reads from neo4j transforms then with "line" 
+creates/merges nodes
+merges relation between reate/merge nodes.  
+
+so, want to write line to kafak topic.                   //  note there is a topic for s1,s2,s3 scrips.
+
+neo4j is listening for kafka messages.
+is it optimally reading a batch size
+
+Looks easy to append zadscripts with kafka producer class.
+
+
+
+https://neo4j.com/docs/labs/neo4j-streams/current/consumer/
+http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html
+https://www.tutorialkart.com/apache-kafka/producer-example-in-apache-kafka/
+https://www.opencodez.com/java/using-apache-kafka-java.htm
+
+
+We began this chapter with a simple example of a producer—just 10 lines of code that
+send events to Kafka.
+
+
+so, the neo4j-streams pluggin is within correct pluggin directory.
+
+the chores are twofold.
+
+append zadscripts with write to kafka functionality
+append neo4j.conf file with kafka connectivity entries.  // the entries include the scripts for processing
+                                                         // kafka messages.
+
+note there is a seperate topic for each s1,s2,s3 to be read.
+there is necessary serializition.  // or maybe not but believe inorder is important.
+
+
+
+7/30
+
+   .bat for kafka start.
+
+Microsoft Windows [Version 10.0.18362.959]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+C:\Users\ChiefQuippy>chdir ..
+
+C:\Users>chdir windows.old
+The system cannot find the path specified.
+
+C:\Users>chdir ..
+
+C:\>chdir windows.old
+
+C:\Windows.old>chdir kafka_2.12-2.5.0
+
+C:\Windows.old\kafka_2.12-2.5.0>chdir bin
+
+C:\Windows.old\kafka_2.12-2.5.0\bin>chdir windows
+
+C:\Windows.old\kafka_2.12-2.5.0\bin\windows>zookeeper-server-start.bat ../../config/zookeeper.properties
+
+
+
+Microsoft Windows [Version 10.0.18362.959]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+C:\Users\ChiefQuippy>chdir ..
+
+C:\Users>chdir ..
+
+C:\>chdir windows.old
+
+C:\Windows.old>chdir kafka_2.12-2.5.0
+
+C:\Windows.old\kafka_2.12-2.5.0>chdir bin
+
+C:\Windows.old\kafka_2.12-2.5.0\bin>chdir windows
+
+C:\Windows.old\kafka_2.12-2.5.0\bin\windows>kafka-server-start.bat ../../config/server.properties
+
+
+append zadscripts with write to kafka functionality
+
+
+And now add kafka functionality to zadscripts.
+
+Will implement as Synchronous Send.   -  send() returns a future which get() waits for.
+
+
+private Properties kafkaProps = new Properties();
+kafkaProps.put("bootstrap.servers", "broker1:9092,broker2:9092");
+kafkaProps.put("key.serializer",
+
+
+ "org.apache.kafka.common.serialization.StringSerializer");
+kafkaProps.put("value.serializer",
+ "org.apache.kafka.common.serialization.StringSerializer");
+producer = new KafkaProducer<String, String>(kafkaProps);
+
+
+kafka-log4j-appender-2.5.0
+
+
+
+It looks like a key value is written to kafka.
+the value is a string.   --    have the jackson jar.  to include in zadscripts
+                               it can convert a map (the resultset) into a json string.  
+What does this string looklike if neo4j is producer.
+What type of string does neo4j consume?   
+
+The stage is set for modifying zadscripts with kafka producer functionality
+NOTE:  ZADScrips must be cloned into ZADScriptsKafka for further editing.
+
+
+
+Back to neo4j consuming kafak topics....
+How to work with consuming the json string.
+
+
+
+     NEO4J_kafka_group_id: p2
+     NEO4J_streams_sink_topic_cypher_friends: "
+       MERGE (p1:Person { name: event.initiated })
+       MERGE (p2:Person { name: event.accepted })
+       CREATE (p1)-[:FRIENDS { when: event.date }]->(p2)
+     "
+     NEO4J_streams_sink_enabled: "true"
+     NEO4J_streams_procedures_enabled: "true"
+     NEO4J_streams_source_enabled: "false"
+     NEO4J_kafka_ssl_endpoint_identification_algorithm: https
+     NEO4J_kafka_sasl_mechanism: PLAIN
+     NEO4J_kafka_request_timeout_ms: 20000
+     NEO4J_kafka_bootstrap_servers: ${KAFKA_BOOTSTRAP_SERVERS}
+     NEO4J_kafka_retry_backoff_ms: 500
+     NEO4J_kafka_sasl_jaas_config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${CONFLUENT_API_KEY}" password="${CONFLUENT_API_SECRET}";
+     NEO4J_kafka_security_protocol: SASL_SSL
+
+
+
+appears to be the streams.sink.topic example being looked for. 
+
+
+
+7/31  
+
+   want json to from java map, therfore interested in simple data binding.
+   the databind jar is added to zadscripts. Can import the necessary classes.
+
+   databinding needs its own function in scripts automation.
+   the function takes the map of a s* resultSet and returns a json string. 
+
+have a kafka producer defined in ScriptScheduler.scheduler.
+it gets passed into ScripsAutomation.
+
+
+But first....
+.clone ZADScripts with clone name ZADScriptsK K is for kafka
+.Seems like a one liner to create the json string. but think
+the string is constructed in the method call to the method that 
+handles the kafka write.
+
+
+s12Initial
+s12Dc
+s3TEc
+
+s3ADc
+
+zerosanddifferences.twopolynomial.zaddbtable1 dose process
+a map returned in resultset.
+
+            ResultSet rs = psInsert.executeQuery();
+            ResultSetMetaData rsmd =rs.getMetaData();
+            System.out.println(rsmd.getColumnCount() + " " +rsmd.getColumnName(1));//+ " " +rsmd.getColumnName(2));
+            //        ((Map)rs.getObject(1)).toString();
+            Map rsMap = new HashMap();
+            Set keySett= new HashSet();
+            ArrayList keyList = new ArrayList();
+            while ( rs.next() ) {
+//            String n = rs.getString(1);    
+//            String rowCounter = rs.getString(2); 
+//            String maxN = rs.getString(3);
+            rsMap=((Map)rs.getObject(1));
+            keySett=((Map)rs.getObject(1)).keySet();
+            System.out.println("(Map)rs.toString: " + ((Map)rs.getObject(1)).keySet());
+            keySett=((Map)rs.getObject(1)).keySet();
+            Iterator iterator=keySett.iterator();
+            while(iterator.hasNext())  {
+                String element = (String) iterator.next();
+                System.out.println("KeySet: "+ element   );
+                System.out.println("(Map)rs.toString: " + rsMap.get(element));
+            }
+
+
+
+So a bit more than trivial is the way to proceed.  
+will:
+. start with s12Initial.   
+. return the map.
+. print the map 
+
+
+or....
+
+shoot the works and write the map to json and println.
+
+
+From s12Initial
+
+        "With {iN:iN,iM:iM,pD:pD,vTwoSeq:vTwoSeq,vvDegree:vvDegree,vvScalar:vvScalar,vDivisor:vDivisor,vvDivisor:vvDivisor,vvTwoSeq:vvTwoSeq,p2Eval:p2Eval,\n" +
+        "       TTScalar:TTScalar,AAScalar:AAScalar,TTDegree:TTDegree,AADegree:AADegree,\n" +
+        "       degreeSum:CASE WHEN vvDegree IS Null THEN TTDegree ELSE apoc.number.exact.add(TTDegree,AADegree) END,\n" +
+        "       scalarProduct:CASE WHEN vvScalar IS Null THEN toString(TTScalar) ELSE apoc.number.exact.mul(TTScalar,AAScalar) END,\n" +
+        "       resultDivisor:CASE WHEN vvScalar IS Null THEN toString(vDivisor) ELSE apoc.number.exact.mul( toString(vDivisor),apoc.number.exact.mul(toString(vvDivisor),toString(pD))) END,\n" +
+        "       rKey:rand()} as lines\n" +
+        "WITH COLLECT(lines) as lines\n" +
+        "UNWIND lines as line\n" +
+        "WITH line, CASE WHEN line.AAScalar IS NULL THEN \"0\" ELSE line.AAScalar END AS AAScalar,CASE WHEN line.AADegree IS NULL THEN \"0\" ELSE line.AADegree END AS AADegree,CASE WHEN line.vvTwoSeq IS NULL THEN \"0\" ELSE line.vvTwoSeq END AS vvTwoSeq \n" +                    
+
+the last cypher statement appears to not be used.  the subsequent create/merges do not use the variables defined for null.
+if it is used then maybe need it in the sink cypher.
+
+so, first thing is include 7th psInsert(writeDimension) in line map. done
+    second robust the result set.  not.
+    just enough for the json string.
+
+     Map rsMap = new HashMap();
+     rsMap=((Map)rs.getObject(1));
+     System.out.println( new ObjectMapper().writeValueAsString(rsMap));
+
+
+
+s12Initial done
+s12Dc      done
+s3TEc      done
+
+s3ADc      done
+
+
+
+
+
+8/3
+
+C:\Users\ChiefQuippy\Documents\ZADScriptsK\ZADScripts\dist>java -jar ZADScripts.jar 2 10 30 8
+
+above was run with parameters producing below.
+println json.  looks all ready for the serialize to kafka.
+
+
+8/4
+
+
+Conguring Producers
+So far we’ve seen very few configuration parameters for the producers—just the
+mandatory bootstrap.servers URI and serializers.
+
+
+batch.size
+
+
+if ("0".equals(rs.getString(1))) {srBol.setBooleanFALSE();}
+if above, inside resultset loop, is usefull then there is some fixin to do.
+//  will need to examine resultset better.
+
+java -jar ZADScripts.jar 2 19 30 2
+java -jar ZADScripts.jar 2 19 30 8
+java -jar ZADScripts.jar 2 19 30 16
+java -jar ZADScripts.jar 2 19 30 32     // will connect fail - a bet.
+java -jar ZADScripts.jar 2 19 30 64
+java -jar ZADScripts.jar 2 19 30 128
+java -jar ZADScripts.jar 2 19 30 256
+java -jar ZADScripts.jar 2 19 30 512
+
+
+
+
+8/5
+
+
+do want zaddscripts writing to kafka today.
+
+
+Will attemt first with s12Initial.  
+Have the json string...
+
+producer record needs a 
+
+topic key value
+
+topic is s12   value is json string.
+The key is....
+could be user id.  say "ZADScripts"
+The first attempt will write a null key.
+
+
+
+Received invalid metadata error in produce request on partition S12-0 due to org.apache.kafka.common.errors.NotLeaderForPartitionException: 
+This server is not the leader for that topic-partition.. Going to request metadata update now
+
+
+
+
+maybe batch size config.
+
+
+windows is opening and closing files too fast????
+
+
+
+8/10
+
+  the y740 is in transit.
+
+have it as a windows machine.
+
+zeppelin spark  maybe set the environment variable to external library.
+neo4j
+kafka 
+
+netbeans java
+eclipse scala 
+
+spark
+
+all technically should run on this machine.
+
+many windows scripts to run. 
+
+
+
+
+8/12
+
+file:///C:/Users/ChiefQuippy/Downloads/Kafka%20Tutorials.htm   has links to be investigated.
+
+file:///C:/Users/ChiefQuippy/Downloads/Creating%20a%20Notebook%20Server%20Hosted%20on%20Amazon%20EC2%20-%20AWS%20Glue.htm       // looks easier second time around.
+file:///C:/Users/ChiefQuippy/Downloads/How%20to%20set%20up%20Zeppelin%20for%20analytics%20and%20visualization%20InfoWorld.htm   // these two together say it the way it is.
+
+another round of ssh
+
+Jova object/type:
+Stream<T> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+s3T10 10 30 8 8 16 128
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"90066639468","eTrm":128,"tDegree":"4","dimension":"16"}
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"-241531814665920","eTrm":128,"tDegree":"1","dimension":"16"}
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"-2062460038640","eTrm":128,"tDegree":"3","dimension":"16"}
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"43993420","eTrm":128,"tDegree":"6","dimension":"16"}
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"864646226988544","eTrm":128,"tDegree":"0","dimension":"16"}
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"1920","eTrm":128,"tDegree":"8","dimension":"16"}
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"-2517663964","eTrm":128,"tDegree":"5","dimension":"16"}
+{"pTD":"2048","iM":"30","iN":"10","tScalar":"29523095725168","eTrm":128,"tDegree":"2","dimension":"16"}
+rangecounter: 7
+scriptConstraint, rangeCounter: 64  6
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T10 10 30 8 8 16 64
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"448","eTrm":64,"tDegree":"8","dimension":"16"}
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"6621050018336","eTrm":64,"tDegree":"2","dimension":"16"}
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"-576041636","eTrm":64,"tDegree":"5","dimension":"16"}
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"-101852","eTrm":64,"tDegree":"7","dimension":"16"}
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"20471229976","eTrm":64,"tDegree":"4","dimension":"16"}
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"-53801894000960","eTrm":64,"tDegree":"1","dimension":"16"}
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"10132136","eTrm":64,"tDegree":"6","dimension":"16"}
+{"pTD":"1024","iM":"30","iN":"10","tScalar":"-465660026304","eTrm":64,"tDegree":"3","dimension":"16"}
+rangecounter: 6
+scriptConstraint, rangeCounter: 32  5
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T10 10 30 8 8 16 32
+{"pTD":"512","iM":"30","iN":"10","tScalar":"-97029839144","eTrm":32,"tDegree":"3","dimension":"16"}
+{"pTD":"512","iM":"30","iN":"10","tScalar":"2147668","eTrm":32,"tDegree":"6","dimension":"16"}
+{"pTD":"512","iM":"30","iN":"10","tScalar":"39140161317504","eTrm":32,"tDegree":"0","dimension":"16"}
+{"pTD":"512","iM":"30","iN":"10","tScalar":"96","eTrm":32,"tDegree":"8","dimension":"16"}
+{"pTD":"512","iM":"30","iN":"10","tScalar":"-121420404","eTrm":32,"tDegree":"5","dimension":"16"}
+{"pTD":"512","iM":"30","iN":"10","tScalar":"1371463089488","eTrm":32,"tDegree":"2","dimension":"16"}
+{"pTD":"512","iM":"30","iN":"10","tScalar":"-21708","eTrm":32,"tDegree":"7","dimension":"16"}
+{"pTD":"512","iM":"30","iN":"10","tScalar":"4290482580","eTrm":32,"tDegree":"4","dimension":"16"}
+rangecounter: 5
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T10 10 30 8 8 16 16
+{"pTD":"256","iM":"30","iN":"10","tScalar":"-1791768025568","eTrm":16,"tDegree":"1","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"10","tScalar":"703597896","eTrm":16,"tDegree":"4","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"10","tScalar":"355144","eTrm":16,"tDegree":"6","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"10","tScalar":"-15842237944","eTrm":16,"tDegree":"3","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"10","tScalar":"16","eTrm":16,"tDegree":"8","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"10","tScalar":"6299811419200","eTrm":16,"tDegree":"0","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"10","tScalar":"-19996292","eTrm":16,"tDegree":"5","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"10","tScalar":"222901286352","eTrm":16,"tDegree":"2","dimension":"16"}
+rangecounter: 4
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T10 10 30 8 8 16 8
+{"pTD":"64","iM":"30","iN":"10","tScalar":"-6521332","eTrm":8,"tDegree":"3","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"10","tScalar":"6597513600","eTrm":8,"tDegree":"0","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"10","tScalar":"-2624","eTrm":8,"tDegree":"5","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"10","tScalar":"133395296","eTrm":8,"tDegree":"2","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"10","tScalar":"179188","eTrm":8,"tDegree":"4","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"10","tScalar":"-1454012944","eTrm":8,"tDegree":"1","dimension":"16"}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T10 10 30 8 8 16 4
+{"pTD":"32","iM":"30","iN":"10","tScalar":"44224","eTrm":4,"tDegree":"4","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"10","tScalar":"-350091200","eTrm":4,"tDegree":"1","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"10","tScalar":"4","eTrm":4,"tDegree":"6","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"10","tScalar":"-1597520","eTrm":4,"tDegree":"3","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"10","tScalar":"1572837888","eTrm":4,"tDegree":"0","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"10","tScalar":"-652","eTrm":4,"tDegree":"5","dimension":"16"}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T10 10 30 8 8 16 2
+{"pTD":"2","iM":"30","iN":"10","tScalar":"2","eTrm":2,"tDegree":"2","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"10","tScalar":"-90","eTrm":2,"tDegree":"1","dimension":"16"}
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T10 10 30 8 8 16 1
+{"pTD":"2","iM":"30","iN":"10","tScalar":"2","eTrm":1,"tDegree":"2","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"10","tScalar":"-84","eTrm":1,"tDegree":"1","dimension":"16"}
+rangecounter: 0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 0
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 1
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 2
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 3
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 4
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 5
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 6
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 7
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  10 10 30 16 16 16 2 8
+Has rs
+
+
+
+concluding.....
+
+need to send the json string to kafka.
+the above suggests the boolean is no longer functional
+at least in s3t
+
+
+
+
+C:\Users\ChiefQuippy\Documents\ZADScriptsK\ZADScripts\dist>java -jar ZADScripts.jar 2 10 30 8
+else if !=4
+writedimension: 16
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+rLower: 2
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 2 2 30 8 8 8 0
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 2 2 30 8 8 8 1
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 2 2 30 8 8 8 2
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 2 2 30 8 8 8 3
+rangecounter: 0
+First if
+srBol: false
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T2 2 30 8 8 16 1
+{"pTD":"2","iM":"30","iN":"2","tScalar":"-116","eTrm":1,"tDegree":"1","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"2","tScalar":"1688","eTrm":1,"tDegree":"0","dimension":"16"}
+rangecounter: 0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  2 2 30 16 16 16 2 0
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  2 2 30 16 16 16 2 1
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  2 2 30 16 16 16 2 2
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  2 2 30 16 16 16 2 3
+rs.next=False
+rLower: 3
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 3 3 30 8 8 8 0
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 3 3 30 8 8 8 0
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 3 3 30 8 8 8 1
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 3 3 30 8 8 8 1
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 3 3 30 8 8 8 2
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 3 3 30 8 8 8 2
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 3 3 30 8 8 8 3
+rangecounter: 1
+First if
+srBol: false
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T3 3 30 8 8 16 2
+{"pTD":"2","iM":"30","iN":"3","tScalar":"2","eTrm":2,"tDegree":"2","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"3","tScalar":"-118","eTrm":2,"tDegree":"1","dimension":"16"}
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T3 3 30 8 8 16 1
+{"pTD":"2","iM":"30","iN":"3","tScalar":"1576","eTrm":1,"tDegree":"0","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"3","tScalar":"2","eTrm":1,"tDegree":"2","dimension":"16"}
+rangecounter: 0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  3 3 30 16 16 16 2 0
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  3 3 30 16 16 16 2 1
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  3 3 30 16 16 16 2 2
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  3 3 30 16 16 16 2 3
+rs.next=False
+rLower: 4
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 4 4 30 8 8 8 0
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"1","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-170352960","vvTwoSeq":"99","pD":4,"TTDegree":"0","TTScalar":"1468560","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"0","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"2478929280","vvTwoSeq":"99","pD":4,"TTDegree":"0","TTScalar":"1468560","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 4 4 30 8 8 8 0
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 4 4 30 8 8 8 0
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 4 4 30 8 8 8 1
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"2","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"23259392","vvTwoSeq":"99","pD":4,"TTDegree":"1","TTScalar":"-200512","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"1","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"-338464256","vvTwoSeq":"99","pD":4,"TTDegree":"1","TTScalar":"-200512","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 4 4 30 8 8 8 1
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 4 4 30 8 8 8 1
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 4 4 30 8 8 8 2
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"3","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-1191552","vvTwoSeq":"99","pD":4,"TTDegree":"2","TTScalar":"10272","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"2","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"17339136","vvTwoSeq":"99","pD":4,"TTDegree":"2","TTScalar":"10272","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 4 4 30 8 8 8 2
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 4 4 30 8 8 8 2
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 4 4 30 8 8 8 3
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"4","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"27144","vvTwoSeq":"99","pD":4,"TTDegree":"3","TTScalar":"-234","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"3","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"-394992","vvTwoSeq":"99","pD":4,"TTDegree":"3","TTScalar":"-234","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 4 4 30 8 8 8 3
+rangecounter: 1
+second if
+srBol: true
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 4 4 30 8 8 8 4
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"5","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-232","vvTwoSeq":"99","pD":4,"TTDegree":"4","TTScalar":"2","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"4","degreeSum":"4","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"3376","vvTwoSeq":"99","pD":4,"TTDegree":"4","TTScalar":"2","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 4 4 30 8 8 8 4
+rangecounter: 1
+second if
+srBol: true
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 4 4 30 8 8 8 5
+rangecounter: 2
+First if
+srBol: false
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T4 4 30 8 8 16 4
+{"pTD":"32","iM":"30","iN":"4","tScalar":"4","eTrm":4,"tDegree":"6","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"4","tScalar":"-1987568","eTrm":4,"tDegree":"3","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"4","tScalar":"2478929280","eTrm":4,"tDegree":"0","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"4","tScalar":"-700","eTrm":4,"tDegree":"5","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"4","tScalar":"43535648","eTrm":4,"tDegree":"2","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"4","tScalar":"51064","eTrm":4,"tDegree":"4","dimension":"16"}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T4 4 30 8 8 16 2
+{"pTD":"2","iM":"30","iN":"4","tScalar":"-114","eTrm":2,"tDegree":"1","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"4","tScalar":"1624","eTrm":2,"tDegree":"0","dimension":"16"}
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T4 4 30 8 8 16 1
+{"pTD":"2","iM":"30","iN":"4","tScalar":"2","eTrm":1,"tDegree":"2","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"4","tScalar":"-108","eTrm":1,"tDegree":"1","dimension":"16"}
+rangecounter: 0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 0
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 1
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 2
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 3
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 4
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 5
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 6
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  4 4 30 16 16 16 2 7
+rs.next=False
+rLower: 5
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 5 5 30 8 8 8 0
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"1","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"-663531600","vvTwoSeq":"99","pD":8,"TTDegree":"0","TTScalar":"2884920","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"0","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"9566394720","vvTwoSeq":"99","pD":8,"TTDegree":"0","TTScalar":"2884920","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 5 5 30 8 8 8 0
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"1","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-158996096","vvTwoSeq":"99","pD":4,"TTDegree":"0","TTScalar":"1370656","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"0","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"2313667328","vvTwoSeq":"99","pD":4,"TTDegree":"0","TTScalar":"1370656","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 5 5 30 8 8 8 0
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 5 5 30 8 8 8 0
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 5 5 30 8 8 8 1
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"2","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"91021120","vvTwoSeq":"99","pD":8,"TTDegree":"1","TTScalar":"-395744","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"1","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"-1312287104","vvTwoSeq":"99","pD":8,"TTDegree":"1","TTScalar":"-395744","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 5 5 30 8 8 8 1
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"2","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"22087328","vvTwoSeq":"99","pD":4,"TTDegree":"1","TTScalar":"-190408","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"1","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"-321408704","vvTwoSeq":"99","pD":4,"TTDegree":"1","TTScalar":"-190408","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 5 5 30 8 8 8 1
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 5 5 30 8 8 8 1
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 5 5 30 8 8 8 2
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"3","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"-4684180","vvTwoSeq":"99","pD":8,"TTDegree":"2","TTScalar":"20366","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"2","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"67533656","vvTwoSeq":"99","pD":8,"TTDegree":"2","TTScalar":"20366","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 5 5 30 8 8 8 2
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"3","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-1151184","vvTwoSeq":"99","pD":4,"TTDegree":"2","TTScalar":"9924","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"2","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"16751712","vvTwoSeq":"99","pD":4,"TTDegree":"2","TTScalar":"9924","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 5 5 30 8 8 8 2
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 5 5 30 8 8 8 2
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 5 5 30 8 8 8 3
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"4","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"107180","vvTwoSeq":"99","pD":8,"TTDegree":"3","TTScalar":"-466","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"3","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"-1545256","vvTwoSeq":"99","pD":8,"TTDegree":"3","TTScalar":"-466","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 5 5 30 8 8 8 3
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"4","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"26680","vvTwoSeq":"99","pD":4,"TTDegree":"3","TTScalar":"-230","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"3","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"-388240","vvTwoSeq":"99","pD":4,"TTDegree":"3","TTScalar":"-230","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 5 5 30 8 8 8 3
+rangecounter: 1
+second if
+srBol: true
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 5 5 30 8 8 8 4
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"5","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"-920","vvTwoSeq":"99","pD":8,"TTDegree":"4","TTScalar":"4","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"4","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"13264","vvTwoSeq":"99","pD":8,"TTDegree":"4","TTScalar":"4","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 5 5 30 8 8 8 4
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"5","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-232","vvTwoSeq":"99","pD":4,"TTDegree":"4","TTScalar":"2","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"5","degreeSum":"4","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"3376","vvTwoSeq":"99","pD":4,"TTDegree":"4","TTScalar":"2","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 5 5 30 8 8 8 4
+rangecounter: 1
+second if
+srBol: true
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 5 5 30 8 8 8 5
+rangecounter: 3
+First if
+srBol: false
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T5 5 30 8 8 16 8
+{"pTD":"64","iM":"30","iN":"5","tScalar":"-1975818704","eTrm":8,"tDegree":"1","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"5","tScalar":"16","eTrm":8,"tDegree":"6","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"5","tScalar":"-7812412","eTrm":8,"tDegree":"3","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"5","tScalar":"9566394720","eTrm":8,"tDegree":"0","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"5","tScalar":"170094456","eTrm":8,"tDegree":"2","dimension":"16"}
+{"pTD":"64","iM":"30","iN":"5","tScalar":"-2784","eTrm":8,"tDegree":"5","dimension":"16"}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T5 5 30 8 8 16 4
+{"pTD":"32","iM":"30","iN":"5","tScalar":"2313667328","eTrm":4,"tDegree":"0","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"5","tScalar":"-692","eTrm":4,"tDegree":"5","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"5","tScalar":"41580352","eTrm":4,"tDegree":"2","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"5","tScalar":"-480404800","eTrm":4,"tDegree":"1","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"5","tScalar":"49904","eTrm":4,"tDegree":"4","dimension":"16"}
+{"pTD":"32","iM":"30","iN":"5","tScalar":"4","eTrm":4,"tDegree":"6","dimension":"16"}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T5 5 30 8 8 16 2
+{"pTD":"2","iM":"30","iN":"5","tScalar":"1512","eTrm":2,"tDegree":"0","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"5","tScalar":"2","eTrm":2,"tDegree":"2","dimension":"16"}
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T5 5 30 8 8 16 1
+{"pTD":"2","iM":"30","iN":"5","tScalar":"1364","eTrm":1,"tDegree":"0","dimension":"16"}
+{"pTD":"2","iM":"30","iN":"5","tScalar":"2","eTrm":1,"tDegree":"2","dimension":"16"}
+rangecounter: 0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 0
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 1
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 2
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 3
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 4
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 5
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 6
+Has rs
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3A  5 5 30 16 16 16 2 7
+rs.next=False
+rLower: 6
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   16 6 6 30 8 8 8 0
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"3","AADegree":"3","vDivisor":"4","AAScalar":"-234","resultDivisor":"256","scalarProduct":"-1337927760","vvTwoSeq":"99","pD":16,"TTDegree":"0","TTScalar":"5717640","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"2","AADegree":"2","vDivisor":"4","AAScalar":"10280","resultDivisor":"256","scalarProduct":"58777339200","vvTwoSeq":"99","pD":16,"TTDegree":"0","TTScalar":"5717640","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"1","AADegree":"1","vDivisor":"4","AAScalar":"-200956","resultDivisor":"256","scalarProduct":"-1148994063840","vvTwoSeq":"99","pD":16,"TTDegree":"0","TTScalar":"5717640","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"0","AADegree":"0","vDivisor":"4","AAScalar":"1474744","resultDivisor":"256","scalarProduct":"8432055284160","vvTwoSeq":"99","pD":16,"TTDegree":"0","TTScalar":"5717640","dimension":"8","p2Eval":16,"vTwoSeq":16}
+rangecounter: 4
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 6 6 30 8 8 8 0
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"1","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"-619296160","vvTwoSeq":"99","pD":8,"TTDegree":"0","TTScalar":"2692592","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"0","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"8928635072","vvTwoSeq":"99","pD":8,"TTDegree":"0","TTScalar":"2692592","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 6 6 30 8 8 8 0
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"1","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-148030848","vvTwoSeq":"99","pD":4,"TTDegree":"0","TTScalar":"1276128","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"0","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"2154104064","vvTwoSeq":"99","pD":4,"TTDegree":"0","TTScalar":"1276128","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 6 6 30 8 8 8 0
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 6 6 30 8 8 8 0
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   16 6 6 30 8 8 8 1
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"4","AADegree":"3","vDivisor":"4","AAScalar":"-234","resultDivisor":"256","scalarProduct":"183972672","vvTwoSeq":"99","pD":16,"TTDegree":"1","TTScalar":"-786208","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"3","AADegree":"2","vDivisor":"4","AAScalar":"10280","resultDivisor":"256","scalarProduct":"-8082218240","vvTwoSeq":"99","pD":16,"TTDegree":"1","TTScalar":"-786208","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"2","AADegree":"1","vDivisor":"4","AAScalar":"-200956","resultDivisor":"256","scalarProduct":"157993214848","vvTwoSeq":"99","pD":16,"TTDegree":"1","TTScalar":"-786208","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"1","AADegree":"0","vDivisor":"4","AAScalar":"1474744","resultDivisor":"256","scalarProduct":"-1159455530752","vvTwoSeq":"99","pD":16,"TTDegree":"1","TTScalar":"-786208","dimension":"8","p2Eval":16,"vTwoSeq":16}
+rangecounter: 4
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 6 6 30 8 8 8 1
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"2","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"86427560","vvTwoSeq":"99","pD":8,"TTDegree":"1","TTScalar":"-375772","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"1","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"-1246059952","vvTwoSeq":"99","pD":8,"TTDegree":"1","TTScalar":"-375772","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 6 6 30 8 8 8 1
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"2","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"20942176","vvTwoSeq":"99","pD":4,"TTDegree":"1","TTScalar":"-180536","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"1","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"-304744768","vvTwoSeq":"99","pD":4,"TTDegree":"1","TTScalar":"-180536","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 6 6 30 8 8 8 1
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 6 6 30 8 8 8 1
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   16 6 6 30 8 8 8 2
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"5","AADegree":"3","vDivisor":"4","AAScalar":"-234","resultDivisor":"256","scalarProduct":"-9489636","vvTwoSeq":"99","pD":16,"TTDegree":"2","TTScalar":"40554","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"4","AADegree":"2","vDivisor":"4","AAScalar":"10280","resultDivisor":"256","scalarProduct":"416895120","vvTwoSeq":"99","pD":16,"TTDegree":"2","TTScalar":"40554","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"3","AADegree":"1","vDivisor":"4","AAScalar":"-200956","resultDivisor":"256","scalarProduct":"-8149569624","vvTwoSeq":"99","pD":16,"TTDegree":"2","TTScalar":"40554","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"2","AADegree":"0","vDivisor":"4","AAScalar":"1474744","resultDivisor":"256","scalarProduct":"59806768176","vvTwoSeq":"99","pD":16,"TTDegree":"2","TTScalar":"40554","dimension":"8","p2Eval":16,"vTwoSeq":16}
+rangecounter: 4
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 6 6 30 8 8 8 2
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"3","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"-4525020","vvTwoSeq":"99","pD":8,"TTDegree":"2","TTScalar":"19674","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"2","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"65238984","vvTwoSeq":"99","pD":8,"TTDegree":"2","TTScalar":"19674","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 6 6 30 8 8 8 2
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"3","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-1111280","vvTwoSeq":"99","pD":4,"TTDegree":"2","TTScalar":"9580","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"2","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"16171040","vvTwoSeq":"99","pD":4,"TTDegree":"2","TTScalar":"9580","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 6 6 30 8 8 8 2
+rangecounter: 1
+scriptConstraint, rangeCounter: 1  0
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   1 6 6 30 8 8 8 2
+rangecounter: 0
+srBol: true
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   16 6 6 30 8 8 8 3
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"6","AADegree":"3","vDivisor":"4","AAScalar":"-234","resultDivisor":"256","scalarProduct":"217620","vvTwoSeq":"99","pD":16,"TTDegree":"3","TTScalar":"-930","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"5","AADegree":"2","vDivisor":"4","AAScalar":"10280","resultDivisor":"256","scalarProduct":"-9560400","vvTwoSeq":"99","pD":16,"TTDegree":"3","TTScalar":"-930","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"4","AADegree":"1","vDivisor":"4","AAScalar":"-200956","resultDivisor":"256","scalarProduct":"186889080","vvTwoSeq":"99","pD":16,"TTDegree":"3","TTScalar":"-930","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"3","AADegree":"0","vDivisor":"4","AAScalar":"1474744","resultDivisor":"256","scalarProduct":"-1371511920","vvTwoSeq":"99","pD":16,"TTDegree":"3","TTScalar":"-930","dimension":"8","p2Eval":16,"vTwoSeq":16}
+rangecounter: 4
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 6 6 30 8 8 8 3
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"4","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"105340","vvTwoSeq":"99","pD":8,"TTDegree":"3","TTScalar":"-458","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"3","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"-1518728","vvTwoSeq":"99","pD":8,"TTDegree":"3","TTScalar":"-458","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 6 6 30 8 8 8 3
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"4","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"26216","vvTwoSeq":"99","pD":4,"TTDegree":"3","TTScalar":"-226","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"3","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"-381488","vvTwoSeq":"99","pD":4,"TTDegree":"3","TTScalar":"-226","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 6 6 30 8 8 8 3
+rangecounter: 1
+second if
+srBol: true
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   16 6 6 30 8 8 8 4
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"7","AADegree":"3","vDivisor":"4","AAScalar":"-234","resultDivisor":"256","scalarProduct":"-1872","vvTwoSeq":"99","pD":16,"TTDegree":"4","TTScalar":"8","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"6","AADegree":"2","vDivisor":"4","AAScalar":"10280","resultDivisor":"256","scalarProduct":"82240","vvTwoSeq":"99","pD":16,"TTDegree":"4","TTScalar":"8","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"5","AADegree":"1","vDivisor":"4","AAScalar":"-200956","resultDivisor":"256","scalarProduct":"-1607648","vvTwoSeq":"99","pD":16,"TTDegree":"4","TTScalar":"8","dimension":"8","p2Eval":16,"vTwoSeq":16}
+{"iM":"30","vvDivisor":"4","iN":"6","degreeSum":"4","AADegree":"0","vDivisor":"4","AAScalar":"1474744","resultDivisor":"256","scalarProduct":"11797952","vvTwoSeq":"99","pD":16,"TTDegree":"4","TTScalar":"8","dimension":"8","p2Eval":16,"vTwoSeq":16}
+rangecounter: 4
+scriptConstraint, rangeCounter: 8  3
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   8 6 6 30 8 8 8 4
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"5","AADegree":"1","vDivisor":"4","AAScalar":"-230","resultDivisor":"64","scalarProduct":"-920","vvTwoSeq":"99","pD":8,"TTDegree":"4","TTScalar":"4","dimension":"8","p2Eval":8,"vTwoSeq":8}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"4","AADegree":"0","vDivisor":"4","AAScalar":"3316","resultDivisor":"64","scalarProduct":"13264","vvTwoSeq":"99","pD":8,"TTDegree":"4","TTScalar":"4","dimension":"8","p2Eval":8,"vTwoSeq":8}
+rangecounter: 3
+scriptConstraint, rangeCounter: 4  2
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   4 6 6 30 8 8 8 4
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"5","AADegree":"1","vDivisor":"4","AAScalar":"-116","resultDivisor":"32","scalarProduct":"-232","vvTwoSeq":"99","pD":4,"TTDegree":"4","TTScalar":"2","dimension":"8","p2Eval":4,"vTwoSeq":4}
+{"iM":"30","vvDivisor":"2","iN":"6","degreeSum":"4","AADegree":"0","vDivisor":"4","AAScalar":"1688","resultDivisor":"32","scalarProduct":"3376","vvTwoSeq":"99","pD":4,"TTDegree":"4","TTScalar":"2","dimension":"8","p2Eval":4,"vTwoSeq":4}
+rangecounter: 2
+scriptConstraint, rangeCounter: 2  1
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   2 6 6 30 8 8 8 4
+rangecounter: 1
+second if
+srBol: true
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+S12 tConstraint:   16 6 6 30 8 8 8 5
+rangecounter: 4
+First if
+srBol: false
+scriptConstraint, rangeCounter: 16  4
+Loaded the appropriate driver
+jdbc:neo4j:bolt://localhost
+s3T6 6 30 8 8 16 16
+{"pTD":"256","iM":"30","iN":"6","tScalar":"810990104","eTrm":16,"tDegree":"4","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"6","tScalar":"-2308449594592","eTrm":16,"tDegree":"1","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"6","tScalar":"380968","eTrm":16,"tDegree":"6","dimension":"16"}
+{"pTD":"256","iM":"30","iN":"6","tScalar":"-18941227544","eTrm":16,"tDegree":"3","dimension":"16"}
+{"pTD":
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

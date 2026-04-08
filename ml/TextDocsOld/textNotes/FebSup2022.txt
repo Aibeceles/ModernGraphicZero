@@ -1,0 +1,714 @@
+2/14
+
+The p's defined such that an argument outputs a specific value of 2^n.
+
+QuerryS12QuadQuerry.main(Array("8","5","N5MaxN8"))
+QuerryS12QuadQuerry.main(Array("16","6","N6MaxN16"))
+
+QueryS3AQuery.main(Array("8","8","5","s3080805"))     // as dimension,maxN,n,dataframe name
+QueryS3AQuery.main(Array("8","16","6","s3081606"))    // as dimension,maxN,n,dataframe name
+
+The above, under arithmetic and argumented with the same MaxN are performant and no analysis is performed
+other than reqired for their definition.
+
+Individually, through respective derivatives or directly, the above are subjected to Sturm analysis,
+gradient descent, Newton's method, and also a relevant arc lenght is computed. Each are associated
+with a number of stationary points (suspicion is all have only one), their location, and translation
+telemetry for locating the min at each p's definition.    
+
+The effort is on describing the effect of multipling two of the above on stationary points.
+Formost, multiplication introduces equations with two variables.
+
+
+The need for today:
+
+GraphicMultiVar crossJoins two dataframes each representing a quadratic.
+The resulting dataframe represents one polynomic equation in two variables.
+Though, this dataframe is not persisted in z context...   
+
+Also:
+
+GraphicZeroThePsNMax8 has the object DifferentiateUDF.  
+Its UDF returns first and second derivative of each row argument
+as an s3ADD case class.  
+
+Note:  solving for crittical points, even in two vars, using Newton, need 
+2X differential.  
+
+And now have GraphicMultiVarPartialDifferentials note.
+First up is object CJoinResult.  Before it crossJoined the two
+argument quadratics and then with a partially applied function 
+signature evaluated the joined quadratic with plot arguments.
+Now the cross joined quadratic needs differential evaluated.
+
+
+
+CJoinResult.main(Array("ReducedMaxN16N6","ReducedMaxN8N5","TermPairs","GraphArgs"))
+
+     x       x        x    x   x         x      y      y        y    y   y         y
++------+------+--------+----+---+---------+------+------+--------+----+---+---------+
+|Degree|Scalar|Divisior|MaxN|  N|Dimension|Degree|Scalar|Divisior|MaxN|  N|Dimension| x Term   
++------+------+--------+----+---+---------+------+------+--------+----+---+---------+
+|     0|  6816|       2|  16|  6|        2|     0|   720|       2|   8|  5|        2|    no
+|     0|  6816|       2|  16|  6|        2|     2|    16|       2|   8|  5|        2|    no
+|     0|  6816|       2|  16|  6|        2|     1|  -210|       2|   8|  5|        2|    no
+|     2|    32|       2|  16|  6|        2|     0|   720|       2|   8|  5|        2|   yes
+|     2|    32|       2|  16|  6|        2|     2|    16|       2|   8|  5|        2|   yes
+|     2|    32|       2|  16|  6|        2|     1|  -210|       2|   8|  5|        2|   yes
+|     1|  -930|       2|  16|  6|        2|     0|   720|       2|   8|  5|        2|   yes
+|     1|  -930|       2|  16|  6|        2|     2|    16|       2|   8|  5|        2|   yes
+|     1|  -930|       2|  16|  6|        2|     1|  -210|       2|   8|  5|        2|   yes
++------+------+--------+----+---+---------+------+------+--------+----+---+---------+
+
+"ReducedMaxN16N6","ReducedMaxN8N5" are the arguments for xJoin table.
+They are not typed.
+Looks like they can be typed as s3AQu.
+Origonally as val dbb=db.map{f => extendResult(s3AQu(f.degree,f.scalar,f.divisior,f.MaxN,f.N,f.dimension)) }
+
+So differentiate each z argument seperately.
+Then crossJoin with un-differentiated congijat.
+
+ 
+
+ExtendResult is the differencing function.   Mayby don't first join.  -  do have to join first....
+differentiatedResult is renamed extendResult
+
+One call to the function...  
+The function ...
+
+Though,  need two dataframes...
+First is differentiated lhs    (x variable)
+Second is differentiated rhs.  (y variable)
+
+pcTrms can be the return type.
+Or not... need the 2X difference...
+
+Do want it to return a s3ADD
+
+2/15
+
+no reason to perform cross join...  wrong...
+
+2/16
+
+Candidate P(x)
+
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|Degree|Scalar|Divisior|MaxN|  N|Dimension|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     0|   720|       2|   8|  5|        2|
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     2|    16|       2|   8|  5|        2|
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     1|  -210|       2|   8|  5|        2|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     0|   720|       2|   8|  5|        2|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     2|    16|       2|   8|  5|        2|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     1|  -210|       2|   8|  5|        2|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     0|   720|       2|   8|  5|        2|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     2|    16|       2|   8|  5|        2|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     1|  -210|       2|   8|  5|        2|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+
+Candidate P(y)
+
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|Degree|Scalar|Divisior|MaxN|  N|Dimension|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|     0|  6816|       2|  16|  6|        2|
+|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|     2|    32|       2|  16|  6|        2|
+|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|     1|  -930|       2|  16|  6|        2|
+|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|     0|  6816|       2|  16|  6|        2|
+|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|     2|    32|       2|  16|  6|        2|
+|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|     1|  -930|       2|  16|  6|        2|
+|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|     0|  6816|       2|  16|  6|        2|
+|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|     2|    32|       2|  16|  6|        2|
+|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|     1|  -930|       2|  16|  6|        2|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+
+The above are     P1(x) = (MaxN,N,D)
+                  P1(y) = (MaxN',N',D')
+
+                  P1(z)=P1(x)*P1(y)
+
+and include d/dx, d/dx,dx
+            d/dy, d/dy,dy
+
+mixed partials are not included yet...
+
+Need to implement breeze matrix times vector 
+
+the vector is:  [differenced x, differenced y]
+           as:  [p1DF2(x), p2DF2(y)]                   
+
+the matrix is:  [p1DFCG (the first row, two different columns) , p2DFCG (the second row, two different columns)]
+
+seems like need partially applied functions for each of the hessian calculations 
+           as well as f(x,y) itself.  - remember f(x,x) is really f'(x,y)
+
+also need plain old function reterning 1/det(x)  as 1/ (ad-bc).
+
+polyEvaluate looks sufficiently generic                       //; it does need a refactor.??     all good...
+                                                              //it is only accepting one list...  it needs two, one for x terms, one for y terms.///
+
+
+     x      x                                  dx     dx       dxx      dxx       y      y                                  dy      dy      dyy      dyy 
+     0      1       2      3   4        5       6       7        8        9      10     11       12   13  14        15      16      17       18       19
+
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+-------+-------+--------+--------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+-------+-------+--------+--------+
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+-------+-------+--------+--------+
+
+f(x) is d/dx       6,7,2,10,11,12,3,13
+f(y)    d/dy       0,1,2,16,17,12,3,13
+
+                                                   a is d/dxx         8,9,2,10,11,12,3,13      
+                                                   b is d/dxy         6,7,2,16,17,12,3,13
+c is d/dxy         6,7,2,16,17,12,3,13         
+d is d/dyy         0,1,2,18,19,12,3,13
+
+// case class s3AQu(degree:String,scalar:String,divisior:String,MaxN:String,N:String,dimension:String)
+// case class s3AD(degree:String,scalar:String,divisior:String,MaxN:String,N:String,dimension:String,dDegree:String,dScalar:String)
+
+// case class s3ADD(degree:String,scalar:String,divisior:String,MaxN:String,N:String,dimension:String,dDegree:String,dScalar:String,ddDegree:String,ddScalar:String)
+// case class pcTrms(deg1:String,sca1:String,div1:String,deg2:String,sca2:String,div2:String,nMax1:String,nMax2:String)
+
+Note: did have to differentiate two seperate dataframs...  and then cross join...  Maybe do not need two crossjoined dataframs... they may be the same...
+
+GraphicMultiVar introduces the partially applied function
+
+The above are not case classed they are a post crossjoin dataframe with each column string type.
+
+Recap:  Get rid of one of the variables for one equation with one unknwon.
+
+
+
+2/21  
+
+Refactoring NewtonsMethod...
+
+Last implemented from .main  
+as pass (hyperparameters, x, functionList,derivative functionList)
+
+Have 7 functions....  
+
+scala How to pass a partially applied function as a parameter...
+
+have:
+
+def polyEvaluate(fPL:List[pcTrms])(xY:nextXYD): graphArgsD = { 
+
+case class nextXY(x:String,y:String)
+case class graphArgsD(x:Double,y:Double,result:Double)
+
+
+GraphicMultiVarPD is not robust enough.
+No can steepest descent 7 partially applied functions.
+
+It does need two functions defined. 
+.gradG, - the hessian.
+.g      - the gradient.
+
+Seems like the two above are responsible for calling polyEvaluate(...)
+
+So maybe time for a class.scala   
+
+It gets constructed with the 7 lists of joy.
+
+so,  anytime 
+
+gradient
+hessian
+
+is needed for a graphArgsD result...
+
+
+as in define gradient and hessian as partially applied functions
+then...   define the polyEvaluate functions also partially applied functions....
+
+eval gradient is a partially defined function
+it needs the partially defined evaFdX,evaFdY as first set of parameters.  not p lists.
+
+eval hessian is to be defined same way.
+
+p244
+
+<console>:76: error: value size is not a member of nextXYD
+           val n = x.size
+                     ^
+<console>:79: error: not found: value g
+           var g0 = g(x,fPL) // Initial estimate of result.
+                    ^
+<console>:79: error: not found: value fPL
+           var g0 = g(x,fPL) // Initial estimate of result.
+                        ^
+<console>:82: error: not found: value gradG
+           var fi = gradG(x,h,fPL,fDL)
+                    ^
+<console>:82: error: not found: value fPL
+           var fi = gradG(x,h,fPL,fDL)
+                              ^
+<console>:82: error: not found: value fDL
+           var fi = gradG(x,h,fPL,fDL)
+                                  ^
+<console>:95: error: nextXYD does not take parameters
+             for (i <- 0 until n by 1) x(i) -= b * g0
+                                        ^
+<console>:98: error: not found: value gradG
+             fi = gradG(x,h,fPL,fDL)
+                  ^
+<console>:98: error: not found: value fPL
+             fi = gradG(x,h,fPL,fDL)
+                            ^
+<console>:98: error: not found: value fDL
+             fi = gradG(x,h,fPL,fDL)
+                                ^
+<console>:109: error: not found: value g
+              g0=g(x,fPL)
+                 ^
+<console>:109: error: not found: value fPL
+              g0=g(x,fPL)
+
+
+NM narrative:
+
+define initial guess = x                                   
+
+enter steepestDescent with x, learningRate, tolerance...
+
+compute f(x)
+compute gradient
+
+....
+
+So, while condition makes sense... though delG>tolerance should be a_i - del(f(a_i) 
+
+
+which means want del(f(a_i)) computed....
+
+
+hessian is currently a four field case class...
+point is currently a two field case class....
+
+
+Do need the matrix,vector and not case classes brought into steapest descent.
+
+
+
+so maybe can go about with steepestDescent function....
+
+as:  steepestDescent 
+
+needs a vector instead of nextXYD.
+
+cHess returns a hess.  it needs to return a matrix.
+
+cFun returns a nextXYD.  it needs to return a vector.
+
+
+
+def testPas(cHess:nextXYD=>hess,cGrad:nextXYD=>nextXYD, argXY:nextXYD,h:hess,hh:hess) = {
+    //cHess takes a nextXYD and returns 4 field case class...
+    //want this 4 field case class to populate a matrix.
+    // cGrad takes a nextXYD and returns a nextXYD
+    // first off want a nextXYD along with the partial functions...
+    println()
+    println()
+    val v = new DenseVector(Array(argXY.x,argXY.y))
+ //   val hM =  DenseMatrix(Array(h.a,h.b),Array(h.c,h.d))
+    val a=h.a
+    val hM = new DenseMatrix(2,2,Array(h.a,h.b,h.c,h.d))
+    val hMM = new DenseMatrix(2,2,Array(hh.a,hh.b,hh.c,hh.d))   
+    println(v)
+    println("hand compted inverse")
+    println(hM)
+    val hMv = hM * v   //* v
+    println(hMv)
+    println("det abcd: "+ det(hMM))
+    println("1/det abcd: "+ 1/det(hMM))
+    println("before inverse "+hMM)
+    val inn=inv(hMM)
+    println("breeze inverse ")
+    println(inn)
+    val hMvv=inn * v
+    println("inn*v: "+hMvv)
+    val hMvvv=inn*hMM
+    println("breeze inverse * nextXYD matrix ")
+    println(hMvvv)
+    
+ }
+
+
+def evGrad=evalGradient(polyEvaluate(fOfdX)_,polyEvaluate(fOfdY)_)_
+val e=evGrad(nxy)
+
+val v = new DenseVector(Array(argXY.x,argXY.y))
+
+def evHess1=evalHessian1(polyEvaluate(fA)_,polyEvaluate(fB)_,polyEvaluate(fC)_,polyEvaluate(fD)_)_ 
+val hh=evHess1(nxy)
+
+val hMM = new DenseMatrix(2,2,Array(hh.a,hh.b,hh.c,hh.d)) 
+
+so, can pass in the vector and the hessian.
+
+
+inside sd, each iterate needs h defined.  - h operates on a case class.
+need vector to case class....  that is easy...  
+
+
+SD narrative:
+
+have point a_0 (2 coordiantes) as a case class.
+need gradient calculated.
+     hessian, inverse hessian defined 
+     hv =hessian * gradient
+     a_1 = a_0 - hv.     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AND... Is GaussMain.java usefull for this????
+
+AND a problem recap:
+
+In one variable, the crittical points are found by finding the zeros of the derivative function.
+GraphicZeroTheP's does iteratively find sturm analysis known to be singular stationary point. 
+
+Have one equation with two unknowns.  Believe there are no zeros,  do want to find the crittical points.
+
+Take the gradient... it is a vector.
+Define the Jacobian of this vector...
+
+file:///D:/Downloads/vdoc.pub_vector-calculus-linear-algebra-and-differential-forms-a-unified-approach.pdf
+
+and with yea old question:  why the inverse of the hessian????
+it is the effect of solving for "x"  don't devide by a matrix...
+take it's inverse and multiply both sides of equation.
+
+the spielie on page 244 of ye old text...
+
+https://www.youtube.com/watch?v=4E-uLaRhrcA
+
+https://www.youtube.com/watch?v=vV-3I5fO_2M
+"newtons method is based on tangent line approximation"
+
+https://www.cmu.edu/math/undergrad/suami/pdfs/2014_newton_method.pdf
+
+The idea of Newton’s method in two variables is the same as in one variable.
+Just like the one variable case, we choose a starting point, locally linearize, solve
+the system of linear equations, and repeat
+
+basins of attraction
+
+Basins of attractions of attracting fixed points of N can be visualized with
+computers in the following way. Create a grid of points representing a points in
+the complex plane. Iterate Newton’s method on each of these points. Then color
+points that converge to di↵erent attracting fixed points of N di↵erent colors.
+The following figure illustrates this by visualizing the basins of attraction of
+a cubic polynomial whose roots form the vertices of an equilateral triangle in
+the complex plane.
+
+https://gimledigital.com/newton-raphson-made-easy-scala
+
+
+Do have a multi-var scala gradient descent.
+Is is also refactored into a single variable gradient descent.
+It is also refactored into a netwton-r algorithem.
+
+Meaning....
+can gd easily...
+Have partials...  need partials inverted...
+
+
+
+The state of a new collection instance may not have been "published" (in the sense of the Java Memory Model specification),
+ so that an unsynchronized non-volatile read from another thread may observe the object in an invalid state
+ (see scala/bug#7838 for details).”
+
+and very worried about having to compute an inverse each time instead of computing inverse of partials themselves- 
+not values from evaluated jacobian...
+
+https://mathoverflow.net/questions/284487/what-is-the-most-accurate-and-efficient-method-of-finding-an-inverse-of-a-hessia
+
+@AlexM. The question you ask is precisely what motivated my comment. My guess is that Op wants to implement Newton's method
+and is willing to invert the Hessian at each step which is not recommended.
+
+https://www.wolframalpha.com/input?i=find+the+inverse+of+the+matrix+%28%28a%2C3%29%2C%285%2C-7%29%29+
+
+so...  can proceed, at lease with the symbolic inverse of 2/2 matrix as    1/ad-bc times row 1 as (d,-b)
+                                                                                             2 as (-c,a)
+
+2/18
+
+GraphicMultivarPartialDiff  
+
+has the partials, second partials but not mixed partials...
+
+Newtons method needs to be brought into worsheet...
+
+
+
++------+------+--------+----+---+---------+
+|Degree|Scalar|Divisior|MaxN|  N|Dimension|
++------+------+--------+----+---+---------+
+|     0|  6816|       2|  16|  6|        2|
+|     2|    32|       2|  16|  6|        2|
+|     1|  -930|       2|  16|  6|        2|
++------+------+--------+----+---+---------+
+
++------+------+--------+----+---+---------+
+|Degree|Scalar|Divisior|MaxN|  N|Dimension|
++------+------+--------+----+---+---------+
+|     0|   720|       2|   8|  5|        2|
+|     2|    16|       2|   8|  5|        2|
+|     1|  -210|       2|   8|  5|        2|
++------+------+--------+----+---+---------+
+
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|
+|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|
+|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|
++------+------+--------+----+---+---------+-------+-------+--------+--------+
+
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|Degree|Scalar|Divisior|MaxN|  N|Dimension|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     0|   720|       2|   8|  5|        2|
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     2|    16|       2|   8|  5|        2|
+|     0|  6816|       2|  16|  6|        2|      0|      0|       0|       0|     1|  -210|       2|   8|  5|        2|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     0|   720|       2|   8|  5|        2|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     2|    16|       2|   8|  5|        2|
+|     2|    32|       2|  16|  6|        2|      1|     64|       0|      64|     1|  -210|       2|   8|  5|        2|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     0|   720|       2|   8|  5|        2|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     2|    16|       2|   8|  5|        2|
+|     1|  -930|       2|  16|  6|        2|      0|   -930|       0|       0|     1|  -210|       2|   8|  5|        2|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|degree|scalar|divisior|MaxN|  N|dimension|dDegree|dScalar|ddDegree|ddScalar|Degree|Scalar|Divisior|MaxN|  N|Dimension|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|     0|  6816|       2|  16|  6|        2|
+|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|     2|    32|       2|  16|  6|        2|
+|     0|   720|       2|   8|  5|        2|      0|      0|       0|       0|     1|  -930|       2|  16|  6|        2|
+|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|     0|  6816|       2|  16|  6|        2|
+|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|     2|    32|       2|  16|  6|        2|
+|     2|    16|       2|   8|  5|        2|      1|     32|       0|      32|     1|  -930|       2|  16|  6|        2|
+|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|     0|  6816|       2|  16|  6|        2|
+|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|     2|    32|       2|  16|  6|        2|
+|     1|  -210|       2|   8|  5|        2|      0|   -210|       0|       0|     1|  -930|       2|  16|  6|        2|
++------+------+--------+----+---+---------+-------+-------+--------+--------+------+------+--------+----+---+---------+
+
+Maybe no computing the mixed partials
+
+
+maybe want crossjoin off the two differentiated dataframes not a crossjoin of the differentiated with a cross join of 
+the other undifferentiated.  Then a matter of selecting columns in a map for evaluating...
+
+NewtonMethod.main(Array("DiffUnionDF","dimArgs"))
+
+|degree|scalar        |divisior                  |MaxN|N  |dimension|
+
+
+the big newtonsMethod object refacter:
+
+and a recap of newton happenings: 
+
+provide an initial (x,y) guess
+ the function - a polynomial in terms of x and y.           --  the function is now the gradient
+ the inverse of hessian                                     --  the jacobian of the gradient.
+
+multiply the hessian by the gradient at the guess...
+
+need to 
+
+.evaluate hessian at guess
+.evaluate gradient at guess
+.multiply evaluates (matrix*vector)
+
+and the moment we've been waiting for.
+
+use the ml spark library 
+or work it out with dataframes....
+Answer
+To use spark ml library....
+
+
+2/28
+
+GraphicMultiVar1 PlotData object is a computational burden.
+it is selecting each unique x and mapping each x,y,r into respective lists.
+Seems very unnecessay.  These lists should be defined where r is computed.
+
+ 
+object CJoinResult needs the refactor.
+
+
+
+    var terms = new ArrayBuffer[List[Double]]()
+    var yTerms = new ArrayBuffer[List[Double]]()
+    var xTerms = new ArrayBuffer[List[Double]]()
+    
+    val dff= z.get(args(0)).asInstanceOf[DataFrame]
+    val df: Dataset[graphArgsD] = dff.as[graphArgsD]
+    df.show()
+    df.printSchema
+    val groupDF =   df.select("x").distinct
+                      .orderBy(asc("X"))
+                     // .agg(collect_list("X"),count("X"))
+
+    def getCategoryStats() = groupDF.select(col("X")).groupBy(col("X")).count().as[(Double,Long)].collect.toList
+
+    val xs = getCategoryStats().map(_._1)
+//    println(xs)
+//    println(xs.size)
+
+    for (x <- xs) {
+        println(x)
+  //      val xArg = String.valueOf(x)
+        val rDF=df.select("result","y","x").filter(col("x")=== x)  
+        rDF.show()
+ 
+//        def getResults() =  rDF.select("result","y").orderBy(asc("y")).groupBy(col("result")).count().as[(Double,Long)].collect.toList 
+//        def getResults() =  rDF.select("result","y").orderBy(asc("y")).groupBy(col("result"),col("y")).count().as[(Double, Double, Long)].collect.toList
+        def getResults() =  rDF.select("result","y","x").orderBy(asc("y")).groupBy(col("result"),col("y"),col("x")).count().as[(Double, Double, Double, Long)].collect.toList
+//        println("getResults:"+getResults())
+        val rList = getResults().map(_._1)
+        val yList = getResults().map(_._2)
+        val xList = getResults().map(_._3)
+//        println(rList)
+//        println(yList)
+        terms+=rList
+        yTerms+=yList
+        xTerms+=xList
+    }
+     val termsL=terms.toList
+     val termsX=xTerms.toList
+     val termsY=yTerms.toList
+         val randomIndex = Math.abs(scala.util.Random.nextInt)
+
+
+
+
+
+
+
+
+
+
+"We can see that the points found through iteration of Newton’s
+method correspond to distinct components of the Fatou set.  
+..determine a function’s basins of attraction- a set of starting points in which
+each point in the set iterates to a particular root."
+
+we can calculate the distance for each root and create
+an image which displays the basins of attraction for the system..
+
+ at z0 we may construct an even better better
+approximation z1 of ↵ as follows. First we locally linearization of f at z0. This
+gives us an affine function.
+...
+
+Given a polynomial f, define the Newton’s function of f, denoted N = Nf ,
+given by..
+...Here we generally consider the domain and range of N to be the Riemann sphere
+(i.e. C [ 1) so that N is defined even at singularities of f...
+
+. The Julia
+set is the set on which the dynamics of N are chaotic.
+
+The Fatou set is the complement of the Julia set; it is the set on which the
+dynamics of N are “well-behaved”.
+
+Basins of attractions of
+Actracting fixed points of N can be visualized with
+computers in the following way. Create a grid of points representing a points in
+the complex plane. Iterate Newton’s method on each of these points. Then color
+points that converge to di↵erent attracting fixed points of N di↵erent colors
+
+
+And remember julia sets, the above, are about single variable p's - the ones on integerpolys.neo
+
+ Hubbard, J., Schleicher, D., Sutherland, S., How to Really Find Roots of
+Polynomials by Newton’s Method,
+
+searching for the magic fern flower at midnight....
+
+https://soundcloud.com/heedthesound/hts-x-ksenia-kamikaza?in=ksenia_kamikaza/sets/house
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Zeppelin question:  Why does only one note paragraph execute at a time...
+                    Why don't different notes execute concurrently....
+                    Are different notes sharing the same spark instance...
+
+
+
+
+
+
+
+
+

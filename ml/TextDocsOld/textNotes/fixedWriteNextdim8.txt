@@ -1,0 +1,264 @@
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'3'})
+With max(cl.Divisor) as maxDivisor
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'3'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+                                      TScalar:toString(aN.TScalar),
+                                      ATwoSeq:aN.ATwoSeq,
+                                      ADegree:aN.ADegree,   
+                                      AScalar:toString(aN.AScalar)})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                   //  important when collecting different dimensions.                                                          
+{DS:COLLECT({ResultScalar:apoc.number.exact.mul(aPTdsU.TScalar,toString(aPafe)), 
+      ResultDegree:aPTdsU.TDegree,
+      ResultTwoSeq:aPTdsU.tft}),Divisor:apD}
+ELSE
+{DS:COLLECT({ResultScalar:apoc.number.exact.mul(apoc.number.exact.mul(aPTdsU.TScalar,aPTdsU.AScalar),toString(aPTdsU.ATwoSeq)), 
+      ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,
+      ResultTwoSeq:aPTdsU.ATwoSeq}),Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+//RETURN cts,rDRM,iN,iM,rpD2,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))   //  d32 script says rDivisor, locally is rpD2
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rpD2} AS pTerms,iM,iN    //  common denominator inside the collect map
+WITH {DSList:COLLECT({Scalar:CASE WHEN maxDivisor/rpD2 > 1 THEN apoc.number.exact.mul(a.acc,toString(maxDivisor/rpD2)) ELSE a.acc END}),Degree:rDRM,DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN   
+//Return pTermss
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT                                   //  need to add again scalar list as now common denominators caused a colletion of scalars at each degree.
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,pTermss[pT].Degree AS pTDegree
+CREATE (aa:Accumulator { acc:"0"})
+WITH dSList,iN,iM,pTD,pTDegree,aa
+FOREACH (n IN dSList | SET aa.acc = apoc.number.exact.add(aa.acc,toString(n.Scalar)))
+WITH distinct {Scalar:aa.acc,Degree:pTDegree,DivideBy:pTD} as pTermsss,iN,iM
+WITH pTermsss.Scalar as Scalar,pTermsss.Degree as Degree,pTermsss.DivideBy as Divisor,iN,iM
+//return pTermsss
+MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:"8"} )  
+MERGE (t:TwoSeqFactor {divisor:Divisor} )
+CREATE (v:VertexNode {Scalar:Scalar,Degree:toString(Degree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE  (i)-[ee:TwoFactor]->(t)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:TargetRelation]->(v)
+
+RETURN toFloat(Scalar),toFloat(Degree),toFloat(Divisor),iN,toFloat(iM)
+
+//  The problem.... possibly with twoSeqFactor..... thank god it goes away in subsequent dimensions.
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'3'})
+With max(cl.Divisor) as maxDivisor
+
+MATCH (cl:CollectedProductArgNode {Dimension:'4',MaxN:'10',N:'3'})-[:Arguments]->(aN:ArgumentsNode)
+WITH {Divisor:cl.Divisor,afe:cl.afe,tft:cl.tft,DS: COLLECT( {  TDegree:aN.TDegree,
+                                      TScalar:toString(aN.TScalar),
+                                      ATwoSeq:aN.ATwoSeq,
+                                      ADegree:aN.ADegree,   
+                                      AScalar:toString(aN.AScalar)})}  AS argumentProduct,cl.N as iN,cl.MaxN as iM,maxDivisor
+WITH COLLECT(argumentProduct) as argumentProductt,argumentProduct.tft as aPafe,iN,iM,argumentProduct.Divisor as apD,argumentProduct.afe AS aPclafe,maxDivisor
+UNWIND RANGE(0,SIZE(argumentProductt)-1) as iii
+WITH argumentProductt[iii].DS as aPTds,aPafe,iN,iM,apD,aPclafe,maxDivisor
+UNWIND aPTds as aPTdsU
+WITH CASE WHEN aPclafe = 99 THEN                                   //  important when collecting different dimensions.                                                          
+{DS:COLLECT({ResultScalar:apoc.number.exact.mul(aPTdsU.TScalar,toString(aPafe)), 
+      ResultDegree:aPTdsU.TDegree,
+      ResultTwoSeq:aPTdsU.tft}),Divisor:apD}
+ELSE
+{DS:COLLECT({ResultScalar:apoc.number.exact.mul(apoc.number.exact.mul(aPTdsU.TScalar,aPTdsU.AScalar),toString(aPTdsU.ATwoSeq)), 
+      ResultDegree: CASE WHEN aPTdsU.ADegree=-1 THEN aPTdsU.TDegree ELSE aPTdsU.ADegree+aPTdsU.TDegree END,
+      ResultTwoSeq:aPTdsU.ATwoSeq}),Divisor:apD}
+END
+AS resultProduct,iN,iM,maxDivisor
+WITH COLLECT(resultProduct) as rPC,iN,iM,resultProduct.Divisor as rpD1,maxDivisor
+UNWIND RANGE(0,SIZE(rPC)-1) as iI
+WITH rPC[iI].DS as rPCDS,iN,iM,rpD1,maxDivisor
+UNWIND rPCDS as rPCDSU
+WITH {RScalarList:COLLECT({RScalar:rPCDSU.ResultScalar}),RDegree:rPCDSU.ResultDegree,Divisor:rpD1} as resultMap,iN,iM,maxDivisor
+WITH COLLECT(resultMap) as resultMapC,resultMap.RDegree as rDRM,iN,iM,resultMap.Divisor as rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(resultMapC)-1) as iII
+WITH resultMapC[iII].RScalarList as rSL,rDRM,iN,iM,rpD2,maxDivisor
+UNWIND RANGE(0,SIZE(rSL)-1) as iIII
+UNWIND rSL[iIII] as rSLI
+WITH COLLECT(rSLI.RScalar) as cts,rDRM,iN,iM,rpD2,"0" as accumulator,maxDivisor
+//RETURN cts,rDRM,iN,iM,rpD2,maxDivisor
+CREATE (a:Accumulator { acc:"0"})
+FOREACH (n IN cts| SET a.acc = apoc.number.exact.add(a.acc,n))   //  d32 script says rDivisor, locally is rpD2
+//WITH {DSList:COLLECT({Degree:rDRM,Scalar:a.acc}),DivideBy:rpD2} AS pTerms,iM,iN    //  common denominator inside the collect map
+WITH {DSList:COLLECT({Scalar:CASE WHEN maxDivisor/rpD2 > 1 THEN apoc.number.exact.mul(a.acc,toString(maxDivisor/rpD2)) ELSE a.acc END}),Degree:rDRM,DivideBy:maxDivisor} AS pTerms,iM,iN
+WITH COLLECT(pTerms) as pTermss,iM,iN   
+//Return pTermss
+UNWIND RANGE(0,SIZE(pTermss)-1) as pT                                   //  need to add again scalar list as now common denominators caused a colletion of scalars at each degree.
+WITH pTermss[pT].DSList as dSList,iN,iM,pTermss[pT].DivideBy AS pTD,pTermss[pT].Degree AS pTDegree
+CREATE (aa:Accumulator { acc:"0"})
+WITH dSList,iN,iM,pTD,pTDegree,aa
+FOREACH (n IN dSList | SET aa.acc = apoc.number.exact.add(aa.acc,toString(n.Scalar)))
+WITH distinct {Scalar:aa.acc,Degree:pTDegree,DivideBy:pTD} as pTermsss,iN,iM
+WITH pTermsss.Scalar as Scalar,pTermsss.Degree as Degree,pTermsss.DivideBy as Divisor,iN,iM
+//return pTermsss
+MERGE (i:IndexedByArgument {N:iN,MaxN:iM,Dimension:"8"} )  
+MERGE (t:TwoSeqFactor {towSeq:"99",divisor:Divisor} )
+CREATE (v:VertexNode {Scalar:Scalar,Degree:toString(Degree)} )
+MERGE (e:Evaluate {Value:toString(toInteger(2^toInteger(iN)))}) //  Must be integer value.... Must compute evaluate   or just say it is computing 2^n
+MERGE  (i)-[ee:TwoFactor]->(t)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[eee:TargetRelation]->(v)
+return i,t,e,v
+
+
+╒═════════════════════════════════════╤═══════════════════════════╤═══════════════╤════════════════════════════════════╕
+│"i"                                  │"t"                        │"e"            │"v"                                 │
+╞═════════════════════════════════════╪═══════════════════════════╪═══════════════╪════════════════════════════════════╡
+│{"MaxN":"10","N":"9","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"512"}│{"Degree":"4","Scalar":"126.00"}    │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"9","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"512"}│{"Degree":"1","Scalar":"-323380.00"}│
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"9","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"512"}│{"Degree":"0","Scalar":"706048.00"} │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"9","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"512"}│{"Degree":"3","Scalar":"-4320.00"}  │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"9","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"512"}│{"Degree":"2","Scalar":"55898.00"}  │
+└─────────────────────────────────────┴───────────────────────────┴───────────────┴────────────────────────────────────┘
+
+╒═════════════════════════════════════╤═══════════════════════════╤═══════════════╤════════════════════════════════════╕
+│"i"                                  │"t"                        │"e"            │"v"                                 │
+╞═════════════════════════════════════╪═══════════════════════════╪═══════════════╪════════════════════════════════════╡
+│{"MaxN":"10","N":"8","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"256"}│{"Degree":"2","Scalar":"27812.00"}  │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"8","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"256"}│{"Degree":"1","Scalar":"-161652.00"}│
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"8","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"256"}│{"Degree":"4","Scalar":"62.00"}     │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"8","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"256"}│{"Degree":"0","Scalar":"354344.00"} │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼────────────────────────────────────┤
+│{"MaxN":"10","N":"8","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"256"}│{"Degree":"3","Scalar":"-2138.00"}  │
+└─────────────────────────────────────┴───────────────────────────┴───────────────┴────────────────────────────────────┘
+
+
+╒═════════════════════════════════════╤═══════════════════════════╤═══════════════╤═══════════════════════════════════╕
+│"i"                                  │"t"                        │"e"            │"v"                                │
+╞═════════════════════════════════════╪═══════════════════════════╪═══════════════╪═══════════════════════════════════╡
+│{"MaxN":"10","N":"7","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"128"}│{"Degree":"0","Scalar":"177392.00"}│
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"7","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"128"}│{"Degree":"3","Scalar":"-1044.00"} │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"7","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"128"}│{"Degree":"2","Scalar":"13702.00"} │
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"7","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"128"}│{"Degree":"1","Scalar":"-80308.00"}│
+├─────────────────────────────────────┼───────────────────────────┼───────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"7","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"128"}│{"Degree":"4","Scalar":"30.00"}    │
+└─────────────────────────────────────┴───────────────────────────┴───────────────┴───────────────────────────────────┘
+
+╒═════════════════════════════════════╤═══════════════════════════╤══════════════╤═══════════════════════════════════╕
+│"i"                                  │"t"                        │"e"           │"v"                                │
+╞═════════════════════════════════════╪═══════════════════════════╪══════════════╪═══════════════════════════════════╡
+│{"MaxN":"10","N":"6","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"64"}│{"Degree":"1","Scalar":"-39088.00"}│
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"6","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"64"}│{"Degree":"4","Scalar":"14.00"}    │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"6","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"64"}│{"Degree":"3","Scalar":"-494.00"}  │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"6","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"64"}│{"Degree":"0","Scalar":"87536.00"} │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"6","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"64"}│{"Degree":"2","Scalar":"6576.00"}  │
+└─────────────────────────────────────┴───────────────────────────┴──────────────┴───────────────────────────────────┘
+
+
+╒═════════════════════════════════════╤═══════════════════════════╤══════════════╤═══════════════════════════════════╕
+│"i"                                  │"t"                        │"e"           │"v"                                │
+╞═════════════════════════════════════╪═══════════════════════════╪══════════════╪═══════════════════════════════════╡
+│{"MaxN":"10","N":"5","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"32"}│{"Degree":"0","Scalar":"40928.00"} │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"5","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"32"}│{"Degree":"2","Scalar":"2938.00"}  │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"5","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"32"}│{"Degree":"4","Scalar":"6.00"}     │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"5","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"32"}│{"Degree":"1","Scalar":"-17860.00"}│
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼───────────────────────────────────┤
+│{"MaxN":"10","N":"5","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"32"}│{"Degree":"3","Scalar":"-216.00"}  │
+└─────────────────────────────────────┴───────────────────────────┴──────────────┴───────────────────────────────────┘
+
+╒═════════════════════════════════════╤═══════════════════════════╤══════════════╤══════════════════════════════════╕
+│"i"                                  │"t"                        │"e"           │"v"                               │
+╞═════════════════════════════════════╪═══════════════════════════╪══════════════╪══════════════════════════════════╡
+│{"MaxN":"10","N":"4","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"16"}│{"Degree":"1","Scalar":"-6556.00"}│
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼──────────────────────────────────┤
+│{"MaxN":"10","N":"4","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"16"}│{"Degree":"0","Scalar":"15624.00"}│
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼──────────────────────────────────┤
+│{"MaxN":"10","N":"4","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"16"}│{"Degree":"3","Scalar":"-74.00"}  │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼──────────────────────────────────┤
+│{"MaxN":"10","N":"4","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"16"}│{"Degree":"2","Scalar":"1040.00"} │
+├─────────────────────────────────────┼───────────────────────────┼──────────────┼──────────────────────────────────┤
+│{"MaxN":"10","N":"4","Dimension":"8"}│{"divisor":4,"towSeq":"99"}│{"Value":"16"}│{"Degree":"4","Scalar":"2.00"}    │
+└─────────────────────────────────────┴───────────────────────────┴──────────────┴──────────────────────────────────┘
+
+╒═════════════════════════════════════╤═══════════════════════════╤═════════════╤═══════════════════════════════╕
+│"i"                                  │"t"                        │"e"          │"v"                            │
+╞═════════════════════════════════════╪═══════════════════════════╪═════════════╪═══════════════════════════════╡
+│{"MaxN":"10","N":"3","Dimension":"8"}│{"divisor":2,"towSeq":"99"}│{"Value":"8"}│{"Degree":"1","Scalar":"-70.0"}│
+├─────────────────────────────────────┼───────────────────────────┼─────────────┼───────────────────────────────┤
+│{"MaxN":"10","N":"3","Dimension":"8"}│{"divisor":2,"towSeq":"99"}│{"Value":"8"}│{"Degree":"0","Scalar":"316.0"}│
+├─────────────────────────────────────┼───────────────────────────┼─────────────┼───────────────────────────────┤
+│{"MaxN":"10","N":"3","Dimension":"8"}│{"divisor":2,"towSeq":"99"}│{"Value":"8"}│{"Degree":"2","Scalar":"4.0"}  │
+└─────────────────────────────────────┴───────────────────────────┴─────────────┴───────────────────────────────┘
+
+╒═════════════════════════════════════╤═══════════════════════════╤═════════════╤═══════════════════════════════╕
+│"i"                                  │"t"                        │"e"          │"v"                            │
+╞═════════════════════════════════════╪═══════════════════════════╪═════════════╪═══════════════════════════════╡
+│{"MaxN":"10","N":"2","Dimension":"8"}│{"divisor":2,"towSeq":"99"}│{"Value":"4"}│{"Degree":"2","Scalar":"2.0"}  │
+├─────────────────────────────────────┼───────────────────────────┼─────────────┼───────────────────────────────┤
+│{"MaxN":"10","N":"2","Dimension":"8"}│{"divisor":2,"towSeq":"99"}│{"Value":"4"}│{"Degree":"1","Scalar":"-36.0"}│
+├─────────────────────────────────────┼───────────────────────────┼─────────────┼───────────────────────────────┤
+│{"MaxN":"10","N":"2","Dimension":"8"}│{"divisor":2,"towSeq":"99"}│{"Value":"4"}│{"Degree":"0","Scalar":"168.0"}│
+└─────────────────────────────────────┴───────────────────────────┴─────────────┴───────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

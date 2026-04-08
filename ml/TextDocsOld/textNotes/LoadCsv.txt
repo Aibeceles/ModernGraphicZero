@@ -1,0 +1,16 @@
+USING PERIODIC COMMIT 2000
+LOAD CSV WITH HEADERS FROM "file:/" + "TwoPolynomial092319.csv" AS line FIELDTERMINATOR ";"
+WITH line
+
+MERGE (i:IndexedBy {N:line.NN,RowCounter:line.flatFileRowCounterr,MaxN:line.nMaxx,Dimension:"2"} )
+MERGE (t:TwoSeqFactor {twoSeq:line.tSeqDB} )
+MERGE (v:VertexNode {Vertex:line.vertexDBVertex,Scalar:line.vertexScalarDB,Degree:line.vertexDegreeDB} )
+MERGE (e:Evaluate {Value:line.targetEvaluate})
+MERGE  (i)-[ee:TwoFactor]->(t)
+MERGE (i) -[:IndexedByEvaluate]->(e)
+MERGE  (i)-[:VertexIndexedBy]->(v)
+RETURN count(i)
+
+
+
+

@@ -1,0 +1,111 @@
+MATCH (n)
+WHERE n.some_property = 'something'
+WITH n
+ORDER BY n.some_other_property
+WITH COLLECT(n) as node_list
+UNWIND RANGE(1, SIZE(node_list) - 1) AS idx
+WITH node_list[idx - 1] AS from, node_list[idx] AS to
+CREATE (from)-[:NEXT]->(to);
+
+
+PROFILE
+MATCH (a:Actor)                                                                              // match customer
+WHERE a.born > $yearBorn
+RETURN a.name AS actor,  a.born AS born,
+[(a)-->(x) WHERE $relYear1 <= x.releaseYear <= $relYear2 | x.title] AS titles ORDER BY actor // order by timestamp.
+
+
+6/3
+
+https://pipercompanies.secure.force.com//TMS__TimesheetLoginResetPassword?Id=0033i00002ozzJL
+
+Dear Candidate
+
+Timesheets 
+
+Please find the login details
+
+Username : tomaspries@gmail.com
+
+Password :  Aibeceles1
+
+
+Work laptop:
+user name a722575
+pswd Dangusmelynus1!
+
+spectrum27
+pinktruck229
+
+Your data has not been saved. Please review the errors or warnings and try again.
+Your registration code has been locked.
+
+https://www.youtube.com/watch?v=x34FuSLt0l8
+https://www.youtube.com/watch?v=x34FuSLt0l8:
+"Virutal nodes are not accessable from cypher."
+
+are useful in aggrigation.
+apoc groupby
+
+virtual nodes can connect real node or virtual nodes eithir/or...
+
+
+match a person node by name....   create a virtual node lacation "US
+return real node,virtual node, relationship
+ 
+imagine all movies in database...
+and want to aggrigate by year....
+
+
+match (m:Move)
+with m.year,count(*) as count
+
+match (m:Movie)
+with m.released as year, count(*) as count
+return apoc.create.vNode(['Movies'],(year:year,count:count}) as movies
+
+//  Not not connected nodes returned.
+
+
+match (p1:Person)-->()<--(p2:Person)
+return p1,p2, apoc.create.vRelatoinship(p1,p2,'KNOWS',(count:count(*)})  // many nodes,relations
+
+
+match (p1:Person)-->()<--(p2:Person)
+with p1,p2, count(*) as c where c>4
+
+
+limmited atlas taxonomy,  only two classes so far...
+    first in list of node lables                  type of relation in pattern. 
+WITH head(labels(a)) AS l, head(labels(b)) AS l2, type(r) AS rel_type, count(*) as count
+
+
+
+
+
+
+https://www.youtube.com/watch?v=t1Nr5C5TAYs
+Efficiently Updating and Inserting Data With apoc.periodic.iterate (#6)
+
+
+
+
+
+CALL apoc.create.virtualPath(['British','Person'],{name:'James', age:28},'KNOWS',{since:2009},['Swedish','Person'],{name:'Daniel', age:30})
+
+
+
+
+
+voc graph database sandbox...
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,747 @@
+multinomial
+
+p(y|x) porportiona p(x|y)p(y)
+p(y=+1|x)>P(y=-1|x)
+
+x a vector
+p(x|+1)p(+1)>p(x|-1)p(-1)
+
+
+
+distribution of the features.
+
+percepteron          vs      liniar classifier.
+(not really used)
+
+
+hyperplane for seperating gaussians.
+
+estimate the parameters of the distribution.
+
+estimate w, b directly....
+
+https://www.youtube.com/watch?v=GnkDzIOxfzI
+
+axiom of compleatness  (sup exists)  
+
+
+ used to prove intersection of closed interval sequence of nested intervals is non empty.
+
+
+the archimedian property...  how the natural numbers are inside Reals....
+
+
+where are the fractions 1/n?
+
+for any real there is an natural number bigger than the real...
+for any real there is a number 1/n n:natural less than r...
+
+archmedian principal shews no biggest number.
+
+newtion's method find the zero....
+
+
+x_1 = x_0 - f(x_0)/f'(x_0)
+
+x_n+1 = x_n - f(x_n) - f(x_n)/f'(x_n)   ...
+
+Where the iteration formula came from:
+https://www.youtube.com/watch?v=cOmAk82cr9M
+
+after a bit of iteration it becomes aparent what the root is....
+
+the gradient/gradient decent....
+
+
+https://www.youtube.com/watch?v=W7S94pq5Xuo
+
+"in one dimention, the gradient is nothing but the derivitave."
+
+yea old alpha variable from killian....
+
+newtons method in optimization....
+
+
+https://www.youtube.com/watch?v=W7S94pq5Xuo
+
+iterative optimization algorithms
+
+x_x+1 = x_k + d_k
+
+the gradient of a function tell the direction of biggest increase.
+del f_x is a vector of partial derivativs of f(x)
+
+the hessian gives information about the curvature....
+
+and again the gradient in one dimension is nothing but the derivative.
+
+and the derivative is nothing but the ration of f(x) - f(x_k)/x-x_k
+
+rearange the terms and the derivative is the slope
+
+f(x) appx f(x_k) + f'(x_k)(x-x_k)
+
+so,,
+
+have x_k+1=x+k - alpha f'(x_k)    -  alpha a multiple of the slope.
+                                     
+so with newtons method, can choose alpha with second errivative info....
+a taylor series approximation...
+
+
+f(x) appx f(x_k) + f'(x_k)(x-x_k) + f''(x_k)(x-x_k)^2/2
+
+resulting function no longer linear but quadratic....
+
+minimise this quadratic and choose the minimim x as next iterate...
+
+
+this defines the alpha, above, as 1/f''(x_k)f'(x_k)
+
+care about predicting y given x  is implied by sigmoid...
+
+maximum likelyhood estimation....
+
+tau the P(y_i|x_i)
+
+
+hyperplains in ml
+
+
+
+
+x axis is w.
+y axis is loss of w....     w maybe the point space...???
+
+
+taylor approximation... take the first derivative, second derivative thirds...
+                        for an arbitrary approximation to the function....
+
+that is taylor expansion includes the hessian as alpha...
+
+
+
+the approximation only holds when approximation is really small.
+
+
+take a stem towards a minimization of the taylor expansion...  repeate...
+
+the step is - alpha, the small step size times the gradient....
+
+
+choose alpha such that the taylor approximation holds....
+
+
+adagrad.....  for step size....
+
+
+
+
+the above:  https://www.youtube.com/watch?v=o6FfdP2uYh4
+Machine Learning Lecture 12 "Gradient Descent / Newton's Method" -Cornell CS4780 SP17
+
+
+
+https://www.youtube.com/watch?v=_21o_ylL0q4
+
+
+https://www.youtube.com/watch?v=i2vFYJ-BBCk
+
+
+https://www.youtube.com/watch?v=lZ3bPUKo5zc
+
+
+jacobian vs hessian....
+
+naieve bayes
+
+yea old ad hoc analysis..
+
+s3 blob storage
+
+dataframe.describe
+
+been down that histogram...
+
+transform the histogram using log(arg)
+
+desplay df .scatter.... yea old heatmap....
+
+
+RMSProp vs AnaGrad.
+
+particularly on spark paraell gradients are averaged.
+
+https://www.cs.cmu.edu/~ggordon/10725-F12/scribes/10725_Lecture5.pdf
+
+https://www.kth.se/social/files/5a04101256be5be762e60d54/ID2223-03-gradient-descent-spark-ml.pdf
+
+
+
+the need for iterative algorithms
+
+derive gradient descent 
+
+concider impact of step size
+
+inntroduce convex functions
+
+
+genaral minimization algorithm
+
+initialize
+
+while until stop condition
+
+find a descent direction
+
+determin step size.
+
+...
+...
+the two norm is wo-norm (plural two-norms) (mathematics) A measure 
+        of length given by "the square root of the squares.
+
+
+gradient is normal to the contours   --- orthogonal.
+
+
+Least Squares and Ridge
+Regression are linear
+methods that use convex
+optimization methods to
+optimize objective
+functions
+
+
+yea old 
+
+   w_i+1 = w_i - alpha_i df/dw (w_i)
+
+equivalently
+
+    w_i+1 = w_i alpha_i del_w f(w_i)
+
+
+
+Spark ML
+•Dataframe
+- Represents a table in SparkSQL
+•Transformer
+- Transform one Dataframe to another Dataframe.
+•Estimator
+- Fit one Dataframe and produce a model, which is a
+transformer
+•Pipeline
+- Chains Transformers and Estimators together in a ML workflow
+•Parameter
+- A common API for params for transformers/estimators
+
+Transformer
+•A Transformer is an algorithm which transforms one
+DataFrame into another DataFrame.
+- Some transformers turn a DataFrame with features into a
+DataFrame with predictions - e.g., LogisticRegressionModel.
+- There are also feature transformers – e.g., HashingTF.
+- Implements the transform() method.
+•Examples
+- HashingTF, Binarizer
+- StringIndexer
+• converts String values (part of a look-up) into categorical indices
+- VectorAssembler
+• constructs a Vector from raw feature columns
+
+
+Estimator
+•An Estimator is an algorithm which can have fit
+called on a DataFrame to produce a Transformer.
+- For example, training/tuning on a DataFrame and
+producing a model.
+- Implements the fit() method.
+•Examples
+- LogisticRegression (produces a LogisticRegressionModel)
+- StandardScaler
+- Pipeline
+
+Pipeline
+•A Pipeline is an estimator that chains multiple
+Transformers and Estimators together to specify a
+ML workflow.
+
+
+Feature Hashing
+
+
+https://www.youtube.com/watch?v=oC0YdZvmTwM
+
+https://www.youtube.com/watch?v=BbYV8UfMJSA
+
+
+recal k nearest neighbors...  similar points have similar neighbors.
+if the number of data points goes to infinity...
+...can only have twice the error as the bayes optimal classifier.  (upside)
+downside - curse of dimensionality...  whats the smallest cube that encapuslates
+the k nearest neighbors...
+the hypercube of length l= k/n  what is k again???
+
+k nearest neighbors has low intrinsic dimensionality....
+(low dimensional sub manifold)...
+
+so the point is k nearest neighbors are local... on the surface...  on the manifold local...
+
+singular value decomposition
+principal componenet analysis ...  k nearest neigbors... find a coordiate system...
+that captures most of the variance of the data... and drop the remaining dimensions...
+
+and remember globally,  eculedian distances do not work on manifold data...
+
+
+think about the true dimensionality of the data...
+
+picture of a face... 10000 pixels... don't need 10000 da...
+
+
+so... the curse of dimensionality....  random points in two dimensions in unit square
+the distance histogram indicates near probability.. increase dimension, less are near
+increase dimension, likely even less are near... increase dimension "farms in kansas"  
+none are near...
+
+with them all far away.. the relative distances become marginal and "rediculous" to
+say "these points are slightly distant from each other"...  cannot run nearest neighbors
+on high dimensional spaces...
+
+... if data does not have ??low dimension??  ... uniform data is uninteresting...
+there is no pattern... it is uniform.
+
+in low dimensional space with lots of data,  k nearest neighbors is very accurate.
+but all the euclidain distances are computation burden.
+
+the perceptitron...
+
+data to the left, data to the right...   a hyper plane between them...
+and this idea holds only in high dimensional space....  the opposite of k nearest neighbors
+assumption of low dimesional space....
+
+
+a hyperplane is a vector and ofset b
+hyperplane =  x * w transpose x + b = 0
+hyperplane has one less dimension then tha ambient space....
+
+so, the classifier is what side of the hyperplane are you on????
+
+that is the data is "linearly" seperable...
+
+this was lecture 4....
+
+how to find the hyperplane....    
+
+
+next up... in the killian series... https://www.youtube.com/watch?v=wl7gVvI-HuY
+
+
+https://mast.queensu.ca/~murty/Ellipse-and-EllipticCurves.pdf
+
+https://www.youtube.com/watch?v=oC0YdZvmTwM
+
+recall ....  how many point needed for small neighborhood (the small hypercube inside the hypercube)
+
+somethng like 10^d...  and remember if d is 10000 than more data than elements in universe therfore 
+useless....
+
+inside the recall: curse of dimensionality....  (more dimensions implies data if farther apart).
+
+curse of dimensionality:   have test point and two known points one slitly closer that the other, both
+far apart....   
+
+recall: the hyper plane and the binary classification  -  the perceptron....
+        {-1,+1}  
+
+the perceptron is the hyperplane defined as w transpose  * x  + b.  
+
+the trick of taking the data point,  adding a  constant dimension 1... 
+defining a new w vector  composed of the origonal w along with a constant b -  the learning variable.
+take the inner product of w bar (the vector) and x bar (the vector)...
+
+" the decision boundary "
+
+k nearest neibors a "crenulated" boundary  but again, very slow to compute. and at most, number of errors
+... bayes classifier.. impossible proveable for perceptron....
+perceptron very restrictive boundary has to be a hyperplane, one vector and bias, great for
+ high dimensionality... and sufficient,  high dimensional data are far enough apart...
+
+note again the perceptron lables are {-1,+1}
+
+one point at a time build the hyperplane....  if it loops forever it is not linearly seperable...
+
+remember the hyperplane always goes through zero.
+because:  so can incorporate the +1 , -1 , the additional dimension.
+
+ perceptron vector mechanics --- cannon ...
+
+
+proof of perceptron convergence....
+exists w* such that every x,y in dataset,  have y w transopose x > 0
+
+will not learn w*  will get closser, closeer tow w* and evrything is seperated....
+
+take the norm of the data point  
+
+
+https://www.youtube.com/watch?v=PwmCZAWeRNE
+
+
+the arc lengh integral....  want to have something squared under the radical...
+the p's are square free....    want to complete the square????
+
+
+https://web.stanford.edu/group/sisl/k12/optimization/MO-unit4-pdfs/4.2simpsonintegrals.pdf
+
+Find the arc length using Simpsons rule
+
+https://www.quora.com/Where-is-Simpsons-rule-from-calculus-applied-in-real-life-What-s-the-point-of-trying-to-approximate-an-integral-in-this-way-if-we-have-means-to-find-an-exact-answer-or-use-a-computer-doing-right-Riemann-sums-to-get
+https://math.stackexchange.com/questions/2058091/when-is-monte-carlo-integration-useful
+
+10000 maniacs campfire songs....
+
+
+the bayes optimal classifier
+
+
+the data p(x|y)  discrimative learning             unlabeled
+
+P(y|x)  generative learining
+         dont have it can estimate it from data..  labled/supervised.
+         all ml 
+
+which is right approach...   
+
+observe x  in P(x)  - one dimensional...
+                     a sample of 10 coin tosses... ten tosses say...
+have P(h)== n_h/N_t+n_h
+
+MLE - maximum likely estimation...
+      
+Probablility of distribution given parameters
+P(D;thata)  theta parameters... prob of heads...
+
+ data - collected a sample
+question for every theta woud get a different probability D.
+
+given observe data which parameters would make it most likly observed what i observed..
+
+
+theta = argmax P(D,theta) - log (n_h_n_t,n_h) theta^n_h (1-theta)^n_t   -log of binomial 
+
+data is biased so smooth is....   
+
+maximum likelyness frequentest
+apostori bayesian
+
+statistians barroom fight over definition of random variable....
+
+; theta a parameter  - apriori   vs 
+| theta is random variable - likely hood
+
+
+Probablity of theta given the data - posterior.
+
+and so saay   P(theta|D) + P(D|theta)P(theta)/P(D)
+
+Beta distribution
+Dirichlet distribution
+
+
+P(theta|D) porportional to (P(D|Theta)(P(theta)
+
+
+
+euler addition theorem...
+
+
+https://www.youtube.com/watch?v=b3EBm0NIU1o
+
+
+
+arch lenght
+.
+elliptic integral    -  abelion integral
+.inversion
+elliptic functions
+.
+addition theorem euler
+.
+complex numbers  -  multi valued doubly periodic
+.
+reimann surfaces
+. 
+abelian functions
+.
+abelian integral
+
+data is drawn from distbution p(x,y)^n n data points .
+define understandable distribution and fit data...
+                              p_theta(x,y)
+
+
+then use bayes optiomal classifier....
+MLE theta=argmax  P_teheta(D)           frequentest
+
+Maxaposteriori estimator-- theta = argmax  P(theta|data) given data  baysian...
+
+P_theta(y|x)  = integral p(y|theta)p(theta|d)dtheta     integral bounds 0 to theta
+tough integral...
+
+"old coin" problem:  found one don't know if its weight is biased....
+                     start flipping it...
+
+and fit the sample to a distribution.  
+
+have p_x no y....
+
+mle state number heads/total numbers   =  3/10 +  imaginary constat...
+
+have the prior belief of coin to consider....
+specifiy distribution before hand and believe it true...
+
+the uninformed prior -  not biasing the system...
+
+
+and run the experiment comparing convergence of the two beliefs  mle vs map...
+
+
+P(x)  not interesting...
+P(y,x)  descrete 
+
+use mle 
+P(y|x)   joint distribution  
+
+
+
+p(X=x) = sum I(x_1=x)/n  count how many times x=x devide by total
+
+and concider P(Y=y|X=x)  have two events.... the intersection is answer...
+
+easy in one dimension....
+in high dimension....
+
+can't really do the above .... in high dimensions,  never really saw it before..
+
+
+
+have naive bayes....  the features are independent given the label
+
+P(Y=y|X=x)  =  P(X=x)|Y=y)P(y=y)/P(X=x)
+
+vectores...
+
+P(X=x|Y=y)= tau 1-d   P(X_0=x_0|Y=y_0)
+all the words are independent of each other  (spam/not spam)
+
+
+bayse classifier   h(x vector) = argmax y   P(y|x vector) = argmax y  p(xy)p(y)/normalizer constant
+    =   use naive bayse --  argMax y p(x) tau _alpha P(xvector)_alpah|y)
+
+         = log 
+
+
+
+
+
+sentiment  like buy the stock don't like short sell.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+How to prove polynomic sequence with each P_i containing one critical point and all intersecting 
+at know x define a convergant sequence of arc lenghts.     
+
+
+Have a sequence of polynomials, the initial p_0 is a quadratic, with degree of p_i greater than 
+p_i-1.  Sturm analysis of each p's derivative suggest one crittical point.  They are defined to
+all intersect at one f(x) and after p_0 are square free.  Gradient descent does identify each
+criical point and can prove sequence of critical points converge.  For each p in seequence want 
+to find the arc length from each critical point to the common point.  Want to prove as i increases,
+said arc length of p_i converges.  I suppose once an arc lenght is defined for each p, an ordinary 
+sequence of values is defined.  Is it sufficient to use a numerical metod such as Simpson's or 
+Monty Carlo to define the ordinary sequence or dig into eliptic integrals for precision?
+
+
+https://math.stackexchange.com/questions/4364862/prove-polynomic-sequence-with-each-p-i-containing-one-critical-point-and-all-int
+
+related question:
+https://math.stackexchange.com/questions/2501762/example-of-a-topology-on-r-except-usual-topology-with-exactly-one-limit-point-f?rq=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
