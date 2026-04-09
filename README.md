@@ -72,6 +72,41 @@ The `ml/` directory contains PyTorch Geometric implementations:
 
 See [ml/README.md](ml/README.md) for setup instructions and [ml/graph_link_prediction/README.md](ml/graph_link_prediction/README.md) for the link prediction module.
 
+### Model Architectures
+
+**Node classification** (`graph_label_prediction/`) provides nine model variants, all trained with Adam:
+
+- **MLP** -- baseline fully-connected (3 Linear layers)
+- **GCN** -- 2-layer Graph Convolutional Network
+- **GraphSAGE** -- 2-layer with max-pool aggregation
+- **DepthAwareGAT / v2** -- GAT with polynomial edge features, skip connections, LayerNorm, JumpingKnowledge
+- **FocalLoss classifier** -- GAT backbone with focal loss for class imbalance
+- **MultiTask** -- shared GAT backbone with dual heads (root count + determined)
+- **CORAL** -- ordinal regression via cumulative thresholds
+- **Production** -- two-phase training: CORAL backbone warmup, then focal head fine-tune
+
+**Link prediction** (`graph_link_prediction/`) is GCN-based across both stages:
+
+- **Task 1 (SAME_DENOMINATOR):** partition classifier (NLL), pairwise link predictor (BCE), contrastive embedder (InfoNCE)
+- **Task 2 (NEXT_INTEGER):** integer value regressor (MSE), pairwise link predictor (BCE)
+- **Baseline (zMap):** GraphSAGE encoder + cosine/Hadamard/L2 combiner + logistic head (BCE), replicating the Neo4j GDS baseline
+
+**Sequence prediction** (experimental): GCN/GAT node encoder fed into a Transformer encoder/decoder for autoregressive root list prediction (dual cross-entropy on list size and root tokens).
+
+### Loss Functions
+
+| Loss | Used By | Purpose |
+|------|---------|---------|
+| NLL (weighted) | GCN, GAT, GraphSAGE, MultiTask | Standard classification with class imbalance handling |
+| Focal (gamma=2) | FocalLoss classifier, Production | Down-weights easy examples, sharpens minority-class predictions |
+| EMD (ordinal CDF) | Any log-softmax model | Earth Mover's Distance on cumulative distributions for ordinal targets |
+| BCE | CORAL, link predictors, zMap baseline | Binary cross-entropy for threshold/edge classification |
+| MSE | IntegerValuePredictor | Regression on integer values for ordering |
+| SmoothL1 | RegressionClassifier | Robust regression diagnostic |
+| InfoNCE | ContrastiveEmbedder | Contrastive learning for rational partitioning |
+| Censored NLL | Any log-softmax model | Hinge on visible roots for partially observed targets |
+| Dual CE | SequencePredictor | Combined cross-entropy on list size + root token predictions |
+
 ## Java Components
 
 ### ZerosAndDifferences
