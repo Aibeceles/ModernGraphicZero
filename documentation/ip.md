@@ -16,7 +16,7 @@ In practice, the strongest patent candidates are usually **specific methods/syst
   - Output: determined/underdetermined label; ordering links; rational partition links; with reproducibility/provenance.
 
 - **Canonicalization + deduplication/merging**:
-  - A **canonical representation** for polynomials and/or difference chains that is stable under numeric noise (e.g., Vandermonde recovery artifacts) and supports **MERGE-safe** graph construction without collapsing distinct objects.
+  - A **canonical representation** for polynomials and/or difference chains that is stable under numeric noise (e.g., legacy Vandermonde/double artifacts; mitigated on the primary `BigDecimal` Newton path) and supports **MERGE-safe** graph construction without collapsing distinct objects.
   - Typical “technical effect”: fewer duplicates, consistent identity, stable joins, scalable ingestion.
 
 - **Dual encoding operationalization (χ integer + μ rational) inside a graph system**:

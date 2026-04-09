@@ -313,7 +313,7 @@ V · c = y
 where V[i,j] = xᵢʲ, c = coefficients, y = sample values
 ```
 
-The Vandermonde matrix is invertible when sample points are distinct, enabling Gaussian elimination to recover polynomial coefficients.
+The Vandermonde matrix is invertible when sample points are distinct, enabling Gaussian elimination to recover polynomial coefficients (conceptually the same unique interpolant as **Newton divided differences** on those samples). The Java **primary** export path implements recovery via **`NewtonInterpolator`**, not Vandermonde elimination.
 
 **Polynomial Rings:** The polynomials form a ring ℤ[x]. The difference operator Δ is linear, and ker(Δⁿ) consists of polynomials of degree < n.
 

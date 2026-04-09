@@ -379,8 +379,9 @@ Input: pArray = [a₀, a₁, ..., aₙ]  (polynomial coefficients)
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ Step Final: Gauss Elimination & Database Write                  │
-│   GaussMain.gauss() — solve for polynomial from samples        │
+│ Step Final: Interpolation & Database Write                      │
+│   NewtonInterpolator.interpolate() — monomial vmResult          │
+│     (primary; legacy: GaussMain.gauss() on Vandermonde)        │
 │   GaussTable1 — write to Neo4j:                                │
 │       :Dnode with vmResult, n, d, totalZero, muList, determined│
 │       :zMap connecting difference levels                        │
@@ -426,13 +427,15 @@ RETURN path
 
 ### 10.1 Overview
 
-`vmResult` is a **String property on `:Dnode` nodes** that stores the polynomial coefficients computed by Vandermonde matrix Gaussian elimination. It represents the unique polynomial identity at each node in the difference tree.
+`vmResult` is a **String property on `:Dnode` nodes** that stores the polynomial coefficients (descending power order) for the unique interpolant at that difference level. The **primary** code path computes them with **`NewtonInterpolator`** (Newton divided differences on equally spaced integer samples, exact `BigDecimal`, conversion to monomial form, then `.doubleValue()` for the string). **Legacy / auxiliary** paths may still use **Vandermonde + `GaussMain.gauss()`**.
 
 ### 10.2 Data Structure
 
-**Type:** String (serialized ArrayList of doubles)
+**Type:** String (serialized list of doubles)
 
-**Source:** `GaussMain.transcribeResult()` → `MatrixA.transcribePowers()`
+**Source (primary):** `NewtonInterpolator.interpolate()` → monomial buffer → `GaussBean1.setVmResult()`
+
+**Source (legacy):** `GaussMain.transcribeResult()` → `MatrixA.transcribePowers()`
 
 **Storage Format:**
 ```
@@ -560,11 +563,23 @@ Polynomial degree = vmResult.length - 1
 
 ### 10.8 Implementation Source Code References
 
-**Coefficient Generation:**
+**Coefficient generation (primary):**
+- `NewtonInterpolator.java`: `computeNewtonCoeffs`, `newtonToMonomial`, `interpolate`
+
+**Coefficient generation (legacy / auxiliary):**
 - `MatrixA.java` (lines 127-163): `transcribePowers()` sets up descending power matrix
 - `GaussMain.java` (lines 229-242): `transcribeResult()` extracts solution column
 
-**Data Flow:**
+**Data flow (primary):**
+```
+LoopList samples (forward-difference table)
+        ↓
+NewtonInterpolator.computeNewtonCoeffs() / newtonToMonomial()
+        ↓
+vmResult String (stored on Dnode)
+```
+
+**Data flow (legacy Vandermonde path):**
 ```
 MatrixA.xPowers (ascending)
         ↓

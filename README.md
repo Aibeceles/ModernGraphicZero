@@ -1,4 +1,4 @@
-# ModernGraphicZero
+ # ModernGraphicZero
 
 Graph-based exploration of polynomial differences, integer-rational bijections, and graph machine learning.
 
@@ -8,7 +8,7 @@ Graph-based exploration of polynomial differences, integer-rational bijections, 
 
 This project explores the intersection of three mathematical domains through computational graph generation and machine learning:
 
-1. **Newton's Forward Differences** -- Iterated difference operations on polynomials to analyze rational roots
+1. **Newton's Forward Differences** -- Forward difference operations on polynomials to analyze rational roots; factorial-scaled levels obey the linear Diophantine structure described in [documentation/README_ZerosAndDifferences.md](documentation/README_ZerosAndDifferences.md) (see also [documentation/formal/03_implementation.md](documentation/formal/03_implementation.md) Part 4), which underpins integer closure in the construction
 2. **Set-Theoretic Bijections** -- A novel approach to establishing integer-rational (Z <-> Q) mappings via binary-encoded root patterns
 3. **Graph Machine Learning** -- Node classification, link prediction, and rational partitioning on the resulting polynomial difference graph
 
@@ -16,7 +16,9 @@ The core algorithm evaluates polynomials over integer ranges, computes successiv
 
 ### Central Claim
 
-Well-bounded graph generation constraints produce a graph containing the complete set of **determined polynomials** (those whose integer roots are fully captured within the evaluation range), corresponding to a power set structure. Each determined polynomial's root pattern encodes as a binary number mapping to an integer, and the ML link prediction task can discover and order these integers by predicting `:NEXT_INTEGER` relationships.
+Well-bounded graph generation constraints produce a graph containing the complete set of **determined polynomials** (those whose integer roots are fully captured within the evaluation range), corresponding to a power set structure. Root positions recorded in graph properties such as `muList` encode as binary patterns that map to integers.
+
+The **machine learning** layer in `ml/` then surfaces what that structure implies without explicit symbolic algebra. **Node classification** (see [ml/graph_label_prediction/](ml/graph_label_prediction/)) learns determined versus underdetermined polynomials from graph and coefficient features (e.g. ~79–83% F1 in the documented GraphSAGE setup). **Two-stage link prediction** (see [ml/graph_link_prediction/](ml/graph_link_prediction/)) first partitions nodes by rational class via `:SAME_DENOMINATOR` (Stage 1, μ / set-union ratio), then recovers consecutive integer order within each class via `:NEXT_INTEGER` (Stage 2). Full pipeline rationale and task design: [documentation/why_ml.md](documentation/why_ml.md); setup and APIs: [ml/README.md](ml/README.md) and [ml/graph_link_prediction/README.md](ml/graph_link_prediction/README.md).
 
 ## Project Structure
 
@@ -83,7 +85,7 @@ Psi_1 = Delta P(x)       degree n-1
 Psi_n = Delta^n P(x)     degree 0 (constant = n! * leading coefficient)
 ```
 
-Gaussian elimination recovers polynomial coefficients from sampled values (Vandermonde matrix solution). Results are persisted to Neo4j as `:Dnode` nodes connected by `:zMap` relationships.
+**Newton interpolation** (divided differences on equally spaced integer samples, exact `BigDecimal` arithmetic in `NewtonInterpolator`) recovers monomial coefficients from the difference table and writes them as `vmResult` on each node. This is the primary path in `LoopsDriver`, `LoopListener`, and related drivers. Some auxiliary or legacy database paths still use Vandermonde matrices with `GaussMain`. Results are persisted to Neo4j as `:Dnode` nodes connected by `:zMap` relationships.
 
 See [documentation/README_ZerosAndDifferences.md](documentation/README_ZerosAndDifferences.md) for full documentation.
 
@@ -104,7 +106,7 @@ Neo4j sink connector configurations replacing the deprecated neo4j-streams plugi
 
 | Node Property | Description |
 |---------------|-------------|
-| `vmResult` | Polynomial coefficients (Vandermonde solution) |
+| `vmResult` | Monomial coefficients (exact Newton interpolation of sampled values) |
 | `muList` | Root positions (binary encoding source) |
 | `n`, `d` | Numerator/denominator of rational mu |
 | `totalZero` | Count of integer roots found |

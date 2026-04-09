@@ -64,7 +64,7 @@ Each node represents a polynomial derived from the difference analysis:
 
 | Property | Type | Description | Example |
 |----------|------|-------------|---------|
-| `vmResult` | String | Vandermonde matrix solution — polynomial coefficients [aₙ, ..., a₁, a₀] (descending) | `"[0.0, 24.0, -24.0]"` |
+| `vmResult` | String | Monomial coefficients [aₙ, ..., a₁, a₀] (descending), from exact Newton interpolation (`NewtonInterpolator`) of the difference table | `"[0.0, 24.0, -24.0]"` |
 | `muList` | String | Adjusted root positions (see note below) | `"[1]"` or `"[]"` |
 | `n` | Integer | **Numerator** of μ rational (from set union ratio) | `1` |
 | `d` | Integer | **Denominator** of μ rational (from set union ratio) | `1` |
@@ -245,9 +245,7 @@ The `:zMap` relationship connects polynomials in the difference sequence:
 
 ## Polynomial Coefficient Interpretation
 
-The `vmResult` array represents polynomial coefficients from the Vandermonde matrix solution:
-
-> **Source:** Coefficient ordering is determined by `MatrixA.java:transcribePowers()` which builds the Vandermonde matrix with **descending powers**.
+The `vmResult` array represents monomial coefficients recovered from the sampled difference sequence (unique interpolant of degree ≤ d on the evaluation nodes). The **primary** implementation is `NewtonInterpolator` in Java (Newton divided differences, `BigDecimal`, then descending-power monomials). **Legacy** paths used `MatrixA.transcribePowers()` with Vandermonde + `GaussMain`; that ordering convention matches the same descending-power layout.
 
 ```
 vmResult = [aₙ, aₙ₋₁, ..., a₁, a₀]   (DESCENDING powers)
@@ -272,7 +270,7 @@ P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀
 | `[0.0, 24.0, -240.0]` | 24x - 240 = 24(x-10) | 1 | x = 10 |
 | `[0.0, 12.0, -252.0, 816.0]` | 12x² - 252x + 816 | 2 | x = 4, 17 |
 
-**Note:** The leading coefficient aₙ is often 0, meaning the effective degree is less than the array length minus 1. Floating-point precision artifacts appear (e.g., `3.9999999999999996` instead of `4.0`) due to Vandermonde matrix numerical solutions.
+**Note:** The leading coefficient aₙ is often 0, meaning the effective degree is less than the array length minus 1. Values like `3.9999999999999996` instead of `4.0` can appear from **double** serialization in `vmResult`, from **legacy** Vandermonde/Gauss output, or from older graph exports — not from exact `BigDecimal` arithmetic before formatting.
 
 ---
 

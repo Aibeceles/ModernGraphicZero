@@ -322,7 +322,7 @@ V · c = y
 where V[i,j] = xᵢʲ, c = coefficients, y = sample values
 ```
 
-The Vandermonde matrix is invertible when sample points are distinct, enabling **Gaussian elimination** to recover polynomial coefficients from their evaluations — implemented as `GaussMain` in the codebase.
+The Vandermonde matrix is invertible when sample points are distinct, enabling **Gaussian elimination** (or equivalent interpolation) to recover polynomial coefficients from their evaluations. The **primary** implementation uses **`NewtonInterpolator`** (same unique interpolant, exact `BigDecimal` on the main Neo4j export path). **`GaussMain`** remains on some legacy or auxiliary database paths.
 
 **Polynomial Rings:**
 The polynomials form a ring ℤ[x] under addition and multiplication. The difference operator Δ is a linear operator on this ring, and the kernel of Δⁿ consists of polynomials of degree < n.
@@ -356,7 +356,7 @@ The question "Is polynomial P determined?" is decidable given finite evaluation 
 **Complexity:**
 - Polynomial evaluation: O(n) for degree n
 - Difference computation: O(n × integerRange)
-- Vandermonde solution: O(n³) via Gaussian elimination
+- Polynomial recovery from samples: O(n²) via Newton divided differences on the primary path; O(n³) Gaussian elimination on the legacy Vandermonde path
 
 ---
 
@@ -468,7 +468,7 @@ Can the framework extend to:
 | **Determined** | Polynomial with all expected integer roots found |
 | **Undetermined** | Polynomial with fewer roots than expected |
 | **wNum** | Worker number / difference level index |
-| **vmResult** | Vandermonde matrix solution — polynomial coefficients `[a₀, a₁, ...]` stored on Dnode nodes |
+| **vmResult** | Monomial coefficients `[aₙ, ..., a₀]` (descending) on Dnode; primary: `NewtonInterpolator`; legacy: Vandermonde / `GaussMain` |
 | **figPArray** | Figure polynomial array — the mutable coefficient array `[c₀, c₁, ...]` adjusted during construction to satisfy root constraints. See [algorithm_construction.md](algorithm_construction.md). |
 | **moduloList** | Factorial lookup table `[1, 1!, 2!, 3!, ...]` used to normalize difference values. Dividing by n! recovers original coefficients from factorial-scaled differences. |
 | **computeIndexZero** | Core method in LoopListener.java that evaluates the polynomial at pArray[n], normalizes by n!, and adjusts figPArray[n] to force a zero at that position. See [algorithm_construction.md](algorithm_construction.md). |

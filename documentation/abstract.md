@@ -257,9 +257,9 @@ The `muList` property (zero positions) may encode set cardinalities that map to 
    - Creates successive LoopLists for each difference level
    - Tracks zeros at each level
 
-3. **Gaussian Elimination** (`GaussMain`)
-   - Recovers polynomial coefficients from sampled values
-   - Produces `vmResult` (Vandermonde matrix solution)
+3. **Polynomial recovery** (`NewtonInterpolator`; legacy `GaussMain`)
+   - Recovers monomial coefficients from sampled difference values
+   - Produces `vmResult` (same unique interpolant as Vandermonde solve on primary path)
 
 4. **Database Persistence** (`GaussTable1`)
    - Writes to Neo4j via JDBC
@@ -275,7 +275,7 @@ The `muList` property (zero positions) may encode set cardinalities that map to 
 
 **Nodes:**
 - `:Dnode` — Polynomial at a difference level
-  - `vmResult`: Vandermonde solution (polynomial identifier)
+  - `vmResult`: monomial coefficients / polynomial identifier (`NewtonInterpolator` primary)
   - `n`, `d`: Numerator/denominator from muList
   - `totalZero`: Count of zeros
   - `muList`: Zero positions

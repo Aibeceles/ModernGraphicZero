@@ -165,9 +165,9 @@ Input: pArray = [a₀, a₁, a₂, ..., aₙ]  (polynomial coefficients in Java 
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ Step Final: Gauss Elimination & Database Write                  │
+│ Step Final: Interpolation & Database Write                      │
 │                                                                 │
-│   GaussMain.gauss() — solve for polynomial from samples        │
+│   NewtonInterpolator — monomial vmResult (primary)              │
 │   GaussTable1 — write to Neo4j:                                │
 │       :Dnode with vmResult, n, d, totalZero, muList, determined│
 │       :zMap connecting difference levels                        │
@@ -180,7 +180,7 @@ Input: pArray = [a₀, a₁, a₂, ..., aₙ]  (polynomial coefficients in Java 
 |--------------|---------------|-------------|
 | P(x) coefficients (Java) | `pArray` | [a₀, a₁, ..., aₙ] — used for polynomial evaluation |
 | Zero-position signature (Neo4j) | `pArray` on CreatedBy | [r₀, r₁, ...] — x-positions where each wNum level = 0 |
-| Polynomial coefficients (Neo4j) | `vmResult` on Dnode | [a₀, a₁, ...] — from Vandermonde solution |
+| Polynomial coefficients (Neo4j) | `vmResult` on Dnode | [aₙ, ..., a₀] descending — Newton interpolation (primary) |
 | Degree n | `dimension` | Polynomial degree |
 | Evaluation range | `integerRange` | Usually 200 → k ∈ [-100, +99] |
 | Ψᵢ (level i values) | `LoopList` at `wNum=i` | Stored as ArrayList |

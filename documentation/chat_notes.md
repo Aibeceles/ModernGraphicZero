@@ -20,7 +20,7 @@
 
 Why "Modulo"?
 The name moduloList is somewhat misleading — it's not performing modular arithmetic. It's a scaling factor list containing factorials. The division by n! normalizes the inflated difference values back to the original coefficient scale.
-This is essential because the Vandermonde matrix solution (vmResult) needs the normalized polynomial coefficients, not the factorial-scaled difference values.
+This is essential because coefficient recovery into `vmResult` (Newton / Vandermonde interpolant) needs normalized polynomial coefficients, not the factorial-scaled difference values.
 
 ┌─────────────────────────────────────────────────────────────────┐
 │  computeIndexZero(n=2, rModulo=2!)                              │
@@ -146,7 +146,7 @@ Without the correct factorial division, the adjustment would be wrong, and the p
 │                                                                             │
 │  figPArray = adjusted coefficients satisfying ALL root constraints          │
 │  rListB = fully rebuilt evaluation arrays with zeros at specified positions │
-│  vmResult = Vandermonde solution (from Gauss) = final polynomial coeffs     │
+│  vmResult = Newton-interpolated monomial coeffs (primary) = final polynomial  │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 

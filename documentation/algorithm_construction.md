@@ -277,9 +277,9 @@ private synchronized void updateRlistB() {
 
 1. **Clear rListB** — start fresh
 2. **Create LoopList[0]** — evaluates P(k) for k in integer range using current figPArray
-3. **Gauss eliminate level 0** — solve Vandermonde system
+3. **Interpolate level 0** — `NewtonInterpolator` (equivalently unique interpolant from samples; legacy docs say Vandermonde/Gauss)
 4. **Loop through levels 1..n** — compute each difference level
-5. **Gauss eliminate each level** — solve for coefficients
+5. **Interpolate each level** — `NewtonInterpolator.interpolate` for `vmResult`
 
 ### propertyChange — The Main Loop
 
@@ -404,7 +404,7 @@ FINAL STATE:
 
 After the iterative refinement completes:
 
-1. **vmResult** — The Vandermonde matrix solution from Gauss elimination gives the final polynomial coefficients. This is stored on `Dnode` nodes.
+1. **vmResult** — Monomial coefficients from **`NewtonInterpolator`** (primary) give the polynomial at each level; legacy Gauss/Vandermonde gives the same interpolant. Stored on `Dnode` nodes.
 
 2. **muList** — During each LoopList construction, zeros are *discovered* by evaluating the polynomial. These include:
    - The explicitly specified pArray roots

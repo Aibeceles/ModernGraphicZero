@@ -494,7 +494,7 @@ LoopsDriverTwoPManager.run()
 │       └── .call()
 │           │
 │           ├── Create LoopList[0..dimension]         difference sequences
-│           ├── Gauss each LoopList                   solve Vandermonde
+│           ├── Interpolate each LoopList (NewtonInterpolator)  vmResult
 │           ├── Attach LoopListener to each gbList    PropertyChangeListener
 │           │
 │           ├── Wire semaphore chain:

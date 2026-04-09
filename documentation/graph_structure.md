@@ -121,7 +121,7 @@ for (int y = 0; y < integerRange; y++) {
 
 #### 2. **Parent Count (Incoming Relationships)**
 
-A node may have **multiple parents** if the same Vandermonde matrix result (`vmResult`) is reached from different source polynomials:
+A node may have **multiple parents** if the same interpolated polynomial identity (`vmResult`) is reached from different source polynomials:
 
 ```
                 [Source P₁]        [Source P₂]
@@ -252,7 +252,7 @@ The primary node type representing a polynomial derived from the difference anal
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `vmResult` | String | Vandermonde matrix solution - the polynomial coefficients identifying this difference polynomial |
+| `vmResult` | String | Monomial coefficients (Newton interpolation primary) identifying this difference polynomial |
 | `n` | Integer | **Numerator** - represents the rational number component in the polynomial's fractional representation |
 | `d` | Integer | **Denominator/Depth** - the degree level in the difference tree (0 = constant, 1 = linear, 2 = quadratic, etc.) |
 | `totalZero` | Integer | Count of zero evaluations - how many integer inputs evaluate to zero |

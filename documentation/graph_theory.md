@@ -307,7 +307,7 @@ Input: Polynomial coefficients (pArray)
              │
              ▼
     ┌──────────────────┐
-    │ Gauss elimination│  ← vmResult (Vandermonde solution)
+    │ Newton interpolate│  ← vmResult (monomial coeffs; legacy: Gauss/Vandermonde)
     │ for polynomial   │
     └────────┬─────────┘
              │
@@ -334,7 +334,7 @@ Key properties stored:
 - `muList` — indices where polynomial evaluates to zero
 - `n`, `d` — numerator/denominator derived from `muList`
 - `totalZero` — count of zeros found
-- `vmResult` — Vandermonde matrix solution (identifies the polynomial)
+- `vmResult` — Monomial coefficients from interpolation (`NewtonInterpolator` primary; identifies the polynomial)
 
 ### Potential Bridge to Bijection Theory
 

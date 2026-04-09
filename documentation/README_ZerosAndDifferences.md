@@ -27,7 +27,7 @@ The core algorithm implements Newton's forward difference method applied to poly
 2. **Sequence Generation**: Generate the evaluation sequence Ψ(0), Ψ(1), Ψ(2), ...
 3. **Difference Iteration**: Compute successive differences until a constant is reached
 4. **Factored Differences**: Factor each difference level by its corresponding factorial (1!, 2!, 3!, ...)
-5. **Gaussian Elimination**: Solve Vandermonde matrices to name the representative polynomials
+5. **Newton Interpolation**: Recover the unique polynomial of each level from values in the difference table (`NewtonInterpolator` — divided differences on equally spaced integer nodes, divide by `k!`, convert Newton form to monomial coefficients). Coefficients are cached on `LoopList`; `evaluateAt` evaluates the interpolant at integer points without rebuilding a Vandermonde system. Mathematically this matches solving the Vandermonde system for the same samples.
 6. **Graph Construction**: Build the DOSPT as a graph structure for analysis
 
 ### Key Mathematical Properties
@@ -76,8 +76,10 @@ ZerosAndDifferences033021/
 │   │   ├── PArrayResetListener.java
 │   │   └── ResultListID.java
 │   │
-│   ├── mugauss/                # Gaussian elimination
-│   │   └── GaussMain.java
+│   ├── mugauss/                # Polynomial recovery from samples
+│   │   ├── NewtonInterpolator.java   # Primary path: exact BigDecimal Newton / divided differences
+│   │   ├── NewtonInterpolatorTest.java # Manual validation harness
+│   │   └── GaussMain.java             # Legacy / auxiliary: Vandermonde + Gaussian elimination (some DB paths)
 │   │
 │   ├── mucorrolationthreaded/  # Database correlation threads
 │   │   ├── GaussCorrolation.java
@@ -115,12 +117,13 @@ The main execution driver that:
 - Initializes polynomial arrays and result lists
 - Creates worker threads using `ExecutorService`
 - Manages semaphore-based synchronization patterns
-- Coordinates Gaussian elimination for polynomial identification
+- Invokes `NewtonInterpolator.interpolate` to set `vmResult` (monomial coefficients) on each analyzed `LoopList`
 
 ### LoopList
 Represents a difference sequence with:
 - `rListB` - Result list containing computed differences
-- `MatrixA` - Vandermonde matrix for Gaussian elimination
+- `MatrixA` - Vandermonde matrix wrapper (still used where legacy Gauss paths build a matrix; primary drivers use the sample stream in `LoopList` directly for Newton interpolation)
+- Cached Newton coefficients (`NewtonInterpolator`) for repeated evaluation via `evaluateAt`
 - Property change support for event-driven updates
 
 ### Semaphore Pattern
@@ -129,8 +132,11 @@ Implements a producer-consumer pattern for iterating through polynomial coeffici
 - `LoopSemaphore` - Intermediate workers
 - `LoopSemaphoreLast` - Terminal worker with completion logic
 
-### GaussMain
-Solves Vandermonde systems using Gaussian elimination to identify representative polynomials from sampled values.
+### NewtonInterpolator
+Static helpers in `mugauss.NewtonInterpolator` that replace `GaussMain.gauss()` on the main graph-generation path (`LoopsDriver`, `LoopListener`, `LoopsDriverTable`, `PArrayResetListener`, `LoopsDriverTwoP`, etc.): exact `BigDecimal` arithmetic, no floating-point Vandermonde solve for `vmResult`.
+
+### GaussMain (legacy / auxiliary)
+`GaussMain` still solves Vandermonde systems with Gaussian elimination on some database correlation or older threading paths (e.g. `twoTableDBThread_1`, `LoopsDriverTwoPManager`). Prefer documenting the Newton path when describing Neo4j export and ML-facing graphs.
 
 ## Configuration
 
@@ -188,14 +194,14 @@ The following JARs are required (included in `dist/lib/`):
 The application outputs:
 - Polynomial array states (`pArray`)
 - Computed differences (`rListB`)
-- Gaussian elimination results
+- Interpolated polynomial coefficients (`vmResult`)
 - Thread execution status
 
 ### Database Output
-Each Gaussian result is stored as a `GaussBean1` containing:
+Each result row is stored as a `GaussBean1` containing:
 - `pArray` - Zero-position signature: `[r₀, r₁, r₂, ...]` where `rᵢ` is the x-position where difference level `wNum=i` equals zero (stored on `CreatedBy` nodes)
 - `loopList` - The difference sequence
-- `vmResult` - Vandermonde matrix solution: polynomial coefficients `[a₀, a₁, ...]` (stored on `Dnode` nodes)
+- `vmResult` - Monomial coefficients from `NewtonInterpolator` (descending-power list as stringified doubles for DB compatibility), stored on `Dnode` nodes
 - `resultListId` - Correlation identifier for related sequences
 
 > **Note:** In the Java code, `pArray` initially holds polynomial coefficients for evaluation. However, when written to the database as a `CreatedBy` node property, `pArray` represents the zero-position signature that uniquely identifies which x-values produce zeros at each difference level. The actual polynomial coefficients are stored in `vmResult` on `Dnode` nodes.

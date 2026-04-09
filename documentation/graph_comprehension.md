@@ -114,7 +114,7 @@ Contain the actual mathematical analysis at each difference level.
 
 | Property | Description |
 |----------|-------------|
-| `vmResult` | Vandermonde matrix solution — polynomial coefficients [a₀, a₁, ...] |
+| `vmResult` | Monomial coefficients [aₙ, ..., a₀] from `NewtonInterpolator` (legacy path: Vandermonde/`GaussMain`) |
 | `muList` | All x-positions where this level equals zero |
 | `n` | Numerator of μ rational encoding |
 | `d` | Denominator of μ rational encoding |
@@ -192,7 +192,7 @@ P(x) has root at x=7
 
 1. **pArray encodes a path** through the difference table — the primary zero at each level
 2. **muList may contain multiple zeros** at a given level (e.g., [4, 16] at Ψ₂)
-3. **vmResult** is the polynomial recovered via Vandermonde/Gaussian elimination
+3. **vmResult** is the polynomial recovered via Newton interpolation of the difference table (primary); Vandermonde/Gauss on some legacy paths
 4. **n/d** encodes the μ rational (set union ratio) for the bijection theory
 5. **Discovery-first principle** — the algorithm discovers zeros by evaluating polynomials, not by constructing them from pArray constraints
 

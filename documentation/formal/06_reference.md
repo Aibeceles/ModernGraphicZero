@@ -219,7 +219,7 @@ Interpretation: P(x) = -24x(x-1), root at x=1, determined.
 
 ### 2.3 Coefficient Interpretation
 
-> **Source:** Coefficient ordering is determined by `MatrixA.java:transcribePowers()` which builds the Vandermonde matrix with **descending powers**.
+> **Source:** Descending-power layout matches `MatrixA.transcribePowers()` (legacy Vandermonde). The primary pipeline uses `NewtonInterpolator` to produce the same monomial ordering.
 
 ```
 vmResult = [aₙ, aₙ₋₁, ..., a₁, a₀]   (DESCENDING powers)
@@ -233,7 +233,7 @@ P(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + ... + a₁x + a₀
 | `[0.0, 24.0, -240.0]` | 24x - 240 = 24(x-10) | 1 | x = 10 |
 | `[0.0, 12.0, -252.0, 816.0]` | 12x² - 252x + 816 | 2 | x = 4, 17 |
 
-**Note:** The leading coefficient aₙ is often 0, meaning the effective degree is less than the array length minus 1. Floating-point precision artifacts appear (e.g., `3.9999999999999996` instead of `4.0`) due to Vandermonde matrix numerical solutions.
+**Note:** The leading coefficient aₙ is often 0, meaning the effective degree is less than the array length minus 1. Values like `3.9999999999999996` may come from double formatting, legacy Gauss/Vandermonde data, or older exports — the current `NewtonInterpolator` path uses exact `BigDecimal` until coefficients are written as doubles.
 
 ---
 
@@ -328,7 +328,7 @@ wNum = dimension  →  d = 0    (constant)
 
 | Property | Definition |
 |----------|------------|
-| **vmResult** | Polynomial coefficients [a₀, a₁, ...] from Vandermonde solution |
+| **vmResult** | Polynomial coefficients [aₙ, ..., a₀] (descending); primary: `NewtonInterpolator`; legacy: Vandermonde + `GaussMain` |
 | **muList** | Adjusted root positions (indices where polynomial = 0) |
 | **rootList** | True mathematical x-positions where polynomial equals zero |
 | **n** | Numerator of μ rational (max of muList values) |
