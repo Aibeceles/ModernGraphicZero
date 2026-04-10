@@ -42,6 +42,7 @@ dist/
 nbproject/private/
 
 # ===== IDE / Editor =====
+.cursor/
 .vscode/
 .idea/
 .metals/
