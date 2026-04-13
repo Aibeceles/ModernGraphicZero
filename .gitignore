@@ -57,6 +57,9 @@ muTableDB/
 twoTableDB/
 derby.log
 
+# ===== Local notes (not in repo) =====
+ml/TextDocsOld/
+
 # ===== Data Files =====
 *.csv
 *.parquet

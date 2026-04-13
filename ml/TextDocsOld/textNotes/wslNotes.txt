@@ -1,7 +1,0 @@
-wget http://archive.apache.org/dist/zeppelin/zeppelin-0.9.0-preview2/zeppelin-0.9.0-preview2-bin-all.tgz
-
-tar -xvzf zeppelin-0.9.0-preview2-bin-all.tgz -C ~/zep
-
-cd zep
-
-cd zeppelin-0.9.0-preview2-bin-all

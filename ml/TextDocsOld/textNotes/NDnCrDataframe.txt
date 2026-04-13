@@ -1,8 +1,0 @@
-Need a grouped aggrigator.
-
-Am refactoring GroupedScalarRowsSum.....
-
-
-
-
-val df= z.get("wNumQuery0105").asInstanceOf[DataFrame]
