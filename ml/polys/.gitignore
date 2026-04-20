@@ -1,0 +1,11 @@
+# sbt
+target/
+project/target/
+project/project/
+
+# local pipeline output
+artifacts/
+
+# metals / bloop (if opened in IDE)
+.metals/
+.bloop/

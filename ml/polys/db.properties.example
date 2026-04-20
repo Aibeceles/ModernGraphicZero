@@ -1,0 +1,7 @@
+# Copy to db.properties and fill values.
+# Use JVM arg -Dpolys.db.properties=<path> to override default location.
+
+neo4j.url=jdbc:neo4j:bolt://localhost
+neo4j.user=neo4j
+neo4j.password=YOUR_PASSWORD_HERE
+neo4j.database=tagtest
