@@ -3,6 +3,45 @@
 `ml/polys` is the first production pipeline for the strongest workbook migration path.  
 It runs the S12-style polynomial flow end-to-end and writes versioned batch artifacts.
 
+## Prerequisites
+
+The project jar is built for **Scala 2.12 / Spark 3.5.1 / Java 17**. Mismatched runtimes cause `NoClassDefFoundError: scala/Serializable` (Scala mismatch) or `UnsupportedOperationException: getSubject is not supported` (Java 21+ mismatch).
+
+| Component | Required | Notes |
+|---|---|---|
+| Java | **17** (Temurin 17.0.x recommended) | JDK 21/24/25 remove APIs Hadoop 3.3.4 uses |
+| Scala | **2.12.18** | set by `build.sbt` |
+| Spark | **3.5.1** | PySpark 3.5.1 in venv is a convenient source |
+| PySpark (optional) | `pip install pyspark==3.5.1` | provides a matching `spark-submit.cmd` |
+| Hadoop `winutils` (Windows) | `C:\hadoop\bin\winutils.exe` | get from [cdarlint/winutils](https://github.com/cdarlint/winutils) Hadoop 3.3.x |
+| Neo4j JDBC driver | `org.neo4j:neo4j-jdbc-driver:4.0.0` | passed via `--packages` at submit time |
+| `pyarrow` (for notebook) | `pip install pyarrow` | needed by `ml/polys/workbook/quadratics.ipynb` |
+
+### Verify your shell before submitting
+
+```powershell
+# Java should report 17.x
+java -version
+
+# Pick the venv spark-submit to avoid a mismatched global install
+.venv\Lib\site-packages\pyspark\bin\spark-submit --version
+# expected: version 3.5.1, Scala 2.12.x
+```
+
+### Environment variables required by spark-submit
+
+```powershell
+# JDK 17
+$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot"
+$env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
+
+# Hadoop for winutils.exe
+$env:HADOOP_HOME = "C:\hadoop"
+$env:PATH = "$env:HADOOP_HOME\bin;$env:PATH"
+```
+
+`[System.Environment]::SetEnvironmentVariable(...,"User")` persists these across future PowerShell sessions, but the **current** session still needs the `$env:` assignments above.
+
 ## What it does
 
 Pipeline stages:
@@ -62,7 +101,7 @@ Parquet / file mode:
 
 ```powershell
 cd C:\path\to\Aibeceles
-spark-submit `
+.venv\Lib\site-packages\pyspark\bin\spark-submit `
   --class polys.app.MainJob `
   ml/polys/target/scala-2.12/polys_2.12-0.1.0.jar `
   --pipelineName=strongestPath `
@@ -73,11 +112,21 @@ spark-submit `
 
 ### Neo4j mode (direct extraction)
 
-Neo4j mode bypasses file input and queries graph data directly:
+Neo4j mode bypasses file input and queries graph data directly.
+
+**Current verified command (Windows, PySpark 3.5.1 from venv, run from repo root):**
 
 ```powershell
 cd C:\path\to\Aibeceles
-spark-submit `
+
+# Prereqs in this shell:
+$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot"
+$env:PATH      = "$env:JAVA_HOME\bin;$env:PATH"
+$env:HADOOP_HOME = "C:\hadoop"
+$env:PATH        = "$env:HADOOP_HOME\bin;$env:PATH"
+
+.venv\Lib\site-packages\pyspark\bin\spark-submit `
+  --packages org.neo4j:neo4j-jdbc-driver:4.0.0 `
   --class polys.app.MainJob `
   ml/polys/target/scala-2.12/polys_2.12-0.1.0.jar `
   --pipelineName=strongestPath `
@@ -89,7 +138,11 @@ spark-submit `
   --artifactsRoot=ml/polys/artifacts
 ```
 
-You may see `winutils.exe` / `HADOOP_HOME` warnings on Windows; they are common for local Spark and are unrelated to the JAR path. If the driver fails on Hadoop filesystem APIs, set up `winutils` and `HADOOP_HOME` per [Hadoop on Windows](https://wiki.apache.org/hadoop/WindowsProblems).
+Notes:
+
+- `--packages org.neo4j:neo4j-jdbc-driver:4.0.0` is required because `sbt package` does not bundle dependencies. On first run Spark downloads the jar to `~\.ivy2\cache` and reuses it afterwards.
+- Using `.venv\Lib\site-packages\pyspark\bin\spark-submit` explicitly avoids picking up an incompatible `spark-submit` earlier in `PATH` (e.g. Spark 4.x/Scala 2.13 builds). Check with `Get-Command spark-submit -All`.
+- If the driver fails on Hadoop filesystem APIs, set up `winutils` and `HADOOP_HOME` per [Hadoop on Windows](https://wiki.apache.org/hadoop/WindowsProblems). Passing `--conf "spark.driver.extraJavaOptions=-Dhadoop.home.dir=C:/hadoop"` also works; use forward slashes so PowerShell does not eat the backslash.
 
 `inputFormat=neo4j` reads **`ml/polys/db.properties`** (repo root: `Aibeceles/ml/polys/db.properties`).  
 If you run with CWD inside `ml/polys`, the same file is used as **`db.properties`** in that folder.
@@ -114,6 +167,7 @@ Required keys:
 Neo4j extraction args:
 - `--rangeLow`
 - `--rangeHigh`
+
 - `--maxN`
 - `--dimension`
 
@@ -231,15 +285,19 @@ Stage folders created per run:
 
 ## Notebook artifact consumption (`.ipynb`)
 
+A ready-to-use workbook is provided at [`ml/polys/workbook/quadratics.ipynb`](workbook/quadratics.ipynb). It reads `latest.txt`, loads all five stage outputs via `pyarrow.parquet` (avoiding the pandas Arrow extension registration bug), and prints row counts / heads for each stage. Requires `pip install pyarrow` in the venv.
+
+Manual equivalent:
+
 ```python
 from pathlib import Path
-import pandas as pd
+import pyarrow.parquet as pq
 
 base = Path("ml/polys/artifacts/parquet/strongestPath")
 run_id = (base / "latest.txt").read_text().strip()
 
-grouped = pd.read_parquet(base / run_id / "groupedDegreeSum")
-reduced = pd.read_parquet(base / run_id / "reducedResult")
+grouped = pq.read_table(base / run_id / "groupedDegreeSum").to_pandas()
+reduced = pq.read_table(base / run_id / "reducedResult").to_pandas()
 
 display(grouped.head())
 display(reduced.head())

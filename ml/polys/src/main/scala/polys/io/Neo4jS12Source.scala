@@ -16,13 +16,17 @@ final case class Neo4jS12Row(
 )
 
 object Neo4jS12Source {
-  private val Query =
+  // Quadratic (Dimension="2") extract produced by TwoPolynomialGenerator.jar (twoPoly sink).
+  // Reads rowScalar from the TwoSeqFactor node (sink writes twoSeq there, not on the rel)
+  // and uses a constant divisor of "1" because the twoPoly sink does not store a divisor.
+  // Binds: 1=rangeLow, 2=rangeHigh, 3=maxN. Dimension is hardcoded to "2".
+  private val QueryDim2 =
     """CYPHER runtime=interpreted
       |UNWIND range(toInteger(?),toInteger(?)) AS n
-      |WITH toString(n) AS iN, ? as iM
-      |MATCH (v:VertexNode)<-[vI:VertexIndexedBy]-(i:IndexedBy {N:iN,MaxN:iM,Dimension:?})-[]->(tS:TwoSeqFactor)
-      |RETURN iN as idx, iM as mxN, vI.twoSeq as rScalar, vI.divisor as div, v.Scalar as scl, v.Degree as deg
-      |ORDER BY idx, deg
+      |WITH toString(n) AS iN, ? AS iM
+      |MATCH (v:VertexNode)<-[:VertexIndexedBy]-(i:IndexedBy {N: iN, MaxN: iM, Dimension: "2"})-[:TwoFactor]->(tS:TwoSeqFactor)
+      |RETURN iN AS idx, iM AS mxN, tS.twoSeq AS rScalar, "1" AS div, v.Scalar AS scl, v.Degree AS deg
+      |ORDER BY idx, rScalar, deg
       |""".stripMargin
 
   def load(
@@ -32,6 +36,10 @@ object Neo4jS12Source {
       maxN: String,
       dimension: String
   ): DataFrame = {
+    require(
+      dimension == "2",
+      s"Neo4jS12Source currently supports only dimension=2 (quadratics from twoPoly lineage); got: $dimension"
+    )
     Class.forName("org.neo4j.jdbc.Driver").newInstance()
     val conn = DriverManager.getConnection(
       DbConfig.protocol,
@@ -39,7 +47,7 @@ object Neo4jS12Source {
       DbConfig.get("neo4j.password")
     )
     conn.setAutoCommit(false)
-    try runQuery(spark, conn, rangeLow, rangeHigh, maxN, dimension)
+    try runQuery(spark, conn, rangeLow, rangeHigh, maxN)
     finally conn.close()
   }
 
@@ -48,15 +56,13 @@ object Neo4jS12Source {
       conn: Connection,
       rangeLow: String,
       rangeHigh: String,
-      maxN: String,
-      dimension: String
+      maxN: String
   ): DataFrame = {
-    val ps = conn.prepareStatement(Query)
+    val ps = conn.prepareStatement(QueryDim2)
     try {
       ps.setString(1, rangeLow)
       ps.setString(2, rangeHigh)
       ps.setString(3, maxN)
-      ps.setString(4, dimension)
 
       val rs = ps.executeQuery()
       val rows = new ArrayBuffer[Neo4jS12Row]()
