@@ -388,7 +388,35 @@ early if an upstream step is missing.
 
 ---
 
-## 7. Glossary (one-line recap)
+## 7. Higher-dimension path (dimension = 8 "quartet")
+
+Everything above covers the **dimension = 2** slice — the quadratic
+TwoPolynomial form read by `DFScripts.s12QuadQ`. The same graph schema also
+hosts a **dimension = 8** slice, where `DFScripts.s3A` plays the role that
+`s12QuadQ` plays here. Key differences:
+
+- `s3A` performs the **row-scalar reduction inside Neo4j** via
+  `apoc.number.exact.mul(RScalar, maxDivisor / rDivisor)` followed by a
+  `REDUCE(sum='0', …)` accumulation. The rows it returns are already of the
+  shape `(degree, scalar, divisor, maxN, N)` — i.e. the graph equivalent of
+  the workbooks' `ReducedMaxN8Range` stage, pre-reduced.
+- A single `s3A` call extracts **one** reduced polynomial `p(x)` for a
+  specified `(MaxN, N, dimension=8)` triple. Two such calls yield two
+  independent single-variable reduced polynomials `p1(x)` and `p2(y)`.
+- Those two polynomials are **cross-joined** to form a separable bivariate
+  surface `F(x, y) = p1(x) * p2(y) / (div1 * div2)`.
+- Symbolic differentiation (power rule with the same `-1 -> 0` sentinel used
+  by `s12QuadQ`) builds the gradient and 2x2 Hessian; **Newton's method** and
+  **gradient descent** then seek critical points of `F`.
+
+Full cell-by-cell analysis, the column-index map for the cross-joined
+derivatives, the Newton / gradient-descent update rules, and the explicit
+tie-back to each of the three migrated workbooks live in
+[`documentation/MultiVariableNMGradientDescent.md`](../../documentation/MultiVariableNMGradientDescent.md).
+
+---
+
+## 8. Glossary (one-line recap)
 
 - **TwoPolynomialGenerator.jar** — writes term-level JSON rows to Kafka
   `twoPoly`; becomes `IndexedBy`, `VertexNode`, `TwoSeqFactor`, `Evaluate`.

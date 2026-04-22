@@ -126,11 +126,19 @@ See [documentation/README_ZerosAndDifferences.md](documentation/README_ZerosAndD
 
 ### ZADScripts
 
-Cypher query utilities and Kafka producers for the polynomial pipeline. Operates against Neo4j via JDBC, supports batch automation and CSV export.
+Cypher query utilities and Kafka producers for the polynomial pipeline. Operates against Neo4j via JDBC, supports batch automation and CSV export. The `DFScripts.s12QuadQ` (dimension 2) and `DFScripts.s3A` (dimension 8) queries are the read-side entry points analyzed in [documentation/MultiVariableNMGradientDescent.md](documentation/MultiVariableNMGradientDescent.md) and [ml/polys/GraphStructureToResultPoly.md](ml/polys/GraphStructureToResultPoly.md).
 
 ### Kafka Connect
 
 Neo4j sink connector configurations replacing the deprecated neo4j-streams plugin (EOL at Neo4j 4.4). Targets Neo4j 5.24.0 Enterprise with Kafka Connect architecture. See [kafka-connect/README.md](kafka-connect/README.md).
+
+### TwoPolynomial and higher-p analysis
+
+`TwoPolynomialGenerator.jar` and `ZADScripts.jar` jointly populate the graph's TwoPolynomial slice (dimension 2) via Kafka and direct Neo4j MERGE writes. Two Cypher readers then reconstruct reduced polynomials `p_N(x)` from that structure: `DFScripts.s12QuadQ` for the quadratic (dim = 2) form, and `DFScripts.s3A` for the higher-p "quartet" (dim = 8) form.
+
+The dim = 2 identity `p_N(MaxN) = 2^N` is numerically validated in three migrated Python workbooks under [ml/polys/workbook/](ml/polys/workbook/): [`GraphicZero-TheQuadratics.ipynb`](ml/polys/workbook/GraphicZero-TheQuadratics.ipynb) (single N deep dive), [`GraphicZero-HigherDegreedPs.ipynb`](ml/polys/workbook/GraphicZero-HigherDegreedPs.ipynb) (range of reduced `p_N`), and [`quadratics.ipynb`](ml/polys/workbook/quadratics.ipynb) (Spark / Cypher cross-check). The dim = 8 "quartet" form is lifted into a separable bivariate `F(x, y) = p1(x) * p2(y) / (div1 * div2)` and used as an optimization target via Newton's method and gradient descent.
+
+Full treatment: [documentation/MultiVariableNMGradientDescent.md](documentation/MultiVariableNMGradientDescent.md) (cell-by-cell formal analysis of the higher-p multivariable notebook) and [ml/polys/GraphStructureToResultPoly.md](ml/polys/GraphStructureToResultPoly.md) (graph-to-result-polynomial end-to-end semantics).
 
 ## Graph Structure
 
@@ -161,6 +169,8 @@ See [documentation/the_graph.md](documentation/the_graph.md) for detailed struct
 | [documentation/formal/](documentation/formal/) | Formal write-up: introduction, theory, implementation, classification, ML, references |
 | [documentation/algorithm_construction.md](documentation/algorithm_construction.md) | How polynomials are constructed with root constraints |
 | [documentation/graph_theory.md](documentation/graph_theory.md) | Theoretical background for the graph structure |
+| [documentation/MultiVariableNMGradientDescent.md](documentation/MultiVariableNMGradientDescent.md) | Formal analysis of the TwoPolynomial (dim=2) and higher-p (dim=8 "quartet") forms: `s12QuadQ` / `s3A` graph extraction, reduced polynomial reconstruction, multivariate cross-product, Newton's method and gradient descent |
+| [ml/polys/GraphStructureToResultPoly.md](ml/polys/GraphStructureToResultPoly.md) | End-to-end semantic analysis from `TwoPolynomialGenerator.jar` / `ZADScripts.jar` through the graph to reduced result polynomials consumed by the migrated workbooks |
 
 ## Requirements
 

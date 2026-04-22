@@ -292,6 +292,11 @@ Legacy-parity workbook migrations are also available:
 - [`ml/polys/workbook/GraphicZero-TheQuadratics.ipynb`](workbook/GraphicZero-TheQuadratics.ipynb): Python migration of the Zeppelin quadratics narrative with Zeppelin-style checkpoint names.
 - [`ml/polys/workbook/GraphicZero-HigherDegreedPs.ipynb`](workbook/GraphicZero-HigherDegreedPs.ipynb): Python migration of the Zeppelin higher-degree notebook (`2G1TWRHEF`) using live Neo4j source logic equivalent to `DFScripts.s12QuadQ`.
 
+Formal analyses of the graph-to-polynomial pipeline that frame the migrated workbooks:
+
+- [`ml/polys/GraphStructureToResultPoly.md`](GraphStructureToResultPoly.md): end-to-end semantic walk from `TwoPolynomialGenerator.jar` / `ZADScripts.jar` through the Neo4j graph to the reduced result polynomials (`p_N(MaxN) = 2^N` for dimension 2).
+- [`documentation/MultiVariableNMGradientDescent.md`](../../documentation/MultiVariableNMGradientDescent.md): cell-by-cell formal analysis of the higher-p (dimension 8 "quartet") Zeppelin notebook (`2GXTHE9EN`), showing how two reduced polynomials are cross-joined into a bivariate surface and optimized via Newton's method and gradient descent. Explicit tie-back to the three migrated workbooks above.
+
 For `GraphicZero-HigherDegreedPs.ipynb`:
 
 - Install dependencies in the notebook environment: `pip install neo4j pandas`.
