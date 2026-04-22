@@ -287,6 +287,17 @@ Stage folders created per run:
 
 A ready-to-use workbook is provided at [`ml/polys/workbook/quadratics.ipynb`](workbook/quadratics.ipynb). It reads `latest.txt`, loads all five stage outputs via `pyarrow.parquet` (avoiding the pandas Arrow extension registration bug), and prints row counts / heads for each stage. Requires `pip install pyarrow` in the venv.
 
+Legacy-parity workbook migrations are also available:
+
+- [`ml/polys/workbook/GraphicZero-TheQuadratics.ipynb`](workbook/GraphicZero-TheQuadratics.ipynb): Python migration of the Zeppelin quadratics narrative with Zeppelin-style checkpoint names.
+- [`ml/polys/workbook/GraphicZero-HigherDegreedPs.ipynb`](workbook/GraphicZero-HigherDegreedPs.ipynb): Python migration of the Zeppelin higher-degree notebook (`2G1TWRHEF`) using live Neo4j source logic equivalent to `DFScripts.s12QuadQ`.
+
+For `GraphicZero-HigherDegreedPs.ipynb`:
+
+- Install dependencies in the notebook environment: `pip install neo4j pandas`.
+- Configure `ml/polys/db.properties` (copy from `ml/polys/db.properties.example`).
+- Execute cells in order; the notebook asserts required intermediate checkpoints and final schema contracts.
+
 Manual equivalent:
 
 ```python
