@@ -6,19 +6,22 @@ Graph-based exploration of polynomial differences, integer-rational bijections, 
 
 ## Overview
 
-This project explores the intersection of three mathematical domains through computational graph generation and machine learning:
+This project explores the intersection of four mathematical domains through computational graph generation, machine learning, and reduced-polynomial surface construction:
 
 1. **Newton's Forward Differences** -- Forward difference operations on polynomials to analyze rational roots; factorial-scaled levels obey the linear Diophantine structure described in [documentation/README_ZerosAndDifferences.md](documentation/README_ZerosAndDifferences.md) (see also [documentation/formal/03_implementation.md](documentation/formal/03_implementation.md) Part 4), which underpins integer closure in the construction
 2. **Set-Theoretic Bijections** -- A novel approach to establishing integer-rational (Z <-> Q) mappings via binary-encoded root patterns
 3. **Graph Machine Learning** -- Node classification, link prediction, and rational partitioning on the resulting polynomial difference graph
+4. **TwoPolynomial reduced-polynomial reconstruction** -- A separate slice of the same Neo4j graph (`IndexedBy` / `VertexNode` / `TwoSeqFactor` / `Evaluate`) from which reduced polynomials `p_N(x)` are reconstructed by Cypher: the dim = 2 form validates `p_N(MaxN) = 2^N`, the dim = 8 "quartet" form lifts to a bivariate `F(x, y) = p1(x) * p2(y) / (div1 * div2)`, and the multivariable workbook generalizes to n-degree reduced polynomials that cross-product into arbitrary surfaces optimized via Newton's method and gradient descent (see [documentation/MultiVariableNMGradientDescent.md](documentation/MultiVariableNMGradientDescent.md) and [ml/polys/GraphStructureToResultPoly.md](ml/polys/GraphStructureToResultPoly.md))
 
-The core algorithm evaluates polynomials over integer ranges, computes successive forward differences, and persists the results as a graph in Neo4j. Each node represents a polynomial at some difference level; edges encode the difference operation. Machine learning then extracts latent structure from this graph -- predicting polynomial determinedness, discovering integer orderings, and partitioning nodes by rational equivalence classes.
+The core algorithm evaluates polynomials over integer ranges, computes successive forward differences, and persists the results as a graph in Neo4j. Each `:Dnode` represents a polynomial at some difference level; `:zMap` edges encode the difference operation. Machine learning then extracts latent structure from this graph -- predicting polynomial determinedness, discovering integer orderings, and partitioning nodes by rational equivalence classes. In parallel, the TwoPolynomial slice of the graph is consumed by the [ml/polys/](ml/polys/) Scala Spark pipeline and migrated Zeppelin workbooks under [ml/polys/workbook/](ml/polys/workbook/), which reconstruct reduced `p_N(x)` and compose them into the multivariable surfaces analyzed in the higher-p notebook.
 
 ### Central Claim
 
-Well-bounded graph generation constraints produce a graph containing the complete set of **determined polynomials** (those whose integer roots are fully captured within the evaluation range), corresponding to a power set structure. Root positions recorded in graph properties such as `muList` encode as binary patterns that map to integers.
+The project makes **two complementary claims** about what the Neo4j graph encodes and what can be recovered from it.
 
-The **machine learning** layer in `ml/` then surfaces what that structure implies without explicit symbolic algebra. **Node classification** (see [ml/graph_label_prediction/](ml/graph_label_prediction/)) learns determined versus underdetermined polynomials from graph and coefficient features (e.g. ~79–83% F1 in the documented GraphSAGE setup). **Two-stage link prediction** (see [ml/graph_link_prediction/](ml/graph_link_prediction/)) first partitions nodes by rational class via `:SAME_DENOMINATOR` (Stage 1, μ / set-union ratio), then recovers consecutive integer order within each class via `:NEXT_INTEGER` (Stage 2). Full pipeline rationale and task design: [documentation/why_ml.md](documentation/why_ml.md); setup and APIs: [ml/README.md](ml/README.md) and [ml/graph_link_prediction/README.md](ml/graph_link_prediction/README.md).
+**Claim A -- ZAD (determined polynomials, bijection, ML recovery).** Well-bounded graph generation constraints produce a graph containing the complete set of **determined polynomials** (those whose integer roots are fully captured within the evaluation range), corresponding to a power set structure. Root positions recorded in graph properties such as `muList` encode as binary patterns that map to integers, and `mu` (set-union ratio) maps to rationals. The **machine learning** layer in `ml/` surfaces this structure without explicit symbolic algebra: **node classification** (see [ml/graph_label_prediction/](ml/graph_label_prediction/)) learns determined versus underdetermined polynomials from graph and coefficient features (e.g. ~79-83% F1 in the documented GraphSAGE setup); **two-stage link prediction** (see [ml/graph_link_prediction/](ml/graph_link_prediction/)) first partitions nodes by rational class via `:SAME_DENOMINATOR` (Stage 1, mu / set-union ratio), then recovers consecutive integer order within each class via `:NEXT_INTEGER` (Stage 2). Full pipeline rationale and task design: [documentation/why_ml.md](documentation/why_ml.md); setup and APIs: [ml/README.md](ml/README.md) and [ml/graph_link_prediction/README.md](ml/graph_link_prediction/README.md).
+
+**Claim B -- TwoPolynomial (reduced polynomials, surface construction).** The same Neo4j graph exposes a separate TwoPolynomial slice (`IndexedBy` / `VertexNode` / `TwoSeqFactor` / `Evaluate`) from which **reduced polynomials `p_N(x)` are reconstructable by Cypher alone**: `DFScripts.s12QuadQ` yields the dim = 2 form (numerically certifying `p_N(MaxN) = 2^N` across the migrated workbooks), and `DFScripts.s3A` yields the dim = 8 "quartet" form. The multivariable workbook generalizes this construction to **n-degree** reduced polynomials and cross-products them into arbitrary bivariate (and higher-dimensional) surfaces `F(x, y, ...) = prod_i p_i(x_i) / prod_i div_i`, which are then optimized via Newton's method and gradient descent. The graph is thus not only a classification substrate but also a substrate for **constructing arbitrary polynomial surfaces**. Full treatment: [documentation/MultiVariableNMGradientDescent.md](documentation/MultiVariableNMGradientDescent.md) and [ml/polys/GraphStructureToResultPoly.md](ml/polys/GraphStructureToResultPoly.md).
 
 ## Project Structure
 
@@ -49,6 +52,14 @@ ModernGraphicZero/
 │   ├── spark_graph_builder/      Spark-based graph construction pipeline
 │   ├── neo4j/                    Neo4j Python client
 │   └── requirements.txt
+│
+├── ml/polys/                  Scala Spark MVP + migrated workbooks for TwoPolynomial
+│   ├── src/                     Spark pipeline (extractS12 -> reducedResult)
+│   ├── workbook/                Migrated Zeppelin notebooks (quadratics, higher-p, s12)
+│   ├── artifacts/               Versioned parquet stage outputs + run metrics
+│   ├── GraphStructureToResultPoly.md  End-to-end graph -> reduced poly analysis
+│   ├── README.md                Pipeline + notebook setup
+│   └── run_polys.ps1            Windows spark-submit wrapper
 │
 └── .gitignore
 ```
