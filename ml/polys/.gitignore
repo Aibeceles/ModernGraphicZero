@@ -9,3 +9,14 @@ artifacts/
 # metals / bloop (if opened in IDE)
 .metals/
 .bloop/
+
+# local workbook experiments (notebooks/outputs); track README runbooks
+workbook/surfaces/**
+!workbook/surfaces/**/
+!workbook/surfaces/**/README.md
+
+# WSL2 JAX+CUDA venv (created under ml/polys; see README JAX GPU section)
+.venv-jax-gpu-wsl/
+
+# WSL2 / Linux JAX+CUDA venv (see README JAX GPU section)
+.venv-jax-gpu-wsl/

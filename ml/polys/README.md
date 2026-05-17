@@ -42,6 +42,27 @@ $env:PATH = "$env:HADOOP_HOME\bin;$env:PATH"
 
 `[System.Environment]::SetEnvironmentVariable(...,"User")` persists these across future PowerShell sessions, but the **current** session still needs the `$env:` assignments above.
 
+### JAX GPU training (WSL2)
+
+Official **JAX with CUDA** is supported on **Linux**, including **WSL2**; native Windows pip installs are typically **CPU-only**. WSL2 uses the **Windows NVIDIA driver**—confirm with `wsl nvidia-smi` (or `nvidia-smi` inside Ubuntu) before installing JAX.
+
+From **Ubuntu (WSL)**, with the repo at `/mnt/c/.../Aibeceles/ml/polys` (or a clone under `~/work` for faster I/O):
+
+```bash
+cd /mnt/c/Users/<you>/JavaProjects/Aibeceles/ml/polys   # adjust path
+python3 -m venv .venv-jax-gpu-wsl
+source .venv-jax-gpu-wsl/bin/activate
+pip install -U pip wheel
+pip install -r requirements-jax-gpu-wsl.txt
+python scripts/verify_jax_gpu_wsl.py   # expect default_backend gpu/cuda + CudaDevice
+```
+
+Install lines follow the [JAX installation](https://jax.readthedocs.io/en/latest/installation.html) page if you need CUDA 13 or a different variant. For notebooks (`workbook/surfaces/sobolev/sobolev_student*.ipynb`), open the folder **in WSL** (Cursor/VS Code Remote WSL) and select this venv’s Python or register it: `python -m ipykernel install --user --name=aibeceles-jaxgpu --display-name="Python (JAX GPU WSL)"`.
+
+Character / grokking experiments: see [`workbook/surfaces/sobolev/README.md`](workbook/surfaces/sobolev/README.md) (how to run notebooks and set modulus `p`).
+
+The venv directory `.venv-jax-gpu-wsl/` is **gitignored** here. Optional **CuPy** in WSL (e.g. `cupy-cuda12x`) is separate from JAX’s bundled CUDA libraries.
+
 ## What it does
 
 Pipeline stages:
@@ -289,8 +310,8 @@ A ready-to-use workbook is provided at [`ml/polys/workbook/quadratics.ipynb`](wo
 
 Legacy-parity workbook migrations are also available:
 
-- [`ml/polys/workbook/GraphicZero-TheQuadratics.ipynb`](workbook/GraphicZero-TheQuadratics.ipynb): Python migration of the Zeppelin quadratics narrative with Zeppelin-style checkpoint names.
-- [`ml/polys/workbook/GraphicZero-HigherDegreedPs.ipynb`](workbook/GraphicZero-HigherDegreedPs.ipynb): Python migration of the Zeppelin higher-degree notebook (`2G1TWRHEF`) using live Neo4j source logic equivalent to `DFScripts.s12QuadQ`.
+- [`ml/polys/workbook/GZ/GraphicZero-TheQuadratics.ipynb`](workbook/GZ/GraphicZero-TheQuadratics.ipynb): Python migration of the Zeppelin quadratics narrative with Zeppelin-style checkpoint names.
+- [`ml/polys/workbook/GZ/GraphicZero-HigherDegreedPs.ipynb`](workbook/GZ/GraphicZero-HigherDegreedPs.ipynb): Python migration of the Zeppelin higher-degree notebook (`2G1TWRHEF`) using live Neo4j source logic equivalent to `DFScripts.s12QuadQ`.
 
 Formal analyses of the graph-to-polynomial pipeline that frame the migrated workbooks:
 
